@@ -14,41 +14,35 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
-namespace ZendTest\Filter;
-
-use Zend\Filter\Dir as DirFilter;
+/**
+ * @namespace
+ */
+namespace Zend\Filter;
 
 /**
  * @category   Zend
  * @package    Zend_Filter
- * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Filter
  */
-class DirTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractFilter implements Filter
 {
     /**
-     * Ensures that the filter follows expected behavior
+     * Invoke filter as a command
      *
-     * @return void
+     * Proxies to {@link filter()}
+     *
+     * @param  mixed $value
+     * @throws Zend\Filter\Exception If filtering $value is impossible
+     * @return mixed
      */
-    public function testBasic()
+    public function __invoke($value)
     {
-        $filter = new DirFilter();
-        $valuesExpected = array(
-            'filename'              => '.',
-            '/path/to/filename'     => '/path/to',
-            '/path/to/filename.ext' => '/path/to'
-            );
-        foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
-        }
+        return $this->filter($value);
     }
 }
