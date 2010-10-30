@@ -18,30 +18,37 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
 namespace Zend\Filter;
 
+use Zend\Loader\PluginSpecBroker;
+
 /**
- * @uses       Zend\Filter\AbstractFilter
+ * Broker for filter instances
+ *
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BaseName extends AbstractFilter
+class FilterBroker extends PluginSpecBroker
 {
     /**
-     * Defined by Zend_Filter_Interface
-     *
-     * Returns basename($value)
-     *
-     * @param  string $value
-     * @return string
+     * @var string Default plugin loading strategy
      */
-    public function filter($value)
+    protected $defaultClassLoader = 'Zend\Filter\FilterLoader';
+
+    /**
+     * Determine if we have a valid filter
+     * 
+     * @param  mixed $plugin 
+     * @return true
+     * @throws Exception
+     */
+    protected function validatePlugin($plugin)
     {
-        return basename((string) $value);
+        if (!$plugin instanceof Filter) {
+            throw new Exception('Filters must implement Zend\Filter\Filter');
+        }
+        return true;
     }
 }
