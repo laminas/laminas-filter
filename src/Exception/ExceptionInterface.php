@@ -18,7 +18,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\Filter;
+namespace Zend\Filter\Exception;
 
 /**
  * @category   Zend
@@ -26,14 +26,5 @@ namespace Zend\Filter;
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Filter
-{
-    /**
-     * Returns the result of filtering $value
-     *
-     * @param  mixed $value
-     * @throws Zend\Filter\Exception\RuntimeException If filtering $value is impossible
-     * @return mixed
-     */
-    public function filter($value);
-}
+interface ExceptionInterface
+{}

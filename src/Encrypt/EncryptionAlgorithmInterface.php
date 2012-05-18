@@ -18,37 +18,37 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\Filter\Compress;
+namespace Zend\Filter\Encrypt;
 
 /**
- * Compression interface
+ * Encryption interface
  *
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface CompressionAlgorithm
+interface EncryptionAlgorithmInterface
 {
     /**
-     * Compresses $value with the defined settings
+     * Encrypts $value with the defined settings
      *
-     * @param  string $value Data to compress
-     * @return string The compressed data
+     * @param  string $value Data to encrypt
+     * @return string The encrypted data
      */
-    public function compress($value);
+    public function encrypt($value);
 
     /**
-     * Decompresses $value with the defined settings
+     * Decrypts $value with the defined settings
      *
-     * @param  string $value Data to decompress
-     * @return string The decompressed data
+     * @param  string $value Data to decrypt
+     * @return string The decrypted data
      */
-    public function decompress($value);
+    public function decrypt($value);
 
     /**
      * Return the adapter name
-     *
+     * 
      * @return string
      */
     public function toString();
