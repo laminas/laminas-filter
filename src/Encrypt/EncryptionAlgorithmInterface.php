@@ -18,16 +18,38 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Filter;
+namespace Zend\Filter\Encrypt;
 
 /**
+ * Encryption interface
+ *
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
-{}
+interface EncryptionAlgorithmInterface
+{
+    /**
+     * Encrypts $value with the defined settings
+     *
+     * @param  string $value Data to encrypt
+     * @return string The encrypted data
+     */
+    public function encrypt($value);
+
+    /**
+     * Decrypts $value with the defined settings
+     *
+     * @param  string $value Data to decrypt
+     * @return string The decrypted data
+     */
+    public function decrypt($value);
+
+    /**
+     * Return the adapter name
+     * 
+     * @return string
+     */
+    public function toString();
+}

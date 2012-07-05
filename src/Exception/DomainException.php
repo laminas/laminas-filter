@@ -14,41 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Filter
+ * @subpackage Exception
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\Filter;
-
-use Zend\Loader\PluginSpecBroker;
+namespace Zend\Filter\Exception;
 
 /**
- * Broker for filter instances
- *
  * @category   Zend
  * @package    Zend_Filter
+ * @subpackage Exception
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FilterBroker extends PluginSpecBroker
+class DomainException extends \DomainException implements ExceptionInterface
 {
-    /**
-     * @var string Default plugin loading strategy
-     */
-    protected $defaultClassLoader = 'Zend\Filter\FilterLoader';
-
-    /**
-     * Determine if we have a valid filter
-     * 
-     * @param  mixed $plugin 
-     * @return true
-     * @throws Exception
-     */
-    protected function validatePlugin($plugin)
-    {
-        if (!$plugin instanceof Filter) {
-            throw new Exception\RuntimeException('Filters must implement Zend\Filter\Filter');
-        }
-        return true;
-    }
 }
