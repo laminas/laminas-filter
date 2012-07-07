@@ -1,6 +1,6 @@
 {
     "name": "zendframework/zend-filter",
-    "description": "Zend\\Filter component",
+    "description": "provides a set of commonly needed data filters",
     "license": "BSD-3-Clause",
     "keywords": [
         "zf2",
@@ -9,11 +9,11 @@
     "homepage": "https://github.com/zendframework/zend-filter",
     "autoload": {
         "psr-4": {
-            "Zend\\Filter\\": "src/"
+            "Zend\\Filter": "src/"
         }
     },
     "require": {
-        "php": ">=5.3.23",
+        "php": ">=5.3.3",
         "zendframework/zend-stdlib": "self.version"
     },
     "require-dev": {
@@ -28,7 +28,8 @@
         "zendframework/zend-crypt": "Zend\\Crypt component",
         "zendframework/zend-i18n": "Zend\\I18n component",
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
-        "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter"
+        "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter",
+        "zendframework/zend-validator": "Zend\\Validator component"
     },
     "extra": {
         "branch-alias": {
