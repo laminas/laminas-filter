@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Filter
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Filter
  */
 
 namespace ZendTest\Filter;
@@ -28,8 +17,6 @@ use Zend\Filter\AbstractFilter;
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Filter
  */
 class FilterChainTest extends \PHPUnit_Framework_TestCase
@@ -144,6 +131,57 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
     public static function staticUcaseFilter($value)
     {
         return strtoupper($value);
+    }
+
+    /**
+     * @group ZF-412
+     */
+    public function testCanAttachMultipleFiltersOfTheSameTypeAsDiscreteInstances()
+    {
+        $chain = new FilterChain();
+        $chain->attachByName('PregReplace', array(
+            'pattern'     => '/Foo/',
+            'replacement' => 'Bar',
+        ));
+        $chain->attachByName('PregReplace', array(
+            'pattern'     => '/Bar/',
+            'replacement' => 'PARTY',
+        ));
+
+        $this->assertEquals(2, count($chain));
+        $filters = $chain->getFilters();
+        $compare = null;
+        foreach ($filters as $filter) {
+            $this->assertNotSame($compare, $filter);
+            $compare = $filter;
+        }
+
+        $this->assertEquals('Tu et PARTY', $chain->filter('Tu et Foo'));
+    }
+
+    public function testClone()
+    {
+        $chain = new FilterChain();
+        $clone = clone $chain;
+
+        $chain->attachByName('strip_tags');
+
+        $this->assertCount(0, $clone);
+    }
+
+    public function testCanSerializeFilterChain()
+    {
+        $chain = new FilterChain();
+        $chain->attach(new LowerCase())
+              ->attach(new StripUpperCase());
+        $serialized = serialize($chain);
+
+        $unserialized = unserialize($serialized);
+        $this->assertInstanceOf('Zend\Filter\FilterChain', $unserialized);
+        $this->assertEquals(2, count($unserialized));
+        $value         = 'AbC';
+        $valueExpected = 'abc';
+        $this->assertEquals($valueExpected, $unserialized->filter($value));
     }
 }
 
