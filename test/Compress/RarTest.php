@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Filter
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Filter
  */
 
 namespace ZendTest\Filter\Compress;
@@ -28,8 +17,6 @@ use Zend\Filter\Compress\Rar as RarCompression;
  * @package    Zend_Filter
  * @subpackage UnitTests
  * @group      Zend_Filter
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class RarTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,7 +38,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
             dirname(__DIR__) . '/_files/_compress'
         );
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             if (file_exists($file)) {
                 if (is_dir($file)) {
                     rmdir($file);
@@ -83,7 +70,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
             dirname(__DIR__) . '/_files/_compress'
         );
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             if (file_exists($file)) {
                 if (is_dir($file)) {
                     rmdir($file);
@@ -121,7 +108,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
                             . DIRECTORY_SEPARATOR . 'compressed.rar', $content);
 
         $content = $filter->decompress($content);
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR, $content);
+        $this->assertTrue($content);
         $content = file_get_contents(dirname(__DIR__) . '/_files/zipextracted.txt');
         $this->assertEquals('compress me', $content);
     }
@@ -216,20 +203,20 @@ class RarTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($callback, $filter->getCallback());
 
     }
-    
+
     public function testSettingCallbackThrowsExceptionOnMissingCallback()
     {
         $filter = new RarCompression();
-        
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+
+        $this->setExpectedException('Zend\Filter\Exception\RuntimeException', 'No compression callback available');
         $filter->compress('test.txt');
     }
-    
+
     public function testSettingCallbackThrowsExceptionOnInvalidCallback()
     {
         $filter = new RarCompression();
-        
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+
+        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'Invalid callback provided');
         $filter->setCallback('invalidCallback');
     }
 
@@ -254,7 +241,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
                             . DIRECTORY_SEPARATOR . 'compressed.rar', $content);
 
         $content = $filter->decompress($content);
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR, $content);
+        $this->assertTrue($content);
         $content = file_get_contents(dirname(__DIR__) . '/_files/zipextracted.txt');
         $this->assertEquals('compress me', $content);
     }
@@ -279,9 +266,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
 
         mkdir(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . '_compress');
         $content = $filter->decompress($content);
-        $this->assertEquals(dirname(__DIR__)
-                            . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . '_compress'
-                            . DIRECTORY_SEPARATOR, $content);
+        $this->assertTrue($content);
 
         $base = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files'
               . DIRECTORY_SEPARATOR . '_compress' . DIRECTORY_SEPARATOR . 'Compress' . DIRECTORY_SEPARATOR;
