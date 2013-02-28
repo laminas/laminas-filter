@@ -29,12 +29,13 @@
         "zendframework/zend-i18n": "Zend\\I18n component",
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
         "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter",
-        "zendframework/zend-validator": "Zend\\Validator component"
+        "zendframework/zend-validator": "Zend\\Validator component",
+        "zendframework/zend-stdlib": "Zend\\Stdlib component"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.4-dev",
-            "dev-develop": "2.5-dev"
+            "dev-master": "2.1-dev",
+            "dev-develop": "2.2-dev"
         }
     },
     "autoload-dev": {

@@ -12,20 +12,20 @@ namespace Zend\Filter\Compress;
 use Zend\Filter\Exception;
 
 /**
- * Compression adapter for Lzf
+ * Compression adapter for php snappy (http://code.google.com/p/php-snappy/)
  */
-class Lzf implements CompressionAlgorithmInterface
+class Snappy implements CompressionAlgorithmInterface
 {
     /**
      * Class constructor
      *
-     * @param  null $options
-     * @throws Exception\ExtensionNotLoadedException if lzf extension missing
+     * @param null|array|\Traversable $options (Optional) Options to set
+     * @throws Exception\ExtensionNotLoadedException if snappy extension not loaded
      */
     public function __construct($options = null)
     {
-        if (!extension_loaded('lzf')) {
-            throw new Exception\ExtensionNotLoadedException('This filter needs the lzf extension');
+        if (!extension_loaded('snappy')) {
+            throw new Exception\ExtensionNotLoadedException('This filter needs the snappy extension');
         }
     }
 
@@ -34,13 +34,14 @@ class Lzf implements CompressionAlgorithmInterface
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException if error occurs during compression
+     * @throws Exception\RuntimeException on memory, output length or data warning
      */
     public function compress($content)
     {
-        $compressed = lzf_compress($content);
-        if (!$compressed) {
-            throw new Exception\RuntimeException('Error during compression');
+        $compressed = snappy_compress($content);
+
+        if ($compressed === false) {
+            throw new Exception\RuntimeException('Error while compressing.');
         }
 
         return $compressed;
@@ -51,13 +52,14 @@ class Lzf implements CompressionAlgorithmInterface
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException if error occurs during decompression
+     * @throws Exception\RuntimeException on memory, output length or data warning
      */
     public function decompress($content)
     {
-        $compressed = lzf_decompress($content);
-        if (!$compressed) {
-            throw new Exception\RuntimeException('Error during decompression');
+        $compressed = snappy_uncompress($content);
+
+        if ($compressed === false) {
+            throw new Exception\RuntimeException('Error while decompressing.');
         }
 
         return $compressed;
@@ -70,6 +72,6 @@ class Lzf implements CompressionAlgorithmInterface
      */
     public function toString()
     {
-        return 'Lzf';
+        return 'Snappy';
     }
 }
