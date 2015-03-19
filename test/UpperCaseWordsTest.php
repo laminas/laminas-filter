@@ -9,28 +9,30 @@
 
 namespace ZendTest\Filter;
 
-use Zend\Filter\StringToLower as StringToLowerFilter;
+use Zend\Filter\UpperCaseWords as UpperCaseWordsFilter;
 
 /**
- * @group      Zend_Filter
+ * Tests for {@see \Zend\Filter\UpperCaseWords}
+ *
+ * @covers \Zend\Filter\UpperCaseWords
  */
-class StringToLowerTest extends \PHPUnit_Framework_TestCase
+class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_StringToLower object
+     * Zend_Filter_UpperCaseWords object
      *
-     * @var StringToLowerFilter
+     * @var UpperCaseWordsFilter
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_StringToLower object for each test method
+     * Creates a new Zend_Filter_UpperCaseWords object for each test method
      *
      * @return void
      */
     public function setUp()
     {
-        $this->_filter = new StringToLowerFilter();
+        $this->_filter = new UpperCaseWordsFilter();
     }
 
     /**
@@ -42,9 +44,9 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
     {
         $filter = $this->_filter;
         $valuesExpected = array(
-            'string' => 'string',
-            'aBc1@3' => 'abc1@3',
-            'A b C'  => 'a b c'
+            'string' => 'String',
+            'aBc1@3' => 'Abc1@3',
+            'A b C'  => 'A B C'
         );
 
         foreach ($valuesExpected as $input => $output) {
@@ -62,9 +64,9 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
     {
         $filter = $this->_filter;
         $valuesExpected = array(
-            'Ü'     => 'ü',
-            'Ñ'     => 'ñ',
-            'ÜÑ123' => 'üñ123'
+            '√º'      => '√º',
+            '√±'      => '√±',
+            '√º√±123' => '√º√±123'
         );
 
         try {
@@ -78,11 +80,12 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @return void
      */
     public function testFalseEncoding()
     {
-        if (!function_exists('mb_strtolower')) {
+        if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
         }
 
@@ -96,13 +99,15 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
     public function testInitiationWithEncoding()
     {
         $valuesExpected = array(
-            'Ü'     => 'ü',
-            'Ñ'     => 'ñ',
-            'ÜÑ123' => 'üñ123'
+            '√º'      => '√º',
+            '√±'      => '√±',
+            '√º√±123' => '√º√±123'
         );
 
         try {
-            $filter = new StringToLowerFilter(array('encoding' => 'UTF-8'));
+            $filter = new UpperCaseWordsFilter(array(
+                'encoding' => 'UTF-8'
+            ));
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
@@ -118,9 +123,9 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
     {
         $filter = $this->_filter;
         $valuesExpected = array(
-            'Ü'     => 'ü',
-            'Ñ'     => 'ñ',
-            'ÜÑ123' => 'üñ123'
+            '√º'      => '√º',
+            '√±'      => '√±',
+            '√º√±123' => '√º√±123'
         );
 
         try {
@@ -148,7 +153,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDetectMbInternalEncoding()
     {
-        if (!function_exists('mb_internal_encoding')) {
+        if (! function_exists('mb_internal_encoding')) {
             $this->markTestSkipped("Function 'mb_internal_encoding' not available");
         }
 
@@ -160,10 +165,12 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
         return array(
             array(null),
             array(new \stdClass()),
+            array(123),
+            array(123.456),
             array(
                 array(
-                    'UPPER CASE WRITTEN',
-                    'This should stay the same'
+                    'Upper CASE and lowerCase Words WRITTEN',
+                    'This Should Stay The Same'
                 )
             )
         );
@@ -171,22 +178,11 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
+     *
+     * @param mixed $input
      */
     public function testReturnUnfiltered($input)
     {
-        $this->assertEquals($input, $this->_filter->filter($input));
-    }
-
-    /**
-     * @group 7147
-     */
-    public function testFilterUsesGetEncodingMethod()
-    {
-        $filterMock = $this->getMock('Zend\Filter\StringToLower', array('getEncoding'));
-        $filterMock->expects($this->once())
-                   ->method('getEncoding')
-                   ->with();
-        $filterMock->filter('foo');
+        $this->assertSame($input, $this->_filter->filter($input));
     }
 }
