@@ -17,7 +17,10 @@
         "zendframework/zend-stdlib": "~2.4"
     },
     "require-dev": {
+        "zendframework/zend-config": "~2.4",
         "zendframework/zend-crypt": "~2.4",
+        "zendframework/zend-i18n": "~2.4",
+        "zendframework/zend-loader": "~2.4",
         "zendframework/zend-servicemanager": "~2.4",
         "zendframework/zend-uri": "~2.4",
         "fabpot/php-cs-fixer": "1.7.*",
