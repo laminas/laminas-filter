@@ -30,6 +30,8 @@
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
         "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "2.4-dev",
