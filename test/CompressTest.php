@@ -25,8 +25,8 @@ class CompressTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        if (file_exists(__DIR__ . '/../_files/compressed.bz2')) {
-            unlink(__DIR__ . '/../_files/compressed.bz2');
+        if (file_exists(__DIR__ . '/_files/compressed.bz2')) {
+            unlink(__DIR__ . '/_files/compressed.bz2');
         }
     }
 
@@ -131,7 +131,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
     public function testCompressToFile()
     {
         $filter   = new CompressFilter('bz2');
-        $archive = __DIR__ . '/../_files/compressed.bz2';
+        $archive = __DIR__ . '/_files/compressed.bz2';
         $filter->setArchive($archive);
 
         $content = $filter('compress me');
@@ -200,7 +200,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
     public function testDecompressArchive()
     {
         $filter   = new CompressFilter('bz2');
-        $archive = __DIR__ . '/../_files/compressed.bz2';
+        $archive = __DIR__ . '/_files/compressed.bz2';
         $filter->setArchive($archive);
 
         $content = $filter('compress me');
