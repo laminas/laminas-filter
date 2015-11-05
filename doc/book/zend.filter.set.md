@@ -26,7 +26,7 @@ en\_US). If unset, it will use the default locale (`Locale::getDefault()`).
 
 ### Basic Usage
 
-``` sourceCode
+```php
 // Default settings, deny whitespace
 $filter = new \Zend\I18n\Filter\Alnum();
 echo $filter->filter("This is (my) content: 123");
@@ -67,7 +67,7 @@ en\_US). If unset, it will use the default locale (`Locale::getDefault()`).
 
 ### Basic Usage
 
-``` sourceCode
+```php
 // Default settings, deny whitespace
 $filter = new \Zend\I18n\Filter\Alpha();
 echo $filter->filter("This is (my) content: 123");
@@ -102,7 +102,7 @@ The following options are supported for `Zend\Filter\Blacklist`:
 
 This is a basic example:
 
-``` sourceCode
+```php
 $blacklist = new \Zend\Filter\Blacklist(array(
     'list' => array('forbidden-1', 'forbidden-2')
 ));
@@ -130,7 +130,7 @@ details.
 By default, this filter works by casting the input to a `BOOLEAN` value; in other words, it operates
 in a similar fashion to calling `(boolean) $value`.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Boolean();
 $value  = '';
 $result = $filter->filter($value);
@@ -165,7 +165,7 @@ There are several ways to select which of the above types are filtered. You can 
 types and add them, you can give an array, you can use constants, or you can give a textual string.
 See the following examples:
 
-``` sourceCode
+```php
 // converts 0 to false
 $filter = new Zend\Filter\Boolean(Zend\Filter\Boolean::TYPE_INTEGER);
 
@@ -203,7 +203,7 @@ This means that you can ask your customer in a form for "yes" or "no" within his
 To set the translation and the corresponding value, you can use the `translations` option or the
 method `setTranslations`.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Boolean(array(
     'type'         => Zend\Filter\Boolean::TYPE_LOCALIZED,
     'translations' => array(
@@ -232,7 +232,7 @@ is set to `FALSE`
 
 The following example shows the behaviour when changing the `casting` option:
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Boolean(array(
     'type'    => Zend\Filter\Boolean::TYPE_ALL,
     'casting' => false,
@@ -266,7 +266,7 @@ processed.
 The usage of this filter is quite simple. Let's expect we want to create a filter which reverses a
 string.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Callback('strrev');
 
 print $filter->filter('Hello!');
@@ -276,7 +276,7 @@ print $filter->filter('Hello!');
 As you can see it's really simple to use a callback to define a own filter. It is also possible to
 use a method, which is defined within a class, by giving an array as callback.
 
-``` sourceCode
+```php
 // Our classdefinition
 class MyClass
 {
@@ -299,7 +299,7 @@ You should note that defining a callback method which can not be called will rai
 It is also possible to define default parameters, which are given to the called method as array when
 the filter is executed. This array will be concatenated with the value which will be filtered.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Callback(
     array(
         'callback' => 'MyMethod',
@@ -311,7 +311,7 @@ $filter->filter(array('value' => 'Hello'));
 
 When you would call the above method definition manually it would look like this:
 
-``` sourceCode
+```php
 $value = MyMethod('Hello', 'param1', 'param2');
 ```
 
@@ -355,7 +355,7 @@ should be used when you wish to decompress items.
 For instance, if we want to compress a string, we have to initiate `Zend\Filter\Compress` and
 indicate the desired adapter.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Compress('Bz2');
 ```
 
@@ -365,7 +365,7 @@ You may also provide an array of options or a Traversable object. If you do, pro
 key "adapter", and then either the key "options" or "adapterOptions" (which should be an array of
 options to provide to the adapter on instantiation).
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Compress(array(
     'adapter' => 'Bz2',
     'options' => array(
@@ -381,14 +381,14 @@ When no compression adapter is given, then the **Gz** adapter will be used.
 Almost the same usage is we want to decompress a string. We just have to use the decompression
 filter in this case.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Decompress('Bz2');
 ```
 
 To get the compressed string, we have to give the original string. The filtered value is the
 compressed version of the original string.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Compress('Bz2');
 $compressed = $filter->filter('Uncompressed string');
 // Returns the compressed string
@@ -396,7 +396,7 @@ $compressed = $filter->filter('Uncompressed string');
 
 Decompression works the same way.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Decompress('Bz2');
 $compressed = $filter->filter('Compressed string');
 // Returns the uncompressed string
@@ -412,7 +412,7 @@ and directories. For details, consult the section for the adapter you wish to us
 Creating an archive file works almost the same as compressing a string. However, in this case we
 need an additional parameter which holds the name of the archive we want to create.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Compress(array(
     'adapter' => 'Bz2',
     'options' => array(
@@ -433,7 +433,7 @@ exists.
 
 When you want to compress a file, then you must give the name of the file with its path.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Compress(array(
     'adapter' => 'Bz2',
     'options' => array(
@@ -447,7 +447,7 @@ $compressed = $filter->filter('C:\temp\compressme.txt');
 You may also specify a directory instead of a filename. In this case the whole directory with all
 its files and subdirectories will be compressed into the archive.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Compress(array(
     'adapter' => 'Bz2',
     'options' => array(
@@ -469,7 +469,7 @@ when there is not enough space or your script takes too much time.
 Decompressing an archive file works almost like compressing it. You must specify either the
 `archive` parameter, or give the filename of the archive when you decompress the file.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Decompress('Bz2');
 $decompressed = $filter->filter('filename.bz2');
 // Returns true on success and decompresses the archive file
@@ -478,7 +478,7 @@ $decompressed = $filter->filter('filename.bz2');
 Some adapters support decompressing the archive into another subdirectory. In this case you can set
 the `target` parameter.
 
-``` sourceCode
+```php
 $filter     = new Zend\Filter\Decompress(array(
     'adapter' => 'Zip',
     'options' => array(
@@ -645,7 +645,7 @@ There are no additional options for `Zend\Filter\Digits`.
 
 A basic example of usage is below:
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Digits();
 
 print $filter->filter('October 2012');
@@ -653,7 +653,7 @@ print $filter->filter('October 2012');
 
 This returns "2012".
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Digits();
 
 print $filter->filter('HTML 5 for Dummies');
@@ -673,7 +673,7 @@ There are no additional options for `Zend\Filter\Dir`.
 
 A basic example of usage is below:
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Dir();
 
 print $filter->filter('/etc/passwd');
@@ -681,7 +681,7 @@ print $filter->filter('/etc/passwd');
 
 This returns "`/etc`".
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\Dir();
 
 print $filter->filter('C:/Temp/x');
@@ -732,7 +732,7 @@ be a random vector.
 As these two encryption methodologies work completely different, also the usage of the adapters
 differ. You have to select the adapter you want to use when initiating the filter.
 
-``` sourceCode
+```php
 // Use the BlockCipher adapter
 $filter1 = new Zend\Filter\Encrypt(array('adapter' => 'BlockCipher'));
 
@@ -743,7 +743,7 @@ $filter2 = new Zend\Filter\Encrypt(array('adapter' => 'openssl'));
 To set another adapter you can also use `setAdapter()`, and the `getAdapter()` method to receive the
 actual set adapter.
 
-``` sourceCode
+```php
 // Use the OpenSSL adapter
 $filter = new Zend\Filter\Encrypt();
 $filter->setAdapter('openssl');
@@ -758,7 +758,7 @@ adapter will be used per default.
 To encrypt a string using the `BlockCipher` you have to specify the encryption key using the
 `setKey()` method or passing it during the constructor.
 
-``` sourceCode
+```php
 // Use the default AES encryption algorithm
 $filter = new Zend\Filter\Encrypt(array('adapter' => 'BlockCipher'));
 $filter->setKey('encryption key');
@@ -776,7 +776,7 @@ printf ("Encrypted text: %s\n", $encrypted);
 You can get and set the encryption values also afterwards with the `getEncryption()` and
 `setEncryption()` methods.
 
-``` sourceCode
+```php
 // Use the default AES encryption algorithm
 $filter = new Zend\Filter\Encrypt(array('adapter' => 'BlockCipher'));
 $filter->setKey('encryption key');
@@ -803,7 +803,7 @@ If you don't specify an initialization Vector (salt or iv), the BlockCipher will
 value during each encryption. If you try to execute the following code the output will be always
 different (note that even if the output is always different you can decrypt it using the same key).
 
-``` sourceCode
+```php
 $key  = 'encryption key';
 $text = 'message to encrypt';
 
@@ -818,7 +818,7 @@ for ($i=0; $i < 10; $i++) {
 If you want to obtain the same output you need to specify a fixed Vector, using the setVector()
 method. This script will produce always the same encryption output.
 
-``` sourceCode
+```php
 // use the default adapter that is BlockCipher
 $filter = new \Zend\Filter\Encrypt();
 $filter->setKey('encryption key');
@@ -842,7 +842,7 @@ options with which the encryption has been called.
 If you used only the encryption key, you can just use it to decrypt the content. As soon as you have
 provided all options decryption is as simple as encryption.
 
-``` sourceCode
+```php
 $content =
 '04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=';
 // use the default adapter that is BlockCipher
@@ -870,7 +870,7 @@ set the public key also afterwards with the `getPublicKey()` and `setPublicKey()
 private key can also be get and set with the related `getPrivateKey()` and `setPrivateKey()`
 methods.
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Encrypt(array(
    'adapter' => 'openssl',
@@ -887,7 +887,7 @@ Note that the `OpenSSL` adapter will not work when you do not provide valid keys
 When you want to decode content which was encoded with a passphrase you will not only need the
 public key, but also the passphrase to decode the encrypted key.
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Encrypt(array(
    'adapter' => 'openssl',
@@ -905,7 +905,7 @@ This means for you, that you have to get the envelope keys after the encryption 
 
 So our complete example for encrypting content with `OpenSSL` look like this.
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Encrypt(array(
    'adapter' => 'openssl',
@@ -928,7 +928,7 @@ This can be very annoying when you work with multiple values.
 
 To have a simplified usage you can set the `package` option to `TRUE`. The default value is `FALSE`.
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Encrypt(array(
    'adapter' => 'openssl',
@@ -955,7 +955,7 @@ Based on the original value, the encrypted value can be a very large string. To 
 The `compression` option can either be set to the name of a compression adapter, or to an array
 which sets all wished options for the compression adapter.
 
-``` sourceCode
+```php
 // Use basic compression adapter
 $filter1 = new Zend\Filter\Encrypt(array(
    'adapter'     => 'openssl',
@@ -985,7 +985,7 @@ compression settings for decryption as for encryption. Otherwise the decryption 
 Decryption with `OpenSSL` is as simple as encryption. But you need to have all data from the person
 who encrypted the content. See the following example:
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Decrypt(array(
    'adapter' => 'openssl',
@@ -1002,7 +1002,7 @@ Note that the `OpenSSL` adapter will not work when you do not provide valid keys
 Optionally it could be necessary to provide the passphrase for decrypting the keys themself passing
 the `passphrase` option.
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Decrypt(array(
    'adapter' => 'openssl',
@@ -1017,7 +1017,7 @@ $filter->setEnvelopeKey('/key/from/encoder/envelope_key.pem');
 At last, decode the content. Our complete example for decrypting the previously encrypted content
 looks like this.
 
-``` sourceCode
+```php
 // Use openssl and provide a private key
 $filter = new Zend\Filter\Decrypt(array(
    'adapter' => 'openssl',
@@ -1044,7 +1044,7 @@ There are no additional options for `Zend\Filter\ToInt`.
 
 A basic example of usage is below:
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\ToInt();
 
 print $filter->filter('-4 is less than 0');
@@ -1079,7 +1079,7 @@ The following options are supported for `Zend\Filter\ToNull`:
 Per default this filter works like *PHP*'s `empty()` method; in other words, if `empty()` returns a
 boolean `TRUE`, then a `NULL` value will be returned.
 
-``` sourceCode
+```php
 $filter = new Zend\Filter\ToNull();
 $value  = '';
 $result = $filter->filter($value);
@@ -1110,7 +1110,7 @@ There are several ways to select which of the above types are filtered. You can 
 types and add them, you can give an array, you can use constants, or you can give a textual string.
 See the following examples:
 
-``` sourceCode
+```php
 // converts false to null
 $filter = new Zend\Filter\ToNull(Zend\Filter\ToNull::BOOLEAN);
 
@@ -1176,7 +1176,7 @@ use. If unset, it will use `NumberFormatter::TYPE_DOUBLE` as the default type.
 
 ### Basic Usage
 
-``` sourceCode
+```php
 $filter = new \Zend\I18n\Filter\NumberFormat("de_DE");
 echo $filter->filter(1234567.8912346);
 // Returns "1.234.567,891"
@@ -1220,7 +1220,7 @@ use. If unset, it will use `NumberFormatter::TYPE_DOUBLE` as the default type.
 
 ### Basic Usage
 
-``` sourceCode
+```php
 $filter = new \Zend\I18n\Filter\NumberParse("de_DE");
 echo $filter->filter("1.234.567,891");
 // Returns 1234567.8912346
@@ -1252,7 +1252,7 @@ The following options are supported for `Zend\Filter\Whitelist`:
 
 This is a basic example:
 
-``` sourceCode
+```php
 $whitelist = new \Zend\Filter\Whitelist(array(
     'list' => array('allowed-1', 'allowed-2')
 ));

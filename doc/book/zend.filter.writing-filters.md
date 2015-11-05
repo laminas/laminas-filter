@@ -11,7 +11,7 @@ classes.
 
 The following example demonstrates how to write a custom filter:
 
-``` sourceCode
+```php
 namespace Application\Filter;
 
 use Zend\Filter\FilterInterface;
@@ -29,7 +29,7 @@ class MyFilter implements FilterInterface
 
 To attach an instance of the filter defined above to a filter chain:
 
-``` sourceCode
+```php
 $filterChain = new Zend\Filter\FilterChain();
 $filterChain->attach(new Application\Filter\MyFilter());
 ```

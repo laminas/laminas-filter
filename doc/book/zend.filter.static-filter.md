@@ -7,13 +7,13 @@ argument is a string, which corresponds to the basename of the filter class, rel
 `Zend\Filter` namespace. The `execute()` method automatically loads the class, creates an instance,
 and applies the `filter()` method to the data input.
 
-``` sourceCode
+```php
 echo StaticFilter::execute('&', 'HtmlEntities');
 ```
 
 You can also pass an array of constructor arguments, if they are needed for the filter class.
 
-``` sourceCode
+```php
 echo StaticFilter::execute('"',
                            'HtmlEntities',
                            array('quotestyle' => ENT_QUOTES));
@@ -29,7 +29,7 @@ classes on demand to process sets of input data. See \[FilterChain\](zend.filter
 You can set and receive the `FilterPluginManager` for the `StaticFilter` to amend the standard
 filter classes.
 
-``` sourceCode
+```php
 $pluginManager = StaticFilter::getPluginManager()->setInvokableClass(
     'myNewFilter', 'MyCustom\Filter\MyNewFilter'
 );

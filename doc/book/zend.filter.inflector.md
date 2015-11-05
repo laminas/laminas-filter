@@ -12,7 +12,7 @@ separate the words using a dash ('-'). An inflector can do this for you.
 
 ## Transforming MixedCase and camelCaseText to another format
 
-``` sourceCode
+```php
 $inflector = new Zend\Filter\Inflector('pages/:page.:suffix');
 $inflector->setRules(array(
     ':page'  => array('Word\CamelCaseToDash', 'StringToLower'),
@@ -53,7 +53,7 @@ inflection. By default, filters registered with `Zend\Filter\FilterPluginManager
 access filters with that prefix but which occur deeper in the hierarchy, such as the various `Word`
 filters, simply strip off the `Zend\Filter` prefix:
 
-``` sourceCode
+```php
 // use Zend\Filter\Word\CamelCaseToDash as a rule
 $inflector->addRules(array('script' => 'Word\CamelCaseToDash'));
 ```
@@ -61,7 +61,7 @@ $inflector->addRules(array('script' => 'Word\CamelCaseToDash'));
 To use custom filters, you have two choices: reference them by fully qualified class name (e.g.,
 `My\Custom\Filter\Mungify`), or manipulate the composed `FilterPluginManager` instance.
 
-``` sourceCode
+```php
 $filters = $inflector->getPluginManager();
 $filters->addInvokableClass('mungify', 'My\Custom\Filter\Mungify');
 ```
@@ -75,7 +75,7 @@ an identifier, a colon (':') by default, followed by a variable name: ':script',
 You can change the identifier using the `setTargetReplacementIdentifier()` method, or passing it as
 the fourth argument to the constructor:
 
-``` sourceCode
+```php
 // Via constructor:
 $inflector = new Zend\Filter\Inflector('#foo/#bar.#sfx', array(), null, '#');
 
@@ -86,7 +86,7 @@ $inflector->setTargetReplacementIdentifier('#');
 Typically, you will set the target via the constructor. However, you may want to re-set the target
 later. `setTarget()` can be used for this purpose:
 
-``` sourceCode
+```php
 $inflector->setTarget('layouts/:script.phtml');
 ```
 
@@ -94,7 +94,7 @@ Additionally, you may wish to have a class member for your class that you can us
 inflector target updated -- without needing to directly update the target each time (thus saving on
 method calls). `setTargetReference()` allows you to do this:
 
-``` sourceCode
+```php
 class Foo
 {
     /**
@@ -144,7 +144,7 @@ Static rules do simple string substitution; use them when you have a segment in 
 typically be static, but which you want to allow the developer to modify. Use the `setStaticRule()`
 method to set or modify the rule:
 
-``` sourceCode
+```php
 $inflector = new Zend\Filter\Inflector(':script.:suffix');
 $inflector->setStaticRule('suffix', 'phtml');
 
@@ -157,7 +157,7 @@ a single variable instead of require a method call; this is often useful when yo
 inflector internally, and you don't want your users to need to fetch the inflector in order to
 update it. The `setStaticRuleReference()` method is used to accomplish this:
 
-``` sourceCode
+```php
 class Foo
 {
     /**
@@ -206,7 +206,7 @@ the inflector's plugin loader (by default, minus the '`Zend\Filter`' prefix).
 a filter.
 - **Array**. An array of one or more strings or filter objects as defined above.
 
-``` sourceCode
+```php
 $inflector = new Zend\Filter\Inflector(':script.:suffix');
 
 // Set rule to use Zend\Filter\Word\CamelCaseToDash filter
@@ -237,7 +237,7 @@ setting static rules and filter rules, according to the following notation:
 
 **Setting Multiple Rules at Once**
 
-``` sourceCode
+```php
 // Could also use setRules() with this notation:
 $inflector->addRules(array(
     // filter rules:
@@ -285,7 +285,7 @@ values or arrays of values, consistent with `addRules()`.
 
 ## Example
 
-``` sourceCode
+```php
 // With the constructor:
 $options; // implements Traversable
 $inflector = new Zend\Filter\Inflector($options);

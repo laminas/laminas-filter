@@ -56,7 +56,7 @@ the `source` option in the options set.
 
 Move all filtered files to a different directory:
 
-``` sourceCode
+```php
 // 'target' option is assumed if param is a string
 $filter = new \Zend\Filter\File\Rename("/tmp/");
 echo $filter->filter("./myfile.txt");
@@ -65,7 +65,7 @@ echo $filter->filter("./myfile.txt");
 
 Rename all filtered files to a new name:
 
-``` sourceCode
+```php
 $filter = new \Zend\Filter\File\Rename("/tmp/newfile.txt");
 echo $filter->filter("./myfile.txt");
 // File has been renamed to "/tmp/newfile.txt"
@@ -73,7 +73,7 @@ echo $filter->filter("./myfile.txt");
 
 Move to a new path and randomize file names:
 
-``` sourceCode
+```php
 $filter = new \Zend\Filter\File\Rename(array(
     "target"    => "/tmp/newfile.txt",
     "randomize" => true,
@@ -84,7 +84,7 @@ echo $filter->filter("./myfile.txt");
 
 Configure different options for several possible source files:
 
-``` sourceCode
+```php
 $filter = new \Zend\Filter\File\Rename(array(
     array(
         "source"    => "fileA.txt"

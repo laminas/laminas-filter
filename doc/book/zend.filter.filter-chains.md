@@ -5,7 +5,7 @@ form accepts a username that should be only lowercase, alphabetic characters.
 `Zend\Filter\FilterChain` provides a simple method by which filters may be chained together. The
 following code illustrates how to chain together two filters for the submitted username:
 
-``` sourceCode
+```php
 // Create a filter chain and add filters to the chain
 $filterChain = new Zend\Filter\FilterChain();
 $filterChain->attach(new Zend\I18n\Filter\Alpha())
@@ -27,7 +27,7 @@ For each filter added to the `FilterChain` you can set a priority to define the 
 default value is `1000`. In the following example, any uppercase characters are converted to
 lowercase before any non-alphabetic characters are removed.
 
-``` sourceCode
+```php
 // Create a filter chain and add filters to the chain
 $filterChain = new Zend\Filter\FilterChain();
 $filterChain->attach(new Zend\I18n\Filter\Alpha())
@@ -42,7 +42,7 @@ known by the `FilterPluginManager` you can use the `attachByName()` method. The 
 the name of the filter within the `FilterPluginManager`. The second parameter takes any options for
 creating the filter instance. The third parameter is the priority.
 
-``` sourceCode
+```php
 // Create a filter chain and add filters to the chain
 $filterChain = new Zend\Filter\FilterChain();
 $filterChain->attachByName('alpha')
@@ -52,7 +52,7 @@ $filterChain->attachByName('alpha')
 The following example shows how to add a custom filter to the `FilterPluginManager` and the
 `FilterChain`.
 
-``` sourceCode
+```php
 $filterChain = new Zend\Filter\FilterChain();
 $filterChain->getPluginManager()->setInvokableClass(
     'myNewFilter', 'MyCustom\Filter\MyNewFilter'
@@ -63,7 +63,7 @@ $filterChain->attachByName('alpha')
 
 You can also add your own `FilterPluginManager` implementation.
 
-``` sourceCode
+```php
 $filterChain = new Zend\Filter\FilterChain();
 $filterChain->setPluginManager(new MyFilterPluginManager());
 $filterChain->attach(new Zend\I18n\Filter\Alpha())
