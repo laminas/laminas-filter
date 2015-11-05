@@ -84,6 +84,35 @@ echo $filter->filter("This is (my) content: 123");
 the english alphabet is used instead of the characters from these languages. The language itself is
 detected using the `Locale`.
 
+## BaseName
+
+`Zend\Filter\BaseName` allows you to filter a string which contains the path to a file and it will
+return the base name of this file.
+
+### Supported Options
+
+There are no additional options for `Zend\Filter\BaseName`.
+
+### Basic Usage
+
+A basic example of usage is below:
+
+```php
+$filter = new Zend\Filter\BaseName();
+
+print $filter->filter('/vol/tmp/filename');
+```
+
+This will return 'filename'.
+
+```php
+$filter = new Zend\Filter\BaseName();
+
+print $filter->filter('/vol/tmp/filename.txt');
+```
+
+This will return '`filename.txt`'.
+
 ## Blacklist
 
 This filter will return `null` if the value being filtered is present in the filter's list of
@@ -1032,6 +1061,116 @@ $decrypted = $filter->filter('encoded_text_normally_unreadable');
 print $decrypted;
 ```
 
+## HtmlEntities
+
+Returns the string `$value`, converting characters to their corresponding *HTML* entity equivalents
+where they exist.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\HtmlEntities`:
+
+- **quotestyle**: Equivalent to the *PHP* htmlentities native function parameter **quote\_style**.
+This allows you to define what will be done with 'single' and "double" quotes. The following
+constants are accepted: `ENT_COMPAT`, `ENT_QUOTES` `ENT_NOQUOTES` with the default being
+`ENT_COMPAT`.
+- **charset**: Equivalent to the *PHP* htmlentities native function parameter **charset**. This
+defines the character set to be used in filtering. Unlike the *PHP* native function the default is
+'UTF-8'. See "<http://php.net/htmlentities>" for a list of supported character sets.
+
+> ##     note
+    >
+    > This option can also be set via the `$options` parameter as a Traversable object or array. The
+option key will be accepted as either charset or encoding.
+
+- **doublequote**: Equivalent to the *PHP* htmlentities native function parameter
+**double\_encode**. If set to false existing html entities will not be encoded. The default is to
+convert everything (true).
+
+> ##     note
+    >
+    > This option must be set via the `$options` parameter or the `setDoubleEncode()` method.
+
+### Basic Usage
+
+See the following example for the default behavior of this filter.
+
+```php
+$filter = new Zend\Filter\HtmlEntities();
+
+print $filter->filter('<');
+```
+
+### Quote Style
+
+`Zend\Filter\HtmlEntities` allows changing the quote style used. This can be useful when you want to
+leave double, single, or both types of quotes un-filtered. See the following example:
+
+```php
+$filter = new Zend\Filter\HtmlEntities(array('quotestyle' => ENT_QUOTES));
+
+$input  = "A 'single' and " . '"double"';
+print $filter->filter($input);
+```
+
+The above example returns `A &#039;single&#039; and &quot;double&quot;`. Notice that `'single'` as
+well as `"double"` quotes are filtered.
+
+```php
+$filter = new Zend\Filter\HtmlEntities(array('quotestyle' => ENT_COMPAT));
+
+$input  = "A 'single' and " . '"double"';
+print $filter->filter($input);
+```
+
+The above example returns `A 'single' and &quot;double&quot;`. Notice that `"double"` quotes are
+filtered while `'single'` quotes are not altered.
+
+```php
+$filter = new Zend\Filter\HtmlEntities(array('quotestyle' => ENT_NOQUOTES));
+
+$input  = "A 'single' and " . '"double"';
+print $filter->filter($input);
+```
+
+The above example returns `A 'single' and "double"`. Notice that neither `"double"` or `'single'`
+quotes are altered.
+
+### Helper Methods
+
+To change or retrieve the `quotestyle` after instantiation, the two methods `setQuoteStyle()` and
+`getQuoteStyle()` may be used respectively. `setQuoteStyle()` accepts one parameter `$quoteStyle`.
+The following constants are accepted: `ENT_COMPAT`, `ENT_QUOTES`, `ENT_NOQUOTES`
+
+```php
+$filter = new Zend\Filter\HtmlEntities();
+
+$filter->setQuoteStyle(ENT_QUOTES);
+print $filter->getQuoteStyle(ENT_QUOTES);
+```
+
+To change or retrieve the `charset` after instantiation, the two methods `setCharSet()` and
+`getCharSet()` may be used respectively. `setCharSet()` accepts one parameter `$charSet`. See
+"<http://php.net/htmlentities>" for a list of supported character sets.
+
+```php
+$filter = new Zend\Filter\HtmlEntities();
+
+$filter->setQuoteStyle(ENT_QUOTES);
+print $filter->getQuoteStyle(ENT_QUOTES);
+```
+
+To change or retrieve the `doublequote` option after instantiation, the two methods
+`setDoubleQuote()` and `getDoubleQuote()` may be used respectively. `setDoubleQuote()` accepts one
+boolean parameter `$doubleQuote`.
+
+```php
+$filter = new Zend\Filter\HtmlEntities();
+
+$filter->setQuoteStyle(ENT_QUOTES);
+print $filter->getQuoteStyle(ENT_QUOTES);
+```
+
 ## ToInt
 
 `Zend\Filter\ToInt` allows you to transform a scalar value which contains into an integer.
@@ -1233,6 +1372,367 @@ $filter = new \Zend\I18n\Filter\NumberParse("fr_FR", NumberFormatter::SCIENTIFIC
 echo $filter->filter("1,23456789E-3");
 // Returns 0.00123456789
 ```
+
+## PregReplace
+
+`Zend\Filter\PregReplace` performs a search using regular expressions and replaces all found
+elements.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\PregReplace`:
+
+- **pattern**: The pattern which will be searched for.
+- **replacement**: The string which is used as replacement for the matches.
+
+### Basic Usage
+
+To use this filter properly you must give two options:
+
+The option `pattern` has to be given to set the pattern which will be searched for. It can be a
+string for a single pattern, or an array of strings for multiple pattern.
+
+To set the pattern which will be used as replacement the option `replacement` has to be used. It can
+be a string for a single pattern, or an array of strings for multiple pattern.
+
+```php
+$filter = new Zend\Filter\PregReplace(array(
+    'pattern'     => '/bob/',
+    'replacement' => 'john',
+));
+$input  = 'Hi bob!';
+
+$filter->filter($input);
+// returns 'Hi john!'
+```
+
+You can use `getPattern()` and `setPattern()` to set the matching pattern afterwards. To set the
+replacement pattern you can use `getReplacement()` and `setReplacement()`.
+
+```php
+$filter = new Zend\Filter\PregReplace();
+$filter->setMatchPattern(array('bob', 'Hi'))
+      ->setReplacement(array('john', 'Bye'));
+$input  = 'Hi bob!';
+
+$filter->filter($input);
+// returns 'Bye john!'
+```
+
+For a more complex usage take a look into *PHP*'s [PCRE Pattern
+Chapter](http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php).
+
+## RealPath
+
+This filter will resolve given links and pathnames and returns canonicalized absolute pathnames.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\RealPath`:
+
+- **exists**: This option defaults to `TRUE` which checks if the given path really exists.
+
+### Basic Usage
+
+For any given link of pathname its absolute path will be returned. References to '`/./`', '`/../`'
+and extra '`/`' characters in the input path will be stripped. The resulting path will not have any
+symbolic link, '`/./`' or '`/../`' character.
+
+`Zend\Filter\RealPath` will return `FALSE` on failure, e.g. if the file does not exist. On *BSD*
+systems `Zend\Filter\RealPath` doesn't fail if only the last path component doesn't exist, while
+other systems will return `FALSE`.
+
+```php
+$filter = new Zend\Filter\RealPath();
+$path   = '/www/var/path/../../mypath';
+$filtered = $filter->filter($path);
+
+// returns '/www/mypath'
+```
+
+### Non-Existing Paths
+
+Sometimes it is useful to get also paths when they don't exist, f.e. when you want to get the real
+path for a path which you want to create. You can then either give a `FALSE` at initiation, or use
+`setExists()` to set it.
+
+```php
+$filter = new Zend\Filter\RealPath(false);
+$path   = '/www/var/path/../../non/existing/path';
+$filtered = $filter->filter($path);
+
+// returns '/www/non/existing/path'
+// even when file_exists or realpath would return false
+```
+
+## StringToLower
+
+This filter converts any input to be lowercased.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\StringToLower`:
+
+- **encoding**: This option can be used to set an encoding which has to be used.
+
+### Basic Usage
+
+This is a basic example:
+
+```php
+$filter = new Zend\Filter\StringToLower();
+
+print $filter->filter('SAMPLE');
+// returns "sample"
+```
+
+### Different Encoded Strings
+
+Per default it will only handle characters from the actual locale of your server. Characters from
+other charsets would be ignored. Still, it's possible to also lowercase them when the mbstring
+extension is available in your environment. Simply set the wished encoding when initiating the
+`StringToLower` filter. Or use the `setEncoding()` method to change the encoding afterwards.
+
+```php
+// using UTF-8
+$filter = new Zend\Filter\StringToLower('UTF-8');
+
+// or give an array which can be useful when using a configuration
+$filter = new Zend\Filter\StringToLower(array('encoding' => 'UTF-8'));
+
+// or do this afterwards
+$filter->setEncoding('ISO-8859-1');
+```
+
+> ## Note
+#### Setting wrong encodings
+Be aware that you will get an exception when you want to set an encoding and the mbstring extension
+is not available in your environment.
+Also when you are trying to set an encoding which is not supported by your mbstring extension you
+will get an exception.
+
+## StringToUpper
+
+This filter converts any input to be uppercased.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\StringToUpper`:
+
+- **encoding**: This option can be used to set an encoding which has to be used.
+
+### Basic Usage
+
+This is a basic example for using the `StringToUpper` filter:
+
+```php
+$filter = new Zend\Filter\StringToUpper();
+
+print $filter->filter('Sample');
+// returns "SAMPLE"
+```
+
+### Different Encoded Strings
+
+Like the `StringToLower` filter, this filter handles only characters from the actual locale of your
+server. Using different character sets works the same as with `StringToLower`.
+
+```php
+$filter = new Zend\Filter\StringToUpper(array('encoding' => 'UTF-8'));
+
+// or do this afterwards
+$filter->setEncoding('ISO-8859-1');
+```
+
+## StringTrim
+
+This filter modifies a given string such that certain characters are removed from the beginning and
+end.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\StringTrim`:
+
+- **charlist**: List of characters to remove from the beginning and end of the string. If this is
+not set or is null, the default behavior will be invoked, which is to remove only whitespace from
+the beginning and end of the string.
+
+### Basic Usage
+
+A basic example of usage is below:
+
+```php
+$filter = new Zend\Filter\StringTrim();
+
+print $filter->filter(' This is (my) content: ');
+```
+
+The above example returns 'This is (my) content:'. Notice that the whitespace characters have been
+removed.
+
+### Default Behavior
+
+```php
+$filter = new Zend\Filter\StringTrim(':');
+// or new Zend\Filter\StringTrim(array('charlist' => ':'));
+
+print $filter->filter(' This is (my) content:');
+```
+
+The above example returns 'This is (my) content'. Notice that the whitespace characters and colon
+are removed. You can also provide a Traversable or an array with a 'charlist' key. To set the
+desired character list after instantiation, use the `setCharList()` method. The `getCharList()`
+return the values set for charlist.
+
+## StripNewlines
+
+This filter modifies a given string and removes all new line characters within that string.
+
+### Supported Options
+
+There are no additional options for `Zend\Filter\StripNewlines`:
+
+### Basic Usage
+
+A basic example of usage is below:
+
+```php
+$filter = new Zend\Filter\StripNewlines();
+
+print $filter->filter(' This is (my)``\n\r``content: ');
+```
+
+The above example returns 'This is (my) content:'. Notice that all newline characters have been
+removed.
+
+## StripTags
+
+This filter can strip XML and HTML tags from given content.
+
+> ## Warning
+#### Zend\\Filter\\StripTags is potentially unsecure
+Be warned that Zend\\Filter\\StripTags should only be used to strip all available tags.
+Using Zend\\Filter\\StripTags to make your site secure by stripping some unwanted tags will lead to
+unsecure and dangerous code.
+Zend\\Filter\\StripTags must not be used to prevent XSS attacks. This filter is no replacement for
+using Tidy or HtmlPurifier.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\StripTags`:
+
+- **allowAttribs**: This option sets the attributes which are accepted. All other attributes are
+stripped from the given content.
+- **allowTags**: This option sets the tags which are accepted. All other tags will be stripped from
+the given content.
+
+### Basic Usage
+
+See the following example for the default behaviour of this filter:
+
+```php
+$filter = new Zend\Filter\StripTags();
+
+print $filter->filter('<B>My content</B>');
+```
+
+As result you will get the stripped content 'My content'.
+
+When the content contains broken or partial tags then the complete following content will be erased.
+See the following example:
+
+```php
+$filter = new Zend\Filter\StripTags();
+
+print $filter->filter('This contains <a href="http://example.com">no ending tag');
+```
+
+The above will return 'This contains' with the rest being stripped.
+
+### Allowing Defined Tags
+
+`Zend\Filter\StripTags` allows stripping of all but defined tags. This can be used for example to
+strip all tags but links from a text.
+
+```php
+$filter = new Zend\Filter\StripTags(array('allowTags' => 'a'));
+
+$input  = "A text with <br/> a <a href='link.com'>link</a>";
+print $filter->filter($input);
+```
+
+The above will return 'A text with a &lt;a href='link.com'&gt;link&lt;/a&gt;' as result. It strips
+all tags but the link. By providing an array you can set multiple tags at once.
+
+> ## Warning
+Do not use this feature to get a probably secure content. This component does not replace the use of
+a proper configured html filter.
+
+### Allowing Defined Attributes
+
+It is also possible to strip all but allowed attributes from a tag.
+
+```php
+$filter = new Zend\Filter\StripTags(array('allowTags' => 'img', 'allowAttribs' => 'src'));
+
+$input  = "A text with <br/> a <img src='picture.com' width='100'>picture</img>";
+print $filter->filter($input);
+```
+
+The above will return 'A text with a &lt;img src='picture.com'&gt;picture&lt;/img&gt;' as result. It
+strips all tags but img. Additionally from the img tag all attributes but src will be stripped. By
+providing an array you can set multiple attributes at once.
+
+### Allowing Advanced Defined Tags with Attributes
+
+You can pass the allowed tags with their attributes in a single array to the constructor.
+
+```php
+$allowedElements = array(
+    'img' => array(
+        'src',
+        'width'
+    ),
+    'a' => array(
+        'href'
+    )
+);
+$filter = new Zend\Filter\StripTags($allowedElements);
+
+$input  = "A text with <br/> a <img src='picture.com' width='100'>picture</img> click " .
+          "<a href='http://picture.com/zend' id='hereId'>here</a>!";
+print $filter->filter($input);
+```
+
+The above will return 'A text with a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt;
+click &lt;a href='<http://picture.com/zend>'&gt;here&lt;/a&gt;!' as result.
+
+## UriNormalize
+
+This filter can set a scheme on an URI, if a scheme is not present. If a scheme is present, that
+scheme will not be affected, even if a different scheme is enforced.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\UriNormalize`:
+
+- **defaultScheme**: This option can be used to set the default scheme to use when parsing
+scheme-less URIs.
+- **enforcedScheme**: Set a URI scheme to enforce on schemeless URIs.
+
+### Basic Usage
+
+See the following example for the default behaviour of this filter:
+
+```php
+$filter = new Zend\Filter\UriNormalize(array(
+    'enforcedScheme' => 'https'
+));
+
+echo $filter->filter('www.example.com');
+```
+
+As the result the string `https://www.example.com` will be output.
 
 ## Whitelist
 
