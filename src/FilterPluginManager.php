@@ -87,6 +87,7 @@ class FilterPluginManager extends AbstractPluginManager
         'striptags'                  => 'Zend\Filter\StripTags',
         'toint'                      => 'Zend\Filter\ToInt',
         'tonull'                     => 'Zend\Filter\ToNull',
+        'uppercasewords'             => 'Zend\Filter\UpperCaseWords',
         'urinormalize'               => 'Zend\Filter\UriNormalize',
         'whitelist'                  => 'Zend\Filter\Whitelist',
         'wordcamelcasetodash'        => 'Zend\Filter\Word\CamelCaseToDash',
