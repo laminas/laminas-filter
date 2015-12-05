@@ -11,6 +11,7 @@ namespace Zend\Filter;
 
 use Countable;
 use Traversable;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\PriorityQueue;
 
 class FilterChain extends AbstractFilter implements Countable
@@ -108,7 +109,7 @@ class FilterChain extends AbstractFilter implements Countable
     public function getPluginManager()
     {
         if (!$this->plugins) {
-            $this->setPluginManager(new FilterPluginManager());
+            $this->setPluginManager(new FilterPluginManager(new ServiceManager()));
         }
         return $this->plugins;
     }

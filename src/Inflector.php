@@ -10,6 +10,7 @@
 namespace Zend\Filter;
 
 use Traversable;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -86,7 +87,7 @@ class Inflector extends AbstractFilter
     public function getPluginManager()
     {
         if (!$this->pluginManager instanceof FilterPluginManager) {
-            $this->setPluginManager(new FilterPluginManager());
+            $this->setPluginManager(new FilterPluginManager(new ServiceManager()));
         }
 
         return $this->pluginManager;
