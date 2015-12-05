@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "zendframework/zend-config": "~2.5",
-        "zendframework/zend-crypt": "~2.5",
+        "zendframework/zend-crypt": "dev-develop as 2.7",
         "zendframework/zend-i18n": "~2.5",
         "zendframework/zend-loader": "~2.5",
         "zendframework/zend-servicemanager": "dev-develop as 2.7",
