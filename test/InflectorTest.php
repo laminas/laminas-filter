@@ -191,7 +191,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         $rules = $this->inflector->getRules();
         $this->assertEquals(1, count($rules));
         $this->inflector->setRules([
-            ':controller' => ['PregReplace', 'Alpha'],
+            ':controller' => [PregReplace::class, Alpha::class],
             'suffix'      => 'phtml',
         ]);
         $rules = $this->inflector->getRules();
@@ -206,7 +206,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('ext/intl not enabled');
         }
 
-        $this->inflector->setFilterRule(':controller', ['Alpha', 'StringToLower']);
+        $this->inflector->setFilterRule(':controller', [Alpha::class, StringToLower::class]);
         $this->assertInstanceOf('Zend\Filter\StringToLower', $this->inflector->getRule('controller', 1));
         $this->assertFalse($this->inflector->getRule('controller', 2));
     }
@@ -432,15 +432,15 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
 
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
-        $this->inflector->setFilterRule('controller', 'PregReplace');
+        $this->inflector->setFilterRule('controller', PregReplace::class);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
-        $this->inflector->addFilterRule('controller', ['Alpha', 'StringToLower']);
+        $this->inflector->addFilterRule('controller', [Alpha::class, StringToLower::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(3, count($rules));
-        $this->_context = 'StringToLower';
+        $this->_context = StringToLower::class;
         $this->inflector->setStaticRuleReference('context', $this->_context);
-        $this->inflector->addFilterRule('controller', ['Alpha', 'StringToLower']);
+        $this->inflector->addFilterRule('controller', [Alpha::class, StringToLower::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(5, count($rules));
     }
