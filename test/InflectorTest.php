@@ -16,7 +16,7 @@ use Zend\Filter\StringToLower;
 use Zend\Filter\StringToUpper;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\I18n\Validator\Alpha;
+use Zend\I18n\Filter\Alpha;
 use Zend\ServiceManager\ServiceManager;
 
 /**
