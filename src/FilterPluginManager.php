@@ -9,9 +9,9 @@
 
 namespace Zend\Filter;
 
+use Zend\I18n\Filter\Alnum;
+use Zend\I18n\Filter\Alpha;
 use Zend\I18n\Filter\NumberParse;
-use Zend\I18n\Validator\Alnum;
-use Zend\I18n\Validator\Alpha;
 use Zend\I18n\View\Helper\NumberFormat;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\InvalidServiceException;
