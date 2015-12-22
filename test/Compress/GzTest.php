@@ -16,17 +16,21 @@ use Zend\Filter\Compress\Gz as GzCompression;
  */
 class GzTest extends \PHPUnit_Framework_TestCase
 {
+    public $target;
+
     public function setUp()
     {
         if (!extension_loaded('zlib')) {
             $this->markTestSkipped('This adapter needs the zlib extension');
         }
+
+        $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('zfilter'));
     }
 
     public function tearDown()
     {
-        if (file_exists(__DIR__ . '/../_files/compressed.gz')) {
-            unlink(__DIR__ . '/../_files/compressed.gz');
+        if (file_exists($this->target)) {
+            unlink($this->target);
         }
     }
 
@@ -137,7 +141,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
     public function testGzCompressToFile()
     {
         $filter   = new GzCompression();
-        $archive = __DIR__ . '/../_files/compressed.gz';
+        $archive = $this->target;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');

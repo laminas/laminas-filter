@@ -21,42 +21,42 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      *
      * @var string
      */
-    protected $_filesPath;
+    protected $tmpPath;
 
     /**
      * Original testfile
      *
      * @var string
      */
-    protected $_origFile;
+    protected $origFile;
 
     /**
      * Testfile
      *
      * @var string
      */
-    protected $_oldFile;
+    protected $oldFile;
 
     /**
      * Testfile
      *
      * @var string
      */
-    protected $_newFile;
+    protected $newFile;
 
     /**
      * Testdirectory
      *
      * @var string
      */
-    protected $_newDir;
+    protected $newDir;
 
     /**
      * Testfile in Testdirectory
      *
      * @var string
      */
-    protected $_newDirFile;
+    protected $newDirFile;
 
     /**
      * Sets the path to test files
@@ -65,26 +65,19 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_filesPath  = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
-        $this->_origFile   = $this->_filesPath . 'original.file';
-        $this->_oldFile    = $this->_filesPath . 'testfile.txt';
-        $this->_newFile    = $this->_filesPath . 'newfile.xml';
-        $this->_newDir     = $this->_filesPath . DIRECTORY_SEPARATOR . '_testDir2';
-        $this->_newDirFile = $this->_newDir . DIRECTORY_SEPARATOR . 'testfile.txt';
+        $control = sprintf('%s/_files/testfile.txt', dirname(__DIR__));
+        $this->tmpPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('zfilter'));
+        mkdir($this->tmpPath, 0775, true);
 
-        if (file_exists($this->_origFile)) {
-            unlink($this->_origFile);
-        }
+        $this->oldFile = sprintf('%s%stestfile.txt', $this->tmpPath, DIRECTORY_SEPARATOR);
+        $this->origFile = sprintf('%s%soriginal.file', $this->tmpPath, DIRECTORY_SEPARATOR);
+        $this->newFile = sprintf('%s%snewfile.xml', $this->tmpPath, DIRECTORY_SEPARATOR);
+        $this->newDir = sprintf('%s%stestdir', $this->tmpPath, DIRECTORY_SEPARATOR);
+        $this->newDirFile = sprintf('%s%stestfile.txt', $this->newDir, DIRECTORY_SEPARATOR);
 
-        if (file_exists($this->_newFile)) {
-            unlink($this->_newFile);
-        }
-
-        if (file_exists($this->_newDirFile)) {
-            unlink($this->_newDirFile);
-        }
-
-        copy($this->_oldFile, $this->_origFile);
+        copy($control, $this->oldFile);
+        copy($control, $this->origFile);
+        mkdir($this->newDir, 0775, true);
     }
 
     /**
@@ -94,20 +87,23 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        if (!file_exists($this->_oldFile)) {
-            copy($this->_origFile, $this->_oldFile);
-        }
-
-        if (file_exists($this->_origFile)) {
-            unlink($this->_origFile);
-        }
-
-        if (file_exists($this->_newFile)) {
-            unlink($this->_newFile);
-        }
-
-        if (file_exists($this->_newDirFile)) {
-            unlink($this->_newDirFile);
+        if (is_dir($this->tmpPath)) {
+            if (file_exists($this->oldFile)) {
+                unlink($this->oldFile);
+            }
+            if (file_exists($this->origFile)) {
+                unlink($this->origFile);
+            }
+            if (file_exists($this->newFile)) {
+                unlink($this->newFile);
+            }
+            if (is_dir($this->newDir)) {
+                if (file_exists($this->newDirFile)) {
+                    unlink($this->newDirFile);
+                }
+                rmdir($this->newDir);
+            }
+            rmdir($this->tmpPath);
         }
     }
 
@@ -118,18 +114,18 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructSingleValue()
     {
-        $filter = new FileRename($this->_newFile);
+        $filter = new FileRename($this->newFile);
 
         $this->assertEquals(
             [0 => [
                 'source'    => '*',
-                'target'    => $this->_newFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -140,20 +136,20 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructSingleValueWithFilesArray()
     {
-        $filter = new FileRename($this->_newFile);
+        $filter = new FileRename($this->newFile);
 
         $this->assertEquals(
             [0 => [
                 'source'    => '*',
-                'target'    => $this->_newFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
         $this->assertEquals(
-            ['tmp_name' => $this->_newFile],
-            $filter(['tmp_name' => $this->_oldFile])
+            ['tmp_name' => $this->newFile],
+            $filter(['tmp_name' => $this->oldFile])
         );
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
@@ -166,19 +162,19 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testConstructSingleArray()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile,
-            'target' => $this->_newFile]);
+            'source' => $this->oldFile,
+            'target' => $this->newFile]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -190,8 +186,8 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testConstructFullOptionsArray()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile,
-            'target' => $this->_newFile,
+            'source' => $this->oldFile,
+            'target' => $this->newFile,
             'overwrite' => true,
             'randomize' => false,
             'unknown'   => false
@@ -199,14 +195,14 @@ class RenameTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => true,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -219,19 +215,19 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new FileRename([
             0 => [
-                'source' => $this->_oldFile,
-                'target' => $this->_newFile]]);
+                'source' => $this->oldFile,
+                'target' => $this->newFile]]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -243,18 +239,18 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testConstructTruncatedTarget()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile]);
+            'source' => $this->oldFile]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
+                'source'    => $this->oldFile,
                 'target'    => '*',
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_oldFile, $filter($this->_oldFile));
+        $this->assertEquals($this->oldFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -266,18 +262,18 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testConstructTruncatedSource()
     {
         $filter = new FileRename([
-            'target' => $this->_newFile]);
+            'target' => $this->newFile]);
 
         $this->assertEquals(
             [0 => [
                 'source'    => '*',
-                'target'    => $this->_newFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -288,18 +284,18 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructSingleDirectory()
     {
-        $filter = new FileRename($this->_newDir);
+        $filter = new FileRename($this->newDir);
 
         $this->assertEquals(
             [0 => [
                 'source'    => '*',
-                'target'    => $this->_newDir,
+                'target'    => $this->newDir,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newDirFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -311,19 +307,19 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testConstructSingleArrayDirectory()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile,
-            'target' => $this->_newDir]);
+            'source' => $this->oldFile,
+            'target' => $this->newDir]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newDir,
+                'source'    => $this->oldFile,
+                'target'    => $this->newDir,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newDirFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -336,19 +332,19 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new FileRename([
             0 => [
-                'source' => $this->_oldFile,
-                'target' => $this->_newDir]]);
+                'source' => $this->oldFile,
+                'target' => $this->newDir]]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newDir,
+                'source'    => $this->oldFile,
+                'target'    => $this->newDir,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newDirFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -360,18 +356,18 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testConstructTruncatedSourceDirectory()
     {
         $filter = new FileRename([
-            'target' => $this->_newDir]);
+            'target' => $this->newDir]);
 
         $this->assertEquals(
             [0 => [
                 'source'    => '*',
-                'target'    => $this->_newDir,
+                'target'    => $this->newDir,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newDirFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -381,23 +377,23 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testAddSameFileAgainAndOverwriteExistingTarget()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile,
-            'target' => $this->_newDir]);
+            'source' => $this->oldFile,
+            'target' => $this->newDir]);
 
         $filter->addFile([
-            'source' => $this->_oldFile,
-            'target' => $this->_newFile]);
+            'source' => $this->oldFile,
+            'target' => $this->newFile]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -407,19 +403,20 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testGetNewName()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile,
-            'target' => $this->_newDir]);
+            'source' => $this->oldFile,
+            'target' => $this->newDir,
+        ]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newDir,
+                'source'    => $this->oldFile,
+                'target'    => $this->newDir,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newDirFile, $filter->getNewName($this->_oldFile));
+        $this->assertEquals($this->newDirFile, $filter->getNewName($this->oldFile));
     }
 
     /**
@@ -428,22 +425,22 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testGetNewNameExceptionWithExistingFile()
     {
         $filter = new FileRename([
-            'source' => $this->_oldFile,
-            'target' => $this->_newFile]);
+            'source' => $this->oldFile,
+            'target' => $this->newFile]);
 
-        copy($this->_oldFile, $this->_newFile);
+        copy($this->oldFile, $this->newFile);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
         $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'could not be renamed');
-        $this->assertEquals($this->_newFile, $filter->getNewName($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter->getNewName($this->oldFile));
     }
 
     /**
@@ -452,22 +449,22 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testGetNewNameOverwriteWithExistingFile()
     {
         $filter = new FileRename([
-            'source'    => $this->_oldFile,
-            'target'    => $this->_newFile,
+            'source'    => $this->oldFile,
+            'target'    => $this->newFile,
             'overwrite' => true]);
 
-        copy($this->_oldFile, $this->_newFile);
+        copy($this->oldFile, $this->newFile);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => true,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter->getNewName($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter->getNewName($this->oldFile));
     }
 
     /**
@@ -476,22 +473,22 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testGetRandomizedFile()
     {
         $filter = new FileRename([
-            'source'    => $this->_oldFile,
-            'target'    => $this->_newFile,
+            'source'    => $this->oldFile,
+            'target'    => $this->newFile,
             'randomize' => true
         ]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
-                'target'    => $this->_newFile,
+                'source'    => $this->oldFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => true,
             ]],
             $filter->getFile()
         );
-        $fileNoExt = $this->_filesPath . 'newfile';
-        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}\.xml#', $filter->getNewName($this->_oldFile));
+        $fileNoExt = $this->tmpPath . DIRECTORY_SEPARATOR . 'newfile';
+        $this->assertRegExp('#' . preg_quote($fileNoExt) . '_.{13}\.xml#', $filter->getNewName($this->oldFile));
     }
 
     /**
@@ -499,23 +496,23 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRandomizedFileWithoutExtension()
     {
-        $fileNoExt = $this->_filesPath . 'newfile';
+        $fileNoExt = $this->tmpPath . DIRECTORY_SEPARATOR . 'newfile';
         $filter = new FileRename([
-            'source'    => $this->_oldFile,
+            'source'    => $this->oldFile,
             'target'    => $fileNoExt,
             'randomize' => true
         ]);
 
         $this->assertEquals(
             [0 => [
-                'source'    => $this->_oldFile,
+                'source'    => $this->oldFile,
                 'target'    => $fileNoExt,
                 'overwrite' => false,
                 'randomize' => true,
             ]],
             $filter->getFile()
         );
-        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}#', $filter->getNewName($this->_oldFile));
+        $this->assertRegExp('#' . preg_quote($fileNoExt) . '_.{13}#', $filter->getNewName($this->oldFile));
     }
 
     /**
@@ -523,19 +520,19 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddFileWithString()
     {
-        $filter = new FileRename($this->_oldFile);
-        $filter->addFile($this->_newFile);
+        $filter = new FileRename($this->oldFile);
+        $filter->addFile($this->newFile);
 
         $this->assertEquals(
             [0 => [
                 'source'    => '*',
-                'target'    => $this->_newFile,
+                'target'    => $this->newFile,
                 'overwrite' => false,
                 'randomize' => false,
             ]],
             $filter->getFile()
         );
-        $this->assertEquals($this->_newFile, $filter($this->_oldFile));
+        $this->assertEquals($this->newFile, $filter($this->oldFile));
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 
@@ -544,7 +541,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddFileWithInvalidOption()
     {
-        $filter = new FileRename($this->_oldFile);
+        $filter = new FileRename($this->oldFile);
         $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
         $filter->addFile(1234);
     }
@@ -564,8 +561,8 @@ class RenameTest extends \PHPUnit_Framework_TestCase
             [null],
             [new \stdClass()],
             [[
-                $this->_oldFile,
-                $this->_origFile
+                $this->oldFile,
+                $this->origFile
             ]]
         ];
     }
@@ -576,7 +573,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnUnfiltered($input)
     {
-        $filter = new FileRename($this->_newFile);
+        $filter = new FileRename($this->newFile);
 
         $this->assertEquals($input, $filter($input));
     }

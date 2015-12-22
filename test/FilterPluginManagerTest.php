@@ -10,15 +10,23 @@
 namespace ZendTest\Filter;
 
 use Zend\Filter\FilterPluginManager;
+use Zend\Filter\Word\SeparatorToSeparator;
+use Zend\ServiceManager\Exception\InvalidServiceException;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @group      Zend_Filter
  */
 class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var FilterPluginManager
+     */
+    private $filters;
+
     public function setUp()
     {
-        $this->filters = new FilterPluginManager();
+        $this->filters = new FilterPluginManager(new ServiceManager());
     }
 
     public function testFilterSuccessfullyRetrieved()
@@ -29,14 +37,15 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteringInvalidFilterRaisesException()
     {
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException');
+        $this->setExpectedException(InvalidServiceException::class);
         $this->filters->setService('test', $this);
+        $this->filters->get('test');
     }
 
     public function testLoadingInvalidFilterRaisesException()
     {
         $this->filters->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException');
+        $this->setExpectedException(InvalidServiceException::class);
         $this->filters->get('test');
     }
 
@@ -45,16 +54,19 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilterSuccessfullyConstructed()
     {
-        $search_separator = ';';
-        $replacement_separator = '|';
+        $searchSeparator      = ';';
+        $replacementSeparator = '|';
+
         $options = [
-            'search_separator'      => $search_separator,
-            'replacement_separator' => $replacement_separator,
+            'search_separator'      => $searchSeparator,
+            'replacement_separator' => $replacementSeparator,
         ];
-        $filter = $this->filters->get('wordseparatortoseparator', $options);
-        $this->assertInstanceOf('Zend\Filter\Word\SeparatorToSeparator', $filter);
-        $this->assertEquals(';', $filter->getSearchSeparator());
-        $this->assertEquals('|', $filter->getReplacementSeparator());
+
+        $filter = $this->filters->build('wordseparatortoseparator', $options);
+
+        $this->assertInstanceOf(SeparatorToSeparator::class, $filter);
+        $this->assertEquals($searchSeparator, $filter->getSearchSeparator());
+        $this->assertEquals($replacementSeparator, $filter->getReplacementSeparator());
     }
 
     /**
@@ -69,6 +81,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
                 'replacement_separator' => '|',
             ]
         );
+
         $filterTwo = $this->filters->get(
             'wordseparatortoseparator',
             [

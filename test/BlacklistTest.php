@@ -11,6 +11,7 @@ namespace ZendTest\Filter;
 
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Blacklist as BlacklistFilter;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayObject;
 
 /**
@@ -39,7 +40,7 @@ class BlacklistTest extends \PHPUnit_Framework_TestCase
 
     public function testWithPluginManager()
     {
-        $pluginManager = new FilterPluginManager();
+        $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter = $pluginManager->get('blacklist');
 
         $this->assertInstanceOf('Zend\Filter\Blacklist', $filter);
