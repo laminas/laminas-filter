@@ -9,7 +9,13 @@
 
 namespace Zend\Filter;
 
+use Zend\I18n\Filter\Alnum;
+use Zend\I18n\Filter\Alpha;
+use Zend\I18n\Filter\NumberParse;
+use Zend\I18n\View\Helper\NumberFormat;
 use Zend\ServiceManager\AbstractPluginManager;
+use Zend\ServiceManager\Exception\InvalidServiceException;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Plugin manager implementation for the filter chain.
@@ -21,8 +27,76 @@ use Zend\ServiceManager\AbstractPluginManager;
 class FilterPluginManager extends AbstractPluginManager
 {
     protected $aliases = [
-        'Zend\Filter\Int'            => 'Zend\Filter\ToInt',
-        'Zend\Filter\Null'           => 'Zend\Filter\ToNull',
+
+        // For the future
+        'Int'  => ToInt::class,
+        'Null' => ToNull::class,
+
+        // I18n filters
+        'alnum'                      => Alnum::class,
+        'alpha'                      => Alpha::class,
+        'numberformat'               => NumberFormat::class,
+        'numberparse'                => NumberParse::class,
+
+        // Standard filters
+        'basename'                   => BaseName::class,
+        'blacklist'                  => Blacklist::class,
+        'boolean'                    => Boolean::class,
+        'callback'                   => Callback::class,
+        'compress'                   => Compress::class,
+        'compressbz2'                => Compress\Bz2::class,
+        'compressgz'                 => Compress\Gz::class,
+        'compresslzf'                => Compress\Lzf::class,
+        'compressrar'                => Compress\Rar::class,
+        'compresssnappy'             => Compress\Snappy::class,
+        'compresstar'                => Compress\Tar::class,
+        'compresszip'                => Compress\Zip::class,
+        'dataunitformatter'          => DataUnitFormatter::class,
+        'dateselect'                 => DateSelect::class,
+        'datetimeformatter'          => DateTimeFormatter::class,
+        'datetimeselect'             => DateTimeSelect::class,
+        'decompress'                 => Decompress::class,
+        'decrypt'                    => Decrypt::class,
+        'digits'                     => Digits::class,
+        'dir'                        => Dir::class,
+        'encrypt'                    => Encrypt::class,
+        'encryptblockcipher'         => Encrypt\BlockCipher::class,
+        'encryptopenssl'             => Encrypt\Openssl::class,
+        'filedecrypt'                => File\Decrypt::class,
+        'fileencrypt'                => File\Encrypt::class,
+        'filelowercase'              => File\LowerCase::class,
+        'filerename'                 => File\Rename::class,
+        'filerenameupload'           => File\RenameUpload::class,
+        'fileuppercase'              => File\UpperCase::class,
+        'htmlentities'               => HtmlEntities::class,
+        'inflector'                  => Inflector::class,
+        'int'                        => ToInt::class,
+        'monthselect'                => MonthSelect::class,
+        'null'                       => ToNull::class,
+
+        'pregreplace'                => PregReplace::class,
+        'realpath'                   => RealPath::class,
+        'stringtolower'              => StringToLower::class,
+        'stringtoupper'              => StringToUpper::class,
+        'stringtrim'                 => StringTrim::class,
+        'stripnewlines'              => StripNewlines::class,
+        'striptags'                  => StripTags::class,
+        'toint'                      => ToInt::class,
+        'tonull'                     => ToNull::class,
+        'urinormalize'               => UriNormalize::class,
+        'whitelist'                  => Whitelist::class,
+        'wordcamelcasetodash'        => Word\CamelCaseToDash::class,
+        'wordcamelcasetoseparator'   => Word\CamelCaseToSeparator::class,
+        'wordcamelcasetounderscore'  => Word\CamelCaseToUnderscore::class,
+        'worddashtocamelcase'        => Word\DashToCamelCase::class,
+        'worddashtoseparator'        => Word\DashToSeparator::class,
+        'worddashtounderscore'       => Word\DashToUnderscore::class,
+        'wordseparatortocamelcase'   => Word\SeparatorToCamelCase::class,
+        'wordseparatortodash'        => Word\SeparatorToDash::class,
+        'wordunderscoretocamelcase'  => Word\UnderscoreToCamelCase::class,
+        'wordunderscoretostudlycase' => Word\UnderscoreToStudlyCase::class,
+        'wordunderscoretodash'       => Word\UnderscoreToDash::class,
+        'wordunderscoretoseparator'  => Word\UnderscoreToSeparator::class,
     ];
 
     /**
@@ -31,107 +105,94 @@ class FilterPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $factories = [
-        'wordseparatortoseparator' => 'Zend\Filter\Word\Service\SeparatorToSeparatorFactory',
+        'wordseparatortoseparator' => Word\Service\SeparatorToSeparatorFactory::class,
+
+        // For the future
+        ToInt::class               => InvokableFactory::class,
+        ToNull::class              => InvokableFactory::class,
+
+        // I18n filters
+        Alnum::class               => InvokableFactory::class,
+        Alpha::class               => InvokableFactory::class,
+        NumberFormat::class        => InvokableFactory::class,
+        NumberParse::class         => InvokableFactory::class,
+
+        // Standard filters
+        BaseName::class                    => InvokableFactory::class,
+        Blacklist::class                   => InvokableFactory::class,
+        Boolean::class                     => InvokableFactory::class,
+        Callback::class                    => InvokableFactory::class,
+        Compress::class                    => InvokableFactory::class,
+        Compress\Bz2::class                => InvokableFactory::class,
+        Compress\Gz::class                 => InvokableFactory::class,
+        Compress\Lzf::class                => InvokableFactory::class,
+        Compress\Rar::class                => InvokableFactory::class,
+        Compress\Snappy::class             => InvokableFactory::class,
+        Compress\Tar::class                => InvokableFactory::class,
+        Compress\Zip::class                => InvokableFactory::class,
+        DataUnitFormatter::class           => InvokableFactory::class,
+        DateSelect::class                  => InvokableFactory::class,
+        DateTimeFormatter::class           => InvokableFactory::class,
+        DateTimeSelect::class              => InvokableFactory::class,
+        Decompress::class                  => InvokableFactory::class,
+        Decrypt::class                     => InvokableFactory::class,
+        Digits::class                      => InvokableFactory::class,
+        Dir::class                         => InvokableFactory::class,
+        Encrypt::class                     => InvokableFactory::class,
+        Encrypt\BlockCipher::class         => InvokableFactory::class,
+        Encrypt\Openssl::class             => InvokableFactory::class,
+        File\Decrypt::class                => InvokableFactory::class,
+        File\Encrypt::class                => InvokableFactory::class,
+        File\LowerCase::class              => InvokableFactory::class,
+        File\Rename::class                 => InvokableFactory::class,
+        File\RenameUpload::class           => InvokableFactory::class,
+        File\UpperCase::class              => InvokableFactory::class,
+        HtmlEntities::class                => InvokableFactory::class,
+        Inflector::class                   => InvokableFactory::class,
+        ToInt::class                       => InvokableFactory::class,
+        MonthSelect::class                 => InvokableFactory::class,
+        ToNull::class                      => InvokableFactory::class,
+        PregReplace::class                 => InvokableFactory::class,
+        RealPath::class                    => InvokableFactory::class,
+        StringToLower::class               => InvokableFactory::class,
+        StringToUpper::class               => InvokableFactory::class,
+        StringTrim::class                  => InvokableFactory::class,
+        StripNewlines::class               => InvokableFactory::class,
+        StripTags::class                   => InvokableFactory::class,
+        ToInt::class                       => InvokableFactory::class,
+        ToNull::class                      => InvokableFactory::class,
+        UriNormalize::class                => InvokableFactory::class,
+        Whitelist::class                   => InvokableFactory::class,
+        Word\CamelCaseToDash::class        => InvokableFactory::class,
+        Word\CamelCaseToSeparator::class   => InvokableFactory::class,
+        Word\CamelCaseToUnderscore::class  => InvokableFactory::class,
+        Word\DashToCamelCase::class        => InvokableFactory::class,
+        Word\DashToSeparator::class        => InvokableFactory::class,
+        Word\DashToUnderscore::class       => InvokableFactory::class,
+        Word\SeparatorToCamelCase::class   => InvokableFactory::class,
+        Word\SeparatorToDash::class        => InvokableFactory::class,
+        Word\UnderscoreToCamelCase::class  => InvokableFactory::class,
+        Word\UnderscoreToStudlyCase::class => InvokableFactory::class,
+        Word\UnderscoreToDash::class       => InvokableFactory::class,
+        Word\UnderscoreToSeparator::class  => InvokableFactory::class,
     ];
 
     /**
-     * Default set of filters
-     *
-     * @var array
+     * {@inheritdoc}
      */
-    protected $invokableClasses = [
-        'alnum'                      => 'Zend\I18n\Filter\Alnum',
-        'alpha'                      => 'Zend\I18n\Filter\Alpha',
-        'basename'                   => 'Zend\Filter\BaseName',
-        'blacklist'                  => 'Zend\Filter\Blacklist',
-        'boolean'                    => 'Zend\Filter\Boolean',
-        'callback'                   => 'Zend\Filter\Callback',
-        'compress'                   => 'Zend\Filter\Compress',
-        'compressbz2'                => 'Zend\Filter\Compress\Bz2',
-        'compressgz'                 => 'Zend\Filter\Compress\Gz',
-        'compresslzf'                => 'Zend\Filter\Compress\Lzf',
-        'compressrar'                => 'Zend\Filter\Compress\Rar',
-        'compresssnappy'             => 'Zend\Filter\Compress\Snappy',
-        'compresstar'                => 'Zend\Filter\Compress\Tar',
-        'compresszip'                => 'Zend\Filter\Compress\Zip',
-        'dataunitformatter'          => 'Zend\Filter\DataUnitFormatter',
-        'dateselect'                 => 'Zend\Filter\DateSelect',
-        'datetimeformatter'          => 'Zend\Filter\DateTimeFormatter',
-        'datetimeselect'             => 'Zend\Filter\DateTimeSelect',
-        'decompress'                 => 'Zend\Filter\Decompress',
-        'decrypt'                    => 'Zend\Filter\Decrypt',
-        'digits'                     => 'Zend\Filter\Digits',
-        'dir'                        => 'Zend\Filter\Dir',
-        'encrypt'                    => 'Zend\Filter\Encrypt',
-        'encryptblockcipher'         => 'Zend\Filter\Encrypt\BlockCipher',
-        'encryptopenssl'             => 'Zend\Filter\Encrypt\Openssl',
-        'filedecrypt'                => 'Zend\Filter\File\Decrypt',
-        'fileencrypt'                => 'Zend\Filter\File\Encrypt',
-        'filelowercase'              => 'Zend\Filter\File\LowerCase',
-        'filerename'                 => 'Zend\Filter\File\Rename',
-        'filerenameupload'           => 'Zend\Filter\File\RenameUpload',
-        'fileuppercase'              => 'Zend\Filter\File\UpperCase',
-        'htmlentities'               => 'Zend\Filter\HtmlEntities',
-        'inflector'                  => 'Zend\Filter\Inflector',
-        'int'                        => 'Zend\Filter\ToInt',
-        'monthselect'                => 'Zend\Filter\MonthSelect',
-        'null'                       => 'Zend\Filter\ToNull',
-        'numberformat'               => 'Zend\I18n\Filter\NumberFormat',
-        'numberparse'                => 'Zend\I18n\Filter\NumberParse',
-        'pregreplace'                => 'Zend\Filter\PregReplace',
-        'realpath'                   => 'Zend\Filter\RealPath',
-        'stringtolower'              => 'Zend\Filter\StringToLower',
-        'stringtoupper'              => 'Zend\Filter\StringToUpper',
-        'stringtrim'                 => 'Zend\Filter\StringTrim',
-        'stripnewlines'              => 'Zend\Filter\StripNewlines',
-        'striptags'                  => 'Zend\Filter\StripTags',
-        'toint'                      => 'Zend\Filter\ToInt',
-        'tonull'                     => 'Zend\Filter\ToNull',
-        'urinormalize'               => 'Zend\Filter\UriNormalize',
-        'whitelist'                  => 'Zend\Filter\Whitelist',
-        'wordcamelcasetodash'        => 'Zend\Filter\Word\CamelCaseToDash',
-        'wordcamelcasetoseparator'   => 'Zend\Filter\Word\CamelCaseToSeparator',
-        'wordcamelcasetounderscore'  => 'Zend\Filter\Word\CamelCaseToUnderscore',
-        'worddashtocamelcase'        => 'Zend\Filter\Word\DashToCamelCase',
-        'worddashtoseparator'        => 'Zend\Filter\Word\DashToSeparator',
-        'worddashtounderscore'       => 'Zend\Filter\Word\DashToUnderscore',
-        'wordseparatortocamelcase'   => 'Zend\Filter\Word\SeparatorToCamelCase',
-        'wordseparatortodash'        => 'Zend\Filter\Word\SeparatorToDash',
-        'wordunderscoretocamelcase'  => 'Zend\Filter\Word\UnderscoreToCamelCase',
-        'wordunderscoretostudlycase' => 'Zend\Filter\Word\UnderscoreToStudlyCase',
-        'wordunderscoretodash'       => 'Zend\Filter\Word\UnderscoreToDash',
-        'wordunderscoretoseparator'  => 'Zend\Filter\Word\UnderscoreToSeparator',
-    ];
-
-    /**
-     * Whether or not to share by default; default to false
-     *
-     * @var bool
-     */
-    protected $shareByDefault = false;
-
-    /**
-     * Validate the plugin
-     *
-     * Checks that the filter loaded is either a valid callback or an instance
-     * of FilterInterface.
-     *
-     * @param  mixed $plugin
-     * @return void
-     * @throws Exception\RuntimeException if invalid
-     */
-    public function validatePlugin($plugin)
+    public function validate($plugin)
     {
         if ($plugin instanceof FilterInterface) {
             // we're okay
             return;
         }
+
         if (is_callable($plugin)) {
             // also okay
             return;
         }
 
-        throw new Exception\RuntimeException(sprintf(
+        throw new InvalidServiceException(sprintf(
             'Plugin of type %s is invalid; must implement %s\FilterInterface or be callable',
             (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
             __NAMESPACE__
