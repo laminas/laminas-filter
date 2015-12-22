@@ -16,26 +16,14 @@ use Zend\Filter\File\LowerCase as FileLowerCase;
  */
 class LowerCaseTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Path to test files
-     *
-     * @var string
-     */
-    protected $_filesPath;
-
-    /**
-     * Original testfile
-     *
-     * @var string
-     */
-    protected $_origFile;
+    protected $testDir;
 
     /**
      * Testfile
      *
      * @var string
      */
-    protected $_newFile;
+    protected $testFile;
 
     /**
      * Sets the path to test files
@@ -44,13 +32,10 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
-        $this->_origFile  = $this->_filesPath . 'testfile2.txt';
-        $this->_newFile   = $this->_filesPath . 'newtestfile2.txt';
-
-        if (!file_exists($this->_newFile)) {
-            copy($this->_origFile, $this->_newFile);
-        }
+        $source = dirname(__DIR__) . '/_files/testfile2.txt';
+        $this->testDir = sys_get_temp_dir();
+        $this->testFile = sprintf('%s/%s.txt', $this->testDir, uniqid('zfilter'));
+        copy($source, $this->testFile);
     }
 
     /**
@@ -60,8 +45,8 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        if (file_exists($this->_newFile)) {
-            unlink($this->_newFile);
+        if (file_exists($this->testFile)) {
+            unlink($this->testFile);
         }
     }
 
@@ -70,10 +55,10 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceCreationAndNormalWorkflow()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         $filter = new FileLowerCase();
-        $filter($this->_newFile);
-        $this->assertContains('this is a file', file_get_contents($this->_newFile));
+        $filter($this->testFile);
+        $this->assertContains('this is a file', file_get_contents($this->testFile));
     }
 
     /**
@@ -81,10 +66,10 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testNormalWorkflowWithFilesArray()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         $filter = new FileLowerCase();
-        $filter(['tmp_name' => $this->_newFile]);
-        $this->assertContains('this is a file', file_get_contents($this->_newFile));
+        $filter(['tmp_name' => $this->testFile]);
+        $this->assertContains('this is a file', file_get_contents($this->testFile));
     }
 
     /**
@@ -94,7 +79,7 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
         $filter = new FileLowerCase();
-        $filter($this->_newFile . 'unknown');
+        $filter($this->testFile . 'unknown');
     }
 
     /**
@@ -102,11 +87,11 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckSettingOfEncodingInIstance()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileLowerCase('ISO-8859-1');
-            $filter($this->_newFile);
-            $this->assertContains('this is a file', file_get_contents($this->_newFile));
+            $filter($this->testFile);
+            $this->assertContains('this is a file', file_get_contents($this->testFile));
         } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
@@ -117,12 +102,12 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckSettingOfEncodingWithMethod()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileLowerCase();
             $filter->setEncoding('ISO-8859-1');
-            $filter($this->_newFile);
-            $this->assertContains('this is a file', file_get_contents($this->_newFile));
+            $filter($this->testFile);
+            $this->assertContains('this is a file', file_get_contents($this->testFile));
         } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
@@ -134,8 +119,8 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
             [null],
             [new \stdClass()],
             [[
-                dirname(__DIR__).'/_files/nofile.txt',
-                dirname(__DIR__).'/_files/nofile2.txt'
+                sprintf('%s/%s.txt', $this->testDir, uniqid()),
+                sprintf('%s/%s.txt', $this->testDir, uniqid()),
             ]]
         ];
     }

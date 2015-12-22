@@ -17,25 +17,11 @@ use Zend\Filter\File\UpperCase as FileUpperCase;
 class UpperCaseTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Path to test files
-     *
-     * @var string
-     */
-    protected $_filesPath;
-
-    /**
-     * Original testfile
-     *
-     * @var string
-     */
-    protected $_origFile;
-
-    /**
      * Testfile
      *
      * @var string
      */
-    protected $_newFile;
+    protected $testFile;
 
     /**
      * Sets the path to test files
@@ -44,13 +30,11 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
-        $this->_origFile  = $this->_filesPath . 'testfile2.txt';
-        $this->_newFile   = $this->_filesPath . 'newtestfile2.txt';
+        $filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
+        $origFile  = $filesPath . 'testfile2.txt';
+        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('zfilter'));
 
-        if (!file_exists($this->_newFile)) {
-            copy($this->_origFile, $this->_newFile);
-        }
+        copy($origFile, $this->testFile);
     }
 
     /**
@@ -60,8 +44,8 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        if (file_exists($this->_newFile)) {
-            unlink($this->_newFile);
+        if (file_exists($this->testFile)) {
+            unlink($this->testFile);
         }
     }
 
@@ -70,10 +54,10 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceCreationAndNormalWorkflow()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         $filter = new FileUpperCase();
-        $filter($this->_newFile);
-        $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
+        $filter($this->testFile);
+        $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
     }
 
     /**
@@ -81,10 +65,10 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testNormalWorkflowWithFilesArray()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         $filter = new FileUpperCase();
-        $filter(['tmp_name' => $this->_newFile]);
-        $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
+        $filter(['tmp_name' => $this->testFile]);
+        $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
     }
 
     /**
@@ -94,7 +78,7 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new FileUpperCase();
         $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
-        $filter($this->_newFile . 'unknown');
+        $filter($this->testFile . 'unknown');
     }
 
     /**
@@ -102,11 +86,11 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckSettingOfEncodingInIstance()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileUpperCase('ISO-8859-1');
-            $filter($this->_newFile);
-            $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
+            $filter($this->testFile);
+            $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
         } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
@@ -117,12 +101,12 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckSettingOfEncodingWithMethod()
     {
-        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        $this->assertContains('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileUpperCase();
             $filter->setEncoding('ISO-8859-1');
-            $filter($this->_newFile);
-            $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
+            $filter($this->testFile);
+            $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
         } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
@@ -134,7 +118,7 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
             [null],
             [new \stdClass()],
             [[
-                $this->_newFile,
+                $this->testFile,
                 'something invalid'
             ]]
         ];

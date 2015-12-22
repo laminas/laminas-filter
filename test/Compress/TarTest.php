@@ -17,6 +17,8 @@ use Zend\Loader\StandardAutoloader;
  */
 class TarTest extends \PHPUnit_Framework_TestCase
 {
+    public $tmp;
+
     public function setUp()
     {
         if (!class_exists('Archive_Tar')) {
@@ -27,52 +29,25 @@ class TarTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $files = [
-            dirname(__DIR__) . '/_files/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress/First/Second/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress/First/Second',
-            dirname(__DIR__) . '/_files/_compress/Compress/First/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress/First',
-            dirname(__DIR__) . '/_files/_compress/Compress/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress',
-            dirname(__DIR__) . '/_files/_compress/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress',
-            dirname(__DIR__) . '/_files/compressed.tar'
-        ];
-
-        foreach ($files as $file) {
-            if (file_exists($file)) {
-                if (is_dir($file)) {
-                    rmdir($file);
-                } else {
-                    unlink($file);
-                }
-            }
-        }
-
-        if (!file_exists(dirname(__DIR__) . '/_files/Compress/First/Second')) {
-            mkdir(dirname(__DIR__) . '/_files/Compress/First/Second', 0777, true);
-            file_put_contents(dirname(__DIR__) . '/_files/Compress/First/Second/zipextracted.txt', 'compress me');
-            file_put_contents(dirname(__DIR__) . '/_files/Compress/First/zipextracted.txt', 'compress me');
-            file_put_contents(dirname(__DIR__) . '/_files/Compress/zipextracted.txt', 'compress me');
-        }
+        $this->tmp = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        mkdir($this->tmp, 0775, true);
     }
 
     public function tearDown()
     {
         $files = [
-            dirname(__DIR__) . '/_files/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress/First/Second/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress/First/Second',
-            dirname(__DIR__) . '/_files/_compress/Compress/First/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress/First',
-            dirname(__DIR__) . '/_files/_compress/Compress/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress/Compress',
-            dirname(__DIR__) . '/_files/_compress/zipextracted.txt',
-            dirname(__DIR__) . '/_files/_compress',
-            dirname(__DIR__) . '/_files/compressed.tar',
-            dirname(__DIR__) . '/_files/compressed.tar.gz',
-            dirname(__DIR__) . '/_files/compressed.tar.bz2'
+            $this->tmp . '/zipextracted.txt',
+            $this->tmp . '/_compress/Compress/First/Second/zipextracted.txt',
+            $this->tmp . '/_compress/Compress/First/Second',
+            $this->tmp . '/_compress/Compress/First/zipextracted.txt',
+            $this->tmp . '/_compress/Compress/First',
+            $this->tmp . '/_compress/Compress/zipextracted.txt',
+            $this->tmp . '/_compress/Compress',
+            $this->tmp . '/_compress/zipextracted.txt',
+            $this->tmp . '/_compress',
+            $this->tmp . '/compressed.tar',
+            $this->tmp . '/compressed.tar.gz',
+            $this->tmp . '/compressed.tar.bz2'
         ];
 
         foreach ($files as $file) {
@@ -83,13 +58,6 @@ class TarTest extends \PHPUnit_Framework_TestCase
                     unlink($file);
                 }
             }
-        }
-
-        if (!file_exists(dirname(__DIR__) . '/_files/Compress/First/Second')) {
-            mkdir(dirname(__DIR__) . '/_files/Compress/First/Second', 0777, true);
-            file_put_contents(dirname(__DIR__) . '/_files/Compress/First/Second/zipextracted.txt', 'compress me');
-            file_put_contents(dirname(__DIR__) . '/_files/Compress/First/zipextracted.txt', 'compress me');
-            file_put_contents(dirname(__DIR__) . '/_files/Compress/zipextracted.txt', 'compress me');
         }
     }
 
@@ -102,18 +70,20 @@ class TarTest extends \PHPUnit_Framework_TestCase
     {
         $filter  = new TarCompression(
             [
-                'archive'  => dirname(__DIR__) . '/_files/compressed.tar',
-                'target'   => dirname(__DIR__) . '/_files/zipextracted.txt'
+                'archive'  => $this->tmp . '/compressed.tar',
+                'target'   => $this->tmp . '/zipextracted.txt'
             ]
         );
 
         $content = $filter->compress('compress me');
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files'
-                            . DIRECTORY_SEPARATOR . 'compressed.tar', $content);
+        $this->assertEquals(
+            $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
+            $content
+        );
 
         $content = $filter->decompress($content);
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR, $content);
-        $content = file_get_contents(dirname(__DIR__) . '/_files/zipextracted.txt');
+        $this->assertEquals($this->tmp  . DIRECTORY_SEPARATOR, $content);
+        $content = file_get_contents($this->tmp . '/zipextracted.txt');
         $this->assertEquals('compress me', $content);
     }
 
@@ -183,19 +153,21 @@ class TarTest extends \PHPUnit_Framework_TestCase
     {
         $filter  = new TarCompression(
             [
-                'archive'  => dirname(__DIR__) . '/_files/compressed.tar',
-                'target'   => dirname(__DIR__) . '/_files/zipextracted.txt'
+                'archive'  => $this->tmp . '/compressed.tar',
+                'target'   => $this->tmp . '/zipextracted.txt'
             ]
         );
-        file_put_contents(dirname(__DIR__) . '/_files/zipextracted.txt', 'compress me');
+        file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
 
-        $content = $filter->compress(dirname(__DIR__) . '/_files/zipextracted.txt');
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files'
-                            . DIRECTORY_SEPARATOR . 'compressed.tar', $content);
+        $content = $filter->compress($this->tmp . '/zipextracted.txt');
+        $this->assertEquals(
+            $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
+            $content
+        );
 
         $content = $filter->decompress($content);
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR, $content);
-        $content = file_get_contents(dirname(__DIR__) . '/_files/zipextracted.txt');
+        $this->assertEquals($this->tmp . DIRECTORY_SEPARATOR, $content);
+        $content = file_get_contents($this->tmp . '/zipextracted.txt');
         $this->assertEquals('compress me', $content);
     }
 
@@ -208,22 +180,27 @@ class TarTest extends \PHPUnit_Framework_TestCase
     {
         $filter  = new TarCompression(
             [
-                'archive'  => dirname(__DIR__) . '/_files/compressed.tar',
-                'target'   => dirname(__DIR__) . '/_files/_compress'
+                'archive'  => $this->tmp . '/compressed.tar',
+                'target'   => $this->tmp . '/_compress'
             ]
         );
         $content = $filter->compress(dirname(__DIR__) . '/_files/Compress');
-        $this->assertEquals(dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files'
-                            . DIRECTORY_SEPARATOR . 'compressed.tar', $content);
+        $this->assertEquals(
+            $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
+            $content
+        );
     }
 
     public function testSetModeShouldWorkWithCaseInsensitive()
     {
         $filter = new TarCompression;
-        $filter->setTarget(dirname(__DIR__).'/_files/zipextracted.txt');
+        $filter->setTarget($this->tmp . '/zipextracted.txt');
 
         foreach (['GZ', 'Bz2'] as $mode) {
-            $archive = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'compressed.tar.'.strtolower($mode);
+            $archive = implode(DIRECTORY_SEPARATOR, [
+                $this->tmp,
+                'compressed.tar.',
+            ]) . strtolower($mode);
             $filter->setArchive($archive);
             $filter->setMode($mode);
             $content = $filter->compress('compress me');

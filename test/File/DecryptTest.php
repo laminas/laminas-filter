@@ -17,29 +17,34 @@ use Zend\Filter\File\Encrypt as FileEncrypt;
  */
 class DecryptTest extends \PHPUnit_Framework_TestCase
 {
+    public $fileToEncrypt;
+
+    public $tmpDir;
+
     public function setUp()
     {
         if (!extension_loaded('mcrypt')) {
             $this->markTestSkipped('This filter needs the mcrypt extension');
         }
 
-        if (file_exists(dirname(__DIR__).'/_files/newencryption.txt')) {
-            unlink(dirname(__DIR__).'/_files/newencryption.txt');
-        }
+        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        mkdir($this->tmpDir, 0775, true);
 
-        if (file_exists(dirname(__DIR__).'/_files/newencryption2.txt')) {
-            unlink(dirname(__DIR__).'/_files/newencryption2.txt');
-        }
+        $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
     }
 
     public function tearDown()
     {
-        if (file_exists(dirname(__DIR__).'/_files/newencryption.txt')) {
-            unlink(dirname(__DIR__).'/_files/newencryption.txt');
-        }
+        if (is_dir($this->tmpDir)) {
+            if (file_exists($this->tmpDir . '/newencryption.txt')) {
+                unlink($this->tmpDir . '/newencryption.txt');
+            }
 
-        if (file_exists(dirname(__DIR__).'/_files/newencryption2.txt')) {
-            unlink(dirname(__DIR__).'/_files/newencryption2.txt');
+            if (file_exists($this->tmpDir . '/newencryption2.txt')) {
+                unlink($this->tmpDir . '/newencryption2.txt');
+            }
+
+            rmdir($this->tmpDir);
         }
     }
 
@@ -51,57 +56,66 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $filter = new FileEncrypt();
-        $filter->setFilename(dirname(__DIR__).'/_files/newencryption.txt');
+        $filter->setFilename($this->tmpDir . '/newencryption.txt');
 
         $this->assertEquals(
-            dirname(__DIR__).'/_files/newencryption.txt',
-            $filter->getFilename());
+            $this->tmpDir . '/newencryption.txt',
+            $filter->getFilename()
+        );
 
         $filter->setKey('1234567890123456');
-        $filter->filter(dirname(__DIR__).'/_files/encryption.txt');
+        $filter->filter($this->fileToEncrypt);
 
         $filter = new FileDecrypt();
 
         $this->assertNotEquals(
             'Encryption',
-            file_get_contents(dirname(__DIR__).'/_files/newencryption.txt'));
+            file_get_contents($this->tmpDir . '/newencryption.txt')
+        );
 
         $filter->setKey('1234567890123456');
         $this->assertEquals(
-            dirname(__DIR__).'/_files/newencryption.txt',
-            $filter->filter(dirname(__DIR__).'/_files/newencryption.txt'));
+            $this->tmpDir . '/newencryption.txt',
+            $filter->filter($this->tmpDir . '/newencryption.txt')
+        );
 
         $this->assertEquals(
             'Encryption',
-            trim(file_get_contents(dirname(__DIR__).'/_files/newencryption.txt')));
+            trim(file_get_contents($this->tmpDir . '/newencryption.txt'))
+        );
     }
 
     public function testEncryptionWithDecryption()
     {
         $filter = new FileEncrypt();
-        $filter->setFilename(dirname(__DIR__).'/_files/newencryption.txt');
+        $filter->setFilename($this->tmpDir . '/newencryption.txt');
         $filter->setKey('1234567890123456');
-        $this->assertEquals(dirname(__DIR__).'/_files/newencryption.txt',
-            $filter->filter(dirname(__DIR__).'/_files/encryption.txt'));
+        $this->assertEquals(
+            $this->tmpDir . '/newencryption.txt',
+            $filter->filter($this->fileToEncrypt)
+        );
 
         $this->assertNotEquals(
             'Encryption',
-            file_get_contents(dirname(__DIR__).'/_files/newencryption.txt'));
+            file_get_contents($this->tmpDir . '/newencryption.txt')
+        );
 
         $filter = new FileDecrypt();
-        $filter->setFilename(dirname(__DIR__).'/_files/newencryption2.txt');
+        $filter->setFilename($this->tmpDir . '/newencryption2.txt');
 
         $this->assertEquals(
-            dirname(__DIR__).'/_files/newencryption2.txt',
-            $filter->getFilename());
+            $this->tmpDir . '/newencryption2.txt',
+            $filter->getFilename()
+        );
 
         $filter->setKey('1234567890123456');
-        $input = $filter->filter(dirname(__DIR__).'/_files/newencryption.txt');
-        $this->assertEquals(dirname(__DIR__).'/_files/newencryption2.txt', $input);
+        $input = $filter->filter($this->tmpDir . '/newencryption.txt');
+        $this->assertEquals($this->tmpDir . '/newencryption2.txt', $input);
 
         $this->assertEquals(
             'Encryption',
-            trim(file_get_contents(dirname(__DIR__).'/_files/newencryption2.txt')));
+            trim(file_get_contents($this->tmpDir . '/newencryption2.txt'))
+        );
     }
 
     /**
@@ -113,7 +127,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
         $filter->setVector('1234567890123456');
 
         $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
-        $filter->filter(dirname(__DIR__).'/_files/nofile.txt');
+        $filter->filter($this->tmpDir . '/nofile.txt');
     }
 
     public function returnUnfilteredDataProvider()
@@ -122,8 +136,8 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
             [null],
             [new \stdClass()],
             [[
-                dirname(__DIR__).'/_files/nofile.txt',
-                dirname(__DIR__).'/_files/nofile2.txt'
+                $this->tmpDir . '/nofile.txt',
+                $this->tmpDir . '/nofile2.txt'
             ]]
         ];
     }

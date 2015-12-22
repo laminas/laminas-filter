@@ -16,17 +16,25 @@ use Zend\Filter\Decompress as DecompressFilter;
  */
 class DecompressTest extends \PHPUnit_Framework_TestCase
 {
+    public $tmpDir;
+
     public function setUp()
     {
         if (!extension_loaded('bz2')) {
             $this->markTestSkipped('This filter is tested with the bz2 extension');
         }
+
+        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        mkdir($this->tmpDir, 0775, true);
     }
 
     public function tearDown()
     {
-        if (file_exists(__DIR__ . '/_files/compressed.bz2')) {
-            unlink(__DIR__ . '/_files/compressed.bz2');
+        if (is_dir($this->tmpDir)) {
+            if (file_exists($this->tmpDir . '/compressed.bz2')) {
+                unlink($this->tmpDir . '/compressed.bz2');
+            }
+            rmdir($this->tmpDir);
         }
     }
 
@@ -54,8 +62,8 @@ class DecompressTest extends \PHPUnit_Framework_TestCase
      */
     public function testCompressToFile()
     {
-        $filter   = new DecompressFilter('bz2');
-        $archive = __DIR__ . '/_files/compressed.bz2';
+        $filter  = new DecompressFilter('bz2');
+        $archive = $this->tmpDir . '/compressed.bz2';
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
@@ -78,8 +86,8 @@ class DecompressTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecompressArchive()
     {
-        $filter   = new DecompressFilter('bz2');
-        $archive = __DIR__ . '/_files/compressed.bz2';
+        $filter  = new DecompressFilter('bz2');
+        $archive = $this->tmpDir . '/compressed.bz2';
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
@@ -92,8 +100,8 @@ class DecompressTest extends \PHPUnit_Framework_TestCase
 
     public function testFilterMethodProxiesToDecompress()
     {
-        $filter   = new DecompressFilter('bz2');
-        $archive = __DIR__ . '/_files/compressed.bz2';
+        $filter  = new DecompressFilter('bz2');
+        $archive = $this->tmpDir . '/compressed.bz2';
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
