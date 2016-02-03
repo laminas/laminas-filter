@@ -9,6 +9,7 @@
 
 namespace ZendTest\Filter;
 
+use Zend\Filter\Exception\RuntimeException;
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Word\SeparatorToSeparator;
 use Zend\ServiceManager\Exception\InvalidServiceException;
@@ -37,7 +38,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteringInvalidFilterRaisesException()
     {
-        $this->setExpectedException(InvalidServiceException::class);
+        $this->setExpectedException($this->getInvalidServiceException());
         $this->filters->setService('test', $this);
         $this->filters->get('test');
     }
@@ -45,7 +46,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
     public function testLoadingInvalidFilterRaisesException()
     {
         $this->filters->setInvokableClass('test', get_class($this));
-        $this->setExpectedException(InvalidServiceException::class);
+        $this->setExpectedException($this->getInvalidServiceException());
         $this->filters->get('test');
     }
 
@@ -62,7 +63,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
             'replacement_separator' => $replacementSeparator,
         ];
 
-        $filter = $this->filters->build('wordseparatortoseparator', $options);
+        $filter = $this->filters->get('wordseparatortoseparator', $options);
 
         $this->assertInstanceOf(SeparatorToSeparator::class, $filter);
         $this->assertEquals($searchSeparator, $filter->getSearchSeparator());
@@ -91,5 +92,14 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertNotEquals($filterOne, $filterTwo);
+    }
+
+
+    protected function getInvalidServiceException()
+    {
+        if (method_exists($this->filters, 'configure')) {
+            return InvalidServiceException::class;
+        }
+        return RuntimeException::class;
     }
 }
