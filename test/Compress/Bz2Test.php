@@ -16,17 +16,21 @@ use Zend\Filter\Compress\Bz2 as Bz2Compression;
  */
 class Bz2Test extends \PHPUnit_Framework_TestCase
 {
+    public $target;
+
     public function setUp()
     {
         if (!extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
         }
+
+        $this->target = sprintf('%s/%s.bz2', sys_get_temp_dir(), uniqid('zfilter'));
     }
 
     public function tearDown()
     {
-        if (file_exists(__DIR__ . '/../_files/compressed.bz2')) {
-            unlink(__DIR__ . '/../_files/compressed.bz2');
+        if (file_exists($this->target)) {
+            unlink($this->target);
         }
     }
 
@@ -119,7 +123,7 @@ class Bz2Test extends \PHPUnit_Framework_TestCase
     public function testBz2CompressToFile()
     {
         $filter   = new Bz2Compression();
-        $archive = __DIR__ . '/../_files/compressed.bz2';
+        $archive = $this->target;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
@@ -154,7 +158,7 @@ class Bz2Test extends \PHPUnit_Framework_TestCase
     public function testBz2DecompressArchive()
     {
         $filter   = new Bz2Compression();
-        $archive = __DIR__ . '/../_files/compressed.bz2';
+        $archive = $this->target;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');

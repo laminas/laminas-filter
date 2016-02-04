@@ -9,8 +9,12 @@
 
 namespace ZendTest\Filter;
 
+use Zend\Filter\Callback;
+use Zend\Filter\Digits;
+use Zend\Filter\HtmlEntities;
 use Zend\Filter\StaticFilter;
 use Zend\Filter\FilterPluginManager;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @group      Zend_Filter
@@ -35,14 +39,14 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
 
     public function testCanSpecifyCustomPluginManager()
     {
-        $plugins = new FilterPluginManager();
+        $plugins = new FilterPluginManager(new ServiceManager());
         StaticFilter::setPluginManager($plugins);
         $this->assertSame($plugins, StaticFilter::getPluginManager());
     }
 
     public function testCanResetPluginManagerByPassingNull()
     {
-        $plugins = new FilterPluginManager();
+        $plugins = new FilterPluginManager(new ServiceManager());
         StaticFilter::setPluginManager($plugins);
         $this->assertSame($plugins, StaticFilter::getPluginManager());
         StaticFilter::setPluginManager(null);
@@ -58,7 +62,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testStaticFactory()
     {
-        $filteredValue = StaticFilter::execute('1a2b3c4d', 'Digits');
+        $filteredValue = StaticFilter::execute('1a2b3c4d', Digits::class);
         $this->assertEquals('1234', $filteredValue);
     }
 
@@ -69,13 +73,13 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
     public function testStaticFactoryWithConstructorArguments()
     {
         // Test HtmlEntities with one ctor argument.
-        $filteredValue = StaticFilter::execute('"O\'Reilly"', 'HtmlEntities', ['quotestyle' => ENT_COMPAT]);
+        $filteredValue = StaticFilter::execute('"O\'Reilly"', HtmlEntities::class, ['quotestyle' => ENT_COMPAT]);
         $this->assertEquals('&quot;O\'Reilly&quot;', $filteredValue);
 
         // Test HtmlEntities with a different ctor argument,
         // and make sure it gives the correct response
         // so we know it passed the arg to the ctor.
-        $filteredValue = StaticFilter::execute('"O\'Reilly"', 'HtmlEntities', ['quotestyle' => ENT_QUOTES]);
+        $filteredValue = StaticFilter::execute('"O\'Reilly"', HtmlEntities::class, ['quotestyle' => ENT_QUOTES]);
         $this->assertEquals('&quot;O&#039;Reilly&quot;', $filteredValue);
     }
 
@@ -95,12 +99,12 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesDifferentConfigurationOnEachRequest()
     {
-        $first = StaticFilter::execute('foo', 'callback', [
+        $first = StaticFilter::execute('foo', Callback::class, [
             'callback' => function ($value) {
                 return 'FOO';
             },
         ]);
-        $second = StaticFilter::execute('foo', 'callback', [
+        $second = StaticFilter::execute('foo', Callback::class, [
             'callback' => function ($value) {
                 return 'BAR';
             },

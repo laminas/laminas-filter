@@ -34,7 +34,7 @@ class Rename extends Filter\AbstractFilter
      * @param  string|array|Traversable $options Target file or directory to be renamed
      * @throws Exception\InvalidArgumentException
      */
-    public function __construct($options)
+    public function __construct($options = [])
     {
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
