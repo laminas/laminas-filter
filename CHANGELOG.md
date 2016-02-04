@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#14](https://github.com/zendframework/zend-filter/pull/14) adds the
   `UpperCaseWords` filter to the default list of filters known to the
   `FilterPluginManager`.
+- [#22](https://github.com/zendframework/zend-filter/pull/22) adds
+  documentation, and automatically publishes it to
+  https://zendframework.github.io/zend-filter/
 
 ### Deprecated
 
