@@ -141,6 +141,9 @@ class FilterPluginManager extends AbstractPluginManager
         'tonull'                     => ToNull::class,
         'toNull'                     => ToNull::class,
         'ToNull'                     => ToNull::class,
+        'uppercasewords'             => UpperCaseWords::class,
+        'upperCaseWords'             => UpperCaseWords::class,
+        'UpperCaseWords'             => UpperCaseWords::class,
         'urinormalize'               => UriNormalize::class,
         'uriNormalize'               => UriNormalize::class,
         'UriNormalize'               => UriNormalize::class,
@@ -193,10 +196,6 @@ class FilterPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $factories = [
-        // For the future
-        ToInt::class                           => InvokableFactory::class,
-        ToNull::class                          => InvokableFactory::class,
-
         // I18n filters
         Alnum::class                           => InvokableFactory::class,
         Alpha::class                           => InvokableFactory::class,
@@ -229,6 +228,7 @@ class FilterPluginManager extends AbstractPluginManager
         ToInt::class                           => InvokableFactory::class,
         MonthSelect::class                     => InvokableFactory::class,
         ToNull::class                          => InvokableFactory::class,
+        UpperCaseWords::class                  => InvokableFactory::class,
         PregReplace::class                     => InvokableFactory::class,
         RealPath::class                        => InvokableFactory::class,
         StringToLower::class                   => InvokableFactory::class,
@@ -292,6 +292,7 @@ class FilterPluginManager extends AbstractPluginManager
         'zendfilterstringtrim'                 => InvokableFactory::class,
         'zendfilterstripnewlines'              => InvokableFactory::class,
         'zendfilterstriptags'                  => InvokableFactory::class,
+        'zendfilteruppercasewords'             => InvokableFactory::class,
         'zendfilterurinormalize'               => InvokableFactory::class,
         'zendfilterwhitelist'                  => InvokableFactory::class,
         'zendfilterwordcamelcasetodash'        => InvokableFactory::class,
