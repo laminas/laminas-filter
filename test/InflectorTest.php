@@ -161,7 +161,6 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
 
     public function testAddRulesCreatesAppropriateRuleEntries()
     {
-
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
         $this->inflector->addRules([

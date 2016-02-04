@@ -9,7 +9,6 @@
 
 namespace ZendTest\Filter\Compress;
 
-use Archive_Tar;
 use Zend\Filter\Compress\Tar as TarCompression;
 
 /**
