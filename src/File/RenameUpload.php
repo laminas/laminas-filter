@@ -40,7 +40,7 @@ class RenameUpload extends AbstractFilter
      *
      * @param array|string $targetOrOptions The target file path or an options array
      */
-    public function __construct($targetOrOptions)
+    public function __construct($targetOrOptions = [])
     {
         if (is_array($targetOrOptions)) {
             $this->setOptions($targetOrOptions);
