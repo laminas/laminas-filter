@@ -9,6 +9,7 @@
 
 namespace ZendTest\Filter;
 
+use ArrayObject;
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Inflector as InflectorFilter;
 use Zend\Filter\PregReplace;
@@ -16,7 +17,6 @@ use Zend\Filter\StringToLower;
 use Zend\Filter\StringToUpper;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\I18n\Filter\Alpha;
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -116,13 +116,9 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFilterRuleAppendsRuleEntries()
     {
-        if (!extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
-        }
-
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
-        $this->inflector->setFilterRule('controller', [PregReplace::class, Alpha::class]);
+        $this->inflector->setFilterRule('controller', [PregReplace::class, TestAsset\Alpha::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(2, count($rules));
         $this->assertInstanceOf('Zend\Filter\FilterInterface', $rules[0]);
@@ -165,14 +161,10 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
 
     public function testAddRulesCreatesAppropriateRuleEntries()
     {
-        if (!extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
-        }
-
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
         $this->inflector->addRules([
-            ':controller' => [PregReplace::class, Alpha::class],
+            ':controller' => [PregReplace::class, TestAsset\Alpha::class],
             'suffix'      => 'phtml',
         ]);
         $rules = $this->inflector->getRules();
@@ -183,15 +175,11 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetRulesCreatesAppropriateRuleEntries()
     {
-        if (!extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
-        }
-
         $this->inflector->setStaticRule('some-rules', 'some-value');
         $rules = $this->inflector->getRules();
         $this->assertEquals(1, count($rules));
         $this->inflector->setRules([
-            ':controller' => [PregReplace::class, Alpha::class],
+            ':controller' => [PregReplace::class, TestAsset\Alpha::class],
             'suffix'      => 'phtml',
         ]);
         $rules = $this->inflector->getRules();
@@ -202,11 +190,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetRule()
     {
-        if (!extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
-        }
-
-        $this->inflector->setFilterRule(':controller', [Alpha::class, StringToLower::class]);
+        $this->inflector->setFilterRule(':controller', [TestAsset\Alpha::class, StringToLower::class]);
         $this->assertInstanceOf('Zend\Filter\StringToLower', $this->inflector->getRule('controller', 1));
         $this->assertFalse($this->inflector->getRule('controller', 2));
     }
@@ -327,11 +311,18 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         return $options;
     }
 
+    /**
+     * This method returns an ArrayObject instance in place of a
+     * Zend\Config\Config instance; the two are interchangeable, as inflectors
+     * consume the more general array or Traversable types.
+     *
+     * @return \Traversable
+     */
     public function getConfig()
     {
         $options = $this->getOptions();
 
-        return new \Zend\Config\Config($options);
+        return new ArrayObject($options);
     }
 
     protected function _testOptions($inflector)
@@ -354,13 +345,6 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
             $this->assertContains($rule, $class);
         }
         $this->assertEquals($options['rules']['suffix'], $rules['suffix']);
-    }
-
-    public function testPassingConfigObjectToConstructorSetsStateAndRules()
-    {
-        $config    = $this->getConfig();
-        $inflector = new InflectorFilter($config);
-        $this->_testOptions($inflector);
     }
 
     public function testSetConfigSetsStateAndRules()
@@ -395,8 +379,14 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
             'controller' => 'FooBar',
             'action'     => 'MooToo'
         ]);
-        $this->assertEquals($filtered,
-            'C:\htdocs\public\cache\00\01\42\app\modules' . DIRECTORY_SEPARATOR . 'foo-bar' . DIRECTORY_SEPARATOR . 'Moo-Too.phtml');
+        $this->assertEquals(
+            $filtered,
+            'C:\htdocs\public\cache\00\01\42\app\modules'
+            . DIRECTORY_SEPARATOR
+            . 'foo-bar'
+            . DIRECTORY_SEPARATOR
+            . 'Moo-Too.phtml'
+        );
     }
 
     /**
@@ -426,21 +416,17 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddFilterRuleMultipleTimes()
     {
-        if (!extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
-        }
-
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
         $this->inflector->setFilterRule('controller', PregReplace::class);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
-        $this->inflector->addFilterRule('controller', [Alpha::class, StringToLower::class]);
+        $this->inflector->addFilterRule('controller', [TestAsset\Alpha::class, StringToLower::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(3, count($rules));
         $this->_context = StringToLower::class;
         $this->inflector->setStaticRuleReference('context', $this->_context);
-        $this->inflector->addFilterRule('controller', [Alpha::class, StringToLower::class]);
+        $this->inflector->addFilterRule('controller', [TestAsset\Alpha::class, StringToLower::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(5, count($rules));
     }
@@ -468,7 +454,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @group ZF-8997
      */
-    public function testPassingZendConfigObjectToConstructorSetsStateAndRules()
+    public function testPassingConfigObjectToConstructorSetsStateAndRules()
     {
         $config    = $this->getConfig();
         $inflector = new InflectorFilter($config);
@@ -478,7 +464,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @group ZF-8997
      */
-    public function testPassingZendConfigObjectToSetConfigSetsStateAndRules()
+    public function testPassingConfigObjectToSetConfigSetsStateAndRules()
     {
         $config    = $this->getConfig();
         $inflector = new InflectorFilter();

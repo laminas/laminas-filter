@@ -9,6 +9,7 @@
 
 namespace ZendTest\Filter;
 
+use ArrayObject;
 use Zend\Filter\HtmlEntities as HtmlEntitiesFilter;
 use Zend\Filter\Exception;
 use Zend\Stdlib\ErrorHandler;
@@ -132,12 +133,16 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * This test uses an ArrayObject in place of a Zend\Config\Config instance;
+     * they two are interchangeable in this scenario, as HtmlEntitiesFilter is
+     * checking for arrays or Traversable instances.
+     *
      * @group ZF-8995
      */
     public function testConfigObject()
     {
         $options = ['quotestyle' => 5, 'encoding' => 'ISO-8859-1'];
-        $config  = new \Zend\Config\Config($options);
+        $config  = new ArrayObject($options);
 
         $filter = new HtmlEntitiesFilter(
             $config
