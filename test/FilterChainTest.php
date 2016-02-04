@@ -9,7 +9,7 @@
 
 namespace ZendTest\Filter;
 
-use Zend\Filter\AbstractFilter;
+use ArrayIterator;
 use Zend\Filter\FilterChain;
 use Zend\Filter\PregReplace;
 use Zend\Filter\StringToLower;
@@ -31,8 +31,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
     public function testFiltersAreExecutedInFifoOrder()
     {
         $chain = new FilterChain();
-        $chain->attach(new LowerCase())
-            ->attach(new StripUpperCase());
+        $chain->attach(new TestAsset\LowerCase())
+            ->attach(new TestAsset\StripUpperCase());
         $value         = 'AbC';
         $valueExpected = 'abc';
         $this->assertEquals($valueExpected, $chain->filter($value));
@@ -41,8 +41,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
     public function testFiltersAreExecutedAccordingToPriority()
     {
         $chain = new FilterChain();
-        $chain->attach(new StripUpperCase())
-            ->attach(new LowerCase, 100);
+        $chain->attach(new TestAsset\StripUpperCase())
+            ->attach(new TestAsset\LowerCase, 100);
         $value         = 'AbC';
         $valueExpected = 'b';
         $this->assertEquals($valueExpected, $chain->filter($value));
@@ -96,7 +96,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
     public function testConfigurationAllowsTraversableObjects()
     {
         $config        = $this->getChainConfig();
-        $config        = new \ArrayIterator($config);
+        $config        = new ArrayIterator($config);
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
         $valueExpected = 'ABC';
@@ -180,8 +180,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
     public function testCanSerializeFilterChain()
     {
         $chain = new FilterChain();
-        $chain->attach(new LowerCase())
-            ->attach(new StripUpperCase());
+        $chain->attach(new TestAsset\LowerCase())
+            ->attach(new TestAsset\StripUpperCase());
         $serialized = serialize($chain);
 
         $unserialized = unserialize($serialized);
@@ -198,47 +198,29 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
         $valueExpected = 'abc';
 
         $chain = new FilterChain();
-        $chain->attach(new StripUpperCase())
-            ->attach(new LowerCase(), 1001);
+        $chain->attach(new TestAsset\StripUpperCase())
+            ->attach(new TestAsset\LowerCase(), 1001);
         $this->assertEquals($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
-        $chain->attach(new LowerCase(), 1001)
-            ->attach(new StripUpperCase());
+        $chain->attach(new TestAsset\LowerCase(), 1001)
+            ->attach(new TestAsset\StripUpperCase());
         $this->assertEquals($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
-        $chain->attach(new LowerCase(), 1001);
+        $chain->attach(new TestAsset\LowerCase(), 1001);
         $chainToMerge = new FilterChain();
-        $chainToMerge->attach(new StripUpperCase());
+        $chainToMerge->attach(new TestAsset\StripUpperCase());
         $chain->merge($chainToMerge);
         $this->assertEquals(2, $chain->count());
         $this->assertEquals($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
-        $chain->attach(new StripUpperCase());
+        $chain->attach(new TestAsset\StripUpperCase());
         $chainToMerge = new FilterChain();
-        $chainToMerge->attach(new LowerCase(), 1001);
+        $chainToMerge->attach(new TestAsset\LowerCase(), 1001);
         $chain->merge($chainToMerge);
         $this->assertEquals(2, $chain->count());
         $this->assertEquals($valueExpected, $chain->filter($value));
-    }
-}
-
-
-class LowerCase extends AbstractFilter
-{
-    public function filter($value)
-    {
-        return strtolower($value);
-    }
-}
-
-
-class StripUpperCase extends AbstractFilter
-{
-    public function filter($value)
-    {
-        return preg_replace('/[A-Z]/', '', $value);
     }
 }
