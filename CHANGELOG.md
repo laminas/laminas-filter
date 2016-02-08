@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.6.1 - TBD
+## 2.6.1 - 2016-02-08
 
 ### Added
 
@@ -18,7 +18,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#24](https://github.com/zendframework/zend-filter/pull/24) updates the
+  `FilterPluginManager` to reference the `NumberFormat` **filter**, instead of
+  the **view helper**.
 
 ## 2.6.0 - 2016-02-04
 
