@@ -12,8 +12,8 @@ namespace Zend\Filter;
 use Zend\Filter\Exception\RuntimeException;
 use Zend\I18n\Filter\Alnum;
 use Zend\I18n\Filter\Alpha;
+use Zend\I18n\Filter\NumberFormat;
 use Zend\I18n\Filter\NumberParse;
-use Zend\I18n\View\Helper\NumberFormat;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\InvalidServiceException;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -260,7 +260,7 @@ class FilterPluginManager extends AbstractPluginManager
         'zendfiltertonull'                     => InvokableFactory::class,
         'zendi18nfilteralnum'                  => InvokableFactory::class,
         'zendi18nfilteralpha'                  => InvokableFactory::class,
-        'zendi18nviewhelpernumberformat'       => InvokableFactory::class,
+        'zendi18nfilternumberformat'           => InvokableFactory::class,
         'zendi18nfilternumberparse'            => InvokableFactory::class,
         'zendfilterbasename'                   => InvokableFactory::class,
         'zendfilterblacklist'                  => InvokableFactory::class,
