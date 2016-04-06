@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#25](https://github.com/zendframework/zend-filter/pull/25) exposes the
+  package as a ZF component and/or generic configuration provider, by adding the
+  following:
+  - `FilterPluginManagerFactory`, which can be consumed by container-interop /
+    zend-servicemanager to create and return a `FilterPluginManager` instance.
+  - `ConfigProvider`, which maps the service `FilterManager` to the above
+    factory.
+  - `Module`, which does the same as `ConfigProvider`, but specifically for
+    zend-mvc applications. It also provices a specification to
+    `Zend\ModuleManager\Listener\ServiceListener` to allow modules to provide
+    filter configuration.
 
 ### Deprecated
 
