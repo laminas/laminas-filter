@@ -36,7 +36,7 @@ class Module
         $serviceListener->addServiceManager(
             'FilterManager',
             'filters',
-            'Zend\ModuleManager\Feature\FilterProviderInterface',
+            FilterProviderInterface::class,
             'getFilterConfig'
         );
     }
