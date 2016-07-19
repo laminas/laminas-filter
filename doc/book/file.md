@@ -9,13 +9,43 @@ performing file operations such as renaming.
 > *or* a `$_FILES` array as the supplied argument. When a `$_FILES` array is
 > passed in, the `tmp_name` is used for the file path.
 
-## Decrypt
+## Encrypt and Decrypt
 
-- TODO
+These filters allow encrypting and decrypting content of given file which should 
+be able to be readable and writable. These filters originally extends from 
+`Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. You can check that for 
+more information about the options. Basic usage example is below: 
 
-## Encrypt
+```php
+use Zend\Http\PhpEnvironment\Request;
 
-- TODO
+$request = new Request();
+$files   = $request->getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new \Zend\Filter\File\Encrypt(['adapter' => 'BlockCipher', 'key' => '--our-super-secret-key--']);
+$filter->filter($files['my-upload']);
+```
+
+In this example, we use constructor injection to inject our options. Also, we 
+can use setter methods to inject options. Check following example: 
+
+```php
+use Zend\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request->getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new \Zend\Filter\File\Encrypt();
+$filter->setAdapter('BlockCipher');
+$filter->setKey('--our-super-secret-key--');
+$filter->filter($files['my-upload']);
+```
+
+Check [documentation](/zend-filter/standard-filters/#encrypt-and-decrypt) of 
+standarts filter of Encrypt and Decrypt for more information about options and 
+adapters. 
 
 ## Lowercase
 
