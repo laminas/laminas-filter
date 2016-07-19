@@ -12,9 +12,10 @@ performing file operations such as renaming.
 ## Encrypt and Decrypt
 
 These filters allow encrypting and decrypting content of given file which should 
-be able to be readable and writable. These filters originally extends from 
-`Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. You can check that for 
-more information about the options. Basic usage example is below: 
+be able to be readable and writable. These filters originally derived from 
+`Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. Only file reading and 
+writing operations are performed by itself, encrypting and decrypting operations 
+are performed by parent classes. Basic usage example is below: 
 
 ```php
 use Zend\Http\PhpEnvironment\Request;
