@@ -283,7 +283,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
     public function testPassCompressionConfigWillBeUnsetCorrectly()
     {
         $filter = new OpensslEncryption([
-            'compression' => 'bz2'
+            'compression' => 'bz2',
         ]);
 
         $r = new ReflectionProperty($filter, 'keys');
