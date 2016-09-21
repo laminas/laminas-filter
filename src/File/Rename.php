@@ -137,7 +137,7 @@ class Rename extends Filter\AbstractFilter
 
         if (file_exists($file['target'])) {
             throw new Exception\InvalidArgumentException(
-                sprintf("File '%s' could not be renamed. It already exists.", $value)
+                sprintf("File '%s' could not be renamed to %s. It already exists.", $value, realpath($file['target']))
             );
         }
 
