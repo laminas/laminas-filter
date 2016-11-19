@@ -227,8 +227,10 @@ class StripTags extends AbstractFilter
      * @param  string $tag
      * @return string
      */
+    // @codingStandardsIgnoreStart
     protected function _filterTag($tag)
     {
+        // @codingStandardsIgnoreEnd
         // Parse the tag into:
         // 1. a starting delimiter (mandatory)
         // 2. a tag name (if available)

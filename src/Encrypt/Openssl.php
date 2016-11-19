@@ -107,8 +107,10 @@ class Openssl implements EncryptionAlgorithmInterface
      * @return self
      * @throws Exception\InvalidArgumentException
      */
+    // @codingStandardsIgnoreStart
     protected function _setKeys($keys)
     {
+        // @codingStandardsIgnoreEnd
         if (! is_array($keys)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }

@@ -58,7 +58,9 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
         }
         $decrypt = new DecryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $decrypt->setVector('1234567890123456890');
+        // @codingStandardsIgnoreStart
         $decrypted = $decrypt->filter('ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
+        // @codingStandardsIgnoreEnd
         $this->assertEquals($decrypted, 'test');
     }
 
@@ -124,7 +126,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
         $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
-        $filter->setAdapter('\\ZendTest\\Filter\\TestAdapter');
+        $filter->setAdapter('\stdClass');
     }
 
     /**
@@ -146,10 +148,12 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         return [
             [null],
             [new \stdClass()],
+            // @codingStandardsIgnoreStart
             [[
                 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=',
                 'decrypt me too, please'
             ]]
+            // @codingStandardsIgnoreEnd
         ];
     }
 
@@ -169,8 +173,4 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $decrypted = $decrypt->filter($input);
         $this->assertEquals($input, $decrypted);
     }
-}
-
-class TestAdapter
-{
 }

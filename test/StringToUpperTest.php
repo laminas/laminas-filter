@@ -16,12 +16,14 @@ use Zend\Filter\StringToUpper as StringToUpperFilter;
  */
 class StringToUpperTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_StringToLower object
      *
      * @var StringToUpperFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_StringToUpper object for each test method

@@ -16,6 +16,7 @@ use Zend\Filter\RealPath as RealPathFilter;
  */
 class RealPathTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Path to test files
      *
@@ -29,6 +30,7 @@ class RealPathTest extends \PHPUnit_Framework_TestCase
      * @var RealPathFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_Basename object for each test method

@@ -16,12 +16,14 @@ use Zend\Filter\StringToLower as StringToLowerFilter;
  */
 class StringToLowerTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_StringToLower object
      *
      * @var StringToLowerFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_StringToLower object for each test method

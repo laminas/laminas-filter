@@ -17,10 +17,12 @@ use stdClass;
  */
 class StringTrimTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * @var StringTrim
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend\Filter\StringTrim object for each test method

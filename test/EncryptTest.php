@@ -64,7 +64,9 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
         $encrypt = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $encrypt->setVector('1234567890123456890');
         $encrypted = $encrypt->filter('test');
+        // @codingStandardsIgnoreStart
         $this->assertEquals($encrypted, 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -134,7 +136,7 @@ PIDs9E7uuizAKDhRRRvho8BS
         $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
         $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
-        $filter->setAdapter('\ZendTest\Filter\TestAdapter2');
+        $filter->setAdapter('\stdClass');
     }
 
     /**
@@ -179,8 +181,4 @@ PIDs9E7uuizAKDhRRRvho8BS
         $encrypted = $encrypt->filter($input);
         $this->assertEquals($input, $encrypted);
     }
-}
-
-class TestAdapter2
-{
 }

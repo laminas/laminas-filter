@@ -123,7 +123,9 @@ class BlockCipher implements EncryptionAlgorithmInterface
             try {
                 $this->blockCipher->setCipherAlgorithm($options['algorithm']);
             } catch (CryptException\InvalidArgumentException $e) {
-                throw new Exception\InvalidArgumentException("The algorithm '{$options['algorithm']}' is not supported");
+                throw new Exception\InvalidArgumentException(
+                    "The algorithm '{$options['algorithm']}' is not supported"
+                );
             }
         }
 

@@ -16,12 +16,14 @@ use Zend\Filter\StripTags as StripTagsFilter;
  */
 class StripTagsTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_StripTags object
      *
      * @var StripTagsFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_StripTags object for each test method

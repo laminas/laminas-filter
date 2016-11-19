@@ -103,7 +103,10 @@ class Compress extends AbstractFilter
 
         $this->adapter = new $adapter($options);
         if (! $this->adapter instanceof Compress\CompressionAlgorithmInterface) {
-            throw new Exception\InvalidArgumentException("Compression adapter '" . $adapter . "' does not implement Zend\\Filter\\Compress\\CompressionAlgorithmInterface");
+            throw new Exception\InvalidArgumentException(
+                "Compression adapter '" . $adapter
+                . "' does not implement Zend\\Filter\\Compress\\CompressionAlgorithmInterface"
+            );
         }
         return $this->adapter;
     }
@@ -132,7 +135,10 @@ class Compress extends AbstractFilter
             return $this;
         }
         if (! is_string($adapter)) {
-            throw new Exception\InvalidArgumentException('Invalid adapter provided; must be string or instance of Zend\\Filter\\Compress\\CompressionAlgorithmInterface');
+            throw new Exception\InvalidArgumentException(
+                'Invalid adapter provided; must be string or instance of '
+                . 'Zend\\Filter\\Compress\\CompressionAlgorithmInterface'
+            );
         }
         $this->adapter = $adapter;
 

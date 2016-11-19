@@ -16,12 +16,14 @@ use Zend\Filter\Digits as DigitsFilter;
  */
 class DigitsTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Is PCRE is compiled with UTF-8 and Unicode support
      *
      * @var mixed
      **/
     protected static $_unicodeEnabled;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_Digits object for each test method

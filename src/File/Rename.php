@@ -211,8 +211,10 @@ class Rename extends Filter\AbstractFilter
      * @param  array $options
      * @return array
      */
+    // @codingStandardsIgnoreStart
     protected function _convertOptions($options)
     {
+        // @codingStandardsIgnoreEnd
         $files = [];
         foreach ($options as $key => $value) {
             if (is_array($value)) {
@@ -285,8 +287,10 @@ class Rename extends Filter\AbstractFilter
      * @param  string $file Filename to get the informations for
      * @return array|string
      */
+    // @codingStandardsIgnoreStart
     protected function _getFileName($file)
     {
+        // @codingStandardsIgnoreEnd
         $rename = [];
         foreach ($this->files as $value) {
             if ($value['source'] == '*') {

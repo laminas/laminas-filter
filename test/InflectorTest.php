@@ -325,8 +325,10 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         return new ArrayObject($options);
     }
 
+    // @codingStandardsIgnoreStart
     protected function _testOptions($inflector)
     {
+        // @codingStandardsIgnoreEnd
         $options = $this->getOptions();
         $broker  = $inflector->getPluginManager();
         $this->assertEquals($options['target'], $inflector->getTarget());

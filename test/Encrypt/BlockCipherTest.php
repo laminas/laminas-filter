@@ -34,11 +34,13 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
     public function testBasicBlockCipher()
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
+        // @codingStandardsIgnoreStart
         $valuesExpected = [
             'STRING' => '5b68e3648f9136e5e9bfaa2242e5b668e7501b2c20e8f9e2c76638f017f62a8eWmVuZEZyYW1ld29yazIuMDpd5vWydswa0fyIo2dnF0Q=',
             'ABC1@3' => 'c7da11b89330f6bbbb15fcb6de574c7ec869ad7187a7d466e60f2437914d927aWmVuZEZyYW1ld29yazIuMKXsBdYXBLQx9elx0B20uxQ=',
             'A b C' => 'ca1b9df732facf9dfadc7c3fdf1ccdc211bf21f638d459f43fefc74bbc9c8e01WmVuZEZyYW1ld29yazIuMM1som/As52rdK/4g7uoYx4='
         ];
+        // @codingStandardsIgnoreEnd
         $filter->setVector('ZendFramework2.0');
         $enc = $filter->getEncryption();
         $this->assertEquals('testkey', $enc['key']);
