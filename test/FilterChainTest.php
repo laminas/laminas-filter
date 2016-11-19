@@ -60,7 +60,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     public function testAllowsConnectingViaClassShortName()
     {
-        if (!function_exists('mb_strtolower')) {
+        if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
         }
 

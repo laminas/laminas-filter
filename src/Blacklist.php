@@ -61,7 +61,7 @@ class Blacklist extends AbstractFilter
      */
     public function setList($list = [])
     {
-        if (!is_array($list)) {
+        if (! is_array($list)) {
             $list = ArrayUtils::iteratorToArray($list);
         }
 

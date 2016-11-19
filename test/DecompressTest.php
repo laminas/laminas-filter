@@ -20,7 +20,7 @@ class DecompressTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This filter is tested with the bz2 extension');
         }
 

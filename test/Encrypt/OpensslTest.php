@@ -20,7 +20,7 @@ class OpensslTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('openssl')) {
+        if (! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the openssl extension');
         }
     }
@@ -61,7 +61,8 @@ FDD4V7XpcNU63QIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAFQ22OU/PAN7rRDr23NS
 PIDs9E7uuizAKDhRRRvho8BS
 -----END CERTIFICATE-----
 '],
-            $key);
+            $key
+        );
         foreach ($valuesExpected as $input => $output) {
             $this->assertNotEquals($output, $filter->encrypt($input));
         }
@@ -262,7 +263,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testEncryptionWithDecryptionAndCompressionWithPackagedKeys()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('Bz2 extension for compression test needed');
         }
 

@@ -18,7 +18,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('mcrypt') and !extension_loaded('openssl')) {
+        if (! extension_loaded('mcrypt') and ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
@@ -30,7 +30,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicMcrypt()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
@@ -53,7 +53,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecryptBlockCipher()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
         $decrypt = new DecryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
@@ -69,7 +69,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicOpenssl()
     {
-        if (!extension_loaded('openssl')) {
+        if (! extension_loaded('openssl')) {
             $this->markTestSkipped('Openssl extension not installed');
         }
 
@@ -101,7 +101,8 @@ cAkcoMuBcgWhIn/46C1PAkEAzLK/ibrdMQLOdO4SuDgj/2nc53NZ3agl61ew8Os6
 d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 -----END RSA PRIVATE KEY-----
 '],
-            $key);
+            $key
+        );
     }
 
     /**
@@ -109,7 +110,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testSettingAdapterManually()
     {
-        if (!extension_loaded('mcrypt') or !extension_loaded('openssl')) {
+        if (! extension_loaded('mcrypt') or ! extension_loaded('openssl')) {
             $this->markTestSkipped('Mcrypt or Openssl extension not installed');
         }
 
@@ -131,7 +132,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testCallingUnknownMethod()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
@@ -158,7 +159,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testReturnUnfiltered($input)
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 

@@ -72,7 +72,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
             $options = ArrayUtils::iteratorToArray($options);
         } elseif (is_string($options)) {
             $options = ['key' => $options];
-        } elseif (!is_array($options)) {
+        } elseif (! is_array($options)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
@@ -109,7 +109,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
             return $this;
         }
 
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
@@ -242,7 +242,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
     public function encrypt($value)
     {
         // compress prior to encryption
-        if (!empty($this->compression)) {
+        if (! empty($this->compression)) {
             $compress = new Compress($this->compression);
             $value    = $compress($value);
         }
@@ -268,7 +268,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
         $decrypted = $this->blockCipher->decrypt($value);
 
         // decompress after decryption
-        if (!empty($this->compression)) {
+        if (! empty($this->compression)) {
             $decompress = new Decompress($this->compression);
             $decrypted  = $decompress($decrypted);
         }

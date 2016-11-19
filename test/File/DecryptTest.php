@@ -23,7 +23,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('This filter needs the mcrypt extension');
         }
 

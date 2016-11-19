@@ -20,7 +20,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('rar')) {
+        if (! extension_loaded('rar')) {
             $this->markTestSkipped('This adapter needs the rar extension');
         }
 

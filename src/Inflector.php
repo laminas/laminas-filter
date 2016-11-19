@@ -53,23 +53,23 @@ class Inflector extends AbstractFilter
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = func_get_args();
             $temp    = [];
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['target'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['rules'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['throwTargetExceptionsOn'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['targetReplacementIdentifier'] = array_shift($options);
             }
 
@@ -86,7 +86,7 @@ class Inflector extends AbstractFilter
      */
     public function getPluginManager()
     {
-        if (!$this->pluginManager instanceof FilterPluginManager) {
+        if (! $this->pluginManager instanceof FilterPluginManager) {
             $this->setPluginManager(new FilterPluginManager(new ServiceManager()));
         }
 
@@ -347,11 +347,11 @@ class Inflector extends AbstractFilter
     public function addFilterRule($spec, $ruleSet)
     {
         $spec = $this->_normalizeSpec($spec);
-        if (!isset($this->rules[$spec])) {
+        if (! isset($this->rules[$spec])) {
             $this->rules[$spec] = [];
         }
 
-        if (!is_array($ruleSet)) {
+        if (! is_array($ruleSet)) {
             $ruleSet = [$ruleSet];
         }
 

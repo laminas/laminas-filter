@@ -78,7 +78,7 @@ class DigitsTest extends \PHPUnit_Framework_TestCase
                 $output,
                 $result = $filter($input),
                 "Expected '$input' to filter to '$output', but received '$result' instead"
-                );
+            );
         }
     }
 

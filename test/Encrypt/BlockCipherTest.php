@@ -199,7 +199,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
      */
     public function testEncryptionWithDecryptionAndCompressionMcrypt()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
         }
 

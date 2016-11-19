@@ -70,7 +70,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function __construct($options = [])
     {
-        if (!extension_loaded('openssl')) {
+        if (! extension_loaded('openssl')) {
             throw new Exception\ExtensionNotLoadedException('This filter needs the openssl extension');
         }
 
@@ -78,7 +78,7 @@ class Openssl implements EncryptionAlgorithmInterface
             $options = ArrayUtils::iteratorToArray($options);
         }
 
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = ['public' => $options];
         }
 
@@ -109,7 +109,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     protected function _setKeys($keys)
     {
-        if (!is_array($keys)) {
+        if (! is_array($keys)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
@@ -361,7 +361,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         // compress prior to encryption
-        if (!empty($this->compression)) {
+        if (! empty($this->compression)) {
             $compress = new Compress($this->compression);
             $value    = $compress($value);
         }
@@ -408,7 +408,7 @@ class Openssl implements EncryptionAlgorithmInterface
             throw new Exception\RuntimeException('Please give a private key for decryption with Openssl');
         }
 
-        if (!$this->package && empty($envelope)) {
+        if (! $this->package && empty($envelope)) {
             throw new Exception\RuntimeException('Please give an envelope key for decryption with Openssl');
         }
 
@@ -449,7 +449,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         // decompress after decryption
-        if (!empty($this->compression)) {
+        if (! empty($this->compression)) {
             $decompress = new Decompress($this->compression);
             $decrypted  = $decompress($decrypted);
         }

@@ -82,7 +82,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFalseEncoding()
     {
-        if (!function_exists('mb_strtolower')) {
+        if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
         }
 
@@ -148,7 +148,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDetectMbInternalEncoding()
     {
-        if (!function_exists('mb_internal_encoding')) {
+        if (! function_exists('mb_internal_encoding')) {
             $this->markTestSkipped("Function 'mb_internal_encoding' not available");
         }
 

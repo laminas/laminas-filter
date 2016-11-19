@@ -22,7 +22,7 @@ class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
 
     public function setUp()
     {
-        if (!StringUtils::hasPcreUnicodeSupport()) {
+        if (! StringUtils::hasPcreUnicodeSupport()) {
             return $this->markTestSkipped('PCRE is not compiled with Unicode support');
         }
 
