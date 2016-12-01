@@ -10,6 +10,7 @@
 namespace ZendTest\Filter;
 
 use Zend\Filter\Boolean as BooleanFilter;
+use Zend\Filter\Boolean;
 
 /**
  * @group      Zend_Filter
@@ -132,6 +133,20 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new BooleanFilter();
         $this->assertEquals(127, $filter->getType());
+    }
+
+    /**
+     * Ensures that if a type is specified more than once, we get the expected type, not something else.
+     * https://github.com/zendframework/zend-filter/issues/48
+     *
+     * @param mixed $type Type to double initialize
+     *
+     * @dataProvider duplicateProvider
+     */
+    public function testDuplicateTypesWorkProperly($type, $expected)
+    {
+        $filter = new BooleanFilter([$type, $type]);
+        $this->assertEquals($expected, $filter->getType());
     }
 
     public static function defaultTestProvider()
@@ -469,6 +484,34 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
                     ['yes', true],
                 ]
             ]
+        ];
+    }
+
+    public static function duplicateProvider()
+    {
+        return [
+            [Boolean::TYPE_BOOLEAN, Boolean::TYPE_BOOLEAN],
+            [Boolean::TYPE_INTEGER, Boolean::TYPE_INTEGER],
+            [Boolean::TYPE_FLOAT, Boolean::TYPE_FLOAT],
+            [Boolean::TYPE_STRING, Boolean::TYPE_STRING],
+            [Boolean::TYPE_ZERO_STRING, Boolean::TYPE_ZERO_STRING],
+            [Boolean::TYPE_EMPTY_ARRAY, Boolean::TYPE_EMPTY_ARRAY],
+            [Boolean::TYPE_NULL, Boolean::TYPE_NULL],
+            [Boolean::TYPE_PHP, Boolean::TYPE_PHP],
+            [Boolean::TYPE_FALSE_STRING, Boolean::TYPE_FALSE_STRING],
+            [Boolean::TYPE_LOCALIZED, Boolean::TYPE_LOCALIZED],
+            [Boolean::TYPE_ALL, Boolean::TYPE_ALL],
+            ['boolean', Boolean::TYPE_BOOLEAN],
+            ['integer', Boolean::TYPE_INTEGER],
+            ['float', Boolean::TYPE_FLOAT],
+            ['string', Boolean::TYPE_STRING],
+            ['zero', Boolean::TYPE_ZERO_STRING],
+            ['array', Boolean::TYPE_EMPTY_ARRAY],
+            ['null', Boolean::TYPE_NULL],
+            ['php', Boolean::TYPE_PHP],
+            ['false', Boolean::TYPE_FALSE_STRING],
+            ['localized', Boolean::TYPE_LOCALIZED],
+            ['all', Boolean::TYPE_ALL],
         ];
     }
 }
