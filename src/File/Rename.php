@@ -112,7 +112,7 @@ class Rename extends Filter\AbstractFilter
      * But existing files will be erased when the overwrite option is true
      *
      * @param  string  $value  Full path of file to change
-     * @param  bool $source Return internal informations
+     * @param  bool $source Return internal information
      * @return string The new filename which has been set
      * @throws Exception\InvalidArgumentException If the target file already exists.
      */
@@ -282,7 +282,7 @@ class Rename extends Filter\AbstractFilter
      * Internal method to resolve the requested source
      * and return all other related parameters
      *
-     * @param  string $file Filename to get the informations for
+     * @param  string $file Filename to get the information for
      * @return array|string
      */
     protected function _getFileName($file)
