@@ -30,9 +30,9 @@ class SeparatorToSeparator extends AbstractFilter
     }
 
     /**
-     * Sets a new seperator to search for
+     * Sets a new separator to search for
      *
-     * @param  string $separator Seperator to search for
+     * @param  string $separator Separator to search for
      * @return self
      */
     public function setSearchSeparator($separator)
