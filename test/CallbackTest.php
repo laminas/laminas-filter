@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Callback as CallbackFilter;
 
-/**
- * @group      Zend_Filter
- */
-class CallbackTest extends \PHPUnit_Framework_TestCase
+class CallbackTest extends TestCase
 {
     public function testObjectCallback()
     {

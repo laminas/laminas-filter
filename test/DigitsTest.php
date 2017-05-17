@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Digits as DigitsFilter;
 
-/**
- * @group      Zend_Filter
- */
-class DigitsTest extends \PHPUnit_Framework_TestCase
+class DigitsTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**

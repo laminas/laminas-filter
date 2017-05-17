@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\UnderscoreToStudlyCase;
 
-/**
- * Test class for Zend\Filter\Word\UnderscoreToStudlyCase.
- *
- * @group      Zend_Filter
- */
-class UnderscoreToStudlyCaseTest extends \PHPUnit_Framework_TestCase
+class UnderscoreToStudlyCaseTest extends TestCase
 {
     public function testFilterSeparatesStudlyCasedWordsWithDashes()
     {

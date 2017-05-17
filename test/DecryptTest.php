@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Decrypt as DecryptFilter;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class DecryptTest extends \PHPUnit_Framework_TestCase
+class DecryptTest extends TestCase
 {
     public function setUp()
     {
@@ -125,7 +124,8 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $this->assertEquals('BlockCipher', $filter->getAdapter());
         $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not implement');
         $filter->setAdapter('\stdClass');
     }
 
@@ -138,7 +138,8 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\BadMethodCallException', 'Unknown method');
+        $this->expectException(Exception\BadMethodCallException::class);
+        $this->expectExceptionMessage('Unknown method');
         $filter = new DecryptFilter();
         $filter->getUnknownMethod();
     }

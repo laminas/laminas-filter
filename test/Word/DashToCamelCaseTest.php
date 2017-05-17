@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\DashToCamelCase as DashToCamelCaseFilter;
 
-/**
- * Test class for Zend\Filter\Word\DashToCamelCase.
- *
- * @group      Zend_Filter
- */
-class DashToCamelCaseTest extends \PHPUnit_Framework_TestCase
+class DashToCamelCaseTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithDashes()
     {

@@ -9,16 +9,14 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Exception\RuntimeException;
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Word\SeparatorToSeparator;
 use Zend\ServiceManager\Exception\InvalidServiceException;
 use Zend\ServiceManager\ServiceManager;
 
-/**
- * @group      Zend_Filter
- */
-class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
+class FilterPluginManagerTest extends TestCase
 {
     /**
      * @var FilterPluginManager
@@ -38,7 +36,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteringInvalidFilterRaisesException()
     {
-        $this->setExpectedException($this->getInvalidServiceException());
+        $this->expectException($this->getInvalidServiceException());
         $this->filters->setService('test', $this);
         $this->filters->get('test');
     }
@@ -46,7 +44,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
     public function testLoadingInvalidFilterRaisesException()
     {
         $this->filters->setInvokableClass('test', get_class($this));
-        $this->setExpectedException($this->getInvalidServiceException());
+        $this->expectException($this->getInvalidServiceException());
         $this->filters->get('test');
     }
 

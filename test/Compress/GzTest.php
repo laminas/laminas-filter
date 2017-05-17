@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Gz as GzCompression;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class GzTest extends \PHPUnit_Framework_TestCase
+class GzTest extends TestCase
 {
     public $target;
 
@@ -99,7 +98,8 @@ class GzTest extends \PHPUnit_Framework_TestCase
         $filter->setLevel(6);
         $this->assertEquals(6, $filter->getOptions('level'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('must be between');
         $filter->setLevel(15);
     }
 
@@ -115,7 +115,8 @@ class GzTest extends \PHPUnit_Framework_TestCase
         $filter->setMode('deflate');
         $this->assertEquals('deflate', $filter->getOptions('mode'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'mode not supported');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('mode not supported');
         $filter->setMode('unknown');
     }
 

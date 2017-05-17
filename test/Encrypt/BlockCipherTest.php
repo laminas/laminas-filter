@@ -9,13 +9,11 @@
 
 namespace ZendTest\Filter\Encrypt;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Encrypt\BlockCipher as BlockCipherEncryption;
 use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class BlockCipherTest extends \PHPUnit_Framework_TestCase
+class BlockCipherTest extends TestCase
 {
     public function setUp()
     {
@@ -63,7 +61,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
 
     public function testWrongSizeVector()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('testvect');
     }
@@ -140,7 +138,8 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructionWithInteger()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options argument');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options argument');
         $filter = new BlockCipherEncryption(1234);
     }
 
@@ -190,7 +189,8 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
     public function testSettingEmptyVector()
     {
         $filter = new BlockCipherEncryption('newkey');
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'The salt (IV) cannot be empty');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The salt (IV) cannot be empty');
         $filter->setVector('');
     }
 

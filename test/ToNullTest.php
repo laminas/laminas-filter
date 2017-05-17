@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\ToNull as ToNullFilter;
 
-/**
- * @group      Zend_Filter
- */
-class ToNullTest extends \PHPUnit_Framework_TestCase
+class ToNullTest extends TestCase
 {
     public function testConstructorOptions()
     {
@@ -90,7 +89,8 @@ class ToNullTest extends \PHPUnit_Framework_TestCase
     public function testSettingFalseType()
     {
         $filter = new ToNullFilter();
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Unknown type value');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown type value');
         $filter->setType(true);
     }
 

@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\UnderscoreToCamelCase as UnderscoreToCamelCaseFilter;
 
-/**
- * Test class for Zend\Filter\Word\UnderscoreToCamelCase.
- *
- * @group      Zend_Filter
- */
-class UnderscoreToCamelCaseTest extends \PHPUnit_Framework_TestCase
+class UnderscoreToCamelCaseTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithDashes()
     {

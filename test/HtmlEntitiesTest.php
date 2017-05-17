@@ -10,14 +10,12 @@
 namespace ZendTest\Filter;
 
 use ArrayObject;
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\HtmlEntities as HtmlEntitiesFilter;
 use Zend\Filter\Exception;
 use Zend\Stdlib\ErrorHandler;
 
-/**
- * @group      Zend_Filter
- */
-class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
+class HtmlEntitiesTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**

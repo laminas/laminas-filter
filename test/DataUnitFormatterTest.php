@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\DataUnitFormatter as DataUnitFormatterFilter;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class DataUnitFormatterTest extends \PHPUnit_Framework_TestCase
+class DataUnitFormatterTest extends TestCase
 {
     /**
      * @param float $value
@@ -66,19 +65,19 @@ class DataUnitFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingNoOptions()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new DataUnitFormatterFilter();
     }
 
     public function testSettingNoUnit()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new DataUnitFormatterFilter([]);
     }
 
     public function testSettingFalseMode()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new DataUnitFormatterFilter([
             'unit' => 'B',
             'mode' => 'invalid',

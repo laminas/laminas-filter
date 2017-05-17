@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\StripTags as StripTagsFilter;
 
-/**
- * @group      Zend_Filter
- */
-class StripTagsTest extends \PHPUnit_Framework_TestCase
+class StripTagsTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**

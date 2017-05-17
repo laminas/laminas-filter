@@ -8,12 +8,10 @@
  */
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\BaseName as BaseNameFilter;
 
-/**
- * @group Zend_Filter
- */
-class BaseNameTest extends \PHPUnit_Framework_TestCase
+class BaseNameTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior

@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Zip as ZipCompression;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class ZipTest extends \PHPUnit_Framework_TestCase
+class ZipTest extends TestCase
 {
     public function setUp()
     {
@@ -164,7 +163,8 @@ class ZipTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Testfile.txt', $filter->getTarget());
         $this->assertEquals('Testfile.txt', $filter->getOptions('target'));
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not exist');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not exist');
         $filter->setTarget('/unknown/path/to/file.txt');
     }
 

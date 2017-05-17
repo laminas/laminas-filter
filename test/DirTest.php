@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Dir as DirFilter;
 
-/**
- * @group      Zend_Filter
- */
-class DirTest extends \PHPUnit_Framework_TestCase
+class DirTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior

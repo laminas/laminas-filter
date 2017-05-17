@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\ToInt as ToIntFilter;
 
-/**
- * @group      Zend_Filter
- */
-class ToIntTest extends \PHPUnit_Framework_TestCase
+class ToIntTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior
