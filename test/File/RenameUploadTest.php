@@ -254,7 +254,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
             'randomize'       => true,
         ]);
 
-        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}\.xml#', $filter($this->sourceFile));
+        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.xml#', $filter($this->sourceFile));
     }
 
     public function testGetFileWithOriginalExtension()
@@ -286,7 +286,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
         $oldFilePathInfo = pathinfo($this->sourceFile);
 
         $this->assertRegExp(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}\.'.$oldFilePathInfo['extension'].'#',
+            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.'.$oldFilePathInfo['extension'].'#',
             $filter($this->sourceFile)
         );
     }
