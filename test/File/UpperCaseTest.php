@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\File\UpperCase as FileUpperCase;
 
-/**
- * @group      Zend_Filter
- */
-class UpperCaseTest extends \PHPUnit_Framework_TestCase
+class UpperCaseTest extends TestCase
 {
     /**
      * Testfile
@@ -77,7 +76,8 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
     public function testFileNotFoundException()
     {
         $filter = new FileUpperCase();
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not found');
         $filter($this->testFile . 'unknown');
     }
 

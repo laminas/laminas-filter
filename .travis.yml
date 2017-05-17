@@ -15,6 +15,10 @@ cache:
 
 env:
   global:
+    - COMPOSER_ARGS="--no-interaction"
+    - COVERAGE_DEPS="satooshi/php-coveralls"
+    - CRYPT_DEPS="zendframework/zend-crypt:^3.0"
+    - LEGACY_DEPS="phpunit/phpunit"
     - SITE_URL: https://zendframework.github.io/zend-filter
     - GH_USER_NAME: "Matthew Weier O'Phinney"
     - GH_USER_EMAIL: matthew@weierophinney.net
@@ -22,55 +26,68 @@ env:
     - secure: "ciAQTsLfrenD7WuLrZb0mzeqYj0JfxIGDleAH6iI0fopm+HrSyitr9aDlZzc1UsWx+9CCkajuV4bmXCarCTSGOAQ8U7NqSujKawyWRWO3M/yN2gCTBeZyZcGaj/GgnOHX2AgNibdpe1ZNaNlAKEd0s1F016SoEYMdN9JuzbSRAfP17VVQ87IAm8LegPJdJrMz7reLW7khl+YXEnYiEdW4hNmMMcN1apGfxlQ/X3dXTt3GIX5F6i14dfGzQqkwFFMBJAkJ6zUXj+mmOWimVXJ8mfSINBwIATM9QWLtgQoDvwUUXNEePk6Lrncc+O83T3dG+SMlmC3loTnMtyzutm9m9Rmo0gAXhzefmiVj8uK6QZMgXcu3MZjKW5GDVHSeGK/BOGagpIm6DvPRluDRDviPYk5uTUdKrrDDlZZ1jQZqqzLE/pyyJPKQ3T7ao1QZWjZ0skj0zy97Qjmx/HP5dsBMIz/WgBkoovKsMvhINZw0CIqv0veOGKNkdjesmQapcJGNLZ3df7DuFWU328QbfeIpptceuhhry32DeAz1i4zdNLD92hPGhjVmKjpwdS0GuOUAIeiK8rfFu6lQ74Kcu7pRdS8hkuqGYamrz8msNZsEc909um4TVPUdzd4aQcepghYboUpVlwNzopPK06Fx1wYMbwTzQzM7jS7YBX+FckPJJc="
 
 matrix:
-  fast_finish: true
   include:
-    - php: 5.5
-      env:
-        - EXECUTE_CS_CHECK=true
-    - php: 5.5
-      env:
-        - SERVICE_MANAGER_VERSION="^2.7.3"
     - php: 5.6
       env:
-        - EXECUTE_TEST_COVERALLS=true
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=latest
+        - TEST_COVERAGE=true
         - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
         - PATH="$HOME/.local/bin:$PATH"
-    - php: 5.6
-      env:
-        - SERVICE_MANAGER_VERSION="^2.7.3"
-    - php: 7
     - php: 7
       env:
-        - SERVICE_MANAGER_VERSION="^2.7.3"
-    - php: hhvm 
-    - php: hhvm 
+        - DEPS=lowest
+    - php: 7
       env:
-        - SERVICE_MANAGER_VERSION="^2.7.3"
+        - DEPS=latest
+        - CS_CHECK=true
+    - php: 7.1
+      env:
+        - DEPS=lowest
+    - php: 7.1
+      env:
+        - DEPS=latest
+    - php: hhvm
+      env:
+        - DEPS=lowest
+    - php: hhvm
+      env:
+        - DEPS=latest
   allow_failures:
     - php: hhvm
 
-notifications:
-  irc: "irc.freenode.org#zftalk.dev"
-  email: false
-
 before_install:
-  - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
-  - composer self-update
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
-  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
+  - travis_retry composer self-update
+  - if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini ; fi
+  - composer validate
 
 install:
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
+  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - if [[ $TRAVIS_PHP_VERSION =~ ^7.1 ]]; then travis_retry composer require $COMPOSER_ARGS --update-with-dependencies $CRYPT_DEPS ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
+  - stty cols 120
+  - COLUMNS=120 composer show
 
 script:
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover clover.xml ; fi
-  - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then ./vendor/bin/phpunit ; fi
-  - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then ./vendor/bin/php-cs-fixer fix -v --diff --dry-run ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
+  - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
   - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
 
 after_success:
   - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
 
 after_script:
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      - secure: "N9n2yGM73arOVGnQ45sCT/Y1sbrQd6E8PGj9IJvqj5OJDoUU88cPmtjssM+LO6UoZb6hzYJCkhV+PmasxzQw++iluyTGJk0KUEfQMIACsyewogXcFKoH5/s9M9PrdPqgmewK3AS3HyeD+hDqmZtfjGx75Je03C0idyZ4r/uvd+7l/m+6naIS4a8zwHd0Um6Y5MstLdieAKxyfHRaxvJf34UN1S2wxbIczsg75FzKYCCK34p6bvzje8w+jkdKbFVsPngxlScGdDvlfeNGl1DuC+RO7UFPwS1g9RxDFavy+XpC4uwSXTsmbzs8IkLErtilK36OSCPXRUrwtVN6NjlbAVZclKGersf0fks0eLHfEKsVEM5RozxzusHN3z/iG9ZIv/qHRSwf9cOpi2NrvfAWjzs/jJTCwDgOXEMgFsO3ROY1EA5X9z7QSNzjLi7rPf63gOpZL+dHEI0Tg5Xmec+xrRNH4Sq2mt6TknEhr8AMSA9qti2PO/dbvcyc99qj02rkWbHNCAqPGa77FMB1+Il95hE6Qzrxa7yU1aU5pJKX9OSZq+XuC9khynibL7X9ji55IZnc+DeGyi5QVLvlpSWNuwWONib41h+8DL+bqmUsxFytAQRIKTKfeDm7VbLBGgQMEsr8HMZZj3D9P5Hkys4EWTVVwiliW14/ctyFM9xO/cg="
+    on_success: change
+    on_failure: always

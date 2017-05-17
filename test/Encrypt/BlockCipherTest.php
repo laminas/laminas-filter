@@ -9,13 +9,11 @@
 
 namespace ZendTest\Filter\Encrypt;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Encrypt\BlockCipher as BlockCipherEncryption;
 use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class BlockCipherTest extends \PHPUnit_Framework_TestCase
+class BlockCipherTest extends TestCase
 {
     public function setUp()
     {
@@ -34,11 +32,13 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
     public function testBasicBlockCipher()
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
+        // @codingStandardsIgnoreStart
         $valuesExpected = [
             'STRING' => '5b68e3648f9136e5e9bfaa2242e5b668e7501b2c20e8f9e2c76638f017f62a8eWmVuZEZyYW1ld29yazIuMDpd5vWydswa0fyIo2dnF0Q=',
             'ABC1@3' => 'c7da11b89330f6bbbb15fcb6de574c7ec869ad7187a7d466e60f2437914d927aWmVuZEZyYW1ld29yazIuMKXsBdYXBLQx9elx0B20uxQ=',
             'A b C' => 'ca1b9df732facf9dfadc7c3fdf1ccdc211bf21f638d459f43fefc74bbc9c8e01WmVuZEZyYW1ld29yazIuMM1som/As52rdK/4g7uoYx4='
         ];
+        // @codingStandardsIgnoreEnd
         $filter->setVector('ZendFramework2.0');
         $enc = $filter->getEncryption();
         $this->assertEquals('testkey', $enc['key']);
@@ -61,7 +61,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
 
     public function testWrongSizeVector()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('testvect');
     }
@@ -94,11 +94,11 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
         $filter->setEncryption(
-            ['algorithm' => '3des']
+            ['algorithm' => 'blowfish']
         );
         $this->assertEquals(
             ['key'           => 'testkey',
-                  'algorithm'     => '3des',
+                  'algorithm'     => 'blowfish',
                   'vector'        => '1234567890123456',
                   'key_iteration' => 5000,
                   'hash'          => 'sha256'],
@@ -138,7 +138,8 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructionWithInteger()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options argument');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options argument');
         $filter = new BlockCipherEncryption(1234);
     }
 
@@ -188,7 +189,8 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
     public function testSettingEmptyVector()
     {
         $filter = new BlockCipherEncryption('newkey');
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'The salt (IV) cannot be empty');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The salt (IV) cannot be empty');
         $filter->setVector('');
     }
 
@@ -199,7 +201,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
      */
     public function testEncryptionWithDecryptionAndCompressionMcrypt()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
         }
 

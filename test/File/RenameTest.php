@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\File\Rename as FileRename;
 
-/**
- * @group      Zend_Filter
- */
-class RenameTest extends \PHPUnit_Framework_TestCase
+class RenameTest extends TestCase
 {
     /**
      * Path to test files
@@ -439,7 +438,8 @@ class RenameTest extends \PHPUnit_Framework_TestCase
             ]],
             $filter->getFile()
         );
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'could not be renamed');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('could not be renamed');
         $this->assertEquals($this->newFile, $filter->getNewName($this->oldFile));
     }
 
@@ -542,7 +542,8 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testAddFileWithInvalidOption()
     {
         $filter = new FileRename($this->oldFile);
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options');
         $filter->addFile(1234);
     }
 
@@ -551,7 +552,8 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidConstruction()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options');
         $filter = new FileRename(1234);
     }
 

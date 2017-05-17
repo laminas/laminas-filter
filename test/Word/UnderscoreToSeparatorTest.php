@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\UnderscoreToSeparator as UnderscoreToSeparatorFilter;
 
-/**
- * Test class for Zend\Filter\Word\UnderscoreToSeparator.
- *
- * @group      Zend_Filter
- */
-class UnderscoreToSeparatorTest extends \PHPUnit_Framework_TestCase
+class UnderscoreToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsDefaultSeparator()
     {

@@ -9,9 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\MonthSelect as MonthSelectFilter;
 
-class MonthSelectTest extends \PHPUnit_Framework_TestCase
+class MonthSelectTest extends TestCase
 {
     /**
      * @dataProvider provideFilter

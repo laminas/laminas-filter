@@ -9,19 +9,24 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Tar as TarCompression;
 use Zend\Filter\Exception\ExtensionNotLoadedException;
 
-/**
- * @group      Zend_Filter
- */
-class TarLoadArchiveTarTest extends \PHPUnit_Framework_TestCase
+class TarLoadArchiveTarTest extends TestCase
 {
     public function testArchiveTarNotLoaded()
     {
+        set_error_handler(function ($errno, $errstr) {
+            // PEAR class uses deprecated constructor, which emits a deprecation error
+            return true;
+        }, E_DEPRECATED);
         if (class_exists('Archive_Tar')) {
+            restore_error_handler();
             $this->markTestSkipped('PEAR Archive_Tar is present; skipping test that expects its absence');
         }
+        restore_error_handler();
+
         try {
             $tar = new TarCompression;
             $this->fail('ExtensionNotLoadedException was expected but not thrown');

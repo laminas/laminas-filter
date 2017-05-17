@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\SeparatorToSeparator as SeparatorToSeparatorFilter;
 
-/**
- * Test class for Zend\Filter\Word\SeparatorToSeparator.
- *
- * @group      Zend_Filter
- */
-class SeparatorToSeparatorTest extends \PHPUnit_Framework_TestCase
+class SeparatorToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesWordsByDefault()
     {

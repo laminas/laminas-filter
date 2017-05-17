@@ -9,21 +9,23 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\UpperCaseWords as UpperCaseWordsFilter;
 
 /**
- * Tests for {@see \Zend\Filter\UpperCaseWords}
- *
  * @covers \Zend\Filter\UpperCaseWords
  */
-class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
+class UpperCaseWordsTest extends TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_UpperCaseWords object
      *
      * @var UpperCaseWordsFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_UpperCaseWords object for each test method
@@ -74,7 +76,7 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -89,7 +91,8 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('mbstring required');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'is not supported');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('is not supported');
         $this->_filter->setEncoding('aaaaa');
     }
 
@@ -111,7 +114,7 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -143,7 +146,7 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }

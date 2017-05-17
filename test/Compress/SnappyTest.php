@@ -9,16 +9,15 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Snappy as SnappyCompression;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class SnappyTest extends \PHPUnit_Framework_TestCase
+class SnappyTest extends TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('snappy')) {
+        if (! extension_loaded('snappy')) {
             $this->markTestSkipped('This adapter needs the snappy extension');
         }
     }
@@ -80,10 +79,8 @@ class SnappyTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new SnappyCompression();
 
-        $this->setExpectedException(
-            'Zend\Filter\Exception\RuntimeException',
-            'Error while decompressing.'
-        );
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('Error while decompressing.');
 
         // restore_error_handler can emit an E_WARNING; let's ignore that, as
         // we want to test the returned value

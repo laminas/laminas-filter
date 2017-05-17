@@ -9,18 +9,16 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Decompress as DecompressFilter;
 
-/**
- * @group      Zend_Filter
- */
-class DecompressTest extends \PHPUnit_Framework_TestCase
+class DecompressTest extends TestCase
 {
     public $tmpDir;
 
     public function setUp()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This filter is tested with the bz2 extension');
         }
 

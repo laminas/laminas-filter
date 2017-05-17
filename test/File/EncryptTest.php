@@ -8,13 +8,12 @@
  */
 namespace ZendTest\Filter\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\File\Encrypt as FileEncrypt;
 use Zend\Filter\File\Decrypt as FileDecrypt;
 
-/**
- * @group Zend_Filter
- */
-class EncryptTest extends \PHPUnit_Framework_TestCase
+class EncryptTest extends TestCase
 {
     public $fileToEncrypt;
     public $testDir;
@@ -84,7 +83,8 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
         $filter = new FileEncrypt();
         $filter->setKey('1234567890123456');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not found');
         $filter->filter(sprintf('%s/%s.txt', $this->testDir, uniqid()));
     }
 

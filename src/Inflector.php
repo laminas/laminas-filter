@@ -53,23 +53,23 @@ class Inflector extends AbstractFilter
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = func_get_args();
             $temp    = [];
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['target'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['rules'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['throwTargetExceptionsOn'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['targetReplacementIdentifier'] = array_shift($options);
             }
 
@@ -86,7 +86,7 @@ class Inflector extends AbstractFilter
      */
     public function getPluginManager()
     {
-        if (!$this->pluginManager instanceof FilterPluginManager) {
+        if (! $this->pluginManager instanceof FilterPluginManager) {
             $this->setPluginManager(new FilterPluginManager(new ServiceManager()));
         }
 
@@ -347,11 +347,11 @@ class Inflector extends AbstractFilter
     public function addFilterRule($spec, $ruleSet)
     {
         $spec = $this->_normalizeSpec($spec);
-        if (!isset($this->rules[$spec])) {
+        if (! isset($this->rules[$spec])) {
             $this->rules[$spec] = [];
         }
 
-        if (!is_array($ruleSet)) {
+        if (! is_array($ruleSet)) {
             $ruleSet = [$ruleSet];
         }
 
@@ -421,24 +421,43 @@ class Inflector extends AbstractFilter
             if (isset($source[$ruleName])) {
                 if (is_string($ruleValue)) {
                     // overriding the set rule
-                    $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace('\\', '\\\\', $source[$ruleName]);
+                    $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace(
+                        '\\',
+                        '\\\\',
+                        $source[$ruleName]
+                    );
                 } elseif (is_array($ruleValue)) {
                     $processedPart = $source[$ruleName];
                     foreach ($ruleValue as $ruleFilter) {
                         $processedPart = $ruleFilter($processedPart);
                     }
-                    $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace('\\', '\\\\', $processedPart);
+                    $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace(
+                        '\\',
+                        '\\\\',
+                        $processedPart
+                    );
                 }
             } elseif (is_string($ruleValue)) {
-                $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace('\\', '\\\\', $ruleValue);
+                $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace(
+                    '\\',
+                    '\\\\',
+                    $ruleValue
+                );
             }
         }
 
-        // all of the values of processedParts would have been str_replace('\\', '\\\\', ..)'d to disable preg_replace backreferences
+        // all of the values of processedParts would have been str_replace('\\', '\\\\', ..)'d
+        // to disable preg_replace backreferences
         $inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->target);
 
-        if ($this->throwTargetExceptionsOn && (preg_match('#(?=' . $pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget) == true)) {
-            throw new Exception\RuntimeException('A replacement identifier ' . $this->targetReplacementIdentifier . ' was found inside the inflected target, perhaps a rule was not satisfied with a target source?  Unsatisfied inflected target: ' . $inflectedTarget);
+        if ($this->throwTargetExceptionsOn
+            && (preg_match('#(?=' . $pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget) == true)
+        ) {
+            throw new Exception\RuntimeException(
+                'A replacement identifier ' . $this->targetReplacementIdentifier
+                . ' was found inside the inflected target, perhaps a rule was not satisfied with a target source?  '
+                . 'Unsatisfied inflected target: ' . $inflectedTarget
+            );
         }
 
         return $inflectedTarget;
@@ -450,8 +469,10 @@ class Inflector extends AbstractFilter
      * @param  string $spec
      * @return string
      */
+    // @codingStandardsIgnoreStart
     protected function _normalizeSpec($spec)
     {
+        // @codingStandardsIgnoreEnd
         return ltrim((string) $spec, ':&');
     }
 
@@ -461,8 +482,10 @@ class Inflector extends AbstractFilter
      * @param  string $rule
      * @return FilterInterface
      */
+    // @codingStandardsIgnoreStart
     protected function _getRule($rule)
     {
+        // @codingStandardsIgnoreEnd
         if ($rule instanceof FilterInterface) {
             return $rule;
         }

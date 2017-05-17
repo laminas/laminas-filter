@@ -9,13 +9,12 @@
 
 namespace ZendTest\Filter;
 
-use Zend\Filter\DateTimeFormatter;
 use DateTime;
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\DateTimeFormatter;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class DateTimeFormatterTest extends \PHPUnit_Framework_TestCase
+class DateTimeFormatterTest extends TestCase
 {
     protected $defaultTimezone;
 
@@ -119,7 +118,7 @@ class DateTimeFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidArgumentExceptionThrownOnInvalidInput()
     {
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter('2013-31-31');

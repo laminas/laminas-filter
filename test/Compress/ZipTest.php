@@ -9,16 +9,15 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Zip as ZipCompression;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class ZipTest extends \PHPUnit_Framework_TestCase
+class ZipTest extends TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('zip')) {
+        if (! extension_loaded('zip')) {
             $this->markTestSkipped('This adapter needs the zip extension');
         }
 
@@ -48,7 +47,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        if (!file_exists($this->tmp . '/Compress/First/Second')) {
+        if (! file_exists($this->tmp . '/Compress/First/Second')) {
             mkdir($this->tmp . '/Compress/First/Second', 0777, true);
             file_put_contents($this->tmp . '/Compress/First/Second/zipextracted.txt', 'compress me');
             file_put_contents($this->tmp . '/Compress/First/zipextracted.txt', 'compress me');
@@ -82,7 +81,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        if (!file_exists($this->tmp . '/Compress/First/Second')) {
+        if (! file_exists($this->tmp . '/Compress/First/Second')) {
             mkdir($this->tmp . '/Compress/First/Second', 0777, true);
             file_put_contents($this->tmp . '/Compress/First/Second/zipextracted.txt', 'compress me');
             file_put_contents($this->tmp . '/Compress/First/zipextracted.txt', 'compress me');
@@ -97,7 +96,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicUsage()
     {
-        if (!getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -164,7 +163,8 @@ class ZipTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Testfile.txt', $filter->getTarget());
         $this->assertEquals('Testfile.txt', $filter->getOptions('target'));
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not exist');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not exist');
         $filter->setTarget('/unknown/path/to/file.txt');
     }
 
@@ -175,7 +175,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
      */
     public function testZipCompressFile()
     {
-        if (!getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -203,7 +203,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
      */
     public function testCompressNonExistingTargetFile()
     {
-        if (!getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -230,7 +230,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
      */
     public function testZipCompressDirectory()
     {
-        if (!getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -271,7 +271,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
 
     public function testDecompressWillThrowExceptionWhenDecompressingWithNoTarget()
     {
-        if (!getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -304,7 +304,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecompressWhenNoArchieveInClass()
     {
-        if (!getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! getenv('TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED')) {
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 

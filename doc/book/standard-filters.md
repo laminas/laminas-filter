@@ -908,7 +908,7 @@ printf("%s\n", $filter->filter('message'));
 04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=
 ```
 
-> #### Use diffrent vectors
+> #### Use different vectors
 >
 > For security purposes, it's always better to use a different vector on each
 > encryption. We suggest using `setVector()` only in exceptional circumstances.

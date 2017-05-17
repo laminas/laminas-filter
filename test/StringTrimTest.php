@@ -9,18 +9,18 @@
 
 namespace ZendTest\Filter;
 
-use Zend\Filter\StringTrim;
+use PHPUnit\Framework\TestCase;
 use stdClass;
+use Zend\Filter\StringTrim;
 
-/**
- * @covers \Zend\Filter\StringTrim
- */
-class StringTrimTest extends \PHPUnit_Framework_TestCase
+class StringTrimTest extends TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * @var StringTrim
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend\Filter\StringTrim object for each test method

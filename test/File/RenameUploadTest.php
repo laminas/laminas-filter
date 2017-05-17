@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\File\RenameUpload as FileRenameUpload;
 
-/**
- * @group      Zend_Filter
- */
-class RenameUploadTest extends \PHPUnit_Framework_TestCase
+class RenameUploadTest extends TestCase
 {
     /**
      * Path to test files
@@ -110,10 +109,8 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
         $filter = new FileRenameUpload($this->targetFile);
         $this->assertEquals($this->targetFile, $filter->getTarget());
         $this->assertEquals('falsefile', $filter('falsefile'));
-        $this->setExpectedException(
-            'Zend\Filter\Exception\RuntimeException',
-            'could not be renamed'
-        );
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('could not be renamed');
         $this->assertEquals($this->targetFile, $filter($this->sourceFile));
     }
 
@@ -236,10 +233,8 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($this->targetFile, $filter->getTarget());
         $this->assertFalse($filter->getOverwrite());
-        $this->setExpectedException(
-            'Zend\Filter\Exception\InvalidArgumentException',
-            'already exists'
-        );
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('already exists');
         $this->assertEquals($this->targetFile, $filter($this->sourceFile));
     }
 
@@ -254,7 +249,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
             'randomize'       => true,
         ]);
 
-        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}\.xml#', $filter($this->sourceFile));
+        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.xml#', $filter($this->sourceFile));
     }
 
     public function testGetFileWithOriginalExtension()
@@ -286,7 +281,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
         $oldFilePathInfo = pathinfo($this->sourceFile);
 
         $this->assertRegExp(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}\.'.$oldFilePathInfo['extension'].'#',
+            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.'.$oldFilePathInfo['extension'].'#',
             $filter($this->sourceFile)
         );
     }
@@ -310,7 +305,8 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidConstruction()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid target');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid target');
         $filter = new FileRenameUpload(1234);
     }
 

@@ -10,6 +10,8 @@
 namespace ZendTest\Filter;
 
 use ArrayObject;
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Inflector as InflectorFilter;
 use Zend\Filter\PregReplace;
@@ -19,12 +21,7 @@ use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\ServiceManager\ServiceManager;
 
-/**
- * Test class for Zend\Filter\Inflector.
- *
- * @group      Zend_Filter
- */
-class InflectorTest extends \PHPUnit_Framework_TestCase
+class InflectorTest extends TestCase
 {
     /**
      * @var InflectorFilter
@@ -268,7 +265,8 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
             '?=##'
         );
 
-        $this->setExpectedException('\Zend\Filter\Exception\RuntimeException', 'perhaps a rule was not satisfied');
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('perhaps a rule was not satisfied');
         $filtered = $inflector(['controller' => 'FooBar']);
     }
 
@@ -325,8 +323,10 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         return new ArrayObject($options);
     }
 
+    // @codingStandardsIgnoreStart
     protected function _testOptions($inflector)
     {
+        // @codingStandardsIgnoreEnd
         $options = $this->getOptions();
         $broker  = $inflector->getPluginManager();
         $this->assertEquals($options['target'], $inflector->getTarget());

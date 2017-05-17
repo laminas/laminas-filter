@@ -9,16 +9,14 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Lzf as LzfCompression;
 
-/**
- * @group      Zend_Filter
- */
-class LzfTest extends \PHPUnit_Framework_TestCase
+class LzfTest extends TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('lzf')) {
+        if (! extension_loaded('lzf')) {
             $this->markTestSkipped('This adapter needs the lzf extension');
         }
     }

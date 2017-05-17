@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\UriNormalize;
 
-/**
- * @group      Zend_Filter
- */
-class UriNormalizeTest extends \PHPUnit_Framework_TestCase
+class UriNormalizeTest extends TestCase
 {
     /**
      * @dataProvider abnormalUriProvider

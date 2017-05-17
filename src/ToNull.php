@@ -89,7 +89,7 @@ class ToNull extends AbstractFilter
             $type = array_search($type, $this->constants);
         }
 
-        if (!is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
+        if (! is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unknown type value "%s" (%s)',
                 $type,

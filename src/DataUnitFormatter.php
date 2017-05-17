@@ -59,11 +59,11 @@ final class DataUnitFormatter extends AbstractFilter
      */
     public function __construct($options = [])
     {
-        if (!static::isOptions($options)) {
+        if (! static::isOptions($options)) {
             throw new InvalidArgumentException('The unit filter needs options to work.');
         }
 
-        if (!isset($options['unit'])) {
+        if (! isset($options['unit'])) {
             throw new InvalidArgumentException('The unit filter needs a unit to work with.');
         }
 
@@ -80,7 +80,7 @@ final class DataUnitFormatter extends AbstractFilter
     protected function setMode($mode)
     {
         $mode = strtolower($mode);
-        if (!in_array($mode, self::$modes)) {
+        if (! in_array($mode, self::$modes)) {
             throw new InvalidArgumentException(sprintf('Invalid binary mode: %s', $mode));
         }
         $this->options['mode'] = $mode;
@@ -206,7 +206,7 @@ final class DataUnitFormatter extends AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             return $value;
         }
 

@@ -42,7 +42,7 @@ class Rar extends AbstractCompressionAlgorithm
      */
     public function __construct($options = null)
     {
-        if (!extension_loaded('rar')) {
+        if (! extension_loaded('rar')) {
             throw new Exception\ExtensionNotLoadedException('This filter needs the rar extension');
         }
         parent::__construct($options);
@@ -67,7 +67,7 @@ class Rar extends AbstractCompressionAlgorithm
      */
     public function setCallback($callback)
     {
-        if (!is_callable($callback)) {
+        if (! is_callable($callback)) {
             throw new Exception\InvalidArgumentException('Invalid callback provided');
         }
 
@@ -140,7 +140,7 @@ class Rar extends AbstractCompressionAlgorithm
      */
     public function setTarget($target)
     {
-        if (!file_exists(dirname($target))) {
+        if (! file_exists(dirname($target))) {
             throw new Exception\InvalidArgumentException("The directory '$target' does not exist");
         }
 
@@ -184,7 +184,7 @@ class Rar extends AbstractCompressionAlgorithm
      */
     public function decompress($content)
     {
-        if (!file_exists($content)) {
+        if (! file_exists($content)) {
             throw new Exception\RuntimeException('RAR Archive not found');
         }
 
@@ -196,17 +196,17 @@ class Rar extends AbstractCompressionAlgorithm
             $archive = rar_open($archive);
         }
 
-        if (!$archive) {
+        if (! $archive) {
             throw new Exception\RuntimeException("Error opening the RAR Archive");
         }
 
         $target = $this->getTarget();
-        if (!is_dir($target)) {
+        if (! is_dir($target)) {
             $target = dirname($target);
         }
 
         $filelist = rar_list($archive);
-        if (!$filelist) {
+        if (! $filelist) {
             throw new Exception\RuntimeException("Error reading the RAR Archive");
         }
 

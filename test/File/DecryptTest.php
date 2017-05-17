@@ -9,13 +9,12 @@
 
 namespace ZendTest\Filter\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\File\Decrypt as FileDecrypt;
 use Zend\Filter\File\Encrypt as FileEncrypt;
 
-/**
- * @group      Zend_Filter
- */
-class DecryptTest extends \PHPUnit_Framework_TestCase
+class DecryptTest extends TestCase
 {
     public $fileToEncrypt;
 
@@ -23,7 +22,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('This filter needs the mcrypt extension');
         }
 
@@ -126,7 +125,8 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
         $filter = new FileDecrypt();
         $filter->setVector('1234567890123456');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not found');
         $filter->filter($this->tmpDir . '/nofile.txt');
     }
 

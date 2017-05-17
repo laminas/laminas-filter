@@ -10,16 +10,14 @@
 namespace ZendTest\Filter;
 
 use ArrayIterator;
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\FilterChain;
 use Zend\Filter\PregReplace;
 use Zend\Filter\StringToLower;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 
-/**
- * @group      Zend_Filter
- */
-class FilterChainTest extends \PHPUnit_Framework_TestCase
+class FilterChainTest extends TestCase
 {
     public function testEmptyFilterChainReturnsOriginalValue()
     {
@@ -60,7 +58,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     public function testAllowsConnectingViaClassShortName()
     {
-        if (!function_exists('mb_strtolower')) {
+        if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
         }
 
