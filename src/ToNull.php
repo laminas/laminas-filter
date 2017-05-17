@@ -78,9 +78,9 @@ class ToNull extends AbstractFilter
             $detected = 0;
             foreach ($type as $value) {
                 if (is_int($value)) {
-                    $detected += $value;
+                    $detected |= $value;
                 } elseif (in_array($value, $this->constants)) {
-                    $detected += array_search($value, $this->constants);
+                    $detected |= array_search($value, $this->constants);
                 }
             }
 
@@ -125,48 +125,42 @@ class ToNull extends AbstractFilter
         $type = $this->getType();
 
         // FLOAT (0.0)
-        if ($type >= self::TYPE_FLOAT) {
-            $type -= self::TYPE_FLOAT;
+        if ($type & self::TYPE_FLOAT) {
             if (is_float($value) && ($value == 0.0)) {
                 return;
             }
         }
 
         // STRING ZERO ('0')
-        if ($type >= self::TYPE_ZERO_STRING) {
-            $type -= self::TYPE_ZERO_STRING;
+        if ($type & self::TYPE_ZERO_STRING) {
             if (is_string($value) && ($value == '0')) {
                 return;
             }
         }
 
         // STRING ('')
-        if ($type >= self::TYPE_STRING) {
-            $type -= self::TYPE_STRING;
+        if ($type & self::TYPE_STRING) {
             if (is_string($value) && ($value == '')) {
                 return;
             }
         }
 
         // EMPTY_ARRAY (array())
-        if ($type >= self::TYPE_EMPTY_ARRAY) {
-            $type -= self::TYPE_EMPTY_ARRAY;
+        if ($type & self::TYPE_EMPTY_ARRAY) {
             if (is_array($value) && ($value == [])) {
                 return;
             }
         }
 
         // INTEGER (0)
-        if ($type >= self::TYPE_INTEGER) {
-            $type -= self::TYPE_INTEGER;
+        if ($type & self::TYPE_INTEGER) {
             if (is_int($value) && ($value == 0)) {
                 return;
             }
         }
 
         // BOOLEAN (false)
-        if ($type >= self::TYPE_BOOLEAN) {
-            $type -= self::TYPE_BOOLEAN;
+        if ($type & self::TYPE_BOOLEAN) {
             if (is_bool($value) && ($value == false)) {
                 return;
             }
