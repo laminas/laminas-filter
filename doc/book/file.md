@@ -11,112 +11,120 @@ performing file operations such as renaming.
 
 ## Encrypt and Decrypt
 
-These filters allow encrypting and decrypting content of given file which should 
-be able to be readable and writable. These filters originally derived from 
-`Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. Only file reading and 
-writing operations are performed by itself, encrypting and decrypting operations 
-are performed by parent classes. Basic usage example is below: 
+These filters allow encrypting and decrypting file contents, and are derived
+from the `Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. Only file reading and 
+writing operations are performed by the filer; encryption and decryption operations 
+are performed by the parent classes.
+
+Usage:
 
 ```php
+use Zend\Filter\File\Encrypt as EncryptFileFilter;
 use Zend\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Encrypt(['adapter' => 'BlockCipher', 'key' => '--our-super-secret-key--']);
+$filter = new EncryptFileFilter([
+    'adapter' => 'BlockCipher',
+    'key' => '--our-super-secret-key--',
+]);
 $filter->filter($files['my-upload']);
 ```
 
-In this example, we use constructor injection to inject our options. Also, we 
-can use setter methods to inject options. Check following example: 
+In the above example, we pass options to our constructor in order to configure
+the filter. We could instead use use setter methods to inject these options:
 
 ```php
+use Zend\Filter\File\Encrypt as EncryptFileFilter;
 use Zend\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Encrypt();
+$filter = new EncryptFileFilter();
 $filter->setAdapter('BlockCipher');
 $filter->setKey('--our-super-secret-key--');
 $filter->filter($files['my-upload']);
 ```
 
-Check [documentation](/zend-filter/standard-filters/#encrypt-and-decrypt) of 
-standarts filter of Encrypt and Decrypt for more information about options and 
-adapters. 
+Check the [Encrypt and Decrypt filter documentation](/zend-filter/standard-filters/#encrypt-and-decrypt)
+for more information about options and adapters. 
 
 ## Lowercase
 
-`Zend\Filter\File\Lowercase` can be used to convert given file content to 
+`Zend\Filter\File\Lowercase` can be used to convert all file contents to 
 lowercase. 
 
 ### Supported Options
 
 The following set of options are supported:
 
- - `encoding`: This option can be used to set an encoding to use.
+ - `encoding`: Set the encoding to use during conversion.
 
 ### Basic Usage
 
-Basically, convert all content of a file to lowercase:
-
 ```php
+use Zend\Filter\File\LowerCase;
 use Zend\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\LowerCase();
+$filter = new LowerCase();
 $filter->filter($files['my-upload']);
 ```
 
-In this example, your temporary file content converted to lowercase characters 
-after you uploaded. After this process, you can use [Rename](#rename) or 
-[RenameUpload](#renameupload) filter to replace this file with your original 
-file, or read directly from file. But, don't forget, if you upload a file and 
-send your $_FILES array to filter method, LowerCase filter only change your 
-temporary file (`tmp_name` index of array), not your original file. Let's check 
-following example:
+This example converts the contents of an uploaded file to lowercase.  After this
+process, you can use the [Rename](#rename) or [RenameUpload](#renameupload)
+filter to replace this file with your original file, or read directly from file.
+But, don't forget, if you upload a file and send your `$_FILES` array to a
+filter method, the `LowerCase` filter will only change the temporary file
+(`tmp_name` index of array), not the original file. Let's check following
+example:
 
 ```php
+use Zend\Filter\File\LowerCase;
+use Zend\Filter\File\Rename;
 use Zend\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$lowercaseFilter = new \Zend\Filter\File\LowerCase();
+$lowercaseFilter = new LowerCase();
 $file = $lowercaseFilter->filter($files['userfile']);
-$renameFilter    = new \Zend\Filter\File\Rename([
+$renameFilter = new Rename([
     'target'    => '/tmp/newfile.txt',
     'randomize' => true,
 ]);
 $filename = $renameFilter->filter($file['tmp_name']);
 ```
 
-With this example, we can easily reach content of the converted file. 
+With this example, the final, stored file on the server will have the lowercased
+content.
 
-If you want to use spesific encoding while converting file content, you should 
-send encoding while initiating the `LowerCase` filter or use the `setEncoding`
-method to change. Let's check below example:
+If you want to use a specific encoding when converting file content, you should
+specify the encoding when instantiating the `LowerCase` filter, or use the
+`setEncoding` method to change it.
 
 ```
+use Zend\Filter\File\LowerCase;
 use Zend\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\LowerCase();
+$filter = new LowerCase();
 $filter->setEncoding('ISO-8859-1');
 $filter->filter($files['my-upload']);
 ```
 
-Additionally, `LowerCase` filter extended from `StringToLower`. You can check 
+The `LowerCase` filter extends from the `StringToLower` filter; read the
 [`StringToLower` documentation](/zend-filter/standard-filters/#stringtolower) 
 for more information about encoding and its exceptions.
 
@@ -299,28 +307,28 @@ echo $filter->filter($files['my-upload']);
 
 ## Uppercase
 
-`Zend\Filter\File\Uppercase` can be used to convert given file content to 
+`Zend\Filter\File\Uppercase` can be used to convert all file contents to 
 uppercase. 
 
 ### Supported Options
 
 The following set of options are supported:
 
- - `encoding`: This option can be used to set an encoding to use.
+ - `encoding`: Set the encoding to use during conversion.
 
 ### Basic Usage
 
-Basically, convert all content of a file to lowercase:
-
 ```php
+use Zend\Filter\File\UpperCase;
 use Zend\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\UpperCase();
+$filter = new UpperCase();
 $filter->filter($files['my-upload']);
 ```
 
-You can check [`LowerCase`](#lowercase) filter for more information. 
+See the documentation on the [`LowerCase`](#lowercase) filter, above, for more
+information. 
