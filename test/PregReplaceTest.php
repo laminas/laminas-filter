@@ -8,14 +8,11 @@
  */
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\PregReplace as PregReplaceFilter;
 
-/**
- * Test class for Zend\Filter\PregReplace.
- *
- * @group Zend_Filter
- */
-class PregReplaceTest extends \PHPUnit_Framework_TestCase
+class PregReplaceTest extends TestCase
 {
     /**
      *
@@ -107,14 +104,16 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
         $filter = $this->filter;
         $string = 'controller/action';
         $filter->setReplacement('foo/bar');
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException', 'does not have a valid pattern set');
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('does not have a valid pattern set');
         $filtered = $filter($string);
     }
 
     public function testPassingPatternWithExecModifierRaisesException()
     {
         $filter = new PregReplaceFilter();
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', '"e" pattern modifier');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('"e" pattern modifier');
         $filter->setPattern('/foo/e');
     }
 

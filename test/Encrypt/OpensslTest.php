@@ -9,18 +9,15 @@
 
 namespace ZendTest\Filter\Encrypt;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Encrypt\Openssl as OpensslEncryption;
+use Zend\Filter\Exception;
 
-/**
- * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Filter
- */
-class OpensslTest extends \PHPUnit_Framework_TestCase
+class OpensslTest extends TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('openssl')) {
+        if (! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the openssl extension');
         }
     }
@@ -61,7 +58,8 @@ FDD4V7XpcNU63QIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAFQ22OU/PAN7rRDr23NS
 PIDs9E7uuizAKDhRRRvho8BS
 -----END CERTIFICATE-----
 '],
-            $key);
+            $key
+        );
         foreach ($valuesExpected as $input => $output) {
             $this->assertNotEquals($output, $filter->encrypt($input));
         }
@@ -135,7 +133,8 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt';
         $r = $filter->setPublicKey(['private' => __DIR__ . '/../_files/publickey.pem']);
         $this->assertSame($filter, $r);
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not valid');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not valid');
         $filter->setPublicKey(123);
     }
 
@@ -167,7 +166,8 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 '], $test);
 
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not valid');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not valid');
         $filter->setPrivateKey(123);
     }
 
@@ -217,7 +217,8 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
     {
         $filter = new OpensslEncryption();
 
-        $this->setExpectedException('\Zend\Filter\Exception\RuntimeException', 'without public key');
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('without public key');
         $filter->encrypt('unknown');
     }
 
@@ -262,7 +263,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testEncryptionWithDecryptionAndCompressionWithPackagedKeys()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('Bz2 extension for compression test needed');
         }
 

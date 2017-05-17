@@ -9,13 +9,12 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\RealPath as RealPathFilter;
 
-/**
- * @group      Zend_Filter
- */
-class RealPathTest extends \PHPUnit_Framework_TestCase
+class RealPathTest extends TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Path to test files
      *
@@ -29,6 +28,7 @@ class RealPathTest extends \PHPUnit_Framework_TestCase
      * @var RealPathFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_Basename object for each test method

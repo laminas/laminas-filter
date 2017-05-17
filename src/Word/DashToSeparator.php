@@ -19,7 +19,7 @@ class DashToSeparator extends AbstractSeparator
      */
     public function filter($value)
     {
-        if (!is_scalar($value) && !is_array($value)) {
+        if (! is_scalar($value) && ! is_array($value)) {
             return $value;
         }
 

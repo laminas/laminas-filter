@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\File\LowerCase as FileLowerCase;
 
-/**
- * @group      Zend_Filter
- */
-class LowerCaseTest extends \PHPUnit_Framework_TestCase
+class LowerCaseTest extends TestCase
 {
     protected $testDir;
 
@@ -77,7 +76,8 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileNotFoundException()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not found');
         $filter = new FileLowerCase();
         $filter($this->testFile . 'unknown');
     }

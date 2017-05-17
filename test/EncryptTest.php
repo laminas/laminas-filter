@@ -9,16 +9,15 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Encrypt as EncryptFilter;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class EncryptTest extends \PHPUnit_Framework_TestCase
+class EncryptTest extends TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('mcrypt') and !extension_loaded('openssl')) {
+        if (! extension_loaded('mcrypt') and ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
@@ -30,7 +29,7 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicBlockCipher()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
@@ -58,13 +57,15 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
      */
     public function testEncryptBlockCipher()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
         $encrypt = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $encrypt->setVector('1234567890123456890');
         $encrypted = $encrypt->filter('test');
+        // @codingStandardsIgnoreStart
         $this->assertEquals($encrypted, 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -74,7 +75,7 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicOpenssl()
     {
-        if (!extension_loaded('openssl')) {
+        if (! extension_loaded('openssl')) {
             $this->markTestSkipped('Openssl extension not installed');
         }
 
@@ -108,7 +109,8 @@ FDD4V7XpcNU63QIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAFQ22OU/PAN7rRDr23NS
 PIDs9E7uuizAKDhRRRvho8BS
 -----END CERTIFICATE-----
 '],
-            $key);
+            $key
+        );
         foreach ($valuesExpected as $input => $output) {
             $this->assertNotEquals($output, $filter($input));
         }
@@ -119,7 +121,7 @@ PIDs9E7uuizAKDhRRRvho8BS
      */
     public function testSettingAdapterManually()
     {
-        if (!extension_loaded('mcrypt') or !extension_loaded('openssl')) {
+        if (! extension_loaded('mcrypt') or ! extension_loaded('openssl')) {
             $this->markTestSkipped('Mcrypt or Openssl extension not installed');
         }
 
@@ -132,8 +134,9 @@ PIDs9E7uuizAKDhRRRvho8BS
         $this->assertEquals('BlockCipher', $filter->getAdapter());
         $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
-        $filter->setAdapter('\ZendTest\Filter\TestAdapter2');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not implement');
+        $filter->setAdapter('\stdClass');
     }
 
     /**
@@ -141,11 +144,12 @@ PIDs9E7uuizAKDhRRRvho8BS
      */
     public function testCallingUnknownMethod()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\BadMethodCallException', 'Unknown method');
+        $this->expectException(Exception\BadMethodCallException::class);
+        $this->expectExceptionMessage('Unknown method');
         $filter = new EncryptFilter();
         $filter->getUnknownMethod();
     }
@@ -168,7 +172,7 @@ PIDs9E7uuizAKDhRRRvho8BS
      */
     public function testReturnUnfiltered($input)
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
@@ -178,8 +182,4 @@ PIDs9E7uuizAKDhRRRvho8BS
         $encrypted = $encrypt->filter($input);
         $this->assertEquals($input, $encrypted);
     }
-}
-
-class TestAdapter2
-{
 }

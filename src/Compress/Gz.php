@@ -40,7 +40,7 @@ class Gz extends AbstractCompressionAlgorithm
      */
     public function __construct($options = null)
     {
-        if (!extension_loaded('zlib')) {
+        if (! extension_loaded('zlib')) {
             throw new Exception\ExtensionNotLoadedException('This filter needs the zlib extension');
         }
         parent::__construct($options);
@@ -132,9 +132,9 @@ class Gz extends AbstractCompressionAlgorithm
     public function compress($content)
     {
         $archive = $this->getArchive();
-        if (!empty($archive)) {
+        if (! empty($archive)) {
             $file = gzopen($archive, 'w' . $this->getLevel());
-            if (!$file) {
+            if (! $file) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $this->options['archive'] . "'");
             }
 
@@ -147,7 +147,7 @@ class Gz extends AbstractCompressionAlgorithm
             $compressed = gzcompress($content, $this->getLevel());
         }
 
-        if (!$compressed) {
+        if (! $compressed) {
             throw new Exception\RuntimeException('Error during compression');
         }
 
@@ -167,13 +167,13 @@ class Gz extends AbstractCompressionAlgorithm
         $mode    = $this->getMode();
 
         //check if there are null byte characters before doing a file_exists check
-        if (!strstr($content, "\0") && file_exists($content)) {
+        if (! strstr($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
         if (file_exists($archive)) {
             $handler = fopen($archive, "rb");
-            if (!$handler) {
+            if (! $handler) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
             }
 

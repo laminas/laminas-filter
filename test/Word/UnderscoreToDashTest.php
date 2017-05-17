@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\UnderscoreToDash as UnderscoreToDashFilter;
 
-/**
- * Test class for Zend\Filter\Word\UnderscoreToDash.
- *
- * @group      Zend_Filter
- */
-class UnderscoreToDashTest extends \PHPUnit_Framework_TestCase
+class UnderscoreToDashTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithDashes()
     {

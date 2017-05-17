@@ -9,18 +9,17 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Bz2 as Bz2Compression;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class Bz2Test extends \PHPUnit_Framework_TestCase
+class Bz2Test extends TestCase
 {
     public $target;
 
     public function setUp()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
         }
 
@@ -81,7 +80,7 @@ class Bz2Test extends \PHPUnit_Framework_TestCase
      */
     public function testBz2GetSetOptionsInConstructor()
     {
-        $filter2= new Bz2Compression(['blocksize' => 8]);
+        $filter2 = new Bz2Compression(['blocksize' => 8]);
         $this->assertEquals(['blocksize' => 8, 'archive' => null], $filter2->getOptions());
     }
 
@@ -97,7 +96,8 @@ class Bz2Test extends \PHPUnit_Framework_TestCase
         $filter->setBlocksize(6);
         $this->assertEquals(6, $filter->getOptions('blocksize'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('must be between');
         $filter->setBlocksize(15);
     }
 

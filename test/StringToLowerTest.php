@@ -9,19 +9,20 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\StringToLower as StringToLowerFilter;
 
-/**
- * @group      Zend_Filter
- */
-class StringToLowerTest extends \PHPUnit_Framework_TestCase
+class StringToLowerTest extends TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_StringToLower object
      *
      * @var StringToLowerFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_StringToLower object for each test method
@@ -72,7 +73,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -82,11 +83,12 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFalseEncoding()
     {
-        if (!function_exists('mb_strtolower')) {
+        if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'is not supported');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('is not supported');
         $this->_filter->setEncoding('aaaaa');
     }
 
@@ -106,7 +108,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -138,7 +140,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -148,7 +150,7 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDetectMbInternalEncoding()
     {
-        if (!function_exists('mb_internal_encoding')) {
+        if (! function_exists('mb_internal_encoding')) {
             $this->markTestSkipped("Function 'mb_internal_encoding' not available");
         }
 
@@ -183,10 +185,12 @@ class StringToLowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilterUsesGetEncodingMethod()
     {
-        $filterMock = $this->getMock('Zend\Filter\StringToLower', ['getEncoding']);
+        $filterMock = $this->getMockBuilder(StringToLowerFilter::class)
+            ->setMethods(['getEncoding'])
+            ->getMock();
         $filterMock->expects($this->once())
-                   ->method('getEncoding')
-                   ->with();
+            ->method('getEncoding')
+            ->with();
         $filterMock->filter('foo');
     }
 }

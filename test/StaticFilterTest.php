@@ -9,17 +9,16 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Callback;
 use Zend\Filter\Digits;
 use Zend\Filter\HtmlEntities;
 use Zend\Filter\StaticFilter;
 use Zend\Filter\FilterPluginManager;
+use Zend\ServiceManager\Exception;
 use Zend\ServiceManager\ServiceManager;
 
-/**
- * @group      Zend_Filter
- */
-class StaticFilterTest extends \PHPUnit_Framework_TestCase
+class StaticFilterTest extends TestCase
 {
     /**
      * Resets the default namespaces
@@ -93,7 +92,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testStaticFactoryClassNotFound()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\ExceptionInterface');
+        $this->expectException(Exception\ExceptionInterface::class);
         StaticFilter::execute('1234', 'UnknownFilter');
     }
 

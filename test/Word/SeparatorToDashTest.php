@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\SeparatorToDash as SeparatorToDashFilter;
 
-/**
- * Test class for Zend\Filter\Word\SeparatorToDash.
- *
- * @group      Zend_Filter
- */
-class SeparatorToDashTest extends \PHPUnit_Framework_TestCase
+class SeparatorToDashTest extends TestCase
 {
     public function testFilterSeparatesDashedWordsWithDefaultSpaces()
     {

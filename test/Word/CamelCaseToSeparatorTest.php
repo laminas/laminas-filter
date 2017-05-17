@@ -9,14 +9,10 @@
 
 namespace ZendTest\Filter\Word;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Word\CamelCaseToSeparator as CamelCaseToSeparatorFilter;
 
-/**
- * Test class for Zend\Filter\Word\CamelCaseToSeparator.
- *
- * @group      Zend_Filter
- */
-class CamelCaseToSeparatorTest extends \PHPUnit_Framework_TestCase
+class CamelCaseToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault()
     {

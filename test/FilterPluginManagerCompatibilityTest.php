@@ -9,7 +9,7 @@
 
 namespace ZendTest\Filter;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Zend\Filter\Exception\RuntimeException;
 use Zend\Filter\FilterInterface;

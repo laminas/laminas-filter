@@ -8,7 +8,7 @@
 namespace ZendTest\Filter;
 
 use Interop\Container\ContainerInterface;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Boolean;
 use Zend\Filter\FilterInterface;
 use Zend\Filter\FilterPluginManager;

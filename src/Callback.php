@@ -44,7 +44,7 @@ class Callback extends AbstractFilter
      */
     public function setCallback($callback)
     {
-        if (!is_callable($callback)) {
+        if (! is_callable($callback)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid parameter for callback: must be callable'
             );

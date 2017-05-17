@@ -9,18 +9,17 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Filter\Exception;
 use Zend\Filter\Compress as CompressFilter;
 
-/**
- * @group      Zend_Filter
- */
-class CompressTest extends \PHPUnit_Framework_TestCase
+class CompressTest extends TestCase
 {
     public $tmpDir;
 
     public function setUp()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This filter is tested with the bz2 extension');
         }
 
@@ -113,7 +112,8 @@ class CompressTest extends \PHPUnit_Framework_TestCase
         $filter->setBlocksize(6);
         $this->assertEquals(6, $filter->getOptions('blocksize'));
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('must be between');
         $filter->setBlocksize(15);
     }
 
@@ -186,7 +186,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAdapter()
     {
-        if (!extension_loaded('zlib')) {
+        if (! extension_loaded('zlib')) {
             $this->markTestSkipped('This filter is tested with the zlib extension');
         }
 
@@ -196,7 +196,8 @@ class CompressTest extends \PHPUnit_Framework_TestCase
 
         $filter->setAdapter('\Zend\Filter\Boolean');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not implement');
         $adapter = $filter->getAdapter();
     }
 
@@ -228,7 +229,8 @@ class CompressTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new CompressFilter();
 
-        $this->setExpectedException('\Zend\Filter\Exception\BadMethodCallException', 'Unknown method');
+        $this->expectException(Exception\BadMethodCallException::class);
+        $this->expectExceptionMessage('Unknown method');
         $filter->invalidMethod();
     }
 

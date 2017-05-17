@@ -23,7 +23,7 @@ class ToInt extends AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_scalar($value)) {
+        if (! is_scalar($value)) {
             return $value;
         }
         $value = (string) $value;

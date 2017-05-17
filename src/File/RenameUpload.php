@@ -55,7 +55,7 @@ class RenameUpload extends AbstractFilter
      */
     public function setTarget($target)
     {
-        if (!is_string($target)) {
+        if (! is_string($target)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid target, must be a string'
             );
@@ -159,14 +159,14 @@ class RenameUpload extends AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_scalar($value) && !is_array($value)) {
+        if (! is_scalar($value) && ! is_array($value)) {
             return $value;
         }
 
         // An uploaded file? Retrieve the 'tmp_name'
         $isFileUpload = false;
         if (is_array($value)) {
-            if (!isset($value['tmp_name'])) {
+            if (! isset($value['tmp_name'])) {
                 return $value;
             }
 
@@ -186,7 +186,7 @@ class RenameUpload extends AbstractFilter
         }
 
         $targetFile = $this->getFinalTarget($uploadData);
-        if (!file_exists($sourceFile) || $sourceFile == $targetFile) {
+        if (! file_exists($sourceFile) || $sourceFile == $targetFile) {
             return $value;
         }
 
@@ -215,7 +215,7 @@ class RenameUpload extends AbstractFilter
         ErrorHandler::start();
         $result = move_uploaded_file($sourceFile, $targetFile);
         $warningException = ErrorHandler::stop();
-        if (!$result || null !== $warningException) {
+        if (! $result || null !== $warningException) {
             throw new Exception\RuntimeException(
                 sprintf("File '%s' could not be renamed. An error occurred while processing the file.", $sourceFile),
                 0,
@@ -251,7 +251,7 @@ class RenameUpload extends AbstractFilter
     {
         $source = $uploadData['tmp_name'];
         $target = $this->getTarget();
-        if (!isset($target) || $target == '*') {
+        if (! isset($target) || $target == '*') {
             $target = $source;
         }
 
@@ -270,9 +270,9 @@ class RenameUpload extends AbstractFilter
         // Get the target filename
         if ($this->getUseUploadName()) {
             $targetFile = basename($uploadData['name']);
-        } elseif (!is_dir($target)) {
+        } elseif (! is_dir($target)) {
             $targetFile = basename($target);
-            if ($this->getUseUploadExtension() && !$this->getRandomize()) {
+            if ($this->getUseUploadExtension() && ! $this->getRandomize()) {
                 $targetInfo = pathinfo($targetFile);
                 $sourceinfo = pathinfo($uploadData['name']);
                 if (isset($sourceinfo['extension'])) {
@@ -298,7 +298,7 @@ class RenameUpload extends AbstractFilter
     protected function applyRandomToFilename($source, $filename)
     {
         $info = pathinfo($filename);
-        $filename = $info['filename'] . uniqid('_');
+        $filename = $info['filename'] . str_replace('.', '_', uniqid('_', true));
 
         $sourceinfo = pathinfo($source);
 

@@ -9,9 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\DateSelect as DateSelectFilter;
 
-class DateSelectTest extends \PHPUnit_Framework_TestCase
+class DateSelectTest extends TestCase
 {
     /**
      * @dataProvider provideFilter

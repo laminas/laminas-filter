@@ -9,12 +9,11 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Boolean as BooleanFilter;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class BooleanTest extends \PHPUnit_Framework_TestCase
+class BooleanTest extends TestCase
 {
     public function testConstructorOptions()
     {
@@ -124,7 +123,8 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
     public function testSettingFalseType()
     {
         $filter = new BooleanFilter();
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Unknown type value');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown type value');
         $filter->setType(true);
     }
 

@@ -9,15 +9,14 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Blacklist as BlacklistFilter;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayObject;
+use Zend\Stdlib\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class BlacklistTest extends \PHPUnit_Framework_TestCase
+class BlacklistTest extends TestCase
 {
     public function testConstructorOptions()
     {
@@ -48,7 +47,7 @@ class BlacklistTest extends \PHPUnit_Framework_TestCase
 
     public function testNullListShouldThrowException()
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new BlacklistFilter([
             'list' => null,
         ]);

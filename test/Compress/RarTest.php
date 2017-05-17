@@ -9,18 +9,17 @@
 
 namespace ZendTest\Filter\Compress;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Compress\Rar as RarCompression;
+use Zend\Filter\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class RarTest extends \PHPUnit_Framework_TestCase
+class RarTest extends TestCase
 {
     public $tmp;
 
     public function setUp()
     {
-        if (!extension_loaded('rar')) {
+        if (! extension_loaded('rar')) {
             $this->markTestSkipped('This adapter needs the rar extension');
         }
 
@@ -174,7 +173,8 @@ class RarTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Testfile.txt', $filter->getTarget());
         $this->assertEquals('Testfile.txt', $filter->getOptions('target'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'does not exist');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not exist');
         $filter->setTarget('/unknown/path/to/file.txt');
     }
 
@@ -196,7 +196,8 @@ class RarTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new RarCompression();
 
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException', 'No compression callback available');
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('No compression callback available');
         $filter->compress('test.txt');
     }
 
@@ -204,7 +205,8 @@ class RarTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new RarCompression();
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'Invalid callback provided');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid callback provided');
         $filter->setCallback('invalidCallback');
     }
 

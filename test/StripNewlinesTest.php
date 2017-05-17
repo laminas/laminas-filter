@@ -8,12 +8,10 @@
  */
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\StripNewlines as StripNewlinesFilter;
 
-/**
- * @group Zend_Filter
- */
-class StripNewlinesTest extends \PHPUnit_Framework_TestCase
+class StripNewlinesTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior

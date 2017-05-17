@@ -9,12 +9,10 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\Null as NullFilter;
 
-/**
- * @group      Zend_Filter
- */
-class NullTest extends \PHPUnit_Framework_TestCase
+class NullTest extends TestCase
 {
     public function setUp()
     {
@@ -25,7 +23,7 @@ class NullTest extends \PHPUnit_Framework_TestCase
 
     public function testRaisesNoticeOnInstantiation()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Deprecated');
+        $this->expectException('PHPUnit_Framework_Error_Deprecated');
         new NullFilter();
     }
 }

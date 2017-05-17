@@ -9,15 +9,14 @@
 
 namespace ZendTest\Filter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Whitelist as WhitelistFilter;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayObject;
+use Zend\Stdlib\Exception;
 
-/**
- * @group      Zend_Filter
- */
-class WhitelistTest extends \PHPUnit_Framework_TestCase
+class WhitelistTest extends TestCase
 {
     public function testConstructorOptions()
     {
@@ -48,7 +47,7 @@ class WhitelistTest extends \PHPUnit_Framework_TestCase
 
     public function testNullListShouldThrowException()
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new WhitelistFilter([
             'list' => null,
         ]);
