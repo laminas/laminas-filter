@@ -2,6 +2,7 @@
 
 namespace Zend\Filter\Word\Service;
 
+use Traversable;
 use Interop\Container\ContainerInterface;
 use Zend\Filter\Word\SeparatorToSeparator;
 use Zend\ServiceManager\Exception\InvalidServiceException;
