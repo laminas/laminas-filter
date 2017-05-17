@@ -14,6 +14,9 @@ All notable changes to this project will be documented in this file, in reverse 
   `Callback` filter's `setCallback()` method to allow passing a string name of a
   class that is instantiable without constructor arguments, and which defines
   `__invoke()`.
+- [#43](https://github.com/zendframework/zend-filter/pull/43) updates the
+  exception thrown by the `File\Rename` filter when the target already exists to
+  indicate the target filename path.
 
 ### Deprecated
 
