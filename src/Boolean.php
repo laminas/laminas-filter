@@ -67,7 +67,10 @@ class Boolean extends AbstractFilter
             }
 
             if (is_array($typeOrOptions)) {
-                if (isset($typeOrOptions['type']) || isset($typeOrOptions['casting']) || isset($typeOrOptions['translations'])) {
+                if (isset($typeOrOptions['type'])
+                    || isset($typeOrOptions['casting'])
+                    || isset($typeOrOptions['translations'])
+                ) {
                     $this->setOptions($typeOrOptions);
                 } else {
                     $this->setType($typeOrOptions);
@@ -106,7 +109,7 @@ class Boolean extends AbstractFilter
             $type = array_search($type, $this->constants);
         }
 
-        if (!is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
+        if (! is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unknown type value "%s" (%s)',
                 $type,
@@ -159,7 +162,7 @@ class Boolean extends AbstractFilter
      */
     public function setTranslations($translations)
     {
-        if (!is_array($translations) && !$translations instanceof Traversable) {
+        if (! is_array($translations) && ! $translations instanceof Traversable) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
@@ -212,7 +215,7 @@ class Boolean extends AbstractFilter
                 return false;
             }
 
-            if (!$casting && is_string($value) && (strtolower($value) == 'true')) {
+            if (! $casting && is_string($value) && (strtolower($value) == 'true')) {
                 return true;
             }
         }
@@ -240,7 +243,7 @@ class Boolean extends AbstractFilter
                 return false;
             }
 
-            if (!$casting && (is_string($value)) && ($value == '1')) {
+            if (! $casting && (is_string($value)) && ($value == '1')) {
                 return true;
             }
         }
@@ -260,7 +263,7 @@ class Boolean extends AbstractFilter
                 return false;
             }
 
-            if (!$casting && is_float($value) && ($value == 1.0)) {
+            if (! $casting && is_float($value) && ($value == 1.0)) {
                 return true;
             }
         }
@@ -272,7 +275,7 @@ class Boolean extends AbstractFilter
                 return false;
             }
 
-            if (!$casting && is_int($value) && ($value == 1)) {
+            if (! $casting && is_int($value) && ($value == 1)) {
                 return true;
             }
         }

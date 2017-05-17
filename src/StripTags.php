@@ -52,15 +52,15 @@ class StripTags extends AbstractFilter
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
-        if ((!is_array($options)) || (is_array($options) && !array_key_exists('allowTags', $options) &&
-            !array_key_exists('allowAttribs', $options) && !array_key_exists('allowComments', $options))) {
+        if ((! is_array($options)) || (is_array($options) && ! array_key_exists('allowTags', $options) &&
+            ! array_key_exists('allowAttribs', $options) && ! array_key_exists('allowComments', $options))) {
             $options = func_get_args();
             $temp['allowTags'] = array_shift($options);
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['allowAttribs'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['allowComments'] = array_shift($options);
             }
 
@@ -94,7 +94,7 @@ class StripTags extends AbstractFilter
      */
     public function setTagsAllowed($tagsAllowed)
     {
-        if (!is_array($tagsAllowed)) {
+        if (! is_array($tagsAllowed)) {
             $tagsAllowed = [$tagsAllowed];
         }
 
@@ -146,7 +146,7 @@ class StripTags extends AbstractFilter
      */
     public function setAttributesAllowed($attributesAllowed)
     {
-        if (!is_array($attributesAllowed)) {
+        if (! is_array($attributesAllowed)) {
             $attributesAllowed = [$attributesAllowed];
         }
 
@@ -173,7 +173,7 @@ class StripTags extends AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_scalar($value)) {
+        if (! is_scalar($value)) {
             return $value;
         }
         $value = (string) $value;
@@ -185,7 +185,7 @@ class StripTags extends AbstractFilter
             $value = substr($value, $pos);
 
             // If there is no comment closing tag, strip whole text
-            if (!preg_match('/--\s*>/s', $value)) {
+            if (! preg_match('/--\s*>/s', $value)) {
                 $value = '';
             } else {
                 $value = preg_replace('/<(?:!(?:--[\s\S]*?--\s*)?(>))/s', '', $value);
@@ -227,8 +227,10 @@ class StripTags extends AbstractFilter
      * @param  string $tag
      * @return string
      */
+    // @codingStandardsIgnoreStart
     protected function _filterTag($tag)
     {
+        // @codingStandardsIgnoreEnd
         // Parse the tag into:
         // 1. a starting delimiter (mandatory)
         // 2. a tag name (if available)
@@ -237,7 +239,7 @@ class StripTags extends AbstractFilter
         $isMatch = preg_match('~(</?)(\w*)((/(?!>)|[^/>])*)(/?>)~', $tag, $matches);
 
         // If the tag does not match, then strip the tag entirely
-        if (!$isMatch) {
+        if (! $isMatch) {
             return '';
         }
 
@@ -248,7 +250,7 @@ class StripTags extends AbstractFilter
         $tagEnd        = $matches[5];
 
         // If the tag is not an allowed tag, then remove the tag entirely
-        if (!isset($this->tagsAllowed[$tagName])) {
+        if (! isset($this->tagsAllowed[$tagName])) {
             return '';
         }
 
@@ -270,8 +272,8 @@ class StripTags extends AbstractFilter
                 $attributeValue     = (strlen($matches[3][$index]) == 0) ? $matches[5][$index] : $matches[3][$index];
 
                 // If the attribute is not allowed, then remove it entirely
-                if (!array_key_exists($attributeName, $this->tagsAllowed[$tagName])
-                    && !array_key_exists($attributeName, $this->attributesAllowed)) {
+                if (! array_key_exists($attributeName, $this->tagsAllowed[$tagName])
+                    && ! array_key_exists($attributeName, $this->attributesAllowed)) {
                     continue;
                 }
                 // Add the attribute to the accumulator

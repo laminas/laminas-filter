@@ -20,7 +20,7 @@ class Bz2Test extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
         }
 
@@ -81,7 +81,7 @@ class Bz2Test extends \PHPUnit_Framework_TestCase
      */
     public function testBz2GetSetOptionsInConstructor()
     {
-        $filter2= new Bz2Compression(['blocksize' => 8]);
+        $filter2 = new Bz2Compression(['blocksize' => 8]);
         $this->assertEquals(['blocksize' => 8, 'archive' => null], $filter2->getOptions());
     }
 

@@ -33,7 +33,7 @@ class Digits extends AbstractFilter
         }
         $value = (string) $value;
 
-        if (!StringUtils::hasPcreUnicodeSupport()) {
+        if (! StringUtils::hasPcreUnicodeSupport()) {
             // POSIX named classes are not supported, use alternative 0-9 match
             $pattern = '/[^0-9]/';
         } elseif (extension_loaded('mbstring')) {

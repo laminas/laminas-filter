@@ -20,7 +20,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('bz2')) {
+        if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This filter is tested with the bz2 extension');
         }
 
@@ -186,7 +186,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAdapter()
     {
-        if (!extension_loaded('zlib')) {
+        if (! extension_loaded('zlib')) {
             $this->markTestSkipped('This filter is tested with the zlib extension');
         }
 

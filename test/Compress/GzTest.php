@@ -20,7 +20,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!extension_loaded('zlib')) {
+        if (! extension_loaded('zlib')) {
             $this->markTestSkipped('This adapter needs the zlib extension');
         }
 
@@ -83,7 +83,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
      */
     public function testGzGetSetOptionsInConstructor()
     {
-        $filter2= new GzCompression(['level' => 8]);
+        $filter2 = new GzCompression(['level' => 8]);
         $this->assertEquals(['mode' => 'compress', 'level' => 8, 'archive' => null], $filter2->getOptions());
     }
 

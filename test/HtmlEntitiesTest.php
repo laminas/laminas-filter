@@ -19,12 +19,14 @@ use Zend\Stdlib\ErrorHandler;
  */
 class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend\Filter\HtmlEntities object
      *
      * @var \Zend\Filter\HtmlEntities
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend\Filter\HtmlEntities object for each test method

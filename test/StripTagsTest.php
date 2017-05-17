@@ -16,12 +16,14 @@ use Zend\Filter\StripTags as StripTagsFilter;
  */
 class StripTagsTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_StripTags object
      *
      * @var StripTagsFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_StripTags object for each test method
@@ -517,7 +519,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     public function testNotClosedHtmlCommentAtEndOfString()
     {
         $input    = 'text<!-- not closed comment at the end';
-        $expected =  'text';
+        $expected = 'text';
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 

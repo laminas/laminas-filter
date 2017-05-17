@@ -18,7 +18,7 @@ class SnappyTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('snappy')) {
+        if (! extension_loaded('snappy')) {
             $this->markTestSkipped('This adapter needs the snappy extension');
         }
     }

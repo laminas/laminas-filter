@@ -40,7 +40,7 @@ class Rename extends Filter\AbstractFilter
             $options = ArrayUtils::iteratorToArray($options);
         } elseif (is_string($options)) {
             $options = ['target' => $options];
-        } elseif (!is_array($options)) {
+        } elseif (! is_array($options)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid options argument provided to filter'
             );
@@ -96,7 +96,7 @@ class Rename extends Filter\AbstractFilter
     {
         if (is_string($options)) {
             $options = ['target' => $options];
-        } elseif (!is_array($options)) {
+        } elseif (! is_array($options)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid options to rename filter provided'
             );
@@ -119,7 +119,7 @@ class Rename extends Filter\AbstractFilter
     public function getNewName($value, $source = false)
     {
         $file = $this->_getFileName($value);
-        if (!is_array($file)) {
+        if (! is_array($file)) {
             return $file;
         }
 
@@ -127,7 +127,7 @@ class Rename extends Filter\AbstractFilter
             return $value;
         }
 
-        if (!file_exists($file['source'])) {
+        if (! file_exists($file['source'])) {
             return $value;
         }
 
@@ -160,14 +160,14 @@ class Rename extends Filter\AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_scalar($value) && !is_array($value)) {
+        if (! is_scalar($value) && ! is_array($value)) {
             return $value;
         }
 
         // An uploaded file? Retrieve the 'tmp_name'
         $isFileUpload = false;
         if (is_array($value)) {
-            if (!isset($value['tmp_name'])) {
+            if (! isset($value['tmp_name'])) {
                 return $value;
             }
 
@@ -211,8 +211,10 @@ class Rename extends Filter\AbstractFilter
      * @param  array $options
      * @return array
      */
+    // @codingStandardsIgnoreStart
     protected function _convertOptions($options)
     {
+        // @codingStandardsIgnoreEnd
         $files = [];
         foreach ($options as $key => $value) {
             if (is_array($value)) {
@@ -270,7 +272,7 @@ class Rename extends Filter\AbstractFilter
             }
         }
 
-        if (!$found) {
+        if (! $found) {
             $count               = count($this->files);
             $this->files[$count] = $files;
         }
@@ -285,12 +287,14 @@ class Rename extends Filter\AbstractFilter
      * @param  string $file Filename to get the informations for
      * @return array|string
      */
+    // @codingStandardsIgnoreStart
     protected function _getFileName($file)
     {
+        // @codingStandardsIgnoreEnd
         $rename = [];
         foreach ($this->files as $value) {
             if ($value['source'] == '*') {
-                if (!isset($rename['source'])) {
+                if (! isset($rename['source'])) {
                     $rename           = $value;
                     $rename['source'] = $file;
                 }
@@ -302,11 +306,11 @@ class Rename extends Filter\AbstractFilter
             }
         }
 
-        if (!isset($rename['source'])) {
+        if (! isset($rename['source'])) {
             return $file;
         }
 
-        if (!isset($rename['target']) || $rename['target'] == '*') {
+        if (! isset($rename['target']) || $rename['target'] == '*') {
             $rename['target'] = $rename['source'];
         }
 

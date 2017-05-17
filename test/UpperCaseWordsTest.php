@@ -18,12 +18,14 @@ use Zend\Filter\UpperCaseWords as UpperCaseWordsFilter;
  */
 class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
 {
+    // @codingStandardsIgnoreStart
     /**
      * Zend_Filter_UpperCaseWords object
      *
      * @var UpperCaseWordsFilter
      */
     protected $_filter;
+    // @codingStandardsIgnoreEnd
 
     /**
      * Creates a new Zend_Filter_UpperCaseWords object for each test method

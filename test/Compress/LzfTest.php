@@ -18,7 +18,7 @@ class LzfTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('lzf')) {
+        if (! extension_loaded('lzf')) {
             $this->markTestSkipped('This adapter needs the lzf extension');
         }
     }
