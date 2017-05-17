@@ -42,6 +42,8 @@ All notable changes to this project will be documented in this file, in reverse 
   operations, ensuring that if the same type is specified multiple times via the
   options, it will be aggregated correctly internally, and thus ensure correct
   operation of the filter.
+- [#55](https://github.com/zendframework/zend-filter/pull/55) adds a missing
+  import statement to the `Word\SeparatorToSeparatorFactory`.
 
 ## 2.7.1 - 2016-04-18
 
