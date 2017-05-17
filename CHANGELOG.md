@@ -41,6 +41,9 @@ All notable changes to this project will be documented in this file, in reverse 
   ensuring it is injecting the relevant configuration from the `config` service
   and thus seeding it with configured translator loader services. This means
   that the `filters` configuration will now be honored in non-zend-mvc contexts.
+- [#36](https://github.com/zendframework/zend-filter/pull/36) fixes an issue in
+  the constructor whereby a discovered option was not removed from the options
+  list after being used to set the compression algorithm.
 
 ## 2.7.1 - 2016-04-18
 

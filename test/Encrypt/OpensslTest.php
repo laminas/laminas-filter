@@ -10,6 +10,7 @@
 namespace ZendTest\Filter\Encrypt;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 use Zend\Filter\Encrypt\Openssl as OpensslEncryption;
 use Zend\Filter\Exception;
 
@@ -278,5 +279,16 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter->setPrivateKey(__DIR__ . '/../_files/privatekey_pass.pem', $phrase);
         $input = $filter->decrypt($output);
         $this->assertEquals('teststring', trim($input));
+    }
+
+    public function testPassCompressionConfigWillBeUnsetCorrectly()
+    {
+        $filter = new OpensslEncryption([
+            'compression' => 'bz2',
+        ]);
+
+        $r = new ReflectionProperty($filter, 'keys');
+        $r->setAccessible(true);
+        $this->assertArrayNotHasKey('compression', $r->getValue($filter));
     }
 }
