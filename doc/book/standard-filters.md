@@ -340,6 +340,19 @@ $filter = new Zend\Filter\Callback(array('MyClass', 'reverse'));
 print $filter->filter('Hello!');
 ```
 
+As of PHP 5.5 you can use ::class resolution for given callback class:
+
+```php
+class MyClass
+{
+    public function __invoke($param);
+}
+
+// The filter definition
+$filter = new Zend\Filter\Callback(MyClass::class);
+print $filter->filter('Hello!');
+```
+
 To get the actual set callback use `getCallback()` and to set another callback
 use `setCallback()`.
 

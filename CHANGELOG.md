@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
+### Changes
+
+- [#40](https://github.com/zendframework/zend-filter/pull/40) updates the
+  `Callback` filter's `setCallback()` method to allow passing a string name of a
+  class that is instantiable without constructor arguments, and which defines
+  `__invoke()`.
+
 ### Deprecated
 
 - Nothing.
