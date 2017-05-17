@@ -62,10 +62,15 @@ class BlockCipher implements EncryptionAlgorithmInterface
      */
     public function __construct($options)
     {
+        $cipherPluginManager = CryptBlockCipher::getSymmetricPluginManager();
+        $cipherType = $cipherPluginManager->has('openssl') ? 'openssl' : 'mcrypt';
         try {
-            $this->blockCipher = CryptBlockCipher::factory('mcrypt', $this->encryption);
+            $this->blockCipher = CryptBlockCipher::factory($cipherType, $this->encryption);
         } catch (SymmetricException\RuntimeException $e) {
-            throw new Exception\RuntimeException('The BlockCipher cannot be used without the Mcrypt extension');
+            throw new Exception\RuntimeException(sprintf(
+                'The BlockCipher cannot be used without the %s extension',
+                $cipherType
+            ));
         }
 
         if ($options instanceof Traversable) {

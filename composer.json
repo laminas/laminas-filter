@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "pear/archive_tar": "^1.4",
-        "zendframework/zend-crypt": "^2.6",
+        "zendframework/zend-crypt": "^2.6 || ^3.0",
         "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
         "zendframework/zend-uri": "^2.5",
         "phpunit/PHPUnit": "^6.0.10 || ^5.7.17",

@@ -94,11 +94,11 @@ class BlockCipherTest extends TestCase
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
         $filter->setEncryption(
-            ['algorithm' => '3des']
+            ['algorithm' => 'blowfish']
         );
         $this->assertEquals(
             ['key'           => 'testkey',
-                  'algorithm'     => '3des',
+                  'algorithm'     => 'blowfish',
                   'vector'        => '1234567890123456',
                   'key_iteration' => 5000,
                   'hash'          => 'sha256'],
