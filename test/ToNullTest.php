@@ -100,6 +100,40 @@ class ToNullTest extends TestCase
         $this->assertEquals(63, $filter->getType());
     }
 
+    /**
+     * Ensures that providing a duplicate initializing type results in the expected type
+     *
+     * @param mixed $type Type to duplicate initialization
+     * @param mixed $expected Expected resulting type
+     *
+     * @dataProvider duplicateTypeProvider
+     */
+    public function testDuplicateInitializationResultsInCorrectType($type, $expected)
+    {
+        $filter = new ToNullFilter([$type, $type]);
+        $this->assertEquals($expected, $filter->getType());
+    }
+
+    public static function duplicateTypeProvider()
+    {
+        return [
+            [ToNullFilter::TYPE_BOOLEAN, ToNullFilter::TYPE_BOOLEAN,],
+            [ToNullFilter::TYPE_INTEGER, ToNullFilter::TYPE_INTEGER,],
+            [ToNullFilter::TYPE_EMPTY_ARRAY, ToNullFilter::TYPE_EMPTY_ARRAY,],
+            [ToNullFilter::TYPE_STRING, ToNullFilter::TYPE_STRING,],
+            [ToNullFilter::TYPE_ZERO_STRING, ToNullFilter::TYPE_ZERO_STRING,],
+            [ToNullFilter::TYPE_FLOAT, ToNullFilter::TYPE_FLOAT,],
+            [ToNullFilter::TYPE_ALL, ToNullFilter::TYPE_ALL,],
+            ['boolean', ToNullFilter::TYPE_BOOLEAN,],
+            ['integer', ToNullFilter::TYPE_INTEGER,],
+            ['array', ToNullFilter::TYPE_EMPTY_ARRAY,],
+            ['string', ToNullFilter::TYPE_STRING,],
+            ['zero', ToNullFilter::TYPE_ZERO_STRING,],
+            ['float', ToNullFilter::TYPE_FLOAT,],
+            ['all', ToNullFilter::TYPE_ALL,],
+        ];
+    }
+
     public static function defaultTestProvider()
     {
         return [
