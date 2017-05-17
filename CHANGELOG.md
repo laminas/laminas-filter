@@ -36,10 +36,12 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#36](https://github.com/zendframework/zend-filter/pull/36) fixes an issue in
   the constructor whereby a discovered option was not removed from the options
   list after being used to set the compression algorithm.
-- [#49](https://github.com/zendframework/zend-filter/pull/49) fixes logic within
-  the `Boolean` filter to use boolean rather than arithmetic operations,
-  ensuring that if the same type is specified multiple times via the options, it
-  will be represented correctly.
+- [#49](https://github.com/zendframework/zend-filter/pull/49) and
+  [#51](https://github.com/zendframework/zend-filter/pull/51) fix logic within
+  the `Boolean` and `ToNull` filters to use boolean rather than arithmetic
+  operations, ensuring that if the same type is specified multiple times via the
+  options, it will be aggregated correctly internally, and thus ensure correct
+  operation of the filter.
 
 ## 2.7.1 - 2016-04-18
 
