@@ -3,26 +3,29 @@
     "description": "provides a set of commonly needed data filters",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "zf",
+        "zendframework",
         "filter"
     ],
-    "homepage": "https://github.com/zendframework/zend-filter",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Filter\\": "src/"
-        }
+    "support": {
+        "docs": "https://docs.zendframework.com/zend-filter/",
+        "issues": "https://github.com/zendframework/zend-filter/issues",
+        "source": "https://github.com/zendframework/zend-filter",
+        "rss": "https://github.com/zendframework/zend-filter/releases.atom",
+        "slack": "https://zendframework-slack.herokuapp.com",
+        "forum": "https://discourse.zendframework.com/c/questions/components"
     },
     "require": {
-        "php": "^5.5 || ^7.0",
-        "zendframework/zend-stdlib": "^2.7 || ^3.0"
+        "php": "^5.6 || ^7.0",
+        "zendframework/zend-stdlib": "^2.7.7 || ^3.1"
     },
     "require-dev": {
-        "pear/archive_tar": "^1.4",
-        "zendframework/zend-crypt": "^2.6 || ^3.0",
-        "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
-        "zendframework/zend-uri": "^2.5",
-        "phpunit/PHPUnit": "^6.0.10 || ^5.7.17",
-        "zendframework/zend-coding-standard": "~1.0.0"
+        "pear/archive_tar": "^1.4.3",
+        "phpunit/PHPUnit": "^5.7.23 || ^6.4.3",
+        "zendframework/zend-coding-standard": "~1.0.0",
+        "zendframework/zend-crypt": "^2.6 || ^3.2.1",
+        "zendframework/zend-servicemanager": "^2.7.8 || ^3.3",
+        "zendframework/zend-uri": "^2.5.2"
     },
     "suggest": {
         "zendframework/zend-crypt": "Zend\\Crypt component, for encryption filters",
@@ -30,8 +33,19 @@
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for using the filter chain functionality",
         "zendframework/zend-uri": "Zend\\Uri component, for the UriNormalize filter"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Zend\\Filter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZendTest\\Filter\\": "test/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.7-dev",
@@ -40,11 +54,6 @@
         "zf": {
             "component": "Zend\\Filter",
             "config-provider": "Zend\\Filter\\ConfigProvider"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Filter\\": "test/"
         }
     },
     "scripts": {
