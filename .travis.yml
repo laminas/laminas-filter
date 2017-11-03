@@ -56,6 +56,7 @@ matrix:
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - if [[ $TRAVIS_PHP_VERSION =~ ^7.2 ]]; then travis_retry pecl install mcrypt ; fi
 
 install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
