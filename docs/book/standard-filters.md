@@ -784,7 +784,7 @@ The following options are supported for `Zend\Filter\Encrypt` and
 - `algorithm`: The algorithm to use with `Zend\Crypt\Symmetric\Mcrypt` (use the
   the `getSupportedAlgorithms()` method of that class to determine what is
   supported). If not set, it defaults to `aes`, the Advanced Encryption Standard
-  (see the [zend-crypt BlockCipher documentation](http://zendframework.github.io/zend-crypt/block-cipher/)
+  (see the [zend-crypt BlockCipher documentation](https://docs.zendframework.com/zend-crypt/block-cipher/)
   for details).
 - `key`: The encryption key with which the input will be encrypted. You need the
   same key for decryption.

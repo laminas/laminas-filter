@@ -9,4 +9,4 @@ be applied to a single datum in a user-defined order.
 
 
 - File issues at https://github.com/zendframework/zend-filter/issues
-- Documentation is at https://zendframework.github.io/zend-filter/
+- Documentation is at https://docs.zendframework.com/zend-filter/
