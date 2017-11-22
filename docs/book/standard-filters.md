@@ -20,7 +20,7 @@ Alnum([ boolean $allowWhiteSpace [, string $locale ]])
 ```
 
 - `$allowWhiteSpace`: If set to true, then whitespace characters are allowed.
-  Otherwise they are suppressed. Default is `false` (whitespace is not allowed).  
+  Otherwise they are suppressed. Default is `false` (whitespace is not allowed).
   Methods for getting/setting the `allowWhiteSpace` option are also available:
   `getAllowWhiteSpace()` and `setAllowWhiteSpace()`.
 
@@ -272,13 +272,13 @@ are returned without change when `casting` is set to `FALSE`
 Type | True | False
 ---- | ---- | -----
 `Zend\Filter\Boolean::TYPE_BOOLEAN` | `TRUE` | `FALSE`
-`Zend\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array()` | 
+`Zend\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array()` |
 `Zend\Filter\Boolean::TYPE_FALSE_STRING` | `"false"` (case insensitive) | `"true"` (case insensitive)
 `Zend\Filter\Boolean::TYPE_FLOAT` | `0.0` | `1.0`
 `Zend\Filter\Boolean::TYPE_INTEGER` | `0` | `1`
 `Zend\Filter\Boolean::TYPE_LOCALIZED` | localized `"yes"` (case insensitive) | localized `"no"` (case insensitive)
-`Zend\Filter\Boolean::TYPE_NULL` | `NULL` | 
-`Zend\Filter\Boolean::TYPE_STRING` | `""` | 
+`Zend\Filter\Boolean::TYPE_NULL` | `NULL` |
+`Zend\Filter\Boolean::TYPE_STRING` | `""` |
 `Zend\Filter\Boolean::TYPE_ZERO_STRING` | `"0"` | `"1"`
 
 The following example shows the behaviour when changing the `casting` option:
@@ -1688,7 +1688,7 @@ This filter can strip XML and HTML tags from given content.
 > available tags.  Using `Zend\\Filter\\StripTags` to make your site secure by
 > stripping *some* unwanted tags will lead to unsecure and dangerous code,
 > including potential XSS vectors.
-> 
+>
 > For a fully secure solution that allows selected filtering of HTML tags, use
 > either Tidy or HtmlPurifier.
 

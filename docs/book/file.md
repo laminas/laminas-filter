@@ -12,8 +12,8 @@ performing file operations such as renaming.
 ## Encrypt and Decrypt
 
 These filters allow encrypting and decrypting file contents, and are derived
-from the `Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. Only file reading and 
-writing operations are performed by the filer; encryption and decryption operations 
+from the `Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. Only file reading and
+writing operations are performed by the filer; encryption and decryption operations
 are performed by the parent classes.
 
 Usage:
@@ -51,12 +51,12 @@ $filter->filter($files['my-upload']);
 ```
 
 Check the [Encrypt and Decrypt filter documentation](/zend-filter/standard-filters/#encrypt-and-decrypt)
-for more information about options and adapters. 
+for more information about options and adapters.
 
 ## Lowercase
 
-`Zend\Filter\File\Lowercase` can be used to convert all file contents to 
-lowercase. 
+`Zend\Filter\File\Lowercase` can be used to convert all file contents to
+lowercase.
 
 ### Supported Options
 
@@ -125,7 +125,7 @@ $filter->filter($files['my-upload']);
 ```
 
 The `LowerCase` filter extends from the `StringToLower` filter; read the
-[`StringToLower` documentation](/zend-filter/standard-filters/#stringtolower) 
+[`StringToLower` documentation](/zend-filter/standard-filters/#stringtolower)
 for more information about encoding and its exceptions.
 
 ## Rename
@@ -243,7 +243,7 @@ The following set of options are supported:
 > Be **very** careful when using the `use_upload_name` option. For instance,
 > extremely bad things could happen if you were to allow uploaded `.php` files
 > (or other CGI files) to be moved into the `DocumentRoot`.
-> 
+>
 > It is generally a better idea to supply an internal filename to avoid
 > security risks.
 
@@ -307,8 +307,8 @@ echo $filter->filter($files['my-upload']);
 
 ## Uppercase
 
-`Zend\Filter\File\Uppercase` can be used to convert all file contents to 
-uppercase. 
+`Zend\Filter\File\Uppercase` can be used to convert all file contents to
+uppercase.
 
 ### Supported Options
 
@@ -331,4 +331,4 @@ $filter->filter($files['my-upload']);
 ```
 
 See the documentation on the [`LowerCase`](#lowercase) filter, above, for more
-information. 
+information.
