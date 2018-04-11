@@ -33,6 +33,9 @@
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for using the filter chain functionality",
         "zendframework/zend-uri": "Zend\\Uri component, for the UriNormalize filter"
     },
+    "conflict": {
+        "zendframework/zend-validator": "<2.10.1"
+    },
     "autoload": {
         "psr-4": {
             "Zend\\Filter\\": "src/"
