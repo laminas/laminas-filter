@@ -17,7 +17,7 @@ class DecryptTest extends TestCase
 {
     public function setUp()
     {
-        if (! extension_loaded('mcrypt') and ! extension_loaded('openssl')) {
+        if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
@@ -29,10 +29,6 @@ class DecryptTest extends TestCase
      */
     public function testBasicMcrypt()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
-
         $filter = new DecryptFilter(['adapter' => 'BlockCipher']);
         $valuesExpected = [
             'STRING' => 'STRING',
@@ -52,9 +48,6 @@ class DecryptTest extends TestCase
      */
     public function testDecryptBlockCipher()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
         $decrypt = new DecryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $decrypt->setVector('1234567890123456890');
         // @codingStandardsIgnoreStart
@@ -111,8 +104,8 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testSettingAdapterManually()
     {
-        if (! extension_loaded('mcrypt') or ! extension_loaded('openssl')) {
-            $this->markTestSkipped('Mcrypt or Openssl extension not installed');
+        if (! extension_loaded('openssl')) {
+            $this->markTestSkipped('Openssl extension not installed');
         }
 
         $filter = new DecryptFilter();
@@ -134,10 +127,6 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testCallingUnknownMethod()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
-
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown method');
         $filter = new DecryptFilter();
@@ -164,10 +153,6 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
      */
     public function testReturnUnfiltered($input)
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
-
         $decrypt = new DecryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $decrypt->setVector('1234567890123456890');
 

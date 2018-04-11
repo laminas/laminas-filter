@@ -17,10 +17,8 @@ class BlockCipherTest extends TestCase
 {
     public function setUp()
     {
-        try {
-            $filter = new BlockCipherEncryption(['key' => 'testkey']);
-        } catch (Exception\RuntimeException $e) {
-            $this->markTestSkipped('This adapter needs the mcrypt extension');
+        if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
+            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
 
@@ -111,7 +109,7 @@ class BlockCipherTest extends TestCase
      *
      * @return void
      */
-    public function testEncryptionWithDecryptionMcrypt()
+    public function testEncryptionWithDecryption()
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
@@ -199,7 +197,7 @@ class BlockCipherTest extends TestCase
      *
      * @return void
      */
-    public function testEncryptionWithDecryptionAndCompressionMcrypt()
+    public function testEncryptionWithDecryptionAndCompression()
     {
         if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
