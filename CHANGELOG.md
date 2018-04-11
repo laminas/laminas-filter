@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.8.0 - TBD
+## 2.8.0 - 2018-04-11
 
 ### Added
 
@@ -32,24 +32,6 @@ All notable changes to this project will be documented in this file, in reverse 
   BlockCipher capabilities, and acts as a polyfill for mcrypt usage. Since this
   functionality has been used by default since 2.7.2, users should be able to
   upgrade seamlessly.
-
-### Fixed
-
-- Nothing.
-
-## 2.7.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
 
 ### Fixed
 
