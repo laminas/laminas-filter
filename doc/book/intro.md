@@ -128,3 +128,27 @@ is `My_Original_Content`.
 As you can see it is not always possible to get the original output by using a
 filter which seems to be the opposite. It depends on the filter and also on the
 given input.
+
+## Providing filters via modules
+
+If you wish to indicate that your zend-mvc module provides filters, have your
+`Module` class implement `Zend\Filter\FilterProviderInterface`, which defines
+the method:
+
+```php
+/**
+ * @return array
+ */
+public function getFilterConfig();
+```
+
+The method should return an array of configuration following the
+[zend-servicemanager configuration format](https://docs.zendframework.com/zend-servicemanager/configuring-the-service-manager/).
+
+If you are not using zend-mvc, but are using a dependency injection container
+(e.g., if you are using Expressive), you can also provide filters using the
+top-level `filters` configuration key; the value of that key should be
+zend-servicemanager configuration, as linked above.
+
+(zend-mvc users may also provide configuration in the same way, and omit
+implementation of the `FilterProviderInterface`.)
