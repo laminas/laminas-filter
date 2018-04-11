@@ -12,9 +12,9 @@ namespace ZendTest\Filter;
 use PHPUnit\Framework\TestCase;
 use Zend\Filter\Callback;
 use Zend\Filter\Digits;
+use Zend\Filter\FilterPluginManager;
 use Zend\Filter\HtmlEntities;
 use Zend\Filter\StaticFilter;
-use Zend\Filter\FilterPluginManager;
 use Zend\ServiceManager\Exception;
 use Zend\ServiceManager\ServiceManager;
 

@@ -10,8 +10,8 @@ namespace ZendTest\Filter\File;
 
 use PHPUnit\Framework\TestCase;
 use Zend\Filter\Exception;
-use Zend\Filter\File\Encrypt as FileEncrypt;
 use Zend\Filter\File\Decrypt as FileDecrypt;
+use Zend\Filter\File\Encrypt as FileEncrypt;
 
 class EncryptTest extends TestCase
 {
@@ -21,8 +21,8 @@ class EncryptTest extends TestCase
 
     public function setUp()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('This filter needs the mcrypt extension');
+        if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
+            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
 
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';

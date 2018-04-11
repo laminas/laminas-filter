@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.8.0 - TBD
+
+### Added
+
+- [#26](https://github.com/zendframework/zend-filter/pull/26) adds the interface
+  `Zend\Filter\FilterProviderInterface`, which can be used to provide
+  configuration for the `FilterPluginManager` via zend-mvc `Module` classes.
+
+- [#61](https://github.com/zendframework/zend-filter/pull/61) adds support for
+  PHP 7.2.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+  for PHP 5.5.
+
+- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+  for HHVM.
+
+- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+  for zend-crypt versions prior to 3.0. This was done as PHP deprecated the
+  mcrypt extension starting in PHP 7.1, and does not ship it by default
+  starting in PHP 7.2. zend-crypt 3.0 adds an OpenSSL adapter for its
+  BlockCipher capabilities, and acts as a polyfill for mcrypt usage. Since this
+  functionality has been used by default since 2.7.2, users should be able to
+  upgrade seamlessly.
+
+### Fixed
+
+- Nothing.
+
 ## 2.7.3 - TBD
 
 ### Added

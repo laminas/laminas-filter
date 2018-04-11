@@ -10,8 +10,8 @@
 namespace ZendTest\Filter;
 
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\FilterPluginManager;
 use Zend\Filter\Blacklist as BlacklistFilter;
+use Zend\Filter\FilterPluginManager;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayObject;
 use Zend\Stdlib\Exception;

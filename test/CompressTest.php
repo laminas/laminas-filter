@@ -10,8 +10,8 @@
 namespace ZendTest\Filter;
 
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
 use Zend\Filter\Compress as CompressFilter;
+use Zend\Filter\Exception;
 
 class CompressTest extends TestCase
 {

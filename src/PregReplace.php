@@ -154,7 +154,7 @@ class PregReplace extends AbstractFilter
             return true;
         }
 
-        if (false !== strstr($matches['modifier'], 'e')) {
+        if (false !== strpos($matches['modifier'], 'e')) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Pattern for a PregReplace filter may not contain the "e" pattern modifier; received "%s"',
                 $pattern
