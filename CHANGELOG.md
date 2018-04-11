@@ -16,7 +16,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+  for PHP 5.5.
+
+- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+  for HHVM.
 
 ### Fixed
 
