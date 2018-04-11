@@ -48,8 +48,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.7-dev",
-            "dev-develop": "2.8-dev"
+            "dev-master": "2.7.x-dev",
+            "dev-develop": "2.8.x-dev"
         },
         "zf": {
             "component": "Zend\\Filter",
