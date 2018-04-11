@@ -167,7 +167,7 @@ class Gz extends AbstractCompressionAlgorithm
         $mode    = $this->getMode();
 
         //check if there are null byte characters before doing a file_exists check
-        if (! strstr($content, "\0") && file_exists($content)) {
+        if (false === strpos($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
