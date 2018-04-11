@@ -17,7 +17,7 @@ class EncryptTest extends TestCase
 {
     public function setUp()
     {
-        if (! extension_loaded('mcrypt') and ! extension_loaded('openssl')) {
+        if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
@@ -29,10 +29,6 @@ class EncryptTest extends TestCase
      */
     public function testBasicBlockCipher()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
-
         $filter = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $valuesExpected = [
             'STRING' => 'STRING',
@@ -57,9 +53,6 @@ class EncryptTest extends TestCase
      */
     public function testEncryptBlockCipher()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
         $encrypt = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $encrypt->setVector('1234567890123456890');
         $encrypted = $encrypt->filter('test');
@@ -121,8 +114,8 @@ PIDs9E7uuizAKDhRRRvho8BS
      */
     public function testSettingAdapterManually()
     {
-        if (! extension_loaded('mcrypt') or ! extension_loaded('openssl')) {
-            $this->markTestSkipped('Mcrypt or Openssl extension not installed');
+        if (! extension_loaded('openssl')) {
+            $this->markTestSkipped('Openssl extension not installed');
         }
 
         $filter = new EncryptFilter();
@@ -144,10 +137,6 @@ PIDs9E7uuizAKDhRRRvho8BS
      */
     public function testCallingUnknownMethod()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
-
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown method');
         $filter = new EncryptFilter();
@@ -172,10 +161,6 @@ PIDs9E7uuizAKDhRRRvho8BS
      */
     public function testReturnUnfiltered($input)
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Mcrypt extension not installed');
-        }
-
         $encrypt = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $encrypt->setVector('1234567890123456890');
 

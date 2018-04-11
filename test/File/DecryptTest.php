@@ -22,8 +22,8 @@ class DecryptTest extends TestCase
 
     public function setUp()
     {
-        if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('This filter needs the mcrypt extension');
+        if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
+            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
 
         $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));

@@ -12,8 +12,6 @@ namespace ZendTest\Filter;
 use ArrayObject;
 use PHPUnit\Framework\TestCase;
 use Zend\Filter\HtmlEntities as HtmlEntitiesFilter;
-use Zend\Filter\Exception;
-use Zend\Stdlib\ErrorHandler;
 
 class HtmlEntitiesTest extends TestCase
 {
