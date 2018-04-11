@@ -1,13 +1,16 @@
 <?php
-
 /**
- * @link      http://github.com/zendframework/zend-filter for the canonical source repository
- *
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-filter for the canonical source repository
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-filter/blob/master/LICENSE.md New BSD License
  */
+
 namespace Zend\Filter;
 
+/**
+ * Implement this interface within Module classes to indicate that your module
+ * provides filter configuration for the FilterPluginManager.
+ */
 interface FilterProviderInterface
 {
     /**
