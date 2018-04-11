@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#26](https://github.com/zendframework/zend-filter/pull/26) adds the interface
+  `Zend\Filter\FilterProviderInterface`, which can be used to provide
+  configuration for the `FilterPluginManager` via zend-mvc `Module` classes.
 
 ### Deprecated
 
