@@ -31,6 +31,7 @@ class ConfigProvider
         return [
             'aliases' => [
                 'FilterManager' => FilterPluginManager::class,
+            ],
             'factories' => [
                 FilterPluginManager::class => FilterPluginManagerFactory::class,
             ],
