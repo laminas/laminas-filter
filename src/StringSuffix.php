@@ -40,7 +40,7 @@ class StringSuffix extends AbstractFilter
      */
     public function setSuffix($suffix)
     {
-        if (!is_string($suffix)) {
+        if (! is_string($suffix)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects "suffix" to be string; received "%s"',
                 __METHOD__,
@@ -58,7 +58,7 @@ class StringSuffix extends AbstractFilter
      */
     public function getSuffix()
     {
-        if (!isset($this->options['suffix'])) {
+        if (! isset($this->options['suffix'])) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a "suffix" option; none given',
                 __CLASS__
@@ -73,7 +73,7 @@ class StringSuffix extends AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_scalar($value)) {
+        if (! is_scalar($value)) {
             return $value;
         }
 

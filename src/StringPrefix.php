@@ -40,7 +40,7 @@ class StringPrefix extends AbstractFilter
      */
     public function setPrefix($prefix)
     {
-        if (!is_string($prefix)) {
+        if (! is_string($prefix)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects "prefix" to be string; received "%s"',
                 __METHOD__,
@@ -58,7 +58,7 @@ class StringPrefix extends AbstractFilter
      */
     public function getPrefix()
     {
-        if (!isset($this->options['prefix'])) {
+        if (! isset($this->options['prefix'])) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a "prefix" option; none given',
                 __CLASS__
@@ -73,7 +73,7 @@ class StringPrefix extends AbstractFilter
      */
     public function filter($value)
     {
-        if (!is_scalar($value)) {
+        if (! is_scalar($value)) {
             return $value;
         }
 
