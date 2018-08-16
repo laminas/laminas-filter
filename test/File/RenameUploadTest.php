@@ -10,6 +10,7 @@
 namespace ZendTest\Filter\File;
 
 use PHPUnit\Framework\TestCase;
+use Zend\Diactoros\UploadedFile;
 use Zend\Filter\Exception;
 use Zend\Filter\File\RenameUpload as FileRenameUpload;
 
@@ -165,6 +166,26 @@ class RenameUploadTest extends TestCase
                 'name' => $this->targetFile,
             ])
         );
+        $this->assertEquals('falsefile', $filter('falsefile'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testStringConstructorWithPsrFile()
+    {
+        $filter = new RenameUploadMock($this->targetFile);
+        $this->assertEquals($this->targetFile, $filter->getTarget());
+
+        /** @var UploadedFile $moved */
+        $moved = $filter(new UploadedFile(
+            $this->sourceFile,
+            1,
+            0,
+            $this->targetFile
+        ));
+        $this->expectExceptionMessage('Cannot retrieve stream after it has already been moved');
+        $moved->getStream();
         $this->assertEquals('falsefile', $filter('falsefile'));
     }
 

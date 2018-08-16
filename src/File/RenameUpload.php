@@ -9,6 +9,7 @@
 
 namespace Zend\Filter\File;
 
+use Psr\Http\Message\UploadedFileInterface;
 use Zend\Filter\AbstractFilter;
 use Zend\Filter\Exception;
 use Zend\Stdlib\ErrorHandler;
@@ -159,7 +160,7 @@ class RenameUpload extends AbstractFilter
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
+        if (! is_scalar($value) && ! is_array($value) && ! $value instanceof UploadedFileInterface) {
             return $value;
         }
 
@@ -171,13 +172,14 @@ class RenameUpload extends AbstractFilter
             }
 
             $isFileUpload = true;
-            $uploadData = $value;
             $sourceFile = $value['tmp_name'];
+            $clientFilename = $value['name'];
+        } elseif ($value instanceof UploadedFileInterface) {
+            $isFileUpload = true;
+            $sourceFile = $value->getStream()->getMetadata('uri');
+            $clientFilename = $value->getClientFilename();
         } else {
-            $uploadData = [
-                'tmp_name' => $value,
-                'name'     => $value,
-            ];
+            $clientFilename = $value;
             $sourceFile = $value;
         }
 
@@ -185,18 +187,28 @@ class RenameUpload extends AbstractFilter
             return $this->alreadyFiltered[$sourceFile];
         }
 
-        $targetFile = $this->getFinalTarget($uploadData);
-        if (! file_exists($sourceFile) || $sourceFile == $targetFile) {
+        $targetFile = $this->getFinalTarget($sourceFile, $clientFilename);
+        if ($sourceFile === $targetFile || ! file_exists($sourceFile) ) {
             return $value;
         }
 
         $this->checkFileExists($targetFile);
-        $this->moveUploadedFile($sourceFile, $targetFile);
+        if ($value instanceof UploadedFileInterface) {
+            $value->moveTo($targetFile);
+        } else {
+            $this->moveUploadedFile($sourceFile, $targetFile);
+        }
 
         $return = $targetFile;
         if ($isFileUpload) {
-            $return = $uploadData;
-            $return['tmp_name'] = $targetFile;
+            if ($value instanceof UploadedFileInterface) {
+                $return = $value;
+            } else {
+                $return = [
+                    'tmp_name' => $clientFilename,
+                    'name'     => $targetFile,
+                ];
+            }
         }
 
         $this->alreadyFiltered[$sourceFile] = $return;
@@ -247,11 +259,10 @@ class RenameUpload extends AbstractFilter
      * @param  array $uploadData $_FILES array
      * @return string
      */
-    protected function getFinalTarget($uploadData)
+    protected function getFinalTarget($source, $clientFileName)
     {
-        $source = $uploadData['tmp_name'];
         $target = $this->getTarget();
-        if (! isset($target) || $target == '*') {
+        if ($target === null || $target === '*') {
             $target = $source;
         }
 
@@ -259,7 +270,7 @@ class RenameUpload extends AbstractFilter
         if (is_dir($target)) {
             $targetDir = $target;
             $last      = $target[strlen($target) - 1];
-            if (($last != '/') && ($last != '\\')) {
+            if (($last !== '/') && ($last !== '\\')) {
                 $targetDir .= DIRECTORY_SEPARATOR;
             }
         } else {
@@ -269,12 +280,12 @@ class RenameUpload extends AbstractFilter
 
         // Get the target filename
         if ($this->getUseUploadName()) {
-            $targetFile = basename($uploadData['name']);
+            $targetFile = basename($clientFileName);
         } elseif (! is_dir($target)) {
             $targetFile = basename($target);
             if ($this->getUseUploadExtension() && ! $this->getRandomize()) {
                 $targetInfo = pathinfo($targetFile);
-                $sourceinfo = pathinfo($uploadData['name']);
+                $sourceinfo = pathinfo($clientFileName);
                 if (isset($sourceinfo['extension'])) {
                     $targetFile = $targetInfo['filename'] . '.' . $sourceinfo['extension'];
                 }
@@ -284,7 +295,7 @@ class RenameUpload extends AbstractFilter
         }
 
         if ($this->getRandomize()) {
-            $targetFile = $this->applyRandomToFilename($uploadData['name'], $targetFile);
+            $targetFile = $this->applyRandomToFilename($clientFileName, $targetFile);
         }
 
         return $targetDir . $targetFile;
