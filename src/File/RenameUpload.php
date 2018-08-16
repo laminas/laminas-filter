@@ -188,7 +188,7 @@ class RenameUpload extends AbstractFilter
         }
 
         $targetFile = $this->getFinalTarget($sourceFile, $clientFilename);
-        if ($sourceFile === $targetFile || ! file_exists($sourceFile) ) {
+        if ($sourceFile === $targetFile || ! file_exists($sourceFile)) {
             return $value;
         }
 
