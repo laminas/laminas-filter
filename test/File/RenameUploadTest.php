@@ -177,14 +177,26 @@ class RenameUploadTest extends TestCase
         $filter = new RenameUploadMock($this->targetFile);
         $this->assertEquals($this->targetFile, $filter->getTarget());
 
-        /** @var UploadedFile $moved */
         $moved = $filter(new UploadedFile(
             $this->sourceFile,
             1,
             0,
             $this->targetFile
         ));
-        $this->expectExceptionMessage('Cannot retrieve stream after it has already been moved');
+
+        /** @var UploadedFile $moved */
+        $this->assertEquals(
+            new UploadedFile(
+                $this->targetFile,
+                0,
+                0,
+                $this->targetFile
+            ),
+            $moved
+        );
+
+        // exception should NOT be thrown.
+        // Moved file in real application will be used by request handlers.
         $moved->getStream();
         $this->assertEquals('falsefile', $filter('falsefile'));
     }

@@ -10,6 +10,7 @@
 namespace Zend\Filter\File;
 
 use Psr\Http\Message\UploadedFileInterface;
+use Zend\Diactoros\UploadedFile;
 use Zend\Filter\AbstractFilter;
 use Zend\Filter\Exception;
 use Zend\Stdlib\ErrorHandler;
@@ -202,7 +203,13 @@ class RenameUpload extends AbstractFilter
         $return = $targetFile;
         if ($isFileUpload) {
             if ($value instanceof UploadedFileInterface) {
-                $return = $value;
+                $return = new UploadedFile(
+                    $targetFile,
+                    filesize($targetFile),
+                    UPLOAD_ERR_OK,
+                    $value->getClientFilename(),
+                    $value->getClientMediaType()
+                );
             } else {
                 $return = [
                     'tmp_name' => $clientFilename,
@@ -256,7 +263,9 @@ class RenameUpload extends AbstractFilter
     }
 
     /**
-     * @param  array $uploadData $_FILES array
+     * @param $source
+     * @param $clientFileName
+     *
      * @return string
      */
     protected function getFinalTarget($source, $clientFileName)
