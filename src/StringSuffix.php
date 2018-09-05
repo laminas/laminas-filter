@@ -12,7 +12,7 @@ use Traversable;
 class StringSuffix extends AbstractFilter
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected $options = [
         'suffix' => null,
