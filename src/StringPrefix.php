@@ -52,6 +52,8 @@ class StringPrefix extends AbstractFilter
     }
 
     /**
+     * Returns the prefix string, which is appended at the beginning of the input value
+     *
      * @return string
      */
     public function getPrefix()

@@ -52,7 +52,10 @@ class StringSuffix extends AbstractFilter
     }
 
     /**
+     * Returns the suffix string, which is appended at the end of the input value
+     *
      * @return string
+     * @throws Exception\InvalidArgumentException
      */
     public function getSuffix()
     {
