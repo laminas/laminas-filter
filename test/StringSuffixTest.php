@@ -50,14 +50,38 @@ class StringSuffixTest extends TestCase
         $filter('sample');
     }
 
-    public function testNonStringSuffix()
+    /**
+     * @return array
+     */
+    public function invalidSuffixesDataProvider()
+    {
+        return [
+            [1],
+            [1.00],
+            [true],
+            [null],
+            [[]],
+            [fopen('php://memory', 'rb+')],
+            [
+                function () {
+                },
+            ],
+            [new \stdClass()],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidSuffixesDataProvider
+     *
+     * @param mixed $suffix
+     */
+    public function testInvalidSuffixes($suffix)
     {
         $filter = $this->filter;
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('expects "suffix" to be string');
 
-        $suffix = [];
         $filter->setSuffix($suffix);
         $filter('sample');
     }

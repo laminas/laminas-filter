@@ -50,14 +50,38 @@ class StringPrefixTest extends TestCase
         $filter('sample');
     }
 
-    public function testNonStringPrefix()
+    /**
+     * @return array
+     */
+    public function invalidPrefixesDataProvider()
+    {
+        return [
+            [1],
+            [1.00],
+            [true],
+            [null],
+            [[]],
+            [fopen('php://memory', 'rb+')],
+            [
+                function () {
+                },
+            ],
+            [new \stdClass()],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidPrefixesDataProvider
+     *
+     * @param mixed $prefix
+     */
+    public function testInvalidPrefixes($prefix)
     {
         $filter = $this->filter;
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('expects "prefix" to be string');
 
-        $prefix = [];
         $filter->setPrefix($prefix);
         $filter('sample');
     }
