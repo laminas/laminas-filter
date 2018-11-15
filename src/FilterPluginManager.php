@@ -261,6 +261,7 @@ class FilterPluginManager extends AbstractPluginManager
         // v2 canonical FQCNs
 
         'zendfiltertoint'                      => InvokableFactory::class,
+        'zendfiltertofloat'                    => InvokableFactory::class,
         'zendfiltertonull'                     => InvokableFactory::class,
         'zendi18nfilteralnum'                  => InvokableFactory::class,
         'zendi18nfilteralpha'                  => InvokableFactory::class,
