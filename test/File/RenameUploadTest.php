@@ -172,6 +172,7 @@ class RenameUploadTest extends TestCase
     }
 
     /**
+     * @requires PHP 7
      * @return void
      */
     public function testStringConstructorWithPsrFile()

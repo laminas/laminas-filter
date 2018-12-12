@@ -22,15 +22,14 @@
     "require-dev": {
         "pear/archive_tar": "^1.4.3",
         "phpunit/phpunit": "^5.7.23 || ^6.4.3",
+        "psr/http-factory": "^1.0",
         "zendframework/zend-coding-standard": "~1.0.0",
         "zendframework/zend-crypt": "^3.2.1",
-        "zendframework/zend-diactoros": "^1.8.6 || ^2.0.1",
         "zendframework/zend-servicemanager": "^2.7.8 || ^3.3",
         "zendframework/zend-uri": "^2.6"
     },
     "suggest": {
         "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters",
-        "psr/http-message-implementation": "psr/http-message-implementation, for supporting file upload filters when using PSR-7",
         "zendframework/zend-crypt": "Zend\\Crypt component, for encryption filters",
         "zendframework/zend-i18n": "Zend\\I18n component for filters depending on i18n functionality",
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for using the filter chain functionality",

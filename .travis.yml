@@ -16,20 +16,23 @@ matrix:
     - php: 5.6
       env:
         - DEPS=lowest
+        - REMOVE_DEV_DEPS="psr/http-factory"
     - php: 5.6
       env:
         - DEPS=locked
-        - LEGACY_DEPS="phpunit/phpunit zendframework/zend-diactoros zendframework/zend-crypt"
+        - REMOVE_DEV_DEPS="psr/http-factory"
+        - LEGACY_DEPS="phpunit/phpunit zendframework/zend-crypt psr/http-factory"
     - php: 5.6
       env:
         - DEPS=latest
+        - REMOVE_DEV_DEPS="psr/http-factory"
     - php: 7
       env:
         - DEPS=lowest
     - php: 7
       env:
         - DEPS=locked
-        - LEGACY_DEPS="phpunit/phpunit zendframework/zend-diactoros"
+        - LEGACY_DEPS="phpunit/phpunit"
     - php: 7
       env:
         - DEPS=latest
@@ -56,6 +59,7 @@ matrix:
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - if [[ $REMOVE_DEV_DEPS != '' ]]; then travis_retry composer remove $COMPOSER_ARGS --dev --no-update $REMOVE_DEV_DEPS ; fi
 
 install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs

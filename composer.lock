@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "211a544d96d953d93ac24b34dbfcb080",
+    "content-hash": "8f485a1e7bde7af92b19d3c29fc203fc",
     "packages": [
         {
             "name": "zendframework/zend-stdlib",
@@ -2111,72 +2111,6 @@
                 "zf"
             ],
             "time": "2018-04-24T22:01:58+00:00"
-        },
-        {
-            "name": "zendframework/zend-diactoros",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "a22d63fccbf1236903c2dbcd5f927f952667d749"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/a22d63fccbf1236903c2dbcd5f927f952667d749",
-                "reference": "a22d63fccbf1236903c2dbcd5f927f952667d749",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1",
-                "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.0"
-            },
-            "provide": {
-                "psr/http-factory-implementation": "1.0",
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "ext-dom": "*",
-                "ext-libxml": "*",
-                "http-interop/http-factory-tests": "^0.5.0",
-                "php-http/psr7-integration-tests": "dev-master",
-                "phpunit/phpunit": "^7.0.2",
-                "zendframework/zend-coding-standard": "~1.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev",
-                    "dev-develop": "2.1.x-dev",
-                    "dev-release-1.8": "1.8.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/functions/create_uploaded_file.php",
-                    "src/functions/marshal_headers_from_sapi.php",
-                    "src/functions/marshal_method_from_sapi.php",
-                    "src/functions/marshal_protocol_version_from_sapi.php",
-                    "src/functions/marshal_uri_from_sapi.php",
-                    "src/functions/normalize_server.php",
-                    "src/functions/normalize_uploaded_files.php",
-                    "src/functions/parse_cookie_header.php"
-                ],
-                "psr-4": {
-                    "Zend\\Diactoros\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "PSR HTTP Message implementations",
-            "keywords": [
-                "http",
-                "psr",
-                "psr-7"
-            ],
-            "time": "2018-12-03T16:20:17+00:00"
         },
         {
             "name": "zendframework/zend-escaper",
