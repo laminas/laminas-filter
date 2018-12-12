@@ -1237,6 +1237,8 @@ print $filter->getQuoteStyle(ENT_QUOTES);
 
 ## ToFloat
 
+- Since 2.9.0
+
 `Zend\Filter\ToFloat` allows you to transform a scalar value into a float.
 
 ### Supported Options
