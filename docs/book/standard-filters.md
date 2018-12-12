@@ -1235,6 +1235,24 @@ $filter->setQuoteStyle(ENT_QUOTES);
 print $filter->getQuoteStyle(ENT_QUOTES);
 ```
 
+## ToFloat
+
+`Zend\Filter\ToFloat` allows you to transform a scalar value into a float.
+
+### Supported Options
+
+There are no additional options for `Zend\Filter\ToFloat`.
+
+### Basic Usage
+
+```php
+$filter = new Zend\Filter\ToFloat();
+
+print $filter->filter('-4.4');
+```
+
+This will return `-4.4` (as a float).
+
 ## ToInt
 
 `Zend\Filter\ToInt` allows you to transform a scalar value into an integer.
@@ -1262,24 +1280,6 @@ instead.
 
 Users pulling their `Int` filter instance from the filter plugin manager receive a `ToInt` instance
 instead starting in 2.4.0.
-
-## ToFloat
-
-`Zend\Filter\ToFloat` allows you to transform a scalar value into a float.
-
-### Supported Options
-
-There are no additional options for `Zend\Filter\ToFloat`.
-
-### Basic Usage
-
-```php
-$filter = new Zend\Filter\ToFloat();
-
-print $filter->filter('-4.4');
-```
-
-This will return -4.4 (as float).
 
 ## ToNull
 
