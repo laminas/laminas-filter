@@ -7,7 +7,10 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Added
 
 - [#70](https://github.com/zendframework/zend-inputfilter/pull/70) Adds compatibility with the PSR-7 `UploadedFileInterface` to the
-  `RenameUpload` filter.
+  `RenameUpload` filter. The functionality requires PHP 7 and a
+  psr/http-factory-implementation in your application. When present,
+  `RenameUpload` will accept a PSR-7 `UploadedFileInterface`, and return a new
+  one representing the renamed file.
 
 - [#71](https://github.com/zendframework/zend-filter/pull/71) adds the `ToFloat` filter, to complement the `ToInt` filter.
 
