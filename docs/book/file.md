@@ -237,6 +237,14 @@ The following set of options are supported:
   file will maintains its original extension if not specified.  For example, if
   the uploaded file is `file.txt` and the target is `mynewfile`, the upload
   will be renamed to `mynewfile.txt`.
+- `stream_factory` (`Psr\Http\Message\StreamFactoryInterface`; default: `null`):
+  Required when passing a [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
+  to the filter; used to create a new stream representing the renamed file.
+  (Since 2.9.0)
+- `upload_file_factory` (`Psr\Http\Message\UploadedFileFactoryInterface`; default:
+  `null`): Required when passing a [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
+  to the filter; used to create a new uploaded file representation of the
+  renamed file.  (Since 2.9.0)
 
 > #### Using the upload name is unsafe
 >
@@ -283,7 +291,7 @@ $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Rename('./data/uploads/newfile.txt');
+$filter = new \Zend\Filter\File\RenameUpload('./data/uploads/newfile.txt');
 echo $filter->filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'
 ```
@@ -297,13 +305,56 @@ $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Rename(array(
+$filter = new \Zend\Filter\File\RenameUpload([
     'target'    => './data/uploads/newfile.txt',
     'randomize' => true,
-));
+]);
 echo $filter->filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
 ```
+
+Handle a PSR-7 uploaded file:
+
+```php
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
+use Psr\Http\Message\UploadedFileInterface;
+use Zend\Filter\File\RenameUpload;
+
+$filter = new \Zend\Filter\File\RenameUpload([
+    'target'              => './data/uploads/',
+    'randomize'           => true,
+    // @var StreamFactoryInterface $streamFactory
+    'stream_factory'      => $streamFactory,
+    // @var UploadedFileFactoryInterface $uploadedFileFactory
+    'upload_file_factory' => $uploadedFileFactory,
+]);
+
+// @var ServerRequestInterface $request
+foreach ($request->getUploadedFiles() as $uploadedFile) {
+    // @var UploadedFileInterface $uploadedFile
+    // @var UploadedFileInterface $movedFile
+    $movedFile = $filter->filter($uploadedFile);
+    echo $movedFile->getClientFilename();
+    // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
+}
+```
+
+> ### PSR-7 support
+>
+> PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
+> [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
+> in your application, as it relies on the stream and uploaded file factories in
+> order to produce the final `UploadedFileInterface` artifact representing the
+> filtered file.
+>
+> PSR-17 itself requires PHP 7, so your application will need to be running on
+> PHP 7 in order to use this feature.
+>
+> [zendframework/zend-diactoros 2.0](https://docs.zendframework.com/zend-diactoros/)
+> provides a PSR-17 implementation, but requires PHP 7.1. If you are still on
+> PHP 7.0, either upgrade, or find a compatible psr/http-factory-implementation.
 
 ## Uppercase
 
