@@ -1542,6 +1542,54 @@ $filtered = $filter->filter($path);
 // even when file_exists or realpath would return false
 ```
 
+## StringPrefix
+
+- Since 2.9.0
+
+This filter will add the provided prefix to scalar values.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\StringPrefix`:
+
+- `prefix`: The string prefix to add to values.
+
+### Basic Usage
+
+```php
+$filter = new Zend\Filter\StringPrefix([
+    'prefix' => 'PHP-',
+]);
+
+echo $filter->filter('MidCentral');
+```
+
+The above results in the string `PHP-MidCentral`.
+
+## StringSuffix
+
+- Since 2.9.0
+
+This filter will add the provided suffix to scalar values.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\StringSuffix`:
+
+- `suffix`: The string suffix to append to values.
+
+### Basic Usage
+
+```php
+$filter = new Zend\Filter\StringSuffix([
+    'suffix' => '-PHP',
+]);
+
+echo $filter->filter('MidCentral');
+```
+
+The above results in the string `MidCentral-PHP`.
+
 ## StringToLower
 
 This filter converts any input to lowercase.
@@ -1810,7 +1858,7 @@ $filter = new Zend\Filter\UriNormalize(array(
 echo $filter->filter('www.example.com');
 ```
 
-The above results int the string `https://www.example.com`.
+The above results in the string `https://www.example.com`.
 
 ## Whitelist
 
