@@ -14,4 +14,3 @@ pages:
 site_name: zend-filter
 site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/zendframework/zend-filter'
-copyright: 'Copyright (c) 2005-2018 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
