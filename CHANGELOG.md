@@ -6,7 +6,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#69](https://github.com/zendframework/zend-filter/pull/69) adds `Zend\Filter\StringSufix`; when provided with a string `suffix`
+  option, it will suffix scalar values with that string.
+
+- [#69](https://github.com/zendframework/zend-filter/pull/69) adds `Zend\Filter\StringPrefix`; when provided with a string `prefix`
+  option, it will prefix scalar values with that string.
 
 ### Changed
 
