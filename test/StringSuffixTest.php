@@ -8,6 +8,7 @@
 namespace ZendTest\Filter;
 
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Zend\Filter\Exception\InvalidArgumentException;
 use Zend\Filter\StringSuffix as StringSuffixFilter;
 
@@ -56,17 +57,17 @@ class StringSuffixTest extends TestCase
     public function invalidSuffixesDataProvider()
     {
         return [
-            [1],
-            [1.00],
-            [true],
-            [null],
-            [[]],
-            [fopen('php://memory', 'rb+')],
-            [
+            'int'                 => [1],
+            'float'               => [1.00],
+            'true'                => [true],
+            'null'                => [null],
+            'empty array'         => [[]],
+            'resource'            => [fopen('php://memory', 'rb+')],
+            'array with callable' => [
                 function () {
                 },
             ],
-            [new \stdClass()],
+            'object'              => [new stdClass()],
         ];
     }
 
@@ -93,6 +94,6 @@ class StringSuffixTest extends TestCase
         $suffix = 'ABC123';
         $filter->setSuffix($suffix);
 
-        $this->assertInstanceOf(\stdClass::class, $filter(new \stdClass()));
+        $this->assertInstanceOf(stdClass::class, $filter(new stdClass()));
     }
 }

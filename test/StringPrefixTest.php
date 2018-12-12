@@ -8,6 +8,7 @@
 namespace ZendTest\Filter;
 
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Zend\Filter\Exception\InvalidArgumentException;
 use Zend\Filter\StringPrefix as StringPrefixFilter;
 
@@ -56,17 +57,17 @@ class StringPrefixTest extends TestCase
     public function invalidPrefixesDataProvider()
     {
         return [
-            [1],
-            [1.00],
-            [true],
-            [null],
-            [[]],
-            [fopen('php://memory', 'rb+')],
-            [
+            'int'                 => [1],
+            'float'               => [1.00],
+            'true'                => [true],
+            'null'                => [null],
+            'empty array'         => [[]],
+            'resource'            => [fopen('php://memory', 'rb+')],
+            'array with callable' => [
                 function () {
                 },
             ],
-            [new \stdClass()],
+            'object'              => [new stdClass()],
         ];
     }
 
@@ -93,6 +94,6 @@ class StringPrefixTest extends TestCase
         $prefix = 'ABC123';
         $filter->setPrefix($prefix);
 
-        $this->assertInstanceOf(\stdClass::class, $filter(new \stdClass()));
+        $this->assertInstanceOf(stdClass::class, $filter(new stdClass()));
     }
 }
