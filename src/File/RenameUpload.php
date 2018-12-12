@@ -204,6 +204,11 @@ class RenameUpload extends AbstractFilter
             return $value;
         }
 
+        // PSR-7 uploaded file
+        if ($value instanceof UploadedFileInterface) {
+            return $this->filterPsr7UploadedFile($value);
+        }
+
         // An uploaded file? Retrieve the 'tmp_name'
         $isFileUpload = false;
         if (is_array($value)) {
@@ -214,10 +219,6 @@ class RenameUpload extends AbstractFilter
             $isFileUpload = true;
             $sourceFile = $value['tmp_name'];
             $clientFilename = $value['name'];
-        } elseif ($value instanceof UploadedFileInterface) {
-            $isFileUpload = true;
-            $sourceFile = $value->getStream()->getMetadata('uri');
-            $clientFilename = $value->getClientFilename();
         } else {
             $clientFilename = $value;
             $sourceFile = $value;
@@ -233,50 +234,14 @@ class RenameUpload extends AbstractFilter
         }
 
         $this->checkFileExists($targetFile);
-        if ($value instanceof UploadedFileInterface) {
-            $value->moveTo($targetFile);
-        } else {
-            $this->moveUploadedFile($sourceFile, $targetFile);
-        }
+        $this->moveUploadedFile($sourceFile, $targetFile);
 
         $return = $targetFile;
         if ($isFileUpload) {
-            if ($value instanceof UploadedFileInterface) {
-                $streamFactory = $this->getStreamFactory();
-                if (! $streamFactory) {
-                    throw new Exception\RuntimeException(sprintf(
-                        'No PSR-17 %s present; cannot filter file. Please pass the stream_file_factory'
-                        . ' option with a %s instance when creating the filter for use with PSR-7.',
-                        StreamFactoryInterface::class,
-                        StreamFactoryInterface::class
-                    ));
-                }
-
-                $stream = $streamFactory->createStreamFromFile($targetFile);
-
-                $uploadedFileFactory = $this->getUploadFileFactory();
-                if (! $uploadedFileFactory) {
-                    throw new Exception\RuntimeException(sprintf(
-                        'No PSR-17 %s present; cannot filter file. Please pass the upload_file_factory'
-                        . ' option with a %s instance when creating the filter for use with PSR-7.',
-                        UploadedFileFactoryInterface::class,
-                        UploadedFileFactoryInterface::class
-                    ));
-                }
-
-                $return = $uploadedFileFactory->createUploadedFile(
-                    $stream,
-                    filesize($targetFile),
-                    UPLOAD_ERR_OK,
-                    $value->getClientFilename(),
-                    $value->getClientMediaType()
-                );
-            } else {
-                $return = [
-                    'tmp_name' => $clientFilename,
-                    'name'     => $targetFile,
-                ];
-            }
+            $return = [
+                'tmp_name' => $clientFilename,
+                'name'     => $targetFile,
+            ];
         }
 
         $this->alreadyFiltered[$sourceFile] = $return;
@@ -308,19 +273,22 @@ class RenameUpload extends AbstractFilter
 
     /**
      * @param  string $targetFile Target file path
+     * @return void
      * @throws Exception\InvalidArgumentException
      */
     protected function checkFileExists($targetFile)
     {
-        if (file_exists($targetFile)) {
-            if ($this->getOverwrite()) {
-                unlink($targetFile);
-            } else {
-                throw new Exception\InvalidArgumentException(
-                    sprintf("File '%s' could not be renamed. It already exists.", $targetFile)
-                );
-            }
+        if (! file_exists($targetFile)) {
+            return;
         }
+
+        if (! $this->getOverwrite()) {
+            throw new Exception\InvalidArgumentException(
+                sprintf("File '%s' could not be renamed. It already exists.", $targetFile)
+            );
+        }
+
+        unlink($targetFile);
     }
 
     /**
@@ -391,5 +359,64 @@ class RenameUpload extends AbstractFilter
         }
 
         return $filename . $extension;
+    }
+
+    /**
+     * @param  UploadedFileInterface $uploadedFile
+     * @return UploadedFileInterface
+     * @throws Exception\RuntimeException if no stream factory is composed in the filter.
+     * @throws Exception\RuntimeException if no uploaded file factory is composed in the filter.
+     */
+    private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile)
+    {
+        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
+
+        if (isset($this->alreadyFiltered[$sourceFile])) {
+            return $this->alreadyFiltered[$sourceFile];
+        }
+
+        $clientFilename = $uploadedFile->getClientFilename();
+        $targetFile     = $this->getFinalTarget($sourceFile, $clientFilename);
+
+        if ($sourceFile === $targetFile || ! file_exists($sourceFile)) {
+            return $uploadedFile;
+        }
+
+        $this->checkFileExists($targetFile);
+        $uploadedFile->moveTo($targetFile);
+
+        $streamFactory = $this->getStreamFactory();
+        if (! $streamFactory) {
+            throw new Exception\RuntimeException(sprintf(
+                'No PSR-17 %s present; cannot filter file. Please pass the stream_file_factory'
+                . ' option with a %s instance when creating the filter for use with PSR-7.',
+                StreamFactoryInterface::class,
+                StreamFactoryInterface::class
+            ));
+        }
+
+        $stream = $streamFactory->createStreamFromFile($targetFile);
+
+        $uploadedFileFactory = $this->getUploadFileFactory();
+        if (! $uploadedFileFactory) {
+            throw new Exception\RuntimeException(sprintf(
+                'No PSR-17 %s present; cannot filter file. Please pass the upload_file_factory'
+                . ' option with a %s instance when creating the filter for use with PSR-7.',
+                UploadedFileFactoryInterface::class,
+                UploadedFileFactoryInterface::class
+            ));
+        }
+
+        $movedFile = $uploadedFileFactory->createUploadedFile(
+            $stream,
+            filesize($targetFile),
+            UPLOAD_ERR_OK,
+            $uploadedFile->getClientFilename(),
+            $uploadedFile->getClientMediaType()
+        );
+
+        $this->alreadyFiltered[$sourceFile] = $movedFile;
+
+        return $movedFile;
     }
 }
