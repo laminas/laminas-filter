@@ -29,6 +29,7 @@
         "zendframework/zend-uri": "^2.6"
     },
     "suggest": {
+        "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters",
         "psr/http-message-implementation": "psr/http-message-implementation, for supporting file upload filters when using PSR-7",
         "zendframework/zend-crypt": "Zend\\Crypt component, for encryption filters",
         "zendframework/zend-i18n": "Zend\\I18n component for filters depending on i18n functionality",
