@@ -25,7 +25,7 @@ class RenameUpload extends AbstractFilter
         'use_upload_extension' => false,
         'overwrite'            => false,
         'randomize'            => false,
-        'stream_file_factory'  => null,
+        'stream_factory'       => null,
         'upload_file_factory'  => null,
     ];
 
@@ -59,7 +59,7 @@ class RenameUpload extends AbstractFilter
      */
     public function setStreamFactory(StreamFactoryInterface $factory)
     {
-        $this->options['stream_file_factory'] = $factory;
+        $this->options['stream_factory'] = $factory;
         return $this;
     }
 
@@ -68,7 +68,7 @@ class RenameUpload extends AbstractFilter
      */
     public function getStreamFactory()
     {
-        return $this->options['stream_file_factory'];
+        return $this->options['stream_factory'];
     }
 
     /**
