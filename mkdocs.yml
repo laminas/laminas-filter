@@ -2,7 +2,7 @@ docs_dir: docs/book
 site_dir: docs/html
 pages:
     - Home: index.md
-    - { Intro: intro.md }
+    - Introduction: intro.md
     - Reference:
       - 'Standard Filters': standard-filters.md
       - 'Word Filters': word.md
