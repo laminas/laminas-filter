@@ -12,7 +12,7 @@ use Traversable;
 class StringPrefix extends AbstractFilter
 {
     /**
-     * @var string[]
+     * @var array<string, null|string>
      */
     protected $options = [
         'prefix' => null,
@@ -31,8 +31,7 @@ class StringPrefix extends AbstractFilter
     /**
      * Set the prefix string
      *
-     * @param string $prefix
-     *
+     * @param  string $prefix
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -42,7 +41,7 @@ class StringPrefix extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects "prefix" to be string; received "%s"',
                 __METHOD__,
-                (is_object($prefix) ? get_class($prefix) : gettype($prefix))
+                is_object($prefix) ? get_class($prefix) : gettype($prefix)
             ));
         }
 
@@ -77,7 +76,7 @@ class StringPrefix extends AbstractFilter
             return $value;
         }
 
-        $value = (string)$value;
+        $value = (string) $value;
 
         return $this->getPrefix() . $value;
     }
