@@ -1,8 +1,8 @@
 docs_dir: docs/book
 site_dir: docs/html
 pages:
-    - index.md
-    - { Intro: intro.md }
+    - Home: index.md
+    - Introduction: intro.md
     - Reference:
       - 'Standard Filters': standard-filters.md
       - 'Word Filters': word.md
@@ -12,6 +12,5 @@ pages:
       - 'Static Filter': static-filter.md
       - 'Writing Filters': writing-filters.md
 site_name: zend-filter
-site_description: Zend\Filter
+site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/zendframework/zend-filter'
-copyright: 'Copyright (c) 2005-2018 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
