@@ -204,10 +204,6 @@ class RenameUpload extends AbstractFilter
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value) && ! $value instanceof UploadedFileInterface) {
-            return $value;
-        }
-
         // PSR-7 uploaded file
         if ($value instanceof UploadedFileInterface) {
             return $this->filterPsr7UploadedFile($value);
