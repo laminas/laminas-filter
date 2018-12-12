@@ -144,6 +144,9 @@ class FilterPluginManager extends AbstractPluginManager
         'toint'                      => ToInt::class,
         'toInt'                      => ToInt::class,
         'ToInt'                      => ToInt::class,
+        'tofloat'                    => ToFloat::class,
+        'toFloat'                    => ToFloat::class,
+        'ToFloat'                    => ToFloat::class,
         'tonull'                     => ToNull::class,
         'toNull'                     => ToNull::class,
         'ToNull'                     => ToNull::class,
@@ -232,6 +235,7 @@ class FilterPluginManager extends AbstractPluginManager
         HtmlEntities::class                    => InvokableFactory::class,
         Inflector::class                       => InvokableFactory::class,
         ToInt::class                           => InvokableFactory::class,
+        ToFloat::class                         => InvokableFactory::class,
         MonthSelect::class                     => InvokableFactory::class,
         ToNull::class                          => InvokableFactory::class,
         UpperCaseWords::class                  => InvokableFactory::class,
@@ -265,6 +269,7 @@ class FilterPluginManager extends AbstractPluginManager
         // v2 canonical FQCNs
 
         'zendfiltertoint'                      => InvokableFactory::class,
+        'zendfiltertofloat'                    => InvokableFactory::class,
         'zendfiltertonull'                     => InvokableFactory::class,
         'zendi18nfilteralnum'                  => InvokableFactory::class,
         'zendi18nfilteralpha'                  => InvokableFactory::class,
