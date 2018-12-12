@@ -342,7 +342,7 @@ class Openssl implements EncryptionAlgorithmInterface
         $encrypted     = [];
         $encryptedkeys = [];
 
-        if (count($this->keys['public']) == 0) {
+        if (! $this->keys['public']) {
             throw new Exception\RuntimeException('Openssl can not encrypt without public keys');
         }
 
