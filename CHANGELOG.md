@@ -10,7 +10,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#66](https://github.com/zendframework/zend-filter/pull/66) modifies how the FilterPluginManager is registered with the dependency
+  injection container. Previously, it was registered only under the name
+  `FilterManager`. Now it regisers `Zend\Filter\FilterPluginManager` as a
+  factory service, and `FilterManager` as an alias to that service.
 
 ### Deprecated
 
