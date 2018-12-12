@@ -1,16 +1,15 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-filter for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-filter/blob/master/LICENSE.md New BSD License
  */
 
 namespace Zend\Filter\File;
 
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
-use Zend\Diactoros\UploadedFile;
 use Zend\Filter\AbstractFilter;
 use Zend\Filter\Exception;
 use Zend\Stdlib\ErrorHandler;
@@ -26,6 +25,8 @@ class RenameUpload extends AbstractFilter
         'use_upload_extension' => false,
         'overwrite'            => false,
         'randomize'            => false,
+        'stream_file_factory'  => null,
+        'upload_file_factory'  => null,
     ];
 
     /**
@@ -52,6 +53,25 @@ class RenameUpload extends AbstractFilter
     }
 
     /**
+     * @param  StreamFactoryInterface $factory Factory to use to produce a PSR-7
+     *     stream with which to seed a PSR-7 UploadedFileInterface.
+     * @return self
+     */
+    public function setStreamFactory(StreamFactoryInterface $factory)
+    {
+        $this->options['stream_file_factory'] = $factory;
+        return $this;
+    }
+
+    /**
+     * @return null|StreamFactoryInterface
+     */
+    public function getStreamFactory()
+    {
+        return $this->options['stream_file_factory'];
+    }
+
+    /**
      * @param  string $target Target file path or directory
      * @return self
      */
@@ -72,6 +92,25 @@ class RenameUpload extends AbstractFilter
     public function getTarget()
     {
         return $this->options['target'];
+    }
+
+    /**
+     * @param  UploadedFileFactoryInterface $factory Factory to use to produce
+     *     filtered PSR-7 UploadedFileInterface instances.
+     * @return self
+     */
+    public function setUploadFileFactory(UploadedFileFactoryInterface $factory)
+    {
+        $this->options['upload_file_factory'] = $factory;
+        return $this;
+    }
+
+    /**
+     * @return null|UploadedFileFactoryInterface
+     */
+    public function getUploadFileFactory()
+    {
+        return $this->options['upload_file_factory'];
     }
 
     /**
@@ -203,8 +242,30 @@ class RenameUpload extends AbstractFilter
         $return = $targetFile;
         if ($isFileUpload) {
             if ($value instanceof UploadedFileInterface) {
-                $return = new UploadedFile(
-                    $targetFile,
+                $streamFactory = $this->getStreamFactory();
+                if (! $streamFactory) {
+                    throw new Exception\RuntimeException(sprintf(
+                        'No PSR-17 %s present; cannot filter file. Please pass the stream_file_factory'
+                        . ' option with a %s instance when creating the filter for use with PSR-7.',
+                        StreamFactoryInterface::class,
+                        StreamFactoryInterface::class
+                    ));
+                }
+
+                $stream = $streamFactory->createStreamFromFile($targetFile);
+
+                $uploadedFileFactory = $this->getUploadFileFactory();
+                if (! $uploadedFileFactory) {
+                    throw new Exception\RuntimeException(sprintf(
+                        'No PSR-17 %s present; cannot filter file. Please pass the upload_file_factory'
+                        . ' option with a %s instance when creating the filter for use with PSR-7.',
+                        UploadedFileFactoryInterface::class,
+                        UploadedFileFactoryInterface::class
+                    ));
+                }
+
+                $return = $uploadedFileFactory->createUploadedFile(
+                    $stream,
                     filesize($targetFile),
                     UPLOAD_ERR_OK,
                     $value->getClientFilename(),

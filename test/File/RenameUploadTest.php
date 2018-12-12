@@ -1,16 +1,18 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-filter for the canonical source repository
+ * @copyright Copyright (c) 20052018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-filter/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendTest\Filter\File;
 
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\UploadedFile;
+use Prophecy\Argument;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Zend\Filter\Exception;
 use Zend\Filter\File\RenameUpload as FileRenameUpload;
 
@@ -174,31 +176,52 @@ class RenameUploadTest extends TestCase
      */
     public function testStringConstructorWithPsrFile()
     {
-        $filter = new RenameUploadMock($this->targetFile);
-        $this->assertEquals($this->targetFile, $filter->getTarget());
+        $sourceFile = $this->sourceFile;
+        $targetFile = $this->targetFile;
 
-        $moved = $filter(new UploadedFile(
-            $this->sourceFile,
-            1,
-            0,
-            $this->targetFile
-        ));
+        $originalStream = $this->prophesize(StreamInterface::class);
+        $originalStream->getMetadata('uri')->willReturn($this->sourceFile);
 
-        /** @var UploadedFile $moved */
-        $this->assertEquals(
-            new UploadedFile(
-                $this->targetFile,
-                0,
-                0,
-                $this->targetFile
-            ),
-            $moved
-        );
+        $originalFile = $this->prophesize(UploadedFileInterface::class);
+        $originalFile->getStream()->will([$originalStream, 'reveal']);
+        $originalFile->getClientFilename()->willReturn($targetFile);
+        $originalFile
+            ->moveTo($targetFile)
+            ->will(function ($args) use ($sourceFile) {
+                $targetFile = array_shift($args);
+                copy($sourceFile, $targetFile);
+            })
+            ->shouldBeCalled();
+        $originalFile->getClientMediaType()->willReturn(null);
 
-        // exception should NOT be thrown.
-        // Moved file in real application will be used by request handlers.
-        $moved->getStream();
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $renamedStream = $this->prophesize(StreamInterface::class);
+        $streamFactory = $this->prophesize(StreamFactoryInterface::class);
+        $streamFactory
+            ->createStreamFromFile($targetFile)
+            ->will([$renamedStream, 'reveal']);
+
+        $renamedFile = $this->prophesize(UploadedFileInterface::class);
+
+        $fileFactory = $this->prophesize(UploadedFileFactoryInterface::class);
+        $fileFactory
+            ->createUploadedFile(
+                Argument::that([$renamedStream, 'reveal']),
+                0,  // we can hardcode this, as we know the file is empty
+                UPLOAD_ERR_OK,
+                $targetFile,
+                null
+            )
+            ->will([$renamedFile, 'reveal']);
+
+        $filter = new RenameUploadMock($targetFile);
+        $this->assertEquals($targetFile, $filter->getTarget());
+
+        $filter->setStreamFactory($streamFactory->reveal());
+        $filter->setUploadFileFactory($fileFactory->reveal());
+
+        $moved = $filter($originalFile->reveal());
+
+        $this->assertSame($renamedFile->reveal(), $moved);
     }
 
     /**
