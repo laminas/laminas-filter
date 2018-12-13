@@ -111,7 +111,7 @@ If you want to use a specific encoding when converting file content, you should
 specify the encoding when instantiating the `LowerCase` filter, or use the
 `setEncoding` method to change it.
 
-```
+```php
 use Zend\Filter\File\LowerCase;
 use Zend\Http\PhpEnvironment\Request;
 
