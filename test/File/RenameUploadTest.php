@@ -412,4 +412,30 @@ class RenameUploadTest extends TestCase
 
         $this->assertEquals($input, $filter($input));
     }
+
+    /**
+     * @see https://github.com/zendframework/zend-filter/issues/77
+     */
+    public function testBackwordCompatibilityBreakFromRelease280ToRelease290()
+    {
+        $filter = new RenameUploadMock($this->targetPath);
+
+        $this->assertEquals(
+            [
+                'tmp_name' => $this->targetPathFile,
+                'name' => basename($this->targetFile),
+                'type' => 'text/plain',
+                'error' => \UPLOAD_ERR_OK,
+                'size' => 123,
+            ],
+            // Emulate the output of \Zend\Http\Request::getFiles()->toArray()
+            $filter([
+                'tmp_name' => $this->sourceFile,
+                'name' => basename($this->targetFile),
+                'type' => 'text/plain',
+                'error' => \UPLOAD_ERR_OK,
+                'size' => 123,
+            ])
+        );
+    }
 }
