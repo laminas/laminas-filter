@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.9.1 - TBD
+## 2.9.1 - 2018-12-17
 
 ### Added
 
@@ -44,7 +44,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#79](https://github.com/zendframework/zend-filter/pull/79) fixes a regression introduced in 2.9.0 when using
+  `Zend\Filter\File\RenameUpload` via the traditional SAPI.
 
 ## 2.9.0 - 2018-12-12
 

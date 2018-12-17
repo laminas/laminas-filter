@@ -373,16 +373,14 @@ class RenameUpload extends AbstractFilter
 
         $targetFile = $this->getFinalTarget($sourceFile, $clientFilename);
         if ($sourceFile === $targetFile || ! file_exists($sourceFile)) {
-            return $value;
+            return $fileData;
         }
 
         $this->checkFileExists($targetFile);
         $this->moveUploadedFile($sourceFile, $targetFile);
 
-        $this->alreadyFiltered[$sourceFile] = [
-            'tmp_name' => $clientFilename,
-            'name'     => $targetFile,
-        ];
+        $this->alreadyFiltered[$sourceFile] = $fileData;
+        $this->alreadyFiltered[$sourceFile]['tmp_name'] = $targetFile;
 
         return $this->alreadyFiltered[$sourceFile];
     }

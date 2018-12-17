@@ -412,4 +412,50 @@ class RenameUploadTest extends TestCase
 
         $this->assertEquals($input, $filter($input));
     }
+
+    /**
+     * @see https://github.com/zendframework/zend-filter/issues/77
+     * @return void
+     */
+    public function testCachesResultsOfFilteringSAPIUploads()
+    {
+        $filter = new RenameUploadMock($this->targetPath);
+
+        // Emulate the output of \Zend\Http\Request::getFiles()->toArray()
+        $sapiSource = [
+            'tmp_name' => $this->sourceFile,
+            'name' => basename($this->targetFile),
+            'type' => 'text/plain',
+            'error' => \UPLOAD_ERR_OK,
+            'size' => 123,
+        ];
+
+        $sapiTarget = [
+            'tmp_name' => $this->targetPathFile,
+            'name' => basename($this->targetFile),
+            'type' => 'text/plain',
+            'error' => \UPLOAD_ERR_OK,
+            'size' => 123,
+        ];
+
+        // Check the result twice for the `alreadyFiltered` cache path
+        $this->assertEquals($sapiTarget, $filter($sapiSource));
+        $this->assertEquals($sapiTarget, $filter($sapiSource));
+    }
+
+    /**
+     * @see https://github.com/zendframework/zend-filter/issues/76
+     * @return void
+     */
+    public function testFilterReturnsFileDataVerbatimUnderSAPIWhenNameAndTmpNameDiffer()
+    {
+        $filter = new RenameUploadMock();
+
+        $source = [
+            'tmp_name' => $this->sourceFile,
+            'name' => basename($this->targetFile),
+        ];
+
+        $this->assertEquals($source, $filter($source));
+    }
 }
