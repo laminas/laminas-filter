@@ -417,7 +417,7 @@ class RenameUploadTest extends TestCase
      * @see https://github.com/zendframework/zend-filter/issues/77
      * @return void
      */
-    public function testBackwordCompatibilityBreakFromRelease280ToRelease290()
+    public function testCachesResultsOfFilteringSAPIUploads()
     {
         $filter = new RenameUploadMock($this->targetPath);
 
@@ -447,7 +447,7 @@ class RenameUploadTest extends TestCase
      * @see https://github.com/zendframework/zend-filter/issues/76
      * @return void
      */
-    public function testTargetSameAsSource()
+    public function testFilterReturnsFileDataVerbatimUnderSAPIWhenNameAndTmpNameDiffer()
     {
         $filter = new RenameUploadMock();
 
