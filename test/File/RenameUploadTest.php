@@ -415,26 +415,49 @@ class RenameUploadTest extends TestCase
 
     /**
      * @see https://github.com/zendframework/zend-filter/issues/77
+     * @return void
      */
     public function testBackwordCompatibilityBreakFromRelease280ToRelease290()
     {
         $filter = new RenameUploadMock($this->targetPath);
 
+        // Emulate the output of \Zend\Http\Request::getFiles()->toArray()
+        $sapiSource = [
+            'tmp_name' => $this->sourceFile,
+            'name' => basename($this->targetFile),
+            'type' => 'text/plain',
+            'error' => \UPLOAD_ERR_OK,
+            'size' => 123,
+        ];
+
+        $sapiTarget = [
+            'tmp_name' => $this->targetPathFile,
+            'name' => basename($this->targetFile),
+            'type' => 'text/plain',
+            'error' => \UPLOAD_ERR_OK,
+            'size' => 123,
+        ];
+
+        // Check the result twice for the `alreadyFiltered` path
+        $this->assertEquals($sapiTarget, $filter($sapiSource));
+        $this->assertEquals($sapiTarget, $filter($sapiSource));
+    }
+
+    /**
+     * @return void
+     */
+    public function testTargetSameAsSource()
+    {
+        $filter = new RenameUploadMock();
+
         $this->assertEquals(
             [
-                'tmp_name' => $this->targetPathFile,
+                'tmp_name' => $this->sourceFile,
                 'name' => basename($this->targetFile),
-                'type' => 'text/plain',
-                'error' => \UPLOAD_ERR_OK,
-                'size' => 123,
             ],
-            // Emulate the output of \Zend\Http\Request::getFiles()->toArray()
             $filter([
                 'tmp_name' => $this->sourceFile,
                 'name' => basename($this->targetFile),
-                'type' => 'text/plain',
-                'error' => \UPLOAD_ERR_OK,
-                'size' => 123,
             ])
         );
     }
