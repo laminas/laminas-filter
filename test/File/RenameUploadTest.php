@@ -438,12 +438,13 @@ class RenameUploadTest extends TestCase
             'size' => 123,
         ];
 
-        // Check the result twice for the `alreadyFiltered` path
+        // Check the result twice for the `alreadyFiltered` cache path
         $this->assertEquals($sapiTarget, $filter($sapiSource));
         $this->assertEquals($sapiTarget, $filter($sapiSource));
     }
 
     /**
+     * @see https://github.com/zendframework/zend-filter/issues/76
      * @return void
      */
     public function testTargetSameAsSource()
