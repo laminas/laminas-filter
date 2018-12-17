@@ -451,15 +451,11 @@ class RenameUploadTest extends TestCase
     {
         $filter = new RenameUploadMock();
 
-        $this->assertEquals(
-            [
-                'tmp_name' => $this->sourceFile,
-                'name' => basename($this->targetFile),
-            ],
-            $filter([
-                'tmp_name' => $this->sourceFile,
-                'name' => basename($this->targetFile),
-            ])
-        );
+        $source = [
+            'tmp_name' => $this->sourceFile,
+            'name' => basename($this->targetFile),
+        ];
+
+        $this->assertEquals($source, $filter($source));
     }
 }
