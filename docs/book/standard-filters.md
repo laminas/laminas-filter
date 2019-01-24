@@ -183,19 +183,23 @@ and returns a `BOOLEAN` just as you would get by type casting to `BOOLEAN`.
 Sometimes, casting with `(boolean)` will not suffice. `Zend\Filter\Boolean`
 allows you to configure specific types to convert, as well as which to omit.
 
-The following types can be handled:
+The following types can be handled (in this precedence order):
 
-- `boolean`: Returns a boolean value as is.
-- `integer`: Converts an integer `0` value to `FALSE`.
-- `float`: Converts a float `0.0` value to `FALSE`.
-- `string`: Converts an empty string `''` to `FALSE`.
-- `zero`: Converts a string containing the single character zero (`'0'`) to `FALSE`.
-- `empty_array`: Converts an empty `array` to `FALSE`.
+- `localized`: Converts any string as mapped (case sensitive) in the `translations` option.
+- `false`: Converts a string equal to the word "false" (case insensitive) to boolean `FALSE`.
 - `null`: Converts a `NULL` value to `FALSE`.
-- `php`: Converts values according to PHP when casting them to `BOOLEAN`.
-- `false_string`: Converts a string containing the word "false" to a boolean `FALSE`.
-- `yes`: Converts a localized string which contains the word "no" to `FALSE`.
-- `all`: Converts all above types to `BOOLEAN`.
+- `array`: Converts an empty `array` to `FALSE`.
+- `zero`: Converts a string to `FALSE` if it equates to `'0'` after type juggling.
+- `string`: Converts an empty string `''` to `FALSE`.
+- `float`: Converts a float `0.0` value to `FALSE`.
+- `integer`: Converts an integer `0` value to `FALSE`.
+- `boolean`: Returns a boolean value as is.
+
+There are 2 additional special types:
+
+- `all`: Converts all above types to `BOOLEAN`. The same as setting all above types.
+- `php`: Converts all above types to `BOOLEAN` except `localized` or `false`. The same as setting all above types except `localized` or `false`.
+
 
 All other given values will return `TRUE` by default.
 
@@ -234,12 +238,12 @@ To set types after instantiation, use the `setType()` method.
 
 ### Localized Booleans
 
-As mentioned previously, `Zend\Filter\Boolean` can also recognise localized "yes" and "no" strings.
+As mentioned previously, `Zend\Filter\Boolean` can also recognize localized "yes" and "no" strings.
 This means that you can ask your customer in a form for "yes" or "no" within his native language and
 `Zend\Filter\Boolean` will convert the response to the appropriate boolean value.
 
 To set the translation and the corresponding value, you can use the `translations` option or the
-method `setTranslations`.
+method `setTranslations`. The translations must be set for any values you wish to map to boolean values.
 
 ```php
 $filter = new Zend\Filter\Boolean([
@@ -261,7 +265,7 @@ $result = $filter->filter('yes');
 
 ### Disable Casting
 
-Sometimes it is necessary to recognise only `TRUE` or `FALSE` and return all
+Sometimes it is necessary to recognize only `TRUE` or `FALSE` and return all
 other values without changes. `Zend\Filter\Boolean` allows you to do this by
 setting the `casting` option to `FALSE`.
 
@@ -269,19 +273,18 @@ In this case `Zend\Filter\Boolean` will work as described in the following
 table, which shows which values return `TRUE` or `FALSE`. All other given values
 are returned without change when `casting` is set to `FALSE`
 
-Type | True | False
----- | ---- | -----
-`Zend\Filter\Boolean::TYPE_BOOLEAN` | `TRUE` | `FALSE`
-`Zend\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array()` |
-`Zend\Filter\Boolean::TYPE_FALSE_STRING` | `"false"` (case insensitive) | `"true"` (case insensitive)
-`Zend\Filter\Boolean::TYPE_FLOAT` | `0.0` | `1.0`
-`Zend\Filter\Boolean::TYPE_INTEGER` | `0` | `1`
-`Zend\Filter\Boolean::TYPE_LOCALIZED` | localized `"yes"` (case insensitive) | localized `"no"` (case insensitive)
-`Zend\Filter\Boolean::TYPE_NULL` | `NULL` |
-`Zend\Filter\Boolean::TYPE_STRING` | `""` |
-`Zend\Filter\Boolean::TYPE_ZERO_STRING` | `"0"` | `"1"`
+Type Constant | Type String | True | False
+---- | ---- | ---- | -----
+`Zend\Filter\Boolean::TYPE_BOOLEAN` | `boolean` | `TRUE` | `FALSE`
+`Zend\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array` | | `[]`
+`Zend\Filter\Boolean::TYPE_FALSE_STRING` | `false` | `'false'` (case insensitive) | `'true'` (case insensitive)
+`Zend\Filter\Boolean::TYPE_FLOAT` | `float` | `1.0` | `0.0`
+`Zend\Filter\Boolean::TYPE_INTEGER` | `integer` | `1` | `0`
+`Zend\Filter\Boolean::TYPE_NULL` | `null` |  | `NULL`
+`Zend\Filter\Boolean::TYPE_STRING` | `string` | | `''`
+`Zend\Filter\Boolean::TYPE_ZERO_STRING` | `zero` | `'1'` | `'0'`
 
-The following example shows the behaviour when changing the `casting` option:
+The following example shows the behavior when changing the `casting` option:
 
 ```php
 $filter = new Zend\Filter\Boolean([
