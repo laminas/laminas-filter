@@ -238,7 +238,7 @@ To set types after instantiation, use the `setType()` method.
 
 ### Localized Booleans
 
-As mentioned previously, `Zend\Filter\Boolean` can also recognize localized "yes" and "no" strings.
+As mentioned previously, `Zend\Filter\Boolean` can also recognise localized "yes" and "no" strings.
 This means that you can ask your customer in a form for "yes" or "no" within his native language and
 `Zend\Filter\Boolean` will convert the response to the appropriate boolean value.
 
@@ -265,7 +265,7 @@ $result = $filter->filter('yes');
 
 ### Disable Casting
 
-Sometimes it is necessary to recognize only `TRUE` or `FALSE` and return all
+Sometimes it is necessary to recognise only `TRUE` or `FALSE` and return all
 other values without changes. `Zend\Filter\Boolean` allows you to do this by
 setting the `casting` option to `FALSE`.
 
