@@ -44,7 +44,7 @@ class ToNull extends AbstractFilter
     /**
      * Constructor
      *
-     * @param string|array|Traversable $typeOrOptions OPTIONAL
+     * @param int|string|array|Traversable $typeOrOptions OPTIONAL
      */
     public function __construct($typeOrOptions = null)
     {
