@@ -511,22 +511,24 @@ class StripTagsTest extends TestCase
         $this->assertEquals($expected, $filter->filter($input));
     }
 
-    public function testEmptyCommentTags()
+    public function badCommentProvider()
     {
-        $input    = 'Bad <!--> comment';
-        $expected = 'Bad  comment';
-        $this->assertEquals($expected, $this->_filter->filter($input));
+        return [
+            ['Bad <!--> comment', 'Bad  comment'],
+            ['Bad <!---> comment', 'Bad  comment'],
+            ['Bad <!----> comment', 'Bad  comment'],
+            ['Bad <!-- --> comment', 'Bad  comment'],
+        ];
+    }
 
-        $input    = 'Bad <!---> comment';
-        $expected = 'Bad  comment';
-        $this->assertEquals($expected, $this->_filter->filter($input));
-
-        $input    = 'Bad <!----> comment';
-        $expected = 'Bad  comment';
-        $this->assertEquals($expected, $this->_filter->filter($input));
-
-        $input    = 'Bad <!-- --> comment';
-        $expected = 'Bad  comment';
+    /**
+     * @dataProvider badCommentProvider
+     *
+     * @param string $input
+     * @param string $expected
+     */
+    public function testBadCommentTags($input, $expected)
+    {
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 
