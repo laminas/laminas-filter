@@ -511,6 +511,25 @@ class StripTagsTest extends TestCase
         $this->assertEquals($expected, $filter->filter($input));
     }
 
+    public function testEmptyCommentTags()
+    {
+        $input    = 'Bad <!--> comment';
+        $expected = 'Bad  comment';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+
+        $input    = 'Bad <!---> comment';
+        $expected = 'Bad  comment';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+
+        $input    = 'Bad <!----> comment';
+        $expected = 'Bad  comment';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+
+        $input    = 'Bad <!-- --> comment';
+        $expected = 'Bad  comment';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+    }
+
      /**
      * @group ZF-10256
      */

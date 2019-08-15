@@ -188,7 +188,7 @@ class StripTags extends AbstractFilter
             if (! preg_match('/--\s*>/s', $value)) {
                 $value = '';
             } else {
-                $value = preg_replace('/<(?:!(?:--[\s\S]*?--\s*)?(>))/s', '', $value);
+                $value = preg_replace('/<(?:!(?:---?(?:[\s\S]*?--)?\s*)?>)/s', '', $value);
             }
 
             $value = $start . $value;
