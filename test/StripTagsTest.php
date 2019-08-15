@@ -514,10 +514,11 @@ class StripTagsTest extends TestCase
     public function badCommentProvider()
     {
         return [
-            ['Bad <!--> comment', 'Bad  comment'],
-            ['Bad <!---> comment', 'Bad  comment'],
-            ['Bad <!----> comment', 'Bad  comment'],
-            ['Bad <!-- --> comment', 'Bad  comment'],
+            ['A <!--> B', 'A '],  // Should be treated as just an open
+            ['A <!---> B', 'A '], // Should be treated as just an open
+            ['A <!----> B', 'A  B'],
+            ['A <!-- --> B', 'A  B'],
+            ['A <!--My favorite operators are > and <!--> B', 'A  B'],
         ];
     }
 
