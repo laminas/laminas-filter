@@ -179,17 +179,17 @@ class StripTags extends AbstractFilter
         $value = (string) $value;
 
         // Strip HTML comments first
-        $commentOpen = '<!--';
-        $commentOpenLen = strlen($commentOpen);
-        $commentClose = '-->';
-        $commentCloseLen = strlen($commentClose);
-        while (($start = strpos($value, $commentOpen)) !== false) {
-            $end = strpos($value, $commentClose, $start + $commentOpenLen);
+        $open     = '<!--';
+        $openLen  = strlen($open);
+        $close    = '-->';
+        $closeLen = strlen($close);
+        while (($start = strpos($value, $open)) !== false) {
+            $end = strpos($value, $close, $start + $openLen);
 
             if ($end === false) {
                 $value = substr($value, 0, $start);
             } else {
-                $value = substr($value, 0, $start) . substr($value, $end + $commentCloseLen);
+                $value = substr($value, 0, $start) . substr($value, $end + $closeLen);
             }
         }
 
