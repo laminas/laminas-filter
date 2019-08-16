@@ -158,7 +158,7 @@ class Tar extends AbstractCompressionAlgorithm
         if (! file_exists($content)) {
             $file = $this->getTarget();
             if (is_dir($file)) {
-                $file .= DIRECTORY_SEPARATOR . "tar.tmp";
+                $file .= DIRECTORY_SEPARATOR . 'tar.tmp';
             }
 
             $result = file_put_contents($file, $content);

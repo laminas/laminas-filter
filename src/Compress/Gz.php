@@ -172,14 +172,14 @@ class Gz extends AbstractCompressionAlgorithm
         }
 
         if (file_exists($archive)) {
-            $handler = fopen($archive, "rb");
+            $handler = fopen($archive, 'rb');
             if (! $handler) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
             }
 
             fseek($handler, -4, SEEK_END);
             $packet = fread($handler, 4);
-            $bytes  = unpack("V", $packet);
+            $bytes  = unpack('V', $packet);
             $size   = end($bytes);
             fclose($handler);
 

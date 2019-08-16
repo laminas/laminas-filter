@@ -161,7 +161,7 @@ class Zip extends AbstractCompressionAlgorithm
             if (! is_dir($file)) {
                 $file = basename($file);
             } else {
-                $file = "zip.tmp";
+                $file = 'zip.tmp';
             }
 
             $res = $zip->addFromString($file, $content);

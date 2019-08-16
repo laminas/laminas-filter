@@ -197,7 +197,7 @@ class Rar extends AbstractCompressionAlgorithm
         }
 
         if (! $archive) {
-            throw new Exception\RuntimeException("Error opening the RAR Archive");
+            throw new Exception\RuntimeException('Error opening the RAR Archive');
         }
 
         $target = $this->getTarget();

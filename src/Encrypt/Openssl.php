@@ -403,7 +403,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function decrypt($value)
     {
-        $decrypted = "";
+        $decrypted = '';
         $envelope  = current($this->getEnvelopeKey());
 
         if (count($this->keys['private']) !== 1) {
