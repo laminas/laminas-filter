@@ -116,7 +116,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         foreach ($keys as $type => $key) {
-            if (is_file($key) and is_readable($key)) {
+            if (is_file($key) && is_readable($key)) {
                 $file = fopen($key, 'r');
                 $cert = fread($file, 8192);
                 fclose($file);

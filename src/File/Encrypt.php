@@ -82,7 +82,7 @@ class Encrypt extends Filter\Encrypt
             $this->filename = $value;
         }
 
-        if (file_exists($this->filename) and ! is_writable($this->filename)) {
+        if (file_exists($this->filename) && ! is_writable($this->filename)) {
             throw new Exception\RuntimeException("File '{$this->filename}' is not writable");
         }
 
