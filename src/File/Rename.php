@@ -123,7 +123,7 @@ class Rename extends Filter\AbstractFilter
             return $file;
         }
 
-        if ($file['source'] == $file['target']) {
+        if ($file['source'] === $file['target']) {
             return $value;
         }
 
@@ -268,7 +268,7 @@ class Rename extends Filter\AbstractFilter
 
         $found = false;
         foreach ($this->files as $key => $value) {
-            if ($value['source'] == $files['source']) {
+            if ($value['source'] === $files['source']) {
                 $this->files[$key] = $files;
                 $found             = true;
             }
@@ -295,14 +295,14 @@ class Rename extends Filter\AbstractFilter
         // @codingStandardsIgnoreEnd
         $rename = [];
         foreach ($this->files as $value) {
-            if ($value['source'] == '*') {
+            if ($value['source'] === '*') {
                 if (! isset($rename['source'])) {
                     $rename           = $value;
                     $rename['source'] = $file;
                 }
             }
 
-            if ($value['source'] == $file) {
+            if ($value['source'] === $file) {
                 $rename = $value;
                 break;
             }
@@ -312,14 +312,14 @@ class Rename extends Filter\AbstractFilter
             return $file;
         }
 
-        if (! isset($rename['target']) || $rename['target'] == '*') {
+        if (! isset($rename['target']) || $rename['target'] === '*') {
             $rename['target'] = $rename['source'];
         }
 
         if (is_dir($rename['target'])) {
             $name = basename($rename['source']);
             $last = $rename['target'][strlen($rename['target']) - 1];
-            if (($last != '/') && ($last != '\\')) {
+            if ($last !== '/' && $last !== '\\') {
                 $rename['target'] .= DIRECTORY_SEPARATOR;
             }
 
@@ -329,7 +329,7 @@ class Rename extends Filter\AbstractFilter
         if ($rename['randomize']) {
             $info = pathinfo($rename['target']);
             $newTarget = $info['dirname'] . DIRECTORY_SEPARATOR .
-                $info['filename'] . uniqid('_');
+                $info['filename'] . uniqid('_', false);
             if (isset($info['extension'])) {
                 $newTarget .= '.' . $info['extension'];
             }

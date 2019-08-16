@@ -48,10 +48,10 @@ final class DataUnitFormatter extends AbstractFilter
      * @var array
      */
     protected $options = [
-        'mode'         => self::MODE_DECIMAL,
-        'unit'         => '',
-        'precision'    => 2,
-        'prefixes'     => [],
+        'mode'      => self::MODE_DECIMAL,
+        'unit'      => '',
+        'precision' => 2,
+        'prefixes'  => [],
     ];
 
     /**
@@ -80,7 +80,7 @@ final class DataUnitFormatter extends AbstractFilter
     protected function setMode($mode)
     {
         $mode = strtolower($mode);
-        if (! in_array($mode, self::$modes)) {
+        if (! in_array($mode, self::$modes, true)) {
             throw new InvalidArgumentException(sprintf('Invalid binary mode: %s', $mode));
         }
         $this->options['mode'] = $mode;
@@ -103,7 +103,7 @@ final class DataUnitFormatter extends AbstractFilter
      */
     protected function isDecimalMode()
     {
-        return $this->getMode() == self::MODE_DECIMAL;
+        return $this->getMode() === self::MODE_DECIMAL;
     }
 
     /**
@@ -113,7 +113,7 @@ final class DataUnitFormatter extends AbstractFilter
      */
     protected function isBinaryMode()
     {
-        return $this->getMode() == self::MODE_BINARY;
+        return $this->getMode() === self::MODE_BINARY;
     }
 
     /**
@@ -212,7 +212,7 @@ final class DataUnitFormatter extends AbstractFilter
 
         // Parse to float and check if value is not zero
         $amount = (float) $value;
-        if ($amount == 0) {
+        if ($amount === 0.0) {
             return $this->formatAmount($amount);
         }
 
@@ -222,7 +222,7 @@ final class DataUnitFormatter extends AbstractFilter
         $prefix = $this->getPrefixAt((int)$power);
 
         // When the amount is too big, no prefix can be found:
-        if (is_null($prefix)) {
+        if ($prefix === null) {
             return $this->formatAmount($amount);
         }
 

@@ -166,7 +166,7 @@ class Rar extends AbstractCompressionAlgorithm
         $options = $this->getOptions();
         unset($options['callback']);
 
-        $result = call_user_func($callback, $options, $content);
+        $result = $callback($options, $content);
         if ($result !== true) {
             throw new Exception\RuntimeException('Error compressing the RAR Archive');
         }
@@ -197,7 +197,7 @@ class Rar extends AbstractCompressionAlgorithm
         }
 
         if (! $archive) {
-            throw new Exception\RuntimeException("Error opening the RAR Archive");
+            throw new Exception\RuntimeException('Error opening the RAR Archive');
         }
 
         $target = $this->getTarget();

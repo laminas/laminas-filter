@@ -116,7 +116,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         foreach ($keys as $type => $key) {
-            if (is_file($key) and is_readable($key)) {
+            if (is_file($key) && is_readable($key)) {
                 $file = fopen($key, 'r');
                 $cert = fread($file, 8192);
                 fclose($file);
@@ -162,8 +162,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getPublicKey()
     {
-        $key = $this->keys['public'];
-        return $key;
+        return $this->keys['public'];
     }
 
     /**
@@ -195,15 +194,14 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getPrivateKey()
     {
-        $key = $this->keys['private'];
-        return $key;
+        return $this->keys['private'];
     }
 
     /**
      * Sets private keys
      *
-     * @param  string $key Private key
-     * @param  string $passphrase
+     * @param  string|array $key Private key
+     * @param  string|null $passphrase
      * @return self
      */
     public function setPrivateKey($key, $passphrase = null)
@@ -233,8 +231,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getEnvelopeKey()
     {
-        $key = $this->keys['envelope'];
-        return $key;
+        return $this->keys['envelope'];
     }
 
     /**
@@ -403,7 +400,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function decrypt($value)
     {
-        $decrypted = "";
+        $decrypted = '';
         $envelope  = current($this->getEnvelopeKey());
 
         if (count($this->keys['private']) !== 1) {
@@ -432,7 +429,7 @@ class Openssl implements EncryptionAlgorithmInterface
             for ($i = $count; $i > 0; --$i) {
                 $header = unpack('H32print/nsize', substr($value, $length, 18));
                 $length  += 18;
-                if ($header['print'] == $fingerprint) {
+                if ($header['print'] === $fingerprint) {
                     $envelope = substr($value, $length, $header['size']);
                 }
 

@@ -14,8 +14,8 @@ use Zend\Filter\Exception;
 
 class SeparatorToSeparator extends AbstractFilter
 {
-    protected $searchSeparator = null;
-    protected $replacementSeparator = null;
+    protected $searchSeparator;
+    protected $replacementSeparator;
 
     /**
      * Constructor

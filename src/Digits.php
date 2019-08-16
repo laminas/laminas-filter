@@ -28,7 +28,7 @@ class Digits extends AbstractFilter
         if (is_int($value)) {
             return (string) $value;
         }
-        if (! (is_float($value) || is_string($value))) {
+        if (! is_float($value) && ! is_string($value)) {
             return $value;
         }
         $value = (string) $value;

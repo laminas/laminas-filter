@@ -22,16 +22,16 @@ class Tar extends AbstractCompressionAlgorithm
     /**
      * Compression Options
      * array(
-     *     'archive'  => Archive to use
-     *     'target'   => Target to write the files to
+     *     'archive' => Archive to use
+     *     'target'  => Target to write the files to
      * )
      *
      * @var array
      */
     protected $options = [
-        'archive'  => null,
-        'target'   => '.',
-        'mode'     => null,
+        'archive' => null,
+        'target'  => '.',
+        'mode'    => null,
     ];
 
     /**
@@ -128,15 +128,15 @@ class Tar extends AbstractCompressionAlgorithm
     public function setMode($mode)
     {
         $mode = strtolower($mode);
-        if (($mode != 'bz2') && ($mode != 'gz')) {
+        if ($mode !== 'bz2' && $mode !== 'gz') {
             throw new Exception\InvalidArgumentException("The mode '$mode' is unknown");
         }
 
-        if (($mode == 'bz2') && (! extension_loaded('bz2'))) {
+        if ($mode === 'bz2' && ! extension_loaded('bz2')) {
             throw new Exception\ExtensionNotLoadedException('This mode needs the bz2 extension');
         }
 
-        if (($mode == 'gz') && (! extension_loaded('zlib'))) {
+        if ($mode === 'gz' && ! extension_loaded('zlib')) {
             throw new Exception\ExtensionNotLoadedException('This mode needs the zlib extension');
         }
 
@@ -158,7 +158,7 @@ class Tar extends AbstractCompressionAlgorithm
         if (! file_exists($content)) {
             $file = $this->getTarget();
             if (is_dir($file)) {
-                $file .= DIRECTORY_SEPARATOR . "tar.tmp";
+                $file .= DIRECTORY_SEPARATOR . 'tar.tmp';
             }
 
             $result = file_put_contents($file, $content);

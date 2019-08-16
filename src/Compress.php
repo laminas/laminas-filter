@@ -64,7 +64,7 @@ class Compress extends AbstractFilter
         }
 
         foreach ($options as $key => $value) {
-            if ($key == 'options') {
+            if ($key === 'options') {
                 $key = 'adapterOptions';
             }
             $method = 'set' . ucfirst($key);
