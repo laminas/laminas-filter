@@ -18,14 +18,14 @@ class UriNormalize extends AbstractFilter
     /**
      * The default scheme to use when parsing scheme-less URIs
      *
-     * @var string
+     * @var string|null
      */
     protected $defaultScheme = null;
 
     /**
      * Enforced scheme for scheme-less URIs. See setEnforcedScheme docs for info
      *
-     * @var string
+     * @var string|null
      */
     protected $enforcedScheme = null;
 

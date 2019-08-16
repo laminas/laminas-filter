@@ -22,7 +22,7 @@ class Callback extends AbstractFilter
     ];
 
     /**
-     * @param callable|array|Traversable $callbackOrOptions
+     * @param callable|array|string|Traversable $callbackOrOptions
      * @param array $callbackParams
      */
     public function __construct($callbackOrOptions = [], $callbackParams = [])

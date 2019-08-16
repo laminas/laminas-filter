@@ -202,8 +202,8 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Sets private keys
      *
-     * @param  string $key Private key
-     * @param  string $passphrase
+     * @param  string|array $key Private key
+     * @param  string|null $passphrase
      * @return self
      */
     public function setPrivateKey($key, $passphrase = null)

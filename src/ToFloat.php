@@ -16,7 +16,7 @@ class ToFloat extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  scalar $value
+     * @param  mixed $value
      * @return float|mixed
      */
     public function filter($value)

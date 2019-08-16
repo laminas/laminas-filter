@@ -19,7 +19,7 @@ abstract class AbstractSeparator extends AbstractFilter
     /**
      * Constructor
      *
-     * @param  string $separator Space by default
+     * @param array|string $separator Space by default
      */
     public function __construct($separator = ' ')
     {
