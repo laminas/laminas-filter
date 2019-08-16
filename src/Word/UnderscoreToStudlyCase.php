@@ -22,7 +22,7 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
         $lowerCaseFirst = 'lcfirst';
 
         if (StringUtils::hasPcreUnicodeSupport() && extension_loaded('mbstring')) {
-            $lowerCaseFirst = function ($value) {
+            $lowerCaseFirst = static function ($value) {
                 if (0 === mb_strlen($value)) {
                     return $value;
                 }
@@ -31,6 +31,6 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
             };
         }
 
-        return is_array($value) ? array_map($lowerCaseFirst, $value) : call_user_func($lowerCaseFirst, $value);
+        return is_array($value) ? array_map($lowerCaseFirst, $value) : $lowerCaseFirst($value);
     }
 }

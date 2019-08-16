@@ -127,12 +127,12 @@ class Zip extends AbstractCompressionAlgorithm
 
                     $dir = dir($current);
                     while (false !== ($node = $dir->read())) {
-                        if (($node == '.') || ($node == '..')) {
+                        if ($node === '.' || $node === '..') {
                             continue;
                         }
 
                         if (is_dir($current . $node)) {
-                            array_push($stack, $current . $node . DIRECTORY_SEPARATOR);
+                            $stack[] = $current . $node . DIRECTORY_SEPARATOR;
                         }
 
                         if (is_file($current . $node)) {
@@ -161,7 +161,7 @@ class Zip extends AbstractCompressionAlgorithm
             if (! is_dir($file)) {
                 $file = basename($file);
             } else {
-                $file = "zip.tmp";
+                $file = 'zip.tmp';
             }
 
             $res = $zip->addFromString($file, $content);

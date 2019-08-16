@@ -13,13 +13,13 @@ use Traversable;
 
 class ToNull extends AbstractFilter
 {
-    const TYPE_BOOLEAN      = 1;
-    const TYPE_INTEGER      = 2;
-    const TYPE_EMPTY_ARRAY  = 4;
-    const TYPE_STRING       = 8;
-    const TYPE_ZERO_STRING  = 16;
-    const TYPE_FLOAT        = 32;
-    const TYPE_ALL          = 63;
+    const TYPE_BOOLEAN     = 1;
+    const TYPE_INTEGER     = 2;
+    const TYPE_EMPTY_ARRAY = 4;
+    const TYPE_STRING      = 8;
+    const TYPE_ZERO_STRING = 16;
+    const TYPE_FLOAT       = 32;
+    const TYPE_ALL         = 63;
 
     /**
      * @var array
@@ -79,14 +79,14 @@ class ToNull extends AbstractFilter
             foreach ($type as $value) {
                 if (is_int($value)) {
                     $detected |= $value;
-                } elseif (in_array($value, $this->constants)) {
-                    $detected |= array_search($value, $this->constants);
+                } elseif (($found = array_search($value, $this->constants, true)) !== false) {
+                    $detected |= $found;
                 }
             }
 
             $type = $detected;
-        } elseif (is_string($type) && in_array($type, $this->constants)) {
-            $type = array_search($type, $this->constants);
+        } elseif (is_string($type) && ($found = array_search($type, $this->constants, true)) !== false) {
+            $type = $found;
         }
 
         if (! is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
@@ -117,8 +117,8 @@ class ToNull extends AbstractFilter
      * Returns null representation of $value, if value is empty and matches
      * types that should be considered null.
      *
-     * @param  string $value
-     * @return string
+     * @param  null|array|bool|float|int|string $value
+     * @return null|mixed
      */
     public function filter($value)
     {
@@ -126,43 +126,43 @@ class ToNull extends AbstractFilter
 
         // FLOAT (0.0)
         if ($type & self::TYPE_FLOAT) {
-            if (is_float($value) && ($value == 0.0)) {
-                return;
+            if (is_float($value) && $value === 0.0) {
+                return null;
             }
         }
 
         // STRING ZERO ('0')
         if ($type & self::TYPE_ZERO_STRING) {
-            if (is_string($value) && ($value == '0')) {
-                return;
+            if (is_string($value) && $value === '0') {
+                return null;
             }
         }
 
         // STRING ('')
         if ($type & self::TYPE_STRING) {
-            if (is_string($value) && ($value == '')) {
-                return;
+            if (is_string($value) && $value === '') {
+                return null;
             }
         }
 
         // EMPTY_ARRAY (array())
         if ($type & self::TYPE_EMPTY_ARRAY) {
-            if (is_array($value) && ($value == [])) {
-                return;
+            if (is_array($value) && $value === []) {
+                return null;
             }
         }
 
         // INTEGER (0)
         if ($type & self::TYPE_INTEGER) {
-            if (is_int($value) && ($value == 0)) {
-                return;
+            if (is_int($value) && $value === 0) {
+                return null;
             }
         }
 
         // BOOLEAN (false)
         if ($type & self::TYPE_BOOLEAN) {
-            if (is_bool($value) && ($value == false)) {
-                return;
+            if (is_bool($value) && $value === false) {
+                return null;
             }
         }
 

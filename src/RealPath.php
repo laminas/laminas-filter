@@ -90,29 +90,29 @@ class RealPath extends AbstractFilter
         }
 
         $drive = '';
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (stripos(PHP_OS, 'WIN') === 0) {
             $path = preg_replace('/[\\\\\/]/', DIRECTORY_SEPARATOR, $path);
             if (preg_match('/([a-zA-Z]\:)(.*)/', $path, $matches)) {
                 list(, $drive, $path) = $matches;
             } else {
                 $cwd   = getcwd();
                 $drive = substr($cwd, 0, 2);
-                if (substr($path, 0, 1) != DIRECTORY_SEPARATOR) {
+                if (strpos($path, DIRECTORY_SEPARATOR) !== 0) {
                     $path = substr($cwd, 3) . DIRECTORY_SEPARATOR . $path;
                 }
             }
-        } elseif (substr($path, 0, 1) != DIRECTORY_SEPARATOR) {
+        } elseif (strpos($path, DIRECTORY_SEPARATOR) !== 0) {
             $path = getcwd() . DIRECTORY_SEPARATOR . $path;
         }
 
         $stack = [];
         $parts = explode(DIRECTORY_SEPARATOR, $path);
         foreach ($parts as $dir) {
-            if (strlen($dir) && $dir !== '.') {
-                if ($dir == '..') {
+            if ($dir !== '' && $dir !== '.') {
+                if ($dir === '..') {
                     array_pop($stack);
                 } else {
-                    array_push($stack, $dir);
+                    $stack[] = $dir;
                 }
             }
         }

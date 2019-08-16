@@ -21,12 +21,12 @@ class Inflector extends AbstractFilter
     /**
      * @var FilterPluginManager
      */
-    protected $pluginManager = null;
+    protected $pluginManager;
 
     /**
      * @var string
      */
-    protected $target = null;
+    protected $target;
 
     /**
      * @var bool
@@ -261,7 +261,7 @@ class Inflector extends AbstractFilter
     {
         $keys = array_keys($rules);
         foreach ($keys as $spec) {
-            if ($spec[0] == ':') {
+            if ($spec[0] === ':') {
                 $this->addFilterRule($spec, $rules[$spec]);
             } else {
                 $this->setStaticRule($spec, $rules[$spec]);
@@ -451,7 +451,7 @@ class Inflector extends AbstractFilter
         $inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->target);
 
         if ($this->throwTargetExceptionsOn
-            && (preg_match('#(?=' . $pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget) == true)
+            && preg_match('#(?=' . $pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget)
         ) {
             throw new Exception\RuntimeException(
                 'A replacement identifier ' . $this->targetReplacementIdentifier

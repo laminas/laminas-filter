@@ -92,7 +92,7 @@ class Gz extends AbstractCompressionAlgorithm
      */
     public function setMode($mode)
     {
-        if (($mode != 'compress') && ($mode != 'deflate')) {
+        if ($mode !== 'compress' && $mode !== 'deflate') {
             throw new Exception\InvalidArgumentException('Given compression mode not supported');
         }
 
@@ -141,7 +141,7 @@ class Gz extends AbstractCompressionAlgorithm
             gzwrite($file, $content);
             gzclose($file);
             $compressed = true;
-        } elseif ($this->options['mode'] == 'deflate') {
+        } elseif ($this->options['mode'] === 'deflate') {
             $compressed = gzdeflate($content, $this->getLevel());
         } else {
             $compressed = gzcompress($content, $this->getLevel());
@@ -172,21 +172,21 @@ class Gz extends AbstractCompressionAlgorithm
         }
 
         if (file_exists($archive)) {
-            $handler = fopen($archive, "rb");
+            $handler = fopen($archive, 'rb');
             if (! $handler) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
             }
 
             fseek($handler, -4, SEEK_END);
             $packet = fread($handler, 4);
-            $bytes  = unpack("V", $packet);
+            $bytes  = unpack('V', $packet);
             $size   = end($bytes);
             fclose($handler);
 
             $file       = gzopen($archive, 'r');
             $compressed = gzread($file, $size);
             gzclose($file);
-        } elseif ($mode == 'deflate') {
+        } elseif ($mode === 'deflate') {
             $compressed = gzinflate($content);
         } else {
             $compressed = gzuncompress($content);
