@@ -20,14 +20,14 @@ class UriNormalize extends AbstractFilter
      *
      * @var string|null
      */
-    protected $defaultScheme = null;
+    protected $defaultScheme;
 
     /**
      * Enforced scheme for scheme-less URIs. See setEnforcedScheme docs for info
      *
      * @var string|null
      */
-    protected $enforcedScheme = null;
+    protected $enforcedScheme;
 
     /**
      * Sets filter options

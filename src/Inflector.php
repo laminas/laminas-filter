@@ -21,12 +21,12 @@ class Inflector extends AbstractFilter
     /**
      * @var FilterPluginManager
      */
-    protected $pluginManager = null;
+    protected $pluginManager;
 
     /**
      * @var string
      */
-    protected $target = null;
+    protected $target;
 
     /**
      * @var bool
