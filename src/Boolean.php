@@ -55,7 +55,7 @@ class Boolean extends AbstractFilter
     /**
      * Constructor
      *
-     * @param array|Traversable|int|null  $typeOrOptions
+     * @param int|string|array|Traversable|null $typeOrOptions
      * @param bool  $casting
      * @param array $translations
      */
@@ -88,7 +88,7 @@ class Boolean extends AbstractFilter
     /**
      * Set boolean types
      *
-     * @param  int|array $type
+     * @param  int|string|array $type
      * @throws Exception\InvalidArgumentException
      * @return self
      */
