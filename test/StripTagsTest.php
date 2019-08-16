@@ -518,6 +518,12 @@ class StripTagsTest extends TestCase
             ['A <!---> B', 'A '], // Should be treated as just an open
             ['A <!----> B', 'A  B'],
             ['A <!-- --> B', 'A  B'],
+            ['A <!--> B <!--> C', 'A  C'],
+            ['A <!-- -- > -- > -->', 'A '],
+            ["A <!-- B\n C\n D -->", 'A '],
+            ["A <!-- B\n <!-- C\n D --> E", 'A  E'],
+            ['A <!-- B <!-- C --> D --> E', 'A  D -- E'],
+            ["A <!--\n B\n <!-- C\n D \n\n\n--> E", 'A  E'],
             ['A <!--My favorite operators are > and <!--> B', 'A  B'],
         ];
     }
