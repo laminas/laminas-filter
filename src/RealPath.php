@@ -112,7 +112,7 @@ class RealPath extends AbstractFilter
                 if ($dir === '..') {
                     array_pop($stack);
                 } else {
-                    array_push($stack, $dir);
+                    $stack[] = $dir;
                 }
             }
         }

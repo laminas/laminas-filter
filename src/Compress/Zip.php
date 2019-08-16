@@ -132,7 +132,7 @@ class Zip extends AbstractCompressionAlgorithm
                         }
 
                         if (is_dir($current . $node)) {
-                            array_push($stack, $current . $node . DIRECTORY_SEPARATOR);
+                            $stack[] = $current . $node . DIRECTORY_SEPARATOR;
                         }
 
                         if (is_file($current . $node)) {
