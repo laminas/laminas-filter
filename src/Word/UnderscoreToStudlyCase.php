@@ -31,6 +31,6 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
             };
         }
 
-        return is_array($value) ? array_map($lowerCaseFirst, $value) : call_user_func($lowerCaseFirst, $value);
+        return is_array($value) ? array_map($lowerCaseFirst, $value) : $lowerCaseFirst($value);
     }
 }
