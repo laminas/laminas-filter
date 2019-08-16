@@ -118,7 +118,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
-        $options = $options + $this->encryption;
+        $options += $this->encryption;
 
         if (isset($options['key'])) {
             $this->blockCipher->setKey($options['key']);
