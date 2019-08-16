@@ -14,17 +14,17 @@ use Zend\Stdlib\ArrayUtils;
 
 class Boolean extends AbstractFilter
 {
-    const TYPE_BOOLEAN        = 1;
-    const TYPE_INTEGER        = 2;
-    const TYPE_FLOAT          = 4;
-    const TYPE_STRING         = 8;
-    const TYPE_ZERO_STRING    = 16;
-    const TYPE_EMPTY_ARRAY    = 32;
-    const TYPE_NULL           = 64;
-    const TYPE_PHP            = 127;
-    const TYPE_FALSE_STRING   = 128;
-    const TYPE_LOCALIZED      = 256;
-    const TYPE_ALL            = 511;
+    const TYPE_BOOLEAN      = 1;
+    const TYPE_INTEGER      = 2;
+    const TYPE_FLOAT        = 4;
+    const TYPE_STRING       = 8;
+    const TYPE_ZERO_STRING  = 16;
+    const TYPE_EMPTY_ARRAY  = 32;
+    const TYPE_NULL         = 64;
+    const TYPE_PHP          = 127;
+    const TYPE_FALSE_STRING = 128;
+    const TYPE_LOCALIZED    = 256;
+    const TYPE_ALL          = 511;
 
     /**
      * @var array

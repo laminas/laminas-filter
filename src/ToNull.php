@@ -13,13 +13,13 @@ use Traversable;
 
 class ToNull extends AbstractFilter
 {
-    const TYPE_BOOLEAN      = 1;
-    const TYPE_INTEGER      = 2;
-    const TYPE_EMPTY_ARRAY  = 4;
-    const TYPE_STRING       = 8;
-    const TYPE_ZERO_STRING  = 16;
-    const TYPE_FLOAT        = 32;
-    const TYPE_ALL          = 63;
+    const TYPE_BOOLEAN     = 1;
+    const TYPE_INTEGER     = 2;
+    const TYPE_EMPTY_ARRAY = 4;
+    const TYPE_STRING      = 8;
+    const TYPE_ZERO_STRING = 16;
+    const TYPE_FLOAT       = 32;
+    const TYPE_ALL         = 63;
 
     /**
      * @var array

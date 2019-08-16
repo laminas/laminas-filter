@@ -34,9 +34,9 @@ class BlockCipher implements EncryptionAlgorithmInterface
      * )
      */
     protected $encryption = [
-        'key_iteration'       => 5000,
-        'algorithm'           => 'aes',
-        'hash'                => 'sha256',
+        'key_iteration' => 5000,
+        'algorithm'     => 'aes',
+        'hash'          => 'sha256',
     ];
 
     /**

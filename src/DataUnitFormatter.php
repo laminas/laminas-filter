@@ -48,10 +48,10 @@ final class DataUnitFormatter extends AbstractFilter
      * @var array
      */
     protected $options = [
-        'mode'         => self::MODE_DECIMAL,
-        'unit'         => '',
-        'precision'    => 2,
-        'prefixes'     => [],
+        'mode'      => self::MODE_DECIMAL,
+        'unit'      => '',
+        'precision' => 2,
+        'prefixes'  => [],
     ];
 
     /**

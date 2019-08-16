@@ -22,16 +22,16 @@ class Tar extends AbstractCompressionAlgorithm
     /**
      * Compression Options
      * array(
-     *     'archive'  => Archive to use
-     *     'target'   => Target to write the files to
+     *     'archive' => Archive to use
+     *     'target'  => Target to write the files to
      * )
      *
      * @var array
      */
     protected $options = [
-        'archive'  => null,
-        'target'   => '.',
-        'mode'     => null,
+        'archive' => null,
+        'target'  => '.',
+        'mode'    => null,
     ];
 
     /**
