@@ -35,21 +35,25 @@ class SeparatorToCamelCase extends AbstractSeparator
             ];
             if (! extension_loaded('mbstring')) {
                 $replacements = [
-                    function ($matches) {
+                    // @codingStandardsIgnoreStart
+                    static function ($matches) {
                         return strtoupper($matches[2]);
                     },
-                    function ($matches) {
+                    static function ($matches) {
                         return strtoupper($matches[1]);
                     },
+                    // @codingStandardsIgnoreEnd
                 ];
             } else {
                 $replacements = [
-                    function ($matches) {
+                    // @codingStandardsIgnoreStart
+                    static function ($matches) {
                         return mb_strtoupper($matches[2], 'UTF-8');
                     },
-                    function ($matches) {
+                    static function ($matches) {
                         return mb_strtoupper($matches[1], 'UTF-8');
                     },
+                    // @codingStandardsIgnoreEnd
                 ];
             }
         } else {
@@ -58,12 +62,14 @@ class SeparatorToCamelCase extends AbstractSeparator
                 '#(^[\S]{1})#',
             ];
             $replacements = [
-                function ($matches) {
+                // @codingStandardsIgnoreStart
+                static function ($matches) {
                     return strtoupper($matches[2]);
                 },
-                function ($matches) {
+                static function ($matches) {
                     return strtoupper($matches[1]);
                 },
+                // @codingStandardsIgnoreEnd
             ];
         }
 
