@@ -127,42 +127,42 @@ class ToNull extends AbstractFilter
         // FLOAT (0.0)
         if ($type & self::TYPE_FLOAT) {
             if (is_float($value) && ($value == 0.0)) {
-                return;
+                return null;
             }
         }
 
         // STRING ZERO ('0')
         if ($type & self::TYPE_ZERO_STRING) {
             if (is_string($value) && ($value == '0')) {
-                return;
+                return null;
             }
         }
 
         // STRING ('')
         if ($type & self::TYPE_STRING) {
             if (is_string($value) && ($value == '')) {
-                return;
+                return null;
             }
         }
 
         // EMPTY_ARRAY (array())
         if ($type & self::TYPE_EMPTY_ARRAY) {
             if (is_array($value) && ($value == [])) {
-                return;
+                return null;
             }
         }
 
         // INTEGER (0)
         if ($type & self::TYPE_INTEGER) {
             if (is_int($value) && ($value == 0)) {
-                return;
+                return null;
             }
         }
 
         // BOOLEAN (false)
         if ($type & self::TYPE_BOOLEAN) {
             if (is_bool($value) && ($value == false)) {
-                return;
+                return null;
             }
         }
 
