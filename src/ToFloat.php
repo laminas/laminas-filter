@@ -25,6 +25,6 @@ class ToFloat extends AbstractFilter
             return $value;
         }
 
-        return (float) floatval($value);
+        return (float) $value;
     }
 }
