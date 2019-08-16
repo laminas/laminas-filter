@@ -162,8 +162,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getPublicKey()
     {
-        $key = $this->keys['public'];
-        return $key;
+        return $this->keys['public'];
     }
 
     /**
@@ -195,8 +194,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getPrivateKey()
     {
-        $key = $this->keys['private'];
-        return $key;
+        return $this->keys['private'];
     }
 
     /**
@@ -233,8 +231,7 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getEnvelopeKey()
     {
-        $key = $this->keys['envelope'];
-        return $key;
+        return $this->keys['envelope'];
     }
 
     /**
