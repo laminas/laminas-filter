@@ -44,7 +44,7 @@ class ToNull extends AbstractFilter
     /**
      * Constructor
      *
-     * @param int|string|array|Traversable $typeOrOptions OPTIONAL
+     * @param int|string|array|Traversable|null $typeOrOptions
      */
     public function __construct($typeOrOptions = null)
     {
@@ -68,7 +68,7 @@ class ToNull extends AbstractFilter
     /**
      * Set boolean types
      *
-     * @param  int|array $type
+     * @param  int|string|array $type
      * @throws Exception\InvalidArgumentException
      * @return self
      */
