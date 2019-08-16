@@ -79,14 +79,14 @@ class ToNull extends AbstractFilter
             foreach ($type as $value) {
                 if (is_int($value)) {
                     $detected |= $value;
-                } elseif (in_array($value, $this->constants)) {
-                    $detected |= array_search($value, $this->constants);
+                } elseif (($found = array_search($value, $this->constants, true)) !== false) {
+                    $detected |= $found;
                 }
             }
 
             $type = $detected;
-        } elseif (is_string($type) && in_array($type, $this->constants)) {
-            $type = array_search($type, $this->constants);
+        } elseif (is_string($type) && ($found = array_search($type, $this->constants, true)) !== false) {
+            $type = $found;
         }
 
         if (! is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
@@ -126,42 +126,42 @@ class ToNull extends AbstractFilter
 
         // FLOAT (0.0)
         if ($type & self::TYPE_FLOAT) {
-            if (is_float($value) && ($value == 0.0)) {
+            if (is_float($value) && $value === 0.0) {
                 return null;
             }
         }
 
         // STRING ZERO ('0')
         if ($type & self::TYPE_ZERO_STRING) {
-            if (is_string($value) && ($value == '0')) {
+            if (is_string($value) && $value === '0') {
                 return null;
             }
         }
 
         // STRING ('')
         if ($type & self::TYPE_STRING) {
-            if (is_string($value) && ($value == '')) {
+            if (is_string($value) && $value === '') {
                 return null;
             }
         }
 
         // EMPTY_ARRAY (array())
         if ($type & self::TYPE_EMPTY_ARRAY) {
-            if (is_array($value) && ($value == [])) {
+            if (is_array($value) && $value === []) {
                 return null;
             }
         }
 
         // INTEGER (0)
         if ($type & self::TYPE_INTEGER) {
-            if (is_int($value) && ($value == 0)) {
+            if (is_int($value) && $value === 0) {
                 return null;
             }
         }
 
         // BOOLEAN (false)
         if ($type & self::TYPE_BOOLEAN) {
-            if (is_bool($value) && ($value == false)) {
+            if (is_bool($value) && $value === false) {
                 return null;
             }
         }

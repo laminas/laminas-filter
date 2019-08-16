@@ -31,7 +31,7 @@ abstract class AbstractUnicode extends AbstractFilter
 
             $encoding    = strtolower($encoding);
             $mbEncodings = array_map('strtolower', mb_list_encodings());
-            if (! in_array($encoding, $mbEncodings)) {
+            if (! in_array($encoding, $mbEncodings, true)) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     "Encoding '%s' is not supported by mbstring extension",
                     $encoding

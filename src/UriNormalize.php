@@ -98,7 +98,7 @@ class UriNormalize extends AbstractFilter
 
         try {
             $uri = UriFactory::factory($value, $defaultScheme);
-            if ($this->enforcedScheme && (! $uri->getScheme())) {
+            if ($this->enforcedScheme && ! $uri->getScheme()) {
                 $this->enforceScheme($uri);
             }
         } catch (UriException $ex) {

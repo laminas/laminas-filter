@@ -127,7 +127,7 @@ class Zip extends AbstractCompressionAlgorithm
 
                     $dir = dir($current);
                     while (false !== ($node = $dir->read())) {
-                        if (($node == '.') || ($node == '..')) {
+                        if ($node === '.' || $node === '..') {
                             continue;
                         }
 

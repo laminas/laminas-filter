@@ -432,7 +432,7 @@ class Openssl implements EncryptionAlgorithmInterface
             for ($i = $count; $i > 0; --$i) {
                 $header = unpack('H32print/nsize', substr($value, $length, 18));
                 $length  += 18;
-                if ($header['print'] == $fingerprint) {
+                if ($header['print'] === $fingerprint) {
                     $envelope = substr($value, $length, $header['size']);
                 }
 
