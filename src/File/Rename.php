@@ -329,7 +329,7 @@ class Rename extends Filter\AbstractFilter
         if ($rename['randomize']) {
             $info = pathinfo($rename['target']);
             $newTarget = $info['dirname'] . DIRECTORY_SEPARATOR .
-                $info['filename'] . uniqid('_');
+                $info['filename'] . uniqid('_', true);
             if (isset($info['extension'])) {
                 $newTarget .= '.' . $info['extension'];
             }
