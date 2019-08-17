@@ -209,4 +209,32 @@ class TarTest extends TestCase
         $filter = new TarCompression();
         $this->assertEquals('Tar', $filter->toString());
     }
+
+    /**
+     * @see https://github.com/zendframework/zend-filter/issues/41
+     */
+    public function testDecompressionDoesNotRequireArchive()
+    {
+        $filter = new TarCompression([
+            'archive' => $this->tmp . '/compressed.tar',
+            'target' => $this->tmp . '/zipextracted.txt',
+        ]);
+
+        $content = 'compress me ' . microtime(true);
+        $compressed = $filter->compress($content);
+
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar', $compressed);
+
+        $target = $this->tmp;
+        $filter = new TarCompression([
+            'target' => $target,
+        ]);
+
+        $decompressed = $filter->decompress($compressed);
+        self::assertSame($target, $decompressed);
+        // per documentation, tar includes full path
+        $file = $target . DIRECTORY_SEPARATOR . $target . DIRECTORY_SEPARATOR . '/zipextracted.txt';
+        self::assertFileExists($file);
+        self::assertSame($content, file_get_contents($file));
+    }
 }
