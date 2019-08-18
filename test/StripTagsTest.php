@@ -511,6 +511,34 @@ class StripTagsTest extends TestCase
         $this->assertEquals($expected, $filter->filter($input));
     }
 
+    public function badCommentProvider()
+    {
+        return [
+            ['A <!--> B', 'A '],  // Should be treated as just an open
+            ['A <!---> B', 'A '], // Should be treated as just an open
+            ['A <!----> B', 'A  B'],
+            ['A <!-- --> B', 'A  B'],
+            ['A <!--> B <!--> C', 'A  C'],
+            ['A <!-- -- > -- > --> B', 'A  B'],
+            ["A <!-- B\n C\n D --> E", 'A  E'],
+            ["A <!-- B\n <!-- C\n D --> E", 'A  E'],
+            ['A <!-- B <!-- C --> D --> E', 'A  D -- E'],
+            ["A <!--\n B\n <!-- C\n D \n\n\n--> E", 'A  E'],
+            ['A <!--My favorite operators are > and <!--> B', 'A  B'],
+        ];
+    }
+
+    /**
+     * @dataProvider badCommentProvider
+     *
+     * @param string $input
+     * @param string $expected
+     */
+    public function testBadCommentTags($input, $expected)
+    {
+        $this->assertEquals($expected, $this->_filter->filter($input));
+    }
+
      /**
      * @group ZF-10256
      */

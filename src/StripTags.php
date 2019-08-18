@@ -179,19 +179,18 @@ class StripTags extends AbstractFilter
         $value = (string) $value;
 
         // Strip HTML comments first
-        while (strpos($value, '<!--') !== false) {
-            $pos   = strrpos($value, '<!--');
-            $start = substr($value, 0, $pos);
-            $value = substr($value, $pos);
+        $open     = '<!--';
+        $openLen  = strlen($open);
+        $close    = '-->';
+        $closeLen = strlen($close);
+        while (($start = strpos($value, $open)) !== false) {
+            $end = strpos($value, $close, $start + $openLen);
 
-            // If there is no comment closing tag, strip whole text
-            if (! preg_match('/--\s*>/s', $value)) {
-                $value = '';
+            if ($end === false) {
+                $value = substr($value, 0, $start);
             } else {
-                $value = preg_replace('/<(?:!(?:--[\s\S]*?--\s*)?(>))/s', '', $value);
+                $value = substr($value, 0, $start) . substr($value, $end + $closeLen);
             }
-
-            $value = $start . $value;
         }
 
         // Initialize accumulator for filtered data
