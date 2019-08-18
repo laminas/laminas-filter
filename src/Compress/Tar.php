@@ -202,11 +202,12 @@ class Tar extends AbstractCompressionAlgorithm
     public function decompress($content)
     {
         $archive = $this->getArchive();
-        if (empty($archive) || ! file_exists($archive)) {
+        if (file_exists($content)) {
+            $archive = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, realpath($content));
+        } elseif (empty($archive) || ! file_exists($archive)) {
             throw new Exception\RuntimeException('Tar Archive not found');
         }
 
-        $archive = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, realpath($content));
         $archive = new Archive_Tar($archive, $this->getMode());
         $target  = $this->getTarget();
         if (! is_dir($target)) {
