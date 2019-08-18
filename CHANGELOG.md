@@ -47,6 +47,9 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#89](https://github.com/zendframework/zend-filter/pull/89) fixes infinite
   loop on malformed HTML comments in StripTags filter.
 
+- [#92](https://github.com/zendframework/zend-filter/pull/92) fixes Tar adapter
+  to not require `archive` in options when decompressing.
+
 ## 2.9.1 - 2018-12-17
 
 ### Added
