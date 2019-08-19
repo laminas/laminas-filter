@@ -1,6 +1,6 @@
 {
     "name": "zendframework/zend-filter",
-    "description": "provides a set of commonly needed data filters",
+    "description": "Programmatically filter and normalize data and files",
     "license": "BSD-3-Clause",
     "keywords": [
         "zf",
@@ -12,7 +12,7 @@
         "issues": "https://github.com/zendframework/zend-filter/issues",
         "source": "https://github.com/zendframework/zend-filter",
         "rss": "https://github.com/zendframework/zend-filter/releases.atom",
-        "slack": "https://zendframework-slack.herokuapp.com",
+        "chat": "https://zendframework-slack.herokuapp.com",
         "forum": "https://discourse.zendframework.com/c/questions/components"
     },
     "require": {
@@ -28,15 +28,15 @@
         "zendframework/zend-servicemanager": "^2.7.8 || ^3.3",
         "zendframework/zend-uri": "^2.6"
     },
+    "conflict": {
+        "zendframework/zend-validator": "<2.10.1"
+    },
     "suggest": {
         "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters",
         "zendframework/zend-crypt": "Zend\\Crypt component, for encryption filters",
         "zendframework/zend-i18n": "Zend\\I18n component for filters depending on i18n functionality",
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for using the filter chain functionality",
         "zendframework/zend-uri": "Zend\\Uri component, for the UriNormalize filter"
-    },
-    "conflict": {
-        "zendframework/zend-validator": "<2.10.1"
     },
     "autoload": {
         "psr-4": {
