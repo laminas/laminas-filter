@@ -246,7 +246,7 @@ The following set of options are supported:
   to the filter; used to create a new uploaded file representation of the
   renamed file.  (Since 2.9.0)
 
-> ### Using the upload name is unsafe
+> ### Using the upload Name is unsafe
 >
 > Be **very** careful when using the `use_upload_name` option. For instance,
 > extremely bad things could happen if you were to allow uploaded `.php` files
@@ -341,7 +341,7 @@ foreach ($request->getUploadedFiles() as $uploadedFile) {
 }
 ```
 
-> ### PSR-7 support
+> ### PSR-7 Support
 >
 > PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
 > [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)

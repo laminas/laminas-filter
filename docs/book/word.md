@@ -62,7 +62,7 @@ This filter modifies a given string such that `CamelCaseWords` are converted to
 
 There are no additional options for `Zend\Filter\Word\CamelCaseToUnderscore`:
 
-### Basic usage
+### Basic Usage
 
 ```php
 $filter = new Zend\Filter\Word\CamelCaseToUnderscore();
@@ -274,7 +274,7 @@ The following options are supported for `Zend\Filter\Word\UnderscoreToSeparator`
 - `separator`: A separator character. If this is not set, the default separator
   is a space.
 
-### Basic usage
+### Basic Usage
 
 ```php
 $filter = new Zend\Filter\Word\UnderscoreToSeparator('+');
@@ -304,7 +304,7 @@ converted to `words-with-underscores`.
 
 There are no additional options for `Zend\Filter\Word\UnderscoreToDash`:
 
-### Basic usage
+### Basic Usage
 
 ```php
 $filter = new Zend\Filter\Word\UnderscoreToDash();

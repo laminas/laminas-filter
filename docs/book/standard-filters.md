@@ -43,7 +43,7 @@ echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content 123'
 ```
 
-> ### Supported languages
+> ### Supported Languages
 >
 > `Alnum` works on almost all languages, except: Chinese, Japanese and Korean.
 > Within these languages, the english alphabet is used instead of the characters
@@ -90,7 +90,7 @@ echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content '
 ```
 
-> ### Supported languages
+> ### Supported Languages
 >
 > `Alpha` works on almost all languages, except: Chinese, Japanese and Korean.
 > Within these languages, the english alphabet is used instead of the characters
@@ -359,12 +359,12 @@ print $filter->filter('Hello!');
 To get the actual set callback use `getCallback()` and to set another callback
 use `setCallback()`.
 
-> ### Possible exceptions
+> ### Possible Exceptions
 >
 > You should note that defining a callback method which can not be called will
 > raise an exception.
 
-### Default Parameters Within a Callback
+### Default Parameters within a Callback
 
 It is also possible to define default parameters, which are given to the called
 method as an array when the filter is executed. This array will be concatenated
@@ -474,7 +474,7 @@ $compressed = $filter->filter('Compressed string');
 // Returns the original, uncompressed string
 ```
 
-> ### Note on string compression
+> ### Note on String Compression
 >
 > Not all adapters support string compression. Compression formats like **Rar**
 > can only handle files and directories. For details, consult the section for
@@ -499,7 +499,7 @@ $compressed = $filter->filter('Uncompressed string');
 In the above example, the uncompressed string is compressed, and is then written
 into the given archive file.
 
-> ### Existing archives will be overwritten
+> ### Existing Archives will be overwritten
 >
 > The content of any existing file will be overwritten when the given filename
 > of the archive already exists.
@@ -532,7 +532,7 @@ $compressed = $filter->filter('C:\temp\somedir');
 // Returns true on success and creates the archive file
 ```
 
-> ### Do not compress large or base directories
+> ### Do not compress large or base Directories
 >
 > You should never compress large or base directories like a complete partition.
 > Compressing a complete partition is a very time consuming task which can lead
@@ -618,7 +618,7 @@ The Lzf Adapter can compress and decompress:
 
 - Strings
 
-> ### Lzf supports only strings
+> ### Lzf supports only Strings
 >
 > The Lzf adapter can not handle files and directories.
 
@@ -633,13 +633,13 @@ The Rar Adapter can compress and decompress:
 - Files
 - Directories
 
-> ### Rar does not support strings
+> ### Rar does not support Strings
 >
 > The Rar Adapter can not handle strings.
 
 This adapter makes use of PHP's Rar extension.
 
-> ### Rar compression not supported
+> ### Rar Compression not supported
 >
 > Due to restrictions with the Rar compression format, there is no compression
 > available for free. When you want to compress files into a new Rar archive,
@@ -664,7 +664,7 @@ The Tar Adapter can compress and decompress:
 - Files
 - Directories
 
-> ### Tar does not support strings
+> ### Tar does not support Strings
 >
 > The Tar Adapter can not handle strings.
 
@@ -683,7 +683,7 @@ example, the related methods for `target` are `getTarget()` and `setTarget()`.
 You can also use the `setOptions()` method which accepts an array of all
 options.
 
-> ### Directory usage
+> ### Directory Usage
 >
 > When compressing directories with Tar, the complete file path is used. This
 > means that created Tar files will not only have the subdirectory, but the
@@ -697,7 +697,7 @@ The Zip Adapter can compress and decompress:
 - Files
 - Directories
 
-> ### Zip does not support string decompression
+> ### Zip does not support String Decompression
 >
 > The Zip Adapter can not handle decompression to a string; decompression will
 > always be written to a file.
@@ -776,13 +776,13 @@ PHP's OpenSSL extension.
 The following options are supported for `Zend\Filter\Encrypt` and
 `Zend\Filter\Decrypt`, and segregated by adapter.
 
-#### General options
+#### General Options
 
 - `adapter`: This sets the encryption adapter to use.
 - `compression`: If the encrypted value should be compressed. Default is no
   compression.
 
-#### BlockCipher options
+#### BlockCipher Options
 
 - `algorithm`: The algorithm to use with `Zend\Crypt\Symmetric\Mcrypt` (use the
   the `getSupportedAlgorithms()` method of that class to determine what is
@@ -799,7 +799,7 @@ The following options are supported for `Zend\Filter\Encrypt` and
 - `vector`: The initialization vector which shall be used. If not set, it will
   be a random vector.
 
-#### OpenSSL options
+#### OpenSSL Options
 
 - `envelope`: The encrypted envelope key from the user who encrypted the
   content. You can either provide the path and filename of the key file, or just
@@ -837,7 +837,7 @@ $filter = new Zend\Filter\Encrypt();
 $filter->setAdapter('openssl');
 ```
 
-> ### Default adapter
+> ### Default Adapter
 >
 > When you do not supply the `adapter` option or do not call `setAdapter()`, the
 > `BlockCipher` adapter will be used per default.
@@ -885,7 +885,7 @@ var_dump($filter->getEncryption());
 //}
 ```
 
-> ### Default BlockCipher algorithm
+> ### Default BlockCipher Algorithm
 >
 > The `BlockCipher` adapter uses the [Mcrypt](http://php.net/mcrypt) extension
 > by default. That means you will need to install the Mcrypt module in your PHP
@@ -924,7 +924,7 @@ printf("%s\n", $filter->filter('message'));
 04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=
 ```
 
-> ### Use different vectors
+> ### Use different Vectors
 >
 > For security purposes, it's always better to use a different vector on each
 > encryption. We suggest using `setVector()` only in exceptional circumstances.
@@ -972,7 +972,7 @@ $filter = new Zend\Filter\Encrypt([
 $filter->setPublicKey('/public/key/path/public.pem');
 ```
 
-> ### Valid keys are required
+> ### Valid Keys are required
 >
 > The `OpenSSL` adapter will not work with invalid or missing keys.
 
@@ -1071,7 +1071,7 @@ $filter2 = new Zend\Filter\Encrypt([
 ]);
 ```
 
-> ### Decrypt using the same settings
+> ### Decrypt using the same Settings
 >
 > When you want to decrypt a value which is additionally compressed, then you
 > need to set the same compression settings for decryption as for encryption;
@@ -1632,7 +1632,7 @@ print $filter->filter('SAMPLE');
 // returns "sample"
 ```
 
-### Handling alternate encoding
+### Handling alternate Encoding
 
 By default, `StringToLower` will only handle characters from the locale of your
 server; characters from other charsets will be ignored. If you have the mbstring
@@ -1651,7 +1651,7 @@ $filter = new Zend\Filter\StringToLower(['encoding' => 'UTF-8']);
 $filter->setEncoding('ISO-8859-1');
 ```
 
-> ### Setting invalid encodings
+> ### Setting invalid Encodings
 >
 > Be aware that you will get an exception when:
 >
@@ -1677,7 +1677,7 @@ print $filter->filter('Sample');
 // returns "SAMPLE"
 ```
 
-### Different Encoded Strings
+### Different encoded Strings
 
 Like the `StringToLower` filter, this filter will only handle characters
 supported by your server locale, unless you have the mbstring extension enabled.
@@ -1714,7 +1714,7 @@ print $filter->filter(' This is (my) content: ');
 The above example returns `This is (my) content:`. Notice that the whitespace
 characters have been removed.
 
-### Specifying alternate characters
+### Specifying alternate Characters
 
 ```php
 $filter = new Zend\Filter\StringTrim(':');
@@ -1793,7 +1793,7 @@ print $filter->filter('This contains <a href="http://example.com">no ending tag'
 
 The above will return `This contains`, with the rest being stripped.
 
-### Allowing Defined Tags
+### Allowing defined Tags
 
 `Zend\Filter\StripTags` allows stripping all but a whitelist of tags. As an
 example, this can be used to strip all markup except for links:
@@ -1814,7 +1814,7 @@ tags at once.
 > Do not use this feature to secure content. This component does not replace the
 > use of a properly configured html filter.
 
-### Allowing Defined Attributes
+### Allowing defined Attributes
 
 You can also strip all but a whitelist of attributes from a tag:
 
@@ -1832,7 +1832,7 @@ The above will return `A text with a <img src='picture.com'>picture</img>`; it
 strips all tags but `<img>`, and all attributes but `src` from those tags.By
 providing an array you can set multiple attributes at once.
 
-### Allow specific tags with specific attributes
+### Allow specific Tags with specific Attributes
 
 You can also pass the tag whitelist as a set of tag/attribute values. Each key
 will be an allowed tag, pointing to a list of whitelisted attributes for that

@@ -11,7 +11,7 @@ lower case this; and finally, you want to separate the words using a dash
 `Zend\Filter\Inflector` implements `Zend\Filter\FilterInterface`; you perform
 inflection by calling `filter()` on the object instance.
 
-## Transforming MixedCase and camelCaseText to another format
+## Transforming MixedCase and CamelCaseText to another Format
 
 ```php
 $inflector = new Zend\Filter\Inflector('pages/:page.:suffix');
@@ -236,7 +236,7 @@ $inflector->setFilterRule('script', [
 ]);
 ```
 
-## Setting Many Rules At Once
+## Setting many Rules at once
 
 Typically, it's easier to set many rules at once than to configure a single
 variable and its inflection rules one at a time. `Zend\Filter\Inflector`'s
@@ -285,7 +285,7 @@ if and when exceptions are thrown.
   filter chain. `$index` must be passed.
 - `clearRules()` will clear all currently registered rules.
 
-## Using a Traversable or an array
+## Using a Traversable or an Array
 
 You can use a `Traversable` or an array to set rules and other object state in
 your inflectors, by passing either type to either the constructor or the
