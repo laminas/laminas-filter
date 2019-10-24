@@ -1,4 +1,4 @@
-# Standard Filter Classes
+# Standard Filter
 
 zend-filter comes with a standard set of filters, available for immediate use.
 

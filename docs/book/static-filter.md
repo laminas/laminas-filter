@@ -1,4 +1,4 @@
-# Using the StaticFilter
+# Static Filter
 
 If it is inconvenient to load a given filter class and create an instance of
 the filter, you can use `StaticFilter` with it's method `execute()` as an
