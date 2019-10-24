@@ -43,7 +43,7 @@ echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content 123'
 ```
 
-> #### Supported languages
+> ### Supported languages
 >
 > `Alnum` works on almost all languages, except: Chinese, Japanese and Korean.
 > Within these languages, the english alphabet is used instead of the characters
@@ -90,7 +90,7 @@ echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content '
 ```
 
-> #### Supported languages
+> ### Supported languages
 >
 > `Alpha` works on almost all languages, except: Chinese, Japanese and Korean.
 > Within these languages, the english alphabet is used instead of the characters
@@ -359,7 +359,7 @@ print $filter->filter('Hello!');
 To get the actual set callback use `getCallback()` and to set another callback
 use `setCallback()`.
 
-> #### Possible exceptions
+> ### Possible exceptions
 >
 > You should note that defining a callback method which can not be called will
 > raise an exception.
@@ -445,7 +445,7 @@ $filter = new Zend\Filter\Compress([
 ]);
 ```
 
-> #### Default compression Adapter
+> ### Default compression Adapter
 >
 > When no compression adapter is given, then the **Gz** adapter will be used.
 
@@ -474,7 +474,7 @@ $compressed = $filter->filter('Compressed string');
 // Returns the original, uncompressed string
 ```
 
-> #### Note on string compression
+> ### Note on string compression
 >
 > Not all adapters support string compression. Compression formats like **Rar**
 > can only handle files and directories. For details, consult the section for
@@ -499,7 +499,7 @@ $compressed = $filter->filter('Uncompressed string');
 In the above example, the uncompressed string is compressed, and is then written
 into the given archive file.
 
-> #### Existing archives will be overwritten
+> ### Existing archives will be overwritten
 >
 > The content of any existing file will be overwritten when the given filename
 > of the archive already exists.
@@ -532,7 +532,7 @@ $compressed = $filter->filter('C:\temp\somedir');
 // Returns true on success and creates the archive file
 ```
 
-> #### Do not compress large or base directories
+> ### Do not compress large or base directories
 >
 > You should never compress large or base directories like a complete partition.
 > Compressing a complete partition is a very time consuming task which can lead
@@ -565,7 +565,7 @@ $decompressed = $filter->filter('filename.zip');
 // into the given target directory
 ```
 
-> #### Directories to extract to must exist
+> ### Directories to extract to must exist
 >
 > When you want to decompress an archive into a directory, then the target
 > directory must exist.
@@ -618,7 +618,7 @@ The Lzf Adapter can compress and decompress:
 
 - Strings
 
-> #### Lzf supports only strings
+> ### Lzf supports only strings
 >
 > The Lzf adapter can not handle files and directories.
 
@@ -633,13 +633,13 @@ The Rar Adapter can compress and decompress:
 - Files
 - Directories
 
-> #### Rar does not support strings
+> ### Rar does not support strings
 >
 > The Rar Adapter can not handle strings.
 
 This adapter makes use of PHP's Rar extension.
 
-> #### Rar compression not supported
+> ### Rar compression not supported
 >
 > Due to restrictions with the Rar compression format, there is no compression
 > available for free. When you want to compress files into a new Rar archive,
@@ -664,7 +664,7 @@ The Tar Adapter can compress and decompress:
 - Files
 - Directories
 
-> #### Tar does not support strings
+> ### Tar does not support strings
 >
 > The Tar Adapter can not handle strings.
 
@@ -683,7 +683,7 @@ example, the related methods for `target` are `getTarget()` and `setTarget()`.
 You can also use the `setOptions()` method which accepts an array of all
 options.
 
-> #### Directory usage
+> ### Directory usage
 >
 > When compressing directories with Tar, the complete file path is used. This
 > means that created Tar files will not only have the subdirectory, but the
@@ -697,7 +697,7 @@ The Zip Adapter can compress and decompress:
 - Files
 - Directories
 
-> #### Zip does not support string decompression
+> ### Zip does not support string decompression
 >
 > The Zip Adapter can not handle decompression to a string; decompression will
 > always be written to a file.
@@ -837,7 +837,7 @@ $filter = new Zend\Filter\Encrypt();
 $filter->setAdapter('openssl');
 ```
 
-> #### Default adapter
+> ### Default adapter
 >
 > When you do not supply the `adapter` option or do not call `setAdapter()`, the
 > `BlockCipher` adapter will be used per default.
@@ -885,7 +885,7 @@ var_dump($filter->getEncryption());
 //}
 ```
 
-> #### Default BlockCipher algorithm
+> ### Default BlockCipher algorithm
 >
 > The `BlockCipher` adapter uses the [Mcrypt](http://php.net/mcrypt) extension
 > by default. That means you will need to install the Mcrypt module in your PHP
@@ -924,7 +924,7 @@ printf("%s\n", $filter->filter('message'));
 04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=
 ```
 
-> #### Use different vectors
+> ### Use different vectors
 >
 > For security purposes, it's always better to use a different vector on each
 > encryption. We suggest using `setVector()` only in exceptional circumstances.
@@ -972,7 +972,7 @@ $filter = new Zend\Filter\Encrypt([
 $filter->setPublicKey('/public/key/path/public.pem');
 ```
 
-> #### Valid keys are required
+> ### Valid keys are required
 >
 > The `OpenSSL` adapter will not work with invalid or missing keys.
 
@@ -1071,7 +1071,7 @@ $filter2 = new Zend\Filter\Encrypt([
 ]);
 ```
 
-> #### Decrypt using the same settings
+> ### Decrypt using the same settings
 >
 > When you want to decrypt a value which is additionally compressed, then you
 > need to set the same compression settings for decryption as for encryption;
@@ -1651,7 +1651,7 @@ $filter = new Zend\Filter\StringToLower(['encoding' => 'UTF-8']);
 $filter->setEncoding('ISO-8859-1');
 ```
 
-> #### Setting invalid encodings
+> ### Setting invalid encodings
 >
 > Be aware that you will get an exception when:
 >
@@ -1809,7 +1809,7 @@ The above will return `A text with a <a href='link.com'>link</a>`;
 it strips all tags but the link. By providing an array, you can specify multiple
 tags at once.
 
-> #### Warning
+> ### Warning
 >
 > Do not use this feature to secure content. This component does not replace the
 > use of a properly configured html filter.
