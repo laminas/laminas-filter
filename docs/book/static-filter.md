@@ -1,4 +1,4 @@
-# Using the StaticFilter
+# Static Filter
 
 If it is inconvenient to load a given filter class and create an instance of
 the filter, you can use `StaticFilter` with it's method `execute()` as an
@@ -30,7 +30,7 @@ and calling its `filter()` method.
 Additionally, [filter chains](filter-chains.md) allow you to instantiate and run multiple filters
 on demand to process sets of input data.
 
-## Using custom filters
+## Using custom Filters
 
 You can set and receive the `FilterPluginManager` for the `StaticFilter` to
 amend the standard filter classes:
