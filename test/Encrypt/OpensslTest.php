@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Encrypt;
+namespace LaminasTest\Filter\Encrypt;
 
-use Zend\Filter\Encrypt\Openssl as OpensslEncryption;
+use Laminas\Filter\Encrypt\Openssl as OpensslEncryption;
 
 /**
- * @copyright  Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Filter
+ * @copyright  Copyright (c) 2005-2013 Laminas (https://www.zend.com)
+ * @license    https://getlaminas.org/license/new-bsd     New BSD License
+ * @group      Laminas_Filter
  */
 class OpensslTest extends \PHPUnit_Framework_TestCase
 {
@@ -135,7 +134,7 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt';
         $r = $filter->setPublicKey(array('private' => __DIR__ . '/../_files/publickey.pem'));
         $this->assertSame($filter, $r);
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not valid');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not valid');
         $filter->setPublicKey(123);
 
     }
@@ -168,7 +167,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 '), $test);
 
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not valid');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not valid');
         $filter->setPrivateKey(123);
 
     }
@@ -191,7 +190,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Zend\Filter\Exception\RuntimeException $e) {
+        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
             $this->assertContains('Please give a private key', $e->getMessage());
         }
 
@@ -199,7 +198,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Zend\Filter\Exception\RuntimeException $e) {
+        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
             $this->assertContains('Please give an envelope key', $e->getMessage());
         }
 
@@ -207,7 +206,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Zend\Filter\Exception\RuntimeException $e) {
+        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
             $this->assertContains('was not able to decrypt', $e->getMessage());
         }
     }
@@ -219,7 +218,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
     {
         $filter = new OpensslEncryption();
 
-        $this->setExpectedException('\Zend\Filter\Exception\RuntimeException', 'without public key');
+        $this->setExpectedException('\Laminas\Filter\Exception\RuntimeException', 'without public key');
         $filter->encrypt('unknown');
     }
 
