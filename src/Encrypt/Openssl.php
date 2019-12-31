@@ -1,26 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\Encrypt;
+namespace Laminas\Filter\Encrypt;
 
+use Laminas\Filter\Compress;
+use Laminas\Filter\Decompress;
+use Laminas\Filter\Exception;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Filter\Compress;
-use Zend\Filter\Decompress;
-use Zend\Filter\Exception;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Encryption adapter for openssl
  *
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  */
 class Openssl implements EncryptionAlgorithmInterface
 {
@@ -172,7 +170,7 @@ class Openssl implements EncryptionAlgorithmInterface
      * Sets public keys
      *
      * @param  string|array $key Public keys
-     * @return \Zend\Filter\Encrypt\Openssl
+     * @return \Laminas\Filter\Encrypt\Openssl
      */
     public function setPublicKey($key)
     {
@@ -243,7 +241,7 @@ class Openssl implements EncryptionAlgorithmInterface
      * Sets envelope keys
      *
      * @param  string|array $key Envelope keys
-     * @return \Zend\Filter\Encrypt\Openssl
+     * @return \Laminas\Filter\Encrypt\Openssl
      */
     public function setEnvelopeKey($key)
     {
@@ -356,7 +354,7 @@ class Openssl implements EncryptionAlgorithmInterface
             if ($this->package) {
                 $details = openssl_pkey_get_details($keys[$key]);
                 if ($details === false) {
-                    $details = array('key' => 'ZendFramework');
+                    $details = array('key' => 'Laminas');
                 }
 
                 ++$count;
@@ -395,7 +393,7 @@ class Openssl implements EncryptionAlgorithmInterface
     }
 
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Defined by Laminas\Filter\FilterInterface
      *
      * Decrypts $value with the defined settings
      *
@@ -425,7 +423,7 @@ class Openssl implements EncryptionAlgorithmInterface
             if ($details !== false) {
                 $fingerprint = md5($details['key']);
             } else {
-                $fingerprint = md5("ZendFramework");
+                $fingerprint = md5("Laminas");
             }
 
             $count = unpack('ncount', $value);

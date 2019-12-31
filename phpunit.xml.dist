@@ -4,7 +4,7 @@
          bootstrap="./test/bootstrap.php"
          colors="true">
     <testsuites>
-        <testsuite name="zend-filter Test Suite">
+        <testsuite name="laminas-filter Test Suite">
             <directory>./test/</directory>
         </testsuite>
     </testsuites>
@@ -26,16 +26,16 @@
 
         <!-- OB_ENABLED should be enabled for some tests to check if all
              functionality works as expected. Such tests include those for
-             Zend\Soap and Zend\Session, which require that headers not be sent
+             Laminas\Soap and Laminas\Session, which require that headers not be sent
              in order to work. -->
-        <const name="TESTS_ZEND_OB_ENABLED" value="false" />
+        <const name="TESTS_LAMINAS_OB_ENABLED" value="false" />
 
-        <!-- Zend\Filter tests
+        <!-- Laminas\Filter tests
 
              Some tests are problematic, largely due to environment.
              Specifically, the Zip compression filter has this issue. These
              tests are enabled by default; set them to false to disable them. -->
-        <const name="TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED" value="true" />
+        <const name="TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED" value="true" />
 
     </php>
 </phpunit>
