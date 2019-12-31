@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
+use Laminas\Filter\Encrypt as EncryptFilter;
+use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Encrypt as EncryptFilter;
-use Zend\Filter\Exception;
 
 class EncryptTest extends TestCase
 {
@@ -121,11 +120,11 @@ PIDs9E7uuizAKDhRRRvho8BS
         $filter = new EncryptFilter();
         $filter->setAdapter('Openssl');
         $this->assertEquals('Openssl', $filter->getAdapter());
-        $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
         $this->assertEquals('BlockCipher', $filter->getAdapter());
-        $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');

@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
+use Laminas\Filter\Exception;
+use Laminas\Filter\StringToUpper as StringToUpperFilter;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
-use Zend\Filter\StringToUpper as StringToUpperFilter;
 
 class StringToUpperTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**
-     * Zend_Filter_StringToLower object
+     * Laminas_Filter_StringToLower object
      *
      * @var StringToUpperFilter
      */
@@ -25,7 +24,7 @@ class StringToUpperTest extends TestCase
     // @codingStandardsIgnoreEnd
 
     /**
-     * Creates a new Zend_Filter_StringToUpper object for each test method
+     * Creates a new Laminas_Filter_StringToUpper object for each test method
      *
      * @return void
      */
@@ -93,7 +92,7 @@ class StringToUpperTest extends TestCase
     }
 
     /**
-     * @ZF-8989
+     * @Laminas-8989
      */
     public function testInitiationWithEncoding()
     {
@@ -114,7 +113,7 @@ class StringToUpperTest extends TestCase
     }
 
     /**
-     *  @ZF-9058
+     *  @Laminas-9058
      */
     public function testCaseInsensitiveEncoding()
     {
@@ -146,7 +145,7 @@ class StringToUpperTest extends TestCase
     }
 
     /**
-     * @group ZF-9854
+     * @group Laminas-9854
      */
     public function testDetectMbInternalEncoding()
     {

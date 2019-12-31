@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
+use Laminas\Filter\Compress\Gz as GzCompression;
+use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Compress\Gz as GzCompression;
-use Zend\Filter\Exception;
 
 class GzTest extends TestCase
 {
@@ -23,7 +22,7 @@ class GzTest extends TestCase
             $this->markTestSkipped('This adapter needs the zlib extension');
         }
 
-        $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
     public function tearDown()
