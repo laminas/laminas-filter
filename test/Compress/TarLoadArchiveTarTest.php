@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Tar as TarCompression;
-use Zend\Filter\Exception\ExtensionNotLoadedException;
+use Laminas\Filter\Compress\Tar as TarCompression;
+use Laminas\Filter\Exception\ExtensionNotLoadedException;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class TarLoadArchveTarTest extends \PHPUnit_Framework_TestCase
 {
