@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Decompress as DecompressFilter;
+use Laminas\Filter\Decompress as DecompressFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class DecompressTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +23,7 @@ class DecompressTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This filter is tested with the bz2 extension');
         }
 
-        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
         mkdir($this->tmpDir, 0775, true);
     }
 

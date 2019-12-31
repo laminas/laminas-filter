@@ -1,6 +1,6 @@
 # File Filters
 
-zend-filter also comes with a set of classes for filtering file contents, and
+laminas-filter also comes with a set of classes for filtering file contents, and
 performing file operations such as renaming.
 
 > ## $_FILES
@@ -23,7 +23,7 @@ performing file operations such as renaming.
 
 ## Rename
 
-`Zend\Filter\File\Rename` can be used to rename a file and/or move a file to a new path.
+`Laminas\Filter\File\Rename` can be used to rename a file and/or move a file to a new path.
 
 ### Supported Options
 
@@ -35,7 +35,7 @@ The following set of options are supported:
   renamed. Used to match the filtered file with an options set.
 - `overwrite` (boolean; default: `false`): Shall existing files be overwritten?
   If the file is unable to be moved into the target path, a
-  `Zend\Filter\Exception\RuntimeException` will be thrown.
+  `Laminas\Filter\Exception\RuntimeException` will be thrown.
 - `randomize` (boolean; default: `false`): Shall target files have a random
   postfix attached? The random postfix will generated with `uniqid('_')` after
   the file name and before the extension. For example, `file.txt` might be
@@ -51,7 +51,7 @@ Move all filtered files to a different directory:
 
 ```php
 // 'target' option is assumed if param is a string
-$filter = new \Zend\Filter\File\Rename('/tmp/');
+$filter = new \Laminas\Filter\File\Rename('/tmp/');
 echo $filter->filter('./myfile.txt');
 // File has been moved to '/tmp/myfile.txt'
 ```
@@ -59,7 +59,7 @@ echo $filter->filter('./myfile.txt');
 Rename all filtered files to a new name:
 
 ```php
-$filter = new \Zend\Filter\File\Rename('/tmp/newfile.txt');
+$filter = new \Laminas\Filter\File\Rename('/tmp/newfile.txt');
 echo $filter->filter('./myfile.txt');
 // File has been renamed to '/tmp/newfile.txt'
 ```
@@ -67,7 +67,7 @@ echo $filter->filter('./myfile.txt');
 Move to a new path, and randomize file names:
 
 ```php
-$filter = new \Zend\Filter\File\Rename([
+$filter = new \Laminas\Filter\File\Rename([
     'target'    => '/tmp/newfile.txt',
     'randomize' => true,
 ]);
@@ -78,7 +78,7 @@ echo $filter->filter('./myfile.txt');
 Configure different options for several possible source files:
 
 ```php
-$filter = new \Zend\Filter\File\Rename([
+$filter = new \Laminas\Filter\File\Rename([
     [
         'source'    => 'fileA.txt'
         'target'    => '/dest1/newfileA.txt',
@@ -109,7 +109,7 @@ follows:
 
 ## RenameUpload
 
-`Zend\Filter\File\RenameUpload` can be used to rename or move an uploaded file to a new path.
+`Laminas\Filter\File\RenameUpload` can be used to rename or move an uploaded file to a new path.
 
 ### Supported Options
 
@@ -118,7 +118,7 @@ The following set of options are supported:
 - `target` (string; default: `*`): Target directory or full filename path.
 - `overwrite` (boolean; default: `false`): Shall existing files be overwritten?
   If the file is unable to be moved into the target path, a
-  `Zend\Filter\Exception\RuntimeException` will be thrown.
+  `Laminas\Filter\Exception\RuntimeException` will be thrown.
 - `randomize` (boolean; default: `false`): Shall target files have a random
   postfix attached? The random postfix will generated with `uniqid('_')` after
   the file name and before the extension. For example, `file.txt` might be
@@ -149,7 +149,7 @@ will be filtered with the same option settings.
 Move all filtered files to a different directory:
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -157,7 +157,7 @@ $files   = $request->getFiles();
 // i.e. $files['my-upload']['name'] === 'myfile.txt'
 
 // 'target' option is assumed if param is a string
-$filter = new \Zend\Filter\File\RenameUpload('./data/uploads/');
+$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/');
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/php5Wx0aJ'
 
@@ -170,13 +170,13 @@ echo $filter->filter($files['my-upload']);
 Rename all filtered files to a new name:
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Rename('./data/uploads/newfile.txt');
+$filter = new \Laminas\Filter\File\Rename('./data/uploads/newfile.txt');
 echo $filter->filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'
 ```
@@ -184,13 +184,13 @@ echo $filter->filter($files['my-upload']);
 Move to a new path and randomize file names:
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Rename(array(
+$filter = new \Laminas\Filter\File\Rename(array(
     'target'    => './data/uploads/newfile.txt',
     'randomize' => true,
 ));

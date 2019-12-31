@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\Encrypt;
+namespace Laminas\Filter\Encrypt;
 
+use Laminas\Crypt\BlockCipher as CryptBlockCipher;
+use Laminas\Crypt\Exception as CryptException;
+use Laminas\Crypt\Symmetric\Exception as SymmetricException;
+use Laminas\Filter\Compress;
+use Laminas\Filter\Decompress;
+use Laminas\Filter\Exception;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Filter\Compress;
-use Zend\Filter\Decompress;
-use Zend\Filter\Exception;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Crypt\BlockCipher as CryptBlockCipher;
-use Zend\Crypt\Exception as CryptException;
-use Zend\Crypt\Symmetric\Exception as SymmetricException;
 
 /**
- * Encryption adapter for Zend\Crypt\BlockCipher
+ * Encryption adapter for Laminas\Crypt\BlockCipher
  */
 class BlockCipher implements EncryptionAlgorithmInterface
 {
@@ -231,7 +230,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
     }
 
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Defined by Laminas\Filter\FilterInterface
      *
      * Encrypts $value with the defined settings
      *
@@ -256,7 +255,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
     }
 
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Defined by Laminas\Filter\FilterInterface
      *
      * Decrypts $value with the defined settings
      *
