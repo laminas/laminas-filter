@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Encrypts a given string
@@ -108,8 +107,8 @@ class Encrypt extends AbstractFilter
             $options = array();
         }
 
-        if (class_exists('Zend\Filter\Encrypt\\' . ucfirst($adapter))) {
-            $adapter = 'Zend\Filter\Encrypt\\' . ucfirst($adapter);
+        if (class_exists('Laminas\Filter\Encrypt\\' . ucfirst($adapter))) {
+            $adapter = 'Laminas\Filter\Encrypt\\' . ucfirst($adapter);
         } elseif (!class_exists($adapter)) {
             throw new Exception\DomainException(
                 sprintf(
@@ -124,7 +123,7 @@ class Encrypt extends AbstractFilter
         if (!$this->adapter instanceof Encrypt\EncryptionAlgorithmInterface) {
             throw new Exception\InvalidArgumentException(
                 "Encoding adapter '" . $adapter
-                . "' does not implement Zend\\Filter\\Encrypt\\EncryptionAlgorithmInterface"
+                . "' does not implement Laminas\\Filter\\Encrypt\\EncryptionAlgorithmInterface"
             );
         }
 
@@ -150,7 +149,7 @@ class Encrypt extends AbstractFilter
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Encrypts the content $value with the defined settings
      *
