@@ -1,6 +1,6 @@
 # Standard Filter Classes
 
-zend-filter comes with a standard set of filters, available for immediate use.
+laminas-filter comes with a standard set of filters, available for immediate use.
 
 ## Alnum
 
@@ -8,7 +8,7 @@ The `Alnum` filter can be used to return only alphabetic characters and digits
 in the unicode "letter" and "number" categories, respectively. All other
 characters are suppressed.
 
-This filter is part of the zend-i18n package; you will need to include that
+This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.
 
 ### Supported Options
@@ -33,12 +33,12 @@ Alnum([ boolean $allowWhiteSpace [, string $locale ]])
 
 ```php
 // Default settings, deny whitespace
-$filter = new \Zend\I18n\Filter\Alnum();
+$filter = new \Laminas\I18n\Filter\Alnum();
 echo $filter->filter('This is (my) content: 123');
 // Returns 'Thisismycontent123'
 
 // First param in constructor is $allowWhiteSpace
-$filter = new \Zend\I18n\Filter\Alnum(true);
+$filter = new \Laminas\I18n\Filter\Alnum(true);
 echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content 123'
 ```
@@ -55,7 +55,7 @@ echo $filter->filter('This is (my) content: 123');
 The `Alpha` filter can be used to return only alphabetic characters in the unicode "letter"
 category. All other characters are suppressed.
 
-This filter is part of the zend-i18n package; you will need to include that
+This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.
 
 ### Supported Options
@@ -80,12 +80,12 @@ Alpha([ boolean $allowWhiteSpace [, string $locale ]])
 
 ```php
 // Default settings, deny whitespace
-$filter = new \Zend\I18n\Filter\Alpha();
+$filter = new \Laminas\I18n\Filter\Alpha();
 echo $filter->filter('This is (my) content: 123');
 // Returns 'Thisismycontent'
 
 // Allow whitespace
-$filter = new \Zend\I18n\Filter\Alpha(true);
+$filter = new \Laminas\I18n\Filter\Alpha(true);
 echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content '
 ```
@@ -99,17 +99,17 @@ echo $filter->filter('This is (my) content: 123');
 
 ## BaseName
 
-`Zend\Filter\BaseName` allows you to filter a string which contains the path to
+`Laminas\Filter\BaseName` allows you to filter a string which contains the path to
 a file, and it will return the base name of this file.
 
 ### Supported Options
 
-There are no additional options for `Zend\Filter\BaseName`.
+There are no additional options for `Laminas\Filter\BaseName`.
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\BaseName();
+$filter = new Laminas\Filter\BaseName();
 
 print $filter->filter('/vol/tmp/filename');
 ```
@@ -117,7 +117,7 @@ print $filter->filter('/vol/tmp/filename');
 This will return 'filename'.
 
 ```php
-$filter = new Zend\Filter\BaseName();
+$filter = new Laminas\Filter\BaseName();
 
 print $filter->filter('/vol/tmp/filename.txt');
 ```
@@ -133,7 +133,7 @@ For the opposite functionality, see the [`Whitelist` filter](#whitelist).
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\Blacklist`:
+The following options are supported for `Laminas\Filter\Blacklist`:
 
 - `strict`: Uses strict mode when comparing; passed to `in_array()`'s third argument.
 - `list`: An array of forbidden values.
@@ -141,7 +141,7 @@ The following options are supported for `Zend\Filter\Blacklist`:
 ### Basic Usage
 
 ```php
-$blacklist = new \Zend\Filter\Blacklist([
+$blacklist = new \Laminas\Filter\Blacklist([
     'list' => ['forbidden-1', 'forbidden-2']
 ]);
 echo $blacklist->filter('forbidden-1'); // => null
@@ -155,7 +155,7 @@ databases or when processing form values.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\Boolean`:
+The following options are supported for `Laminas\Filter\Boolean`:
 
 - `casting`: When this option is set to `TRUE`, then any given input will be
   cast to boolean.  This option defaults to `TRUE`.
@@ -169,18 +169,18 @@ By default, this filter works by casting the input to a `BOOLEAN` value; in othe
 in a similar fashion to calling `(boolean) $value`.
 
 ```php
-$filter = new Zend\Filter\Boolean();
+$filter = new Laminas\Filter\Boolean();
 $value  = '';
 $result = $filter->filter($value);
 // returns false
 ```
 
-This means that without providing any configuration, `Zend\Filter\Boolean` accepts all input types
+This means that without providing any configuration, `Laminas\Filter\Boolean` accepts all input types
 and returns a `BOOLEAN` just as you would get by type casting to `BOOLEAN`.
 
 ### Changing the Default Behavior
 
-Sometimes, casting with `(boolean)` will not suffice. `Zend\Filter\Boolean`
+Sometimes, casting with `(boolean)` will not suffice. `Laminas\Filter\Boolean`
 allows you to configure specific types to convert, as well as which to omit.
 
 The following types can be handled:
@@ -205,23 +205,23 @@ constants, or you can give a textual string.  See the following examples:
 
 ```php
 // converts 0 to false
-$filter = new Zend\Filter\Boolean(Zend\Filter\Boolean::TYPE_INTEGER);
+$filter = new Laminas\Filter\Boolean(Laminas\Filter\Boolean::TYPE_INTEGER);
 
 // converts 0 and '0' to false
-$filter = new Zend\Filter\Boolean(
-    Zend\Filter\Boolean::TYPE_INTEGER + Zend\Filter\Boolean::TYPE_ZERO_STRING
+$filter = new Laminas\Filter\Boolean(
+    Laminas\Filter\Boolean::TYPE_INTEGER + Laminas\Filter\Boolean::TYPE_ZERO_STRING
 );
 
 // converts 0 and '0' to false
-$filter = new Zend\Filter\Boolean([
+$filter = new Laminas\Filter\Boolean([
     'type' => [
-        Zend\Filter\Boolean::TYPE_INTEGER,
-        Zend\Filter\Boolean::TYPE_ZERO_STRING,
+        Laminas\Filter\Boolean::TYPE_INTEGER,
+        Laminas\Filter\Boolean::TYPE_ZERO_STRING,
     ],
 ]);
 
 // converts 0 and '0' to false
-$filter = new Zend\Filter\Boolean([
+$filter = new Laminas\Filter\Boolean([
     'type' => [
         'integer',
         'zero',
@@ -229,21 +229,21 @@ $filter = new Zend\Filter\Boolean([
 ]);
 ```
 
-You can also give an instance of `Zend\Config\Config` to set the desired types.
+You can also give an instance of `Laminas\Config\Config` to set the desired types.
 To set types after instantiation, use the `setType()` method.
 
 ### Localized Booleans
 
-As mentioned previously, `Zend\Filter\Boolean` can also recognise localized "yes" and "no" strings.
+As mentioned previously, `Laminas\Filter\Boolean` can also recognise localized "yes" and "no" strings.
 This means that you can ask your customer in a form for "yes" or "no" within his native language and
-`Zend\Filter\Boolean` will convert the response to the appropriate boolean value.
+`Laminas\Filter\Boolean` will convert the response to the appropriate boolean value.
 
 To set the translation and the corresponding value, you can use the `translations` option or the
 method `setTranslations`.
 
 ```php
-$filter = new Zend\Filter\Boolean([
-    'type'         => Zend\Filter\Boolean::TYPE_LOCALIZED,
+$filter = new Laminas\Filter\Boolean([
+    'type'         => Laminas\Filter\Boolean::TYPE_LOCALIZED,
     'translations' => [
         'ja'   => true,
         'nein' => false,
@@ -262,30 +262,30 @@ $result = $filter->filter('yes');
 ### Disable Casting
 
 Sometimes it is necessary to recognise only `TRUE` or `FALSE` and return all
-other values without changes. `Zend\Filter\Boolean` allows you to do this by
+other values without changes. `Laminas\Filter\Boolean` allows you to do this by
 setting the `casting` option to `FALSE`.
 
-In this case `Zend\Filter\Boolean` will work as described in the following
+In this case `Laminas\Filter\Boolean` will work as described in the following
 table, which shows which values return `TRUE` or `FALSE`. All other given values
 are returned without change when `casting` is set to `FALSE`
 
 Type | True | False
 ---- | ---- | -----
-`Zend\Filter\Boolean::TYPE_BOOLEAN` | `TRUE` | `FALSE`
-`Zend\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array()` |
-`Zend\Filter\Boolean::TYPE_FALSE_STRING` | `"false"` (case insensitive) | `"true"` (case insensitive)
-`Zend\Filter\Boolean::TYPE_FLOAT` | `0.0` | `1.0`
-`Zend\Filter\Boolean::TYPE_INTEGER` | `0` | `1`
-`Zend\Filter\Boolean::TYPE_LOCALIZED` | localized `"yes"` (case insensitive) | localized `"no"` (case insensitive)
-`Zend\Filter\Boolean::TYPE_NULL` | `NULL` |
-`Zend\Filter\Boolean::TYPE_STRING` | `""` |
-`Zend\Filter\Boolean::TYPE_ZERO_STRING` | `"0"` | `"1"`
+`Laminas\Filter\Boolean::TYPE_BOOLEAN` | `TRUE` | `FALSE`
+`Laminas\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array()` |
+`Laminas\Filter\Boolean::TYPE_FALSE_STRING` | `"false"` (case insensitive) | `"true"` (case insensitive)
+`Laminas\Filter\Boolean::TYPE_FLOAT` | `0.0` | `1.0`
+`Laminas\Filter\Boolean::TYPE_INTEGER` | `0` | `1`
+`Laminas\Filter\Boolean::TYPE_LOCALIZED` | localized `"yes"` (case insensitive) | localized `"no"` (case insensitive)
+`Laminas\Filter\Boolean::TYPE_NULL` | `NULL` |
+`Laminas\Filter\Boolean::TYPE_STRING` | `""` |
+`Laminas\Filter\Boolean::TYPE_ZERO_STRING` | `"0"` | `"1"`
 
 The following example shows the behaviour when changing the `casting` option:
 
 ```php
-$filter = new Zend\Filter\Boolean([
-    'type'    => Zend\Filter\Boolean::TYPE_ALL,
+$filter = new Laminas\Filter\Boolean([
+    'type'    => Laminas\Filter\Boolean::TYPE_ALL,
     'casting' => false,
 ]);
 
@@ -301,13 +301,13 @@ $result = $filter->filter(2);
 
 ## Callback
 
-This filter allows you to use own methods in conjunction with `Zend\Filter`. You
+This filter allows you to use own methods in conjunction with `Laminas\Filter`. You
 don't have to create a new filter when you already have a method which does the
 job.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\Callback`:
+The following options are supported for `Laminas\Filter\Callback`:
 
 - `callback`: This sets the callback which should be used.
 - `callback_params`: This property sets the options which are used when the
@@ -319,7 +319,7 @@ The usage of this filter is quite simple. In this example, we want to create a
 filter which reverses a string:
 
 ```php
-$filter = new Zend\Filter\Callback('strrev');
+$filter = new Laminas\Filter\Callback('strrev');
 
 print $filter->filter('Hello!');
 // returns "!olleH"
@@ -336,7 +336,7 @@ class MyClass
 }
 
 // The filter definition
-$filter = new Zend\Filter\Callback(array('MyClass', 'reverse'));
+$filter = new Laminas\Filter\Callback(array('MyClass', 'reverse'));
 print $filter->filter('Hello!');
 ```
 
@@ -349,7 +349,7 @@ class MyClass
 }
 
 // The filter definition
-$filter = new Zend\Filter\Callback(MyClass::class);
+$filter = new Laminas\Filter\Callback(MyClass::class);
 print $filter->filter('Hello!');
 ```
 
@@ -368,7 +368,7 @@ method as an array when the filter is executed. This array will be concatenated
 with the value which will be filtered.
 
 ```php
-$filter = new Zend\Filter\Callback([
+$filter = new Laminas\Filter\Callback([
     'callback' => 'MyMethod',
     'options'  => ['key' => 'param1', 'key2' => 'param2']
 ]);
@@ -387,7 +387,7 @@ These two filters are capable of compressing and decompressing strings, files, a
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\Compress` and `Zend\Filter\Decompress`:
+The following options are supported for `Laminas\Filter\Compress` and `Laminas\Filter\Decompress`:
 
 - `adapter`: The compression adapter which should be used. It defaults to `Gz`.
 - `options`: Additional options which are given to the adapter at initiation.
@@ -399,7 +399,7 @@ The following compression formats are supported by their own adapter:
 
 - **Bz2**
 - **Gz**
-- **Lzf**
+- **Llaminas**
 - **Rar**
 - **Tar**
 - **Zip**
@@ -416,14 +416,14 @@ following example takes the **Bz2** adapter. Details for all other adapters are 
 this section.
 
 The two filters are basically identical, in that they utilize the same backends.
-`Zend\Filter\Compress` should be used when you wish to compress items, and `Zend\Filter\Decompress`
+`Laminas\Filter\Compress` should be used when you wish to compress items, and `Laminas\Filter\Decompress`
 should be used when you wish to decompress items.
 
-For instance, if we want to compress a string, we have to initialize `Zend\Filter\Compress` and
+For instance, if we want to compress a string, we have to initialize `Laminas\Filter\Compress` and
 indicate the desired adapter:
 
 ```php
-$filter = new Zend\Filter\Compress('Bz2');
+$filter = new Laminas\Filter\Compress('Bz2');
 ```
 
 To use a different adapter, you simply specify it to the constructor.
@@ -434,7 +434,7 @@ provide minimally the key "adapter", and then either the key "options" or
 adapter on instantiation.
 
 ```php
-$filter = new Zend\Filter\Compress([
+$filter = new Laminas\Filter\Compress([
     'adapter' => 'Bz2',
     'options' => [
         'blocksize' => 8,
@@ -450,14 +450,14 @@ Decompression is essentially the same usage; we simply use the `Decompress`
 filter instead:
 
 ```php
-$filter = new Zend\Filter\Decompress('Bz2');
+$filter = new Laminas\Filter\Decompress('Bz2');
 ```
 
 To get the compressed string, we have to give the original string. The filtered value is the
 compressed version of the original string.
 
 ```php
-$filter     = new Zend\Filter\Compress('Bz2');
+$filter     = new Laminas\Filter\Compress('Bz2');
 $compressed = $filter->filter('Uncompressed string');
 // Returns the compressed string
 ```
@@ -466,7 +466,7 @@ Decompression works in reverse, accepting the compressed string, and returning
 the original:
 
 ```php
-$filter     = new Zend\Filter\Decompress('Bz2');
+$filter     = new Laminas\Filter\Decompress('Bz2');
 $compressed = $filter->filter('Compressed string');
 // Returns the original, uncompressed string
 ```
@@ -483,7 +483,7 @@ Creating an archive file works almost the same as compressing a string. However,
 need an additional parameter which holds the name of the archive we want to create.
 
 ```php
-$filter = new Zend\Filter\Compress([
+$filter = new Laminas\Filter\Compress([
     'adapter' => 'Bz2',
     'options' => [
         'archive' => 'filename.bz2',
@@ -504,7 +504,7 @@ into the given archive file.
 When you want to compress a file, then you must give the name of the file with its path:
 
 ```php
-$filter = new Zend\Filter\Compress([
+$filter = new Laminas\Filter\Compress([
     'adapter' => 'Bz2',
     'options' => [
         'archive' => 'filename.bz2'
@@ -519,7 +519,7 @@ directory with all its files and subdirectories will be compressed into the
 archive:
 
 ```php
-$filter = new Zend\Filter\Compress([
+$filter = new Laminas\Filter\Compress([
     'adapter' => 'Bz2',
     'options' => [
         'archive' => 'filename.bz2'
@@ -542,7 +542,7 @@ Decompressing an archive file works almost like compressing it. You must specify
 `archive` parameter, or give the filename of the archive when you decompress the file.
 
 ```php
-$filter = new Zend\Filter\Decompress('Bz2');
+$filter = new Laminas\Filter\Decompress('Bz2');
 $decompressed = $filter->filter('filename.bz2');
 // Returns true on success and decompresses the archive file
 ```
@@ -551,7 +551,7 @@ Some adapters support decompressing the archive into another subdirectory. In
 this case you can set the `target` parameter:
 
 ```php
-$filter = new Zend\Filter\Decompress([
+$filter = new Laminas\Filter\Decompress([
     'adapter' => 'Zip',
     'options' => [
         'target' => 'C:\temp',
@@ -609,17 +609,17 @@ All options can be set at initiation or by using a related method. For example, 
 for `level` are `getLevel()` and `setLevel()`. You can also use the `setOptions()` method which
 accepts an array of all options.
 
-### Lzf Adapter
+### Llaminas Adapter
 
-The Lzf Adapter can compress and decompress:
+The Llaminas Adapter can compress and decompress:
 
 - Strings
 
-> #### Lzf supports only strings
+> #### Llaminas supports only strings
 >
-> The Lzf adapter can not handle files and directories.
+> The Llaminas adapter can not handle files and directories.
 
-This adapter makes use of PHP's Lzf extension.
+This adapter makes use of PHP's Llaminas extension.
 
 There are no options available to customize this adapter.
 
@@ -716,12 +716,12 @@ Returns the string `$value`, removing all but digits.
 
 ### Supported Options
 
-There are no additional options for `Zend\Filter\Digits`.
+There are no additional options for `Laminas\Filter\Digits`.
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\Digits();
+$filter = new Laminas\Filter\Digits();
 
 print $filter->filter('October 2012');
 ```
@@ -729,7 +729,7 @@ print $filter->filter('October 2012');
 This returns "2012".
 
 ```php
-$filter = new Zend\Filter\Digits();
+$filter = new Laminas\Filter\Digits();
 
 print $filter->filter('HTML 5 for Dummies');
 ```
@@ -742,12 +742,12 @@ Given a string containing a path to a file, this function will return the name o
 
 ### Supported Options
 
-There are no additional options for `Zend\Filter\Dir`.
+There are no additional options for `Laminas\Filter\Dir`.
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\Dir();
+$filter = new Laminas\Filter\Dir();
 
 print $filter->filter('/etc/passwd');
 ```
@@ -755,7 +755,7 @@ print $filter->filter('/etc/passwd');
 This returns `/etc`.
 
 ```php
-$filter = new Zend\Filter\Dir();
+$filter = new Laminas\Filter\Dir();
 
 print $filter->filter('C:/Temp/x');
 ```
@@ -765,13 +765,13 @@ This returns `C:/Temp`.
 ## Encrypt and Decrypt
 
 These filters allow encrypting and decrypting any given string; they do so via
-the use of adapters. Included adapters support `Zend\Crypt\BlockCipher` and
+the use of adapters. Included adapters support `Laminas\Crypt\BlockCipher` and
 PHP's OpenSSL extension.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\Encrypt` and
-`Zend\Filter\Decrypt`, and segregated by adapter.
+The following options are supported for `Laminas\Filter\Encrypt` and
+`Laminas\Filter\Decrypt`, and segregated by adapter.
 
 #### General options
 
@@ -781,10 +781,10 @@ The following options are supported for `Zend\Filter\Encrypt` and
 
 #### BlockCipher options
 
-- `algorithm`: The algorithm to use with `Zend\Crypt\Symmetric\Mcrypt` (use the
+- `algorithm`: The algorithm to use with `Laminas\Crypt\Symmetric\Mcrypt` (use the
   the `getSupportedAlgorithms()` method of that class to determine what is
   supported). If not set, it defaults to `aes`, the Advanced Encryption Standard
-  (see the [zend-crypt BlockCipher documentation](https://docs.zendframework.com/zend-crypt/block-cipher/)
+  (see the [laminas-crypt BlockCipher documentation](https://docs.laminas.dev/laminas-crypt/block-cipher/)
   for details).
 - `key`: The encryption key with which the input will be encrypted. You need the
   same key for decryption.
@@ -819,10 +819,10 @@ initiating the filter.
 
 ```php
 // Use the BlockCipher adapter
-$filter1 = new Zend\Filter\Encrypt(['adapter' => 'BlockCipher']);
+$filter1 = new Laminas\Filter\Encrypt(['adapter' => 'BlockCipher']);
 
 // Use the OpenSSL adapter
-$filter2 = new Zend\Filter\Encrypt(['adapter' => 'openssl']);
+$filter2 = new Laminas\Filter\Encrypt(['adapter' => 'openssl']);
 ```
 
 To set another adapter, you can use `setAdapter()`; `getAdapter()` will return
@@ -830,7 +830,7 @@ the currently composed adapter.
 
 ```php
 // Use the OpenSSL adapter
-$filter = new Zend\Filter\Encrypt();
+$filter = new Laminas\Filter\Encrypt();
 $filter->setAdapter('openssl');
 ```
 
@@ -847,11 +847,11 @@ constructor.
 
 ```php
 // Use the default AES encryption algorithm
-$filter = new Zend\Filter\Encrypt(['adapter' => 'BlockCipher']);
+$filter = new Laminas\Filter\Encrypt(['adapter' => 'BlockCipher']);
 $filter->setKey('encryption key');
 
 // or
-// $filter = new Zend\Filter\Encrypt([
+// $filter = new Laminas\Filter\Encrypt([
 //     'adapter' => 'BlockCipher',
 //     'key'     => 'encryption key'
 // ]);
@@ -865,7 +865,7 @@ You can get and set the encryption values after construction using the
 
 ```php
 // Use the default AES encryption algorithm
-$filter = new Zend\Filter\Encrypt(['adapter' => 'BlockCipher']);
+$filter = new Laminas\Filter\Encrypt(['adapter' => 'BlockCipher']);
 $filter->setKey('encryption key');
 var_dump($filter->getEncryption());
 
@@ -898,7 +898,7 @@ $key  = 'encryption key';
 $text = 'message to encrypt';
 
 // use the default adapter that is BlockCipher
-$filter = new \Zend\Filter\Encrypt();
+$filter = new \Laminas\Filter\Encrypt();
 $filter->setKey('encryption key');
 for ($i = 0; $i < 10; $i++) {
    printf("%d) %s\n", $i, $filter->filter($text));
@@ -911,7 +911,7 @@ encryption output:
 
 ```php
 // use the default adapter that is BlockCipher
-$filter = new \Zend\Filter\Encrypt();
+$filter = new \Laminas\Filter\Encrypt();
 $filter->setKey('encryption key');
 $filter->setVector('12345678901234567890');
 printf("%s\n", $filter->filter('message'));
@@ -938,7 +938,7 @@ encryption.
 ```php
 $content = '04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=';
 // use the default adapter (BlockCipher):
-$filter = new Zend\Filter\Decrypt();
+$filter = new Laminas\Filter\Decrypt();
 $filter->setKey('encryption key');
 printf("Decrypt: %s\n", $filter->filter($content));
 
@@ -960,7 +960,7 @@ via the `setPrivateKey()` method.
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Encrypt([
+$filter = new Laminas\Filter\Encrypt([
    'adapter' => 'openssl',
    'private' => '/path/to/mykey/private.pem',
 ]);
@@ -978,7 +978,7 @@ need the public key, but also the passphrase:
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Encrypt([
+$filter = new Laminas\Filter\Encrypt([
    'adapter' => 'openssl',
    'passphrase' => 'enter here the passphrase for the private key',
    'private' => '/path/to/mykey/private.pem',
@@ -995,7 +995,7 @@ following:
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Encrypt([
+$filter = new Laminas\Filter\Encrypt([
    'adapter' => 'openssl',
    'passphrase' => 'enter here the passphrase for the private key',
    'private' => '/path/to/mykey/private.pem',
@@ -1021,7 +1021,7 @@ containing both the encrypted message *and* the envelope key:
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Encrypt([
+$filter = new Laminas\Filter\Encrypt([
    'adapter' => 'openssl',
    'private' => '/path/to/mykey/private.pem',
    'public'  => '/public/key/path/public.pem',
@@ -1038,19 +1038,19 @@ Now the returned value contains the encrypted value and the envelope. You don't
 need to fetch the envelope key separately.
 
 However, there is one negative aspect to this: the encrypted value can now only
-be decrypted by using `Zend\Filter\Encrypt`.
+be decrypted by using `Laminas\Filter\Encrypt`.
 
 ### Compressing Content
 
 Based on the original value, the encrypted value can be a very large string. To
-reduce the value, `Zend\Filter\Encrypt` allows the usage of compression.
+reduce the value, `Laminas\Filter\Encrypt` allows the usage of compression.
 
 The `compression` option can either be set to the name of a compression adapter,
 or to an array which sets all required options for the compression adapter.
 
 ```php
 // Use basic compression adapter
-$filter1 = new Zend\Filter\Encrypt([
+$filter1 = new Laminas\Filter\Encrypt([
    'adapter'     => 'openssl',
    'private'     => '/path/to/mykey/private.pem',
    'public'      => '/public/key/path/public.pem',
@@ -1059,7 +1059,7 @@ $filter1 = new Zend\Filter\Encrypt([
 ]);
 
 // Compression adatper with options:
-$filter2 = new Zend\Filter\Encrypt([
+$filter2 = new Laminas\Filter\Encrypt([
    'adapter'     => 'openssl',
    'private'     => '/path/to/mykey/private.pem',
    'public'      => '/public/key/path/public.pem',
@@ -1084,7 +1084,7 @@ As an example:
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Decrypt([
+$filter = new Laminas\Filter\Decrypt([
    'adapter' => 'openssl',
    'private' => '/path/to/mykey/private.pem'
 ]);
@@ -1097,7 +1097,7 @@ If encyption used a passphrase, you'll need to provide that as well:
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Decrypt([
+$filter = new Laminas\Filter\Decrypt([
    'adapter' => 'openssl',
    'passphrase' => 'enter here the passphrase for the private key',
    'private' => '/path/to/mykey/private.pem'
@@ -1114,7 +1114,7 @@ this:
 
 ```php
 // Use openssl and provide a private key
-$filter = new Zend\Filter\Decrypt([
+$filter = new Laminas\Filter\Decrypt([
    'adapter' => 'openssl',
    'passphrase' => 'enter here the passphrase for the private key',
    'private' => '/path/to/mykey/private.pem'
@@ -1134,7 +1134,7 @@ entity equivalents when possible.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\HtmlEntities`:
+The following options are supported for `Laminas\Filter\HtmlEntities`:
 
 - `quotestyle`: Equivalent to the PHP `htmlentities()` native function parameter
   `quote_style`.  This allows you to define what will be done with 'single' and
@@ -1158,18 +1158,18 @@ The following options are supported for `Zend\Filter\HtmlEntities`:
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\HtmlEntities();
+$filter = new Laminas\Filter\HtmlEntities();
 
 print $filter->filter('<');
 ```
 
 ### Quote Style
 
-`Zend\Filter\HtmlEntities` allows changing the quote style used. This can be useful when you want to
+`Laminas\Filter\HtmlEntities` allows changing the quote style used. This can be useful when you want to
 leave double, single, or both types of quotes un-filtered.
 
 ```php
-$filter = new Zend\Filter\HtmlEntities(['quotestyle' => ENT_QUOTES]);
+$filter = new Laminas\Filter\HtmlEntities(['quotestyle' => ENT_QUOTES]);
 
 $input = "A 'single' and " . '"double"';
 print $filter->filter($input);
@@ -1179,7 +1179,7 @@ The above example returns `A &#039;single&#039; and &quot;double&quot;`. Notice
 that 'single' as well as "double" quotes are filtered.
 
 ```php
-$filter = new Zend\Filter\HtmlEntities(['quotestyle' => ENT_COMPAT]);
+$filter = new Laminas\Filter\HtmlEntities(['quotestyle' => ENT_COMPAT]);
 
 $input = "A 'single' and " . '"double"';
 print $filter->filter($input);
@@ -1189,7 +1189,7 @@ The above example returns `A 'single' and &quot;double&quot;`. Notice that
 "double" quotes are filtered while 'single' quotes are not altered.
 
 ```php
-$filter = new Zend\Filter\HtmlEntities(['quotestyle' => ENT_NOQUOTES]);
+$filter = new Laminas\Filter\HtmlEntities(['quotestyle' => ENT_NOQUOTES]);
 
 $input = "A 'single' and " . '"double"';
 print $filter->filter($input);
@@ -1206,7 +1206,7 @@ To change or retrieve the `quotestyle` after instantiation, the two methods
 constants `ENT_COMPAT`, `ENT_QUOTES`, or `ENT_NOQUOTES`.
 
 ```php
-$filter = new Zend\Filter\HtmlEntities();
+$filter = new Laminas\Filter\HtmlEntities();
 
 $filter->setQuoteStyle(ENT_QUOTES);
 print $filter->getQuoteStyle(ENT_QUOTES);
@@ -1218,7 +1218,7 @@ accepts one parameter, `$charSet`. See the [PHP htmlentities manual
 page](http://php.net/htmlentities) for a list of supported character sets.
 
 ```php
-$filter = new Zend\Filter\HtmlEntities();
+$filter = new Laminas\Filter\HtmlEntities();
 
 $filter->setQuoteStyle(ENT_QUOTES);
 print $filter->getQuoteStyle(ENT_QUOTES);
@@ -1229,7 +1229,7 @@ To change or retrieve the `doublequote` option after instantiation, the two meth
 boolean parameter, `$doubleQuote`.
 
 ```php
-$filter = new Zend\Filter\HtmlEntities();
+$filter = new Laminas\Filter\HtmlEntities();
 
 $filter->setQuoteStyle(ENT_QUOTES);
 print $filter->getQuoteStyle(ENT_QUOTES);
@@ -1237,16 +1237,16 @@ print $filter->getQuoteStyle(ENT_QUOTES);
 
 ## ToInt
 
-`Zend\Filter\ToInt` allows you to transform a scalar value into an integer.
+`Laminas\Filter\ToInt` allows you to transform a scalar value into an integer.
 
 ### Supported Options
 
-There are no additional options for `Zend\Filter\ToInt`.
+There are no additional options for `Laminas\Filter\ToInt`.
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\ToInt();
+$filter = new Laminas\Filter\ToInt();
 
 print $filter->filter('-4 is less than 0');
 ```
@@ -1271,7 +1271,7 @@ a `NULL` value instead of a boolean or any other type.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\ToNull`:
+The following options are supported for `Laminas\Filter\ToNull`:
 
 - `type`: The variable type which should be supported.
 
@@ -1281,13 +1281,13 @@ Per default this filter works like PHP's `empty()` method; in other words, if
 `empty()` returns a boolean `TRUE`, then a `NULL` value will be returned.
 
 ```php
-$filter = new Zend\Filter\ToNull();
+$filter = new Laminas\Filter\ToNull();
 $value  = '';
 $result = $filter->filter($value);
 // returns null instead of the empty string
 ```
 
-This means that without providing any configuration, `Zend\Filter\ToNull` will
+This means that without providing any configuration, `Laminas\Filter\ToNull` will
 accept all input types and return `NULL` in the same cases as `empty()`.
 
 Any other value will be returned as is, without any changes.
@@ -1295,7 +1295,7 @@ Any other value will be returned as is, without any changes.
 ### Changing the Default Behavior
 
 Sometimes it's not enough to filter based on `empty()`. Therefore
-`Zend\Filter\ToNull` allows you to configure which types will be converted, and
+`Laminas\Filter\ToNull` allows you to configure which types will be converted, and
 which not.
 
 The following types can be handled:
@@ -1314,21 +1314,21 @@ constants, or you can give a textual string.  See the following examples:
 
 ```php
 // converts false to null
-$filter = new Zend\Filter\ToNull(Zend\Filter\ToNull::BOOLEAN);
+$filter = new Laminas\Filter\ToNull(Laminas\Filter\ToNull::BOOLEAN);
 
 // converts false and 0 to null
-$filter = new Zend\Filter\ToNull(
-    Zend\Filter\ToNull::BOOLEAN + Zend\Filter\ToNull::INTEGER
+$filter = new Laminas\Filter\ToNull(
+    Laminas\Filter\ToNull::BOOLEAN + Laminas\Filter\ToNull::INTEGER
 );
 
 // converts false and 0 to null
-$filter = new Zend\Filter\ToNull([
-    Zend\Filter\ToNull::BOOLEAN,
-    Zend\Filter\ToNull::INTEGER
+$filter = new Laminas\Filter\ToNull([
+    Laminas\Filter\ToNull::BOOLEAN,
+    Laminas\Filter\ToNull::INTEGER
 ]);
 
 // converts false and 0 to null
-$filter = new Zend\Filter\ToNull([
+$filter = new Laminas\Filter\ToNull([
     'boolean',
     'integer',
 ]);
@@ -1353,7 +1353,7 @@ The `NumberFormat` filter can be used to return locale-specific number and perce
 extends the `NumberParse` filter, which acts as wrapper for the `NumberFormatter` class within the
 Internationalization extension (Intl).
 
-This filter is part of the zend-i18n package; you will need to include that
+This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.
 
 ### Supported Options
@@ -1383,15 +1383,15 @@ NumberFormat([ string $locale [, int $style [, int $type ]]])
 ### Basic Usage
 
 ```php
-$filter = new \Zend\I18n\Filter\NumberFormat('de_DE');
+$filter = new \Laminas\I18n\Filter\NumberFormat('de_DE');
 echo $filter->filter(1234567.8912346);
 // Returns '1.234.567,891'
 
-$filter = new \Zend\I18n\Filter\NumberFormat('en_US', NumberFormatter::PERCENT);
+$filter = new \Laminas\I18n\Filter\NumberFormat('en_US', NumberFormatter::PERCENT);
 echo $filter->filter(0.80);
 // Returns '80%'
 
-$filter = new \Zend\I18n\Filter\NumberFormat('fr_FR', NumberFormatter::SCIENTIFIC);
+$filter = new \Laminas\I18n\Filter\NumberFormat('fr_FR', NumberFormatter::SCIENTIFIC);
 echo $filter->filter(0.00123456789);
 // Returns '1,23456789E-3'
 ```
@@ -1402,7 +1402,7 @@ The `NumberParse` filter can be used to parse a number from a string. It acts as
 a wrapper for the `NumberFormatter` class within the Internationalization
 extension (Intl).
 
-This filter is part of the zend-i18n package; you will need to include that
+This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.
 
 ### Supported Options
@@ -1432,27 +1432,27 @@ NumberParse([ string $locale [, int $style [, int $type ]]])
 ### Basic Usage
 
 ```php
-$filter = new \Zend\I18n\Filter\NumberParse('de_DE');
+$filter = new \Laminas\I18n\Filter\NumberParse('de_DE');
 echo $filter->filter('1.234.567,891');
 // Returns 1234567.8912346
 
-$filter = new \Zend\I18n\Filter\NumberParse('en_US', NumberFormatter::PERCENT);
+$filter = new \Laminas\I18n\Filter\NumberParse('en_US', NumberFormatter::PERCENT);
 echo $filter->filter('80%');
 // Returns 0.80
 
-$filter = new \Zend\I18n\Filter\NumberParse('fr_FR', NumberFormatter::SCIENTIFIC);
+$filter = new \Laminas\I18n\Filter\NumberParse('fr_FR', NumberFormatter::SCIENTIFIC);
 echo $filter->filter('1,23456789E-3');
 // Returns 0.00123456789
 ```
 
 ## PregReplace
 
-`Zend\Filter\PregReplace` performs a search using regular expressions and replaces all found
+`Laminas\Filter\PregReplace` performs a search using regular expressions and replaces all found
 elements.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\PregReplace`:
+The following options are supported for `Laminas\Filter\PregReplace`:
 
 - `pattern`: The pattern to search for.
 - `replacement`: The string which to use as a replacement for the matches; this
@@ -1470,7 +1470,7 @@ contain placeholders for matched groups from the search `pattern`. The value may
 be a string replacement, or an array of string replacements.
 
 ```php
-$filter = new Zend\Filter\PregReplace([
+$filter = new Laminas\Filter\PregReplace([
     'pattern'     => '/bob/',
     'replacement' => 'john',
 ]);
@@ -1484,7 +1484,7 @@ You can also use `setPattern()` to set the pattern(s), and `setReplacement()` se
 the replacement(s).
 
 ```php
-$filter = new Zend\Filter\PregReplace();
+$filter = new Laminas\Filter\PregReplace();
 $filter
     ->setPattern(array('bob', 'Hi'))
     ->setReplacement(array('john', 'Bye'));
@@ -1504,7 +1504,7 @@ absolute pathnames.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\RealPath`:
+The following options are supported for `Laminas\Filter\RealPath`:
 
 - `exists`: This option defaults to `TRUE`, which validates that the given path
   really exists.
@@ -1515,12 +1515,12 @@ For any given link or pathname, its absolute path will be returned. References
 to `/./`, `/../` and extra `/` sequences in the input path will be stripped. The
 resulting path will not have any symbolic links, `/./`, or `/../` sequences.
 
-`Zend\Filter\RealPath` will return `FALSE` on failure, e.g. if the file does not exist. On BSD
-systems `Zend\Filter\RealPath` doesn't fail if only the last path component doesn't exist, while
+`Laminas\Filter\RealPath` will return `FALSE` on failure, e.g. if the file does not exist. On BSD
+systems `Laminas\Filter\RealPath` doesn't fail if only the last path component doesn't exist, while
 other systems will return `FALSE`.
 
 ```php
-$filter = new Zend\Filter\RealPath();
+$filter = new Laminas\Filter\RealPath();
 $path = '/www/var/path/../../mypath';
 $filtered = $filter->filter($path);
 
@@ -1534,7 +1534,7 @@ want to get the real path for a path you want to create. You can then either
 provide a `FALSE` `exists` value at initiation, or use `setExists()` to set it.
 
 ```php
-$filter = new Zend\Filter\RealPath(false);
+$filter = new Laminas\Filter\RealPath(false);
 $path = '/www/var/path/../../non/existing/path';
 $filtered = $filter->filter($path);
 
@@ -1548,14 +1548,14 @@ This filter converts any input to lowercase.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\StringToLower`:
+The following options are supported for `Laminas\Filter\StringToLower`:
 
 - `encoding`: This option can be used to set an encoding to use.
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\StringToLower();
+$filter = new Laminas\Filter\StringToLower();
 
 print $filter->filter('SAMPLE');
 // returns "sample"
@@ -1571,10 +1571,10 @@ desired encoding when initiating the `StringToLower` filter, or use the
 
 ```php
 // using UTF-8
-$filter = new Zend\Filter\StringToLower('UTF-8');
+$filter = new Laminas\Filter\StringToLower('UTF-8');
 
 // or give an array which can be useful when using a configuration
-$filter = new Zend\Filter\StringToLower(['encoding' => 'UTF-8']);
+$filter = new Laminas\Filter\StringToLower(['encoding' => 'UTF-8']);
 
 // or do this afterwards
 $filter->setEncoding('ISO-8859-1');
@@ -1593,14 +1593,14 @@ This filter converts any input to UPPERCASE.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\StringToUpper`:
+The following options are supported for `Laminas\Filter\StringToUpper`:
 
 - `encoding`: This option can be used to set the encoding to use.
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\StringToUpper();
+$filter = new Laminas\Filter\StringToUpper();
 
 print $filter->filter('Sample');
 // returns "SAMPLE"
@@ -1613,7 +1613,7 @@ supported by your server locale, unless you have the mbstring extension enabled.
 Using different character sets works the same as with `StringToLower`.
 
 ```php
-$filter = new Zend\Filter\StringToUpper(['encoding' => 'UTF-8']);
+$filter = new Laminas\Filter\StringToUpper(['encoding' => 'UTF-8']);
 
 // or do this afterwards
 $filter->setEncoding('ISO-8859-1');
@@ -1626,7 +1626,7 @@ from the beginning and end.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\StringTrim`:
+The following options are supported for `Laminas\Filter\StringTrim`:
 
 - `charlist`: List of characters to remove from the beginning and end of the
   string. If this is not set or is null, the default behavior will be invoked,
@@ -1635,7 +1635,7 @@ The following options are supported for `Zend\Filter\StringTrim`:
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\StringTrim();
+$filter = new Laminas\Filter\StringTrim();
 
 print $filter->filter(' This is (my) content: ');
 ```
@@ -1646,8 +1646,8 @@ characters have been removed.
 ### Specifying alternate characters
 
 ```php
-$filter = new Zend\Filter\StringTrim(':');
-// or new Zend\Filter\StringTrim(array('charlist' => ':'));
+$filter = new Laminas\Filter\StringTrim(':');
+// or new Laminas\Filter\StringTrim(array('charlist' => ':'));
 
 print $filter->filter(' This is (my) content:');
 ```
@@ -1665,12 +1665,12 @@ that string.
 
 ### Supported Options
 
-There are no additional options for `Zend\Filter\StripNewlines`:
+There are no additional options for `Laminas\Filter\StripNewlines`:
 
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\StripNewlines();
+$filter = new Laminas\Filter\StripNewlines();
 
 print $filter->filter(' This is (my)``\n\r``content: ');
 ```
@@ -1682,10 +1682,10 @@ characters have been removed.
 
 This filter can strip XML and HTML tags from given content.
 
-> ### Zend\\Filter\\StripTags is potentially insecure
+> ### Laminas\\Filter\\StripTags is potentially insecure
 >
-> Be warned that `Zend\\Filter\\StripTags` should only be used to strip *all*
-> available tags.  Using `Zend\\Filter\\StripTags` to make your site secure by
+> Be warned that `Laminas\\Filter\\StripTags` should only be used to strip *all*
+> available tags.  Using `Laminas\\Filter\\StripTags` to make your site secure by
 > stripping *some* unwanted tags will lead to unsecure and dangerous code,
 > including potential XSS vectors.
 >
@@ -1694,7 +1694,7 @@ This filter can strip XML and HTML tags from given content.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\StripTags`:
+The following options are supported for `Laminas\Filter\StripTags`:
 
 - `allowAttribs`: This option sets the attributes which are accepted. All other
   attributes are stripped from the given content.
@@ -1704,7 +1704,7 @@ The following options are supported for `Zend\Filter\StripTags`:
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\StripTags();
+$filter = new Laminas\Filter\StripTags();
 
 print $filter->filter('<B>My content</B>');
 ```
@@ -1715,7 +1715,7 @@ When the content contains broken or partial tags, any content following the
 opening tag will be completely removed:
 
 ```php
-$filter = new Zend\Filter\StripTags();
+$filter = new Laminas\Filter\StripTags();
 
 print $filter->filter('This contains <a href="http://example.com">no ending tag');
 ```
@@ -1724,11 +1724,11 @@ The above will return `This contains`, with the rest being stripped.
 
 ### Allowing Defined Tags
 
-`Zend\Filter\StripTags` allows stripping all but a whitelist of tags. As an
+`Laminas\Filter\StripTags` allows stripping all but a whitelist of tags. As an
 example, this can be used to strip all markup except for links:
 
 ```php
-$filter = new Zend\Filter\StripTags(['allowTags' => 'a']);
+$filter = new Laminas\Filter\StripTags(['allowTags' => 'a']);
 
 $input  = "A text with <br/> a <a href='link.com'>link</a>";
 print $filter->filter($input);
@@ -1748,7 +1748,7 @@ tags at once.
 You can also strip all but a whitelist of attributes from a tag:
 
 ```php
-$filter = new Zend\Filter\StripTags([
+$filter = new Laminas\Filter\StripTags([
     'allowTags' => 'img',
     'allowAttribs' => 'src',
 ]);
@@ -1777,15 +1777,15 @@ $allowedElements = [
         'href'
     ]
 ];
-$filter = new Zend\Filter\StripTags($allowedElements);
+$filter = new Laminas\Filter\StripTags($allowedElements);
 
 $input = "A text with <br/> a <img src='picture.com' width='100'>picture</img> click "
-    . "<a href='http://picture.com/zend' id='hereId'>here</a>!";
+    . "<a href='http://picture.com/laminas' id='hereId'>here</a>!";
 print $filter->filter($input);
 ```
 
 The above will return `A text with a <img src='picture.com'
-width='100'>picture</img> click <a href='<http://picture.com/zend>'>here</a>!`
+width='100'>picture</img> click <a href='<http://picture.com/laminas>'>here</a>!`
 as the result.
 
 ## UriNormalize
@@ -1794,7 +1794,7 @@ This filter sets the scheme on a URI if the scheme is missing.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\UriNormalize`:
+The following options are supported for `Laminas\Filter\UriNormalize`:
 
 - `defaultScheme`: This option can be used to set the default scheme to use when
   parsing scheme-less URIs.
@@ -1803,7 +1803,7 @@ The following options are supported for `Zend\Filter\UriNormalize`:
 ### Basic Usage
 
 ```php
-$filter = new Zend\Filter\UriNormalize(array(
+$filter = new Laminas\Filter\UriNormalize(array(
     'enforcedScheme' => 'https'
 ));
 
@@ -1822,7 +1822,7 @@ For the opposite functionality see the [Blacklist](#blacklist) filter.
 
 ### Supported Options
 
-The following options are supported for `Zend\Filter\Whitelist`:
+The following options are supported for `Laminas\Filter\Whitelist`:
 
 - `strict`: Uses strict mode for comparisons; passed to `in_array()`'s third argument.
 - `list`: An array of allowed values.
@@ -1830,7 +1830,7 @@ The following options are supported for `Zend\Filter\Whitelist`:
 ### Basic Usage
 
 ```php
-$whitelist = new \Zend\Filter\Whitelist([
+$whitelist = new \Laminas\Filter\Whitelist([
     'list' => ['allowed-1', 'allowed-2']
 ]);
 echo $whitelist->filter('allowed-2');   // => 'allowed-2'

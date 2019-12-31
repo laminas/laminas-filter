@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
+use Laminas\Filter\Exception;
+use Laminas\Filter\File\UpperCase as FileUpperCase;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
-use Zend\Filter\File\UpperCase as FileUpperCase;
 
 class UpperCaseTest extends TestCase
 {
@@ -31,7 +30,7 @@ class UpperCaseTest extends TestCase
     {
         $filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
         $origFile  = $filesPath . 'testfile2.txt';
-        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
 
         copy($origFile, $this->testFile);
     }
@@ -91,7 +90,7 @@ class UpperCaseTest extends TestCase
             $filter = new FileUpperCase('ISO-8859-1');
             $filter($this->testFile);
             $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -107,7 +106,7 @@ class UpperCaseTest extends TestCase
             $filter->setEncoding('ISO-8859-1');
             $filter($this->testFile);
             $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }

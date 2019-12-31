@@ -1,6 +1,6 @@
 # File Filters
 
-zend-filter also comes with a set of classes for filtering file contents, and
+laminas-filter also comes with a set of classes for filtering file contents, and
 performing file operations such as renaming.
 
 > ## $_FILES
@@ -12,15 +12,15 @@ performing file operations such as renaming.
 ## Encrypt and Decrypt
 
 These filters allow encrypting and decrypting file contents, and are derived
-from the `Zend\Filter\Encrypt` and `Zend\Filter\Decrypt` filters. Only file reading and
+from the `Laminas\Filter\Encrypt` and `Laminas\Filter\Decrypt` filters. Only file reading and
 writing operations are performed by the filer; encryption and decryption operations
 are performed by the parent classes.
 
 Usage:
 
 ```php
-use Zend\Filter\File\Encrypt as EncryptFileFilter;
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -37,8 +37,8 @@ In the above example, we pass options to our constructor in order to configure
 the filter. We could instead use use setter methods to inject these options:
 
 ```php
-use Zend\Filter\File\Encrypt as EncryptFileFilter;
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -50,12 +50,12 @@ $filter->setKey('--our-super-secret-key--');
 $filter->filter($files['my-upload']);
 ```
 
-Check the [Encrypt and Decrypt filter documentation](/zend-filter/standard-filters/#encrypt-and-decrypt)
+Check the [Encrypt and Decrypt filter documentation](/laminas-filter/standard-filters/#encrypt-and-decrypt)
 for more information about options and adapters.
 
 ## Lowercase
 
-`Zend\Filter\File\Lowercase` can be used to convert all file contents to
+`Laminas\Filter\File\Lowercase` can be used to convert all file contents to
 lowercase.
 
 ### Supported Options
@@ -67,8 +67,8 @@ The following set of options are supported:
 ### Basic Usage
 
 ```php
-use Zend\Filter\File\LowerCase;
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Filter\File\LowerCase;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -87,9 +87,9 @@ filter method, the `LowerCase` filter will only change the temporary file
 example:
 
 ```php
-use Zend\Filter\File\LowerCase;
-use Zend\Filter\File\Rename;
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Filter\File\LowerCase;
+use Laminas\Filter\File\Rename;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -112,8 +112,8 @@ specify the encoding when instantiating the `LowerCase` filter, or use the
 `setEncoding` method to change it.
 
 ```
-use Zend\Filter\File\LowerCase;
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Filter\File\LowerCase;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -125,12 +125,12 @@ $filter->filter($files['my-upload']);
 ```
 
 The `LowerCase` filter extends from the `StringToLower` filter; read the
-[`StringToLower` documentation](/zend-filter/standard-filters/#stringtolower)
+[`StringToLower` documentation](/laminas-filter/standard-filters/#stringtolower)
 for more information about encoding and its exceptions.
 
 ## Rename
 
-`Zend\Filter\File\Rename` can be used to rename a file and/or move a file to a new path.
+`Laminas\Filter\File\Rename` can be used to rename a file and/or move a file to a new path.
 
 ### Supported Options
 
@@ -142,7 +142,7 @@ The following set of options are supported:
   renamed. Used to match the filtered file with an options set.
 - `overwrite` (boolean; default: `false`): Shall existing files be overwritten?
   If the file is unable to be moved into the target path, a
-  `Zend\Filter\Exception\RuntimeException` will be thrown.
+  `Laminas\Filter\Exception\RuntimeException` will be thrown.
 - `randomize` (boolean; default: `false`): Shall target files have a random
   postfix attached? The random postfix will generated with `uniqid('_')` after
   the file name and before the extension. For example, `file.txt` might be
@@ -158,7 +158,7 @@ Move all filtered files to a different directory:
 
 ```php
 // 'target' option is assumed if param is a string
-$filter = new \Zend\Filter\File\Rename('/tmp/');
+$filter = new \Laminas\Filter\File\Rename('/tmp/');
 echo $filter->filter('./myfile.txt');
 // File has been moved to '/tmp/myfile.txt'
 ```
@@ -166,7 +166,7 @@ echo $filter->filter('./myfile.txt');
 Rename all filtered files to a new name:
 
 ```php
-$filter = new \Zend\Filter\File\Rename('/tmp/newfile.txt');
+$filter = new \Laminas\Filter\File\Rename('/tmp/newfile.txt');
 echo $filter->filter('./myfile.txt');
 // File has been renamed to '/tmp/newfile.txt'
 ```
@@ -174,7 +174,7 @@ echo $filter->filter('./myfile.txt');
 Move to a new path, and randomize file names:
 
 ```php
-$filter = new \Zend\Filter\File\Rename([
+$filter = new \Laminas\Filter\File\Rename([
     'target'    => '/tmp/newfile.txt',
     'randomize' => true,
 ]);
@@ -185,7 +185,7 @@ echo $filter->filter('./myfile.txt');
 Configure different options for several possible source files:
 
 ```php
-$filter = new \Zend\Filter\File\Rename([
+$filter = new \Laminas\Filter\File\Rename([
     [
         'source'    => 'fileA.txt'
         'target'    => '/dest1/newfileA.txt',
@@ -216,7 +216,7 @@ follows:
 
 ## RenameUpload
 
-`Zend\Filter\File\RenameUpload` can be used to rename or move an uploaded file to a new path.
+`Laminas\Filter\File\RenameUpload` can be used to rename or move an uploaded file to a new path.
 
 ### Supported Options
 
@@ -225,7 +225,7 @@ The following set of options are supported:
 - `target` (string; default: `*`): Target directory or full filename path.
 - `overwrite` (boolean; default: `false`): Shall existing files be overwritten?
   If the file is unable to be moved into the target path, a
-  `Zend\Filter\Exception\RuntimeException` will be thrown.
+  `Laminas\Filter\Exception\RuntimeException` will be thrown.
 - `randomize` (boolean; default: `false`): Shall target files have a random
   postfix attached? The random postfix will generated with `uniqid('_')` after
   the file name and before the extension. For example, `file.txt` might be
@@ -256,7 +256,7 @@ will be filtered with the same option settings.
 Move all filtered files to a different directory:
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -264,7 +264,7 @@ $files   = $request->getFiles();
 // i.e. $files['my-upload']['name'] === 'myfile.txt'
 
 // 'target' option is assumed if param is a string
-$filter = new \Zend\Filter\File\RenameUpload('./data/uploads/');
+$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/');
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/php5Wx0aJ'
 
@@ -277,13 +277,13 @@ echo $filter->filter($files['my-upload']);
 Rename all filtered files to a new name:
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Rename('./data/uploads/newfile.txt');
+$filter = new \Laminas\Filter\File\Rename('./data/uploads/newfile.txt');
 echo $filter->filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'
 ```
@@ -291,13 +291,13 @@ echo $filter->filter($files['my-upload']);
 Move to a new path and randomize file names:
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Zend\Filter\File\Rename(array(
+$filter = new \Laminas\Filter\File\Rename(array(
     'target'    => './data/uploads/newfile.txt',
     'randomize' => true,
 ));
@@ -307,7 +307,7 @@ echo $filter->filter($files['my-upload']);
 
 ## Uppercase
 
-`Zend\Filter\File\Uppercase` can be used to convert all file contents to
+`Laminas\Filter\File\Uppercase` can be used to convert all file contents to
 uppercase.
 
 ### Supported Options
@@ -319,8 +319,8 @@ The following set of options are supported:
 ### Basic Usage
 
 ```php
-use Zend\Filter\File\UpperCase;
-use Zend\Http\PhpEnvironment\Request;
+use Laminas\Filter\File\UpperCase;
+use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request->getFiles();
