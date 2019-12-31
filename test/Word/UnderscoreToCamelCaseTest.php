@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\UnderscoreToCamelCase as UnderscoreToCamelCaseFilter;
+use Laminas\Filter\Word\UnderscoreToCamelCase as UnderscoreToCamelCaseFilter;
 
 /**
- * Test class for Zend_Filter_Word_UnderscoreToCamelCase.
+ * Test class for Laminas_Filter_Word_UnderscoreToCamelCase.
  *
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class UnderscoreToCamelCaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,40 +28,40 @@ class UnderscoreToCamelCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-4097
+     * Laminas-4097
      */
     public function testSomeFilterValues()
     {
         $filter   = new UnderscoreToCamelCaseFilter();
 
-        $string   = 'zend_framework';
+        $string   = 'laminas_project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('ZendFramework', $filtered);
+        $this->assertEquals('LaminasProject', $filtered);
 
-        $string   = 'zend_Framework';
+        $string   = 'laminas_Project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('ZendFramework', $filtered);
+        $this->assertEquals('LaminasProject', $filtered);
 
-        $string   = 'zendFramework';
+        $string   = 'laminasProject';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('ZendFramework', $filtered);
+        $this->assertEquals('LaminasProject', $filtered);
 
-        $string   = 'zendframework';
+        $string   = 'laminasproject';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('Zendframework', $filtered);
+        $this->assertEquals('Laminasproject', $filtered);
 
-        $string   = '_zendframework';
+        $string   = '_laminasproject';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('Zendframework', $filtered);
+        $this->assertEquals('Laminasproject', $filtered);
 
-        $string   = '_zend_framework';
+        $string   = '_laminas_project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('ZendFramework', $filtered);
+        $this->assertEquals('LaminasProject', $filtered);
     }
 }

@@ -1,34 +1,22 @@
 {
-    "name": "zendframework/zend-filter",
+    "name": "laminas/laminas-filter",
     "description": "provides a set of commonly needed data filters",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "filter"
     ],
-    "homepage": "https://github.com/zendframework/zend-filter",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Filter\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-filter/",
+        "issues": "https://github.com/laminas/laminas-filter/issues",
+        "source": "https://github.com/laminas/laminas-filter",
+        "rss": "https://github.com/laminas/laminas-filter/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.23",
-        "zendframework/zend-stdlib": "self.version"
-    },
-    "require-dev": {
-        "zendframework/zend-crypt": "self.version",
-        "zendframework/zend-servicemanager": "self.version",
-        "zendframework/zend-uri": "self.version",
-        "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
-    },
-    "suggest": {
-        "zendframework/zend-crypt": "Zend\\Crypt component",
-        "zendframework/zend-i18n": "Zend\\I18n component",
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
-        "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -36,9 +24,36 @@
             "dev-develop": "2.3-dev"
         }
     },
+    "require": {
+        "php": ">=5.3.23",
+        "laminas/laminas-stdlib": "self.version",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "1.7.*",
+        "laminas/laminas-crypt": "self.version",
+        "laminas/laminas-servicemanager": "self.version",
+        "laminas/laminas-uri": "self.version",
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "laminas/laminas-crypt": "Laminas\\Crypt component",
+        "laminas/laminas-i18n": "Laminas\\I18n component",
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component",
+        "laminas/laminas-uri": "Laminas\\Uri component for UriNormalize filter"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Filter\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Filter\\": "test/"
+            "LaminasTest\\Filter\\": "test/"
         }
+    },
+    "replace": {
+        "zendframework/zend-filter": "self.version"
     }
 }
