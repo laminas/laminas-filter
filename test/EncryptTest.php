@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Encrypt as EncryptFilter;
+use Laminas\Filter\Encrypt as EncryptFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class EncryptTest extends \PHPUnit_Framework_TestCase
 {
@@ -126,14 +125,14 @@ PIDs9E7uuizAKDhRRRvho8BS
         $filter = new EncryptFilter();
         $filter->setAdapter('Openssl');
         $this->assertEquals('Openssl', $filter->getAdapter());
-        $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
         $this->assertEquals('BlockCipher', $filter->getAdapter());
-        $this->assertInstanceOf('Zend\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
-        $filter->setAdapter('\ZendTest\Filter\TestAdapter2');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'does not implement');
+        $filter->setAdapter('\LaminasTest\Filter\TestAdapter2');
     }
 
     /**
@@ -145,7 +144,7 @@ PIDs9E7uuizAKDhRRRvho8BS
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\BadMethodCallException', 'Unknown method');
+        $this->setExpectedException('\Laminas\Filter\Exception\BadMethodCallException', 'Unknown method');
         $filter = new EncryptFilter();
         $filter->getUnknownMethod();
     }
