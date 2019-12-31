@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\SeparatorToCamelCase as SeparatorToCamelCaseFilter;
+use Laminas\Filter\Word\SeparatorToCamelCase as SeparatorToCamelCaseFilter;
 
 /**
- * Test class for Zend\Filter\Word\SeparatorToCamelCase.
+ * Test class for Laminas\Filter\Word\SeparatorToCamelCase.
  *
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class SeparatorToCamelCaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,7 +38,7 @@ class SeparatorToCamelCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10517
+     * @group Laminas-10517
      */
     public function testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator()
     {
@@ -56,7 +55,7 @@ class SeparatorToCamelCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10517
+     * @group Laminas-10517
      */
     public function testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator()
     {

@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Digits as DigitsFilter;
+use Laminas\Filter\Digits as DigitsFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class DigitsTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +23,7 @@ class DigitsTest extends \PHPUnit_Framework_TestCase
     protected static $_unicodeEnabled;
 
     /**
-     * Creates a new Zend_Filter_Digits object for each test method
+     * Creates a new Laminas_Filter_Digits object for each test method
      *
      * @return void
      */
@@ -48,7 +47,7 @@ class DigitsTest extends \PHPUnit_Framework_TestCase
             // Filter for the value with mbstring
             /**
              * The first element of $valuesExpected contains multibyte digit characters.
-             *   But , Zend_Filter_Digits is expected to return only singlebyte digits.
+             *   But , Laminas_Filter_Digits is expected to return only singlebyte digits.
              *
              * The second contains multibyte or singebyte space, and also alphabet.
              * The third  contains various multibyte characters.
