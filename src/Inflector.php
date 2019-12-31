@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Filter chain for string inflection
@@ -326,7 +325,7 @@ class Inflector extends AbstractFilter
      * or an array of strings or filter objects.
      *
      * @param  string $spec
-     * @param  array|string|\Zend\Filter\FilterInterface $ruleSet
+     * @param  array|string|\Laminas\Filter\FilterInterface $ruleSet
      * @return self
      */
     public function setFilterRule($spec, $ruleSet)
