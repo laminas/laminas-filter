@@ -1,31 +1,30 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
-namespace Zend\Filter\Compress;
-
-use Zend\Filter\Exception;
 
 /**
- * Compression adapter for Lzf
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
-class Lzf implements CompressionAlgorithmInterface
+
+namespace Laminas\Filter\Compress;
+
+use Laminas\Filter\Exception;
+
+/**
+ * Compression adapter for Llaminas
+ */
+class Llaminas implements CompressionAlgorithmInterface
 {
     /**
      * Class constructor
      *
      * @param  null $options
-     * @throws Exception\ExtensionNotLoadedException if lzf extension missing
+     * @throws Exception\ExtensionNotLoadedException if llaminas extension missing
      */
     public function __construct($options = null)
     {
-        if (!extension_loaded('lzf')) {
-            throw new Exception\ExtensionNotLoadedException('This filter needs the lzf extension');
+        if (!extension_loaded('llaminas')) {
+            throw new Exception\ExtensionNotLoadedException('This filter needs the llaminas extension');
         }
     }
 
@@ -38,7 +37,7 @@ class Lzf implements CompressionAlgorithmInterface
      */
     public function compress($content)
     {
-        $compressed = lzf_compress($content);
+        $compressed = llaminas_compress($content);
         if (!$compressed) {
             throw new Exception\RuntimeException('Error during compression');
         }
@@ -55,7 +54,7 @@ class Lzf implements CompressionAlgorithmInterface
      */
     public function decompress($content)
     {
-        $compressed = lzf_decompress($content);
+        $compressed = llaminas_decompress($content);
         if (!$compressed) {
             throw new Exception\RuntimeException('Error during decompression');
         }
@@ -70,6 +69,6 @@ class Lzf implements CompressionAlgorithmInterface
      */
     public function toString()
     {
-        return 'Lzf';
+        return 'Llaminas';
     }
 }
