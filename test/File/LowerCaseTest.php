@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\LowerCase as FileLowerCase;
+use Laminas\Filter\File\LowerCase as FileLowerCase;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class LowerCaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -92,7 +91,7 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileNotFoundException()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not found');
         $filter = new FileLowerCase();
         $filter($this->_newFile . 'unknown');
     }
@@ -107,7 +106,7 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
             $filter = new FileLowerCase('ISO-8859-1');
             $filter($this->_newFile);
             $this->assertContains('this is a file', file_get_contents($this->_newFile));
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -123,7 +122,7 @@ class LowerCaseTest extends \PHPUnit_Framework_TestCase
             $filter->setEncoding('ISO-8859-1');
             $filter($this->_newFile);
             $this->assertContains('this is a file', file_get_contents($this->_newFile));
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }

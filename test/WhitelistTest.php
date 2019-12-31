@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\FilterPluginManager;
-use Zend\Filter\Whitelist as WhitelistFilter;
-use Zend\Stdlib\ArrayObject;
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\Whitelist as WhitelistFilter;
+use Laminas\Stdlib\ArrayObject;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class WhitelistTest extends \PHPUnit_Framework_TestCase
 {
@@ -42,12 +41,12 @@ class WhitelistTest extends \PHPUnit_Framework_TestCase
         $pluginManager = new FilterPluginManager();
         $filter = $pluginManager->get('whitelist');
 
-        $this->assertInstanceOf('Zend\Filter\Whitelist', $filter);
+        $this->assertInstanceOf('Laminas\Filter\Whitelist', $filter);
     }
 
     public function testNullListShouldThrowException()
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException');
         $filter = new WhitelistFilter(array(
             'list' => null,
         ));
