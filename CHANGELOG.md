@@ -10,11 +10,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changes
 
-- [#40](https://github.com/zendframework/zend-filter/pull/40) updates the
+- [zendframework/zend-filter#40](https://github.com/zendframework/zend-filter/pull/40) updates the
   `Callback` filter's `setCallback()` method to allow passing a string name of a
   class that is instantiable without constructor arguments, and which defines
   `__invoke()`.
-- [#43](https://github.com/zendframework/zend-filter/pull/43) updates the
+- [zendframework/zend-filter#43](https://github.com/zendframework/zend-filter/pull/43) updates the
   exception thrown by the `File\Rename` filter when the target already exists to
   indicate the target filename path.
 
@@ -28,21 +28,21 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#56](https://github.com/zendframework/zend-filter/pull/56) fixes how the
+- [zendframework/zend-filter#56](https://github.com/zendframework/zend-filter/pull/56) fixes how the
   `FilterPluginManagerFactory` factory initializes the plugin manager instance,
   ensuring it is injecting the relevant configuration from the `config` service
   and thus seeding it with configured translator loader services. This means
-  that the `filters` configuration will now be honored in non-zend-mvc contexts.
-- [#36](https://github.com/zendframework/zend-filter/pull/36) fixes an issue in
+  that the `filters` configuration will now be honored in non-laminas-mvc contexts.
+- [zendframework/zend-filter#36](https://github.com/zendframework/zend-filter/pull/36) fixes an issue in
   the constructor whereby a discovered option was not removed from the options
   list after being used to set the compression algorithm.
-- [#49](https://github.com/zendframework/zend-filter/pull/49) and
-  [#51](https://github.com/zendframework/zend-filter/pull/51) fix logic within
+- [zendframework/zend-filter#49](https://github.com/zendframework/zend-filter/pull/49) and
+  [zendframework/zend-filter#51](https://github.com/zendframework/zend-filter/pull/51) fix logic within
   the `Boolean` and `ToNull` filters to use boolean rather than arithmetic
   operations, ensuring that if the same type is specified multiple times via the
   options, it will be aggregated correctly internally, and thus ensure correct
   operation of the filter.
-- [#55](https://github.com/zendframework/zend-filter/pull/55) adds a missing
+- [zendframework/zend-filter#55](https://github.com/zendframework/zend-filter/pull/55) adds a missing
   import statement to the `Word\SeparatorToSeparatorFactory`.
 
 ## 2.7.1 - 2016-04-18
@@ -61,7 +61,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#27](https://github.com/zendframework/zend-filter/pull/27) fixes the
+- [zendframework/zend-filter#27](https://github.com/zendframework/zend-filter/pull/27) fixes the
   `Module::init()` method to properly receive a `ModuleManager` instance, and
   not expect a `ModuleEvent`.
 
@@ -69,16 +69,16 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#25](https://github.com/zendframework/zend-filter/pull/25) exposes the
-  package as a ZF component and/or generic configuration provider, by adding the
+- [zendframework/zend-filter#25](https://github.com/zendframework/zend-filter/pull/25) exposes the
+  package as a Laminas component and/or generic configuration provider, by adding the
   following:
   - `FilterPluginManagerFactory`, which can be consumed by container-interop /
-    zend-servicemanager to create and return a `FilterPluginManager` instance.
+    laminas-servicemanager to create and return a `FilterPluginManager` instance.
   - `ConfigProvider`, which maps the service `FilterManager` to the above
     factory.
   - `Module`, which does the same as `ConfigProvider`, but specifically for
-    zend-mvc applications. It also provices a specification to
-    `Zend\ModuleManager\Listener\ServiceListener` to allow modules to provide
+    laminas-mvc applications. It also provices a specification to
+    `Laminas\ModuleManager\Listener\ServiceListener` to allow modules to provide
     filter configuration.
 
 ### Deprecated
@@ -109,7 +109,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#24](https://github.com/zendframework/zend-filter/pull/24) updates the
+- [zendframework/zend-filter#24](https://github.com/zendframework/zend-filter/pull/24) updates the
   `FilterPluginManager` to reference the `NumberFormat` **filter**, instead of
   the **view helper**.
 
@@ -117,12 +117,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#14](https://github.com/zendframework/zend-filter/pull/14) adds the
+- [zendframework/zend-filter#14](https://github.com/zendframework/zend-filter/pull/14) adds the
   `UpperCaseWords` filter to the default list of filters known to the
   `FilterPluginManager`.
-- [#22](https://github.com/zendframework/zend-filter/pull/22) adds
+- [zendframework/zend-filter#22](https://github.com/zendframework/zend-filter/pull/22) adds
   documentation, and automatically publishes it to
-  https://zendframework.github.io/zend-filter/
+  https://docs.laminas.dev/laminas-filter/
 
 ### Deprecated
 
@@ -134,8 +134,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#15](https://github.com/zendframework/zend-filter/pull/15),
-  [#19](https://github.com/zendframework/zend-filter/pull/19), and
-  [#21](https://github.com/zendframework/zend-filter/pull/21)
-  update the component to be forwards-compatible with zend-servicemanager v3,
+- [zendframework/zend-filter#15](https://github.com/zendframework/zend-filter/pull/15),
+  [zendframework/zend-filter#19](https://github.com/zendframework/zend-filter/pull/19), and
+  [zendframework/zend-filter#21](https://github.com/zendframework/zend-filter/pull/21)
+  update the component to be forwards-compatible with laminas-servicemanager v3,
   and reduce the number of development dependencies required for testing.

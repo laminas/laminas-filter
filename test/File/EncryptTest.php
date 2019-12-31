@@ -1,17 +1,16 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-namespace ZendTest\Filter\File;
 
+/**
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
+ */
+namespace LaminasTest\Filter\File;
+
+use Laminas\Filter\Exception;
+use Laminas\Filter\File\Decrypt as FileDecrypt;
+use Laminas\Filter\File\Encrypt as FileEncrypt;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
-use Zend\Filter\File\Encrypt as FileEncrypt;
-use Zend\Filter\File\Decrypt as FileDecrypt;
 
 class EncryptTest extends TestCase
 {
@@ -27,7 +26,7 @@ class EncryptTest extends TestCase
 
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
         $this->testDir = sys_get_temp_dir();
-        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
     public function tearDown()

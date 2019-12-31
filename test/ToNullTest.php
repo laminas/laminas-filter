@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
+use Laminas\Filter\Exception;
+use Laminas\Filter\ToNull as ToNullFilter;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
-use Zend\Filter\ToNull as ToNullFilter;
 
 class ToNullTest extends TestCase
 {

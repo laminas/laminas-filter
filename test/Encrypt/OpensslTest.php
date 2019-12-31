@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Encrypt;
+namespace LaminasTest\Filter\Encrypt;
 
+use Laminas\Filter\Encrypt\Openssl as OpensslEncryption;
+use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Zend\Filter\Encrypt\Openssl as OpensslEncryption;
-use Zend\Filter\Exception;
 
 class OpensslTest extends TestCase
 {
@@ -190,7 +189,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Zend\Filter\Exception\RuntimeException $e) {
+        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
             $this->assertContains('Please give a private key', $e->getMessage());
         }
 
@@ -198,7 +197,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Zend\Filter\Exception\RuntimeException $e) {
+        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
             $this->assertContains('Please give an envelope key', $e->getMessage());
         }
 
@@ -206,7 +205,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Zend\Filter\Exception\RuntimeException $e) {
+        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
             $this->assertContains('was not able to decrypt', $e->getMessage());
         }
     }
