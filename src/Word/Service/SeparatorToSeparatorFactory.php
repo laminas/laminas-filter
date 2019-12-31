@@ -1,11 +1,11 @@
 <?php
 
-namespace Zend\Filter\Word\Service;
+namespace Laminas\Filter\Word\Service;
 
-use Zend\Filter\Word\SeparatorToSeparator;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\MutableCreationOptionsInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Filter\Word\SeparatorToSeparator;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\MutableCreationOptionsInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class SeparatorToSeparatorFactory implements
     FactoryInterface,
