@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Programmatically filter and normalize data and files.">  
+    <link rel="canonical" href="https://docs.laminas.dev/file/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>File Filters - laminas-filter - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-filter</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../standard-filters/" class="subnavigation__link">Standard Filters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../word/" class="subnavigation__link">Word Filters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">File Filters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../static-filter/" class="subnavigation__link">Static Filter</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-filter</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-filter/" class="header__link header__link--github" title="Go to repository of laminas-filter">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#encrypt-and-decrypt" class="toc__link">Encrypt and Decrypt</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#lowercase" class="toc__link">Lowercase</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#rename" class="toc__link">Rename</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#renameupload" class="toc__link">RenameUpload</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#uppercase" class="toc__link">Uppercase</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-filter</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">File Filters</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="file-filters">File Filters</h1>
+<p>laminas-filter also comes with a set of classes for filtering file contents, and
+performing file operations such as renaming.</p>
+<blockquote>
+<h3>$_FILES</h3>
+<p>All file filter <code>filter()</code> implementations support either a file path string
+<em>or</em> a <code>$_FILES</code> array as the supplied argument. When a <code>$_FILES</code> array is
+passed in, the <code>tmp_name</code> is used for the file path.</p>
+</blockquote>
+<h2 id="encrypt-and-decrypt">Encrypt and Decrypt</h2>
+<p>These filters allow encrypting and decrypting file contents, and are derived
+from the <code>Laminas\Filter\Encrypt</code> and <code>Laminas\Filter\Decrypt</code> filters. Only file reading and
+writing operations are performed by the filer; encryption and decryption operations
+are performed by the parent classes.</p>
+<p>Usage:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\Encrypt as EncryptFileFilter;</span>
+<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new EncryptFileFilter([</span>
+<span class=x>    &#39;adapter&#39; =&gt; &#39;BlockCipher&#39;,</span>
+<span class=x>    &#39;key&#39; =&gt; &#39;--our-super-secret-key--&#39;,</span>
+<span class=x>]);</span>
+<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+</pre></div></p>
+<p>In the above example, we pass options to our constructor in order to configure
+the filter. We could instead use use setter methods to inject these options:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\Encrypt as EncryptFileFilter;</span>
+<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new EncryptFileFilter();</span>
+<span class=x>$filter-&gt;setAdapter(&#39;BlockCipher&#39;);</span>
+<span class=x>$filter-&gt;setKey(&#39;--our-super-secret-key--&#39;);</span>
+<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+</pre></div></p>
+<p>Check the <a href="/laminas-filter/standard-filters/#encrypt-and-decrypt">Encrypt and Decrypt filter documentation</a>
+for more information about options and adapters.</p>
+<h2 id="lowercase">Lowercase</h2>
+<p><code>Laminas\Filter\File\Lowercase</code> can be used to convert all file contents to
+lowercase.</p>
+<h3>Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>encoding</code>: Set the encoding to use during conversion.</li>
+</ul>
+<h3>Basic Usage</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\LowerCase;</span>
+<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new LowerCase();</span>
+<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+</pre></div></p>
+<p>This example converts the contents of an uploaded file to lowercase.  After this
+process, you can use the <a href="#rename">Rename</a> or <a href="#renameupload">RenameUpload</a>
+filter to replace this file with your original file, or read directly from file.
+But, don't forget, if you upload a file and send your <code>$_FILES</code> array to a
+filter method, the <code>LowerCase</code> filter will only change the temporary file
+(<code>tmp_name</code> index of array), not the original file. Let's check following
+example:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\LowerCase;</span>
+<span class=x>use Laminas\Filter\File\Rename;</span>
+<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$lowercaseFilter = new LowerCase();</span>
+<span class=x>$file = $lowercaseFilter-&gt;filter($files[&#39;userfile&#39;]);</span>
+<span class=x>$renameFilter = new Rename([</span>
+<span class=x>    &#39;target&#39;    =&gt; &#39;/tmp/newfile.txt&#39;,</span>
+<span class=x>    &#39;randomize&#39; =&gt; true,</span>
+<span class=x>]);</span>
+<span class=x>$filename = $renameFilter-&gt;filter($file[&#39;tmp_name&#39;]);</span>
+</pre></div></p>
+<p>With this example, the final, stored file on the server will have the lowercased
+content.</p>
+<p>If you want to use a specific encoding when converting file content, you should
+specify the encoding when instantiating the <code>LowerCase</code> filter, or use the
+<code>setEncoding</code> method to change it.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\LowerCase;</span>
+<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new LowerCase();</span>
+<span class=x>$filter-&gt;setEncoding(&#39;ISO-8859-1&#39;);</span>
+<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+</pre></div></p>
+<p>The <code>LowerCase</code> filter extends from the <code>StringToLower</code> filter; read the
+<a href="/laminas-filter/standard-filters/#stringtolower"><code>StringToLower</code> documentation</a>
+for more information about encoding and its exceptions.</p>
+<h2 id="rename">Rename</h2>
+<p><code>Laminas\Filter\File\Rename</code> can be used to rename a file and/or move a file to a new path.</p>
+<h3>Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>target</code> (string; default: <code>*</code>): Target filename or directory; the new name
+  of the source file.</li>
+<li><code>source</code> (string; default: <code>*</code>): Source filename or directory which will be
+  renamed. Used to match the filtered file with an options set.</li>
+<li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?
+  If the file is unable to be moved into the target path, a
+  <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
+<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random
+  postfix attached? The random postfix will generated with <code>uniqid('_')</code> after
+  the file name and before the extension. For example, <code>file.txt</code> might be
+  randomized to <code>file_4b3403665fea6.txt</code>.</li>
+</ul>
+<p>An array of option sets is also supported, where a single <code>Rename</code> filter
+instance can filter several files using different options. The options used for
+the filtered file will be matched from the <code>source</code> option in the options set.</p>
+<h3>Usage Examples</h3>
+<p>Move all filtered files to a different directory:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// &#39;target&#39; option is assumed if param is a string</span>
+<span class=x>$filter = new \Laminas\Filter\File\Rename(&#39;/tmp/&#39;);</span>
+<span class=x>echo $filter-&gt;filter(&#39;./myfile.txt&#39;);</span>
+<span class=x>// File has been moved to &#39;/tmp/myfile.txt&#39;</span>
+</pre></div></p>
+<p>Rename all filtered files to a new name:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$filter = new \Laminas\Filter\File\Rename(&#39;/tmp/newfile.txt&#39;);</span>
+<span class=x>echo $filter-&gt;filter(&#39;./myfile.txt&#39;);</span>
+<span class=x>// File has been renamed to &#39;/tmp/newfile.txt&#39;</span>
+</pre></div></p>
+<p>Move to a new path, and randomize file names:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$filter = new \Laminas\Filter\File\Rename([</span>
+<span class=x>    &#39;target&#39;    =&gt; &#39;/tmp/newfile.txt&#39;,</span>
+<span class=x>    &#39;randomize&#39; =&gt; true,</span>
+<span class=x>]);</span>
+<span class=x>echo $filter-&gt;filter(&#39;./myfile.txt&#39;);</span>
+<span class=x>// File has been renamed to &#39;/tmp/newfile_4b3403665fea6.txt&#39;</span>
+</pre></div></p>
+<p>Configure different options for several possible source files:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$filter = new \Laminas\Filter\File\Rename([</span>
+<span class=x>    [</span>
+<span class=x>        &#39;source&#39;    =&gt; &#39;fileA.txt&#39;</span>
+<span class=x>        &#39;target&#39;    =&gt; &#39;/dest1/newfileA.txt&#39;,</span>
+<span class=x>        &#39;overwrite&#39; =&gt; true,</span>
+<span class=x>    ],</span>
+<span class=x>    [</span>
+<span class=x>        &#39;source&#39;    =&gt; &#39;fileB.txt&#39;</span>
+<span class=x>        &#39;target&#39;    =&gt; &#39;/dest2/newfileB.txt&#39;,</span>
+<span class=x>        &#39;randomize&#39; =&gt; true,</span>
+<span class=x>    ],</span>
+<span class=x>]);</span>
+<span class=x>echo $filter-&gt;filter(&#39;fileA.txt&#39;);</span>
+<span class=x>// File has been renamed to &#39;/dest1/newfileA.txt&#39;</span>
+<span class=x>echo $filter-&gt;filter(&#39;fileB.txt&#39;);</span>
+<span class=x>// File has been renamed to &#39;/dest2/newfileB_4b3403665fea6.txt&#39;</span>
+</pre></div></p>
+<h3>Public Methods</h3>
+<p>The <code>Rename</code> filter defines the following public methods in addition to <code>filter()</code>:
+follows:</p>
+<ul>
+<li><code>getFile() : array</code>: Returns the files to rename along with their new name and location.</li>
+<li><code>setFile(string|array $options) : void</code>: Sets the file options for renaming.
+  Removes any previously set file options.</li>
+<li><code>addFile(string|array $options) : void</code>: Adds file options for renaming to
+  the current list of file options.</li>
+</ul>
+<h2 id="renameupload">RenameUpload</h2>
+<p><code>Laminas\Filter\File\RenameUpload</code> can be used to rename or move an uploaded file to a new path.</p>
+<h3>Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>target</code> (string; default: <code>*</code>): Target directory or full filename path.</li>
+<li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?
+  If the file is unable to be moved into the target path, a
+  <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
+<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random
+  postfix attached? The random postfix will generated with <code>uniqid('_')</code> after
+  the file name and before the extension. For example, <code>file.txt</code> might be
+  randomized to <code>file_4b3403665fea6.txt</code>.</li>
+<li><code>use_upload_name</code> (boolean; default: <code>false</code>): When true, this filter will
+  use <code>$_FILES['name']</code> as the target filename. Otherwise, the default <code>target</code>
+  rules and the <code>$_FILES['tmp_name']</code> will be used.</li>
+<li><code>use_upload_extension</code> (boolean; default: <code>false</code>): When true, the uploaded
+  file will maintains its original extension if not specified.  For example, if
+  the uploaded file is <code>file.txt</code> and the target is <code>mynewfile</code>, the upload
+  will be renamed to <code>mynewfile.txt</code>.</li>
+<li><code>stream_factory</code> (<code>Psr\Http\Message\StreamFactoryInterface</code>; default: <code>null</code>):
+  Required when passing a <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR-7 UploadedFileInterface</a>
+  to the filter; used to create a new stream representing the renamed file.
+  (Since 2.9.0)</li>
+<li><code>upload_file_factory</code> (<code>Psr\Http\Message\UploadedFileFactoryInterface</code>; default:
+  <code>null</code>): Required when passing a <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR-7 UploadedFileInterface</a>
+  to the filter; used to create a new uploaded file representation of the
+  renamed file.  (Since 2.9.0)</li>
+</ul>
+<blockquote>
+<h3>Using the upload Name is unsafe</h3>
+<p>Be <strong>very</strong> careful when using the <code>use_upload_name</code> option. For instance,
+extremely bad things could happen if you were to allow uploaded <code>.php</code> files
+(or other CGI files) to be moved into the <code>DocumentRoot</code>.</p>
+<p>It is generally a better idea to supply an internal filename to avoid
+security risks.</p>
+</blockquote>
+<p><code>RenameUpload</code> does not support an array of options like the<code>Rename</code> filter.
+When filtering HTML5 file uploads with the <code>multiple</code> attribute set, all files
+will be filtered with the same option settings.</p>
+<h3>Usage Examples</h3>
+<p>Move all filtered files to a different directory:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;name&#39;] === &#39;myfile.txt&#39;</span>
+
+<span class=x>// &#39;target&#39; option is assumed if param is a string</span>
+<span class=x>$filter = new \Laminas\Filter\File\RenameUpload(&#39;./data/uploads/&#39;);</span>
+<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+<span class=x>// File has been moved to &#39;./data/uploads/php5Wx0aJ&#39;</span>
+
+<span class=x>// ... or retain the uploaded file name</span>
+<span class=x>$filter-&gt;setUseUploadName(true);</span>
+<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+<span class=x>// File has been moved to &#39;./data/uploads/myfile.txt&#39;</span>
+</pre></div></p>
+<p>Rename all filtered files to a new name:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new \Laminas\Filter\File\RenameUpload(&#39;./data/uploads/newfile.txt&#39;);</span>
+<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+<span class=x>// File has been renamed to &#39;./data/uploads/newfile.txt&#39;</span>
+</pre></div></p>
+<p>Move to a new path and randomize file names:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new \Laminas\Filter\File\RenameUpload([</span>
+<span class=x>    &#39;target&#39;    =&gt; &#39;./data/uploads/newfile.txt&#39;,</span>
+<span class=x>    &#39;randomize&#39; =&gt; true,</span>
+<span class=x>]);</span>
+<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+<span class=x>// File has been renamed to &#39;./data/uploads/newfile_4b3403665fea6.txt&#39;</span>
+</pre></div></p>
+<p>Handle a PSR-7 uploaded file:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
+<span class=x>use Psr\Http\Message\StreamFactoryInterface;</span>
+<span class=x>use Psr\Http\Message\UploadedFileFactoryInterface;</span>
+<span class=x>use Psr\Http\Message\UploadedFileInterface;</span>
+<span class=x>use Laminas\Filter\File\RenameUpload;</span>
+
+<span class=x>$filter = new \Laminas\Filter\File\RenameUpload([</span>
+<span class=x>    &#39;target&#39;              =&gt; &#39;./data/uploads/&#39;,</span>
+<span class=x>    &#39;randomize&#39;           =&gt; true,</span>
+<span class=x>    // @var StreamFactoryInterface $streamFactory</span>
+<span class=x>    &#39;stream_factory&#39;      =&gt; $streamFactory,</span>
+<span class=x>    // @var UploadedFileFactoryInterface $uploadedFileFactory</span>
+<span class=x>    &#39;upload_file_factory&#39; =&gt; $uploadedFileFactory,</span>
+<span class=x>]);</span>
+
+<span class=x>// @var ServerRequestInterface $request</span>
+<span class=x>foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {</span>
+<span class=x>    // @var UploadedFileInterface $uploadedFile</span>
+<span class=x>    // @var UploadedFileInterface $movedFile</span>
+<span class=x>    $movedFile = $filter-&gt;filter($uploadedFile);</span>
+<span class=x>    echo $movedFile-&gt;getClientFilename();</span>
+<span class=x>    // File has been renamed to &#39;./data/uploads/newfile_4b3403665fea6.txt&#39;</span>
+<span class=x>}</span>
+</pre></div></p>
+<blockquote>
+<h3>PSR-7 Support</h3>
+<p>PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
+<a href="https://packagist.org/providers/psr/http-factory-implementation">psr/http-factory-implementation</a>
+in your application, as it relies on the stream and uploaded file factories in
+order to produce the final <code>UploadedFileInterface</code> artifact representing the
+filtered file.</p>
+<p>PSR-17 itself requires PHP 7, so your application will need to be running on
+PHP 7 in order to use this feature.</p>
+<p><a href="https://docs.laminas.dev/laminas-diactoros/">laminas/laminas-diactoros 2.0</a>
+provides a PSR-17 implementation, but requires PHP 7.1. If you are still on
+PHP 7.0, either upgrade, or find a compatible psr/http-factory-implementation.</p>
+</blockquote>
+<h2 id="uppercase">Uppercase</h2>
+<p><code>Laminas\Filter\File\Uppercase</code> can be used to convert all file contents to
+uppercase.</p>
+<h3>Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>encoding</code>: Set the encoding to use during conversion.</li>
+</ul>
+<h3>Basic Usage</h3>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\UpperCase;</span>
+<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+
+<span class=x>$request = new Request();</span>
+<span class=x>$files   = $request-&gt;getFiles();</span>
+<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+
+<span class=x>$filter = new UpperCase();</span>
+<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
+</pre></div></p>
+<p>See the documentation on the <a href="#lowercase"><code>LowerCase</code></a> filter, above, for more
+information.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../word/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../filter-chains/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-filter/edit/master/docs/book/file.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-filter</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../standard-filters/" class="subnavigation__link">Standard Filters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../word/" class="subnavigation__link">Word Filters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">File Filters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../static-filter/" class="subnavigation__link">Static Filter</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-filter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-filter//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-filter';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-filter" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
