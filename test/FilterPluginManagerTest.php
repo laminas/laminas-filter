@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\FilterPluginManager;
+use Laminas\Filter\FilterPluginManager;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,19 +26,19 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
     public function testFilterSuccessfullyRetrieved()
     {
         $filter = $this->filters->get('int');
-        $this->assertInstanceOf('Zend\Filter\Int', $filter);
+        $this->assertInstanceOf('Laminas\Filter\Int', $filter);
     }
 
     public function testRegisteringInvalidFilterRaisesException()
     {
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException');
         $this->filters->setService('test', $this);
     }
 
     public function testLoadingInvalidFilterRaisesException()
     {
         $this->filters->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException');
         $this->filters->get('test');
     }
 }

@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
+use Laminas\Filter\StringTrim;
 use stdClass;
-use Zend\Filter\StringTrim;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class StringTrimTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +25,7 @@ class StringTrimTest extends \PHPUnit_Framework_TestCase
     protected $_filter;
 
     /**
-     * Creates a new Zend\Filter\StringTrim object for each test method
+     * Creates a new Laminas\Filter\StringTrim object for each test method
      *
      * @return void
      */
@@ -101,18 +99,18 @@ class StringTrimTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7183
+     * @group Laminas-7183
      */
-    public function testZF7183()
+    public function testLaminas7183()
     {
         $filter = $this->_filter;
         $this->assertEquals('Зенд', $filter('Зенд'));
     }
 
     /**
-     * @group ZF2-170
+     * @group Laminas-170
      */
-    public function testZF2170()
+    public function testLaminas170()
     {
         $filter = $this->_filter;
         $this->assertEquals('Расчет', $filter('Расчет'));
@@ -120,18 +118,18 @@ class StringTrimTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @group ZF-7902
+     * @group Laminas-7902
      */
-    public function testZF7902()
+    public function testLaminas7902()
     {
         $filter = $this->_filter;
         $this->assertEquals('/', $filter('/'));
     }
 
     /**
-     * @group ZF-10891
+     * @group Laminas-10891
      */
-    public function testZF10891()
+    public function testLaminas10891()
     {
         $filter = $this->_filter;
         $this->assertEquals('Зенд', $filter('   Зенд   '));

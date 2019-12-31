@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
-use Zend\Filter\AbstractFilter;
-use Zend\Filter\Exception\InvalidArgumentException;
-use Zend\Uri\UriFactory;
-use Zend\Uri\Uri;
-use Zend\Uri\Exception\ExceptionInterface as UriException;
+use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\Exception\InvalidArgumentException;
+use Laminas\Uri\Exception\ExceptionInterface as UriException;
+use Laminas\Uri\Uri;
+use Laminas\Uri\UriFactory;
 
 class UriNormalize extends AbstractFilter
 {
@@ -51,7 +50,7 @@ class UriNormalize extends AbstractFilter
      * normalize the URI and thus may affect the resulting normalize URI.
      *
      * @param  string $defaultScheme
-     * @return \Zend\Filter\UriNormalize
+     * @return \Laminas\Filter\UriNormalize
      */
     public function setDefaultScheme($defaultScheme)
     {
@@ -71,7 +70,7 @@ class UriNormalize extends AbstractFilter
      * real-world user mishaps, it may yield unexpected results at times.
      *
      * @param  string $enforcedScheme
-     * @return \Zend\Filter\UriNormalize
+     * @return \Laminas\Filter\UriNormalize
      */
     public function setEnforcedScheme($enforcedScheme)
     {
