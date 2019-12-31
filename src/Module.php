@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-filter for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-filter/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 class Module
 {
     /**
-     * Return default zend-filter configuration for zend-mvc applications.
+     * Return default laminas-filter configuration for laminas-mvc applications.
      */
     public function getConfig()
     {
@@ -24,7 +25,7 @@ class Module
     /**
      * Register a specification for the FilterManager with the ServiceListener.
      *
-     * @param \Zend\ModuleManager\ModuleManager $moduleManager
+     * @param \Laminas\ModuleManager\ModuleManager $moduleManager
      * @return void
      */
     public function init($moduleManager)

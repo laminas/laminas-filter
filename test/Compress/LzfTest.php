@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
+use Laminas\Filter\Compress\Llaminas as LlaminasCompression;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Compress\Lzf as LzfCompression;
 
-class LzfTest extends TestCase
+class LlaminasTest extends TestCase
 {
     public function setUp()
     {
-        if (! extension_loaded('lzf')) {
-            $this->markTestSkipped('This adapter needs the lzf extension');
+        if (! extension_loaded('llaminas')) {
+            $this->markTestSkipped('This adapter needs the llaminas extension');
         }
     }
 
@@ -28,7 +27,7 @@ class LzfTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new LzfCompression();
+        $filter  = new LlaminasCompression();
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);
@@ -43,9 +42,9 @@ class LzfTest extends TestCase
      *
      * @return void
      */
-    public function testLzfToString()
+    public function testLlaminasToString()
     {
-        $filter = new LzfCompression();
-        $this->assertEquals('Lzf', $filter->toString());
+        $filter = new LlaminasCompression();
+        $this->assertEquals('Llaminas', $filter->toString());
     }
 }

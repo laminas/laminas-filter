@@ -1,8 +1,8 @@
 # Writing Filters
 
-`Zend\Filter` supplies a set of commonly needed filters, but developers will
+`Laminas\Filter` supplies a set of commonly needed filters, but developers will
 often need to write custom filters for their particular use cases. You can do
-so by writing classes that implement `Zend\Filter\FilterInterface`, which
+so by writing classes that implement `Laminas\Filter\FilterInterface`, which
 defines a single method, `filter()`.
 
 ## Example
@@ -10,7 +10,7 @@ defines a single method, `filter()`.
 ```php
 namespace Application\Filter;
 
-use Zend\Filter\FilterInterface;
+use Laminas\Filter\FilterInterface;
 
 class MyFilter implements FilterInterface
 {
@@ -26,14 +26,14 @@ class MyFilter implements FilterInterface
 To attach an instance of the filter defined above to a filter chain:
 
 ```php
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain->attach(new Application\Filter\MyFilter());
 ```
 
 Alternately, add it to the `FilterPluginManager`:
 
 ```php
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain
     ->getPluginManager()
     ->setInvokableClass('myfilter', Application\Filter\MyFilter::class)

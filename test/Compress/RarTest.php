@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
+use Laminas\Filter\Compress\Rar as RarCompression;
+use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Compress\Rar as RarCompression;
-use Zend\Filter\Exception;
 
 class RarTest extends TestCase
 {
@@ -23,7 +22,7 @@ class RarTest extends TestCase
             $this->markTestSkipped('This adapter needs the rar extension');
         }
 
-        $this->tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid('zfilter');
+        $this->tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid('laminasilter');
         mkdir($this->tmp);
 
         $files = [
