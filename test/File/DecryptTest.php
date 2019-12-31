@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\Decrypt as FileDecrypt;
-use Zend\Filter\File\Encrypt as FileEncrypt;
+use Laminas\Filter\File\Decrypt as FileDecrypt;
+use Laminas\Filter\File\Encrypt as FileEncrypt;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class DecryptTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +26,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This filter needs the mcrypt extension');
         }
 
-        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
         mkdir($this->tmpDir, 0775, true);
 
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
@@ -126,7 +125,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
         $filter = new FileDecrypt();
         $filter->setVector('1234567890123456');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not found');
         $filter->filter($this->tmpDir . '/nofile.txt');
     }
 

@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
 use ArrayIterator;
-use Zend\Filter\FilterChain;
-use Zend\Filter\PregReplace;
-use Zend\Filter\StringToLower;
-use Zend\Filter\StringTrim;
-use Zend\Filter\StripTags;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\PregReplace;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+use Laminas\Filter\StripTags;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class FilterChainTest extends \PHPUnit_Framework_TestCase
 {
@@ -142,7 +141,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-412
+     * @group Laminas-412
      */
     public function testCanAttachMultipleFiltersOfTheSameTypeAsDiscreteInstances()
     {
@@ -185,7 +184,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
         $serialized = serialize($chain);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf('Zend\Filter\FilterChain', $unserialized);
+        $this->assertInstanceOf('Laminas\Filter\FilterChain', $unserialized);
         $this->assertEquals(2, count($unserialized));
         $value         = 'AbC';
         $valueExpected = 'abc';

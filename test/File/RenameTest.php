@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\Rename as FileRename;
+use Laminas\Filter\File\Rename as FileRename;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class RenameTest extends \PHPUnit_Framework_TestCase
 {
@@ -66,7 +65,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $control = sprintf('%s/_files/testfile.txt', dirname(__DIR__));
-        $this->tmpPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('zfilter'));
+        $this->tmpPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
         mkdir($this->tmpPath, 0775, true);
 
         $this->oldFile = sprintf('%s%stestfile.txt', $this->tmpPath, DIRECTORY_SEPARATOR);
@@ -439,7 +438,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
             ]],
             $filter->getFile()
         );
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'could not be renamed');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'could not be renamed');
         $this->assertEquals($this->newFile, $filter->getNewName($this->oldFile));
     }
 
@@ -542,7 +541,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testAddFileWithInvalidOption()
     {
         $filter = new FileRename($this->oldFile);
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Invalid options');
         $filter->addFile(1234);
     }
 
@@ -551,7 +550,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidConstruction()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Invalid options');
         $filter = new FileRename(1234);
     }
 
