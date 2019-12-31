@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\StaticFilter;
-use Zend\Filter\FilterPluginManager;
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\StaticFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class StaticFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,7 +29,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
     public function testUsesFilterPluginManagerByDefault()
     {
         $plugins = StaticFilter::getPluginManager();
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $plugins);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $plugins);
     }
 
     public function testCanSpecifyCustomPluginManager()
@@ -48,7 +47,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
         StaticFilter::setPluginManager(null);
         $registered = StaticFilter::getPluginManager();
         $this->assertNotSame($plugins, $registered);
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $registered);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $registered);
     }
 
     /**
@@ -83,13 +82,13 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
      * Ensures that if we specify a validator class basename that doesn't
      * exist in the namespace, get() throws an exception.
      *
-     * Refactored to conform with ZF-2724.
+     * Refactored to conform with Laminas-2724.
      *
-     * @group  ZF-2724
+     * @group  Laminas-2724
      */
     public function testStaticFactoryClassNotFound()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\ServiceManager\Exception\ExceptionInterface');
         StaticFilter::execute('1234', 'UnknownFilter');
     }
 
