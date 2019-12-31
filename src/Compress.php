@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Compresses a given string
@@ -91,7 +90,7 @@ class Compress extends AbstractFilter
         $adapter = $this->adapter;
         $options = $this->getAdapterOptions();
         if (!class_exists($adapter)) {
-            $adapter = 'Zend\\Filter\\Compress\\' . ucfirst($adapter);
+            $adapter = 'Laminas\\Filter\\Compress\\' . ucfirst($adapter);
             if (!class_exists($adapter)) {
                 throw new Exception\RuntimeException(sprintf(
                     '%s unable to load adapter; class "%s" not found',
@@ -103,7 +102,7 @@ class Compress extends AbstractFilter
 
         $this->adapter = new $adapter($options);
         if (!$this->adapter instanceof Compress\CompressionAlgorithmInterface) {
-            throw new Exception\InvalidArgumentException("Compression adapter '" . $adapter . "' does not implement Zend\\Filter\\Compress\\CompressionAlgorithmInterface");
+            throw new Exception\InvalidArgumentException("Compression adapter '" . $adapter . "' does not implement Laminas\\Filter\\Compress\\CompressionAlgorithmInterface");
         }
         return $this->adapter;
     }
@@ -132,7 +131,7 @@ class Compress extends AbstractFilter
             return $this;
         }
         if (!is_string($adapter)) {
-            throw new Exception\InvalidArgumentException('Invalid adapter provided; must be string or instance of Zend\\Filter\\Compress\\CompressionAlgorithmInterface');
+            throw new Exception\InvalidArgumentException('Invalid adapter provided; must be string or instance of Laminas\\Filter\\Compress\\CompressionAlgorithmInterface');
         }
         $this->adapter = $adapter;
 
@@ -192,7 +191,7 @@ class Compress extends AbstractFilter
     }
 
     /**
-     * Defined by Zend_Filter_Filter
+     * Defined by Laminas_Filter_Filter
      *
      * Compresses the content $value with the defined settings
      *
