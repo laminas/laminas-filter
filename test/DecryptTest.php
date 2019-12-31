@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Decrypt as DecryptFilter;
+use Laminas\Filter\Decrypt as DecryptFilter;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class DecryptTest extends \PHPUnit_Framework_TestCase
 {
@@ -124,8 +122,8 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter->setAdapter('BlockCipher');
         $this->assertEquals('BlockCipher', $filter->getAdapter());
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
-        $filter->setAdapter('\\ZendTest\\Filter\\TestAdapter');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'does not implement');
+        $filter->setAdapter('\\LaminasTest\\Filter\\TestAdapter');
     }
 
     /**
@@ -137,7 +135,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
             $this->markTestSkipped('Mcrypt extension not installed');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\BadMethodCallException', 'Unknown method');
+        $this->setExpectedException('\Laminas\Filter\Exception\BadMethodCallException', 'Unknown method');
         $filter = new DecryptFilter();
         $filter->getUnknownMethod();
     }
