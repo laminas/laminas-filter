@@ -1,12 +1,12 @@
 <?php
 
-namespace Zend\Filter\Word\Service;
+namespace Laminas\Filter\Word\Service;
 
 use Interop\Container\ContainerInterface;
-use Zend\Filter\Word\SeparatorToSeparator;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Filter\Word\SeparatorToSeparator;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class SeparatorToSeparatorFactory implements FactoryInterface
 {

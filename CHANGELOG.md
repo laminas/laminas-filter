@@ -6,12 +6,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#14](https://github.com/zendframework/zend-filter/pull/14) adds the
+- [zendframework/zend-filter#14](https://github.com/zendframework/zend-filter/pull/14) adds the
   `UpperCaseWords` filter to the default list of filters known to the
   `FilterPluginManager`.
-- [#22](https://github.com/zendframework/zend-filter/pull/22) adds
+- [zendframework/zend-filter#22](https://github.com/zendframework/zend-filter/pull/22) adds
   documentation, and automatically publishes it to
-  https://zendframework.github.io/zend-filter/
+  https://docs.laminas.dev/laminas-filter/
 
 ### Deprecated
 
@@ -23,8 +23,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#15](https://github.com/zendframework/zend-filter/pull/15),
-  [#19](https://github.com/zendframework/zend-filter/pull/19), and
-  [#21](https://github.com/zendframework/zend-filter/pull/21)
-  update the component to be forwards-compatible with zend-servicemanager v3,
+- [zendframework/zend-filter#15](https://github.com/zendframework/zend-filter/pull/15),
+  [zendframework/zend-filter#19](https://github.com/zendframework/zend-filter/pull/19), and
+  [zendframework/zend-filter#21](https://github.com/zendframework/zend-filter/pull/21)
+  update the component to be forwards-compatible with laminas-servicemanager v3,
   and reduce the number of development dependencies required for testing.

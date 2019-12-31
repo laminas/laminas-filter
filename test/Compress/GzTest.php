@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Gz as GzCompression;
+use Laminas\Filter\Compress\Gz as GzCompression;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class GzTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +23,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This adapter needs the zlib extension');
         }
 
-        $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
     public function tearDown()
@@ -99,7 +98,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
         $filter->setLevel(6);
         $this->assertEquals(6, $filter->getOptions('level'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'must be between');
         $filter->setLevel(15);
     }
 
@@ -115,7 +114,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
         $filter->setMode('deflate');
         $this->assertEquals('deflate', $filter->getOptions('mode'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'mode not supported');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'mode not supported');
         $filter->setMode('unknown');
     }
 
