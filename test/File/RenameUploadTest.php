@@ -1,20 +1,21 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-filter for the canonical source repository
- * @copyright Copyright (c) 20052018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-filter/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
+use Laminas\Filter\Exception;
+use Laminas\Filter\File\RenameUpload as FileRenameUpload;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
-use Zend\Filter\Exception;
-use Zend\Filter\File\RenameUpload as FileRenameUpload;
 
 class RenameUploadTest extends TestCase
 {
@@ -60,7 +61,7 @@ class RenameUploadTest extends TestCase
      */
     public function setUp()
     {
-        $this->filesPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('zfilter'));
+        $this->filesPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
         $this->targetPath = sprintf('%s%s%s', $this->filesPath, DIRECTORY_SEPARATOR, 'targetPath');
 
         mkdir($this->targetPath, 0775, true);

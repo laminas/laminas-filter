@@ -1,6 +1,6 @@
 # Introduction
 
-zend-filter provides a set of commonly needed data filters. It also provides a
+laminas-filter provides a set of commonly needed data filters. It also provides a
 simple filter chaining mechanism by which multiple filters may be applied to a
 single datum in a user-defined order.
 
@@ -24,33 +24,33 @@ A filter that removes the HTML entities operates within the scope of the first
 definition of filter - an operator that produces a subset of the input. A filter
 that escapes the HTML entities, however, transforms the input (e.g., `&` is
 transformed to `&amp;`). Supporting such use cases for web developers is
-important, and “to filter”, in the context of using zend-filter, means to
+important, and “to filter”, in the context of using laminas-filter, means to
 perform some transformations upon input data.
 
 ## Basic usage of filters
 
 Having this filter definition established provides the foundation for
-`Zend\Filter\FilterInterface`, which requires a single method named `filter()`
+`Laminas\Filter\FilterInterface`, which requires a single method named `filter()`
 to be implemented by a filter class.
 
 Following is a basic example of using a filter upon two input data, the
 ampersand (`&`) and double quote (`"`) characters:
 
 ```php
-$htmlEntities = new Zend\Filter\HtmlEntities();
+$htmlEntities = new Laminas\Filter\HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
 echo $htmlEntities->filter('"'); // &quot;
 ```
 
-Also, if a filter inherits from `Zend\Filter\AbstractFilter` (as do all of the
+Also, if a filter inherits from `Laminas\Filter\AbstractFilter` (as do all of the
 out-of-the-box filters), you can also use them as invokables:
 
 ```php
-$strtolower = new Zend\Filter\StringToLower;
+$strtolower = new Laminas\Filter\StringToLower;
 
-echo $strtolower('I LOVE ZF2!'); // i love zf2!
-$zf2love = $strtolower('I LOVE ZF2!');
+echo $strtolower('I LOVE Laminas!'); // i love laminas!
+$laminaslove = $strtolower('I LOVE Laminas!');
 ```
 
 ## Using the StaticFilter
@@ -59,7 +59,7 @@ If it is inconvenient to load a given filter class and create an instance of the
 filter, you can use `StaticFilter` with its `execute()` method as an alternative
 invocation style. The first argument of this method is a data input value, that
 you would pass to the `filter()` method. The second argument is a string, which
-corresponds to the basename of the filter class, relative to the `Zend\Filter`
+corresponds to the basename of the filter class, relative to the `Laminas\Filter`
 namespace. The `execute()` method automatically loads the class, creates an
 instance, and applies the `filter()` method to the data input.
 
@@ -111,11 +111,11 @@ the following example:
 $original = 'my_original_content';
 
 // Attach a filter
-$filter   = new Zend\Filter\Word\UnderscoreToCamelCase();
+$filter   = new Laminas\Filter\Word\UnderscoreToCamelCase();
 $filtered = $filter->filter($original);
 
 // Use it's opposite
-$filter2  = new Zend\Filter\Word\CamelCaseToUnderscore();
+$filter2  = new Laminas\Filter\Word\CamelCaseToUnderscore();
 $filtered = $filter2->filter($filtered)
 ```
 
@@ -131,8 +131,8 @@ given input.
 
 ## Providing filters via modules
 
-If you wish to indicate that your zend-mvc module provides filters, have your
-`Module` class implement `Zend\Filter\FilterProviderInterface`, which defines
+If you wish to indicate that your laminas-mvc module provides filters, have your
+`Module` class implement `Laminas\Filter\FilterProviderInterface`, which defines
 the method:
 
 ```php
@@ -143,12 +143,12 @@ public function getFilterConfig();
 ```
 
 The method should return an array of configuration following the
-[zend-servicemanager configuration format](https://docs.zendframework.com/zend-servicemanager/configuring-the-service-manager/).
+[laminas-servicemanager configuration format](https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/).
 
-If you are not using zend-mvc, but are using a dependency injection container
-(e.g., if you are using Expressive), you can also provide filters using the
+If you are not using laminas-mvc, but are using a dependency injection container
+(e.g., if you are using Mezzio), you can also provide filters using the
 top-level `filters` configuration key; the value of that key should be
-zend-servicemanager configuration, as linked above.
+laminas-servicemanager configuration, as linked above.
 
-(zend-mvc users may also provide configuration in the same way, and omit
+(laminas-mvc users may also provide configuration in the same way, and omit
 implementation of the `FilterProviderInterface`.)

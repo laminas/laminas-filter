@@ -1,6 +1,6 @@
 # String Inflection
 
-`Zend\Filter\Inflector` is a general purpose tool for rules-based inflection of
+`Laminas\Filter\Inflector` is a general purpose tool for rules-based inflection of
 strings to a given target.
 
 As an example, you may find you need to transform MixedCase or camelCasedWords
@@ -8,13 +8,13 @@ into a path; for readability, OS policies, or other reasons, you also need to
 lower case this; and finally, you want to separate the words using a dash
 (`-`). An inflector can do this for you.
 
-`Zend\Filter\Inflector` implements `Zend\Filter\FilterInterface`; you perform
+`Laminas\Filter\Inflector` implements `Laminas\Filter\FilterInterface`; you perform
 inflection by calling `filter()` on the object instance.
 
 ## Transforming MixedCase and camelCaseText to another format
 
 ```php
-$inflector = new Zend\Filter\Inflector('pages/:page.:suffix');
+$inflector = new Laminas\Filter\Inflector('pages/:page.:suffix');
 $inflector->setRules([
     ':page'  => ['Word\CamelCaseToDash', 'StringToLower'],
     'suffix' => 'html',
@@ -39,25 +39,25 @@ When calling `filter()`, you then pass in an array of key and value pairs
 corresponding to the variables in the target.
 
 Each variable in the target can have zero or more rules associated with them.
-Rules may be either **static** or refer to a zend-filter class. Static rules
+Rules may be either **static** or refer to a laminas-filter class. Static rules
 will replace with the text provided.  Otherwise, a class matching the rule
 provided will be used to inflect the text. Classes are typically specified
 using a short name indicating the filter name stripped of any common prefix.
 
-As an example, you can use any zend-filter concrete implementations; however,
-instead of referring to them as `Zend\I18n\Filter\Alpha` or
-`Zend\Filter\StringToLower`, you'd specify only `Alpha` or `StringToLower`.
+As an example, you can use any laminas-filter concrete implementations; however,
+instead of referring to them as `Laminas\I18n\Filter\Alpha` or
+`Laminas\Filter\StringToLower`, you'd specify only `Alpha` or `StringToLower`.
 
 ### Using Custom Filters
 
-`Zend\Filter\Inflector` uses `Zend\Filter\FilterPluginManager` to manage
+`Laminas\Filter\Inflector` uses `Laminas\Filter\FilterPluginManager` to manage
 loading filters to use with inflection. By default, filters registered with
-`Zend\Filter\FilterPluginManager` are available. To access filters with that
+`Laminas\Filter\FilterPluginManager` are available. To access filters with that
 prefix but which occur deeper in the hierarchy, such as the various `Word`
-filters, simply strip off the `Zend\Filter` prefix:
+filters, simply strip off the `Laminas\Filter` prefix:
 
 ```php
-// use Zend\Filter\Word\CamelCaseToDash as a rule
+// use Laminas\Filter\Word\CamelCaseToDash as a rule
 $inflector->addRules(['script' => 'Word\CamelCaseToDash']);
 ```
 
@@ -82,7 +82,7 @@ method, or passing it as the fourth argument to the constructor:
 
 ```php
 // Via constructor:
-$inflector = new Zend\Filter\Inflector('#foo/#bar.#sfx', array(), null, '#');
+$inflector = new Laminas\Filter\Inflector('#foo/#bar.#sfx', array(), null, '#');
 
 // Via accessor:
 $inflector->setTargetReplacementIdentifier('#');
@@ -114,7 +114,7 @@ class Foo
      */
     public function __construct()
     {
-        $this->inflector = new Zend\Filter\Inflector();
+        $this->inflector = new Laminas\Filter\Inflector();
         $this->inflector->setTargetReference($this->target);
     }
 
@@ -155,7 +155,7 @@ developer to modify. Use the `setStaticRule()` method to set or modify the
 rule:
 
 ```php
-$inflector = new Zend\Filter\Inflector(':script.:suffix');
+$inflector = new Laminas\Filter\Inflector(':script.:suffix');
 $inflector->setStaticRule('suffix', 'phtml');
 
 // change it later:
@@ -182,7 +182,7 @@ class Foo
      */
     public function construct()
     {
-        $this->inflector = new Zend\Filter\Inflector(':script.:suffix');
+        $this->inflector = new Laminas\Filter\Inflector(':script.:suffix');
         $this->inflector->setStaticRuleReference('suffix', $this->suffix);
     }
 
@@ -202,7 +202,7 @@ class Foo
 
 ### Filter-Based Inflector Rules
 
-`Zend\Filter` filters may be used as inflector rules as well. Just like static
+`Laminas\Filter` filters may be used as inflector rules as well. Just like static
 rules, these are bound to a target variable; unlike static rules, you may
 define multiple filters to use when inflecting. These filters are processed in
 order, so be careful to register them in an order that makes sense for the data
@@ -215,31 +215,31 @@ ways:
 
 - **String**. The string may be a filter class name, or a class name segment
   minus any prefix set in the inflector's plugin loader (by default, minus the
-  '`Zend\Filter`' prefix).
+  '`Laminas\Filter`' prefix).
 - **Filter object**. Any object instance implementing
-  `Zend\Filter\FilterInterface` may be passed as a filter.
+  `Laminas\Filter\FilterInterface` may be passed as a filter.
 - **Array**. An array of one or more strings or filter objects as defined above.
 
 ```php
-$inflector = new Zend\Filter\Inflector(':script.:suffix');
+$inflector = new Laminas\Filter\Inflector(':script.:suffix');
 
-// Set rule to use Zend\Filter\Word\CamelCaseToDash filter
+// Set rule to use Laminas\Filter\Word\CamelCaseToDash filter
 $inflector->setFilterRule('script', 'Word\CamelCaseToDash');
 
 // Add rule to lowercase string
-$inflector->addFilterRule('script', new Zend\Filter\StringToLower());
+$inflector->addFilterRule('script', new Laminas\Filter\StringToLower());
 
 // Set rules en-masse
 $inflector->setFilterRule('script', [
     'Word\CamelCaseToDash',
-    new Zend\Filter\StringToLower()
+    new Laminas\Filter\StringToLower()
 ]);
 ```
 
 ## Setting Many Rules At Once
 
 Typically, it's easier to set many rules at once than to configure a single
-variable and its inflection rules one at a time. `Zend\Filter\Inflector`'s
+variable and its inflection rules one at a time. `Laminas\Filter\Inflector`'s
 `addRules()` and `setRules()` methods allow this.
 
 Each method takes an array of variable and rule pairs, where the rule may be
@@ -266,13 +266,13 @@ $inflector->addRules([
 
 ## Utility Methods
 
-`Zend\Filter\Inflector` has a number of utility methods for retrieving and
+`Laminas\Filter\Inflector` has a number of utility methods for retrieving and
 setting the plugin loader, manipulating and retrieving rules, and controlling
 if and when exceptions are thrown.
 
 - `setPluginManager()` can be used when you have configured your own
-  `Zend\Filter\FilterPluginManager` instance and wish to use it with
-  `Zend\Filter\Inflector`; `getPluginManager()` retrieves the currently set
+  `Laminas\Filter\FilterPluginManager` instance and wish to use it with
+  `Laminas\Filter\Inflector`; `getPluginManager()` retrieves the currently set
   one.
 - `setThrowTargetExceptionsOn()` can be used to control whether or not
   `filter()` throws an exception when a given replacement identifier passed to
@@ -292,7 +292,7 @@ your inflectors, by passing either type to either the constructor or the
 `setOptions()` method. The following settings may be specified:
 
 - `target` specifies the inflection target.
-- `pluginManager` specifies the `Zend\Filter\FilterPluginManager` instance or
+- `pluginManager` specifies the `Laminas\Filter\FilterPluginManager` instance or
   extension to use for obtaining plugins; alternately, you may specify a class
   name of a class that extends the `FilterPluginManager`.
 - `throwTargetExceptionsOn` should be a boolean indicating whether or not to
@@ -309,9 +309,9 @@ As examples:
 // $options implements Traversable:
 
 // With the constructor:
-$inflector = new Zend\Filter\Inflector($options);
+$inflector = new Laminas\Filter\Inflector($options);
 
 // Or with setOptions():
-$inflector = new Zend\Filter\Inflector();
+$inflector = new Laminas\Filter\Inflector();
 $inflector->setOptions($options);
 ```

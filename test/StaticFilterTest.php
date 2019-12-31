@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
+use Laminas\Filter\Callback;
+use Laminas\Filter\Digits;
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\HtmlEntities;
+use Laminas\Filter\StaticFilter;
+use Laminas\ServiceManager\Exception;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Callback;
-use Zend\Filter\Digits;
-use Zend\Filter\FilterPluginManager;
-use Zend\Filter\HtmlEntities;
-use Zend\Filter\StaticFilter;
-use Zend\ServiceManager\Exception;
-use Zend\ServiceManager\ServiceManager;
 
 class StaticFilterTest extends TestCase
 {
@@ -33,7 +32,7 @@ class StaticFilterTest extends TestCase
     public function testUsesFilterPluginManagerByDefault()
     {
         $plugins = StaticFilter::getPluginManager();
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $plugins);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $plugins);
     }
 
     public function testCanSpecifyCustomPluginManager()
@@ -51,7 +50,7 @@ class StaticFilterTest extends TestCase
         StaticFilter::setPluginManager(null);
         $registered = StaticFilter::getPluginManager();
         $this->assertNotSame($plugins, $registered);
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $registered);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $registered);
     }
 
     /**
@@ -86,9 +85,9 @@ class StaticFilterTest extends TestCase
      * Ensures that if we specify a validator class basename that doesn't
      * exist in the namespace, get() throws an exception.
      *
-     * Refactored to conform with ZF-2724.
+     * Refactored to conform with Laminas-2724.
      *
-     * @group  ZF-2724
+     * @group  Laminas-2724
      */
     public function testStaticFactoryClassNotFound()
     {
