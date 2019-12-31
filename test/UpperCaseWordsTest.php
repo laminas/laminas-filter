@@ -1,32 +1,31 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\UpperCaseWords as UpperCaseWordsFilter;
+use Laminas\Filter\UpperCaseWords as UpperCaseWordsFilter;
 
 /**
- * Tests for {@see \Zend\Filter\UpperCaseWords}
+ * Tests for {@see \Laminas\Filter\UpperCaseWords}
  *
- * @covers \Zend\Filter\UpperCaseWords
+ * @covers \Laminas\Filter\UpperCaseWords
  */
 class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_UpperCaseWords object
+     * Laminas_Filter_UpperCaseWords object
      *
      * @var UpperCaseWordsFilter
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_UpperCaseWords object for each test method
+     * Creates a new Laminas_Filter_UpperCaseWords object for each test method
      *
      * @return void
      */
@@ -74,7 +73,7 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -89,12 +88,12 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('mbstring required');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'is not supported');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'is not supported');
         $this->_filter->setEncoding('aaaaa');
     }
 
     /**
-     * @ZF-8989
+     * @Laminas-8989
      */
     public function testInitiationWithEncoding()
     {
@@ -111,13 +110,13 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
 
     /**
-     * @ZF-9058
+     * @Laminas-9058
      */
     public function testCaseInsensitiveEncoding()
     {
@@ -143,13 +142,13 @@ class UpperCaseWordsTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
 
     /**
-     * @group ZF-9854
+     * @group Laminas-9854
      */
     public function testDetectMbInternalEncoding()
     {
