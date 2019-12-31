@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Compress as CompressFilter;
+use Laminas\Filter\Compress as CompressFilter;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class CompressTest extends \PHPUnit_Framework_TestCase
 {
@@ -113,7 +111,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
         $filter->setBlocksize(6);
         $this->assertEquals(6, $filter->getOptions('blocksize'));
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'must be between');
         $filter->setBlocksize(15);
     }
 
@@ -175,7 +173,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new CompressFilter('bz2');
         $adapter = $filter->getAdapter();
-        $this->assertTrue($adapter instanceof \Zend\Filter\Compress\CompressionAlgorithmInterface);
+        $this->assertTrue($adapter instanceof \Laminas\Filter\Compress\CompressionAlgorithmInterface);
         $this->assertEquals('Bz2', $filter->getAdapterName());
     }
 
@@ -194,9 +192,9 @@ class CompressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Gz', $filter->getAdapterName());
 
 
-        $filter->setAdapter('\Zend\Filter\Boolean');
+        $filter->setAdapter('\Laminas\Filter\Boolean');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'does not implement');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'does not implement');
         $adapter = $filter->getAdapter();
     }
 
@@ -228,7 +226,7 @@ class CompressTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new CompressFilter();
 
-        $this->setExpectedException('\Zend\Filter\Exception\BadMethodCallException', 'Unknown method');
+        $this->setExpectedException('\Laminas\Filter\Exception\BadMethodCallException', 'Unknown method');
         $filter->invalidMethod();
     }
 }
