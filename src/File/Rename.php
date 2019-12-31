@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\File;
+namespace Laminas\Filter\File;
 
+use Laminas\Filter;
+use Laminas\Filter\Exception;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Filter;
-use Zend\Filter\Exception;
-use Zend\Stdlib\ArrayUtils;
 
 class Rename extends Filter\AbstractFilter
 {
@@ -24,8 +23,8 @@ class Rename extends Filter\AbstractFilter
     /**
      * Class constructor
      *
-     * Options argument may be either a string, a Zend\Config\Config object, or an array.
-     * If an array or Zend\Config\Config object, it accepts the following keys:
+     * Options argument may be either a string, a Laminas\Config\Config object, or an array.
+     * If an array or Laminas\Config\Config object, it accepts the following keys:
      * 'source'    => Source filename or directory which will be renamed
      * 'target'    => Target filename or directory, the new name of the source file
      * 'overwrite' => Shall existing files be overwritten ?
@@ -112,7 +111,7 @@ class Rename extends Filter\AbstractFilter
      * But existing files will be erased when the overwrite option is true
      *
      * @param  string  $value  Full path of file to change
-     * @param  bool $source Return internal informations
+     * @param  bool $source Return internal information
      * @return string The new filename which has been set
      * @throws Exception\InvalidArgumentException If the target file already exists.
      */
@@ -149,7 +148,7 @@ class Rename extends Filter\AbstractFilter
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Renames the file $value to the new name set before
      * Returns the file $value, removing all but digit characters
@@ -282,7 +281,7 @@ class Rename extends Filter\AbstractFilter
      * Internal method to resolve the requested source
      * and return all other related parameters
      *
-     * @param  string $file Filename to get the informations for
+     * @param  string $file Filename to get the information for
      * @return array|string
      */
     protected function _getFileName($file)

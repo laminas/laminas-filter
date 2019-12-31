@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\UnderscoreToStudlyCase;
+use Laminas\Filter\Word\UnderscoreToStudlyCase;
 
 /**
- * Test class for Zend\Filter\Word\UnderscoreToStudlyCase.
+ * Test class for Laminas\Filter\Word\UnderscoreToStudlyCase.
  *
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class UnderscoreToStudlyCaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,43 +31,43 @@ class UnderscoreToStudlyCaseTest extends \PHPUnit_Framework_TestCase
     {
         $filter   = new UnderscoreToStudlyCase();
 
-        $string   = 'zend_framework';
+        $string   = 'laminas_framework';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('zendFramework', $filtered);
+        $this->assertEquals('laminasFramework', $filtered);
 
-        $string   = 'zend_Framework';
+        $string   = 'laminas_Framework';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('zendFramework', $filtered);
+        $this->assertEquals('laminasFramework', $filtered);
 
-        $string   = 'zendFramework';
+        $string   = 'laminasFramework';
         $filtered = $filter($string);
-        $this->assertEquals('zendFramework', $filtered);
+        $this->assertEquals('laminasFramework', $filtered);
 
-        $string   = 'zendframework';
+        $string   = 'laminas';
         $filtered = $filter($string);
-        $this->assertEquals('zendframework', $filtered);
+        $this->assertEquals('laminas', $filtered);
 
-        $string   = '_zendframework';
-        $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('zendframework', $filtered);
-
-        $string   = '_zend_framework';
+        $string   = '_laminas';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('zendFramework', $filtered);
+        $this->assertEquals('laminas', $filtered);
+
+        $string   = '_laminas_framework';
+        $filtered = $filter($string);
+        $this->assertNotEquals($string, $filtered);
+        $this->assertEquals('laminasFramework', $filtered);
     }
 
     public function testFiltersArray()
     {
         $filter   = new UnderscoreToStudlyCase();
 
-        $string   = ['zend_framework', '_zend_framework'];
+        $string   = ['laminas_framework', '_laminas_framework'];
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals(['zendFramework', 'zendFramework'], $filtered);
+        $this->assertEquals(['laminasFramework', 'laminasFramework'], $filtered);
     }
 
     public function testWithEmpties()
@@ -79,8 +78,8 @@ class UnderscoreToStudlyCaseTest extends \PHPUnit_Framework_TestCase
         $filtered = $filter($string);
         $this->assertEquals('', $filtered);
 
-        $string   = ['', 'Zend_Framework'];
+        $string   = ['', 'Laminas_Framework'];
         $filtered = $filter($string);
-        $this->assertEquals(['', 'zendFramework'], $filtered);
+        $this->assertEquals(['', 'laminasFramework'], $filtered);
     }
 }

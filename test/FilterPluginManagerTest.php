@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Exception\RuntimeException;
-use Zend\Filter\FilterPluginManager;
-use Zend\Filter\Word\SeparatorToSeparator;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Filter\Exception\RuntimeException;
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\Word\SeparatorToSeparator;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,7 +32,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
     public function testFilterSuccessfullyRetrieved()
     {
         $filter = $this->filters->get('int');
-        $this->assertInstanceOf('Zend\Filter\ToInt', $filter);
+        $this->assertInstanceOf('Laminas\Filter\ToInt', $filter);
     }
 
     public function testRegisteringInvalidFilterRaisesException()

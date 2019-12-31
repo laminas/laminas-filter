@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-filter for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
 use Interop\Container\ContainerInterface;
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\FilterPluginManagerFactory;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Filter\FilterPluginManager;
-use Zend\Filter\FilterPluginManagerFactory;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class FilterPluginManagerFactoryTest extends TestCase
 {
@@ -24,10 +25,10 @@ class FilterPluginManagerFactoryTest extends TestCase
         $this->assertInstanceOf(FilterPluginManager::class, $filters);
 
         if (method_exists($filters, 'configure')) {
-            // zend-servicemanager v3
+            // laminas-servicemanager v3
             $this->assertAttributeSame($container, 'creationContext', $filters);
         } else {
-            // zend-servicemanager v2
+            // laminas-servicemanager v2
             $this->assertSame($container, $filters->getServiceLocator());
         }
     }
