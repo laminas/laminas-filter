@@ -1,22 +1,20 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
- */
-
-namespace Zend\Filter\Word;
-
-use Zend\Filter\Exception;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
-class SeparatorToSeparator extends \Zend\Filter\PregReplace
+
+namespace Laminas\Filter\Word;
+
+use Laminas\Filter\Exception;
+
+/**
+ * @category   Laminas
+ * @package    Laminas_Filter
+ */
+class SeparatorToSeparator extends \Laminas\Filter\PregReplace
 {
     protected $searchSeparator = null;
     protected $replacementSeparator = null;
@@ -78,7 +76,7 @@ class SeparatorToSeparator extends \Zend\Filter\PregReplace
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Returns the string $value, replacing the searched separators with the defined ones
      *

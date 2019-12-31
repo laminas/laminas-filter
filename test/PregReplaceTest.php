@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\PregReplace as PregReplaceFilter;
+use Laminas\Filter\PregReplace as PregReplaceFilter;
 
 /**
- * Test class for Zend_Filter_PregReplace.
+ * Test class for Laminas_Filter_PregReplace.
  *
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class PregReplaceTest extends \PHPUnit_Framework_TestCase
 {
@@ -93,7 +91,7 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
         $filter = $this->filter;
         $string = 'controller/action';
         $filter->setReplacement('foo/bar');
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException',
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException',
                                     'does not have a valid pattern set');
         $filtered = $filter($string);
     }
