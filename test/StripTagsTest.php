@@ -1,34 +1,32 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\StripTags as StripTagsFilter;
+use Laminas\Filter\StripTags as StripTagsFilter;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class StripTagsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_StripTags object
+     * Laminas_Filter_StripTags object
      *
-     * @var Zend_Filter_StripTags
+     * @var Laminas_Filter_StripTags
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_StripTags object for each test method
+     * Creates a new Laminas_Filter_StripTags object for each test method
      *
      * @return void
      */
@@ -386,7 +384,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
      * Ensures that a closing angle bracket in an allowed attribute does not break the parser
      *
      * @return void
-     * @link   http://framework.zend.com/issues/browse/ZF-3278
+     * @link   https://getlaminas.org/issues/browse/Laminas-3278
      */
     public function testClosingAngleBracketInAllowedAttributeValue()
     {
@@ -403,8 +401,8 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that an allowed attribute's value may end with an equals sign '='
      *
-     * @group ZF-3293
-     * @group ZF-5983
+     * @group Laminas-3293
+     * @group Laminas-5983
      */
     public function testAllowedAttributeValueMayEndWithEquals()
     {
@@ -418,22 +416,22 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-5983
+     * @group Laminas-5983
      */
     public function testDisallowedAttributesSplitOverMultipleLinesShouldBeStripped()
     {
         $filter = $this->_filter;
         $tagsAllowed = array('a' => 'href');
         $filter->setTagsAllowed($tagsAllowed);
-        $input = '<a href="http://framework.zend.com/issues" onclick
+        $input = '<a href="https://getlaminas.org/issues" onclick
 =
-    "alert(&quot;Gotcha&quot;); return false;">http://framework.zend.com/issues</a>';
+    "alert(&quot;Gotcha&quot;); return false;">https://getlaminas.org/issues</a>';
         $filtered = $filter($input);
         $this->assertNotContains('onclick', $filtered);
     }
 
     /**
-     * @ZF-8828
+     * @Laminas-8828
      */
     public function testFilterIsoChars()
     {
@@ -449,7 +447,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-8828
+     * @Laminas-8828
      */
     public function testFilterIsoCharsInComment()
     {
@@ -465,7 +463,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-8828
+     * @Laminas-8828
      */
     public function testFilterSplitCommentTags()
     {
@@ -476,7 +474,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9434
+     * @group Laminas-9434
      */
     public function testCommentWithTagInSameLine()
     {
@@ -487,7 +485,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9833
+     * @group Laminas-9833
      */
     public function testMultiParamArray()
     {
@@ -499,7 +497,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9828
+     * @group Laminas-9828
      */
     public function testMultiQuoteInput()
     {
@@ -516,7 +514,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
      /**
-     * @group ZF-10256
+     * @group Laminas-10256
      */
     public function testNotClosedHtmlCommentAtEndOfString()
     {
@@ -526,7 +524,7 @@ class StripTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11617
+     * @group Laminas-11617
      */
     public function testFilterCanAllowHyphenatedAttributeNames()
     {

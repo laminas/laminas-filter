@@ -1,29 +1,27 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Lzf as LzfCompression;
+use Laminas\Filter\Compress\Llaminas as LlaminasCompression;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
-class LzfTest extends \PHPUnit_Framework_TestCase
+class LlaminasTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('lzf')) {
-            $this->markTestSkipped('This adapter needs the lzf extension');
+        if (!extension_loaded('llaminas')) {
+            $this->markTestSkipped('This adapter needs the llaminas extension');
         }
     }
 
@@ -34,7 +32,7 @@ class LzfTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new LzfCompression();
+        $filter  = new LlaminasCompression();
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);
@@ -49,9 +47,9 @@ class LzfTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testLzfToString()
+    public function testLlaminasToString()
     {
-        $filter = new LzfCompression();
-        $this->assertEquals('Lzf', $filter->toString());
+        $filter = new LlaminasCompression();
+        $this->assertEquals('Llaminas', $filter->toString());
     }
 }
