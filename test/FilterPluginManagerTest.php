@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\FilterPluginManager;
+use Laminas\Filter\FilterPluginManager;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,19 +23,19 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
     public function testFilterSuccessfullyRetrieved()
     {
         $filter = $this->filters->get('int');
-        $this->assertInstanceOf('Zend\Filter\ToInt', $filter);
+        $this->assertInstanceOf('Laminas\Filter\ToInt', $filter);
     }
 
     public function testRegisteringInvalidFilterRaisesException()
     {
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException');
         $this->filters->setService('test', $this);
     }
 
     public function testLoadingInvalidFilterRaisesException()
     {
         $this->filters->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException');
         $this->filters->get('test');
     }
 
@@ -52,7 +51,7 @@ class FilterPluginManagerTest extends \PHPUnit_Framework_TestCase
             'replacement_separator' => $replacement_separator,
         );
         $filter = $this->filters->get('wordseparatortoseparator', $options);
-        $this->assertInstanceOf('Zend\Filter\Word\SeparatorToSeparator', $filter);
+        $this->assertInstanceOf('Laminas\Filter\Word\SeparatorToSeparator', $filter);
         $this->assertEquals(';', $filter->getSearchSeparator());
         $this->assertEquals('|', $filter->getReplacementSeparator());
     }

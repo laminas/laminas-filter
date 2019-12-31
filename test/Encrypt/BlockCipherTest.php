@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Encrypt;
+namespace LaminasTest\Filter\Encrypt;
 
-use Zend\Filter\Encrypt\BlockCipher as BlockCipherEncryption;
-use Zend\Filter\Exception;
+use Laminas\Filter\Encrypt\BlockCipher as BlockCipherEncryption;
+use Laminas\Filter\Exception;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class BlockCipherTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,11 +34,11 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new BlockCipherEncryption(array('key' => 'testkey'));
         $valuesExpected = array(
-            'STRING' => '5b68e3648f9136e5e9bfaa2242e5b668e7501b2c20e8f9e2c76638f017f62a8eWmVuZEZyYW1ld29yazIuMDpd5vWydswa0fyIo2dnF0Q=',
-            'ABC1@3' => 'c7da11b89330f6bbbb15fcb6de574c7ec869ad7187a7d466e60f2437914d927aWmVuZEZyYW1ld29yazIuMKXsBdYXBLQx9elx0B20uxQ=',
-            'A b C' => 'ca1b9df732facf9dfadc7c3fdf1ccdc211bf21f638d459f43fefc74bbc9c8e01WmVuZEZyYW1ld29yazIuMM1som/As52rdK/4g7uoYx4='
+            'STRING' => '972c29fe2ac804e7adab21aa15b2896215e2daf227d82f92734da074c24095abTGFtaW5hc19fUHJvamVjdGK1rPNgf9xxr8Croef2PRs=',
+            'ABC1@3' => '8b3fcdd53a5833257f27e1a35fa715c0e023da85240f22e32f9fd5ed790431a8TGFtaW5hc19fUHJvamVjdGHsk81/w1rQQXN6RpRYDqI=',
+            'A b C' => 'f89c41712b95d1ec48efdf53f23488bae0b2d8cb28915fbf90a8f630bade3dd1TGFtaW5hc19fUHJvamVjdE53RnguL2HyRLU4a5m9RWU='
         );
-        $filter->setVector('ZendFramework2.0');
+        $filter->setVector('Laminas__Project');
         $enc = $filter->getEncryption();
         $this->assertEquals('testkey', $enc['key']);
         foreach ($valuesExpected as $input => $output) {
@@ -61,7 +60,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
 
     public function testWrongSizeVector()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException');
         $filter = new BlockCipherEncryption(array('key' => 'testkey'));
         $filter->setVector('testvect');
     }
@@ -138,7 +137,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructionWithInteger()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options argument');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Invalid options argument');
         $filter = new BlockCipherEncryption(1234);
     }
 
@@ -164,20 +163,20 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
         try {
             $filter->setEncryption(1234);
             $filter->fail();
-        } catch (\Zend\Filter\Exception\InvalidArgumentException $e) {
+        } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
             $this->assertContains('Invalid options argument', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(array('algorithm' => 'unknown'));
             $filter->fail();
-        } catch (\Zend\Filter\Exception\InvalidArgumentException $e) {
+        } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
             $this->assertContains('The algorithm', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(array('mode' => 'unknown'));
-        } catch (\Zend\Filter\Exception\InvalidArgumentException $e) {
+        } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
             $this->assertContains('The mode', $e->getMessage());
         }
     }
@@ -188,7 +187,7 @@ class BlockCipherTest extends \PHPUnit_Framework_TestCase
     public function testSettingEmptyVector()
     {
         $filter = new BlockCipherEncryption('newkey');
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'The salt (IV) cannot be empty');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'The salt (IV) cannot be empty');
         $filter->setVector('');
     }
 
