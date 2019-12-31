@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
 use ArrayObject;
+use Laminas\Filter\Exception;
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\Inflector as InflectorFilter;
+use Laminas\Filter\PregReplace;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringToUpper;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
-use Zend\Filter\FilterPluginManager;
-use Zend\Filter\Inflector as InflectorFilter;
-use Zend\Filter\PregReplace;
-use Zend\Filter\StringToLower;
-use Zend\Filter\StringToUpper;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\ServiceManager\ServiceManager;
 
 class InflectorTest extends TestCase
 {
@@ -48,7 +47,7 @@ class InflectorTest extends TestCase
     public function testGetPluginManagerReturnsFilterManagerByDefault()
     {
         $broker = $this->inflector->getPluginManager();
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $broker);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $broker);
     }
 
     public function testSetPluginManagerAllowsSettingAlternatePluginManager()
@@ -95,7 +94,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
         $filter = $rules[0];
-        $this->assertInstanceOf('Zend\Filter\FilterInterface', $filter);
+        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $filter);
     }
 
     public function testSetFilterRuleWithFilterObjectCreatesRuleEntryWithFilterObject()
@@ -107,7 +106,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
         $received = $rules[0];
-        $this->assertInstanceOf('Zend\Filter\FilterInterface', $received);
+        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $received);
         $this->assertSame($filter, $received);
     }
 
@@ -118,8 +117,8 @@ class InflectorTest extends TestCase
         $this->inflector->setFilterRule('controller', [PregReplace::class, TestAsset\Alpha::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(2, count($rules));
-        $this->assertInstanceOf('Zend\Filter\FilterInterface', $rules[0]);
-        $this->assertInstanceOf('Zend\Filter\FilterInterface', $rules[1]);
+        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $rules[0]);
+        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $rules[1]);
     }
 
     public function testSetStaticRuleCreatesScalarRuleEntry()
@@ -188,7 +187,7 @@ class InflectorTest extends TestCase
     public function testGetRule()
     {
         $this->inflector->setFilterRule(':controller', [TestAsset\Alpha::class, StringToLower::class]);
-        $this->assertInstanceOf('Zend\Filter\StringToLower', $this->inflector->getRule('controller', 1));
+        $this->assertInstanceOf('Laminas\Filter\StringToLower', $this->inflector->getRule('controller', 1));
         $this->assertFalse($this->inflector->getRule('controller', 2));
     }
 
@@ -311,7 +310,7 @@ class InflectorTest extends TestCase
 
     /**
      * This method returns an ArrayObject instance in place of a
-     * Zend\Config\Config instance; the two are interchangeable, as inflectors
+     * Laminas\Config\Config instance; the two are interchangeable, as inflectors
      * consume the more general array or Traversable types.
      *
      * @return \Traversable
@@ -331,7 +330,7 @@ class InflectorTest extends TestCase
         $broker  = $inflector->getPluginManager();
         $this->assertEquals($options['target'], $inflector->getTarget());
 
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $broker);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $broker);
         $this->assertTrue($inflector->isThrowTargetExceptionsOn());
         $this->assertEquals($options['targetReplacementIdentifier'], $inflector->getTargetReplacementIdentifier());
 
@@ -358,7 +357,7 @@ class InflectorTest extends TestCase
     /**
      * Added str_replace('\\', '\\\\', ..) to all processedParts values to disable backreferences
      *
-     * @issue ZF-2538 Zend_Filter_Inflector::filter() fails with all numeric folder on Windows
+     * @issue Laminas-2538 Laminas_Filter_Inflector::filter() fails with all numeric folder on Windows
      */
     public function testCheckInflectorWithPregBackreferenceLikeParts()
     {
@@ -390,7 +389,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @issue ZF-2522
+     * @issue Laminas-2522
      */
     public function testTestForFalseInConstructorParams()
     {
@@ -402,7 +401,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @issue ZF-2964
+     * @issue Laminas-2964
      */
     public function testNoInflectableTarget()
     {
@@ -412,7 +411,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @issue ZF-7544
+     * @issue Laminas-7544
      */
     public function testAddFilterRuleMultipleTimes()
     {
@@ -432,7 +431,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @group ZF-8997
+     * @group Laminas-8997
      */
     public function testPassingArrayToConstructorSetsStateAndRules()
     {
@@ -441,7 +440,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @group ZF-8997
+     * @group Laminas-8997
      */
     public function testPassingArrayToSetConfigSetsStateAndRules()
     {
@@ -452,7 +451,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @group ZF-8997
+     * @group Laminas-8997
      */
     public function testPassingConfigObjectToConstructorSetsStateAndRules()
     {
@@ -462,7 +461,7 @@ class InflectorTest extends TestCase
     }
 
     /**
-     * @group ZF-8997
+     * @group Laminas-8997
      */
     public function testPassingConfigObjectToSetConfigSetsStateAndRules()
     {

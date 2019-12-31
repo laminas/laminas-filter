@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
+use Laminas\Filter\Exception;
+use Laminas\Filter\File\Decrypt as FileDecrypt;
+use Laminas\Filter\File\Encrypt as FileEncrypt;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Exception;
-use Zend\Filter\File\Decrypt as FileDecrypt;
-use Zend\Filter\File\Encrypt as FileEncrypt;
 
 class DecryptTest extends TestCase
 {
@@ -26,7 +25,7 @@ class DecryptTest extends TestCase
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
 
-        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
         mkdir($this->tmpDir, 0775, true);
 
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
