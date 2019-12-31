@@ -1,35 +1,33 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Filter
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\HtmlEntities as HtmlEntitiesFilter;
-use Zend\Filter\Exception;
+use Laminas\Filter\Exception;
+use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
 
 /**
- * @category   Zend
- * @package    Zend_Filter
+ * @category   Laminas
+ * @package    Laminas_Filter
  * @subpackage UnitTests
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend\Filter\HtmlEntities object
+     * Laminas\Filter\HtmlEntities object
      *
-     * @var \Zend\Filter\HtmlEntities
+     * @var \Laminas\Filter\HtmlEntities
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend\Filter\HtmlEntities object for each test method
+     * Creates a new Laminas\Filter\HtmlEntities object for each test method
      *
      * @return void
      */
@@ -83,7 +81,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that getCharSet() returns expected default value
      *
-     * @group ZF-8715
+     * @group Laminas-8715
      * @return void
      */
     public function testGetCharSet()
@@ -126,7 +124,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensure that fluent interfaces are supported
      *
-     * @group ZF-3172
+     * @group Laminas-3172
      */
     public function testFluentInterface()
     {
@@ -135,12 +133,12 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8995
+     * @group Laminas-8995
      */
     public function testConfigObject()
     {
         $options = array('quotestyle' => 5, 'encoding' => 'ISO-8859-1');
-        $config  = new \Zend\Config\Config($options);
+        $config  = new \Laminas\Config\Config($options);
 
         $filter = new HtmlEntitiesFilter(
             $config
@@ -153,7 +151,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that when ENT_QUOTES is set, the filtered value has both 'single' and "double" quotes encoded
      *
-     * @group  ZF-8962
+     * @group  Laminas-8962
      * @return void
      */
     public function testQuoteStyleQuotesEncodeBoth()
@@ -168,7 +166,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that when ENT_COMPAT is set, the filtered value has only "double" quotes encoded
      *
-     * @group  ZF-8962
+     * @group  Laminas-8962
      * @return void
      */
     public function testQuoteStyleQuotesEncodeDouble()
@@ -183,7 +181,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that when ENT_NOQUOTES is set, the filtered value leaves both "double" and 'single' quotes un-altered
      *
-     * @group  ZF-8962
+     * @group  Laminas-8962
      * @return void
      */
     public function testQuoteStyleQuotesEncodeNone()
@@ -196,7 +194,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11344
+     * @group Laminas-11344
      */
     public function testCorrectsForEncodingMismatch()
     {
@@ -216,7 +214,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11344
+     * @group Laminas-11344
      */
     public function testStripsUnknownCharactersWhenEncodingMismatchDetected()
     {
@@ -236,7 +234,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11344
+     * @group Laminas-11344
      */
     public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty()
     {
