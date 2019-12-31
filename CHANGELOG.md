@@ -22,10 +22,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#89](https://github.com/zendframework/zend-filter/pull/89) fixes infinite
+- [zendframework/zend-filter#89](https://github.com/zendframework/zend-filter/pull/89) fixes infinite
   loop on malformed HTML comments in StripTags filter.
 
-- [#92](https://github.com/zendframework/zend-filter/pull/92) fixes Tar adapter
+- [zendframework/zend-filter#92](https://github.com/zendframework/zend-filter/pull/92) fixes Tar adapter
   to not require `archive` in options when decompressing.
 
 ## 2.9.1 - 2018-12-17
@@ -48,32 +48,32 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#79](https://github.com/zendframework/zend-filter/pull/79) fixes a regression introduced in 2.9.0 when using
-  `Zend\Filter\File\RenameUpload` via the traditional SAPI.
+- [zendframework/zend-filter#79](https://github.com/zendframework/zend-filter/pull/79) fixes a regression introduced in 2.9.0 when using
+  `Laminas\Filter\File\RenameUpload` via the traditional SAPI.
 
 ## 2.9.0 - 2018-12-12
 
 ### Added
 
-- [#70](https://github.com/zendframework/zend-inputfilter/pull/70) Adds compatibility with the PSR-7 `UploadedFileInterface` to the
+- [zendframework/zend-filter#70](https://github.com/zendframework/zend-inputfilter/pull/70) Adds compatibility with the PSR-7 `UploadedFileInterface` to the
   `RenameUpload` filter. The functionality requires PHP 7 and a
   psr/http-factory-implementation in your application. When present,
   `RenameUpload` will accept a PSR-7 `UploadedFileInterface`, and return a new
   one representing the renamed file.
 
-- [#71](https://github.com/zendframework/zend-filter/pull/71) adds the `ToFloat` filter, to complement the `ToInt` filter.
+- [zendframework/zend-filter#71](https://github.com/zendframework/zend-filter/pull/71) adds the `ToFloat` filter, to complement the `ToInt` filter.
 
-- [#69](https://github.com/zendframework/zend-filter/pull/69) adds `Zend\Filter\StringSufix`; when provided with a string `suffix`
+- [zendframework/zend-filter#69](https://github.com/zendframework/zend-filter/pull/69) adds `Laminas\Filter\StringSufix`; when provided with a string `suffix`
   option, it will suffix scalar values with that string.
 
-- [#69](https://github.com/zendframework/zend-filter/pull/69) adds `Zend\Filter\StringPrefix`; when provided with a string `prefix`
+- [zendframework/zend-filter#69](https://github.com/zendframework/zend-filter/pull/69) adds `Laminas\Filter\StringPrefix`; when provided with a string `prefix`
   option, it will prefix scalar values with that string.
 
 ### Changed
 
-- [#66](https://github.com/zendframework/zend-filter/pull/66) modifies how the FilterPluginManager is registered with the dependency
+- [zendframework/zend-filter#66](https://github.com/zendframework/zend-filter/pull/66) modifies how the FilterPluginManager is registered with the dependency
   injection container. Previously, it was registered only under the name
-  `FilterManager`. Now it regisers `Zend\Filter\FilterPluginManager` as a
+  `FilterManager`. Now it regisers `Laminas\Filter\FilterPluginManager` as a
   factory service, and `FilterManager` as an alias to that service.
 
 ### Deprecated
@@ -92,11 +92,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#26](https://github.com/zendframework/zend-filter/pull/26) adds the interface
-  `Zend\Filter\FilterProviderInterface`, which can be used to provide
-  configuration for the `FilterPluginManager` via zend-mvc `Module` classes.
+- [zendframework/zend-filter#26](https://github.com/zendframework/zend-filter/pull/26) adds the interface
+  `Laminas\Filter\FilterProviderInterface`, which can be used to provide
+  configuration for the `FilterPluginManager` via laminas-mvc `Module` classes.
 
-- [#61](https://github.com/zendframework/zend-filter/pull/61) adds support for
+- [zendframework/zend-filter#61](https://github.com/zendframework/zend-filter/pull/61) adds support for
   PHP 7.2.
 
 ### Deprecated
@@ -105,16 +105,16 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+- [zendframework/zend-filter#61](https://github.com/zendframework/zend-filter/pull/61) removes support
   for PHP 5.5.
 
-- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+- [zendframework/zend-filter#61](https://github.com/zendframework/zend-filter/pull/61) removes support
   for HHVM.
 
-- [#61](https://github.com/zendframework/zend-filter/pull/61) removes support
-  for zend-crypt versions prior to 3.0. This was done as PHP deprecated the
+- [zendframework/zend-filter#61](https://github.com/zendframework/zend-filter/pull/61) removes support
+  for laminas-crypt versions prior to 3.0. This was done as PHP deprecated the
   mcrypt extension starting in PHP 7.1, and does not ship it by default
-  starting in PHP 7.2. zend-crypt 3.0 adds an OpenSSL adapter for its
+  starting in PHP 7.2. laminas-crypt 3.0 adds an OpenSSL adapter for its
   BlockCipher capabilities, and acts as a polyfill for mcrypt usage. Since this
   functionality has been used by default since 2.7.2, users should be able to
   upgrade seamlessly.
@@ -131,11 +131,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changes
 
-- [#40](https://github.com/zendframework/zend-filter/pull/40) updates the
+- [zendframework/zend-filter#40](https://github.com/zendframework/zend-filter/pull/40) updates the
   `Callback` filter's `setCallback()` method to allow passing a string name of a
   class that is instantiable without constructor arguments, and which defines
   `__invoke()`.
-- [#43](https://github.com/zendframework/zend-filter/pull/43) updates the
+- [zendframework/zend-filter#43](https://github.com/zendframework/zend-filter/pull/43) updates the
   exception thrown by the `File\Rename` filter when the target already exists to
   indicate the target filename path.
 
@@ -149,21 +149,21 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#56](https://github.com/zendframework/zend-filter/pull/56) fixes how the
+- [zendframework/zend-filter#56](https://github.com/zendframework/zend-filter/pull/56) fixes how the
   `FilterPluginManagerFactory` factory initializes the plugin manager instance,
   ensuring it is injecting the relevant configuration from the `config` service
   and thus seeding it with configured translator loader services. This means
-  that the `filters` configuration will now be honored in non-zend-mvc contexts.
-- [#36](https://github.com/zendframework/zend-filter/pull/36) fixes an issue in
+  that the `filters` configuration will now be honored in non-laminas-mvc contexts.
+- [zendframework/zend-filter#36](https://github.com/zendframework/zend-filter/pull/36) fixes an issue in
   the constructor whereby a discovered option was not removed from the options
   list after being used to set the compression algorithm.
-- [#49](https://github.com/zendframework/zend-filter/pull/49) and
-  [#51](https://github.com/zendframework/zend-filter/pull/51) fix logic within
+- [zendframework/zend-filter#49](https://github.com/zendframework/zend-filter/pull/49) and
+  [zendframework/zend-filter#51](https://github.com/zendframework/zend-filter/pull/51) fix logic within
   the `Boolean` and `ToNull` filters to use boolean rather than arithmetic
   operations, ensuring that if the same type is specified multiple times via the
   options, it will be aggregated correctly internally, and thus ensure correct
   operation of the filter.
-- [#55](https://github.com/zendframework/zend-filter/pull/55) adds a missing
+- [zendframework/zend-filter#55](https://github.com/zendframework/zend-filter/pull/55) adds a missing
   import statement to the `Word\SeparatorToSeparatorFactory`.
 
 ## 2.7.1 - 2016-04-18
@@ -182,7 +182,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#27](https://github.com/zendframework/zend-filter/pull/27) fixes the
+- [zendframework/zend-filter#27](https://github.com/zendframework/zend-filter/pull/27) fixes the
   `Module::init()` method to properly receive a `ModuleManager` instance, and
   not expect a `ModuleEvent`.
 
@@ -190,16 +190,16 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#25](https://github.com/zendframework/zend-filter/pull/25) exposes the
-  package as a ZF component and/or generic configuration provider, by adding the
+- [zendframework/zend-filter#25](https://github.com/zendframework/zend-filter/pull/25) exposes the
+  package as a Laminas component and/or generic configuration provider, by adding the
   following:
   - `FilterPluginManagerFactory`, which can be consumed by container-interop /
-    zend-servicemanager to create and return a `FilterPluginManager` instance.
+    laminas-servicemanager to create and return a `FilterPluginManager` instance.
   - `ConfigProvider`, which maps the service `FilterManager` to the above
     factory.
   - `Module`, which does the same as `ConfigProvider`, but specifically for
-    zend-mvc applications. It also provices a specification to
-    `Zend\ModuleManager\Listener\ServiceListener` to allow modules to provide
+    laminas-mvc applications. It also provices a specification to
+    `Laminas\ModuleManager\Listener\ServiceListener` to allow modules to provide
     filter configuration.
 
 ### Deprecated
@@ -230,7 +230,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#24](https://github.com/zendframework/zend-filter/pull/24) updates the
+- [zendframework/zend-filter#24](https://github.com/zendframework/zend-filter/pull/24) updates the
   `FilterPluginManager` to reference the `NumberFormat` **filter**, instead of
   the **view helper**.
 
@@ -238,12 +238,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#14](https://github.com/zendframework/zend-filter/pull/14) adds the
+- [zendframework/zend-filter#14](https://github.com/zendframework/zend-filter/pull/14) adds the
   `UpperCaseWords` filter to the default list of filters known to the
   `FilterPluginManager`.
-- [#22](https://github.com/zendframework/zend-filter/pull/22) adds
+- [zendframework/zend-filter#22](https://github.com/zendframework/zend-filter/pull/22) adds
   documentation, and automatically publishes it to
-  https://zendframework.github.io/zend-filter/
+  https://docs.laminas.dev/laminas-filter/
 
 ### Deprecated
 
@@ -255,8 +255,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#15](https://github.com/zendframework/zend-filter/pull/15),
-  [#19](https://github.com/zendframework/zend-filter/pull/19), and
-  [#21](https://github.com/zendframework/zend-filter/pull/21)
-  update the component to be forwards-compatible with zend-servicemanager v3,
+- [zendframework/zend-filter#15](https://github.com/zendframework/zend-filter/pull/15),
+  [zendframework/zend-filter#19](https://github.com/zendframework/zend-filter/pull/19), and
+  [zendframework/zend-filter#21](https://github.com/zendframework/zend-filter/pull/21)
+  update the component to be forwards-compatible with laminas-servicemanager v3,
   and reduce the number of development dependencies required for testing.

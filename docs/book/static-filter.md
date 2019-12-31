@@ -5,7 +5,7 @@ the filter, you can use `StaticFilter` with it's method `execute()` as an
 alternative invocation style. The first argument of this method is a data input
 value that you would pass to the `filter()` method. The second argument is a
 string, which corresponds to the basename of the filter class, relative to the
-`Zend\Filter` namespace. The `execute()` method automatically loads the class,
+`Laminas\Filter` namespace. The `execute()` method automatically loads the class,
 creates an instance, and applies the `filter()` method to the data input.
 
 ```php

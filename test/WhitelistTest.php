@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
+use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\Whitelist as WhitelistFilter;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\ArrayObject;
+use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\FilterPluginManager;
-use Zend\Filter\Whitelist as WhitelistFilter;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Stdlib\ArrayObject;
-use Zend\Stdlib\Exception;
 
 class WhitelistTest extends TestCase
 {
@@ -42,7 +41,7 @@ class WhitelistTest extends TestCase
         $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter = $pluginManager->get('whitelist');
 
-        $this->assertInstanceOf('Zend\Filter\Whitelist', $filter);
+        $this->assertInstanceOf('Laminas\Filter\Whitelist', $filter);
     }
 
     public function testNullListShouldThrowException()

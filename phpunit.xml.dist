@@ -4,7 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>
-        <testsuite name="zend-filter Test Suite">
+        <testsuite name="laminas-filter Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
@@ -20,11 +20,11 @@
     </filter>
 
     <php>
-        <!-- Zend\Filter tests
+        <!-- Laminas\Filter tests
 
              Some tests are problematic, largely due to environment.
              Specifically, the Zip compression filter has this issue. These
              tests are enabled by default; set them to false to disable them. -->
-        <env name="TESTS_ZEND_FILTER_COMPRESS_ZIP_ENABLED" value="true" />
+        <env name="TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED" value="true" />
     </php>
 </phpunit>

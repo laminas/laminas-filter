@@ -4,16 +4,16 @@ Often, multiple filters should be applied to some value in a particular order.
 For example, a login form accepts a username that should be lowercase and
 contain only alphabetic characters.
 
-`Zend\Filter\FilterChain` provides a simple method by which filters may be
+`Laminas\Filter\FilterChain` provides a simple method by which filters may be
 chained together. The following code illustrates how to chain together two
 filters for the submitted username and fulfill the above requirements:
 
 ```php
 // Create a filter chain and add filters to the chain
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain
-    ->attach(new Zend\I18n\Filter\Alpha())
-    ->attach(new Zend\Filter\StringToLower());
+    ->attach(new Laminas\I18n\Filter\Alpha())
+    ->attach(new Laminas\Filter\StringToLower());
 
 // Filter the username
 $username = $filterChain->filter($_POST['username']);
@@ -23,7 +23,7 @@ Filters are run in the order they are added to the filter chain. In the above
 example, the username is first removed of any non-alphabetic characters, and
 then any uppercase characters are converted to lowercase.
 
-Any object that implements `Zend\Filter\FilterInterface` may be used in a
+Any object that implements `Laminas\Filter\FilterInterface` may be used in a
 filter chain.
 
 ## Setting Filter Chain Order
@@ -37,10 +37,10 @@ before any non-alphabetic characters are removed.
 
 ```php
 // Create a filter chain and add filters to the chain
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain
-    ->attach(new Zend\I18n\Filter\Alpha())
-    ->attach(new Zend\Filter\StringToLower(), 500);
+    ->attach(new Laminas\I18n\Filter\Alpha())
+    ->attach(new Laminas\Filter\StringToLower(), 500);
 ```
 
 ## Using the Plugin Manager
@@ -55,7 +55,7 @@ parameter is the priority.
 
 ```php
 // Create a filter chain and add filters to the chain
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain
     ->attachByName('alpha')
     ->attachByName('stringtolower', ['encoding' => 'utf-8'], 500);
@@ -65,7 +65,7 @@ The following example shows how to add a custom filter to the `FilterPluginManag
 `FilterChain`:
 
 ```php
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain
     ->getPluginManager()
     ->setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
@@ -77,9 +77,9 @@ $filterChain
 You can also add your own `FilterPluginManager` implementation:
 
 ```php
-$filterChain = new Zend\Filter\FilterChain();
+$filterChain = new Laminas\Filter\FilterChain();
 $filterChain->setPluginManager(new MyFilterPluginManager());
 $filterChain
-    ->attach(new Zend\I18n\Filter\Alpha())
+    ->attach(new Laminas\I18n\Filter\Alpha())
     ->attach(new MyCustom\Filter\MyNewFilter());
 ```

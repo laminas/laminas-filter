@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-filter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
+use Laminas\Filter\Compress\Tar as TarCompression;
+use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
-use Zend\Filter\Compress\Tar as TarCompression;
-use Zend\Filter\Exception;
 
 class TarTest extends TestCase
 {
@@ -19,7 +18,7 @@ class TarTest extends TestCase
 
     public function setUp()
     {
-        $this->tmp = sprintf('%s/%s', sys_get_temp_dir(), uniqid('zfilter'));
+        $this->tmp = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
         mkdir($this->tmp, 0775, true);
     }
 
