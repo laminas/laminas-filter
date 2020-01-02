@@ -1,11 +1,18 @@
 docs_dir: docs/book
 site_dir: docs/html
 nav:
-    - { Home: index.md }
-    - { Introduction: intro.md }
-    - { Reference: [{ 'Standard Filters': standard-filters.md }, { 'Word Filters': word.md }, { 'File Filters': file.md }, { 'Filter Chains': filter-chains.md }, { 'String Inflection': inflector.md }, { 'Static Filter': static-filter.md }, { 'Writing Filters': writing-filters.md }] }
+    - Home: index.md
+    - Introduction: intro.md
+    - Reference:
+      - 'Standard Filters': standard-filters.md
+      - 'Word Filters': word.md
+      - 'File Filters': file.md
+      - 'Filter Chains': filter-chains.md
+      - 'String Inflection': inflector.md
+      - 'Static Filter': static-filter.md
+      - 'Writing Filters': writing-filters.md
 site_name: laminas-filter
-site_description: 'Programmatically filter and normalize data and files.'
+site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
 extra:
     project: Components
