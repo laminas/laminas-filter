@@ -8,7 +8,7 @@
 
 namespace ZendTest\Filter\Compress;
 
-use Zend\Filter\Compress\Lzf as LzfCompression;
+use Laminas\Filter\Compress\Lzf as LzfCompression;
 
 /**
  * @group      Zend_Filter
