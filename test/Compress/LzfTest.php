@@ -8,17 +8,17 @@
 
 namespace LaminasTest\Filter\Compress;
 
-use Laminas\Filter\Compress\Llaminas as LlaminasCompression;
+use Laminas\Filter\Compress\Lzf as LzfCompression;
 
 /**
  * @group      Laminas_Filter
  */
-class LlaminasTest extends \PHPUnit_Framework_TestCase
+class LzfTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!extension_loaded('llaminas')) {
-            $this->markTestSkipped('This adapter needs the llaminas extension');
+        if (!extension_loaded('lzf')) {
+            $this->markTestSkipped('This adapter needs the lzf extension');
         }
     }
 
@@ -29,7 +29,7 @@ class LlaminasTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new LlaminasCompression();
+        $filter  = new LzfCompression();
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);
@@ -44,9 +44,9 @@ class LlaminasTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testLlaminasToString()
+    public function testLzfToString()
     {
-        $filter = new LlaminasCompression();
-        $this->assertEquals('Llaminas', $filter->toString());
+        $filter = new LzfCompression();
+        $this->assertEquals('Lzf', $filter->toString());
     }
 }
