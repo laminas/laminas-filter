@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.9.3 - TBD
+## 2.9.3 - 2020-01-07
 
 ### Added
 
@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#15](https://github.com/laminas/laminas-filter/pull/15) fixes an issue caused by migration, whereby the `Lzf` compression adapter was incorrectly renamed to `Llaminas`, and all invocations of `lzf_*` functions were renamed to `llaminas_*`. These are now corrected, and patch releases issued for all prior releases.
 
 ## 2.9.2 - 2019-08-19
 
