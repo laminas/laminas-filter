@@ -11,20 +11,20 @@ namespace Laminas\Filter\Compress;
 use Laminas\Filter\Exception;
 
 /**
- * Compression adapter for Llaminas
+ * Compression adapter for Lzf
  */
-class Llaminas implements CompressionAlgorithmInterface
+class Lzf implements CompressionAlgorithmInterface
 {
     /**
      * Class constructor
      *
      * @param  null $options
-     * @throws Exception\ExtensionNotLoadedException if llaminas extension missing
+     * @throws Exception\ExtensionNotLoadedException if lzf extension missing
      */
     public function __construct($options = null)
     {
-        if (! extension_loaded('llaminas')) {
-            throw new Exception\ExtensionNotLoadedException('This filter needs the llaminas extension');
+        if (! extension_loaded('lzf')) {
+            throw new Exception\ExtensionNotLoadedException('This filter needs the lzf extension');
         }
     }
 
@@ -37,7 +37,7 @@ class Llaminas implements CompressionAlgorithmInterface
      */
     public function compress($content)
     {
-        $compressed = llaminas_compress($content);
+        $compressed = lzf_compress($content);
         if (! $compressed) {
             throw new Exception\RuntimeException('Error during compression');
         }
@@ -54,7 +54,7 @@ class Llaminas implements CompressionAlgorithmInterface
      */
     public function decompress($content)
     {
-        $compressed = llaminas_decompress($content);
+        $compressed = lzf_decompress($content);
         if (! $compressed) {
             throw new Exception\RuntimeException('Error during decompression');
         }
@@ -69,6 +69,6 @@ class Llaminas implements CompressionAlgorithmInterface
      */
     public function toString()
     {
-        return 'Llaminas';
+        return 'Lzf';
     }
 }

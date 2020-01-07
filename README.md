@@ -1,6 +1,6 @@
 # laminas-filter
 
-[![Build Status](https://travis-ci.org/laminas/laminas-filter.svg?branch=master)](https://travis-ci.org/laminas/laminas-filter)
+[![Build Status](https://travis-ci.com/laminas/laminas-filter.svg?branch=master)](https://travis-ci.com/laminas/laminas-filter)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-filter/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-filter?branch=master)
 
 The `Laminas\Filter` component provides a set of commonly needed data filters. It
