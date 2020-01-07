@@ -12,6 +12,9 @@ use Zend\Filter\Exception;
 
 /**
  * Compression adapter for Lzf
+ *
+ * @category   Laminas
+ * @package    Laminas_Filter
  */
 class Lzf implements CompressionAlgorithmInterface
 {
