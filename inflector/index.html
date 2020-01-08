@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -276,20 +280,19 @@ lower case this; and finally, you want to separate the words using a dash
 <p><code>Laminas\Filter\Inflector</code> implements <code>Laminas\Filter\FilterInterface</code>; you perform
 inflection by calling <code>filter()</code> on the object instance.</p>
 <h2 id="transforming-mixedcase-and-camelcasetext-to-another-format">Transforming MixedCase and CamelCaseText to another Format</h2>
-<p> <div class=codehilite><pre><span></span><span class=x>$inflector = new Laminas\Filter\Inflector(&#39;pages/:page.:suffix&#39;);</span>
-<span class=x>$inflector-&gt;setRules([</span>
-<span class=x>    &#39;:page&#39;  =&gt; [&#39;Word\CamelCaseToDash&#39;, &#39;StringToLower&#39;],</span>
-<span class=x>    &#39;suffix&#39; =&gt; &#39;html&#39;,</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>$inflector = new Laminas\Filter\Inflector('pages/:page.:suffix');
+$inflector-&gt;setRules([
+    ':page'  =&gt; ['Word\CamelCaseToDash', 'StringToLower'],
+    'suffix' =&gt; 'html',
+]);
 
-<span class=x>$string   = &#39;camelCasedWords&#39;;</span>
-<span class=x>$filtered = $inflector-&gt;filter([&#39;page&#39; =&gt; $string]);</span>
-<span class=x>// pages/camel-cased-words.html</span>
+$string   = 'camelCasedWords';
+$filtered = $inflector-&gt;filter(['page' =&gt; $string]);
+// pages/camel-cased-words.html
 
-<span class=x>$string   = &#39;this_is_not_camel_cased&#39;;</span>
-<span class=x>$filtered = $inflector-&gt;filter([&#39;page&#39; =&gt; $string]);</span>
-<span class=x>// pages/this_is_not_camel_cased.html</span>
-</pre></div></p>
+$string   = 'this_is_not_camel_cased';
+$filtered = $inflector-&gt;filter(['page' =&gt; $string]);
+// pages/this_is_not_camel_cased.html</code></pre>
 <h2 id="operation">Operation</h2>
 <p>An inflector requires a <strong>target</strong> and one or more <strong>rules</strong>. A target is
 basically a string that defines placeholders for variables you wish to
@@ -310,15 +313,13 @@ loading filters to use with inflection. By default, filters registered with
 <code>Laminas\Filter\FilterPluginManager</code> are available. To access filters with that
 prefix but which occur deeper in the hierarchy, such as the various <code>Word</code>
 filters, simply strip off the <code>Laminas\Filter</code> prefix:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// use Laminas\Filter\Word\CamelCaseToDash as a rule</span>
-<span class=x>$inflector-&gt;addRules([&#39;script&#39; =&gt; &#39;Word\CamelCaseToDash&#39;]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// use Laminas\Filter\Word\CamelCaseToDash as a rule
+$inflector-&gt;addRules(['script' =&gt; 'Word\CamelCaseToDash']);</code></pre>
 <p>To use custom filters, you have two choices: reference them by fully qualified
 class name (e.g., <code>My\Custom\Filter\Mungify</code>), or manipulate the composed
 <code>FilterPluginManager</code> instance.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$filters = $inflector-&gt;getPluginManager();</span>
-<span class=x>$filters-&gt;addInvokableClass(&#39;mungify&#39;, &#39;My\Custom\Filter\Mungify&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$filters = $inflector-&gt;getPluginManager();
+$filters-&gt;addInvokableClass('mungify', 'My\Custom\Filter\Mungify');</code></pre>
 <h3>Setting the Inflector Target</h3>
 <p>The inflector target is a string with some placeholders for variables.
 Placeholders take the form of an identifier, a colon (<code>:</code>) by default, followed
@@ -326,50 +327,47 @@ by a variable name: <code>:script</code>, <code>:path</code>, etc. The <code>fil
 the identifier followed by the variable name being replaced.</p>
 <p>You can change the identifier using the <code>setTargetReplacementIdentifier()</code>
 method, or passing it as the fourth argument to the constructor:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Via constructor:</span>
-<span class=x>$inflector = new Laminas\Filter\Inflector(&#39;#foo/#bar.#sfx&#39;, array(), null, &#39;#&#39;);</span>
+<pre class=codehilite><code class=language-php>// Via constructor:
+$inflector = new Laminas\Filter\Inflector('#foo/#bar.#sfx', array(), null, '#');
 
-<span class=x>// Via accessor:</span>
-<span class=x>$inflector-&gt;setTargetReplacementIdentifier(&#39;#&#39;);</span>
-</pre></div></p>
+// Via accessor:
+$inflector-&gt;setTargetReplacementIdentifier('#');</code></pre>
 <p>Typically, you will set the target via the constructor. However, you may want
 to re-set the target later. <code>setTarget()</code> can be used for this purpose:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$inflector-&gt;setTarget(&#39;layouts/:script.phtml&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$inflector-&gt;setTarget('layouts/:script.phtml');</code></pre>
 <p>Additionally, you may wish to have a class member for your class that you can
 use to keep the inflector target updated &mdash; without needing to directly update
 the target each time (thus saving on method calls). <code>setTargetReference()</code>
 allows you to do this:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class Foo</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @var string Inflector target</span>
-<span class=x>     */</span>
-<span class=x>    protected $target = &#39;foo/:bar/:baz.:suffix&#39;;</span>
+<pre class=codehilite><code class=language-php>class Foo
+{
+    /**
+     * @var string Inflector target
+     */
+    protected $target = 'foo/:bar/:baz.:suffix';
 
-<span class=x>    /**</span>
-<span class=x>     * Constructor</span>
-<span class=x>     * @return void</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct()</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;inflector = new Laminas\Filter\Inflector();</span>
-<span class=x>        $this-&gt;inflector-&gt;setTargetReference($this-&gt;target);</span>
-<span class=x>    }</span>
+    /**
+     * Constructor
+     * @return void
+     */
+    public function __construct()
+    {
+        $this-&gt;inflector = new Laminas\Filter\Inflector();
+        $this-&gt;inflector-&gt;setTargetReference($this-&gt;target);
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Set target; updates target in inflector</span>
-<span class=x>     *</span>
-<span class=x>     * @param  string $target</span>
-<span class=x>     * @return Foo</span>
-<span class=x>     */</span>
-<span class=x>    public function setTarget($target)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;target = $target;</span>
-<span class=x>        return $this;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    /**
+     * Set target; updates target in inflector
+     *
+     * @param  string $target
+     * @return Foo
+     */
+    public function setTarget($target)
+    {
+        $this-&gt;target = $target;
+        return $this;
+    }
+}</code></pre>
 <h2 id="inflection-rules">Inflection Rules</h2>
 <p>As mentioned in the introduction, there are two types of rules: static and filter-based.</p>
 <blockquote>
@@ -388,47 +386,45 @@ leaving <code>Dir</code> inside of the target uninflected.</p>
 the target that will typically be static, but which you want to allow the
 developer to modify. Use the <code>setStaticRule()</code> method to set or modify the
 rule:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$inflector = new Laminas\Filter\Inflector(&#39;:script.:suffix&#39;);</span>
-<span class=x>$inflector-&gt;setStaticRule(&#39;suffix&#39;, &#39;phtml&#39;);</span>
+<pre class=codehilite><code class=language-php>$inflector = new Laminas\Filter\Inflector(':script.:suffix');
+$inflector-&gt;setStaticRule('suffix', 'phtml');
 
-<span class=x>// change it later:</span>
-<span class=x>$inflector-&gt;setStaticRule(&#39;suffix&#39;, &#39;php&#39;);</span>
-</pre></div></p>
+// change it later:
+$inflector-&gt;setStaticRule('suffix', 'php');</code></pre>
 <p>Much like the target itself, you can also bind a static rule to a reference,
 allowing you to update a single variable instead of require a method call; this
 is often useful when your class uses an inflector internally, and you don't
 want your users to need to fetch the inflector in order to update it. The
 <code>setStaticRuleReference()</code> method is used to accomplish this:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class Foo</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @var string Suffix</span>
-<span class=x>     */</span>
-<span class=x>    private $suffix = &#39;phtml&#39;;</span>
+<pre class=codehilite><code class=language-php>class Foo
+{
+    /**
+     * @var string Suffix
+     */
+    private $suffix = 'phtml';
 
-<span class=x>    /**</span>
-<span class=x>     * Constructor</span>
-<span class=x>     * @return void</span>
-<span class=x>     */</span>
-<span class=x>    public function construct()</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;inflector = new Laminas\Filter\Inflector(&#39;:script.:suffix&#39;);</span>
-<span class=x>        $this-&gt;inflector-&gt;setStaticRuleReference(&#39;suffix&#39;, $this-&gt;suffix);</span>
-<span class=x>    }</span>
+    /**
+     * Constructor
+     * @return void
+     */
+    public function construct()
+    {
+        $this-&gt;inflector = new Laminas\Filter\Inflector(':script.:suffix');
+        $this-&gt;inflector-&gt;setStaticRuleReference('suffix', $this-&gt;suffix);
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Set suffix; updates suffix static rule in inflector</span>
-<span class=x>     *</span>
-<span class=x>     * @param  string $suffix</span>
-<span class=x>     * @return Foo</span>
-<span class=x>     */</span>
-<span class=x>    public function setSuffix($suffix)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;suffix = $suffix;</span>
-<span class=x>        return $this;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    /**
+     * Set suffix; updates suffix static rule in inflector
+     *
+     * @param  string $suffix
+     * @return Foo
+     */
+    public function setSuffix($suffix)
+    {
+        $this-&gt;suffix = $suffix;
+        return $this;
+    }
+}</code></pre>
 <h3>Filter-Based Inflector Rules</h3>
 <p><code>Laminas\Filter</code> filters may be used as inflector rules as well. Just like static
 rules, these are bound to a target variable; unlike static rules, you may
@@ -447,20 +443,19 @@ ways:</p>
   <code>Laminas\Filter\FilterInterface</code> may be passed as a filter.</li>
 <li><strong>Array</strong>. An array of one or more strings or filter objects as defined above.</li>
 </ul>
-<p> <div class=codehilite><pre><span></span><span class=x>$inflector = new Laminas\Filter\Inflector(&#39;:script.:suffix&#39;);</span>
+<pre class=codehilite><code class=language-php>$inflector = new Laminas\Filter\Inflector(':script.:suffix');
 
-<span class=x>// Set rule to use Laminas\Filter\Word\CamelCaseToDash filter</span>
-<span class=x>$inflector-&gt;setFilterRule(&#39;script&#39;, &#39;Word\CamelCaseToDash&#39;);</span>
+// Set rule to use Laminas\Filter\Word\CamelCaseToDash filter
+$inflector-&gt;setFilterRule('script', 'Word\CamelCaseToDash');
 
-<span class=x>// Add rule to lowercase string</span>
-<span class=x>$inflector-&gt;addFilterRule(&#39;script&#39;, new Laminas\Filter\StringToLower());</span>
+// Add rule to lowercase string
+$inflector-&gt;addFilterRule('script', new Laminas\Filter\StringToLower());
 
-<span class=x>// Set rules en-masse</span>
-<span class=x>$inflector-&gt;setFilterRule(&#39;script&#39;, [</span>
-<span class=x>    &#39;Word\CamelCaseToDash&#39;,</span>
-<span class=x>    new Laminas\Filter\StringToLower()</span>
-<span class=x>]);</span>
-</pre></div></p>
+// Set rules en-masse
+$inflector-&gt;setFilterRule('script', [
+    'Word\CamelCaseToDash',
+    new Laminas\Filter\StringToLower()
+]);</code></pre>
 <h2 id="setting-many-rules-at-once">Setting many Rules at once</h2>
 <p>Typically, it's easier to set many rules at once than to configure a single
 variable and its inflection rules one at a time. <code>Laminas\Filter\Inflector</code>'s
@@ -474,16 +469,15 @@ according to the following notation:</p>
 <li><strong>No prefix</strong>: static rule.</li>
 </ul>
 <p>As an example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Could also use setRules() with this notation:</span>
-<span class=x>$inflector-&gt;addRules([</span>
-<span class=x>    // Filter rules:</span>
-<span class=x>    &#39;:controller&#39; =&gt; [&#39;Word\CamelCaseToUnderscore&#39;,&#39;StringToLower&#39;],</span>
-<span class=x>    &#39;:action&#39;     =&gt; [&#39;Word\CamelCaseToUnderscore&#39;,&#39;StringToLower&#39;],</span>
+<pre class=codehilite><code class=language-php>// Could also use setRules() with this notation:
+$inflector-&gt;addRules([
+    // Filter rules:
+    ':controller' =&gt; ['Word\CamelCaseToUnderscore','StringToLower'],
+    ':action'     =&gt; ['Word\CamelCaseToUnderscore','StringToLower'],
 
-<span class=x>    // Static rule:</span>
-<span class=x>    &#39;suffix&#39;      =&gt; &#39;phtml&#39;,</span>
-<span class=x>]);</span>
-</pre></div></p>
+    // Static rule:
+    'suffix'      =&gt; 'phtml',
+]);</code></pre>
 <h2 id="utility-methods">Utility Methods</h2>
 <p><code>Laminas\Filter\Inflector</code> has a number of utility methods for retrieving and
 setting the plugin loader, manipulating and retrieving rules, and controlling
@@ -522,15 +516,14 @@ your inflectors, by passing either type to either the constructor or the
   that specify either values or arrays of values, consistent with <code>addRules()</code>.</li>
 </ul>
 <p>As examples:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// $options implements Traversable:</span>
+<pre class=codehilite><code class=language-php>// $options implements Traversable:
 
-<span class=x>// With the constructor:</span>
-<span class=x>$inflector = new Laminas\Filter\Inflector($options);</span>
+// With the constructor:
+$inflector = new Laminas\Filter\Inflector($options);
 
-<span class=x>// Or with setOptions():</span>
-<span class=x>$inflector = new Laminas\Filter\Inflector();</span>
-<span class=x>$inflector-&gt;setOptions($options);</span>
-</pre></div></p>
+// Or with setOptions():
+$inflector = new Laminas\Filter\Inflector();
+$inflector-&gt;setOptions($options);</code></pre>
 
 
 
@@ -688,9 +681,10 @@ your inflectors, by passing either type to either the constructor or the
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -727,7 +721,7 @@ your inflectors, by passing either type to either the constructor or the
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-filter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-filter/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -736,8 +730,8 @@ your inflectors, by passing either type to either the constructor or the
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-filter//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

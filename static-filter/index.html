@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -254,15 +258,13 @@ value that you would pass to the <code>filter()</code> method. The second argume
 string, which corresponds to the basename of the filter class, relative to the
 <code>Laminas\Filter</code> namespace. The <code>execute()</code> method automatically loads the class,
 creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>echo StaticFilter::execute(&#39;&amp;&#39;, &#39;HtmlEntities&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
 <p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>echo StaticFilter::execute(</span>
-<span class=x>    &#39;&quot;&#39;,</span>
-<span class=x>    &#39;HtmlEntities&#39;,</span>
-<span class=x>    [&#39;quotestyle&#39; =&gt; ENT_QUOTES]</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>echo StaticFilter::execute(
+    '&quot;',
+    'HtmlEntities',
+    ['quotestyle' =&gt; ENT_QUOTES]
+);</code></pre>
 <p>The static usage can be convenient for invoking a filter ad hoc, but if you
 have the need to run a filter for multiple inputs, it's more efficient to
 create an instance of the filter and invoke it.  instance of the filter object
@@ -272,11 +274,10 @@ on demand to process sets of input data.</p>
 <h2 id="using-custom-filters">Using custom Filters</h2>
 <p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to
 amend the standard filter classes:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$pluginManager = StaticFilter::getPluginManager()</span>
-<span class=x>    -&gt;setInvokableClass(&#39;myNewFilter&#39;, &#39;MyCustom\Filter\MyNewFilter&#39;);</span>
+<pre class=codehilite><code class=language-php>$pluginManager = StaticFilter::getPluginManager()
+    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
 
-<span class=x>StaticFilter::setPluginManager(new MyFilterPluginManager());</span>
-</pre></div></p>
+StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 <p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
 
 
@@ -435,9 +436,10 @@ amend the standard filter classes:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -474,7 +476,7 @@ amend the standard filter classes:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-filter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-filter/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -483,8 +485,8 @@ amend the standard filter classes:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-filter//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

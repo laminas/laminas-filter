@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -277,33 +281,31 @@ from the <code>Laminas\Filter\Encrypt</code> and <code>Laminas\Filter\Decrypt</c
 writing operations are performed by the filer; encryption and decryption operations
 are performed by the parent classes.</p>
 <p>Usage:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\Encrypt as EncryptFileFilter;</span>
-<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new EncryptFileFilter([</span>
-<span class=x>    &#39;adapter&#39; =&gt; &#39;BlockCipher&#39;,</span>
-<span class=x>    &#39;key&#39; =&gt; &#39;--our-super-secret-key--&#39;,</span>
-<span class=x>]);</span>
-<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-</pre></div></p>
+$filter = new EncryptFileFilter([
+    'adapter' =&gt; 'BlockCipher',
+    'key' =&gt; '--our-super-secret-key--',
+]);
+$filter-&gt;filter($files['my-upload']);</code></pre>
 <p>In the above example, we pass options to our constructor in order to configure
 the filter. We could instead use use setter methods to inject these options:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\Encrypt as EncryptFileFilter;</span>
-<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new EncryptFileFilter();</span>
-<span class=x>$filter-&gt;setAdapter(&#39;BlockCipher&#39;);</span>
-<span class=x>$filter-&gt;setKey(&#39;--our-super-secret-key--&#39;);</span>
-<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-</pre></div></p>
+$filter = new EncryptFileFilter();
+$filter-&gt;setAdapter('BlockCipher');
+$filter-&gt;setKey('--our-super-secret-key--');
+$filter-&gt;filter($files['my-upload']);</code></pre>
 <p>Check the <a href="/laminas-filter/standard-filters/#encrypt-and-decrypt">Encrypt and Decrypt filter documentation</a>
 for more information about options and adapters.</p>
 <h2 id="lowercase">Lowercase</h2>
@@ -315,16 +317,15 @@ lowercase.</p>
 <li><code>encoding</code>: Set the encoding to use during conversion.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\LowerCase;</span>
-<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Filter\File\LowerCase;
+use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new LowerCase();</span>
-<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-</pre></div></p>
+$filter = new LowerCase();
+$filter-&gt;filter($files['my-upload']);</code></pre>
 <p>This example converts the contents of an uploaded file to lowercase.  After this
 process, you can use the <a href="#rename">Rename</a> or <a href="#renameupload">RenameUpload</a>
 filter to replace this file with your original file, or read directly from file.
@@ -332,38 +333,36 @@ But, don't forget, if you upload a file and send your <code>$_FILES</code> array
 filter method, the <code>LowerCase</code> filter will only change the temporary file
 (<code>tmp_name</code> index of array), not the original file. Let's check following
 example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\LowerCase;</span>
-<span class=x>use Laminas\Filter\File\Rename;</span>
-<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Filter\File\LowerCase;
+use Laminas\Filter\File\Rename;
+use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$lowercaseFilter = new LowerCase();</span>
-<span class=x>$file = $lowercaseFilter-&gt;filter($files[&#39;userfile&#39;]);</span>
-<span class=x>$renameFilter = new Rename([</span>
-<span class=x>    &#39;target&#39;    =&gt; &#39;/tmp/newfile.txt&#39;,</span>
-<span class=x>    &#39;randomize&#39; =&gt; true,</span>
-<span class=x>]);</span>
-<span class=x>$filename = $renameFilter-&gt;filter($file[&#39;tmp_name&#39;]);</span>
-</pre></div></p>
+$lowercaseFilter = new LowerCase();
+$file = $lowercaseFilter-&gt;filter($files['userfile']);
+$renameFilter = new Rename([
+    'target'    =&gt; '/tmp/newfile.txt',
+    'randomize' =&gt; true,
+]);
+$filename = $renameFilter-&gt;filter($file['tmp_name']);</code></pre>
 <p>With this example, the final, stored file on the server will have the lowercased
 content.</p>
 <p>If you want to use a specific encoding when converting file content, you should
 specify the encoding when instantiating the <code>LowerCase</code> filter, or use the
 <code>setEncoding</code> method to change it.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\LowerCase;</span>
-<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Filter\File\LowerCase;
+use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new LowerCase();</span>
-<span class=x>$filter-&gt;setEncoding(&#39;ISO-8859-1&#39;);</span>
-<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-</pre></div></p>
+$filter = new LowerCase();
+$filter-&gt;setEncoding('ISO-8859-1');
+$filter-&gt;filter($files['my-upload']);</code></pre>
 <p>The <code>LowerCase</code> filter extends from the <code>StringToLower</code> filter; read the
 <a href="/laminas-filter/standard-filters/#stringtolower"><code>StringToLower</code> documentation</a>
 for more information about encoding and its exceptions.</p>
@@ -389,42 +388,38 @@ instance can filter several files using different options. The options used for
 the filtered file will be matched from the <code>source</code> option in the options set.</p>
 <h3>Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// &#39;target&#39; option is assumed if param is a string</span>
-<span class=x>$filter = new \Laminas\Filter\File\Rename(&#39;/tmp/&#39;);</span>
-<span class=x>echo $filter-&gt;filter(&#39;./myfile.txt&#39;);</span>
-<span class=x>// File has been moved to &#39;/tmp/myfile.txt&#39;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// 'target' option is assumed if param is a string
+$filter = new \Laminas\Filter\File\Rename('/tmp/');
+echo $filter-&gt;filter('./myfile.txt');
+// File has been moved to '/tmp/myfile.txt'</code></pre>
 <p>Rename all filtered files to a new name:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new \Laminas\Filter\File\Rename(&#39;/tmp/newfile.txt&#39;);</span>
-<span class=x>echo $filter-&gt;filter(&#39;./myfile.txt&#39;);</span>
-<span class=x>// File has been renamed to &#39;/tmp/newfile.txt&#39;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$filter = new \Laminas\Filter\File\Rename('/tmp/newfile.txt');
+echo $filter-&gt;filter('./myfile.txt');
+// File has been renamed to '/tmp/newfile.txt'</code></pre>
 <p>Move to a new path, and randomize file names:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new \Laminas\Filter\File\Rename([</span>
-<span class=x>    &#39;target&#39;    =&gt; &#39;/tmp/newfile.txt&#39;,</span>
-<span class=x>    &#39;randomize&#39; =&gt; true,</span>
-<span class=x>]);</span>
-<span class=x>echo $filter-&gt;filter(&#39;./myfile.txt&#39;);</span>
-<span class=x>// File has been renamed to &#39;/tmp/newfile_4b3403665fea6.txt&#39;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$filter = new \Laminas\Filter\File\Rename([
+    'target'    =&gt; '/tmp/newfile.txt',
+    'randomize' =&gt; true,
+]);
+echo $filter-&gt;filter('./myfile.txt');
+// File has been renamed to '/tmp/newfile_4b3403665fea6.txt'</code></pre>
 <p>Configure different options for several possible source files:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new \Laminas\Filter\File\Rename([</span>
-<span class=x>    [</span>
-<span class=x>        &#39;source&#39;    =&gt; &#39;fileA.txt&#39;</span>
-<span class=x>        &#39;target&#39;    =&gt; &#39;/dest1/newfileA.txt&#39;,</span>
-<span class=x>        &#39;overwrite&#39; =&gt; true,</span>
-<span class=x>    ],</span>
-<span class=x>    [</span>
-<span class=x>        &#39;source&#39;    =&gt; &#39;fileB.txt&#39;</span>
-<span class=x>        &#39;target&#39;    =&gt; &#39;/dest2/newfileB.txt&#39;,</span>
-<span class=x>        &#39;randomize&#39; =&gt; true,</span>
-<span class=x>    ],</span>
-<span class=x>]);</span>
-<span class=x>echo $filter-&gt;filter(&#39;fileA.txt&#39;);</span>
-<span class=x>// File has been renamed to &#39;/dest1/newfileA.txt&#39;</span>
-<span class=x>echo $filter-&gt;filter(&#39;fileB.txt&#39;);</span>
-<span class=x>// File has been renamed to &#39;/dest2/newfileB_4b3403665fea6.txt&#39;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$filter = new \Laminas\Filter\File\Rename([
+    [
+        'source'    =&gt; 'fileA.txt'
+        'target'    =&gt; '/dest1/newfileA.txt',
+        'overwrite' =&gt; true,
+    ],
+    [
+        'source'    =&gt; 'fileB.txt'
+        'target'    =&gt; '/dest2/newfileB.txt',
+        'randomize' =&gt; true,
+    ],
+]);
+echo $filter-&gt;filter('fileA.txt');
+// File has been renamed to '/dest1/newfileA.txt'
+echo $filter-&gt;filter('fileB.txt');
+// File has been renamed to '/dest2/newfileB_4b3403665fea6.txt'</code></pre>
 <h3>Public Methods</h3>
 <p>The <code>Rename</code> filter defines the following public methods in addition to <code>filter()</code>:
 follows:</p>
@@ -477,73 +472,69 @@ When filtering HTML5 file uploads with the <code>multiple</code> attribute set, 
 will be filtered with the same option settings.</p>
 <h3>Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;name&#39;] === &#39;myfile.txt&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+// i.e. $files['my-upload']['name'] === 'myfile.txt'
 
-<span class=x>// &#39;target&#39; option is assumed if param is a string</span>
-<span class=x>$filter = new \Laminas\Filter\File\RenameUpload(&#39;./data/uploads/&#39;);</span>
-<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-<span class=x>// File has been moved to &#39;./data/uploads/php5Wx0aJ&#39;</span>
+// 'target' option is assumed if param is a string
+$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/');
+echo $filter-&gt;filter($files['my-upload']);
+// File has been moved to './data/uploads/php5Wx0aJ'
 
-<span class=x>// ... or retain the uploaded file name</span>
-<span class=x>$filter-&gt;setUseUploadName(true);</span>
-<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-<span class=x>// File has been moved to &#39;./data/uploads/myfile.txt&#39;</span>
-</pre></div></p>
+// ... or retain the uploaded file name
+$filter-&gt;setUseUploadName(true);
+echo $filter-&gt;filter($files['my-upload']);
+// File has been moved to './data/uploads/myfile.txt'</code></pre>
 <p>Rename all filtered files to a new name:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new \Laminas\Filter\File\RenameUpload(&#39;./data/uploads/newfile.txt&#39;);</span>
-<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-<span class=x>// File has been renamed to &#39;./data/uploads/newfile.txt&#39;</span>
-</pre></div></p>
+$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/newfile.txt');
+echo $filter-&gt;filter($files['my-upload']);
+// File has been renamed to './data/uploads/newfile.txt'</code></pre>
 <p>Move to a new path and randomize file names:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new \Laminas\Filter\File\RenameUpload([</span>
-<span class=x>    &#39;target&#39;    =&gt; &#39;./data/uploads/newfile.txt&#39;,</span>
-<span class=x>    &#39;randomize&#39; =&gt; true,</span>
-<span class=x>]);</span>
-<span class=x>echo $filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-<span class=x>// File has been renamed to &#39;./data/uploads/newfile_4b3403665fea6.txt&#39;</span>
-</pre></div></p>
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target'    =&gt; './data/uploads/newfile.txt',
+    'randomize' =&gt; true,
+]);
+echo $filter-&gt;filter($files['my-upload']);
+// File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'</code></pre>
 <p>Handle a PSR-7 uploaded file:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
-<span class=x>use Psr\Http\Message\StreamFactoryInterface;</span>
-<span class=x>use Psr\Http\Message\UploadedFileFactoryInterface;</span>
-<span class=x>use Psr\Http\Message\UploadedFileInterface;</span>
-<span class=x>use Laminas\Filter\File\RenameUpload;</span>
+<pre class=codehilite><code class=language-php>use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
+use Psr\Http\Message\UploadedFileInterface;
+use Laminas\Filter\File\RenameUpload;
 
-<span class=x>$filter = new \Laminas\Filter\File\RenameUpload([</span>
-<span class=x>    &#39;target&#39;              =&gt; &#39;./data/uploads/&#39;,</span>
-<span class=x>    &#39;randomize&#39;           =&gt; true,</span>
-<span class=x>    // @var StreamFactoryInterface $streamFactory</span>
-<span class=x>    &#39;stream_factory&#39;      =&gt; $streamFactory,</span>
-<span class=x>    // @var UploadedFileFactoryInterface $uploadedFileFactory</span>
-<span class=x>    &#39;upload_file_factory&#39; =&gt; $uploadedFileFactory,</span>
-<span class=x>]);</span>
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target'              =&gt; './data/uploads/',
+    'randomize'           =&gt; true,
+    // @var StreamFactoryInterface $streamFactory
+    'stream_factory'      =&gt; $streamFactory,
+    // @var UploadedFileFactoryInterface $uploadedFileFactory
+    'upload_file_factory' =&gt; $uploadedFileFactory,
+]);
 
-<span class=x>// @var ServerRequestInterface $request</span>
-<span class=x>foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {</span>
-<span class=x>    // @var UploadedFileInterface $uploadedFile</span>
-<span class=x>    // @var UploadedFileInterface $movedFile</span>
-<span class=x>    $movedFile = $filter-&gt;filter($uploadedFile);</span>
-<span class=x>    echo $movedFile-&gt;getClientFilename();</span>
-<span class=x>    // File has been renamed to &#39;./data/uploads/newfile_4b3403665fea6.txt&#39;</span>
-<span class=x>}</span>
-</pre></div></p>
+// @var ServerRequestInterface $request
+foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {
+    // @var UploadedFileInterface $uploadedFile
+    // @var UploadedFileInterface $movedFile
+    $movedFile = $filter-&gt;filter($uploadedFile);
+    echo $movedFile-&gt;getClientFilename();
+    // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
+}</code></pre>
 <blockquote>
 <h3>PSR-7 Support</h3>
 <p>PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
@@ -566,16 +557,15 @@ uppercase.</p>
 <li><code>encoding</code>: Set the encoding to use during conversion.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Filter\File\UpperCase;</span>
-<span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Filter\File\UpperCase;
+use Laminas\Http\PhpEnvironment\Request;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;tmp_name&#39;] === &#39;/tmp/php5Wx0aJ&#39;</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-<span class=x>$filter = new UpperCase();</span>
-<span class=x>$filter-&gt;filter($files[&#39;my-upload&#39;]);</span>
-</pre></div></p>
+$filter = new UpperCase();
+$filter-&gt;filter($files['my-upload']);</code></pre>
 <p>See the documentation on the <a href="#lowercase"><code>LowerCase</code></a> filter, above, for more
 information.</p>
 
@@ -735,9 +725,10 @@ information.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -774,7 +765,7 @@ information.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-filter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-filter/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -783,8 +774,8 @@ information.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-filter//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

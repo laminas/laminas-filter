@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -257,15 +261,14 @@ contain only alphabetic characters.</p>
 <p><code>Laminas\Filter\FilterChain</code> provides a simple method by which filters may be
 chained together. The following code illustrates how to chain together two
 filters for the submitted username and fulfill the above requirements:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Create a filter chain and add filters to the chain</span>
-<span class=x>$filterChain = new Laminas\Filter\FilterChain();</span>
-<span class=x>$filterChain</span>
-<span class=x>    -&gt;attach(new Laminas\I18n\Filter\Alpha())</span>
-<span class=x>    -&gt;attach(new Laminas\Filter\StringToLower());</span>
+<pre class=codehilite><code class=language-php>// Create a filter chain and add filters to the chain
+$filterChain = new Laminas\Filter\FilterChain();
+$filterChain
+    -&gt;attach(new Laminas\I18n\Filter\Alpha())
+    -&gt;attach(new Laminas\Filter\StringToLower());
 
-<span class=x>// Filter the username</span>
-<span class=x>$username = $filterChain-&gt;filter($_POST[&#39;username&#39;]);</span>
-</pre></div></p>
+// Filter the username
+$username = $filterChain-&gt;filter($_POST['username']);</code></pre>
 <p>Filters are run in the order they are added to the filter chain. In the above
 example, the username is first removed of any non-alphabetic characters, and
 then any uppercase characters are converted to lowercase.</p>
@@ -277,12 +280,11 @@ the chain order. Higher values indicate higher priority (execute first), while
 lower and/or negative values indicate lower priority (execute last). The default value is <code>1000</code>.</p>
 <p>In the following example, any uppercase characters are converted to lowercase
 before any non-alphabetic characters are removed.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Create a filter chain and add filters to the chain</span>
-<span class=x>$filterChain = new Laminas\Filter\FilterChain();</span>
-<span class=x>$filterChain</span>
-<span class=x>    -&gt;attach(new Laminas\I18n\Filter\Alpha())</span>
-<span class=x>    -&gt;attach(new Laminas\Filter\StringToLower(), 500);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// Create a filter chain and add filters to the chain
+$filterChain = new Laminas\Filter\FilterChain();
+$filterChain
+    -&gt;attach(new Laminas\I18n\Filter\Alpha())
+    -&gt;attach(new Laminas\Filter\StringToLower(), 500);</code></pre>
 <h2 id="using-the-plugin-manager">Using the Plugin Manager</h2>
 <p>A <code>FilterPluginManager</code> is attached to every <code>FilterChain</code> instance. Every filter
 that is used in a <code>FilterChain</code> must be known to the <code>FilterPluginManager</code>.</p>
@@ -290,29 +292,26 @@ that is used in a <code>FilterChain</code> must be known to the <code>FilterPlug
 first parameter is the name of the filter within the <code>FilterPluginManager</code>. The
 second parameter takes any options for creating the filter instance. The third
 parameter is the priority.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Create a filter chain and add filters to the chain</span>
-<span class=x>$filterChain = new Laminas\Filter\FilterChain();</span>
-<span class=x>$filterChain</span>
-<span class=x>    -&gt;attachByName(&#39;alpha&#39;)</span>
-<span class=x>    -&gt;attachByName(&#39;stringtolower&#39;, [&#39;encoding&#39; =&gt; &#39;utf-8&#39;], 500);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// Create a filter chain and add filters to the chain
+$filterChain = new Laminas\Filter\FilterChain();
+$filterChain
+    -&gt;attachByName('alpha')
+    -&gt;attachByName('stringtolower', ['encoding' =&gt; 'utf-8'], 500);</code></pre>
 <p>The following example shows how to add a custom filter to the <code>FilterPluginManager</code> and the
 <code>FilterChain</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$filterChain = new Laminas\Filter\FilterChain();</span>
-<span class=x>$filterChain</span>
-<span class=x>    -&gt;getPluginManager()</span>
-<span class=x>    -&gt;setInvokableClass(&#39;myNewFilter&#39;, &#39;MyCustom\Filter\MyNewFilter&#39;);</span>
-<span class=x>$filterChain</span>
-<span class=x>    -&gt;attachByName(&#39;alpha&#39;)</span>
-<span class=x>    -&gt;attachByName(&#39;myNewFilter&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$filterChain = new Laminas\Filter\FilterChain();
+$filterChain
+    -&gt;getPluginManager()
+    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
+$filterChain
+    -&gt;attachByName('alpha')
+    -&gt;attachByName('myNewFilter');</code></pre>
 <p>You can also add your own <code>FilterPluginManager</code> implementation:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$filterChain = new Laminas\Filter\FilterChain();</span>
-<span class=x>$filterChain-&gt;setPluginManager(new MyFilterPluginManager());</span>
-<span class=x>$filterChain</span>
-<span class=x>    -&gt;attach(new Laminas\I18n\Filter\Alpha())</span>
-<span class=x>    -&gt;attach(new MyCustom\Filter\MyNewFilter());</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$filterChain = new Laminas\Filter\FilterChain();
+$filterChain-&gt;setPluginManager(new MyFilterPluginManager());
+$filterChain
+    -&gt;attach(new Laminas\I18n\Filter\Alpha())
+    -&gt;attach(new MyCustom\Filter\MyNewFilter());</code></pre>
 
 
 
@@ -470,9 +469,10 @@ parameter is the priority.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -509,7 +509,7 @@ parameter is the priority.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-filter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-filter/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -518,8 +518,8 @@ parameter is the priority.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-filter//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

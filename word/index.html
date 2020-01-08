@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -298,10 +302,9 @@ to filtering word strings.</p>
 <h3>Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Word\CamelCaseToDash</code>:</p>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\CamelCaseToDash();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\CamelCaseToDash();
 
-<span class=x>print $filter-&gt;filter(&#39;ThisIsMyContent&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
 <p>The above example returns <code>This-Is-My-Content</code>.</p>
 <h2 id="camelcasetoseparator">CamelCaseToSeparator</h2>
 <p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to <code>Camel Case Words</code>.</p>
@@ -312,17 +315,15 @@ to filtering word strings.</p>
   is a space.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\CamelCaseToSeparator(&#39;:&#39;);</span>
-<span class=x>// or new Laminas\Filter\Word\CamelCaseToSeparator(array(&#39;separator&#39; =&gt; &#39;:&#39;));</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\CamelCaseToSeparator(':');
+// or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' =&gt; ':'));
 
-<span class=x>print $filter-&gt;filter(&#39;ThisIsMyContent&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
 <p>The above example returns <code>This:Is:My:Content</code>.</p>
 <h3>Default Behavior</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\CamelCaseToSeparator();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\CamelCaseToSeparator();
 
-<span class=x>print $filter-&gt;filter(&#39;ThisIsMyContent&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
 <p>The above example returns <code>This Is My Content</code>.</p>
 <h2 id="camelcasetounderscore">CamelCaseToUnderscore</h2>
 <p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to
@@ -330,10 +331,9 @@ to filtering word strings.</p>
 <h3>Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Word\CamelCaseToUnderscore</code>:</p>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\CamelCaseToUnderscore();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\CamelCaseToUnderscore();
 
-<span class=x>print $filter-&gt;filter(&#39;ThisIsMyContent&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
 <p>The above example returns <code>This_Is_My_Content</code>.</p>
 <h2 id="dashtocamelcase">DashToCamelCase</h2>
 <p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
@@ -341,10 +341,9 @@ to <code>WordsWithDashes</code>.</p>
 <h3>Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Word\DashToCamelCase</code>:</p>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\DashToCamelCase();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\DashToCamelCase();
 
-<span class=x>print $filter-&gt;filter(&#39;this-is-my-content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this-is-my-content');</code></pre>
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h2 id="dashtoseparator">DashToSeparator</h2>
 <p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
@@ -356,17 +355,15 @@ to <code>words with dashes</code>.</p>
   is a space.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\DashToSeparator(&#39;+&#39;);</span>
-<span class=x>// or new Laminas\Filter\Word\CamelCaseToSeparator(array(&#39;separator&#39; =&gt; &#39;+&#39;));</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\DashToSeparator('+');
+// or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' =&gt; '+'));
 
-<span class=x>print $filter-&gt;filter(&#39;this-is-my-content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this-is-my-content');</code></pre>
 <p>The above example returns <code>this+is+my+content</code>.</p>
 <h3>Default Behavior</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\DashToSeparator();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\DashToSeparator();
 
-<span class=x>print $filter-&gt;filter(&#39;this-is-my-content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this-is-my-content');</code></pre>
 <p>The above example returns <code>this is my content</code>.</p>
 <h2 id="dashtounderscore">DashToUnderscore</h2>
 <p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
@@ -374,10 +371,9 @@ to <code>words_with_dashes</code>.</p>
 <h3>Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Word\DashToUnderscore</code>:</p>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\DashToUnderscore();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\DashToUnderscore();
 
-<span class=x>print $filter-&gt;filter(&#39;this-is-my-content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this-is-my-content');</code></pre>
 <p>The above example returns <code>this_is_my_content</code>.</p>
 <h2 id="separatortocamelcase">SeparatorToCamelCase</h2>
 <p>This filter modifies a given string such that <code>words with separators</code> are
@@ -389,17 +385,15 @@ converted to <code>WordsWithSeparators</code>.</p>
   is a space.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\SeparatorToCamelCase(&#39;:&#39;);</span>
-<span class=x>// or new Laminas\Filter\Word\SeparatorToCamelCase(array(&#39;separator&#39; =&gt; &#39;:&#39;));</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\SeparatorToCamelCase(':');
+// or new Laminas\Filter\Word\SeparatorToCamelCase(array('separator' =&gt; ':'));
 
-<span class=x>print $filter-&gt;filter(&#39;this:is:my:content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this:is:my:content');</code></pre>
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h3>Default Behavior</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\SeparatorToCamelCase();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\SeparatorToCamelCase();
 
-<span class=x>print $filter-&gt;filter(&#39;this is my content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this is my content');</code></pre>
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h2 id="separatortodash">SeparatorToDash</h2>
 <p>This filter modifies a given string such that <code>words with separators</code> are
@@ -411,17 +405,15 @@ converted to <code>words-with-separators</code>.</p>
   is a space.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\SeparatorToDash(&#39;:&#39;);</span>
-<span class=x>// or new Laminas\Filter\Word\SeparatorToDash(array(&#39;separator&#39; =&gt; &#39;:&#39;));</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\SeparatorToDash(':');
+// or new Laminas\Filter\Word\SeparatorToDash(array('separator' =&gt; ':'));
 
-<span class=x>print $filter-&gt;filter(&#39;this:is:my:content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this:is:my:content');</code></pre>
 <p>The above example returns <code>this-is-my-content</code>.</p>
 <h3>Default Behavior</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\SeparatorToDash();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\SeparatorToDash();
 
-<span class=x>print $filter-&gt;filter(&#39;this is my content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this is my content');</code></pre>
 <p>The above example returns <code>this-is-my-content</code>.</p>
 <h2 id="separatortoseparator">SeparatorToSeparator</h2>
 <p>This filter modifies a given string such that <code>words with separators</code> are
@@ -435,16 +427,14 @@ converted to <code>words-with-separators</code>.</p>
   default separator is a dash (<code>-</code>).</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\SeparatorToSeparator(&#39;:&#39;, &#39;+&#39;);</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\SeparatorToSeparator(':', '+');
 
-<span class=x>print $filter-&gt;filter(&#39;this:is:my:content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this:is:my:content');</code></pre>
 <p>The above example returns <code>this+is+my+content</code>.</p>
 <h3>Default Behaviour</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\SeparatorToSeparator();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\SeparatorToSeparator();
 
-<span class=x>print $filter-&gt;filter(&#39;this is my content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this is my content');</code></pre>
 <p>The above example returns <code>this-is-my-content</code>.</p>
 <h2 id="underscoretocamelcase">UnderscoreToCamelCase</h2>
 <p>This filter modifies a given string such that <code>words_with_underscores</code> are
@@ -452,10 +442,9 @@ converted to <code>WordsWithUnderscores</code>.</p>
 <h3>Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Word\UnderscoreToCamelCase</code>:</p>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\UnderscoreToCamelCase();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\UnderscoreToCamelCase();
 
-<span class=x>print $filter-&gt;filter(&#39;this_is_my_content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this_is_my_content');</code></pre>
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h2 id="underscoretoseparator">UnderscoreToSeparator</h2>
 <p>This filter modifies a given string such that <code>words_with_underscores</code> are
@@ -467,17 +456,15 @@ converted to <code>words with underscores</code>.</p>
   is a space.</li>
 </ul>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\UnderscoreToSeparator(&#39;+&#39;);</span>
-<span class=x>// or new Laminas\Filter\Word\CamelCaseToSeparator(array(&#39;separator&#39; =&gt; &#39;+&#39;));</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\UnderscoreToSeparator('+');
+// or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' =&gt; '+'));
 
-<span class=x>print $filter-&gt;filter(&#39;this_is_my_content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this_is_my_content');</code></pre>
 <p>The above example returns <code>this+is+my+content</code>.</p>
 <h3>Default Behavior</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\UnderscoreToSeparator();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\UnderscoreToSeparator();
 
-<span class=x>print $filter-&gt;filter(&#39;this_is_my_content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this_is_my_content');</code></pre>
 <p>The above example returns <code>this is my content</code>.</p>
 <h2 id="underscoretodash">UnderscoreToDash</h2>
 <p>This filter modifies a given string such that <code>words_with_underscores</code> are
@@ -485,10 +472,9 @@ converted to <code>words-with-underscores</code>.</p>
 <h3>Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Word\UnderscoreToDash</code>:</p>
 <h3>Basic Usage</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$filter = new Laminas\Filter\Word\UnderscoreToDash();</span>
+<pre class=codehilite><code class=language-php>$filter = new Laminas\Filter\Word\UnderscoreToDash();
 
-<span class=x>print $filter-&gt;filter(&#39;this_is_my_content&#39;);</span>
-</pre></div></p>
+print $filter-&gt;filter('this_is_my_content');</code></pre>
 <p>The above example returns <code>this-is-my-content</code>.</p>
 
 
@@ -647,9 +633,10 @@ converted to <code>words-with-underscores</code>.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -686,7 +673,7 @@ converted to <code>words-with-underscores</code>.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-filter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-filter/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -695,8 +682,8 @@ converted to <code>words-with-underscores</code>.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-filter//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
