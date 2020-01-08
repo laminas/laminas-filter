@@ -16,4 +16,3 @@ site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
 extra:
     project: Components
-    project_url: 'https://docs.laminas.dev'
