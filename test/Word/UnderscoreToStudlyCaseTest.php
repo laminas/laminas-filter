@@ -27,19 +27,19 @@ class UnderscoreToStudlyCaseTest extends TestCase
     {
         $filter   = new UnderscoreToStudlyCase();
 
-        $string   = 'laminas_framework';
+        $string   = 'laminas_project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminasFramework', $filtered);
+        $this->assertEquals('laminasProject', $filtered);
 
-        $string   = 'laminas_Framework';
+        $string   = 'laminas_Project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminasFramework', $filtered);
+        $this->assertEquals('laminasProject', $filtered);
 
-        $string   = 'laminasFramework';
+        $string   = 'laminasProject';
         $filtered = $filter($string);
-        $this->assertEquals('laminasFramework', $filtered);
+        $this->assertEquals('laminasProject', $filtered);
 
         $string   = 'laminas';
         $filtered = $filter($string);
@@ -50,20 +50,20 @@ class UnderscoreToStudlyCaseTest extends TestCase
         $this->assertNotEquals($string, $filtered);
         $this->assertEquals('laminas', $filtered);
 
-        $string   = '_laminas_framework';
+        $string   = '_laminas_project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminasFramework', $filtered);
+        $this->assertEquals('laminasProject', $filtered);
     }
 
     public function testFiltersArray()
     {
         $filter   = new UnderscoreToStudlyCase();
 
-        $string   = ['laminas_framework', '_laminas_framework'];
+        $string   = ['laminas_project', '_laminas_project'];
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals(['laminasFramework', 'laminasFramework'], $filtered);
+        $this->assertEquals(['laminasProject', 'laminasProject'], $filtered);
     }
 
     public function testWithEmpties()
@@ -74,8 +74,8 @@ class UnderscoreToStudlyCaseTest extends TestCase
         $filtered = $filter($string);
         $this->assertEquals('', $filtered);
 
-        $string   = ['', 'Laminas_Framework'];
+        $string   = ['', 'Laminas_Project'];
         $filtered = $filter($string);
-        $this->assertEquals(['', 'laminasFramework'], $filtered);
+        $this->assertEquals(['', 'laminasProject'], $filtered);
     }
 }
