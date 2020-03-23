@@ -26,14 +26,14 @@
     },
     "require": {
         "php": ">=5.3.23",
-        "laminas/laminas-stdlib": "self.version",
+        "laminas/laminas-stdlib": "~2.4.9.0",
         "laminas/laminas-zendframework-bridge": "^1.0"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "1.7.*",
-        "laminas/laminas-crypt": "self.version",
-        "laminas/laminas-servicemanager": "self.version",
-        "laminas/laminas-uri": "self.version",
+        "laminas/laminas-crypt": "~2.4.9.0",
+        "laminas/laminas-servicemanager": "~2.4.9.0",
+        "laminas/laminas-uri": "~2.4.9.0",
         "phpunit/phpunit": "~4.0",
         "satooshi/php-coveralls": "dev-master"
     },
@@ -54,6 +54,6 @@
         }
     },
     "replace": {
-        "zendframework/zend-filter": "self.version"
+        "zendframework/zend-filter": "~2.4.9.0"
     }
 }
