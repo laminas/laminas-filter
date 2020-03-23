@@ -69,6 +69,6 @@
         "upload-coverage": "coveralls -v"
     },
     "replace": {
-        "zendframework/zend-filter": "self.version"
+        "zendframework/zend-filter": "~2.7.2.0"
     }
 }
