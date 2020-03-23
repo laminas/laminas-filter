@@ -58,6 +58,6 @@
         }
     },
     "replace": {
-        "zendframework/zend-filter": "self.version"
+        "zendframework/zend-filter": "~2.7.1.0"
     }
 }
