@@ -56,6 +56,6 @@
         }
     },
     "replace": {
-        "zendframework/zend-filter": "self.version"
+        "zendframework/zend-filter": "~2.5.1.0"
     }
 }
