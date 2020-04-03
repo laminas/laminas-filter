@@ -340,7 +340,7 @@ from the <code>Laminas\Filter\Encrypt</code> and <code>Laminas\Filter\Decrypt</c
 writing operations are performed by the filer; encryption and decryption operations
 are performed by the parent classes.</p>
 <p>Usage:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\Encrypt as EncryptFileFilter;
 use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
@@ -352,9 +352,10 @@ $filter = new EncryptFileFilter([
     'key' =&gt; '--our-super-secret-key--',
 ]);
 $filter-&gt;filter($files['my-upload']);</code></pre>
+
 <p>In the above example, we pass options to our constructor in order to configure
 the filter. We could instead use use setter methods to inject these options:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\Encrypt as EncryptFileFilter;
 use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
@@ -365,6 +366,7 @@ $filter = new EncryptFileFilter();
 $filter-&gt;setAdapter('BlockCipher');
 $filter-&gt;setKey('--our-super-secret-key--');
 $filter-&gt;filter($files['my-upload']);</code></pre>
+
 <p>Check the <a href="/laminas-filter/standard-filters/#encrypt-and-decrypt">Encrypt and Decrypt filter documentation</a>
 for more information about options and adapters.</p>
 <h2 id="lowercase">Lowercase</h2>
@@ -376,7 +378,7 @@ lowercase.</p>
 <li><code>encoding</code>: Set the encoding to use during conversion.</li>
 </ul>
 <h3>Basic Usage</h3>
-<pre class=codehilite><code class=language-php>use Laminas\Filter\File\LowerCase;
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
 use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
@@ -385,6 +387,7 @@ $files   = $request-&gt;getFiles();
 
 $filter = new LowerCase();
 $filter-&gt;filter($files['my-upload']);</code></pre>
+
 <p>This example converts the contents of an uploaded file to lowercase.  After this
 process, you can use the <a href="#rename">Rename</a> or <a href="#renameupload">RenameUpload</a>
 filter to replace this file with your original file, or read directly from file.
@@ -392,7 +395,7 @@ But, don't forget, if you upload a file and send your <code>$_FILES</code> array
 filter method, the <code>LowerCase</code> filter will only change the temporary file
 (<code>tmp_name</code> index of array), not the original file. Let's check following
 example:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Filter\File\LowerCase;
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
 use Laminas\Filter\File\Rename;
 use Laminas\Http\PhpEnvironment\Request;
 
@@ -407,12 +410,13 @@ $renameFilter = new Rename([
     'randomize' =&gt; true,
 ]);
 $filename = $renameFilter-&gt;filter($file['tmp_name']);</code></pre>
+
 <p>With this example, the final, stored file on the server will have the lowercased
 content.</p>
 <p>If you want to use a specific encoding when converting file content, you should
 specify the encoding when instantiating the <code>LowerCase</code> filter, or use the
 <code>setEncoding</code> method to change it.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Filter\File\LowerCase;
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
 use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
@@ -422,6 +426,7 @@ $files   = $request-&gt;getFiles();
 $filter = new LowerCase();
 $filter-&gt;setEncoding('ISO-8859-1');
 $filter-&gt;filter($files['my-upload']);</code></pre>
+
 <p>The <code>LowerCase</code> filter extends from the <code>StringToLower</code> filter; read the
 <a href="/laminas-filter/standard-filters/#stringtolower"><code>StringToLower</code> documentation</a>
 for more information about encoding and its exceptions.</p>
@@ -447,23 +452,26 @@ instance can filter several files using different options. The options used for
 the filtered file will be matched from the <code>source</code> option in the options set.</p>
 <h3>Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
-<pre class=codehilite><code class=language-php>// 'target' option is assumed if param is a string
+<pre class="highlight"><code class="language-php">// 'target' option is assumed if param is a string
 $filter = new \Laminas\Filter\File\Rename('/tmp/');
 echo $filter-&gt;filter('./myfile.txt');
 // File has been moved to '/tmp/myfile.txt'</code></pre>
+
 <p>Rename all filtered files to a new name:</p>
-<pre class=codehilite><code class=language-php>$filter = new \Laminas\Filter\File\Rename('/tmp/newfile.txt');
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\File\Rename('/tmp/newfile.txt');
 echo $filter-&gt;filter('./myfile.txt');
 // File has been renamed to '/tmp/newfile.txt'</code></pre>
+
 <p>Move to a new path, and randomize file names:</p>
-<pre class=codehilite><code class=language-php>$filter = new \Laminas\Filter\File\Rename([
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\File\Rename([
     'target'    =&gt; '/tmp/newfile.txt',
     'randomize' =&gt; true,
 ]);
 echo $filter-&gt;filter('./myfile.txt');
 // File has been renamed to '/tmp/newfile_4b3403665fea6.txt'</code></pre>
+
 <p>Configure different options for several possible source files:</p>
-<pre class=codehilite><code class=language-php>$filter = new \Laminas\Filter\File\Rename([
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\File\Rename([
     [
         'source'    =&gt; 'fileA.txt'
         'target'    =&gt; '/dest1/newfileA.txt',
@@ -479,6 +487,7 @@ echo $filter-&gt;filter('fileA.txt');
 // File has been renamed to '/dest1/newfileA.txt'
 echo $filter-&gt;filter('fileB.txt');
 // File has been renamed to '/dest2/newfileB_4b3403665fea6.txt'</code></pre>
+
 <h3>Public Methods</h3>
 <p>The <code>Rename</code> filter defines the following public methods in addition to <code>filter()</code>:
 follows:</p>
@@ -531,7 +540,7 @@ When filtering HTML5 file uploads with the <code>multiple</code> attribute set, 
 will be filtered with the same option settings.</p>
 <h3>Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
+<pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request-&gt;getFiles();
@@ -547,8 +556,9 @@ echo $filter-&gt;filter($files['my-upload']);
 $filter-&gt;setUseUploadName(true);
 echo $filter-&gt;filter($files['my-upload']);
 // File has been moved to './data/uploads/myfile.txt'</code></pre>
+
 <p>Rename all filtered files to a new name:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
+<pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request-&gt;getFiles();
@@ -557,8 +567,9 @@ $files   = $request-&gt;getFiles();
 $filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/newfile.txt');
 echo $filter-&gt;filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'</code></pre>
+
 <p>Move to a new path and randomize file names:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
+<pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
 $files   = $request-&gt;getFiles();
@@ -570,8 +581,9 @@ $filter = new \Laminas\Filter\File\RenameUpload([
 ]);
 echo $filter-&gt;filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'</code></pre>
+
 <p>Handle a PSR-7 uploaded file:</p>
-<pre class=codehilite><code class=language-php>use Psr\Http\Message\ServerRequestInterface;
+<pre class="highlight"><code class="language-php">use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -594,6 +606,7 @@ foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {
     echo $movedFile-&gt;getClientFilename();
     // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
 }</code></pre>
+
 <blockquote>
 <h3>PSR-7 Support</h3>
 <p>PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
@@ -616,7 +629,7 @@ uppercase.</p>
 <li><code>encoding</code>: Set the encoding to use during conversion.</li>
 </ul>
 <h3>Basic Usage</h3>
-<pre class=codehilite><code class=language-php>use Laminas\Filter\File\UpperCase;
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\UpperCase;
 use Laminas\Http\PhpEnvironment\Request;
 
 $request = new Request();
@@ -625,6 +638,7 @@ $files   = $request-&gt;getFiles();
 
 $filter = new UpperCase();
 $filter-&gt;filter($files['my-upload']);</code></pre>
+
 <p>See the documentation on the <a href="#lowercase"><code>LowerCase</code></a> filter, above, for more
 information.</p>
 

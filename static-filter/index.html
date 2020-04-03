@@ -317,13 +317,15 @@ value that you would pass to the <code>filter()</code> method. The second argume
 string, which corresponds to the basename of the filter class, relative to the
 <code>Laminas\Filter</code> namespace. The <code>execute()</code> method automatically loads the class,
 creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class=codehilite><code class=language-php>echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
+<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
+
 <p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class=codehilite><code class=language-php>echo StaticFilter::execute(
-    '&quot;',
+<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
+    '"',
     'HtmlEntities',
     ['quotestyle' =&gt; ENT_QUOTES]
 );</code></pre>
+
 <p>The static usage can be convenient for invoking a filter ad hoc, but if you
 have the need to run a filter for multiple inputs, it's more efficient to
 create an instance of the filter and invoke it.  instance of the filter object
@@ -333,10 +335,11 @@ on demand to process sets of input data.</p>
 <h2 id="using-custom-filters">Using custom Filters</h2>
 <p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to
 amend the standard filter classes:</p>
-<pre class=codehilite><code class=language-php>$pluginManager = StaticFilter::getPluginManager()
+<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
     -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
 
 StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
+
 <p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
 
 

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://docs.laminas.dev/laminas-filter/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/intro/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/standard-filters/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/word/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/file/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/filter-chains/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/inflector/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/static-filter/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.laminas.dev/laminas-filter/writing-filters/</loc>
-     <lastmod>2020-03-29</lastmod>
+     <lastmod>2020-04-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

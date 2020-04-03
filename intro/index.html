@@ -346,16 +346,18 @@ perform some transformations upon input data.</p>
 to be implemented by a filter class.</p>
 <p>Following is a basic example of using a filter upon two input data, the
 ampersand (<code>&amp;</code>) and double quote (<code>"</code>) characters:</p>
-<pre class=codehilite><code class=language-php>$htmlEntities = new Laminas\Filter\HtmlEntities();
+<pre class="highlight"><code class="language-php">$htmlEntities = new Laminas\Filter\HtmlEntities();
 
 echo $htmlEntities-&gt;filter('&amp;'); // &amp;amp;
-echo $htmlEntities-&gt;filter('&quot;'); // &amp;quot;</code></pre>
+echo $htmlEntities-&gt;filter('"'); // &amp;quot;</code></pre>
+
 <p>Also, if a filter inherits from <code>Laminas\Filter\AbstractFilter</code> (as do all of the
 out-of-the-box filters), you can also use them as invokables:</p>
-<pre class=codehilite><code class=language-php>$strtolower = new Laminas\Filter\StringToLower;
+<pre class="highlight"><code class="language-php">$strtolower = new Laminas\Filter\StringToLower;
 
 echo $strtolower('I LOVE Laminas!'); // i love laminas!
 $laminaslove = $strtolower('I LOVE Laminas!');</code></pre>
+
 <h2 id="using-the-staticfilter">Using the StaticFilter</h2>
 <p>If it is inconvenient to load a given filter class and create an instance of the
 filter, you can use <code>StaticFilter</code> with its <code>execute()</code> method as an alternative
@@ -364,14 +366,16 @@ you would pass to the <code>filter()</code> method. The second argument is a str
 corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code>
 namespace. The <code>execute()</code> method automatically loads the class, creates an
 instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class=codehilite><code class=language-php>echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
+<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
+
 <p>You can also pass an array of constructor arguments, if they are needed for the
 filter class:</p>
-<pre class=codehilite><code class=language-php>echo StaticFilter::execute(
-    '&quot;',
+<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
+    '"',
     'HtmlEntities',
     ['quotestyle' =&gt; ENT_QUOTES]
 );</code></pre>
+
 <p>The static usage can be convenient for invoking a filter ad hoc, but if you have
 the need to run a filter for multiple inputs, it’s more efficient to follow the
 first example above, creating an instance of the filter object and calling its
@@ -381,18 +385,19 @@ and validator classes on demand to process sets of input data. See the
 <a href="../filter-chains/">FilterChain</a> chapter for more details.</p>
 <p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to
 amend the standard filter classes.</p>
-<pre class=codehilite><code class=language-php>$pluginManager = StaticFilter::getPluginManager()-&gt;setInvokableClass(
+<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()-&gt;setInvokableClass(
     'myNewFilter',
     'MyCustom\Filter\MyNewFilter'
 );
 
 StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
+
 <p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
 <h2 id="double-filtering">Double filtering</h2>
 <p>When using two filters in succession, you have to keep in mind that it is
 often not possible to get the original output by using the opposite filter. Take
 the following example:</p>
-<pre class=codehilite><code class=language-php>$original = 'my_original_content';
+<pre class="highlight"><code class="language-php">$original = 'my_original_content';
 
 // Attach a filter
 $filter   = new Laminas\Filter\Word\UnderscoreToCamelCase();
@@ -401,6 +406,7 @@ $filtered = $filter-&gt;filter($original);
 // Use it's opposite
 $filter2  = new Laminas\Filter\Word\CamelCaseToUnderscore();
 $filtered = $filter2-&gt;filter($filtered)</code></pre>
+
 <p>The above code example could lead to the impression that you will get the
 original output after the second filter has been applied. But thinking logically
 this is not the case. After applying the first filter, <code>my_original_content</code> will
@@ -413,10 +419,11 @@ given input.</p>
 <p>If you wish to indicate that your laminas-mvc module provides filters, have your
 <code>Module</code> class implement <code>Laminas\Filter\FilterProviderInterface</code>, which defines
 the method:</p>
-<pre class=codehilite><code class=language-php>/**
+<pre class="highlight"><code class="language-php">/**
  * @return array
  */
 public function getFilterConfig();</code></pre>
+
 <p>The method should return an array of configuration following the
 <a href="https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/">laminas-servicemanager configuration format</a>.</p>
 <p>If you are not using laminas-mvc, but are using a dependency injection container
