@@ -19,10 +19,11 @@ class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
 {
     protected $reflection;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! StringUtils::hasPcreUnicodeSupport()) {
-            return $this->markTestSkipped('PCRE is not compiled with Unicode support');
+            $this->markTestSkipped('PCRE is not compiled with Unicode support');
+            return;
         }
 
         $this->reflection = new ReflectionProperty('Laminas\Stdlib\StringUtils', 'hasPcreUnicodeSupport');
@@ -30,7 +31,7 @@ class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
         $this->reflection->setValue(false);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->reflection->setValue(true);
     }

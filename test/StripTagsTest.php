@@ -27,7 +27,7 @@ class StripTagsTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filter = new StripTagsFilter();
     }
@@ -424,7 +424,7 @@ class StripTagsTest extends TestCase
 =
     "alert(&quot;Gotcha&quot;); return false;">https://getlaminas.org/issues</a>';
         $filtered = $filter($input);
-        $this->assertNotContains('onclick', $filtered);
+        $this->assertStringNotContainsString('onclick', $filtered);
     }
 
     /**

@@ -61,7 +61,7 @@ class RenameTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $control = sprintf('%s/_files/testfile.txt', dirname(__DIR__));
         $this->tmpPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
@@ -83,7 +83,7 @@ class RenameTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_dir($this->tmpPath)) {
             if (file_exists($this->oldFile)) {
@@ -487,7 +487,10 @@ class RenameTest extends TestCase
             $filter->getFile()
         );
         $fileNoExt = $this->tmpPath . DIRECTORY_SEPARATOR . 'newfile';
-        $this->assertRegExp('#' . preg_quote($fileNoExt) . '_.{13}\.xml#', $filter->getNewName($this->oldFile));
+        $this->assertMatchesRegularExpression(
+            '#' . preg_quote($fileNoExt) . '_.{13}\.xml#',
+            $filter->getNewName($this->oldFile)
+        );
     }
 
     /**
@@ -511,7 +514,10 @@ class RenameTest extends TestCase
             ]],
             $filter->getFile()
         );
-        $this->assertRegExp('#' . preg_quote($fileNoExt) . '_.{13}#', $filter->getNewName($this->oldFile));
+        $this->assertMatchesRegularExpression(
+            '#' . preg_quote($fileNoExt) . '_.{13}#',
+            $filter->getNewName($this->oldFile)
+        );
     }
 
     /**

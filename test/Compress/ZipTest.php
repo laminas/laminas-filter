@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class ZipTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('zip')) {
             $this->markTestSkipped('This adapter needs the zip extension');
@@ -54,7 +54,7 @@ class ZipTest extends TestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $files = [
             $this->tmp . '/compressed.zip',

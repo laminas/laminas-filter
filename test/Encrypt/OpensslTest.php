@@ -15,7 +15,7 @@ use ReflectionProperty;
 
 class OpensslTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the openssl extension');
@@ -190,7 +190,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
             $filter->decrypt('unknown');
             $this->fail();
         } catch (\Laminas\Filter\Exception\RuntimeException $e) {
-            $this->assertContains('Please give a private key', $e->getMessage());
+            $this->assertStringContainsString('Please give a private key', $e->getMessage());
         }
 
         $filter->setPrivateKey(['public' => __DIR__ . '/../_files/privatekey.pem']);
@@ -198,7 +198,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
             $filter->decrypt('unknown');
             $this->fail();
         } catch (\Laminas\Filter\Exception\RuntimeException $e) {
-            $this->assertContains('Please give an envelope key', $e->getMessage());
+            $this->assertStringContainsString('Please give an envelope key', $e->getMessage());
         }
 
         $filter->setEnvelopeKey('unknown');
@@ -206,7 +206,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
             $filter->decrypt('unknown');
             $this->fail();
         } catch (\Laminas\Filter\Exception\RuntimeException $e) {
-            $this->assertContains('was not able to decrypt', $e->getMessage());
+            $this->assertStringContainsString('was not able to decrypt', $e->getMessage());
         }
     }
 

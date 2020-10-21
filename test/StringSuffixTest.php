@@ -23,7 +23,7 @@ class StringSuffixTest extends TestCase
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->filter = new StringSuffixFilter();
     }

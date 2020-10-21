@@ -37,11 +37,9 @@ class MonthSelectTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \Laminas\Filter\Exception\RuntimeException
-     */
     public function testInvalidInput()
     {
+        $this->expectException(\Laminas\Filter\Exception\RuntimeException::class);
         $sut = new MonthSelectFilter();
         $sut->filter(['year' => '2120']);
     }

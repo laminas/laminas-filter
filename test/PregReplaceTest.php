@@ -19,7 +19,7 @@ class PregReplaceTest extends TestCase
      */
     protected $filter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filter = new PregReplaceFilter();
     }

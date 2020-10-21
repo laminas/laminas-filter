@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class BlockCipherTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
@@ -163,20 +163,20 @@ class BlockCipherTest extends TestCase
             $filter->setEncryption(1234);
             $filter->fail();
         } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
-            $this->assertContains('Invalid options argument', $e->getMessage());
+            $this->assertStringContainsString('Invalid options argument', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(['algorithm' => 'unknown']);
             $filter->fail();
         } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
-            $this->assertContains('The algorithm', $e->getMessage());
+            $this->assertStringContainsString('The algorithm', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(['mode' => 'unknown']);
         } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
-            $this->assertContains('The mode', $e->getMessage());
+            $this->assertStringContainsString('The mode', $e->getMessage());
         }
     }
 

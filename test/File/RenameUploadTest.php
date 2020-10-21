@@ -12,6 +12,7 @@ use Laminas\Filter\Exception;
 use Laminas\Filter\File\RenameUpload as FileRenameUpload;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
@@ -19,6 +20,8 @@ use Psr\Http\Message\UploadedFileInterface;
 
 class RenameUploadTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Path to test files
      *
@@ -59,7 +62,7 @@ class RenameUploadTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->filesPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
         $this->targetPath = sprintf('%s%s%s', $this->filesPath, DIRECTORY_SEPARATOR, 'targetPath');
@@ -78,7 +81,7 @@ class RenameUploadTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->removeDir($this->filesPath);
     }
@@ -307,7 +310,10 @@ class RenameUploadTest extends TestCase
             'randomize'       => true,
         ]);
 
-        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.xml#', $filter($this->sourceFile));
+        $this->assertMatchesRegularExpression(
+            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.xml#',
+            $filter($this->sourceFile)
+        );
     }
 
     public function testGetFileWithOriginalExtension()
@@ -321,7 +327,7 @@ class RenameUploadTest extends TestCase
 
         $oldFilePathInfo = pathinfo($this->sourceFile);
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#' . str_replace('\\', '\\\\', $fileNoExt) . '.'.$oldFilePathInfo['extension'].'#',
             $filter($this->sourceFile)
         );
@@ -338,7 +344,7 @@ class RenameUploadTest extends TestCase
 
         $oldFilePathInfo = pathinfo($this->sourceFile);
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.'.$oldFilePathInfo['extension'].'#',
             $filter($this->sourceFile)
         );
@@ -355,7 +361,10 @@ class RenameUploadTest extends TestCase
             'randomize'       => true,
         ]);
 
-        $this->assertRegExp('#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}#', $filter($this->sourceFile));
+        $this->assertMatchesRegularExpression(
+            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}#',
+            $filter($this->sourceFile)
+        );
     }
 
     /**
@@ -380,7 +389,7 @@ class RenameUploadTest extends TestCase
 
         $firstResult = $filter($this->sourceFile);
 
-        $this->assertContains('newfile', $firstResult);
+        $this->assertStringContainsString('newfile', $firstResult);
 
         $secondResult = $filter($this->sourceFile);
 

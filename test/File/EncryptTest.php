@@ -18,7 +18,7 @@ class EncryptTest extends TestCase
     public $testDir;
     public $testFile;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
@@ -29,7 +29,7 @@ class EncryptTest extends TestCase
         $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists($this->testFile)) {
             unlink($this->testFile);

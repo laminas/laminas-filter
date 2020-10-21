@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class EncryptTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');

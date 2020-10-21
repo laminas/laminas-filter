@@ -16,13 +16,13 @@ class TarTest extends TestCase
 {
     public $tmp;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tmp = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
         mkdir($this->tmp, 0775, true);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $files = [
             $this->tmp . '/zipextracted.txt',
