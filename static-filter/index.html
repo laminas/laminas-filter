@@ -233,7 +233,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -318,14 +318,12 @@ string, which corresponds to the basename of the filter class, relative to the
 <code>Laminas\Filter</code> namespace. The <code>execute()</code> method automatically loads the class,
 creates an instance, and applies the <code>filter()</code> method to the data input.</p>
 <pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-
 <p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
 <pre class="highlight"><code class="language-php">echo StaticFilter::execute(
     '"',
     'HtmlEntities',
     ['quotestyle' =&gt; ENT_QUOTES]
 );</code></pre>
-
 <p>The static usage can be convenient for invoking a filter ad hoc, but if you
 have the need to run a filter for multiple inputs, it's more efficient to
 create an instance of the filter and invoke it.  instance of the filter object
@@ -339,7 +337,6 @@ amend the standard filter classes:</p>
     -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
 
 StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-
 <p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
 
 
@@ -558,7 +555,7 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

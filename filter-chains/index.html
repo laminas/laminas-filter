@@ -233,7 +233,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -328,7 +328,6 @@ $filterChain
 
 // Filter the username
 $username = $filterChain-&gt;filter($_POST['username']);</code></pre>
-
 <p>Filters are run in the order they are added to the filter chain. In the above
 example, the username is first removed of any non-alphabetic characters, and
 then any uppercase characters are converted to lowercase.</p>
@@ -345,7 +344,6 @@ $filterChain = new Laminas\Filter\FilterChain();
 $filterChain
     -&gt;attach(new Laminas\I18n\Filter\Alpha())
     -&gt;attach(new Laminas\Filter\StringToLower(), 500);</code></pre>
-
 <h2 id="using-the-plugin-manager">Using the Plugin Manager</h2>
 <p>A <code>FilterPluginManager</code> is attached to every <code>FilterChain</code> instance. Every filter
 that is used in a <code>FilterChain</code> must be known to the <code>FilterPluginManager</code>.</p>
@@ -358,7 +356,6 @@ $filterChain = new Laminas\Filter\FilterChain();
 $filterChain
     -&gt;attachByName('alpha')
     -&gt;attachByName('stringtolower', ['encoding' =&gt; 'utf-8'], 500);</code></pre>
-
 <p>The following example shows how to add a custom filter to the <code>FilterPluginManager</code> and the
 <code>FilterChain</code>:</p>
 <pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain();
@@ -368,7 +365,6 @@ $filterChain
 $filterChain
     -&gt;attachByName('alpha')
     -&gt;attachByName('myNewFilter');</code></pre>
-
 <p>You can also add your own <code>FilterPluginManager</code> implementation:</p>
 <pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain();
 $filterChain-&gt;setPluginManager(new MyFilterPluginManager());
@@ -592,7 +588,7 @@ $filterChain
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

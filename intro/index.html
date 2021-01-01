@@ -233,7 +233,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -350,14 +350,12 @@ ampersand (<code>&amp;</code>) and double quote (<code>"</code>) characters:</p>
 
 echo $htmlEntities-&gt;filter('&amp;'); // &amp;amp;
 echo $htmlEntities-&gt;filter('"'); // &amp;quot;</code></pre>
-
 <p>Also, if a filter inherits from <code>Laminas\Filter\AbstractFilter</code> (as do all of the
 out-of-the-box filters), you can also use them as invokables:</p>
 <pre class="highlight"><code class="language-php">$strtolower = new Laminas\Filter\StringToLower;
 
 echo $strtolower('I LOVE Laminas!'); // i love laminas!
 $laminaslove = $strtolower('I LOVE Laminas!');</code></pre>
-
 <h2 id="using-the-staticfilter">Using the StaticFilter</h2>
 <p>If it is inconvenient to load a given filter class and create an instance of the
 filter, you can use <code>StaticFilter</code> with its <code>execute()</code> method as an alternative
@@ -367,7 +365,6 @@ corresponds to the basename of the filter class, relative to the <code>Laminas\F
 namespace. The <code>execute()</code> method automatically loads the class, creates an
 instance, and applies the <code>filter()</code> method to the data input.</p>
 <pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-
 <p>You can also pass an array of constructor arguments, if they are needed for the
 filter class:</p>
 <pre class="highlight"><code class="language-php">echo StaticFilter::execute(
@@ -375,7 +372,6 @@ filter class:</p>
     'HtmlEntities',
     ['quotestyle' =&gt; ENT_QUOTES]
 );</code></pre>
-
 <p>The static usage can be convenient for invoking a filter ad hoc, but if you have
 the need to run a filter for multiple inputs, it’s more efficient to follow the
 first example above, creating an instance of the filter object and calling its
@@ -391,7 +387,6 @@ amend the standard filter classes.</p>
 );
 
 StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-
 <p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
 <h2 id="double-filtering">Double filtering</h2>
 <p>When using two filters in succession, you have to keep in mind that it is
@@ -406,7 +401,6 @@ $filtered = $filter-&gt;filter($original);
 // Use it's opposite
 $filter2  = new Laminas\Filter\Word\CamelCaseToUnderscore();
 $filtered = $filter2-&gt;filter($filtered)</code></pre>
-
 <p>The above code example could lead to the impression that you will get the
 original output after the second filter has been applied. But thinking logically
 this is not the case. After applying the first filter, <code>my_original_content</code> will
@@ -423,7 +417,6 @@ the method:</p>
  * @return array
  */
 public function getFilterConfig();</code></pre>
-
 <p>The method should return an array of configuration following the
 <a href="https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/">laminas-servicemanager configuration format</a>.</p>
 <p>If you are not using laminas-mvc, but are using a dependency injection container
@@ -649,7 +642,7 @@ implementation of the <code>FilterProviderInterface</code>.)</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

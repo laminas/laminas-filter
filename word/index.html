@@ -233,7 +233,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -364,7 +364,6 @@ to filtering word strings.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToDash();
 
 print $filter-&gt;filter('ThisIsMyContent');</code></pre>
-
 <p>The above example returns <code>This-Is-My-Content</code>.</p>
 <h2 id="camelcasetoseparator">CamelCaseToSeparator</h2>
 <p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to <code>Camel Case Words</code>.</p>
@@ -379,13 +378,11 @@ print $filter-&gt;filter('ThisIsMyContent');</code></pre>
 // or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' =&gt; ':'));
 
 print $filter-&gt;filter('ThisIsMyContent');</code></pre>
-
 <p>The above example returns <code>This:Is:My:Content</code>.</p>
 <h3>Default Behavior</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToSeparator();
 
 print $filter-&gt;filter('ThisIsMyContent');</code></pre>
-
 <p>The above example returns <code>This Is My Content</code>.</p>
 <h2 id="camelcasetounderscore">CamelCaseToUnderscore</h2>
 <p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to
@@ -396,7 +393,6 @@ print $filter-&gt;filter('ThisIsMyContent');</code></pre>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToUnderscore();
 
 print $filter-&gt;filter('ThisIsMyContent');</code></pre>
-
 <p>The above example returns <code>This_Is_My_Content</code>.</p>
 <h2 id="dashtocamelcase">DashToCamelCase</h2>
 <p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
@@ -407,7 +403,6 @@ to <code>WordsWithDashes</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToCamelCase();
 
 print $filter-&gt;filter('this-is-my-content');</code></pre>
-
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h2 id="dashtoseparator">DashToSeparator</h2>
 <p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
@@ -423,13 +418,11 @@ to <code>words with dashes</code>.</p>
 // or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' =&gt; '+'));
 
 print $filter-&gt;filter('this-is-my-content');</code></pre>
-
 <p>The above example returns <code>this+is+my+content</code>.</p>
 <h3>Default Behavior</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToSeparator();
 
 print $filter-&gt;filter('this-is-my-content');</code></pre>
-
 <p>The above example returns <code>this is my content</code>.</p>
 <h2 id="dashtounderscore">DashToUnderscore</h2>
 <p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
@@ -440,7 +433,6 @@ to <code>words_with_dashes</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToUnderscore();
 
 print $filter-&gt;filter('this-is-my-content');</code></pre>
-
 <p>The above example returns <code>this_is_my_content</code>.</p>
 <h2 id="separatortocamelcase">SeparatorToCamelCase</h2>
 <p>This filter modifies a given string such that <code>words with separators</code> are
@@ -456,13 +448,11 @@ converted to <code>WordsWithSeparators</code>.</p>
 // or new Laminas\Filter\Word\SeparatorToCamelCase(array('separator' =&gt; ':'));
 
 print $filter-&gt;filter('this:is:my:content');</code></pre>
-
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h3>Default Behavior</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToCamelCase();
 
 print $filter-&gt;filter('this is my content');</code></pre>
-
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h2 id="separatortodash">SeparatorToDash</h2>
 <p>This filter modifies a given string such that <code>words with separators</code> are
@@ -478,13 +468,11 @@ converted to <code>words-with-separators</code>.</p>
 // or new Laminas\Filter\Word\SeparatorToDash(array('separator' =&gt; ':'));
 
 print $filter-&gt;filter('this:is:my:content');</code></pre>
-
 <p>The above example returns <code>this-is-my-content</code>.</p>
 <h3>Default Behavior</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToDash();
 
 print $filter-&gt;filter('this is my content');</code></pre>
-
 <p>The above example returns <code>this-is-my-content</code>.</p>
 <h2 id="separatortoseparator">SeparatorToSeparator</h2>
 <p>This filter modifies a given string such that <code>words with separators</code> are
@@ -501,13 +489,11 @@ converted to <code>words-with-separators</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToSeparator(':', '+');
 
 print $filter-&gt;filter('this:is:my:content');</code></pre>
-
 <p>The above example returns <code>this+is+my+content</code>.</p>
 <h3>Default Behaviour</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToSeparator();
 
 print $filter-&gt;filter('this is my content');</code></pre>
-
 <p>The above example returns <code>this-is-my-content</code>.</p>
 <h2 id="underscoretocamelcase">UnderscoreToCamelCase</h2>
 <p>This filter modifies a given string such that <code>words_with_underscores</code> are
@@ -518,7 +504,6 @@ converted to <code>WordsWithUnderscores</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToCamelCase();
 
 print $filter-&gt;filter('this_is_my_content');</code></pre>
-
 <p>The above example returns <code>ThisIsMyContent</code>.</p>
 <h2 id="underscoretoseparator">UnderscoreToSeparator</h2>
 <p>This filter modifies a given string such that <code>words_with_underscores</code> are
@@ -534,13 +519,11 @@ converted to <code>words with underscores</code>.</p>
 // or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' =&gt; '+'));
 
 print $filter-&gt;filter('this_is_my_content');</code></pre>
-
 <p>The above example returns <code>this+is+my+content</code>.</p>
 <h3>Default Behavior</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToSeparator();
 
 print $filter-&gt;filter('this_is_my_content');</code></pre>
-
 <p>The above example returns <code>this is my content</code>.</p>
 <h2 id="underscoretodash">UnderscoreToDash</h2>
 <p>This filter modifies a given string such that <code>words_with_underscores</code> are
@@ -551,7 +534,6 @@ converted to <code>words-with-underscores</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToDash();
 
 print $filter-&gt;filter('this_is_my_content');</code></pre>
-
 <p>The above example returns <code>this-is-my-content</code>.</p>
 
 
@@ -770,7 +752,7 @@ print $filter-&gt;filter('this_is_my_content');</code></pre>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
