@@ -22,7 +22,7 @@ class FilterPluginManagerTest extends TestCase
      */
     private $filters;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filters = new FilterPluginManager(new ServiceManager());
     }

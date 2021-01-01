@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class SnappyTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('snappy')) {
             $this->markTestSkipped('This adapter needs the snappy extension');

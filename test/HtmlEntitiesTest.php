@@ -28,7 +28,7 @@ class HtmlEntitiesTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filter = new HtmlEntitiesFilter();
     }

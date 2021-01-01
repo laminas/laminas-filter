@@ -16,7 +16,7 @@ class CompressTest extends TestCase
 {
     public $tmpDir;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This filter is tested with the bz2 extension');
@@ -26,7 +26,7 @@ class CompressTest extends TestCase
         mkdir($this->tmpDir, 0775, true);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_dir($this->tmpDir)) {
             if (file_exists($this->tmpDir . '/compressed.bz2')) {

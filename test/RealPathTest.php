@@ -34,7 +34,7 @@ class RealPathTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filesPath = __DIR__ . DIRECTORY_SEPARATOR . '_files';
         $this->_filter    = new RealPathFilter();
@@ -49,7 +49,7 @@ class RealPathTest extends TestCase
     {
         $filter   = $this->_filter;
         $filename = 'file.1';
-        $this->assertContains($filename, $filter($this->_filesPath . DIRECTORY_SEPARATOR . $filename));
+        $this->assertStringContainsString($filename, $filter($this->_filesPath . DIRECTORY_SEPARATOR . $filename));
     }
 
     /**

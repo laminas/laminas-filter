@@ -19,7 +19,7 @@ class DecryptTest extends TestCase
 
     public $tmpDir;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
             $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
@@ -31,7 +31,7 @@ class DecryptTest extends TestCase
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_dir($this->tmpDir)) {
             if (file_exists($this->tmpDir . '/newencryption.txt')) {

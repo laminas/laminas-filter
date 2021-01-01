@@ -16,7 +16,7 @@ class Bz2Test extends TestCase
 {
     public $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
@@ -25,7 +25,7 @@ class Bz2Test extends TestCase
         $this->target = sprintf('%s/%s.bz2', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists($this->target)) {
             unlink($this->target);

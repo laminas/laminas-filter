@@ -12,38 +12,31 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 5.6
+    - php: 7.3
       env:
         - DEPS=lowest
-        - REMOVE_DEV_DEPS="psr/http-factory"
-    - php: 5.6
-      env:
-        - DEPS=latest
-        - REMOVE_DEV_DEPS="psr/http-factory"
-    - php: 7
-      env:
-        - DEPS=lowest
-    - php: 7
-      env:
-        - DEPS=latest
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
+    - php: 7.3
       env:
         - DEPS=latest
         - CS_CHECK=true
         - TEST_COVERAGE=true
-    - php: 7.2
+    - php: 7.4
       env:
         - DEPS=lowest
-    - php: 7.2
+    - php: 7.4
       env:
         - DEPS=latest
+    - php: 8.0
+      env:
+        - DEPS=lowest
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - php: 8.0
+      env:
+        - DEPS=latest
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
-  - if [[ $REMOVE_DEV_DEPS != '' ]]; then travis_retry composer remove $COMPOSER_ARGS --dev --no-update $REMOVE_DEV_DEPS ; fi
 
 install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs

@@ -27,7 +27,7 @@ class DigitsTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (null === static::$_unicodeEnabled) {
             static::$_unicodeEnabled = (bool) @preg_match('/\pL/u', 'a');

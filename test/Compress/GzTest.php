@@ -16,7 +16,7 @@ class GzTest extends TestCase
 {
     public $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('zlib')) {
             $this->markTestSkipped('This adapter needs the zlib extension');
@@ -25,7 +25,7 @@ class GzTest extends TestCase
         $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists($this->target)) {
             unlink($this->target);

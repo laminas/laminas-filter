@@ -16,7 +16,7 @@ class RarTest extends TestCase
 {
     public $tmp;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('rar')) {
             $this->markTestSkipped('This adapter needs the rar extension');
@@ -48,7 +48,7 @@ class RarTest extends TestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $files = [
             $this->tmp . '/zipextracted.txt',

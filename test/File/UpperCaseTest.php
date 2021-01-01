@@ -26,7 +26,7 @@ class UpperCaseTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
         $origFile  = $filesPath . 'testfile2.txt';
@@ -40,7 +40,7 @@ class UpperCaseTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists($this->testFile)) {
             unlink($this->testFile);
@@ -52,10 +52,10 @@ class UpperCaseTest extends TestCase
      */
     public function testInstanceCreationAndNormalWorkflow()
     {
-        $this->assertContains('This is a File', file_get_contents($this->testFile));
+        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileUpperCase();
         $filter($this->testFile);
-        $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
+        $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
     }
 
     /**
@@ -63,10 +63,10 @@ class UpperCaseTest extends TestCase
      */
     public function testNormalWorkflowWithFilesArray()
     {
-        $this->assertContains('This is a File', file_get_contents($this->testFile));
+        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileUpperCase();
         $filter(['tmp_name' => $this->testFile]);
-        $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
+        $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
     }
 
     /**
@@ -85,13 +85,13 @@ class UpperCaseTest extends TestCase
      */
     public function testCheckSettingOfEncodingInIstance()
     {
-        $this->assertContains('This is a File', file_get_contents($this->testFile));
+        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileUpperCase('ISO-8859-1');
             $filter($this->testFile);
-            $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
+            $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
         } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
-            $this->assertContains('mbstring is required', $e->getMessage());
+            $this->assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
 
@@ -100,14 +100,14 @@ class UpperCaseTest extends TestCase
      */
     public function testCheckSettingOfEncodingWithMethod()
     {
-        $this->assertContains('This is a File', file_get_contents($this->testFile));
+        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileUpperCase();
             $filter->setEncoding('ISO-8859-1');
             $filter($this->testFile);
-            $this->assertContains('THIS IS A FILE', file_get_contents($this->testFile));
+            $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
         } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
-            $this->assertContains('mbstring is required', $e->getMessage());
+            $this->assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
 

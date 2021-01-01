@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class LlaminasTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (! extension_loaded('llaminas')) {
             $this->markTestSkipped('This adapter needs the llaminas extension');
