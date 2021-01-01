@@ -131,7 +131,7 @@ class Openssl implements EncryptionAlgorithmInterface
                         throw new Exception\InvalidArgumentException("Public key '{$cert}' not valid");
                     }
 
-                    $this->freeKeyResource([$test]);
+                    $this->freeKeyResources([$test]);
                     $this->keys['public'][$key] = $cert;
                     break;
                 case 'private':
@@ -140,7 +140,7 @@ class Openssl implements EncryptionAlgorithmInterface
                         throw new Exception\InvalidArgumentException("Private key '{$cert}' not valid");
                     }
 
-                    $this->freeKeyResource([$test]);
+                    $this->freeKeyResources([$test]);
                     $this->keys['private'][$key] = $cert;
                     break;
                 case 'envelope':
@@ -366,7 +366,7 @@ class Openssl implements EncryptionAlgorithmInterface
 
         $crypt  = openssl_seal($value, $encrypted, $encryptedkeys, $keys, 'RC4');
 
-        $this->freeKeyResource($keys);
+        $this->freeKeyResources($keys);
 
         if ($crypt === false) {
             throw new Exception\RuntimeException('Openssl was not able to encrypt your content with the given options');
@@ -440,7 +440,7 @@ class Openssl implements EncryptionAlgorithmInterface
 
         $crypt  = openssl_open($value, $decrypted, $envelope, $keys, 'RC4');
 
-        $this->freeKeyResource([$keys]);
+        $this->freeKeyResources([$keys]);
 
         if ($crypt === false) {
             throw new Exception\RuntimeException('Openssl was not able to decrypt you content with the given options');
@@ -471,7 +471,7 @@ class Openssl implements EncryptionAlgorithmInterface
      *
      * @param array<int,resource> $keys
      */
-    private function freeKeyResource(array $keys): void
+    private function freeKeyResources(array $keys): void
     {
         if (PHP_VERSION_ID < 80000) {
             foreach ($keys as $key) {
