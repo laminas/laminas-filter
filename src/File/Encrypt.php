@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\File;
+namespace Laminas\Filter\File;
 
-use Zend\Filter;
-use Zend\Filter\Exception;
+use Laminas\Filter;
+use Laminas\Filter\Exception;
 
 /**
  * Encrypts a given file and stores the encrypted file content
@@ -46,7 +46,7 @@ class Encrypt extends Filter\Encrypt
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Encrypts the file $value with the defined settings
      *

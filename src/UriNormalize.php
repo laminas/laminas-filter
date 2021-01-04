@@ -6,11 +6,11 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
-use Zend\Uri\Exception\ExceptionInterface as UriException;
-use Zend\Uri\UriFactory;
-use Zend\Uri\Uri;
+use Laminas\Uri\Exception\ExceptionInterface as UriException;
+use Laminas\Uri\UriFactory;
+use Laminas\Uri\Uri;
 
 class UriNormalize extends AbstractFilter
 {

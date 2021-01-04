@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\SeparatorToDash as SeparatorToDashFilter;
+use Laminas\Filter\Word\SeparatorToDash as SeparatorToDashFilter;
 
 /**
- * Test class for Zend\Filter\Word\SeparatorToDash.
+ * Test class for Laminas\Filter\Word\SeparatorToDash.
  *
  * @group      Zend_Filter
  */

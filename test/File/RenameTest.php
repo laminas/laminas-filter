@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\Rename as FileRename;
+use Laminas\Filter\File\Rename as FileRename;
 
 /**
  * @group      Zend_Filter
@@ -441,7 +441,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
             )),
             $filter->getFile()
         );
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'could not be renamed');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'could not be renamed');
         $this->assertEquals($this->_newFile, $filter->getNewName($this->_oldFile));
     }
 
@@ -544,7 +544,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
     public function testAddFileWithInvalidOption()
     {
         $filter = new FileRename($this->_oldFile);
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Invalid options');
         $filter->addFile(1234);
     }
 
@@ -553,7 +553,7 @@ class RenameTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidConstruction()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid options');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Invalid options');
         $filter = new FileRename(1234);
     }
 

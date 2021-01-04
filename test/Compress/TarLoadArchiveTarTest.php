@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Tar as TarCompression;
-use Zend\Filter\Exception\ExtensionNotLoadedException;
+use Laminas\Filter\Compress\Tar as TarCompression;
+use Laminas\Filter\Exception\ExtensionNotLoadedException;
 
 /**
  * @group      Zend_Filter

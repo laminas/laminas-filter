@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 class Dir extends AbstractFilter
 {
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Defined by Laminas\Filter\FilterInterface
      *
      * Returns dirname($value)
      *

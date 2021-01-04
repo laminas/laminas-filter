@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\Word;
+namespace Laminas\Filter\Word;
 
-use Zend\Filter\AbstractFilter;
-use Zend\Filter\Exception;
+use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\Exception;
 
 abstract class AbstractSeparator extends AbstractFilter
 {

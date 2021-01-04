@@ -6,24 +6,24 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\StringToUpper as StringToUpperFilter;
+use Laminas\Filter\StringToUpper as StringToUpperFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class StringToUpperTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_StringToLower object
+     * Laminas_Filter_StringToLower object
      *
      * @var StringToUpperFilter
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_StringToUpper object for each test method
+     * Creates a new Laminas_Filter_StringToUpper object for each test method
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class StringToUpperTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -85,7 +85,7 @@ class StringToUpperTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('mbstring required');
         }
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'is not supported');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'is not supported');
         $this->_filter->setEncoding('aaaaa');
     }
 
@@ -105,7 +105,7 @@ class StringToUpperTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -137,7 +137,7 @@ class StringToUpperTest extends \PHPUnit_Framework_TestCase
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
             }
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }

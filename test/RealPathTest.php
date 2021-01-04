@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\RealPath as RealPathFilter;
+use Laminas\Filter\RealPath as RealPathFilter;
 
 /**
  * @group      Zend_Filter

@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\UnderscoreToSeparator as UnderscoreToSeparatorFilter;
+use Laminas\Filter\Word\UnderscoreToSeparator as UnderscoreToSeparatorFilter;
 
 /**
- * Test class for Zend\Filter\Word\UnderscoreToSeparator.
+ * Test class for Laminas\Filter\Word\UnderscoreToSeparator.
  *
  * @group      Zend_Filter
  */

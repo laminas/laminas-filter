@@ -5,12 +5,12 @@
  * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\PregReplace as PregReplaceFilter;
+use Laminas\Filter\PregReplace as PregReplaceFilter;
 
 /**
- * Test class for Zend\Filter\PregReplace.
+ * Test class for Laminas\Filter\PregReplace.
  *
  * @group Zend_Filter
  */
@@ -106,14 +106,14 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
         $filter = $this->filter;
         $string = 'controller/action';
         $filter->setReplacement('foo/bar');
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException', 'does not have a valid pattern set');
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException', 'does not have a valid pattern set');
         $filtered = $filter($string);
     }
 
     public function testPassingPatternWithExecModifierRaisesException()
     {
         $filter = new PregReplaceFilter();
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', '"e" pattern modifier');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', '"e" pattern modifier');
         $filter->setPattern('/foo/e');
     }
 

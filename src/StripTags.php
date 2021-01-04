@@ -6,17 +6,17 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Stdlib\ArrayUtils;
 
 class StripTags extends AbstractFilter
 {
     /**
      * Unique ID prefix used for allowing comments
      */
-    const UNIQUE_ID_PREFIX = '__Zend_Filter_StripTags__';
+    const UNIQUE_ID_PREFIX = '__Laminas_Filter_StripTags__';
 
     /**
      * Array of allowed tags and allowed attributes for each allowed tag
@@ -162,7 +162,7 @@ class StripTags extends AbstractFilter
     }
 
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Defined by Laminas\Filter\FilterInterface
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *

@@ -30,6 +30,6 @@ require __DIR__ . '/../vendor/autoload.php';
 /**
  * Start output buffering, if enabled
  */
-if (defined('TESTS_ZEND_OB_ENABLED') && constant('TESTS_ZEND_OB_ENABLED')) {
+if (defined('TESTS_LAMINAS_OB_ENABLED') && constant('TESTS_LAMINAS_OB_ENABLED')) {
     ob_start();
 }

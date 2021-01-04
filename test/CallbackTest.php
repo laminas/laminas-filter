@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Callback as CallbackFilter;
+use Laminas\Filter\Callback as CallbackFilter;
 
 /**
  * @group      Zend_Filter

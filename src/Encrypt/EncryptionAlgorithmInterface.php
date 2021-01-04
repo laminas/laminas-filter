@@ -6,7 +6,7 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\Encrypt;
+namespace Laminas\Filter\Encrypt;
 
 /**
  * Encryption interface

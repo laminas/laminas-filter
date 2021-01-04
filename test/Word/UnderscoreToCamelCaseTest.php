@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\UnderscoreToCamelCase as UnderscoreToCamelCaseFilter;
+use Laminas\Filter\Word\UnderscoreToCamelCase as UnderscoreToCamelCaseFilter;
 
 /**
- * Test class for Zend\Filter\Word\UnderscoreToCamelCase.
+ * Test class for Laminas\Filter\Word\UnderscoreToCamelCase.
  *
  * @group      Zend_Filter
  */

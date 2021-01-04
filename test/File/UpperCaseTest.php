@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\UpperCase as FileUpperCase;
+use Laminas\Filter\File\UpperCase as FileUpperCase;
 
 /**
  * @group      Zend_Filter
@@ -92,7 +92,7 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
     public function testFileNotFoundException()
     {
         $filter = new FileUpperCase();
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not found');
         $filter($this->_newFile . 'unknown');
     }
 
@@ -106,7 +106,7 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
             $filter = new FileUpperCase('ISO-8859-1');
             $filter($this->_newFile);
             $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
@@ -122,7 +122,7 @@ class UpperCaseTest extends \PHPUnit_Framework_TestCase
             $filter->setEncoding('ISO-8859-1');
             $filter($this->_newFile);
             $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
-        } catch (\Zend\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }

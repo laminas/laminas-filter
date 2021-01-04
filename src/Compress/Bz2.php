@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\Compress;
+namespace Laminas\Filter\Compress;
 
-use Zend\Filter\Exception;
+use Laminas\Filter\Exception;
 
 /**
  * Compression adapter for Bz2

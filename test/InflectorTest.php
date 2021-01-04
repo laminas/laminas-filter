@@ -6,13 +6,13 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Inflector as InflectorFilter;
-use Zend\Filter\FilterPluginManager;
+use Laminas\Filter\Inflector as InflectorFilter;
+use Laminas\Filter\FilterPluginManager;
 
 /**
- * Test class for Zend\Filter\Inflector.
+ * Test class for Laminas\Filter\Inflector.
  *
  * @group      Zend_Filter
  */
@@ -90,19 +90,19 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
         $filter = $rules[0];
-        $this->assertTrue($filter instanceof \Zend\Filter\FilterInterface);
+        $this->assertTrue($filter instanceof \Laminas\Filter\FilterInterface);
     }
 
     public function testSetFilterRuleWithFilterObjectCreatesRuleEntryWithFilterObject()
     {
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
-        $filter = new \Zend\Filter\PregReplace();
+        $filter = new \Laminas\Filter\PregReplace();
         $this->inflector->setFilterRule('controller', $filter);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
         $received = $rules[0];
-        $this->assertTrue($received instanceof \Zend\Filter\FilterInterface);
+        $this->assertTrue($received instanceof \Laminas\Filter\FilterInterface);
         $this->assertSame($filter, $received);
     }
 
@@ -117,8 +117,8 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         $this->inflector->setFilterRule('controller', array('PregReplace', 'Alpha'));
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(2, count($rules));
-        $this->assertTrue($rules[0] instanceof \Zend\Filter\FilterInterface);
-        $this->assertTrue($rules[1] instanceof \Zend\Filter\FilterInterface);
+        $this->assertTrue($rules[0] instanceof \Laminas\Filter\FilterInterface);
+        $this->assertTrue($rules[1] instanceof \Laminas\Filter\FilterInterface);
     }
 
     public function testSetStaticRuleCreatesScalarRuleEntry()
@@ -199,7 +199,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->inflector->setFilterRule(':controller', array('Alpha', 'StringToLower'));
-        $this->assertTrue($this->inflector->getRule('controller', 1) instanceof \Zend\Filter\StringToLower);
+        $this->assertTrue($this->inflector->getRule('controller', 1) instanceof \Laminas\Filter\StringToLower);
         $this->assertFalse($this->inflector->getRule('controller', 2));
     }
 
@@ -274,7 +274,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
             '?=##'
             );
 
-        $this->setExpectedException('\Zend\Filter\Exception\RuntimeException', 'perhaps a rule was not satisfied');
+        $this->setExpectedException('\Laminas\Filter\Exception\RuntimeException', 'perhaps a rule was not satisfied');
         $filtered = $inflector(array('controller' => 'FooBar'));
     }
 
@@ -319,7 +319,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
     public function getConfig()
     {
         $options = $this->getOptions();
-        return new \Zend\Config\Config($options);
+        return new \Laminas\Config\Config($options);
     }
 
     protected function _testOptions($inflector)
@@ -328,7 +328,7 @@ class InflectorTest extends \PHPUnit_Framework_TestCase
         $broker  = $inflector->getPluginManager();
         $this->assertEquals($options['target'], $inflector->getTarget());
 
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $broker);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $broker);
         $this->assertTrue($inflector->isThrowTargetExceptionsOn());
         $this->assertEquals($options['targetReplacementIdentifier'], $inflector->getTargetReplacementIdentifier());
 

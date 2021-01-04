@@ -6,24 +6,24 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\StripTags as StripTagsFilter;
+use Laminas\Filter\StripTags as StripTagsFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class StripTagsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_StripTags object
+     * Laminas_Filter_StripTags object
      *
      * @var StripTagsFilter
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_StripTags object for each test method
+     * Creates a new Laminas_Filter_StripTags object for each test method
      *
      * @return void
      */

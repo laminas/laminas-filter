@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\RenameUpload;
+use Laminas\Filter\File\RenameUpload;
 
 class RenameUploadMock extends RenameUpload
 {

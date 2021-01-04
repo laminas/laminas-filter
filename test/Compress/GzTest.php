@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Gz as GzCompression;
+use Laminas\Filter\Compress\Gz as GzCompression;
 
 /**
  * @group      Zend_Filter
@@ -94,7 +94,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
         $filter->setLevel(6);
         $this->assertEquals(6, $filter->getOptions('level'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'must be between');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'must be between');
         $filter->setLevel(15);
     }
 
@@ -110,7 +110,7 @@ class GzTest extends \PHPUnit_Framework_TestCase
         $filter->setMode('deflate');
         $this->assertEquals('deflate', $filter->getOptions('mode'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'mode not supported');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'mode not supported');
         $filter->setMode('unknown');
     }
 

@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\CamelCaseToSeparator as CamelCaseToSeparatorFilter;
+use Laminas\Filter\Word\CamelCaseToSeparator as CamelCaseToSeparatorFilter;
 
 /**
- * Test class for Zend\Filter\Word\CamelCaseToSeparator.
+ * Test class for Laminas\Filter\Word\CamelCaseToSeparator.
  *
  * @group      Zend_Filter
  */

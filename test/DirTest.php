@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Dir as DirFilter;
+use Laminas\Filter\Dir as DirFilter;
 
 /**
  * @group      Zend_Filter

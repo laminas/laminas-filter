@@ -6,11 +6,11 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\HtmlEntities as HtmlEntitiesFilter;
-use Zend\Filter\Exception;
-use Zend\Stdlib\ErrorHandler;
+use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
+use Laminas\Filter\Exception;
+use Laminas\Stdlib\ErrorHandler;
 
 /**
  * @group      Zend_Filter
@@ -18,14 +18,14 @@ use Zend\Stdlib\ErrorHandler;
 class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Zend\Filter\HtmlEntities object
+     * Laminas\Filter\HtmlEntities object
      *
-     * @var \Zend\Filter\HtmlEntities
+     * @var \Laminas\Filter\HtmlEntities
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend\Filter\HtmlEntities object for each test method
+     * Creates a new Laminas\Filter\HtmlEntities object for each test method
      *
      * @return void
      */
@@ -136,7 +136,7 @@ class HtmlEntitiesTest extends \PHPUnit_Framework_TestCase
     public function testConfigObject()
     {
         $options = array('quotestyle' => 5, 'encoding' => 'ISO-8859-1');
-        $config  = new \Zend\Config\Config($options);
+        $config  = new \Laminas\Config\Config($options);
 
         $filter = new HtmlEntitiesFilter(
             $config

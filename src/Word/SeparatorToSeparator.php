@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\Word;
+namespace Laminas\Filter\Word;
 
-use Zend\Filter\AbstractFilter;
-use Zend\Filter\Exception;
+use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\Exception;
 
 class SeparatorToSeparator extends AbstractFilter
 {
@@ -73,7 +73,7 @@ class SeparatorToSeparator extends AbstractFilter
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Returns the string $value, replacing the searched separators with the defined ones
      *

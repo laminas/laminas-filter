@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
-use Zend\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
  * Plugin manager implementation for the filter chain.
@@ -25,7 +25,7 @@ class FilterPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $factories = array(
-        'wordseparatortoseparator' => 'Zend\Filter\Word\Service\SeparatorToSeparatorFactory',
+        'wordseparatortoseparator' => 'Laminas\Filter\Word\Service\SeparatorToSeparatorFactory',
     );
 
     /**
@@ -34,59 +34,59 @@ class FilterPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $invokableClasses = array(
-        'alnum'                      => 'Zend\I18n\Filter\Alnum',
-        'alpha'                      => 'Zend\I18n\Filter\Alpha',
-        'basename'                   => 'Zend\Filter\BaseName',
-        'boolean'                    => 'Zend\Filter\Boolean',
-        'callback'                   => 'Zend\Filter\Callback',
-        'compress'                   => 'Zend\Filter\Compress',
-        'compressbz2'                => 'Zend\Filter\Compress\Bz2',
-        'compressgz'                 => 'Zend\Filter\Compress\Gz',
-        'compresslzf'                => 'Zend\Filter\Compress\Lzf',
-        'compressrar'                => 'Zend\Filter\Compress\Rar',
-        'compresssnappy'             => 'Zend\Filter\Compress\Snappy',
-        'compresstar'                => 'Zend\Filter\Compress\Tar',
-        'compresszip'                => 'Zend\Filter\Compress\Zip',
-        'datetimeformatter'          => 'Zend\Filter\DateTimeFormatter',
-        'decompress'                 => 'Zend\Filter\Decompress',
-        'decrypt'                    => 'Zend\Filter\Decrypt',
-        'digits'                     => 'Zend\Filter\Digits',
-        'dir'                        => 'Zend\Filter\Dir',
-        'encrypt'                    => 'Zend\Filter\Encrypt',
-        'encryptblockcipher'         => 'Zend\Filter\Encrypt\BlockCipher',
-        'encryptopenssl'             => 'Zend\Filter\Encrypt\Openssl',
-        'filedecrypt'                => 'Zend\Filter\File\Decrypt',
-        'fileencrypt'                => 'Zend\Filter\File\Encrypt',
-        'filelowercase'              => 'Zend\Filter\File\LowerCase',
-        'filerename'                 => 'Zend\Filter\File\Rename',
-        'filerenameupload'           => 'Zend\Filter\File\RenameUpload',
-        'fileuppercase'              => 'Zend\Filter\File\UpperCase',
-        'htmlentities'               => 'Zend\Filter\HtmlEntities',
-        'inflector'                  => 'Zend\Filter\Inflector',
-        'int'                        => 'Zend\Filter\Int',
-        'null'                       => 'Zend\Filter\Null',
-        'numberformat'               => 'Zend\I18n\Filter\NumberFormat',
-        'numberparse'                => 'Zend\I18n\Filter\NumberParse',
-        'pregreplace'                => 'Zend\Filter\PregReplace',
-        'realpath'                   => 'Zend\Filter\RealPath',
-        'stringtolower'              => 'Zend\Filter\StringToLower',
-        'stringtoupper'              => 'Zend\Filter\StringToUpper',
-        'stringtrim'                 => 'Zend\Filter\StringTrim',
-        'stripnewlines'              => 'Zend\Filter\StripNewlines',
-        'striptags'                  => 'Zend\Filter\StripTags',
-        'urinormalize'               => 'Zend\Filter\UriNormalize',
-        'wordcamelcasetodash'        => 'Zend\Filter\Word\CamelCaseToDash',
-        'wordcamelcasetoseparator'   => 'Zend\Filter\Word\CamelCaseToSeparator',
-        'wordcamelcasetounderscore'  => 'Zend\Filter\Word\CamelCaseToUnderscore',
-        'worddashtocamelcase'        => 'Zend\Filter\Word\DashToCamelCase',
-        'worddashtoseparator'        => 'Zend\Filter\Word\DashToSeparator',
-        'worddashtounderscore'       => 'Zend\Filter\Word\DashToUnderscore',
-        'wordseparatortocamelcase'   => 'Zend\Filter\Word\SeparatorToCamelCase',
-        'wordseparatortodash'        => 'Zend\Filter\Word\SeparatorToDash',
-        'wordunderscoretocamelcase'  => 'Zend\Filter\Word\UnderscoreToCamelCase',
-        'wordunderscoretostudlycase' => 'Zend\Filter\Word\UnderscoreToStudlyCase',
-        'wordunderscoretodash'       => 'Zend\Filter\Word\UnderscoreToDash',
-        'wordunderscoretoseparator'  => 'Zend\Filter\Word\UnderscoreToSeparator',
+        'alnum'                      => 'Laminas\I18n\Filter\Alnum',
+        'alpha'                      => 'Laminas\I18n\Filter\Alpha',
+        'basename'                   => 'Laminas\Filter\BaseName',
+        'boolean'                    => 'Laminas\Filter\Boolean',
+        'callback'                   => 'Laminas\Filter\Callback',
+        'compress'                   => 'Laminas\Filter\Compress',
+        'compressbz2'                => 'Laminas\Filter\Compress\Bz2',
+        'compressgz'                 => 'Laminas\Filter\Compress\Gz',
+        'compresslzf'                => 'Laminas\Filter\Compress\Lzf',
+        'compressrar'                => 'Laminas\Filter\Compress\Rar',
+        'compresssnappy'             => 'Laminas\Filter\Compress\Snappy',
+        'compresstar'                => 'Laminas\Filter\Compress\Tar',
+        'compresszip'                => 'Laminas\Filter\Compress\Zip',
+        'datetimeformatter'          => 'Laminas\Filter\DateTimeFormatter',
+        'decompress'                 => 'Laminas\Filter\Decompress',
+        'decrypt'                    => 'Laminas\Filter\Decrypt',
+        'digits'                     => 'Laminas\Filter\Digits',
+        'dir'                        => 'Laminas\Filter\Dir',
+        'encrypt'                    => 'Laminas\Filter\Encrypt',
+        'encryptblockcipher'         => 'Laminas\Filter\Encrypt\BlockCipher',
+        'encryptopenssl'             => 'Laminas\Filter\Encrypt\Openssl',
+        'filedecrypt'                => 'Laminas\Filter\File\Decrypt',
+        'fileencrypt'                => 'Laminas\Filter\File\Encrypt',
+        'filelowercase'              => 'Laminas\Filter\File\LowerCase',
+        'filerename'                 => 'Laminas\Filter\File\Rename',
+        'filerenameupload'           => 'Laminas\Filter\File\RenameUpload',
+        'fileuppercase'              => 'Laminas\Filter\File\UpperCase',
+        'htmlentities'               => 'Laminas\Filter\HtmlEntities',
+        'inflector'                  => 'Laminas\Filter\Inflector',
+        'int'                        => 'Laminas\Filter\Int',
+        'null'                       => 'Laminas\Filter\Null',
+        'numberformat'               => 'Laminas\I18n\Filter\NumberFormat',
+        'numberparse'                => 'Laminas\I18n\Filter\NumberParse',
+        'pregreplace'                => 'Laminas\Filter\PregReplace',
+        'realpath'                   => 'Laminas\Filter\RealPath',
+        'stringtolower'              => 'Laminas\Filter\StringToLower',
+        'stringtoupper'              => 'Laminas\Filter\StringToUpper',
+        'stringtrim'                 => 'Laminas\Filter\StringTrim',
+        'stripnewlines'              => 'Laminas\Filter\StripNewlines',
+        'striptags'                  => 'Laminas\Filter\StripTags',
+        'urinormalize'               => 'Laminas\Filter\UriNormalize',
+        'wordcamelcasetodash'        => 'Laminas\Filter\Word\CamelCaseToDash',
+        'wordcamelcasetoseparator'   => 'Laminas\Filter\Word\CamelCaseToSeparator',
+        'wordcamelcasetounderscore'  => 'Laminas\Filter\Word\CamelCaseToUnderscore',
+        'worddashtocamelcase'        => 'Laminas\Filter\Word\DashToCamelCase',
+        'worddashtoseparator'        => 'Laminas\Filter\Word\DashToSeparator',
+        'worddashtounderscore'       => 'Laminas\Filter\Word\DashToUnderscore',
+        'wordseparatortocamelcase'   => 'Laminas\Filter\Word\SeparatorToCamelCase',
+        'wordseparatortodash'        => 'Laminas\Filter\Word\SeparatorToDash',
+        'wordunderscoretocamelcase'  => 'Laminas\Filter\Word\UnderscoreToCamelCase',
+        'wordunderscoretostudlycase' => 'Laminas\Filter\Word\UnderscoreToStudlyCase',
+        'wordunderscoretodash'       => 'Laminas\Filter\Word\UnderscoreToDash',
+        'wordunderscoretoseparator'  => 'Laminas\Filter\Word\UnderscoreToSeparator',
     );
 
     /**

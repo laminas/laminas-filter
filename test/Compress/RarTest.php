@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Rar as RarCompression;
+use Laminas\Filter\Compress\Rar as RarCompression;
 
 /**
  * @group      Zend_Filter
@@ -180,7 +180,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Testfile.txt', $filter->getTarget());
         $this->assertEquals('Testfile.txt', $filter->getOptions('target'));
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'does not exist');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'does not exist');
         $filter->setTarget('/unknown/path/to/file.txt');
     }
 
@@ -202,7 +202,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new RarCompression();
 
-        $this->setExpectedException('Zend\Filter\Exception\RuntimeException', 'No compression callback available');
+        $this->setExpectedException('Laminas\Filter\Exception\RuntimeException', 'No compression callback available');
         $filter->compress('test.txt');
     }
 
@@ -210,7 +210,7 @@ class RarTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new RarCompression();
 
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException', 'Invalid callback provided');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException', 'Invalid callback provided');
         $filter->setCallback('invalidCallback');
     }
 

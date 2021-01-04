@@ -8,7 +8,7 @@
 
 namespace TestNamespace;
 
-use Zend\Validator\Digits as DigitsValidator;
+use Laminas\Validator\Digits as DigitsValidator;
 
 /**
  * Mock file for testbed

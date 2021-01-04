@@ -5,9 +5,9 @@
  * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\BaseName as BaseNameFilter;
+use Laminas\Filter\BaseName as BaseNameFilter;
 
 /**
  * @group Zend_Filter

@@ -6,7 +6,7 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 /**
  * Decrypts a given string
@@ -14,7 +14,7 @@ namespace Zend\Filter;
 class Decrypt extends Encrypt
 {
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Decrypts the content $value with the defined settings
      *

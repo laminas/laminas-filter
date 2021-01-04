@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Compress;
+namespace LaminasTest\Filter\Compress;
 
-use Zend\Filter\Compress\Snappy as SnappyCompression;
+use Laminas\Filter\Compress\Snappy as SnappyCompression;
 
 /**
  * @group      Zend_Filter
@@ -80,7 +80,7 @@ class SnappyTest extends \PHPUnit_Framework_TestCase
         $filter = new SnappyCompression();
 
         $this->setExpectedException(
-            'Zend\Filter\Exception\RuntimeException',
+            'Laminas\Filter\Exception\RuntimeException',
             'Error while decompressing.'
         );
 

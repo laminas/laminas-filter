@@ -6,13 +6,13 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\FilterChain;
-use Zend\Filter\AbstractFilter;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\AbstractFilter;
 
 /**
- * @group      Zend_Filter
+ * @group      Laminas_Filter
  */
 class FilterChainTest extends \PHPUnit_Framework_TestCase
 {
@@ -172,7 +172,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
         $serialized = serialize($chain);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf('Zend\Filter\FilterChain', $unserialized);
+        $this->assertInstanceOf('Laminas\Filter\FilterChain', $unserialized);
         $this->assertEquals(2, count($unserialized));
         $value         = 'AbC';
         $valueExpected = 'abc';

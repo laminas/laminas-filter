@@ -8,7 +8,7 @@
 
 namespace TestNamespace;
 
-use Zend\Validator\ValidatorBroker as BaseValidatorBroker;
+use Laminas\Validator\ValidatorBroker as BaseValidatorBroker;
 
 require_once __DIR__ . '/ValidatorLoader.php';
 

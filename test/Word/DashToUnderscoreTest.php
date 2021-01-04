@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\DashToUnderscore as DashToUnderscoreFilter;
+use Laminas\Filter\Word\DashToUnderscore as DashToUnderscoreFilter;
 
 /**
- * Test class for Zend\Filter\Word\DashToUnderscore.
+ * Test class for Laminas\Filter\Word\DashToUnderscore.
  *
  * @group      Zend_Filter
  */

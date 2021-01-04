@@ -8,7 +8,7 @@
 
 namespace TestNamespace;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * Mock file for testbed

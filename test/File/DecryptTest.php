@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\Decrypt as FileDecrypt;
-use Zend\Filter\File\Encrypt as FileEncrypt;
+use Laminas\Filter\File\Decrypt as FileDecrypt;
+use Laminas\Filter\File\Encrypt as FileEncrypt;
 
 /**
  * @group      Zend_Filter
@@ -111,7 +111,7 @@ class DecryptTest extends \PHPUnit_Framework_TestCase
         $filter = new FileDecrypt();
         $filter->setVector('1234567890123456');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not found');
         $filter->filter(dirname(__DIR__).'/_files/nofile.txt');
     }
 

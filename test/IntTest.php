@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Int as IntFilter;
+use Laminas\Filter\Int as IntFilter;
 
 /**
  * @group      Zend_Filter

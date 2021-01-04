@@ -6,7 +6,7 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 use Traversable;
 
@@ -36,7 +36,7 @@ class StringToLower extends AbstractUnicode
     }
 
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Defined by Laminas\Filter\FilterInterface
      *
      * Returns the string $value, converting characters to lowercase as necessary
      *

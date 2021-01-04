@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Stdlib\ArrayUtils;
 
 /**
  * Filter chain for string inflection
@@ -325,7 +325,7 @@ class Inflector extends AbstractFilter
      * or an array of strings or filter objects.
      *
      * @param  string $spec
-     * @param  array|string|\Zend\Filter\FilterInterface $ruleSet
+     * @param  array|string|\Laminas\Filter\FilterInterface $ruleSet
      * @return self
      */
     public function setFilterRule($spec, $ruleSet)

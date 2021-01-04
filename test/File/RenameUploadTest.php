@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\RenameUpload as FileRenameUpload;
+use Laminas\Filter\File\RenameUpload as FileRenameUpload;
 
 /**
  * @group      Zend_Filter
@@ -109,7 +109,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->_newFile, $filter->getTarget());
         $this->assertEquals('falsefile', $filter('falsefile'));
         $this->setExpectedException(
-            'Zend\Filter\Exception\RuntimeException', 'could not be renamed'
+            'Laminas\Filter\Exception\RuntimeException', 'could not be renamed'
         );
         $this->assertEquals($this->_newFile, $filter($this->_oldFile));
     }
@@ -234,7 +234,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->_newFile, $filter->getTarget());
         $this->assertFalse($filter->getOverwrite());
         $this->setExpectedException(
-            'Zend\Filter\Exception\InvalidArgumentException', 'already exists'
+            'Laminas\Filter\Exception\InvalidArgumentException', 'already exists'
         );
         $this->assertEquals($this->_newFile, $filter($this->_oldFile));
     }
@@ -306,7 +306,7 @@ class RenameUploadTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidConstruction()
     {
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Invalid target');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Invalid target');
         $filter = new FileRenameUpload(1234);
     }
 

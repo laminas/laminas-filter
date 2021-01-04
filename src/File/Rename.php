@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter\File;
+namespace Laminas\Filter\File;
 
 use Traversable;
-use Zend\Filter;
-use Zend\Filter\Exception;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Filter;
+use Laminas\Filter\Exception;
+use Laminas\Stdlib\ArrayUtils;
 
 class Rename extends Filter\AbstractFilter
 {
@@ -23,8 +23,8 @@ class Rename extends Filter\AbstractFilter
     /**
      * Class constructor
      *
-     * Options argument may be either a string, a Zend\Config\Config object, or an array.
-     * If an array or Zend\Config\Config object, it accepts the following keys:
+     * Options argument may be either a string, a Laminas\Config\Config object, or an array.
+     * If an array or Laminas\Config\Config object, it accepts the following keys:
      * 'source'    => Source filename or directory which will be renamed
      * 'target'    => Target filename or directory, the new name of the source file
      * 'overwrite' => Shall existing files be overwritten ?
@@ -148,7 +148,7 @@ class Rename extends Filter\AbstractFilter
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Laminas\Filter\Filter
      *
      * Renames the file $value to the new name set before
      * Returns the file $value, removing all but digit characters

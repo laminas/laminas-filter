@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Filter;
+namespace Laminas\Filter;
 
 use Traversable;
-use Zend\Stdlib\StringUtils;
+use Laminas\Stdlib\StringUtils;
 
 abstract class AbstractFilter implements FilterInterface
 {

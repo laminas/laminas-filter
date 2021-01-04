@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\DateTimeFormatter;
+use Laminas\Filter\DateTimeFormatter;
 use DateTime;
 
 /**
@@ -118,7 +118,7 @@ class DateTimeFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidArgumentExceptionThrownOnInvalidInput()
     {
-        $this->setExpectedException('Zend\Filter\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Filter\Exception\InvalidArgumentException');
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter('2013-31-31');

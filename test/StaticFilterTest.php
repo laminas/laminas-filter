@@ -6,10 +6,10 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\StaticFilter;
-use Zend\Filter\FilterPluginManager;
+use Laminas\Filter\StaticFilter;
+use Laminas\Filter\FilterPluginManager;
 
 /**
  * @group      Zend_Filter
@@ -29,7 +29,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
     public function testUsesFilterPluginManagerByDefault()
     {
         $plugins = StaticFilter::getPluginManager();
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $plugins);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $plugins);
     }
 
     public function testCanSpecifyCustomPluginManager()
@@ -47,7 +47,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
         StaticFilter::setPluginManager(null);
         $registered = StaticFilter::getPluginManager();
         $this->assertNotSame($plugins, $registered);
-        $this->assertInstanceOf('Zend\Filter\FilterPluginManager', $registered);
+        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $registered);
     }
 
     /**
@@ -88,7 +88,7 @@ class StaticFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testStaticFactoryClassNotFound()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\ServiceManager\Exception\ExceptionInterface');
         StaticFilter::execute('1234', 'UnknownFilter');
     }
 

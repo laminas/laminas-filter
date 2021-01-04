@@ -6,12 +6,12 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter\Word;
+namespace LaminasTest\Filter\Word;
 
-use Zend\Filter\Word\DashToCamelCase as DashToCamelCaseFilter;
+use Laminas\Filter\Word\DashToCamelCase as DashToCamelCaseFilter;
 
 /**
- * Test class for Zend\Filter\Word\DashToCamelCase.
+ * Test class for Laminas\Filter\Word\DashToCamelCase.
  *
  * @group      Zend_Filter
  */

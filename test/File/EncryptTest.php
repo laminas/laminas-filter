@@ -5,10 +5,10 @@
  * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Filter\File;
+namespace LaminasTest\Filter\File;
 
-use Zend\Filter\File\Encrypt as FileEncrypt;
-use Zend\Filter\File\Decrypt as FileDecrypt;
+use Laminas\Filter\File\Encrypt as FileEncrypt;
+use Laminas\Filter\File\Decrypt as FileDecrypt;
 
 /**
  * @group Zend_Filter
@@ -79,7 +79,7 @@ class EncryptTest extends \PHPUnit_Framework_TestCase
         $filter = new FileEncrypt();
         $filter->setKey('1234567890123456');
 
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'not found');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'not found');
         echo $filter->filter(dirname(__DIR__) . '/_files/nofile.txt');
     }
 

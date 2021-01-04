@@ -6,9 +6,9 @@
  * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Filter;
+namespace LaminasTest\Filter;
 
-use Zend\Filter\Boolean as BooleanFilter;
+use Laminas\Filter\Boolean as BooleanFilter;
 
 /**
  * @group      Zend_Filter
@@ -123,7 +123,7 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
     public function testSettingFalseType()
     {
         $filter = new BooleanFilter();
-        $this->setExpectedException('\Zend\Filter\Exception\InvalidArgumentException', 'Unknown type value');
+        $this->setExpectedException('\Laminas\Filter\Exception\InvalidArgumentException', 'Unknown type value');
         $filter->setType(true);
     }
 
