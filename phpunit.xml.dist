@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="vendor/autoload.php"
          colors="true">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+        <exclude>
+            <file>src/Int.php</file>
+            <file>src/Null.php</file>
+        </exclude>
+    </coverage>
     <testsuites>
         <testsuite name="laminas-filter Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
-            <exclude>
-                <file>src/Int.php</file>
-                <file>src/Null.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-
     <php>
         <!-- Laminas\Filter tests
 
-             Some tests are problematic, largely due to environment.
-             Specifically, the Zip compression filter has this issue. These
-             tests are enabled by default; set them to false to disable them. -->
-        <env name="TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED" value="true" />
+                 Some tests are problematic, largely due to environment.
+                 Specifically, the Zip compression filter has this issue. These
+                 tests are enabled by default; set them to false to disable them. -->
+        <env name="TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED" value="true"/>
     </php>
 </phpunit>
