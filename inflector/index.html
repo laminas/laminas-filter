@@ -366,7 +366,7 @@ using a short name indicating the filter name stripped of any common prefix.</p>
 <p>As an example, you can use any laminas-filter concrete implementations; however,
 instead of referring to them as <code>Laminas\I18n\Filter\Alpha</code> or
 <code>Laminas\Filter\StringToLower</code>, you'd specify only <code>Alpha</code> or <code>StringToLower</code>.</p>
-<h3>Using Custom Filters</h3>
+<h3 id="using-custom-filters">Using Custom Filters</h3>
 <p><code>Laminas\Filter\Inflector</code> uses <code>Laminas\Filter\FilterPluginManager</code> to manage
 loading filters to use with inflection. By default, filters registered with
 <code>Laminas\Filter\FilterPluginManager</code> are available. To access filters with that
@@ -379,7 +379,7 @@ class name (e.g., <code>My\Custom\Filter\Mungify</code>), or manipulate the comp
 <code>FilterPluginManager</code> instance.</p>
 <pre class="highlight"><code class="language-php">$filters = $inflector-&gt;getPluginManager();
 $filters-&gt;addInvokableClass('mungify', 'My\Custom\Filter\Mungify');</code></pre>
-<h3>Setting the Inflector Target</h3>
+<h3 id="setting-the-inflector-target">Setting the Inflector Target</h3>
 <p>The inflector target is a string with some placeholders for variables.
 Placeholders take the form of an identifier, a colon (<code>:</code>) by default, followed
 by a variable name: <code>:script</code>, <code>:path</code>, etc. The <code>filter()</code> method looks for
@@ -430,7 +430,7 @@ allows you to do this:</p>
 <h2 id="inflection-rules">Inflection Rules</h2>
 <p>As mentioned in the introduction, there are two types of rules: static and filter-based.</p>
 <blockquote>
-<h3>Order is important</h3>
+<h3 id="order-is-important">Order is important</h3>
 <p>It is important to note that regardless of the method in which you add rules
 to the inflector, either one-by-one, or all-at-once; the order is very
 important. More specific names, or names that might contain other rule names,
@@ -440,7 +440,7 @@ module since <code>module</code> is contained within <code>moduleDir</code>. If 
 before <code>moduleDir</code>, <code>module</code> will match part of <code>moduleDir</code> and process it
 leaving <code>Dir</code> inside of the target uninflected.</p>
 </blockquote>
-<h3>Static Rules</h3>
+<h3 id="static-rules">Static Rules</h3>
 <p>Static rules do simple string substitution; use them when you have a segment in
 the target that will typically be static, but which you want to allow the
 developer to modify. Use the <code>setStaticRule()</code> method to set or modify the
@@ -484,7 +484,7 @@ want your users to need to fetch the inflector in order to update it. The
         return $this;
     }
 }</code></pre>
-<h3>Filter-Based Inflector Rules</h3>
+<h3 id="filter-based-inflector-rules">Filter-Based Inflector Rules</h3>
 <p><code>Laminas\Filter</code> filters may be used as inflector rules as well. Just like static
 rules, these are bound to a target variable; unlike static rules, you may
 define multiple filters to use when inflecting. These filters are processed in
@@ -728,6 +728,7 @@ $inflector-&gt;setOptions($options);</code></pre>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>

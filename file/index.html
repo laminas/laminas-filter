@@ -329,7 +329,7 @@
 <p>laminas-filter also comes with a set of classes for filtering file contents, and
 performing file operations such as renaming.</p>
 <blockquote>
-<h3>$_FILES</h3>
+<h3 id="_files">$_FILES</h3>
 <p>All file filter <code>filter()</code> implementations support either a file path string
 <em>or</em> a <code>$_FILES</code> array as the supplied argument. When a <code>$_FILES</code> array is
 passed in, the <code>tmp_name</code> is used for the file path.</p>
@@ -370,12 +370,12 @@ for more information about options and adapters.</p>
 <h2 id="lowercase">Lowercase</h2>
 <p><code>Laminas\Filter\File\Lowercase</code> can be used to convert all file contents to
 lowercase.</p>
-<h3>Supported Options</h3>
+<h3 id="supported-options">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
 <li><code>encoding</code>: Set the encoding to use during conversion.</li>
 </ul>
-<h3>Basic Usage</h3>
+<h3 id="basic-usage">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
 use Laminas\Http\PhpEnvironment\Request;
 
@@ -427,7 +427,7 @@ $filter-&gt;filter($files['my-upload']);</code></pre>
 for more information about encoding and its exceptions.</p>
 <h2 id="rename">Rename</h2>
 <p><code>Laminas\Filter\File\Rename</code> can be used to rename a file and/or move a file to a new path.</p>
-<h3>Supported Options</h3>
+<h3 id="supported-options_1">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
 <li><code>target</code> (string; default: <code>*</code>): Target filename or directory; the new name
@@ -445,7 +445,7 @@ for more information about encoding and its exceptions.</p>
 <p>An array of option sets is also supported, where a single <code>Rename</code> filter
 instance can filter several files using different options. The options used for
 the filtered file will be matched from the <code>source</code> option in the options set.</p>
-<h3>Usage Examples</h3>
+<h3 id="usage-examples">Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
 <pre class="highlight"><code class="language-php">// 'target' option is assumed if param is a string
 $filter = new \Laminas\Filter\File\Rename('/tmp/');
@@ -479,7 +479,7 @@ echo $filter-&gt;filter('fileA.txt');
 // File has been renamed to '/dest1/newfileA.txt'
 echo $filter-&gt;filter('fileB.txt');
 // File has been renamed to '/dest2/newfileB_4b3403665fea6.txt'</code></pre>
-<h3>Public Methods</h3>
+<h3 id="public-methods">Public Methods</h3>
 <p>The <code>Rename</code> filter defines the following public methods in addition to <code>filter()</code>:
 follows:</p>
 <ul>
@@ -491,7 +491,7 @@ follows:</p>
 </ul>
 <h2 id="renameupload">RenameUpload</h2>
 <p><code>Laminas\Filter\File\RenameUpload</code> can be used to rename or move an uploaded file to a new path.</p>
-<h3>Supported Options</h3>
+<h3 id="supported-options_2">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
 <li><code>target</code> (string; default: <code>*</code>): Target directory or full filename path.</li>
@@ -519,7 +519,7 @@ follows:</p>
   renamed file.  (Since 2.9.0)</li>
 </ul>
 <blockquote>
-<h3>Using the upload Name is unsafe</h3>
+<h3 id="using-the-upload-name-is-unsafe">Using the upload Name is unsafe</h3>
 <p>Be <strong>very</strong> careful when using the <code>use_upload_name</code> option. For instance,
 extremely bad things could happen if you were to allow uploaded <code>.php</code> files
 (or other CGI files) to be moved into the <code>DocumentRoot</code>.</p>
@@ -529,7 +529,7 @@ security risks.</p>
 <p><code>RenameUpload</code> does not support an array of options like the<code>Rename</code> filter.
 When filtering HTML5 file uploads with the <code>multiple</code> attribute set, all files
 will be filtered with the same option settings.</p>
-<h3>Usage Examples</h3>
+<h3 id="usage-examples_1">Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
 
@@ -595,7 +595,7 @@ foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {
     // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
 }</code></pre>
 <blockquote>
-<h3>PSR-7 Support</h3>
+<h3 id="psr-7-support">PSR-7 Support</h3>
 <p>PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
 <a href="https://packagist.org/providers/psr/http-factory-implementation">psr/http-factory-implementation</a>
 in your application, as it relies on the stream and uploaded file factories in
@@ -610,12 +610,12 @@ PHP 7.0, either upgrade, or find a compatible psr/http-factory-implementation.</
 <h2 id="uppercase">Uppercase</h2>
 <p><code>Laminas\Filter\File\Uppercase</code> can be used to convert all file contents to
 uppercase.</p>
-<h3>Supported Options</h3>
+<h3 id="supported-options_3">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
 <li><code>encoding</code>: Set the encoding to use during conversion.</li>
 </ul>
-<h3>Basic Usage</h3>
+<h3 id="basic-usage_1">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">use Laminas\Filter\File\UpperCase;
 use Laminas\Http\PhpEnvironment\Request;
 
@@ -772,6 +772,7 @@ information.</p>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
