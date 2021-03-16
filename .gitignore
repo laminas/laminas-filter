@@ -1,3 +1,5 @@
+/.phpunit.result.cache
+/.psalm-cache
 /clover.xml
 /composer.lock
 /coveralls-upload.json
@@ -6,4 +8,3 @@
 /laminas-mkdoc-theme/
 /phpunit.xml
 /vendor/
-.phpunit.result.cache
