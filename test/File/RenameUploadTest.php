@@ -188,7 +188,11 @@ class RenameUploadTest extends TestCase
         $originalStream->getMetadata('uri')->willReturn($this->sourceFile);
 
         $originalFile = $this->prophesize(UploadedFileInterface::class);
-        $originalFile->getStream()->will([$originalStream, 'reveal']);
+        $originalFile->getStream()->will(function ($args, $mock) use ($originalStream) {
+            $mock->getStream()->willThrow(new \RuntimeException('Cannot call getStream() more than once'));
+
+            return $originalStream->reveal();
+        });
         $originalFile->getClientFilename()->willReturn($targetFile);
         $originalFile
             ->moveTo($targetFile)
@@ -227,6 +231,10 @@ class RenameUploadTest extends TestCase
         $moved = $filter($originalFile->reveal());
 
         $this->assertSame($renamedFile->reveal(), $moved);
+
+        $secondResult = $filter($originalFile->reveal());
+
+        $this->assertSame($moved, $secondResult);
     }
 
     /**
