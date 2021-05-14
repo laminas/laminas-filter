@@ -413,7 +413,7 @@ class RenameUpload extends AbstractFilter
         $streamFactory = $this->getStreamFactory();
         if (! $streamFactory) {
             throw new Exception\RuntimeException(sprintf(
-                'No PSR-17 %s present; cannot filter file. Please pass the stream_file_factory'
+                'No PSR-17 %s present; cannot filter file. Please pass the stream_factory'
                 . ' option with a %s instance when creating the filter for use with PSR-7.',
                 StreamFactoryInterface::class,
                 StreamFactoryInterface::class
