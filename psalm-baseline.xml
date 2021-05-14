@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.6.1@e93e532e4eaad6d68c4d7b606853800eaceccc72">
+<files psalm-version="4.6.3@f1a840727dd756899eee2f1f9ea443e265a4763f">
   <file src="src/AbstractDateDropdown.php">
     <InvalidArgument occurrences="1">
       <code>$options</code>
@@ -988,9 +988,7 @@
     <MixedArrayAccess occurrences="1">
       <code>$target[strlen($target) - 1]</code>
     </MixedArrayAccess>
-    <MixedArrayOffset occurrences="5">
-      <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
-      <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
+    <MixedArrayOffset occurrences="3">
       <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
       <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
       <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
@@ -1020,8 +1018,8 @@
       <code>$targetDir</code>
     </MixedOperand>
     <MixedReturnStatement occurrences="10">
+      <code>$this-&gt;alreadyFiltered[$alreadyFilteredKey]</code>
       <code>$this-&gt;alreadyFiltered[$fileName]</code>
-      <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
       <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
       <code>$this-&gt;options['overwrite']</code>
       <code>$this-&gt;options['randomize']</code>
@@ -1041,9 +1039,6 @@
     <PossiblyInvalidArgument occurrences="1">
       <code>$sourceFile</code>
     </PossiblyInvalidArgument>
-    <PossiblyNullArrayOffset occurrences="1">
-      <code>$this-&gt;alreadyFiltered</code>
-    </PossiblyNullArrayOffset>
     <RedundantCastGivenDocblockType occurrences="4">
       <code>(bool) $flag</code>
       <code>(bool) $flag</code>
@@ -1589,9 +1584,6 @@
     <MissingReturnType occurrences="1">
       <code>enforceScheme</code>
     </MissingReturnType>
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
     <MixedReturnStatement occurrences="1">
       <code>$value</code>
     </MixedReturnStatement>
@@ -2350,6 +2342,13 @@
     <MissingReturnType occurrences="1">
       <code>testWrongSizeVector</code>
     </MissingReturnType>
+    <MixedArgument occurrences="1">
+      <code>$input</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$input</code>
+      <code>$output</code>
+    </MixedAssignment>
     <UndefinedMethod occurrences="2">
       <code>fail</code>
       <code>fail</code>
@@ -2363,9 +2362,14 @@
     <MissingReturnType occurrences="1">
       <code>testPassCompressionConfigWillBeUnsetCorrectly</code>
     </MissingReturnType>
-    <MixedArgument occurrences="1">
+    <MixedArgument occurrences="2">
+      <code>$input</code>
       <code>$r-&gt;getValue($filter)</code>
     </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$input</code>
+      <code>$output</code>
+    </MixedAssignment>
   </file>
   <file src="test/EncryptTest.php">
     <ArgumentTypeCoercion occurrences="2">
@@ -2496,8 +2500,10 @@
     <InvalidScalarArgument occurrences="1">
       <code>1234</code>
     </InvalidScalarArgument>
-    <MissingClosureParamType occurrences="1">
+    <MissingClosureParamType occurrences="3">
       <code>$args</code>
+      <code>$args</code>
+      <code>$mock</code>
     </MissingClosureParamType>
     <MissingParamType occurrences="2">
       <code>$dir</code>
@@ -2527,6 +2533,10 @@
       <code>$firstResult</code>
       <code>$targetFile</code>
     </MixedAssignment>
+    <MixedMethodCall occurrences="2">
+      <code>getStream</code>
+      <code>willThrow</code>
+    </MixedMethodCall>
     <MixedOperand occurrences="1">
       <code>$dir</code>
     </MixedOperand>
