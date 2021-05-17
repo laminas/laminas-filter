@@ -1,33 +1,22 @@
 {
     "name": "laminas/laminas-filter",
     "description": "Programmatically filter and normalize data and files",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "filter"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-filter/",
-        "issues": "https://github.com/laminas/laminas-filter/issues",
-        "source": "https://github.com/laminas/laminas-filter",
-        "rss": "https://github.com/laminas/laminas-filter/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laminas": {
-            "component": "Laminas\\Filter",
-            "config-provider": "Laminas\\Filter\\ConfigProvider"
-        }
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-stdlib": "^3.3",
         "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "replace": {
+        "zendframework/zend-filter": "^2.9.2"
+    },
+    "conflict": {
+        "laminas/laminas-validator": "<2.10.1"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
@@ -41,15 +30,21 @@
         "psr/http-factory": "^1.0",
         "vimeo/psalm": "^4.6"
     },
-    "conflict": {
-        "laminas/laminas-validator": "<2.10.1"
-    },
     "suggest": {
         "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
         "laminas/laminas-servicemanager": "Laminas\\ServiceManager component, for using the filter chain functionality",
         "laminas/laminas-uri": "Laminas\\Uri component, for the UriNormalize filter",
         "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "component": "Laminas\\Filter",
+            "config-provider": "Laminas\\Filter\\ConfigProvider"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -68,11 +63,16 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "static-analysis": "psalm --shepherd --stats"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-filter": "^2.9.2"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-filter/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-filter",
+        "docs": "https://docs.laminas.dev/laminas-filter/",
+        "rss": "https://github.com/laminas/laminas-filter/releases.atom"
     }
 }
