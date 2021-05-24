@@ -394,12 +394,13 @@ class RenameUpload extends AbstractFilter
      */
     private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile)
     {
-        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
+        $alreadyFilteredKey = spl_object_hash($uploadedFile);
 
-        if (isset($this->alreadyFiltered[$sourceFile])) {
-            return $this->alreadyFiltered[$sourceFile];
+        if (isset($this->alreadyFiltered[$alreadyFilteredKey])) {
+            return $this->alreadyFiltered[$alreadyFilteredKey];
         }
 
+        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
         $clientFilename = $uploadedFile->getClientFilename();
         $targetFile     = $this->getFinalTarget($sourceFile, $clientFilename);
 
@@ -432,7 +433,7 @@ class RenameUpload extends AbstractFilter
             ));
         }
 
-        $this->alreadyFiltered[$sourceFile] = $uploadedFileFactory->createUploadedFile(
+        $this->alreadyFiltered[$alreadyFilteredKey] = $uploadedFileFactory->createUploadedFile(
             $stream,
             filesize($targetFile),
             UPLOAD_ERR_OK,
@@ -440,6 +441,6 @@ class RenameUpload extends AbstractFilter
             $uploadedFile->getClientMediaType()
         );
 
-        return $this->alreadyFiltered[$sourceFile];
+        return $this->alreadyFiltered[$alreadyFilteredKey];
     }
 }
