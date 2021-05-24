@@ -388,12 +388,13 @@ class RenameUpload extends AbstractFilter
      */
     private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile)
     {
-        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
+        $alreadyFilteredKey = spl_object_hash($uploadedFile);
 
-        if (isset($this->alreadyFiltered[$sourceFile])) {
-            return $this->alreadyFiltered[$sourceFile];
+        if (isset($this->alreadyFiltered[$alreadyFilteredKey])) {
+            return $this->alreadyFiltered[$alreadyFilteredKey];
         }
 
+        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
         $clientFilename = $uploadedFile->getClientFilename();
         $targetFile     = $this->getFinalTarget($sourceFile, $clientFilename);
 
@@ -407,7 +408,7 @@ class RenameUpload extends AbstractFilter
         $streamFactory = $this->getStreamFactory();
         if (! $streamFactory) {
             throw new Exception\RuntimeException(sprintf(
-                'No PSR-17 %s present; cannot filter file. Please pass the stream_file_factory'
+                'No PSR-17 %s present; cannot filter file. Please pass the stream_factory'
                 . ' option with a %s instance when creating the filter for use with PSR-7.',
                 StreamFactoryInterface::class,
                 StreamFactoryInterface::class
@@ -426,7 +427,7 @@ class RenameUpload extends AbstractFilter
             ));
         }
 
-        $this->alreadyFiltered[$sourceFile] = $uploadedFileFactory->createUploadedFile(
+        $this->alreadyFiltered[$alreadyFilteredKey] = $uploadedFileFactory->createUploadedFile(
             $stream,
             filesize($targetFile),
             UPLOAD_ERR_OK,
@@ -434,6 +435,6 @@ class RenameUpload extends AbstractFilter
             $uploadedFile->getClientMediaType()
         );
 
-        return $this->alreadyFiltered[$sourceFile];
+        return $this->alreadyFiltered[$alreadyFilteredKey];
     }
 }
