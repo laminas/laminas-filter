@@ -24,7 +24,7 @@ class FourOperations extends AbstractFilter {
         if (!isset($options['operation']) || (!in_array($options['operation'],$operations))){
             throw new InvalidArgumentException(sprintf(
                 '%s expects argument operation string with one of theses values: add, sub, mul or div; received "%s"',
-                __METHOD__, $options['operation']));
+                __METHOD__, (float) $options['operation']));
         }
         if (!isset($options['value'])){
             throw new InvalidArgumentException(sprintf(
@@ -36,7 +36,8 @@ class FourOperations extends AbstractFilter {
     
     public function filter($value)
     {
-        $operand = $this->options['value'];
+        $value = (float) $value;
+        $operand = (float) $this->options['value'];
         switch ($this->options['operation']){
             case self::ADD:
                 return ($value + $operand);
