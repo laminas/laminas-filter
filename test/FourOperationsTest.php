@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class FourOperationsTest extends TestCase
 {
-    public function testOperations()
+    public function testOperations(): void
     {
         $filter = new FourOperations(['operation'=>'add','value'=>4]);
         $this->assertEquals(9, $filter->filter(5));
