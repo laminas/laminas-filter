@@ -22,7 +22,7 @@ class FiveOperations extends AbstractFilter
         'operand' => null
     ];
 
-    protected $operations = [
+    protected array $operations = [
         self::ADD,
         self::SUB,
         self::MUL,
@@ -61,7 +61,7 @@ class FiveOperations extends AbstractFilter
      * @param string $operation
      * @throws InvalidArgumentException
      */
-    public function setOperation($operation)
+    public function setOperation(string $operation): FiveOperations
     {
         if (! in_array($operation, $this->operations)) {
             throw new InvalidArgumentException(sprintf('%s expects argument operation string with one of theses values: add, sub, mul, div or mod; received "%s"', __METHOD__, $operation));
@@ -71,7 +71,11 @@ class FiveOperations extends AbstractFilter
         return $this;
     }
 
-    public function setOperand($operand)
+    /**
+     * 
+     * @param integer | float $operand
+     */
+    public function setOperand($operand): FiveOperations
     {
         $this->options['operand'] = $operand;
         return $this;
