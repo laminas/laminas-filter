@@ -2,6 +2,32 @@
 
 laminas-filter comes with a standard set of filters, available for immediate use.
 
+## AllowList
+
+Previously known as `Whitelist`.
+This filter will return `null` if the value being filtered is not present the
+filter's allowed list of values. If the value is present, it will return that
+value.
+
+For the opposite functionality see the [DenyList](#denyList) filter.
+
+### Supported Options
+
+The following options are supported for `Laminas\Filter\AllowList`:
+
+- `strict`: Uses strict mode for comparisons; passed to `in_array()`'s third argument.
+- `list`: An array of allowed values.
+
+### Basic Usage
+
+```php
+$allowList = new \Laminas\Filter\AllowList([
+    'list' => ['allowed-1', 'allowed-2']
+]);
+echo $allowList->filter('allowed-2');   // => 'allowed-2'
+echo $allowList->filter('not-allowed'); // => null
+```
+
 ## Alnum
 
 The `Alnum` filter can be used to return only alphabetic characters and digits
@@ -123,30 +149,6 @@ print $filter->filter('/vol/tmp/filename.txt');
 ```
 
 This will return '`filename.txt`'.
-
-## Blacklist
-
-This filter will return `null` if the value being filtered is present in the filter's list of
-values. If the value is not present, it will return that value.
-
-For the opposite functionality, see the [`Whitelist` filter](#whitelist).
-
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Blacklist`:
-
-- `strict`: Uses strict mode when comparing; passed to `in_array()`'s third argument.
-- `list`: An array of forbidden values.
-
-### Basic Usage
-
-```php
-$blacklist = new \Laminas\Filter\Blacklist([
-    'list' => ['forbidden-1', 'forbidden-2']
-]);
-echo $blacklist->filter('forbidden-1'); // => null
-echo $blacklist->filter('allowed');     // => 'allowed'
-```
 
 ## Boolean
 
@@ -712,6 +714,31 @@ To customize compression, this adapter supports the following options:
 All options can be set at instantiation or by using a related method. For example, the related
 methods for `target` are `getTarget()` and `setTarget()`. You can also use the `setOptions()` method
 which accepts an array of all options.
+
+## DenyList
+
+Previously known as `Blacklist`.
+This filter will return `null` if the value being filtered is present in the filter's list of
+values. If the value is not present, it will return that value.
+
+For the opposite functionality, see the [`AllowList` filter](#allowList).
+
+### Supported Options
+
+The following options are supported for `Laminas\Filter\DenyList`:
+
+- `strict`: Uses strict mode when comparing; passed to `in_array()`'s third argument.
+- `list`: An array of forbidden values.
+
+### Basic Usage
+
+```php
+$denyList = new \Laminas\Filter\DenyList([
+    'list' => ['forbidden-1', 'forbidden-2']
+]);
+echo $denyList->filter('forbidden-1'); // => null
+echo $denyList->filter('allowed');     // => 'allowed'
+```
 
 ## Digits
 
@@ -1795,7 +1822,7 @@ The above will return `This contains`, with the rest being stripped.
 
 ### Allowing defined Tags
 
-`Laminas\Filter\StripTags` allows stripping all but a whitelist of tags. As an
+`Laminas\Filter\StripTags` allows stripping all but an allowed set of tags. As an
 example, this can be used to strip all markup except for links:
 
 ```php
@@ -1816,7 +1843,7 @@ tags at once.
 
 ### Allowing defined Attributes
 
-You can also strip all but a whitelist of attributes from a tag:
+You can also strip all but an allowed set of attributes from a tag:
 
 ```php
 $filter = new Laminas\Filter\StripTags([
@@ -1834,8 +1861,8 @@ providing an array you can set multiple attributes at once.
 
 ### Allow specific Tags with specific Attributes
 
-You can also pass the tag whitelist as a set of tag/attribute values. Each key
-will be an allowed tag, pointing to a list of whitelisted attributes for that
+You can also pass the tag allow list as a set of tag/attribute values. Each key
+will be an allowed tag, pointing to a list of allowed attributes for that
 tag.
 
 ```php
@@ -1882,28 +1909,3 @@ echo $filter->filter('www.example.com');
 ```
 
 The above results in the string `https://www.example.com`.
-
-## Whitelist
-
-This filter will return `null` if the value being filtered is not present the
-filter's allowed list of values. If the value is present, it will return that
-value.
-
-For the opposite functionality see the [Blacklist](#blacklist) filter.
-
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Whitelist`:
-
-- `strict`: Uses strict mode for comparisons; passed to `in_array()`'s third argument.
-- `list`: An array of allowed values.
-
-### Basic Usage
-
-```php
-$whitelist = new \Laminas\Filter\Whitelist([
-    'list' => ['allowed-1', 'allowed-2']
-]);
-echo $whitelist->filter('allowed-2');   // => 'allowed-2'
-echo $whitelist->filter('not-allowed'); // => null
-```

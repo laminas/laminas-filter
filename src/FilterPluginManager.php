@@ -41,6 +41,9 @@ class FilterPluginManager extends AbstractPluginManager
         'NumberParse'                => NumberParse::class,
 
         // Standard filters
+        'allowlist'                  => AllowList::class,
+        'allowList'                  => AllowList::class,
+        'AllowList'                  => AllowList::class,
         'basename'                   => BaseName::class,
         'Basename'                   => BaseName::class,
         'blacklist'                  => Blacklist::class,
@@ -71,6 +74,9 @@ class FilterPluginManager extends AbstractPluginManager
         'Decompress'                 => Decompress::class,
         'decrypt'                    => Decrypt::class,
         'Decrypt'                    => Decrypt::class,
+        'denylist'                   => DenyList::class,
+        'denyList'                   => DenyList::class,
+        'DenyList'                   => DenyList::class,
         'digits'                     => Digits::class,
         'Digits'                     => Digits::class,
         'dir'                        => Dir::class,
@@ -319,6 +325,7 @@ class FilterPluginManager extends AbstractPluginManager
         NumberParse::class                     => InvokableFactory::class,
 
         // Standard filters
+        AllowList::class                       => InvokableFactory::class,
         BaseName::class                        => InvokableFactory::class,
         Blacklist::class                       => InvokableFactory::class,
         Boolean::class                         => InvokableFactory::class,
@@ -330,6 +337,7 @@ class FilterPluginManager extends AbstractPluginManager
         DateTimeSelect::class                  => InvokableFactory::class,
         Decompress::class                      => InvokableFactory::class,
         Decrypt::class                         => InvokableFactory::class,
+        DenyList::class                        => InvokableFactory::class,
         Digits::class                          => InvokableFactory::class,
         Dir::class                             => InvokableFactory::class,
         Encrypt::class                         => InvokableFactory::class,
