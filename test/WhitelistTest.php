@@ -2,142 +2,25 @@
 
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\AllowList;
 use Laminas\Filter\Whitelist as WhitelistFilter;
+use Laminas\Filter\FilterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Stdlib\ArrayObject;
-use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\TestCase;
 
 class WhitelistTest extends TestCase
 {
-    public function testConstructorOptions()
+    public function testRaisesNoticeOnInstantiation(): void
     {
-        $filter = new WhitelistFilter([
-            'list'    => ['test', 1],
-            'strict'  => true,
-        ]);
-
-        $this->assertEquals(true, $filter->getStrict());
-        $this->assertEquals(['test', 1], $filter->getList());
+        $this->expectDeprecation();
+        new WhitelistFilter();
     }
 
-    public function testConstructorDefaults()
-    {
-        $filter = new WhitelistFilter();
-
-        $this->assertEquals(false, $filter->getStrict());
-        $this->assertEquals([], $filter->getList());
-    }
-
-    public function testWithPluginManager()
+    public function testWithPluginManager(): void
     {
         $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter = $pluginManager->get('whitelist');
 
-        $this->assertInstanceOf('Laminas\Filter\Whitelist', $filter);
-    }
-
-    public function testNullListShouldThrowException()
-    {
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $filter = new WhitelistFilter([
-            'list' => null,
-        ]);
-    }
-
-    public function testTraversableConvertsToArray()
-    {
-        $array = ['test', 1];
-        $obj = new ArrayObject(['test', 1]);
-        $filter = new WhitelistFilter([
-            'list' => $obj,
-        ]);
-        $this->assertEquals($array, $filter->getList());
-    }
-
-    public function testSetStrictShouldCastToBoolean()
-    {
-        $filter = new WhitelistFilter([
-            'strict' => 1
-        ]);
-        $this->assertSame(true, $filter->getStrict());
-    }
-
-    /**
-     * @param mixed $value
-     * @param bool  $expected
-     * @dataProvider defaultTestProvider
-     */
-    public function testDefault($value, $expected)
-    {
-        $filter = new WhitelistFilter();
-        $this->assertSame($expected, $filter->filter($value));
-    }
-
-    /**
-     * @param bool $strict
-     * @param array $testData
-     * @dataProvider listTestProvider
-     */
-    public function testList($strict, $list, $testData)
-    {
-        $filter = new WhitelistFilter([
-            'strict' => $strict,
-            'list'   => $list,
-        ]);
-        foreach ($testData as $data) {
-            list($value, $expected) = $data;
-            $message = sprintf(
-                '%s (%s) is not filtered as %s; type = %s',
-                var_export($value, true),
-                gettype($value),
-                var_export($expected, true),
-                $strict
-            );
-            $this->assertSame($expected, $filter->filter($value), $message);
-        }
-    }
-
-    public static function defaultTestProvider()
-    {
-        return [
-            ['test',   null],
-            [0,        null],
-            [0.1,      null],
-            [[],  null],
-            [null,     null],
-        ];
-    }
-
-    public static function listTestProvider()
-    {
-        return [
-            [
-                true, //strict
-                ['test', 0],
-                [
-                    ['test',   'test'],
-                    [0,        0],
-                    [null,     null],
-                    [false,    null],
-                    [0.0,      null],
-                    [[],  null],
-                ],
-            ],
-            [
-                false, //not strict
-                ['test', 0],
-                [
-                    ['test',   'test'],
-                    [0,        0],
-                    [null,     null],
-                    [false,    false],
-                    [0.0,      0.0],
-                    [0.1,      null],
-                    [[],  null],
-                ],
-            ],
-        ];
+        $this->assertInstanceOf(AllowList::class, $filter);
     }
 }

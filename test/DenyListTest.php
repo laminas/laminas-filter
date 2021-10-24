@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class DenyListTest extends TestCase
 {
-    public function testConstructorOptions()
+    public function testConstructorOptions(): void
     {
         $filter = new DenyListFilter([
             'list'    => ['test', 1],
@@ -22,7 +22,7 @@ class DenyListTest extends TestCase
         $this->assertEquals(['test', 1], $filter->getList());
     }
 
-    public function testConstructorDefaults()
+    public function testConstructorDefaults(): void
     {
         $filter = new DenyListFilter();
 
@@ -30,15 +30,15 @@ class DenyListTest extends TestCase
         $this->assertEquals([], $filter->getList());
     }
 
-    public function testWithPluginManager()
+    public function testWithPluginManager(): void
     {
         $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter = $pluginManager->get('DenyList');
 
-        $this->assertInstanceOf('Laminas\Filter\DenyList', $filter);
+        $this->assertInstanceOf(DenyListFilter::class, $filter);
     }
 
-    public function testNullListShouldThrowException()
+    public function testNullListShouldThrowException(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new DenyListFilter([
@@ -46,7 +46,7 @@ class DenyListTest extends TestCase
         ]);
     }
 
-    public function testTraversableConvertsToArray()
+    public function testTraversableConvertsToArray(): void
     {
         $array = ['test', 1];
         $obj = new ArrayObject(['test', 1]);
@@ -56,7 +56,7 @@ class DenyListTest extends TestCase
         $this->assertEquals($array, $filter->getList());
     }
 
-    public function testSetStrictShouldCastToBoolean()
+    public function testSetStrictShouldCastToBoolean(): void
     {
         $filter = new DenyListFilter([
             'strict' => 1
@@ -66,40 +66,40 @@ class DenyListTest extends TestCase
 
     /**
      * @param mixed $value
-     * @param bool  $expected
+     * @param mixed  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected)
+    public function testDefault($value, $expected): void
     {
         $filter = new DenyListFilter();
         $this->assertSame($expected, $filter->filter($value));
     }
 
     /**
-     * @param bool $strict
-     * @param array $testData
      * @dataProvider listTestProvider
      */
-    public function testList($strict, $list, $testData)
+    public function testList(bool $strict, array $list, array $testData): void
     {
         $filter = new DenyListFilter([
             'strict' => $strict,
             'list'   => $list,
         ]);
         foreach ($testData as $data) {
-            list($value, $expected) = $data;
+            /** @var mixed */
+            [$value, $expected] = $data;
             $message = sprintf(
-                '%s (%s) is not filtered as %s; type = %s',
+                '%s (%s) is not filtered as %s; type = %s, strict = %b',
                 var_export($value, true),
                 gettype($value),
                 var_export($expected, true),
-                $strict
+                gettype($value),
+                (int) $strict
             );
             $this->assertSame($expected, $filter->filter($value), $message);
         }
     }
 
-    public static function defaultTestProvider()
+    public static function defaultTestProvider(): array
     {
         return [
             ['test',   'test'],
@@ -110,7 +110,7 @@ class DenyListTest extends TestCase
         ];
     }
 
-    public static function listTestProvider()
+    public static function listTestProvider(): array
     {
         return [
             [

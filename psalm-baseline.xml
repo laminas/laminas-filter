@@ -48,10 +48,6 @@
     </MixedReturnStatement>
   </file>
   <file src="src/AllowList.php">
-    <MissingReturnType occurrences="2">
-      <code>setList</code>
-      <code>setStrict</code>
-    </MissingReturnType>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
@@ -68,13 +64,12 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Blacklist.php">
-    <MissingReturnType occurrences="2">
-      <code>setList</code>
-      <code>setStrict</code>
-    </MissingReturnType>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(bool) $strict</code>
-    </RedundantCastGivenDocblockType>
+    <MissingParamType occurrences="1">
+      <code>$options</code>
+    </MissingParamType>
+    <MixedArgument occurrences="1">
+      <code>$options</code>
+    </MixedArgument>
   </file>
   <file src="src/Boolean.php">
     <DocblockTypeContradiction occurrences="1">
@@ -496,10 +491,6 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/DenyList.php">
-    <MissingReturnType occurrences="2">
-      <code>setList</code>
-      <code>setStrict</code>
-    </MissingReturnType>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
@@ -1149,6 +1140,12 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/FilterPluginManager.php">
+    <DeprecatedClass occurrences="4">
+      <code>Blacklist::class</code>
+      <code>Whitelist::class</code>
+      <code>\Zend\Filter\Blacklist::class</code>
+      <code>\Zend\Filter\Whitelist::class</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="1">
       <code>gettype($plugin)</code>
     </DocblockTypeContradiction>
@@ -1618,13 +1615,12 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Whitelist.php">
-    <MissingReturnType occurrences="2">
-      <code>setList</code>
-      <code>setStrict</code>
-    </MissingReturnType>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(bool) $strict</code>
-    </RedundantCastGivenDocblockType>
+    <MissingParamType occurrences="1">
+      <code>$options</code>
+    </MissingParamType>
+    <MixedArgument occurrences="1">
+      <code>$options</code>
+    </MixedArgument>
   </file>
   <file src="src/Word/AbstractSeparator.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1804,36 +1800,24 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="test/AllowListTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'Laminas\Filter\AllowList'</code>
-    </ArgumentTypeCoercion>
     <InvalidScalarArgument occurrences="1">
       <code>$strict</code>
     </InvalidScalarArgument>
     <MissingParamType occurrences="1">
       <code>$list</code>
     </MissingParamType>
-    <MissingReturnType occurrences="10">
-      <code>defaultTestProvider</code>
-      <code>listTestProvider</code>
-      <code>testConstructorDefaults</code>
-      <code>testConstructorOptions</code>
-      <code>testDefault</code>
-      <code>testList</code>
-      <code>testNullListShouldThrowException</code>
-      <code>testSetStrictShouldCastToBoolean</code>
-      <code>testTraversableConvertsToArray</code>
-      <code>testWithPluginManager</code>
-    </MissingReturnType>
     <MixedArrayAccess occurrences="2">
       <code>$expected</code>
       <code>$value</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="2">
       <code>$data</code>
-      <code>$filter</code>
-      <code>list($value, $expected)</code>
+      <code>[$value, $expected]</code>
     </MixedAssignment>
+    <MixedInferredReturnType occurrences="2">
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
   </file>
   <file src="test/BaseNameTest.php">
     <MissingParamType occurrences="1">
@@ -1844,36 +1828,9 @@
     </MissingReturnType>
   </file>
   <file src="test/BlacklistTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'Laminas\Filter\Blacklist'</code>
-    </ArgumentTypeCoercion>
-    <InvalidScalarArgument occurrences="1">
-      <code>$strict</code>
-    </InvalidScalarArgument>
-    <MissingParamType occurrences="1">
-      <code>$list</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="10">
-      <code>defaultTestProvider</code>
-      <code>listTestProvider</code>
-      <code>testConstructorDefaults</code>
-      <code>testConstructorOptions</code>
-      <code>testDefault</code>
-      <code>testList</code>
-      <code>testNullListShouldThrowException</code>
-      <code>testSetStrictShouldCastToBoolean</code>
-      <code>testTraversableConvertsToArray</code>
-      <code>testWithPluginManager</code>
-    </MissingReturnType>
-    <MixedArrayAccess occurrences="2">
-      <code>$expected</code>
-      <code>$value</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
-      <code>$data</code>
-      <code>$filter</code>
-      <code>list($value, $expected)</code>
-    </MixedAssignment>
+    <DeprecatedClass occurrences="1">
+      <code>new BlacklistFilter()</code>
+    </DeprecatedClass>
   </file>
   <file src="test/BooleanTest.php">
     <InvalidScalarArgument occurrences="1">
@@ -2366,36 +2323,17 @@
     </MixedAssignment>
   </file>
   <file src="test/DenyListTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'Laminas\Filter\Blacklist'</code>
-    </ArgumentTypeCoercion>
-    <InvalidScalarArgument occurrences="1">
-      <code>$strict</code>
-    </InvalidScalarArgument>
-    <MissingParamType occurrences="1">
-      <code>$list</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="10">
-      <code>defaultTestProvider</code>
-      <code>listTestProvider</code>
-      <code>testConstructorDefaults</code>
-      <code>testConstructorOptions</code>
-      <code>testDefault</code>
-      <code>testList</code>
-      <code>testNullListShouldThrowException</code>
-      <code>testSetStrictShouldCastToBoolean</code>
-      <code>testTraversableConvertsToArray</code>
-      <code>testWithPluginManager</code>
-    </MissingReturnType>
     <MixedArrayAccess occurrences="2">
       <code>$expected</code>
       <code>$value</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="1">
       <code>$data</code>
-      <code>$filter</code>
-      <code>list($value, $expected)</code>
     </MixedAssignment>
+    <MixedInferredReturnType occurrences="2">
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
   </file>
   <file src="test/DigitsTest.php">
     <MissingParamType occurrences="1">
@@ -2424,13 +2362,6 @@
     <MissingReturnType occurrences="1">
       <code>testWrongSizeVector</code>
     </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$input</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$input</code>
-      <code>$output</code>
-    </MixedAssignment>
     <UndefinedMethod occurrences="2">
       <code>fail</code>
       <code>fail</code>
@@ -2444,14 +2375,9 @@
     <MissingReturnType occurrences="1">
       <code>testPassCompressionConfigWillBeUnsetCorrectly</code>
     </MissingReturnType>
-    <MixedArgument occurrences="2">
-      <code>$input</code>
+    <MixedArgument occurrences="1">
       <code>$r-&gt;getValue($filter)</code>
     </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$input</code>
-      <code>$output</code>
-    </MixedAssignment>
   </file>
   <file src="test/EncryptTest.php">
     <ArgumentTypeCoercion occurrences="2">
@@ -3274,36 +3200,9 @@
     </MixedArgument>
   </file>
   <file src="test/WhitelistTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'Laminas\Filter\Whitelist'</code>
-    </ArgumentTypeCoercion>
-    <InvalidScalarArgument occurrences="1">
-      <code>$strict</code>
-    </InvalidScalarArgument>
-    <MissingParamType occurrences="1">
-      <code>$list</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="10">
-      <code>defaultTestProvider</code>
-      <code>listTestProvider</code>
-      <code>testConstructorDefaults</code>
-      <code>testConstructorOptions</code>
-      <code>testDefault</code>
-      <code>testList</code>
-      <code>testNullListShouldThrowException</code>
-      <code>testSetStrictShouldCastToBoolean</code>
-      <code>testTraversableConvertsToArray</code>
-      <code>testWithPluginManager</code>
-    </MissingReturnType>
-    <MixedArrayAccess occurrences="2">
-      <code>$expected</code>
-      <code>$value</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
-      <code>$data</code>
-      <code>$filter</code>
-      <code>list($value, $expected)</code>
-    </MixedAssignment>
+    <DeprecatedClass occurrences="1">
+      <code>new WhitelistFilter()</code>
+    </DeprecatedClass>
   </file>
   <file src="test/Word/CamelCaseToDashTest.php">
     <MissingReturnType occurrences="1">

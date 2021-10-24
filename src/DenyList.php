@@ -32,7 +32,7 @@ class DenyList extends AbstractFilter
      *
      * @param  bool $strict
      */
-    public function setStrict($strict = true)
+    public function setStrict($strict = true): void
     {
         $this->strict = (bool) $strict;
     }
@@ -52,7 +52,7 @@ class DenyList extends AbstractFilter
      *
      * @param  array|Traversable $list
      */
-    public function setList($list = [])
+    public function setList($list = []): void
     {
         if (! is_array($list)) {
             $list = ArrayUtils::iteratorToArray($list);
