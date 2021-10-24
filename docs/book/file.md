@@ -3,7 +3,7 @@
 laminas-filter also comes with a set of classes for filtering file contents, and
 performing file operations such as renaming.
 
-> ### $_FILES
+> ## $_FILES
 >
 > All file filter `filter()` implementations support either a file path string
 > *or* a `$_FILES` array as the supplied argument. When a `$_FILES` array is
@@ -62,7 +62,7 @@ lowercase.
 
 The following set of options are supported:
 
- - `encoding`: Set the encoding to use during conversion.
+- `encoding`: Set the encoding to use during conversion.
 
 ### Basic Usage
 
@@ -365,7 +365,7 @@ uppercase.
 
 The following set of options are supported:
 
- - `encoding`: Set the encoding to use during conversion.
+- `encoding`: Set the encoding to use during conversion.
 
 ### Basic Usage
 
