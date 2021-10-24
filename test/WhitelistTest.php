@@ -10,10 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class WhitelistTest extends TestCase
 {
-    public function testRaisesNoticeOnInstantiation(): void
+    public function testConstructor(): void
     {
-        $this->expectDeprecation();
-        new WhitelistFilter();
+        $filter = new WhitelistFilter();
+        $this->assertInstanceOf(AllowList::class, $filter);
     }
 
     public function testWithPluginManager(): void

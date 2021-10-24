@@ -10,10 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class BlacklistTest extends TestCase
 {
-    public function testRaisesNoticeOnInstantiation(): void
+    public function testConstructor(): void
     {
-        $this->expectDeprecation();
-        new BlacklistFilter();
+        $filter = new BlacklistFilter();
+        $this->assertInstanceOf(DenyList::class, $filter);
     }
 
     public function testWithPluginManager(): void
