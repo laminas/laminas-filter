@@ -1881,7 +1881,7 @@ $input = "A text with <br/> a <img src='picture.com' width='100'>picture</img> c
 print $filter->filter($input);
 ```
 
-The above will return 
+The above will return
 `A text with a <img src='picture.com' width='100'>picture</img> click <a href='<http://picture.com/laminas>'>here</a>!`
 as the result.
 
