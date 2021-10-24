@@ -202,7 +202,6 @@ There are 2 additional special types:
 - `all`: Converts all above types to `BOOLEAN`. The same as setting all above types.
 - `php`: Converts all above types to `BOOLEAN` except `localized` or `false`. The same as setting all above types except `localized` or `false`.
 
-
 All other given values will return `TRUE` by default.
 
 There are several ways to select which of the above types are filtered. You can
@@ -1882,8 +1881,8 @@ $input = "A text with <br/> a <img src='picture.com' width='100'>picture</img> c
 print $filter->filter($input);
 ```
 
-The above will return `A text with a <img src='picture.com'
-width='100'>picture</img> click <a href='<http://picture.com/laminas>'>here</a>!`
+The above will return 
+`A text with a <img src='picture.com' width='100'>picture</img> click <a href='<http://picture.com/laminas>'>here</a>!`
 as the result.
 
 ## UriNormalize
