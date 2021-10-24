@@ -47,6 +47,15 @@
       <code>$this-&gt;options['encoding']</code>
     </MixedReturnStatement>
   </file>
+  <file src="src/AllowList.php">
+    <MissingReturnType occurrences="2">
+      <code>setList</code>
+      <code>setStrict</code>
+    </MissingReturnType>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(bool) $strict</code>
+    </RedundantCastGivenDocblockType>
+  </file>
   <file src="src/BaseName.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_scalar($value)</code>
@@ -485,6 +494,15 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src/DenyList.php">
+    <MissingReturnType occurrences="2">
+      <code>setList</code>
+      <code>setStrict</code>
+    </MissingReturnType>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(bool) $strict</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Digits.php">
     <DocblockTypeContradiction occurrences="2">
@@ -1785,6 +1803,38 @@
       <code>$value</code>
     </MoreSpecificImplementedParamType>
   </file>
+  <file src="test/AllowListTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Filter\AllowList'</code>
+    </ArgumentTypeCoercion>
+    <InvalidScalarArgument occurrences="1">
+      <code>$strict</code>
+    </InvalidScalarArgument>
+    <MissingParamType occurrences="1">
+      <code>$list</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="10">
+      <code>defaultTestProvider</code>
+      <code>listTestProvider</code>
+      <code>testConstructorDefaults</code>
+      <code>testConstructorOptions</code>
+      <code>testDefault</code>
+      <code>testList</code>
+      <code>testNullListShouldThrowException</code>
+      <code>testSetStrictShouldCastToBoolean</code>
+      <code>testTraversableConvertsToArray</code>
+      <code>testWithPluginManager</code>
+    </MissingReturnType>
+    <MixedArrayAccess occurrences="2">
+      <code>$expected</code>
+      <code>$value</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="3">
+      <code>$data</code>
+      <code>$filter</code>
+      <code>list($value, $expected)</code>
+    </MixedAssignment>
+  </file>
   <file src="test/BaseNameTest.php">
     <MissingParamType occurrences="1">
       <code>$input</code>
@@ -2313,6 +2363,38 @@
     <MixedAssignment occurrences="2">
       <code>$enc</code>
       <code>$key</code>
+    </MixedAssignment>
+  </file>
+  <file src="test/DenyListTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Filter\Blacklist'</code>
+    </ArgumentTypeCoercion>
+    <InvalidScalarArgument occurrences="1">
+      <code>$strict</code>
+    </InvalidScalarArgument>
+    <MissingParamType occurrences="1">
+      <code>$list</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="10">
+      <code>defaultTestProvider</code>
+      <code>listTestProvider</code>
+      <code>testConstructorDefaults</code>
+      <code>testConstructorOptions</code>
+      <code>testDefault</code>
+      <code>testList</code>
+      <code>testNullListShouldThrowException</code>
+      <code>testSetStrictShouldCastToBoolean</code>
+      <code>testTraversableConvertsToArray</code>
+      <code>testWithPluginManager</code>
+    </MissingReturnType>
+    <MixedArrayAccess occurrences="2">
+      <code>$expected</code>
+      <code>$value</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="3">
+      <code>$data</code>
+      <code>$filter</code>
+      <code>list($value, $expected)</code>
     </MixedAssignment>
   </file>
   <file src="test/DigitsTest.php">
