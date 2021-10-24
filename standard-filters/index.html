@@ -265,6 +265,10 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
+                        <a href="#allowlist" class="toc__link nav-link">AllowList</a>
+                    </li>
+                
+                    <li class="toc__entry">
                         <a href="#alnum" class="toc__link nav-link">Alnum</a>
                     </li>
                 
@@ -277,10 +281,6 @@
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#blacklist" class="toc__link nav-link">Blacklist</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#boolean" class="toc__link nav-link">Boolean</a>
                     </li>
                 
@@ -290,6 +290,10 @@
                 
                     <li class="toc__entry">
                         <a href="#compress-and-decompress" class="toc__link nav-link">Compress and Decompress</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#denylist" class="toc__link nav-link">DenyList</a>
                     </li>
                 
                     <li class="toc__entry">
@@ -368,10 +372,6 @@
                         <a href="#urinormalize" class="toc__link nav-link">UriNormalize</a>
                     </li>
                 
-                    <li class="toc__entry">
-                        <a href="#whitelist" class="toc__link nav-link">Whitelist</a>
-                    </li>
-                
             </ul>
         </div>
     
@@ -415,13 +415,31 @@
 
     <h1 id="standard-filters">Standard Filters</h1>
 <p>laminas-filter comes with a standard set of filters, available for immediate use.</p>
+<h2 id="allowlist">AllowList</h2>
+<p>Previously known as <code>Whitelist</code>.
+This filter will return <code>null</code> if the value being filtered is not present the
+filter's allowed list of values. If the value is present, it will return that
+value.</p>
+<p>For the opposite functionality see the <a href="#denyList">DenyList</a> filter.</p>
+<h3 id="supported-options">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\AllowList</code>:</p>
+<ul>
+<li><code>strict</code>: Uses strict mode for comparisons; passed to <code>in_array()</code>'s third argument.</li>
+<li><code>list</code>: An array of allowed values.</li>
+</ul>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$allowList = new \Laminas\Filter\AllowList([
+    'list' =&gt; ['allowed-1', 'allowed-2']
+]);
+echo $allowList-&gt;filter('allowed-2');   // =&gt; 'allowed-2'
+echo $allowList-&gt;filter('not-allowed'); // =&gt; null</code></pre>
 <h2 id="alnum">Alnum</h2>
 <p>The <code>Alnum</code> filter can be used to return only alphabetic characters and digits
 in the unicode "letter" and "number" categories, respectively. All other
 characters are suppressed.</p>
 <p>This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.</p>
-<h3 id="supported-options">Supported Options</h3>
+<h3 id="supported-options_1">Supported Options</h3>
 <p>The following options are supported for <code>Alnum</code>:</p>
 <pre class="highlight"><code class="language-php">Alnum([ boolean $allowWhiteSpace [, string $locale ]])</code></pre>
 <ul>
@@ -438,7 +456,7 @@ package in your application to use it.</p>
   available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
 </li>
 </ul>
-<h3 id="basic-usage">Basic Usage</h3>
+<h3 id="basic-usage_1">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">// Default settings, deny whitespace
 $filter = new \Laminas\I18n\Filter\Alnum();
 echo $filter-&gt;filter('This is (my) content: 123');
@@ -460,7 +478,7 @@ class.</p>
 category. All other characters are suppressed.</p>
 <p>This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.</p>
-<h3 id="supported-options_1">Supported Options</h3>
+<h3 id="supported-options_2">Supported Options</h3>
 <p>The following options are supported for <code>Alpha</code>:</p>
 <pre class="highlight"><code class="language-php">Alpha([ boolean $allowWhiteSpace [, string $locale ]])</code></pre>
 <ul>
@@ -477,7 +495,7 @@ package in your application to use it.</p>
   available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
 </li>
 </ul>
-<h3 id="basic-usage_1">Basic Usage</h3>
+<h3 id="basic-usage_2">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">// Default settings, deny whitespace
 $filter = new \Laminas\I18n\Filter\Alpha();
 echo $filter-&gt;filter('This is (my) content: 123');
@@ -497,9 +515,9 @@ class.</p>
 <h2 id="basename">BaseName</h2>
 <p><code>Laminas\Filter\BaseName</code> allows you to filter a string which contains the path to
 a file, and it will return the base name of this file.</p>
-<h3 id="supported-options_2">Supported Options</h3>
+<h3 id="supported-options_3">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\BaseName</code>.</p>
-<h3 id="basic-usage_2">Basic Usage</h3>
+<h3 id="basic-usage_3">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\BaseName();
 
 print $filter-&gt;filter('/vol/tmp/filename');</code></pre>
@@ -508,22 +526,6 @@ print $filter-&gt;filter('/vol/tmp/filename');</code></pre>
 
 print $filter-&gt;filter('/vol/tmp/filename.txt');</code></pre>
 <p>This will return '<code>filename.txt</code>'.</p>
-<h2 id="blacklist">Blacklist</h2>
-<p>This filter will return <code>null</code> if the value being filtered is present in the filter's list of
-values. If the value is not present, it will return that value.</p>
-<p>For the opposite functionality, see the <a href="#whitelist"><code>Whitelist</code> filter</a>.</p>
-<h3 id="supported-options_3">Supported Options</h3>
-<p>The following options are supported for <code>Laminas\Filter\Blacklist</code>:</p>
-<ul>
-<li><code>strict</code>: Uses strict mode when comparing; passed to <code>in_array()</code>'s third argument.</li>
-<li><code>list</code>: An array of forbidden values.</li>
-</ul>
-<h3 id="basic-usage_3">Basic Usage</h3>
-<pre class="highlight"><code class="language-php">$blacklist = new \Laminas\Filter\Blacklist([
-    'list' =&gt; ['forbidden-1', 'forbidden-2']
-]);
-echo $blacklist-&gt;filter('forbidden-1'); // =&gt; null
-echo $blacklist-&gt;filter('allowed');     // =&gt; 'allowed'</code></pre>
 <h2 id="boolean">Boolean</h2>
 <p>This filter changes a given input to be a <code>BOOLEAN</code> value. This is often useful when working with
 databases or when processing form values.</p>
@@ -1011,11 +1013,28 @@ always be written to a file.</p>
 <p>All options can be set at instantiation or by using a related method. For example, the related
 methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>. You can also use the <code>setOptions()</code> method
 which accepts an array of all options.</p>
+<h2 id="denylist">DenyList</h2>
+<p>Previously known as <code>Blacklist</code>.
+This filter will return <code>null</code> if the value being filtered is present in the filter's list of
+values. If the value is not present, it will return that value.</p>
+<p>For the opposite functionality, see the <a href="#allowList"><code>AllowList</code> filter</a>.</p>
+<h3 id="supported-options_7">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\DenyList</code>:</p>
+<ul>
+<li><code>strict</code>: Uses strict mode when comparing; passed to <code>in_array()</code>'s third argument.</li>
+<li><code>list</code>: An array of forbidden values.</li>
+</ul>
+<h3 id="basic-usage_5">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$denyList = new \Laminas\Filter\DenyList([
+    'list' =&gt; ['forbidden-1', 'forbidden-2']
+]);
+echo $denyList-&gt;filter('forbidden-1'); // =&gt; null
+echo $denyList-&gt;filter('allowed');     // =&gt; 'allowed'</code></pre>
 <h2 id="digits">Digits</h2>
 <p>Returns the string <code>$value</code>, removing all but digits.</p>
-<h3 id="supported-options_7">Supported Options</h3>
+<h3 id="supported-options_8">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Digits</code>.</p>
-<h3 id="basic-usage_5">Basic Usage</h3>
+<h3 id="basic-usage_6">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Digits();
 
 print $filter-&gt;filter('October 2012');</code></pre>
@@ -1026,9 +1045,9 @@ print $filter-&gt;filter('HTML 5 for Dummies');</code></pre>
 <p>This returns "5".</p>
 <h2 id="dir">Dir</h2>
 <p>Given a string containing a path to a file, this function will return the name of the directory.</p>
-<h3 id="supported-options_8">Supported Options</h3>
+<h3 id="supported-options_9">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\Dir</code>.</p>
-<h3 id="basic-usage_6">Basic Usage</h3>
+<h3 id="basic-usage_7">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Dir();
 
 print $filter-&gt;filter('/etc/passwd');</code></pre>
@@ -1041,7 +1060,7 @@ print $filter-&gt;filter('C:/Temp/x');</code></pre>
 <p>These filters allow encrypting and decrypting any given string; they do so via
 the use of adapters. Included adapters support <code>Laminas\Crypt\BlockCipher</code> and
 PHP's OpenSSL extension.</p>
-<h3 id="supported-options_9">Supported Options</h3>
+<h3 id="supported-options_10">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\Encrypt</code> and
 <code>Laminas\Filter\Decrypt</code>, and segregated by adapter.</p>
 <h4 id="general-options">General Options</h4>
@@ -1325,7 +1344,7 @@ print $decrypted;</code></pre>
 <h2 id="htmlentities">HtmlEntities</h2>
 <p>Returns the string <code>$value</code>, converting characters to their corresponding HTML
 entity equivalents when possible.</p>
-<h3 id="supported-options_10">Supported Options</h3>
+<h3 id="supported-options_11">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\HtmlEntities</code>:</p>
 <ul>
 <li><code>quotestyle</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter
@@ -1345,7 +1364,7 @@ entity equivalents when possible.</p>
   be encoded. The default is to convert everything (<code>true</code>).</p>
 <p>This option must be set via the <code>$options</code> parameter or the
   <code>setDoubleEncode()</code> method.</p>
-<h3 id="basic-usage_7">Basic Usage</h3>
+<h3 id="basic-usage_8">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities();
 
 print $filter-&gt;filter('&lt;');</code></pre>
@@ -1399,18 +1418,18 @@ print $filter-&gt;getQuoteStyle(ENT_QUOTES);</code></pre>
 <li>Since 2.9.0</li>
 </ul>
 <p><code>Laminas\Filter\ToFloat</code> allows you to transform a scalar value into a float.</p>
-<h3 id="supported-options_11">Supported Options</h3>
+<h3 id="supported-options_12">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\ToFloat</code>.</p>
-<h3 id="basic-usage_8">Basic Usage</h3>
+<h3 id="basic-usage_9">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToFloat();
 
 print $filter-&gt;filter('-4.4');</code></pre>
 <p>This will return <code>-4.4</code> (as a float).</p>
 <h2 id="toint">ToInt</h2>
 <p><code>Laminas\Filter\ToInt</code> allows you to transform a scalar value into an integer.</p>
-<h3 id="supported-options_12">Supported Options</h3>
+<h3 id="supported-options_13">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\ToInt</code>.</p>
-<h3 id="basic-usage_9">Basic Usage</h3>
+<h3 id="basic-usage_10">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToInt();
 
 print $filter-&gt;filter('-4 is less than 0');</code></pre>
@@ -1426,7 +1445,7 @@ instead starting in 2.4.0.</p>
 <p>This filter will change the given input to be <code>NULL</code> if it meets specific
 criteria. This is often necessary when you work with databases and want to have
 a <code>NULL</code> value instead of a boolean or any other type.</p>
-<h3 id="supported-options_13">Supported Options</h3>
+<h3 id="supported-options_14">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\ToNull</code>:</p>
 <ul>
 <li><code>type</code>: The variable type which should be supported.</li>
@@ -1492,7 +1511,7 @@ extends the <code>NumberParse</code> filter, which acts as wrapper for the <code
 Internationalization extension (Intl).</p>
 <p>This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.</p>
-<h3 id="supported-options_14">Supported Options</h3>
+<h3 id="supported-options_15">Supported Options</h3>
 <p>The following options are supported for <code>NumberFormat</code>:</p>
 <pre class="highlight"><code class="language-php">NumberFormat([ string $locale [, int $style [, int $type ]]])</code></pre>
 <ul>
@@ -1516,7 +1535,7 @@ package in your application to use it.</p>
   <code>getType()</code> and <code>setType()</code>.</p>
 </li>
 </ul>
-<h3 id="basic-usage_10">Basic Usage</h3>
+<h3 id="basic-usage_11">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new \Laminas\I18n\Filter\NumberFormat('de_DE');
 echo $filter-&gt;filter(1234567.8912346);
 // Returns '1.234.567,891'
@@ -1534,7 +1553,7 @@ a wrapper for the <code>NumberFormatter</code> class within the Internationaliza
 extension (Intl).</p>
 <p>This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.</p>
-<h3 id="supported-options_15">Supported Options</h3>
+<h3 id="supported-options_16">Supported Options</h3>
 <p>The following options are supported for <code>NumberParse</code>:</p>
 <pre class="highlight"><code class="language-php">NumberParse([ string $locale [, int $style [, int $type ]]])</code></pre>
 <ul>
@@ -1558,7 +1577,7 @@ package in your application to use it.</p>
   <code>getType()</code> and <code>setType()</code>.</p>
 </li>
 </ul>
-<h3 id="basic-usage_11">Basic Usage</h3>
+<h3 id="basic-usage_12">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new \Laminas\I18n\Filter\NumberParse('de_DE');
 echo $filter-&gt;filter('1.234.567,891');
 // Returns 1234567.8912346
@@ -1573,14 +1592,14 @@ echo $filter-&gt;filter('1,23456789E-3');
 <h2 id="pregreplace">PregReplace</h2>
 <p><code>Laminas\Filter\PregReplace</code> performs a search using regular expressions and replaces all found
 elements.</p>
-<h3 id="supported-options_16">Supported Options</h3>
+<h3 id="supported-options_17">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\PregReplace</code>:</p>
 <ul>
 <li><code>pattern</code>: The pattern to search for.</li>
 <li><code>replacement</code>: The string which to use as a replacement for the matches; this
   can optionally contain placeholders for matched groups in the search pattern.</li>
 </ul>
-<h3 id="basic-usage_12">Basic Usage</h3>
+<h3 id="basic-usage_13">Basic Usage</h3>
 <p>To use this filter properly, you must give both options listed above.</p>
 <p>The <code>pattern</code> option has to be given to set the pattern to search for. It can be
 a string for a single pattern, or an array of strings for multiple patterns.</p>
@@ -1610,13 +1629,13 @@ $filter-&gt;filter($input);
 <h2 id="realpath">RealPath</h2>
 <p>This filter will resolve given links and pathnames, and returns the canonicalized
 absolute pathnames.</p>
-<h3 id="supported-options_17">Supported Options</h3>
+<h3 id="supported-options_18">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\RealPath</code>:</p>
 <ul>
 <li><code>exists</code>: This option defaults to <code>TRUE</code>, which validates that the given path
   really exists.</li>
 </ul>
-<h3 id="basic-usage_13">Basic Usage</h3>
+<h3 id="basic-usage_14">Basic Usage</h3>
 <p>For any given link or pathname, its absolute path will be returned. References
 to <code>/./</code>, <code>/../</code> and extra <code>/</code> sequences in the input path will be stripped. The
 resulting path will not have any symbolic links, <code>/./</code>, or <code>/../</code> sequences.</p>
@@ -1643,12 +1662,12 @@ $filtered = $filter-&gt;filter($path);
 <li>Since 2.9.0</li>
 </ul>
 <p>This filter will add the provided prefix to scalar values.</p>
-<h3 id="supported-options_18">Supported Options</h3>
+<h3 id="supported-options_19">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringPrefix</code>:</p>
 <ul>
 <li><code>prefix</code>: The string prefix to add to values.</li>
 </ul>
-<h3 id="basic-usage_14">Basic Usage</h3>
+<h3 id="basic-usage_15">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringPrefix([
     'prefix' =&gt; 'PHP-',
 ]);
@@ -1660,12 +1679,12 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 <li>Since 2.9.0</li>
 </ul>
 <p>This filter will add the provided suffix to scalar values.</p>
-<h3 id="supported-options_19">Supported Options</h3>
+<h3 id="supported-options_20">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringSuffix</code>:</p>
 <ul>
 <li><code>suffix</code>: The string suffix to append to values.</li>
 </ul>
-<h3 id="basic-usage_15">Basic Usage</h3>
+<h3 id="basic-usage_16">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringSuffix([
     'suffix' =&gt; '-PHP',
 ]);
@@ -1674,12 +1693,12 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 <p>The above results in the string <code>MidCentral-PHP</code>.</p>
 <h2 id="stringtolower">StringToLower</h2>
 <p>This filter converts any input to lowercase.</p>
-<h3 id="supported-options_20">Supported Options</h3>
+<h3 id="supported-options_21">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringToLower</code>:</p>
 <ul>
 <li><code>encoding</code>: This option can be used to set an encoding to use.</li>
 </ul>
-<h3 id="basic-usage_16">Basic Usage</h3>
+<h3 id="basic-usage_17">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToLower();
 
 print $filter-&gt;filter('SAMPLE');
@@ -1708,12 +1727,12 @@ $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 </blockquote>
 <h2 id="stringtoupper">StringToUpper</h2>
 <p>This filter converts any input to UPPERCASE.</p>
-<h3 id="supported-options_21">Supported Options</h3>
+<h3 id="supported-options_22">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringToUpper</code>:</p>
 <ul>
 <li><code>encoding</code>: This option can be used to set the encoding to use.</li>
 </ul>
-<h3 id="basic-usage_17">Basic Usage</h3>
+<h3 id="basic-usage_18">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToUpper();
 
 print $filter-&gt;filter('Sample');
@@ -1729,14 +1748,14 @@ $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 <h2 id="stringtrim">StringTrim</h2>
 <p>This filter modifies a given string such that certain characters are removed
 from the beginning and end.</p>
-<h3 id="supported-options_22">Supported Options</h3>
+<h3 id="supported-options_23">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringTrim</code>:</p>
 <ul>
 <li><code>charlist</code>: List of characters to remove from the beginning and end of the
   string. If this is not set or is null, the default behavior will be invoked,
   which is to remove only whitespace from the beginning and end of the string.</li>
 </ul>
-<h3 id="basic-usage_18">Basic Usage</h3>
+<h3 id="basic-usage_19">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringTrim();
 
 print $filter-&gt;filter(' This is (my) content: ');</code></pre>
@@ -1755,9 +1774,9 @@ current character list.</p>
 <h2 id="stripnewlines">StripNewlines</h2>
 <p>This filter modifies a given string and removes all new line characters within
 that string.</p>
-<h3 id="supported-options_23">Supported Options</h3>
+<h3 id="supported-options_24">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\StripNewlines</code>:</p>
-<h3 id="basic-usage_19">Basic Usage</h3>
+<h3 id="basic-usage_20">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripNewlines();
 
 print $filter-&gt;filter(' This is (my)``\n\r``content: ');</code></pre>
@@ -1774,7 +1793,7 @@ including potential XSS vectors.</p>
 <p>For a fully secure solution that allows selected filtering of HTML tags, use
 either Tidy or HtmlPurifier.</p>
 </blockquote>
-<h3 id="supported-options_24">Supported Options</h3>
+<h3 id="supported-options_25">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StripTags</code>:</p>
 <ul>
 <li><code>allowAttribs</code>: This option sets the attributes which are accepted. All other
@@ -1782,7 +1801,7 @@ either Tidy or HtmlPurifier.</p>
 <li><code>allowTags</code>: This option sets the tags which are accepted. All other tags will
   be stripped from; the given content.</li>
 </ul>
-<h3 id="basic-usage_20">Basic Usage</h3>
+<h3 id="basic-usage_21">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags();
 
 print $filter-&gt;filter('&lt;B&gt;My content&lt;/B&gt;');</code></pre>
@@ -1794,7 +1813,7 @@ opening tag will be completely removed:</p>
 print $filter-&gt;filter('This contains &lt;a href="http://example.com"&gt;no ending tag');</code></pre>
 <p>The above will return <code>This contains</code>, with the rest being stripped.</p>
 <h3 id="allowing-defined-tags">Allowing defined Tags</h3>
-<p><code>Laminas\Filter\StripTags</code> allows stripping all but a whitelist of tags. As an
+<p><code>Laminas\Filter\StripTags</code> allows stripping all but an allowed set of tags. As an
 example, this can be used to strip all markup except for links:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags(['allowTags' =&gt; 'a']);
 
@@ -1809,7 +1828,7 @@ tags at once.</p>
 use of a properly configured html filter.</p>
 </blockquote>
 <h3 id="allowing-defined-attributes">Allowing defined Attributes</h3>
-<p>You can also strip all but a whitelist of attributes from a tag:</p>
+<p>You can also strip all but an allowed set of attributes from a tag:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags([
     'allowTags' =&gt; 'img',
     'allowAttribs' =&gt; 'src',
@@ -1821,8 +1840,8 @@ print $filter-&gt;filter($input);</code></pre>
 strips all tags but <code>&lt;img&gt;</code>, and all attributes but <code>src</code> from those tags.By
 providing an array you can set multiple attributes at once.</p>
 <h3 id="allow-specific-tags-with-specific-attributes">Allow specific Tags with specific Attributes</h3>
-<p>You can also pass the tag whitelist as a set of tag/attribute values. Each key
-will be an allowed tag, pointing to a list of whitelisted attributes for that
+<p>You can also pass the tag allow list as a set of tag/attribute values. Each key
+will be an allowed tag, pointing to a list of allowed attributes for that
 tag.</p>
 <pre class="highlight"><code class="language-php">$allowedElements = [
     'img' =&gt; [
@@ -1838,42 +1857,25 @@ $filter = new Laminas\Filter\StripTags($allowedElements);
 $input = "A text with &lt;br/&gt; a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt; click "
     . "&lt;a href='http://picture.com/laminas' id='hereId'&gt;here&lt;/a&gt;!";
 print $filter-&gt;filter($input);</code></pre>
-<p>The above will return <code>A text with a &lt;img src='picture.com'
-width='100'&gt;picture&lt;/img&gt; click &lt;a href='&lt;http://picture.com/laminas&gt;'&gt;here&lt;/a&gt;!</code>
+<p>The above will return
+<code>A text with a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt; click &lt;a href='&lt;http://picture.com/laminas&gt;'&gt;here&lt;/a&gt;!</code>
 as the result.</p>
 <h2 id="urinormalize">UriNormalize</h2>
 <p>This filter sets the scheme on a URI if the scheme is missing.</p>
-<h3 id="supported-options_25">Supported Options</h3>
+<h3 id="supported-options_26">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\UriNormalize</code>:</p>
 <ul>
 <li><code>defaultScheme</code>: This option can be used to set the default scheme to use when
   parsing scheme-less URIs.</li>
 <li><code>enforcedScheme</code>: Set a URI scheme to enforce on schemeless URIs.</li>
 </ul>
-<h3 id="basic-usage_21">Basic Usage</h3>
+<h3 id="basic-usage_22">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\UriNormalize(array(
     'enforcedScheme' =&gt; 'https'
 ));
 
 echo $filter-&gt;filter('www.example.com');</code></pre>
 <p>The above results in the string <code>https://www.example.com</code>.</p>
-<h2 id="whitelist">Whitelist</h2>
-<p>This filter will return <code>null</code> if the value being filtered is not present the
-filter's allowed list of values. If the value is present, it will return that
-value.</p>
-<p>For the opposite functionality see the <a href="#blacklist">Blacklist</a> filter.</p>
-<h3 id="supported-options_26">Supported Options</h3>
-<p>The following options are supported for <code>Laminas\Filter\Whitelist</code>:</p>
-<ul>
-<li><code>strict</code>: Uses strict mode for comparisons; passed to <code>in_array()</code>'s third argument.</li>
-<li><code>list</code>: An array of allowed values.</li>
-</ul>
-<h3 id="basic-usage_22">Basic Usage</h3>
-<pre class="highlight"><code class="language-php">$whitelist = new \Laminas\Filter\Whitelist([
-    'list' =&gt; ['allowed-1', 'allowed-2']
-]);
-echo $whitelist-&gt;filter('allowed-2');   // =&gt; 'allowed-2'
-echo $whitelist-&gt;filter('not-allowed'); // =&gt; null</code></pre>
 
 
 
@@ -1902,16 +1904,6 @@ echo $whitelist-&gt;filter('not-allowed'); // =&gt; null</code></pre>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-filter/edit/master/docs/book/standard-filters.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>
