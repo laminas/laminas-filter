@@ -26,8 +26,7 @@
     },
     "require": {
         "php": "^7.3 || ~8.0.0",
-        "laminas/laminas-stdlib": "^3.3",
-        "laminas/laminas-zendframework-bridge": "^1.0"
+        "laminas/laminas-stdlib": "^3.3"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
@@ -42,7 +41,8 @@
         "vimeo/psalm": "^4.6"
     },
     "conflict": {
-        "laminas/laminas-validator": "<2.10.1"
+        "laminas/laminas-validator": "<2.10.1",
+        "zendframework/zend-filter": "*"
     },
     "suggest": {
         "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
@@ -71,8 +71,5 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "static-analysis": "psalm --shepherd --stats"
-    },
-    "replace": {
-        "zendframework/zend-filter": "^2.9.2"
     }
 }
