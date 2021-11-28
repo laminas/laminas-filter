@@ -25,11 +25,11 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0",
+        "php": "^7.3 || ~8.0.0 || ~8.1.0",
         "laminas/laminas-stdlib": "^3.6.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-coding-standard": "^2.3.0",
         "laminas/laminas-crypt": "^3.5.1",
         "laminas/laminas-servicemanager": "^3.7.0",
         "laminas/laminas-uri": "^2.9.1",
