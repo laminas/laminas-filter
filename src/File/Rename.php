@@ -1,11 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\File;
 
 use Laminas\Filter;
 use Laminas\Filter\Exception;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function basename;
+use function count;
+use function file_exists;
+use function is_array;
+use function is_dir;
+use function is_scalar;
+use function is_string;
+use function pathinfo;
+use function realpath;
+use function rename;
+use function sprintf;
+use function strlen;
+use function uniqid;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
 
 class Rename extends Filter\AbstractFilter
 {
@@ -15,8 +34,6 @@ class Rename extends Filter\AbstractFilter
     protected $files = [];
 
     /**
-     * Class constructor
-     *
      * Options argument may be either a string, a Laminas\Config\Config object, or an array.
      * If an array or Laminas\Config\Config object, it accepts the following keys:
      * 'source'    => Source filename or directory which will be renamed
@@ -167,8 +184,8 @@ class Rename extends Filter\AbstractFilter
             }
 
             $isFileUpload = true;
-            $uploadData = $value;
-            $value      = $value['tmp_name'];
+            $uploadData   = $value;
+            $value        = $value['tmp_name'];
         }
 
         $file = $this->getNewName($value, true);
@@ -185,8 +202,8 @@ class Rename extends Filter\AbstractFilter
         if ($result !== true) {
             throw new Exception\RuntimeException(
                 sprintf(
-                    "File '%s' could not be renamed. " .
-                    "An error occurred while processing the file.",
+                    "File '%s' could not be renamed. "
+                    . "An error occurred while processing the file.",
                     $value
                 )
             );
@@ -320,9 +337,9 @@ class Rename extends Filter\AbstractFilter
         }
 
         if ($rename['randomize']) {
-            $info = pathinfo($rename['target']);
-            $newTarget = $info['dirname'] . DIRECTORY_SEPARATOR .
-                $info['filename'] . uniqid('_', false);
+            $info      = pathinfo($rename['target']);
+            $newTarget = $info['dirname'] . DIRECTORY_SEPARATOR
+                . $info['filename'] . uniqid('_', false);
             if (isset($info['extension'])) {
                 $newTarget .= '.' . $info['extension'];
             }

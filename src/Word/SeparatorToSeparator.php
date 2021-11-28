@@ -1,9 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word;
 
 use Laminas\Filter\AbstractFilter;
 use Laminas\Filter\Exception;
+
+use function is_array;
+use function is_scalar;
+use function preg_quote;
+use function preg_replace;
 
 class SeparatorToSeparator extends AbstractFilter
 {

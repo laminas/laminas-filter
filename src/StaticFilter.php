@@ -1,23 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\ServiceManager\ServiceManager;
 
 class StaticFilter
 {
-    /**
-     * @var FilterPluginManager
-     */
+    /** @var FilterPluginManager */
     protected static $plugins;
 
     /**
      * Set plugin manager for resolving filter classes
      *
-     * @param  FilterPluginManager $manager
      * @return void
      */
-    public static function setPluginManager(FilterPluginManager $manager = null)
+    public static function setPluginManager(?FilterPluginManager $manager = null)
     {
         static::$plugins = $manager;
     }

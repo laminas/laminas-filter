@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\StringTrim;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
+use function utf8_encode;
 
 class StringTrimTest extends TestCase
 {
@@ -17,8 +21,6 @@ class StringTrimTest extends TestCase
 
     /**
      * Creates a new Laminas\Filter\StringTrim object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -32,12 +34,12 @@ class StringTrimTest extends TestCase
      */
     public function testBasic()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             'string' => 'string',
             ' str '  => 'str',
-            "\ns\t"  => 's'
-            ];
+            "\ns\t"  => 's',
+        ];
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $filter($input));
         }
@@ -104,7 +106,6 @@ class StringTrimTest extends TestCase
         $this->assertEquals('Расчет', $filter('Расчет'));
     }
 
-
     /**
      * @group Laminas-7902
      */
@@ -125,7 +126,7 @@ class StringTrimTest extends TestCase
         $this->assertEquals('Зенд', $filter('   Зенд'));
 
         $trim_charlist = " \t\n\r\x0B・。";
-        $filter = new StringTrim($trim_charlist);
+        $filter        = new StringTrim($trim_charlist);
         $this->assertEquals('Зенд', $filter->filter('。  Зенд  。'));
     }
 

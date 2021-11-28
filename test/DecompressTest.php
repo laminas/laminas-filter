@@ -1,9 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Decompress as DecompressFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function extension_loaded;
+use function file_exists;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class DecompressTest extends TestCase
 {
@@ -36,7 +49,7 @@ class DecompressTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new DecompressFilter('bz2');
+        $filter = new DecompressFilter('bz2');
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);
@@ -107,11 +120,13 @@ class DecompressTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                'decompress me',
-                'decompress me too, please'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    'decompress me',
+                    'decompress me too, please',
+                ],
+            ],
         ];
     }
 

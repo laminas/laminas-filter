@@ -1,10 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Tar as TarCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function dirname;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function implode;
+use function is_dir;
+use function microtime;
+use function mkdir;
+use function rmdir;
+use function sprintf;
+use function strtolower;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
 
 class TarTest extends TestCase
 {
@@ -30,7 +49,7 @@ class TarTest extends TestCase
             $this->tmp . '/_compress',
             $this->tmp . '/compressed.tar',
             $this->tmp . '/compressed.tar.gz',
-            $this->tmp . '/compressed.tar.bz2'
+            $this->tmp . '/compressed.tar.bz2',
         ];
 
         foreach ($files as $file) {
@@ -51,10 +70,10 @@ class TarTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new TarCompression(
+        $filter = new TarCompression(
             [
-                'archive'  => $this->tmp . '/compressed.tar',
-                'target'   => $this->tmp . '/zipextracted.txt'
+                'archive' => $this->tmp . '/compressed.tar',
+                'target'  => $this->tmp . '/zipextracted.txt',
             ]
         );
 
@@ -65,7 +84,7 @@ class TarTest extends TestCase
         );
 
         $content = $filter->decompress($content);
-        $this->assertEquals($this->tmp  . DIRECTORY_SEPARATOR, $content);
+        $this->assertEquals($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
         $this->assertEquals('compress me', $content);
     }
@@ -82,7 +101,8 @@ class TarTest extends TestCase
             [
                 'archive' => null,
                 'target'  => '.',
-                'mode'    => null],
+                'mode'    => null,
+            ],
             $filter->getOptions()
         );
 
@@ -135,10 +155,10 @@ class TarTest extends TestCase
      */
     public function testTarCompressToFile()
     {
-        $filter  = new TarCompression(
+        $filter = new TarCompression(
             [
-                'archive'  => $this->tmp . '/compressed.tar',
-                'target'   => $this->tmp . '/zipextracted.txt'
+                'archive' => $this->tmp . '/compressed.tar',
+                'target'  => $this->tmp . '/zipextracted.txt',
             ]
         );
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
@@ -164,8 +184,8 @@ class TarTest extends TestCase
     {
         $filter  = new TarCompression(
             [
-                'archive'  => $this->tmp . '/compressed.tar',
-                'target'   => $this->tmp . '/_compress'
+                'archive' => $this->tmp . '/compressed.tar',
+                'target'  => $this->tmp . '/_compress',
             ]
         );
         $content = $filter->compress(dirname(__DIR__) . '/_files/Compress');
@@ -177,7 +197,7 @@ class TarTest extends TestCase
 
     public function testSetModeShouldWorkWithCaseInsensitive()
     {
-        $filter = new TarCompression;
+        $filter = new TarCompression();
         $filter->setTarget($this->tmp . '/zipextracted.txt');
 
         foreach (['GZ', 'Bz2'] as $mode) {
@@ -210,10 +230,10 @@ class TarTest extends TestCase
     {
         $filter = new TarCompression([
             'archive' => $this->tmp . '/compressed.tar',
-            'target' => $this->tmp . '/zipextracted.txt',
+            'target'  => $this->tmp . '/zipextracted.txt',
         ]);
 
-        $content = 'compress me ' . microtime(true);
+        $content    = 'compress me ' . microtime(true);
         $compressed = $filter->compress($content);
 
         self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar', $compressed);

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\UriNormalize;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class UriNormalizeTest extends TestCase
 {
@@ -51,7 +54,7 @@ class UriNormalizeTest extends TestCase
             ['mailto', 'mailto:shahar@example.com', 'mailto:shahar@example.com'],
             ['http', 'www.example.com/foo/bar?q=q', 'http://www.example.com/foo/bar?q=q'],
             ['ftp', 'www.example.com/path/to/file.ext', 'ftp://www.example.com/path/to/file.ext'],
-            ['http', '/just/a/path', '/just/a/path'] // cannot be enforced, no host
+            ['http', '/just/a/path', '/just/a/path'], // cannot be enforced, no host
         ];
     }
 
@@ -59,11 +62,13 @@ class UriNormalizeTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                'http://www.example.com',
-                'file:///home/shahar/secret/../../otherguy/secret'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    'http://www.example.com',
+                    'file:///home/shahar/secret/../../otherguy/secret',
+                ],
+            ],
         ];
     }
 

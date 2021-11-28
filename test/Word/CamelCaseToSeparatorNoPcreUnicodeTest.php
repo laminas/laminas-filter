@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Stdlib\StringUtils;
@@ -20,7 +22,7 @@ class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
             return;
         }
 
-        $this->reflection = new ReflectionProperty('Laminas\Stdlib\StringUtils', 'hasPcreUnicodeSupport');
+        $this->reflection = new ReflectionProperty(StringUtils::class, 'hasPcreUnicodeSupport');
         $this->reflection->setAccessible(true);
         $this->reflection->setValue(false);
     }

@@ -1,9 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
+use Laminas\Filter\Compress\CompressionAlgorithmInterface;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function call_user_func_array;
+use function class_exists;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function is_string;
+use function method_exists;
+use function sprintf;
+use function ucfirst;
 
 /**
  * Compresses a given string
@@ -21,8 +35,6 @@ class Compress extends AbstractFilter
     protected $adapterOptions = [];
 
     /**
-     * Class constructor
-     *
      * @param string|array|Traversable $options (Optional) Options to set
      */
     public function __construct($options = null)
@@ -43,7 +55,7 @@ class Compress extends AbstractFilter
      * Set filter setate
      *
      * @param  array $options
-     * @throws Exception\InvalidArgumentException if options is not an array or Traversable
+     * @throws Exception\InvalidArgumentException If options is not an array or Traversable.
      * @return self
      */
     public function setOptions($options)
@@ -52,7 +64,7 @@ class Compress extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
-                (is_object($options) ? get_class($options) : gettype($options))
+                is_object($options) ? get_class($options) : gettype($options)
             ));
         }
 
@@ -73,7 +85,7 @@ class Compress extends AbstractFilter
      *
      * @throws Exception\RuntimeException
      * @throws Exception\InvalidArgumentException
-     * @return Compress\CompressionAlgorithmInterface
+     * @return CompressionAlgorithmInterface
      */
     public function getAdapter()
     {
@@ -117,7 +129,7 @@ class Compress extends AbstractFilter
     /**
      * Sets compression adapter
      *
-     * @param  string|Compress\CompressionAlgorithmInterface $adapter Adapter to use
+     * @param  string|CompressionAlgorithmInterface $adapter Adapter to use
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -130,7 +142,7 @@ class Compress extends AbstractFilter
         if (! is_string($adapter)) {
             throw new Exception\InvalidArgumentException(
                 'Invalid adapter provided; must be string or instance of '
-                . 'Laminas\\Filter\\Compress\\CompressionAlgorithmInterface'
+                . CompressionAlgorithmInterface::class
             );
         }
         $this->adapter = $adapter;

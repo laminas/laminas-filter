@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Traversable;
 
+use function is_scalar;
+use function mb_strtolower;
+use function strtolower;
+
 class StringToLower extends AbstractUnicode
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [
         'encoding' => null,
     ];

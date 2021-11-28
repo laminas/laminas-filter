@@ -1,10 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
+use Laminas\Filter\Boolean;
 use Laminas\Filter\Compress as CompressFilter;
+use Laminas\Filter\Compress\CompressionAlgorithmInterface;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function extension_loaded;
+use function file_exists;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class CompressTest extends TestCase
 {
@@ -37,9 +52,9 @@ class CompressTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new CompressFilter('bz2');
+        $filter = new CompressFilter('bz2');
 
-        $text     = 'compress me';
+        $text       = 'compress me';
         $compressed = $filter($text);
         $this->assertNotEquals($text, $compressed);
 
@@ -59,7 +74,7 @@ class CompressTest extends TestCase
             'options' => [
                 'blocksize' => 6,
                 'archive'   => 'test.txt',
-            ]
+            ],
         ]);
 
         $this->assertEquals(
@@ -85,7 +100,7 @@ class CompressTest extends TestCase
             'archive'   => 'test.txt',
         ]);
         $this->assertEquals(
-            ['blocksize' => 6, 'archive'   => 'test.txt'],
+            ['blocksize' => 6, 'archive' => 'test.txt'],
             $filter->getAdapterOptions()
         );
         $adapter = $filter->getAdapter();
@@ -131,7 +146,7 @@ class CompressTest extends TestCase
      */
     public function testCompressToFile()
     {
-        $filter   = new CompressFilter('bz2');
+        $filter  = new CompressFilter('bz2');
         $archive = $this->tmpDir . '/compressed.bz2';
         $filter->setArchive($archive);
 
@@ -166,9 +181,9 @@ class CompressTest extends TestCase
      */
     public function testGetAdapter()
     {
-        $filter = new CompressFilter('bz2');
+        $filter  = new CompressFilter('bz2');
         $adapter = $filter->getAdapter();
-        $this->assertInstanceOf('Laminas\Filter\Compress\CompressionAlgorithmInterface', $adapter);
+        $this->assertInstanceOf(CompressionAlgorithmInterface::class, $adapter);
         $this->assertEquals('Bz2', $filter->getAdapterName());
     }
 
@@ -186,8 +201,7 @@ class CompressTest extends TestCase
         $filter = new CompressFilter();
         $this->assertEquals('Gz', $filter->getAdapterName());
 
-
-        $filter->setAdapter('\Laminas\Filter\Boolean');
+        $filter->setAdapter(Boolean::class);
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
@@ -201,7 +215,7 @@ class CompressTest extends TestCase
      */
     public function testDecompressArchive()
     {
-        $filter   = new CompressFilter('bz2');
+        $filter  = new CompressFilter('bz2');
         $archive = $this->tmpDir . '/compressed.bz2';
         $filter->setArchive($archive);
 
@@ -231,11 +245,13 @@ class CompressTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                'compress me',
-                'compress me too, please'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    'compress me',
+                    'compress me too, please',
+                ],
+            ],
         ];
     }
 
@@ -245,7 +261,7 @@ class CompressTest extends TestCase
      */
     public function testReturnUnfiltered($input)
     {
-        $filter  = new CompressFilter('bz2');
+        $filter = new CompressFilter('bz2');
 
         $this->assertEquals($input, $filter($input));
     }

@@ -1,11 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use DateTime;
 use Laminas\Filter\DateTimeFormatter;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function date_default_timezone_get;
+use function date_default_timezone_set;
 
 class DateTimeFormatterTest extends TestCase
 {
@@ -26,12 +32,14 @@ class DateTimeFormatterTest extends TestCase
         return [
             [null],
             [''],
-            [new \stdClass()],
-            [[
-                '1',
-                -1
-            ]],
-            [0.53]
+            [new stdClass()],
+            [
+                [
+                    '1',
+                    -1,
+                ],
+            ],
+            [0.53],
         ];
     }
 

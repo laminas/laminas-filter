@@ -1,16 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Filter\Exception\InvalidArgumentException;
 
+use function floor;
+use function in_array;
+use function is_numeric;
+use function log;
+use function number_format;
+use function pow;
+use function sprintf;
+use function strtolower;
+
 final class DataUnitFormatter extends AbstractFilter
 {
-    const MODE_BINARY = 'binary';
-    const MODE_DECIMAL = 'decimal';
+    public const MODE_BINARY  = 'binary';
+    public const MODE_DECIMAL = 'decimal';
 
-    const BASE_BINARY = 1024;
-    const BASE_DECIMAL = 1000;
+    public const BASE_BINARY  = 1024;
+    public const BASE_DECIMAL = 1000;
 
     /**
      * A list of all possible filter modes:
@@ -24,6 +35,7 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * A list of standardized binary prefix formats for decimal and binary mode
+     *
      * @link https://en.wikipedia.org/wiki/Binary_prefix
      *
      * @var array
@@ -67,7 +79,6 @@ final class DataUnitFormatter extends AbstractFilter
      * Define the mode of the filter. Possible values can be fount at self::$modes.
      *
      * @param string $mode
-     *
      * @throws InvalidArgumentException
      */
     protected function setMode($mode)
@@ -178,13 +189,12 @@ final class DataUnitFormatter extends AbstractFilter
      * Find the prefix at a specific location in the prefixes array.
      *
      * @param $index
-     *
      * @return string|null
      */
     protected function getPrefixAt($index)
     {
         $prefixes = $this->getPrefixes();
-        return isset($prefixes[$index]) ? $prefixes[$index] : null;
+        return $prefixes[$index] ?? null;
     }
 
     /**
@@ -210,9 +220,9 @@ final class DataUnitFormatter extends AbstractFilter
         }
 
         // Calculate the correct size and prefix:
-        $base = $this->isBinaryMode() ? self::BASE_BINARY : self::BASE_DECIMAL;
-        $power = floor(log($amount, $base));
-        $prefix = $this->getPrefixAt((int)$power);
+        $base   = $this->isBinaryMode() ? self::BASE_BINARY : self::BASE_DECIMAL;
+        $power  = floor(log($amount, $base));
+        $prefix = $this->getPrefixAt((int) $power);
 
         // When the amount is too big, no prefix can be found:
         if ($prefix === null) {
@@ -220,7 +230,7 @@ final class DataUnitFormatter extends AbstractFilter
         }
 
         // return formatted value:
-        $result = ($amount / pow($base, $power));
+        $result    = $amount / pow($base, $power);
         $formatted = number_format($result, $this->getPrecision());
         return $this->formatAmount($formatted, $prefix);
     }
@@ -228,7 +238,6 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * @param      $amount
      * @param null $prefix
-     *
      * @return string
      */
     protected function formatAmount($amount, $prefix = null)

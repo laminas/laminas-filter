@@ -1,8 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
+use Traversable;
+
+use function extension_loaded;
+use function file_exists;
+use function is_int;
+use function strpos;
 
 /**
  * Compression adapter for Bz2
@@ -24,10 +32,8 @@ class Bz2 extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * Class constructor
-     *
-     * @param null|array|\Traversable $options (Optional) Options to set
-     * @throws Exception\ExtensionNotLoadedException if bz2 extension not loaded
+     * @param null|array|Traversable $options (Optional) Options to set
+     * @throws Exception\ExtensionNotLoadedException If bz2 extension not loaded.
      */
     public function __construct($options = null)
     {

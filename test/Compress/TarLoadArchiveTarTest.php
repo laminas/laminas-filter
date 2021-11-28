@@ -1,10 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Tar as TarCompression;
 use Laminas\Filter\Exception\ExtensionNotLoadedException;
 use PHPUnit\Framework\TestCase;
+
+use function class_exists;
+use function restore_error_handler;
+use function set_error_handler;
+
+use const E_DEPRECATED;
 
 class TarLoadArchiveTarTest extends TestCase
 {
@@ -21,7 +29,7 @@ class TarLoadArchiveTarTest extends TestCase
         restore_error_handler();
 
         try {
-            $tar = new TarCompression;
+            $tar = new TarCompression();
             $this->fail('ExtensionNotLoadedException was expected but not thrown');
         } catch (ExtensionNotLoadedException $e) {
         }

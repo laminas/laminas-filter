@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-filter for the canonical source repository
- * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\PregReplace as PregReplaceFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function preg_match;
 
 class PregReplaceTest extends TestCase
 {
-    /**
-     *
-     * @var PregReplaceFilter
-     */
+    /** @var PregReplaceFilter */
     protected $filter;
 
     public function setUp(): void
@@ -33,14 +34,14 @@ class PregReplaceTest extends TestCase
     public function testPassingPatternToConstructorSetsPattern()
     {
         $pattern = '#^controller/(?P<action>[a-z_-]+)#';
-        $filter = new PregReplaceFilter($pattern);
+        $filter  = new PregReplaceFilter($pattern);
         $this->assertEquals($pattern, $filter->getPattern());
     }
 
     public function testPassingReplacementToConstructorSetsReplacement()
     {
         $replace = 'foo/bar';
-        $filter = new PregReplaceFilter(null, $replace);
+        $filter  = new PregReplaceFilter(null, $replace);
         $this->assertEquals($replace, $filter->getReplacement());
     }
 
@@ -74,7 +75,7 @@ class PregReplaceTest extends TestCase
         $filter = $this->filter;
         $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
 
-        $string = 'controller/action';
+        $string   = 'controller/action';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
         $this->assertEquals('foo/bar', $filtered);
@@ -87,14 +88,14 @@ class PregReplaceTest extends TestCase
 
         $input = [
             'controller/action',
-            'This should stay the same'
+            'This should stay the same',
         ];
 
         $filtered = $filter($input);
         $this->assertNotEquals($input, $filtered);
         $this->assertEquals([
             'foo/bar',
-            'This should stay the same'
+            'This should stay the same',
         ], $filtered);
     }
 
@@ -120,7 +121,7 @@ class PregReplaceTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()]
+            [new stdClass()],
         ];
     }
 

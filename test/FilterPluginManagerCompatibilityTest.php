@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\RuntimeException;
@@ -9,6 +11,8 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+
+use function strpos;
 
 class FilterPluginManagerCompatibilityTest extends TestCase
 {
@@ -32,7 +36,7 @@ class FilterPluginManagerCompatibilityTest extends TestCase
     public function aliasProvider()
     {
         $pluginManager = $this->getPluginManager();
-        $r = new ReflectionProperty($pluginManager, 'aliases');
+        $r             = new ReflectionProperty($pluginManager, 'aliases');
         $r->setAccessible(true);
         $aliases = $r->getValue($pluginManager);
 

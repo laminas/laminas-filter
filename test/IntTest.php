@@ -1,9 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Int as IntFilter;
 use PHPUnit\Framework\TestCase;
+
+use function version_compare;
+
+use const PHP_VERSION;
 
 class IntTest extends TestCase
 {

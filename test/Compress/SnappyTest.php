@@ -1,10 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Snappy as SnappyCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
+use function restore_error_handler;
+use function set_error_handler;
+
+use const E_WARNING;
 
 class SnappyTest extends TestCase
 {
@@ -22,7 +30,7 @@ class SnappyTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new SnappyCompression();
+        $filter = new SnappyCompression();
 
         $content = $filter->compress('compress me');
         $this->assertNotEquals('compress me', $content);

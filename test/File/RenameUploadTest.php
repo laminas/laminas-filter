@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
@@ -11,6 +13,27 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use RuntimeException;
+use stdClass;
+
+use function array_shift;
+use function basename;
+use function copy;
+use function glob;
+use function is_dir;
+use function is_file;
+use function mkdir;
+use function pathinfo;
+use function rmdir;
+use function sprintf;
+use function str_replace;
+use function sys_get_temp_dir;
+use function touch;
+use function uniqid;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
+use const UPLOAD_ERR_OK;
 
 class RenameUploadTest extends TestCase
 {
@@ -53,18 +76,16 @@ class RenameUploadTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function setUp(): void
     {
-        $this->filesPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
+        $this->filesPath  = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
         $this->targetPath = sprintf('%s%s%s', $this->filesPath, DIRECTORY_SEPARATOR, 'targetPath');
 
         mkdir($this->targetPath, 0775, true);
 
-        $this->sourceFile = $this->filesPath . DIRECTORY_SEPARATOR . 'testfile.txt';
-        $this->targetFile = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile.xml';
+        $this->sourceFile     = $this->filesPath . DIRECTORY_SEPARATOR . 'testfile.txt';
+        $this->targetFile     = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile.xml';
         $this->targetPathFile = $this->targetPath . DIRECTORY_SEPARATOR . 'testfile.txt';
 
         touch($this->sourceFile);
@@ -72,8 +93,6 @@ class RenameUploadTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function tearDown(): void
     {
@@ -163,7 +182,7 @@ class RenameUploadTest extends TestCase
             ],
             $filter([
                 'tmp_name' => $this->sourceFile,
-                'name' => $this->targetFile,
+                'name'     => $this->targetFile,
             ])
         );
         $this->assertEquals('falsefile', $filter('falsefile'));
@@ -183,7 +202,7 @@ class RenameUploadTest extends TestCase
 
         $originalFile = $this->prophesize(UploadedFileInterface::class);
         $originalFile->getStream()->will(function ($args, $mock) use ($originalStream) {
-            $mock->getStream()->willThrow(new \RuntimeException('Cannot call getStream() more than once'));
+            $mock->getStream()->willThrow(new RuntimeException('Cannot call getStream() more than once'));
 
             return $originalStream->reveal();
         });
@@ -209,7 +228,7 @@ class RenameUploadTest extends TestCase
         $fileFactory
             ->createUploadedFile(
                 Argument::that([$renamedStream, 'reveal']),
-                0,  // we can hardcode this, as we know the file is empty
+                0, // we can hardcode this, as we know the file is empty
                 UPLOAD_ERR_OK,
                 $targetFile,
                 null
@@ -272,8 +291,8 @@ class RenameUploadTest extends TestCase
     public function testOverwriteWithExistingFile()
     {
         $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
-            'overwrite'       => true,
+            'target'    => $this->targetFile,
+            'overwrite' => true,
         ]);
 
         copy($this->sourceFile, $this->targetFile);
@@ -288,8 +307,8 @@ class RenameUploadTest extends TestCase
     public function testCannotOverwriteExistingFile()
     {
         $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
-            'overwrite'       => false,
+            'target'    => $this->targetFile,
+            'overwrite' => false,
         ]);
 
         copy($this->sourceFile, $this->targetFile);
@@ -307,9 +326,9 @@ class RenameUploadTest extends TestCase
     public function testGetRandomizedFile()
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
-            'randomize'       => true,
+        $filter    = new RenameUploadMock([
+            'target'    => $this->targetFile,
+            'randomize' => true,
         ]);
 
         $this->assertMatchesRegularExpression(
@@ -321,16 +340,16 @@ class RenameUploadTest extends TestCase
     public function testGetFileWithOriginalExtension()
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
+        $filter    = new RenameUploadMock([
+            'target'               => $this->targetFile,
             'use_upload_extension' => true,
-            'randomize'       => false,
+            'randomize'            => false,
         ]);
 
         $oldFilePathInfo = pathinfo($this->sourceFile);
 
         $this->assertMatchesRegularExpression(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '.'.$oldFilePathInfo['extension'].'#',
+            '#' . str_replace('\\', '\\\\', $fileNoExt) . '.' . $oldFilePathInfo['extension'] . '#',
             $filter($this->sourceFile)
         );
     }
@@ -338,16 +357,16 @@ class RenameUploadTest extends TestCase
     public function testGetRandomizedFileWithOriginalExtension()
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
+        $filter    = new RenameUploadMock([
+            'target'               => $this->targetFile,
             'use_upload_extension' => true,
-            'randomize'       => true,
+            'randomize'            => true,
         ]);
 
         $oldFilePathInfo = pathinfo($this->sourceFile);
 
         $this->assertMatchesRegularExpression(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.'.$oldFilePathInfo['extension'].'#',
+            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.' . $oldFilePathInfo['extension'] . '#',
             $filter($this->sourceFile)
         );
     }
@@ -358,9 +377,9 @@ class RenameUploadTest extends TestCase
     public function testGetRandomizedFileWithoutExtension()
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter = new RenameUploadMock([
-            'target'          => $fileNoExt,
-            'randomize'       => true,
+        $filter    = new RenameUploadMock([
+            'target'    => $fileNoExt,
+            'randomize' => true,
         ]);
 
         $this->assertMatchesRegularExpression(
@@ -385,8 +404,8 @@ class RenameUploadTest extends TestCase
     public function testCanFilterMultipleTimesWithSameResult()
     {
         $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
-            'randomize'       => true,
+            'target'    => $this->targetFile,
+            'randomize' => true,
         ]);
 
         $firstResult = $filter($this->sourceFile);
@@ -398,16 +417,17 @@ class RenameUploadTest extends TestCase
         $this->assertSame($firstResult, $secondResult);
     }
 
-
     public function returnUnfilteredDataProvider()
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                $this->sourceFile,
-                'something invalid'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    $this->sourceFile,
+                    'something invalid',
+                ],
+            ],
         ];
     }
 
@@ -418,8 +438,8 @@ class RenameUploadTest extends TestCase
     public function testReturnUnfiltered($input)
     {
         $filter = new RenameUploadMock([
-            'target'          => $this->targetFile,
-            'randomize'       => true,
+            'target'    => $this->targetFile,
+            'randomize' => true,
         ]);
 
         $this->assertEquals($input, $filter($input));
@@ -427,6 +447,7 @@ class RenameUploadTest extends TestCase
 
     /**
      * @see https://github.com/zendframework/zend-filter/issues/77
+     *
      * @return void
      */
     public function testFilterDoesNotAlterUnknownFileDataAndCachesResultsOfFilteringSAPIUploads()
@@ -436,18 +457,18 @@ class RenameUploadTest extends TestCase
         // Emulate the output of \Laminas\Http\Request::getFiles()->toArray()
         $sapiSource = [
             'tmp_name' => $this->sourceFile,
-            'name' => basename($this->targetFile),
-            'type' => 'text/plain',
-            'error' => \UPLOAD_ERR_OK,
-            'size' => 123,
+            'name'     => basename($this->targetFile),
+            'type'     => 'text/plain',
+            'error'    => UPLOAD_ERR_OK,
+            'size'     => 123,
         ];
 
         $sapiTarget = [
             'tmp_name' => $this->targetPathFile,
-            'name' => basename($this->targetFile),
-            'type' => 'text/plain',
-            'error' => \UPLOAD_ERR_OK,
-            'size' => 123,
+            'name'     => basename($this->targetFile),
+            'type'     => 'text/plain',
+            'error'    => UPLOAD_ERR_OK,
+            'size'     => 123,
         ];
 
         // Check the result twice for the `alreadyFiltered` cache path
@@ -457,6 +478,7 @@ class RenameUploadTest extends TestCase
 
     /**
      * @see https://github.com/zendframework/zend-filter/issues/76
+     *
      * @return void
      */
     public function testFilterReturnsFileDataVerbatimUnderSAPIWhenTargetPathIsUnspecified()
@@ -465,7 +487,7 @@ class RenameUploadTest extends TestCase
 
         $source = [
             'tmp_name' => $this->sourceFile,
-            'name' => basename($this->targetFile),
+            'name'     => basename($this->targetFile),
         ];
 
         $this->assertEquals($source, $filter($source));

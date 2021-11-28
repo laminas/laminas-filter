@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
+use function in_array;
+use function is_array;
+
 class AllowList extends AbstractFilter
 {
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $strict = false;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $list = [];
 
     /**
@@ -40,7 +41,7 @@ class AllowList extends AbstractFilter
     /**
      * Returns whether the in_array() call should be "strict" or not. See in_array docs.
      *
-     * @return boolean
+     * @return Boolean
      */
     public function getStrict()
     {
@@ -60,7 +61,6 @@ class AllowList extends AbstractFilter
 
         $this->list = $list;
     }
-
 
     /**
      * Get the list of items to white-list

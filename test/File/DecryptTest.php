@@ -1,11 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\File\Decrypt as FileDecrypt;
 use Laminas\Filter\File\Encrypt as FileEncrypt;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function dirname;
+use function extension_loaded;
+use function file_exists;
+use function file_get_contents;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function sprintf;
+use function sys_get_temp_dir;
+use function trim;
+use function uniqid;
+use function unlink;
 
 class DecryptTest extends TestCase
 {
@@ -127,11 +143,13 @@ class DecryptTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                $this->tmpDir . '/nofile.txt',
-                $this->tmpDir . '/nofile2.txt'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    $this->tmpDir . '/nofile.txt',
+                    $this->tmpDir . '/nofile2.txt',
+                ],
+            ],
         ];
     }
 

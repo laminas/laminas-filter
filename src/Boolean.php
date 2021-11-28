@@ -1,44 +1,54 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
+use function array_search;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_bool;
+use function is_float;
+use function is_int;
+use function is_object;
+use function is_string;
+use function sprintf;
+use function strtolower;
+
 class Boolean extends AbstractFilter
 {
-    const TYPE_BOOLEAN      = 1;
-    const TYPE_INTEGER      = 2;
-    const TYPE_FLOAT        = 4;
-    const TYPE_STRING       = 8;
-    const TYPE_ZERO_STRING  = 16;
-    const TYPE_EMPTY_ARRAY  = 32;
-    const TYPE_NULL         = 64;
-    const TYPE_PHP          = 127;
-    const TYPE_FALSE_STRING = 128;
-    const TYPE_LOCALIZED    = 256;
-    const TYPE_ALL          = 511;
+    public const TYPE_BOOLEAN      = 1;
+    public const TYPE_INTEGER      = 2;
+    public const TYPE_FLOAT        = 4;
+    public const TYPE_STRING       = 8;
+    public const TYPE_ZERO_STRING  = 16;
+    public const TYPE_EMPTY_ARRAY  = 32;
+    public const TYPE_NULL         = 64;
+    public const TYPE_PHP          = 127;
+    public const TYPE_FALSE_STRING = 128;
+    public const TYPE_LOCALIZED    = 256;
+    public const TYPE_ALL          = 511;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $constants = [
-        self::TYPE_BOOLEAN       => 'boolean',
-        self::TYPE_INTEGER       => 'integer',
-        self::TYPE_FLOAT         => 'float',
-        self::TYPE_STRING        => 'string',
-        self::TYPE_ZERO_STRING   => 'zero',
-        self::TYPE_EMPTY_ARRAY   => 'array',
-        self::TYPE_NULL          => 'null',
-        self::TYPE_PHP           => 'php',
-        self::TYPE_FALSE_STRING  => 'false',
-        self::TYPE_LOCALIZED     => 'localized',
-        self::TYPE_ALL           => 'all',
+        self::TYPE_BOOLEAN      => 'boolean',
+        self::TYPE_INTEGER      => 'integer',
+        self::TYPE_FLOAT        => 'float',
+        self::TYPE_STRING       => 'string',
+        self::TYPE_ZERO_STRING  => 'zero',
+        self::TYPE_EMPTY_ARRAY  => 'array',
+        self::TYPE_NULL         => 'null',
+        self::TYPE_PHP          => 'php',
+        self::TYPE_FALSE_STRING => 'false',
+        self::TYPE_LOCALIZED    => 'localized',
+        self::TYPE_ALL          => 'all',
     ];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [
         'type'         => self::TYPE_PHP,
         'casting'      => true,
@@ -60,7 +70,8 @@ class Boolean extends AbstractFilter
             }
 
             if (is_array($typeOrOptions)) {
-                if (isset($typeOrOptions['type'])
+                if (
+                    isset($typeOrOptions['type'])
                     || isset($typeOrOptions['casting'])
                     || isset($typeOrOptions['translations'])
                 ) {
@@ -159,7 +170,7 @@ class Boolean extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
-                (is_object($translations) ? get_class($translations) : gettype($translations))
+                is_object($translations) ? get_class($translations) : gettype($translations)
             ));
         }
 

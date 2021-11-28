@@ -1,39 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
+use Laminas\Filter\FilterInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function array_keys;
+use function array_shift;
+use function array_values;
+use function class_exists;
+use function func_get_args;
+use function is_array;
+use function is_scalar;
+use function is_string;
+use function ltrim;
+use function preg_match;
+use function preg_quote;
+use function preg_replace;
+use function str_replace;
 
 /**
  * Filter chain for string inflection
  */
 class Inflector extends AbstractFilter
 {
-    /**
-     * @var FilterPluginManager
-     */
+    /** @var FilterPluginManager */
     protected $pluginManager;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $target;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $throwTargetExceptionsOn = true;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $targetReplacementIdentifier = ':';
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $rules = [];
 
     /**
@@ -89,7 +97,6 @@ class Inflector extends AbstractFilter
     /**
      * Set plugin manager
      *
-     * @param  FilterPluginManager $manager
      * @return self
      */
     public function setPluginManager(FilterPluginManager $manager)
@@ -113,7 +120,7 @@ class Inflector extends AbstractFilter
         // Set plugin manager
         if (array_key_exists('pluginManager', $options)) {
             if (is_scalar($options['pluginManager']) && class_exists($options['pluginManager'])) {
-                $options['pluginManager'] = new $options['pluginManager'];
+                $options['pluginManager'] = new $options['pluginManager']();
             }
             $this->setPluginManager($options['pluginManager']);
         }
@@ -216,7 +223,7 @@ class Inflector extends AbstractFilter
      */
     public function setTargetReference(&$target)
     {
-        $this->target =& $target;
+        $this->target = &$target;
         return $this;
     }
 
@@ -320,12 +327,12 @@ class Inflector extends AbstractFilter
      * or an array of strings or filter objects.
      *
      * @param  string $spec
-     * @param  array|string|\Laminas\Filter\FilterInterface $ruleSet
+     * @param array|string|FilterInterface $ruleSet
      * @return self
      */
     public function setFilterRule($spec, $ruleSet)
     {
-        $spec = $this->_normalizeSpec($spec);
+        $spec               = $this->_normalizeSpec($spec);
         $this->rules[$spec] = [];
         return $this->addFilterRule($spec, $ruleSet);
     }
@@ -349,8 +356,8 @@ class Inflector extends AbstractFilter
         }
 
         if (is_string($this->rules[$spec])) {
-            $temp = $this->rules[$spec];
-            $this->rules[$spec] = [];
+            $temp                 = $this->rules[$spec];
+            $this->rules[$spec]   = [];
             $this->rules[$spec][] = $temp;
         }
 
@@ -370,7 +377,7 @@ class Inflector extends AbstractFilter
      */
     public function setStaticRule($name, $value)
     {
-        $name = $this->_normalizeSpec($name);
+        $name               = $this->_normalizeSpec($name);
         $this->rules[$name] = (string) $value;
         return $this;
     }
@@ -388,8 +395,8 @@ class Inflector extends AbstractFilter
      */
     public function setStaticRuleReference($name, &$reference)
     {
-        $name = $this->_normalizeSpec($name);
-        $this->rules[$name] =& $reference;
+        $name               = $this->_normalizeSpec($name);
+        $this->rules[$name] = &$reference;
         return $this;
     }
 
@@ -408,7 +415,7 @@ class Inflector extends AbstractFilter
         }
 
         $pregQuotedTargetReplacementIdentifier = preg_quote($this->targetReplacementIdentifier, '#');
-        $processedParts = [];
+        $processedParts                        = [];
 
         foreach ($this->rules as $ruleName => $ruleValue) {
             if (isset($source[$ruleName])) {
@@ -443,8 +450,9 @@ class Inflector extends AbstractFilter
         // to disable preg_replace backreferences
         $inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->target);
 
-        if ($this->throwTargetExceptionsOn
-            && preg_match('#(?=' . $pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget)
+        if (
+            $this->throwTargetExceptionsOn
+            && preg_match('#(?=' . $pregQuotedTargetReplacementIdentifier . '[A-Za-z]{1})#', $inflectedTarget)
         ) {
             throw new Exception\RuntimeException(
                 'A replacement identifier ' . $this->targetReplacementIdentifier

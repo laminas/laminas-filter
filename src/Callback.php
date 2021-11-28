@@ -1,17 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Traversable;
 
+use function array_unshift;
+use function call_user_func_array;
+use function class_exists;
+use function is_callable;
+use function is_string;
+
 class Callback extends AbstractFilter
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [
         'callback'        => null,
-        'callback_params' => []
+        'callback_params' => [],
     ];
 
     /**

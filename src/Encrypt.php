@@ -1,9 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function call_user_func_array;
+use function class_exists;
+use function is_array;
+use function is_numeric;
+use function is_string;
+use function method_exists;
+use function sprintf;
+use function substr;
+use function ucfirst;
 
 /**
  * Encrypts a given string
@@ -18,8 +30,6 @@ class Encrypt extends AbstractFilter
     protected $adapter;
 
     /**
-     * Class constructor
-     *
      * @param string|array|Traversable $options (Optional) Options to set, if null mcrypt is used
      */
     public function __construct($options = null)
@@ -47,7 +57,7 @@ class Encrypt extends AbstractFilter
         $adapter = $this->adapter;
         $options = $this->getOptions();
         if (! class_exists($adapter)) {
-            $adapter = __CLASS__ . '\\' . ucfirst($adapter);
+            $adapter = self::class . '\\' . ucfirst($adapter);
             if (! class_exists($adapter)) {
                 throw new Exception\RuntimeException(sprintf(
                     '%s unable to load adapter; class "%s" not found',
@@ -62,7 +72,7 @@ class Encrypt extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 'Encryption adapter "%s" does not implement %s\\EncryptionAlgorithmInterface',
                 $adapter,
-                __CLASS__
+                self::class
             ));
         }
         return $this->adapter;

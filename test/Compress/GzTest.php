@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Gz as GzCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
+use function file_exists;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class GzTest extends TestCase
 {
@@ -33,7 +42,7 @@ class GzTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new GzCompression();
+        $filter = new GzCompression();
 
         $content = $filter->compress('compress me');
         $this->assertNotEquals('compress me', $content);
@@ -134,7 +143,7 @@ class GzTest extends TestCase
      */
     public function testGzCompressToFile()
     {
-        $filter   = new GzCompression();
+        $filter  = new GzCompression();
         $archive = $this->target;
         $filter->setArchive($archive);
 
@@ -158,7 +167,7 @@ class GzTest extends TestCase
      */
     public function testGzDeflate()
     {
-        $filter  = new GzCompression(['mode' => 'deflate']);
+        $filter = new GzCompression(['mode' => 'deflate']);
 
         $content = $filter->compress('compress me');
         $this->assertNotEquals('compress me', $content);

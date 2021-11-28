@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\File;
 
 use Laminas\Filter;
 use Laminas\Filter\Exception;
+
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_array;
+use function is_scalar;
+use function is_writable;
 
 /**
  * Encrypts a given file and stores the encrypted file content
@@ -63,8 +72,8 @@ class Encrypt extends Filter\Encrypt
             }
 
             $isFileUpload = true;
-            $uploadData = $value;
-            $value      = $value['tmp_name'];
+            $uploadData   = $value;
+            $value        = $value['tmp_name'];
         }
 
         if (! file_exists($value)) {

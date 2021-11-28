@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
+use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Filter\MonthSelect as MonthSelectFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +36,7 @@ class MonthSelectTest extends TestCase
 
     public function testInvalidInput()
     {
-        $this->expectException(\Laminas\Filter\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $sut = new MonthSelectFilter();
         $sut->filter(['year' => '2120']);
     }

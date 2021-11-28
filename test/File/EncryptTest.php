@@ -1,16 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-filter for the canonical source repository
- * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
+
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\File\Decrypt as FileDecrypt;
 use Laminas\Filter\File\Encrypt as FileEncrypt;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function copy;
+use function dirname;
+use function extension_loaded;
+use function file_exists;
+use function file_get_contents;
+use function sprintf;
+use function sys_get_temp_dir;
+use function trim;
+use function uniqid;
+use function unlink;
 
 class EncryptTest extends TestCase
 {
@@ -25,8 +38,8 @@ class EncryptTest extends TestCase
         }
 
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
-        $this->testDir = sys_get_temp_dir();
-        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
+        $this->testDir       = sys_get_temp_dir();
+        $this->testFile      = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
     }
 
     public function tearDown(): void
@@ -74,7 +87,6 @@ class EncryptTest extends TestCase
     }
 
     /**
-     *
      * @return void
      */
     public function testNonExistingFile()
@@ -88,7 +100,6 @@ class EncryptTest extends TestCase
     }
 
     /**
-     *
      * @return void
      */
     public function testEncryptionInSameFile()
@@ -106,11 +117,13 @@ class EncryptTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid()),
-                sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid()),
-            ]]
+            [new stdClass()],
+            [
+                [
+                    sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid()),
+                    sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid()),
+                ],
+            ],
         ];
     }
 

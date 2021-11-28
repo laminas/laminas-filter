@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Encrypt;
 
 use Laminas\Filter\Encrypt\BlockCipher as BlockCipherEncryption;
 use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
+use function trim;
 
 class BlockCipherTest extends TestCase
 {
@@ -56,6 +62,7 @@ class BlockCipherTest extends TestCase
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('testvect');
     }
+
     /**
      * Ensures that the filter allows default encryption
      *
@@ -66,11 +73,13 @@ class BlockCipherTest extends TestCase
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
         $this->assertEquals(
-            ['key'           => 'testkey',
-                  'algorithm'     => 'aes',
-                  'vector'        => '1234567890123456',
-                  'key_iteration' => 5000,
-                  'hash'          => 'sha256'],
+            [
+                'key'           => 'testkey',
+                'algorithm'     => 'aes',
+                'vector'        => '1234567890123456',
+                'key_iteration' => 5000,
+                'hash'          => 'sha256',
+            ],
             $filter->getEncryption()
         );
     }
@@ -88,11 +97,13 @@ class BlockCipherTest extends TestCase
             ['algorithm' => 'blowfish']
         );
         $this->assertEquals(
-            ['key'           => 'testkey',
-                  'algorithm'     => 'blowfish',
-                  'vector'        => '1234567890123456',
-                  'key_iteration' => 5000,
-                  'hash'          => 'sha256'],
+            [
+                'key'           => 'testkey',
+                'algorithm'     => 'blowfish',
+                'vector'        => '1234567890123456',
+                'key_iteration' => 5000,
+                'hash'          => 'sha256',
+            ],
             $filter->getEncryption()
         );
     }
@@ -120,7 +131,7 @@ class BlockCipherTest extends TestCase
     public function testConstructionWithStringKey()
     {
         $filter = new BlockCipherEncryption('testkey');
-        $data = $filter->getEncryption();
+        $data   = $filter->getEncryption();
         $this->assertEquals('testkey', $data['key']);
     }
 
@@ -156,20 +167,20 @@ class BlockCipherTest extends TestCase
         try {
             $filter->setEncryption(1234);
             $filter->fail();
-        } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertStringContainsString('Invalid options argument', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(['algorithm' => 'unknown']);
             $filter->fail();
-        } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertStringContainsString('The algorithm', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(['mode' => 'unknown']);
-        } catch (\Laminas\Filter\Exception\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->assertStringContainsString('The mode', $e->getMessage());
         }
     }

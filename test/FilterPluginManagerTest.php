@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\ToInt;
 use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
+use function method_exists;
+
 class FilterPluginManagerTest extends TestCase
 {
-    /**
-     * @var FilterPluginManager
-     */
+    /** @var FilterPluginManager */
     private $filters;
 
     public function setUp(): void
@@ -24,7 +27,7 @@ class FilterPluginManagerTest extends TestCase
     public function testFilterSuccessfullyRetrieved()
     {
         $filter = $this->filters->get('int');
-        $this->assertInstanceOf('Laminas\Filter\ToInt', $filter);
+        $this->assertInstanceOf(ToInt::class, $filter);
     }
 
     public function testRegisteringInvalidFilterRaisesException()
@@ -36,7 +39,7 @@ class FilterPluginManagerTest extends TestCase
 
     public function testLoadingInvalidFilterRaisesException()
     {
-        $this->filters->setInvokableClass('test', get_class($this));
+        $this->filters->setInvokableClass('test', static::class);
         $this->expectException($this->getInvalidServiceException());
         $this->filters->get('test');
     }
@@ -84,7 +87,6 @@ class FilterPluginManagerTest extends TestCase
 
         $this->assertNotEquals($filterOne, $filterTwo);
     }
-
 
     protected function getInvalidServiceException()
     {

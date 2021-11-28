@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
+
+use function basename;
+use function is_scalar;
 
 class BaseName extends AbstractFilter
 {

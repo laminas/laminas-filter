@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\InvalidArgumentException;
@@ -7,16 +9,13 @@ use Laminas\Filter\StringPrefix as StringPrefixFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function fopen;
+
 class StringPrefixTest extends TestCase
 {
-    /**
-     * @var StringPrefixFilter
-     */
+    /** @var StringPrefixFilter */
     protected $filter;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         $this->filter = new StringPrefixFilter();
@@ -68,7 +67,6 @@ class StringPrefixTest extends TestCase
 
     /**
      * @dataProvider invalidPrefixesDataProvider
-     *
      * @param mixed $prefix
      */
     public function testInvalidPrefixes($prefix)

@@ -1,6 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
+
+use Traversable;
+
+use function is_string;
+use function mb_convert_case;
+use function strtolower;
+use function ucwords;
+
+use const MB_CASE_TITLE;
 
 final class UpperCaseWords extends AbstractUnicode
 {
@@ -8,13 +19,13 @@ final class UpperCaseWords extends AbstractUnicode
      * {@inheritDoc}
      */
     protected $options = [
-        'encoding' => null
+        'encoding' => null,
     ];
 
     /**
      * Constructor
      *
-     * @param string|array|\Traversable $encodingOrOptions OPTIONAL
+     * @param string|array|Traversable $encodingOrOptions OPTIONAL
      */
     public function __construct($encodingOrOptions = null)
     {

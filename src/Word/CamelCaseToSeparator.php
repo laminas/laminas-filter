@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word;
 
 use Laminas\Stdlib\StringUtils;
+
+use function is_array;
+use function is_scalar;
+use function preg_replace;
 
 class CamelCaseToSeparator extends AbstractSeparator
 {

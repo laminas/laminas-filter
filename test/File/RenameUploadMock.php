@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\File\RenameUpload;
+
+use function rename;
 
 class RenameUploadMock extends RenameUpload
 {

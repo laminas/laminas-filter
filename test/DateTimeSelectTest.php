@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\DateTimeSelect as DateTimeSelectFilter;
+use Laminas\Filter\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeSelectTest extends TestCase
@@ -26,34 +29,34 @@ class DateTimeSelectTest extends TestCase
             [
                 [],
                 ['year' => '2014', 'month' => '10', 'day' => '26', 'hour' => '12', 'minute' => '35'],
-                '2014-10-26 12:35:00'
+                '2014-10-26 12:35:00',
             ],
             [
                 ['nullOnEmpty' => true],
                 ['year' => null, 'month' => '10', 'day' => '26', 'hour' => '12', 'minute' => '35'],
-                null
+                null,
             ],
             [
                 ['null_on_empty' => true],
                 ['year' => null, 'month' => '10', 'day' => '26', 'hour' => '12', 'minute' => '35'],
-                null
+                null,
             ],
             [
                 ['nullOnAllEmpty' => true],
                 ['year' => null, 'month' => null, 'day' => null, 'hour' => null, 'minute' => null],
-                null
+                null,
             ],
             [
                 ['null_on_all_empty' => true],
                 ['year' => null, 'month' => null, 'day' => null, 'hour' => null, 'minute' => null],
-                null
+                null,
             ],
         ];
     }
 
     public function testInvalidInput()
     {
-        $this->expectException(\Laminas\Filter\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $sut = new DateTimeSelectFilter();
         $sut->filter(['year' => '2120', 'month' => '10', 'day' => '26', 'hour' => '12']);
     }

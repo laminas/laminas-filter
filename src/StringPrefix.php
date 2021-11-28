@@ -1,14 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Traversable;
 
+use function get_class;
+use function gettype;
+use function is_object;
+use function is_scalar;
+use function is_string;
+use function sprintf;
+
 class StringPrefix extends AbstractFilter
 {
-    /**
-     * @var array<string, null|string>
-     */
+    /** @var array<string, null|string> */
     protected $options = [
         'prefix' => null,
     ];
@@ -55,7 +62,7 @@ class StringPrefix extends AbstractFilter
         if (! isset($this->options['prefix'])) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a "prefix" option; none given',
-                __CLASS__
+                self::class
             ));
         }
 

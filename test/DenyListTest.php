@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\DenyList as DenyListFilter;
@@ -9,13 +11,17 @@ use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\TestCase;
 
+use function gettype;
+use function sprintf;
+use function var_export;
+
 class DenyListTest extends TestCase
 {
     public function testConstructorOptions(): void
     {
         $filter = new DenyListFilter([
-            'list'    => ['test', 1],
-            'strict'  => true,
+            'list'   => ['test', 1],
+            'strict' => true,
         ]);
 
         $this->assertEquals(true, $filter->getStrict());
@@ -33,7 +39,7 @@ class DenyListTest extends TestCase
     public function testWithPluginManager(): void
     {
         $pluginManager = new FilterPluginManager(new ServiceManager());
-        $filter = $pluginManager->get('DenyList');
+        $filter        = $pluginManager->get('DenyList');
 
         $this->assertInstanceOf(DenyListFilter::class, $filter);
     }
@@ -48,8 +54,8 @@ class DenyListTest extends TestCase
 
     public function testTraversableConvertsToArray(): void
     {
-        $array = ['test', 1];
-        $obj = new ArrayObject(['test', 1]);
+        $array  = ['test', 1];
+        $obj    = new ArrayObject(['test', 1]);
         $filter = new DenyListFilter([
             'list' => $obj,
         ]);
@@ -59,7 +65,7 @@ class DenyListTest extends TestCase
     public function testSetStrictShouldCastToBoolean(): void
     {
         $filter = new DenyListFilter([
-            'strict' => 1
+            'strict' => 1,
         ]);
         $this->assertSame(true, $filter->getStrict());
     }
@@ -87,7 +93,7 @@ class DenyListTest extends TestCase
         foreach ($testData as $data) {
             /** @var mixed */
             [$value, $expected] = $data;
-            $message = sprintf(
+            $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s, strict = %b',
                 var_export($value, true),
                 gettype($value),
@@ -105,7 +111,7 @@ class DenyListTest extends TestCase
             ['test',   'test'],
             [0,        0],
             [0.1,      0.1],
-            [[],  []],
+            [[], []],
             [null,     null],
         ];
     }
@@ -122,7 +128,7 @@ class DenyListTest extends TestCase
                     [null,     null],
                     [false,    false],
                     [0.0,      0.0],
-                    [[],  []],
+                    [[], []],
                 ],
             ],
             [
@@ -135,7 +141,7 @@ class DenyListTest extends TestCase
                     [false,    null],
                     [0.0,      null],
                     [0.1,      0.1],
-                    [[],  []],
+                    [[], []],
                 ],
             ],
         ];

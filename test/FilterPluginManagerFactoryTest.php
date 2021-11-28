@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Interop\Container\ContainerInterface;
@@ -12,6 +14,8 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionObject;
 
+use function method_exists;
+
 class FilterPluginManagerFactoryTest extends TestCase
 {
     use ProphecyTrait;
@@ -19,7 +23,7 @@ class FilterPluginManagerFactoryTest extends TestCase
     public function testFactoryReturnsPluginManager()
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
-        $factory = new FilterPluginManagerFactory();
+        $factory   = new FilterPluginManagerFactory();
 
         $filters = $factory($container, FilterPluginManagerFactory::class);
         $this->assertInstanceOf(FilterPluginManager::class, $filters);
@@ -42,7 +46,7 @@ class FilterPluginManagerFactoryTest extends TestCase
     public function testFactoryConfiguresPluginManagerUnderContainerInterop()
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
-        $filter = function ($value) {
+        $filter    = function ($value) {
             return $value;
         };
 
@@ -83,7 +87,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $filter = $this->prophesize(FilterInterface::class)->reveal();
         $config = [
             'filters' => [
-                'aliases' => [
+                'aliases'   => [
                     'test' => Boolean::class,
                 ],
                 'factories' => [
@@ -116,7 +120,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $filter = $this->prophesize(FilterInterface::class)->reveal();
         $config = [
             'filters' => [
-                'aliases' => [
+                'aliases'   => [
                     'test' => Boolean::class,
                 ],
                 'factories' => [

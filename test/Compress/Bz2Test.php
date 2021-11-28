@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Bz2 as Bz2Compression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
+use function file_exists;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class Bz2Test extends TestCase
 {
@@ -33,7 +42,7 @@ class Bz2Test extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new Bz2Compression();
+        $filter = new Bz2Compression();
 
         $content = $filter->compress('compress me');
         $this->assertNotEquals('compress me', $content);
@@ -115,7 +124,7 @@ class Bz2Test extends TestCase
      */
     public function testBz2CompressToFile()
     {
-        $filter   = new Bz2Compression();
+        $filter  = new Bz2Compression();
         $archive = $this->target;
         $filter->setArchive($archive);
 
@@ -150,7 +159,7 @@ class Bz2Test extends TestCase
      */
     public function testBz2DecompressArchive()
     {
-        $filter   = new Bz2Compression();
+        $filter  = new Bz2Compression();
         $archive = $this->target;
         $filter->setArchive($archive);
 

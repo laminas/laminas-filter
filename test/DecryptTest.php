@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Decrypt as DecryptFilter;
+use Laminas\Filter\Encrypt\EncryptionAlgorithmInterface;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function extension_loaded;
 
 class DecryptTest extends TestCase
 {
@@ -22,11 +28,11 @@ class DecryptTest extends TestCase
      */
     public function testBasicMcrypt()
     {
-        $filter = new DecryptFilter(['adapter' => 'BlockCipher']);
+        $filter         = new DecryptFilter(['adapter' => 'BlockCipher']);
         $valuesExpected = [
             'STRING' => 'STRING',
             'ABC1@3' => 'ABC1@3',
-            'A b C'  => 'A B C'
+            'A b C'  => 'A B C',
         ];
 
         $enc = $filter->getEncryption();
@@ -71,8 +77,9 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
 
         $key = $filter->getPrivateKey();
         $this->assertEquals(
-            [__DIR__ . '/_files/privatekey.pem' =>
-                  '-----BEGIN RSA PRIVATE KEY-----
+            [
+                __DIR__ . '/_files/privatekey.pem'
+                  => '-----BEGIN RSA PRIVATE KEY-----
 MIICXgIBAAKBgQDKTIp7FntJt1BioBZ0lmWBE8CyzngeGCHNMcAC4JLbi1Y0LwT4
 CSaQarbvAqBRmc+joHX+rcURm89wOibRaThrrZcvgl2pomzu7shJc0ObiRZC8H7p
 xTkZ1HHjN8cRSQlOHkcdtE9yoiSGSO+zZ9K5ReU1DOsFFDD4V7XpcNU63QIDAQAB
@@ -87,7 +94,8 @@ qxzHN7QGmjSn9g36hmH+/rhwKGK9MxfsGkt+/KOOqNi5X8kGIFkxBPGP5LtMisk8
 cAkcoMuBcgWhIn/46C1PAkEAzLK/ibrdMQLOdO4SuDgj/2nc53NZ3agl61ew8Os6
 d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 -----END RSA PRIVATE KEY-----
-'],
+',
+            ],
             $key
         );
     }
@@ -104,15 +112,15 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter = new DecryptFilter();
         $filter->setAdapter('Openssl');
         $this->assertEquals('Openssl', $filter->getAdapter());
-        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
         $this->assertEquals('BlockCipher', $filter->getAdapter());
-        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
-        $filter->setAdapter('\stdClass');
+        $filter->setAdapter(stdClass::class);
     }
 
     /**
@@ -130,7 +138,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
     {
         return [
             [null],
-            [new \stdClass()],
+            [new stdClass()],
             // @codingStandardsIgnoreStart
             [[
                 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=',

@@ -1,21 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\AllowList as AllowListFilter;
+use Laminas\Filter\FilterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function gettype;
+use function sprintf;
+use function var_export;
 
 class AllowListTest extends TestCase
 {
     public function testConstructorOptions(): void
     {
         $filter = new AllowListFilter([
-            'list'    => ['test', 1],
-            'strict'  => true,
+            'list'   => ['test', 1],
+            'strict' => true,
         ]);
 
         $this->assertEquals(true, $filter->getStrict());
@@ -33,7 +39,7 @@ class AllowListTest extends TestCase
     public function testWithPluginManager(): void
     {
         $pluginManager = new FilterPluginManager(new ServiceManager());
-        $filter = $pluginManager->get('AllowList');
+        $filter        = $pluginManager->get('AllowList');
 
         $this->assertInstanceOf(AllowListFilter::class, $filter);
     }
@@ -48,8 +54,8 @@ class AllowListTest extends TestCase
 
     public function testTraversableConvertsToArray(): void
     {
-        $array = ['test', 1];
-        $obj = new ArrayObject(['test', 1]);
+        $array  = ['test', 1];
+        $obj    = new ArrayObject(['test', 1]);
         $filter = new AllowListFilter([
             'list' => $obj,
         ]);
@@ -59,7 +65,7 @@ class AllowListTest extends TestCase
     public function testSetStrictShouldCastToBoolean(): void
     {
         $filter = new AllowListFilter([
-            'strict' => 1
+            'strict' => 1,
         ]);
         $this->assertSame(true, $filter->getStrict());
     }
@@ -88,7 +94,7 @@ class AllowListTest extends TestCase
         ]);
         foreach ($testData as $data) {
             [$value, $expected] = $data;
-            $message = sprintf(
+            $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s',
                 var_export($value, true),
                 gettype($value),
@@ -105,7 +111,7 @@ class AllowListTest extends TestCase
             ['test',   null],
             [0,        null],
             [0.1,      null],
-            [[],  null],
+            [[], null],
             [null,     null],
         ];
     }
@@ -122,7 +128,7 @@ class AllowListTest extends TestCase
                     [null,     null],
                     [false,    null],
                     [0.0,      null],
-                    [[],  null],
+                    [[], null],
                 ],
             ],
             [
@@ -135,7 +141,7 @@ class AllowListTest extends TestCase
                     [false,    false],
                     [0.0,      0.0],
                     [0.1,      null],
-                    [[],  null],
+                    [[], null],
                 ],
             ],
         ];

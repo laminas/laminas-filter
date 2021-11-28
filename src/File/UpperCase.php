@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\File;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\StringToUpper;
+
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_array;
+use function is_scalar;
+use function is_writable;
 
 class UpperCase extends StringToUpper
 {
@@ -31,8 +40,8 @@ class UpperCase extends StringToUpper
             }
 
             $isFileUpload = true;
-            $uploadData = $value;
-            $value      = $value['tmp_name'];
+            $uploadData   = $value;
+            $value        = $value['tmp_name'];
         }
 
         if (! file_exists($value)) {

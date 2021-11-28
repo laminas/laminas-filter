@@ -1,10 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Zip as ZipCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function getenv;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function str_replace;
+use function sys_get_temp_dir;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
 
 class ZipTest extends TestCase
 {
@@ -14,7 +30,7 @@ class ZipTest extends TestCase
             $this->markTestSkipped('This adapter needs the zip extension');
         }
 
-        $this->tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', __CLASS__);
+        $this->tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', self::class);
 
         $files = [
             $this->tmp . '/compressed.zip',
@@ -27,7 +43,7 @@ class ZipTest extends TestCase
             $this->tmp . '/_files/_compress/Compress/zipextracted.txt',
             $this->tmp . '/_files/_compress/Compress',
             $this->tmp . '/_files/_compress/zipextracted.txt',
-            $this->tmp . '/_files/_compress'
+            $this->tmp . '/_files/_compress',
         ];
 
         foreach ($files as $file) {
@@ -61,7 +77,7 @@ class ZipTest extends TestCase
             $this->tmp . '/_compress/Compress/zipextracted.txt',
             $this->tmp . '/_compress/Compress',
             $this->tmp . '/_compress/zipextracted.txt',
-            $this->tmp . '/_compress'
+            $this->tmp . '/_compress',
         ];
 
         foreach ($files as $file) {
@@ -93,10 +109,10 @@ class ZipTest extends TestCase
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
-        $filter  = new ZipCompression(
+        $filter = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp . '/zipextracted.txt'
+                'target'  => $this->tmp . '/zipextracted.txt',
             ]
         );
 
@@ -172,10 +188,10 @@ class ZipTest extends TestCase
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
-        $filter  = new ZipCompression(
+        $filter = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp . '/zipextracted.txt'
+                'target'  => $this->tmp . '/zipextracted.txt',
             ]
         );
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
@@ -200,10 +216,10 @@ class ZipTest extends TestCase
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
-        $filter  = new ZipCompression(
+        $filter = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp
+                'target'  => $this->tmp,
             ]
         );
 
@@ -230,7 +246,7 @@ class ZipTest extends TestCase
         $filter  = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp . '/_compress'
+                'target'  => $this->tmp . '/_compress',
             ]
         );
         $content = $filter->compress($this->tmp . '/Compress');
@@ -245,8 +261,8 @@ class ZipTest extends TestCase
         $this->assertFileExists($base);
         $this->assertFileExists($base . 'zipextracted.txt');
         $this->assertFileExists($base . 'First' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
-        $this->assertFileExists($base . 'First' . DIRECTORY_SEPARATOR .
-                          'Second' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
+        $this->assertFileExists($base . 'First' . DIRECTORY_SEPARATOR
+                          . 'Second' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
         $content = file_get_contents($this->tmp . '/Compress/zipextracted.txt');
         $this->assertEquals('compress me', $content);
     }
@@ -268,10 +284,10 @@ class ZipTest extends TestCase
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
-        $filter  = new ZipCompression(
+        $filter = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp . '/_compress'
+                'target'  => $this->tmp . '/_compress',
             ]
         );
 
@@ -281,7 +297,7 @@ class ZipTest extends TestCase
         $filter  = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp . '/_compress'
+                'target'  => $this->tmp . '/_compress',
             ]
         );
         $content = $filter->decompress($content);
@@ -292,7 +308,6 @@ class ZipTest extends TestCase
 
     /**
      * @group 6026
-     *
      * @covers \Laminas\Filter\Compress\Zip::decompress
      */
     public function testDecompressWhenNoArchieveInClass()
@@ -301,10 +316,10 @@ class ZipTest extends TestCase
             $this->markTestSkipped('ZIP compression tests are currently disabled');
         }
 
-        $filter  = new ZipCompression(
+        $filter = new ZipCompression(
             [
                 'archive' => $this->tmp . '/compressed.zip',
-                'target'  => $this->tmp . '/_compress'
+                'target'  => $this->tmp . '/_compress',
             ]
         );
 
@@ -313,7 +328,7 @@ class ZipTest extends TestCase
 
         $filter  = new ZipCompression(
             [
-                'target'  => $this->tmp . '/_compress'
+                'target' => $this->tmp . '/_compress',
             ]
         );
         $content = $filter->decompress($content);

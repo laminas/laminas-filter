@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\UnderscoreToStudlyCase;
@@ -19,7 +21,7 @@ class UnderscoreToStudlyCaseTest extends TestCase
 
     public function testSomeFilterValues()
     {
-        $filter   = new UnderscoreToStudlyCase();
+        $filter = new UnderscoreToStudlyCase();
 
         $string   = 'laminas_project';
         $filtered = $filter($string);
@@ -52,7 +54,7 @@ class UnderscoreToStudlyCaseTest extends TestCase
 
     public function testFiltersArray()
     {
-        $filter   = new UnderscoreToStudlyCase();
+        $filter = new UnderscoreToStudlyCase();
 
         $string   = ['laminas_project', '_laminas_project'];
         $filtered = $filter($string);
@@ -62,7 +64,7 @@ class UnderscoreToStudlyCaseTest extends TestCase
 
     public function testWithEmpties()
     {
-        $filter   = new UnderscoreToStudlyCase();
+        $filter = new UnderscoreToStudlyCase();
 
         $string   = '';
         $filtered = $filter($string);

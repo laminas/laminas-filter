@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Llaminas as LlaminasCompression;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
 
 class LlaminasTest extends TestCase
 {
@@ -21,7 +25,7 @@ class LlaminasTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new LlaminasCompression();
+        $filter = new LlaminasCompression();
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);

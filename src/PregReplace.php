@@ -1,8 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Traversable;
+
+use function func_get_args;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function is_scalar;
+use function is_string;
+use function iterator_to_array;
+use function preg_match;
+use function preg_replace;
+use function sprintf;
+use function strpos;
 
 class PregReplace extends AbstractFilter
 {
@@ -40,6 +55,7 @@ class PregReplace extends AbstractFilter
 
     /**
      * Set the regex pattern to search for
+     *
      * @see preg_replace()
      *
      * @param  string|array $pattern - same as the first argument of preg_replace
@@ -52,7 +68,7 @@ class PregReplace extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects pattern to be array or string; received "%s"',
                 __METHOD__,
-                (is_object($pattern) ? get_class($pattern) : gettype($pattern))
+                is_object($pattern) ? get_class($pattern) : gettype($pattern)
             ));
         }
 
@@ -82,6 +98,7 @@ class PregReplace extends AbstractFilter
 
     /**
      * Set the replacement array/string
+     *
      * @see preg_replace()
      *
      * @param  array|string $replacement - same as the second argument of preg_replace
@@ -94,7 +111,7 @@ class PregReplace extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects replacement to be array or string; received "%s"',
                 __METHOD__,
-                (is_object($replacement) ? get_class($replacement) : gettype($replacement))
+                is_object($replacement) ? get_class($replacement) : gettype($replacement)
             ));
         }
         $this->options['replacement'] = $replacement;
@@ -127,7 +144,7 @@ class PregReplace extends AbstractFilter
         if ($this->options['pattern'] === null) {
             throw new Exception\RuntimeException(sprintf(
                 'Filter %s does not have a valid pattern set',
-                get_class($this)
+                static::class
             ));
         }
 

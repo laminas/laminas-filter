@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-filter for the canonical source repository
- * @copyright https://github.com/laminas/laminas-filter/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-filter/blob/master/LICENSE.md New BSD License
  */
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\BaseName as BaseNameFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class BaseNameTest extends TestCase
 {
@@ -19,10 +21,10 @@ class BaseNameTest extends TestCase
      */
     public function testBasic()
     {
-        $filter = new BaseNameFilter();
+        $filter         = new BaseNameFilter();
         $valuesExpected = [
-            '/path/to/filename' => 'filename',
-            '/path/to/filename.ext' => 'filename.ext'
+            '/path/to/filename'     => 'filename',
+            '/path/to/filename.ext' => 'filename.ext',
         ];
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $filter($input));
@@ -33,11 +35,13 @@ class BaseNameTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                '/path/to/filename',
-                '/path/to/filename.ext'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    '/path/to/filename',
+                    '/path/to/filename.ext',
+                ],
+            ],
         ];
     }
 

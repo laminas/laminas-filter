@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use ArrayObject;
 use Laminas\Filter\Exception;
+use Laminas\Filter\FilterInterface;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\Inflector as InflectorFilter;
 use Laminas\Filter\PregReplace;
@@ -13,24 +16,25 @@ use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use Traversable;
+
+use function array_values;
+use function count;
+use function get_class;
+
+use const DIRECTORY_SEPARATOR;
 
 class InflectorTest extends TestCase
 {
-    /**
-     * @var InflectorFilter
-     */
+    /** @var InflectorFilter */
     protected $inflector;
 
-    /**
-     * @var FilterPluginManager
-     */
+    /** @var FilterPluginManager */
     protected $broker;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -41,7 +45,7 @@ class InflectorTest extends TestCase
     public function testGetPluginManagerReturnsFilterManagerByDefault()
     {
         $broker = $this->inflector->getPluginManager();
-        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $broker);
+        $this->assertInstanceOf(FilterPluginManager::class, $broker);
     }
 
     public function testSetPluginManagerAllowsSettingAlternatePluginManager()
@@ -88,7 +92,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
         $filter = $rules[0];
-        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $filter);
+        $this->assertInstanceOf(FilterInterface::class, $filter);
     }
 
     public function testSetFilterRuleWithFilterObjectCreatesRuleEntryWithFilterObject()
@@ -100,7 +104,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(1, count($rules));
         $received = $rules[0];
-        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $received);
+        $this->assertInstanceOf(FilterInterface::class, $received);
         $this->assertSame($filter, $received);
     }
 
@@ -111,8 +115,8 @@ class InflectorTest extends TestCase
         $this->inflector->setFilterRule('controller', [PregReplace::class, TestAsset\Alpha::class]);
         $rules = $this->inflector->getRules('controller');
         $this->assertEquals(2, count($rules));
-        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $rules[0]);
-        $this->assertInstanceOf('Laminas\Filter\FilterInterface', $rules[1]);
+        $this->assertInstanceOf(FilterInterface::class, $rules[0]);
+        $this->assertInstanceOf(FilterInterface::class, $rules[1]);
     }
 
     public function testSetStaticRuleCreatesScalarRuleEntry()
@@ -181,7 +185,7 @@ class InflectorTest extends TestCase
     public function testGetRule()
     {
         $this->inflector->setFilterRule(':controller', [TestAsset\Alpha::class, StringToLower::class]);
-        $this->assertInstanceOf('Laminas\Filter\StringToLower', $this->inflector->getRule('controller', 1));
+        $this->assertInstanceOf(StringToLower::class, $this->inflector->getRule('controller', 1));
         $this->assertFalse($this->inflector->getRule('controller', 2));
     }
 
@@ -192,13 +196,13 @@ class InflectorTest extends TestCase
             ->addRules([
                 ':controller' => [CamelCaseToDash::class],
                 ':action'     => [CamelCaseToDash::class],
-                'suffix'      => 'phtml'
+                'suffix'      => 'phtml',
             ]);
 
         $filter   = $this->inflector;
         $filtered = $filter([
             'controller' => 'FooBar',
-            'action'     => 'bazBat'
+            'action'     => 'bazBat',
         ]);
         $this->assertEquals('Foo-Bar/baz-Bat.phtml', $filtered);
     }
@@ -217,7 +221,7 @@ class InflectorTest extends TestCase
             [
                 ':controller' => [CamelCaseToDash::class],
                 ':action'     => [CamelCaseToDash::class],
-                'suffix'      => 'phtml'
+                'suffix'      => 'phtml',
             ],
             null,
             '?=##'
@@ -225,7 +229,7 @@ class InflectorTest extends TestCase
 
         $filtered = $inflector([
             'controller' => 'FooBar',
-            'action'     => 'bazBat'
+            'action'     => 'bazBat',
         ]);
 
         $this->assertEquals('Foo-Bar/baz-Bat.phtml', $filtered);
@@ -252,7 +256,7 @@ class InflectorTest extends TestCase
             [
                 ':controller' => [CamelCaseToDash::class],
                 ':action'     => [CamelCaseToDash::class],
-                'suffix'      => 'phtml'
+                'suffix'      => 'phtml',
             ],
             true,
             '?=##'
@@ -270,7 +274,7 @@ class InflectorTest extends TestCase
             [
                 ':controller' => [CamelCaseToDash::class, StringToLower::class],
                 ':action'     => [CamelCaseToDash::class],
-                'suffix'      => 'phtml'
+                'suffix'      => 'phtml',
             ],
             true,
             ':'
@@ -282,7 +286,7 @@ class InflectorTest extends TestCase
 
     public function getOptions()
     {
-        $options = [
+        return [
             'target'                      => '$controller/$action.$suffix',
             'throwTargetExceptionsOn'     => true,
             'targetReplacementIdentifier' => '$',
@@ -295,11 +299,9 @@ class InflectorTest extends TestCase
                     'rule1' => CamelCaseToDash::class,
                     'rule2' => StringToUpper::class,
                 ],
-                'suffix'      => 'php'
+                'suffix'      => 'php',
             ],
         ];
-
-        return $options;
     }
 
     /**
@@ -307,7 +309,7 @@ class InflectorTest extends TestCase
      * Laminas\Config\Config instance; the two are interchangeable, as inflectors
      * consume the more general array or Traversable types.
      *
-     * @return \Traversable
+     * @return Traversable
      */
     public function getConfig()
     {
@@ -324,7 +326,7 @@ class InflectorTest extends TestCase
         $broker  = $inflector->getPluginManager();
         $this->assertEquals($options['target'], $inflector->getTarget());
 
-        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $broker);
+        $this->assertInstanceOf(FilterPluginManager::class, $broker);
         $this->assertTrue($inflector->isThrowTargetExceptionsOn());
         $this->assertEquals($options['targetReplacementIdentifier'], $inflector->getTargetReplacementIdentifier());
 
@@ -360,7 +362,7 @@ class InflectorTest extends TestCase
             [
                 ':controller' => [CamelCaseToDash::class, StringToLower::class],
                 ':action'     => [CamelCaseToDash::class],
-                'suffix'      => 'phtml'
+                'suffix'      => 'phtml',
             ],
             true,
             ':'
@@ -370,7 +372,7 @@ class InflectorTest extends TestCase
 
         $filtered = $inflector([
             'controller' => 'FooBar',
-            'action'     => 'MooToo'
+            'action'     => 'MooToo',
         ]);
         $this->assertEquals(
             $filtered,
