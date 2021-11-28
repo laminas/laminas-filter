@@ -119,7 +119,6 @@ class DecompressTest extends TestCase
     public function returnUnfilteredDataProvider()
     {
         return [
-            [null],
             [new stdClass()],
             [
                 [

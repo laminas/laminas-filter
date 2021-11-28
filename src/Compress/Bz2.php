@@ -134,11 +134,11 @@ class Bz2 extends AbstractCompressionAlgorithm
         $archive = $this->getArchive();
 
         //check if there are null byte characters before doing a file_exists check
-        if (false === strpos($content, "\0") && file_exists($content)) {
+        if (null !== $content && false === strpos($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
-        if (file_exists($archive)) {
+        if (null !== $archive && file_exists($archive)) {
             $file = bzopen($archive, 'r');
             if (! $file) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $content . "'");
@@ -146,8 +146,10 @@ class Bz2 extends AbstractCompressionAlgorithm
 
             $compressed = bzread($file);
             bzclose($file);
-        } else {
+        } elseif (null !== $content) {
             $compressed = bzdecompress($content);
+        } else {
+            $compressed = -4; // BZ_DATA_ERROR
         }
 
         if (is_int($compressed)) {
