@@ -90,7 +90,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
      * Attempts to filter an array of date/time information to a formatted
      * string.
      *
-     * @param  mixed $value
+     * @param  mixed $value input to the filter
      * @return mixed
      * @throws Exception\RuntimeException If filtering $value is impossible.
      */
@@ -127,7 +127,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
     /**
      * Ensures there are enough inputs in the array to properly format the date.
      *
-     * @param $value
+     * @param mixed $value
      * @throws Exception\RuntimeException
      */
     protected function filterable($value)

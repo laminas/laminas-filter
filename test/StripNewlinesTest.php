@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-filter for the canonical source repository
- */
-
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\StripNewlines as StripNewlinesFilter;

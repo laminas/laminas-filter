@@ -91,7 +91,6 @@ class DenyListTest extends TestCase
             'list'   => $list,
         ]);
         foreach ($testData as $data) {
-            /** @var mixed */
             [$value, $expected] = $data;
             $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s, strict = %b',

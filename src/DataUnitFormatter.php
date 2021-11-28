@@ -143,7 +143,7 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Set the precision of the filtered result.
      *
-     * @param $precision
+     * @param int $precision
      */
     protected function setPrecision($precision)
     {
@@ -188,7 +188,7 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Find the prefix at a specific location in the prefixes array.
      *
-     * @param $index
+     * @param mixed $index
      * @return string|null
      */
     protected function getPrefixAt($index)
@@ -236,8 +236,8 @@ final class DataUnitFormatter extends AbstractFilter
     }
 
     /**
-     * @param      $amount
-     * @param null $prefix
+     * @param mixed $amount
+     * @param null  $prefix
      * @return string
      */
     protected function formatAmount($amount, $prefix = null)

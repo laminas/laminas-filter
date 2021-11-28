@@ -279,8 +279,8 @@ class RenameUpload extends AbstractFilter
     }
 
     /**
-     * @param $source
-     * @param $clientFileName
+     * @param string $source
+     * @param string|null $clientFileName
      * @return string
      */
     protected function getFinalTarget($source, $clientFileName)

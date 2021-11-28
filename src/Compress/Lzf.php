@@ -46,7 +46,7 @@ class Lzf implements CompressionAlgorithmInterface
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException If error occurs during decompression
+     * @throws Exception\RuntimeException If error occurs during decompression.
      */
     public function decompress($content)
     {

@@ -510,7 +510,7 @@ class FilterPluginManager extends AbstractPluginManager
      *
      * @param  mixed $plugin
      * @return void
-     * @throws RuntimeException If invalid
+     * @throws RuntimeException If invalid.
      */
     public function validatePlugin($plugin)
     {

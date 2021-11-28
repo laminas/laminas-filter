@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 use function extension_loaded;
 
-class LlaminasTest extends TestCase
+class LzfTest extends TestCase
 {
     public function setUp(): void
     {
