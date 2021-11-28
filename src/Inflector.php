@@ -216,7 +216,7 @@ class Inflector extends AbstractFilter
      */
     public function setTargetReference(&$target)
     {
-        $this->target =& $target;
+        $this->target = & $target;
         return $this;
     }
 
@@ -389,7 +389,7 @@ class Inflector extends AbstractFilter
     public function setStaticRuleReference($name, &$reference)
     {
         $name = $this->_normalizeSpec($name);
-        $this->rules[$name] =& $reference;
+        $this->rules[$name] = & $reference;
         return $this;
     }
 

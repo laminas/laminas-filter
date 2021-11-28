@@ -22,7 +22,7 @@ class Tar extends AbstractCompressionAlgorithm
      * @var array
      */
     protected $options = [
-        'archive' => null,
+        'archive' => '',
         'target'  => '.',
         'mode'    => null,
     ];

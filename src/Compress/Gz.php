@@ -4,6 +4,8 @@ namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
 
+use function file_exists;
+
 /**
  * Compression adapter for Gzip (ZLib)
  */
@@ -22,7 +24,7 @@ class Gz extends AbstractCompressionAlgorithm
     protected $options = [
         'level'   => 9,
         'mode'    => 'compress',
-        'archive' => null,
+        'archive' => '',
     ];
 
     /**
@@ -159,8 +161,12 @@ class Gz extends AbstractCompressionAlgorithm
         $archive = $this->getArchive();
         $mode    = $this->getMode();
 
+        if ($content === null && ! file_exists($archive)) {
+            return null;
+        }
+
         //check if there are null byte characters before doing a file_exists check
-        if (false === strpos($content, "\0") && file_exists($content)) {
+        if ($content !== null && false === strpos($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
@@ -197,7 +203,7 @@ class Gz extends AbstractCompressionAlgorithm
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return 'Gz';
     }

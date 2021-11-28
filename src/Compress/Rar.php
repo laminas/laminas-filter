@@ -22,7 +22,7 @@ class Rar extends AbstractCompressionAlgorithm
      */
     protected $options = [
         'callback' => null,
-        'archive'  => null,
+        'archive'  => '',
         'password' => null,
         'target'   => '.',
     ];
@@ -216,7 +216,7 @@ class Rar extends AbstractCompressionAlgorithm
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return 'Rar';
     }

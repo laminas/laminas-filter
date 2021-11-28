@@ -20,7 +20,7 @@ class Bz2 extends AbstractCompressionAlgorithm
      */
     protected $options = [
         'blocksize' => 4,
-        'archive'   => null,
+        'archive'   => '',
     ];
 
     /**
@@ -90,7 +90,7 @@ class Bz2 extends AbstractCompressionAlgorithm
      * Compresses the given content
      *
      * @param  string $content
-     * @return string
+     * @return string|true
      * @throws Exception\RuntimeException
      */
     public function compress($content)
@@ -120,15 +120,19 @@ class Bz2 extends AbstractCompressionAlgorithm
      * Decompresses the given content
      *
      * @param  string $content
-     * @return string
+     * @return string|null|false
      * @throws Exception\RuntimeException
      */
     public function decompress($content)
     {
         $archive = $this->getArchive();
 
+        if ($content === null && ! file_exists($archive)) {
+            return null;
+        }
+
         //check if there are null byte characters before doing a file_exists check
-        if (false === strpos($content, "\0") && file_exists($content)) {
+        if ($content !== null && false === strpos($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
