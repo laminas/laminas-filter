@@ -7,6 +7,12 @@ namespace Laminas\Filter\Compress;
 use Laminas\Filter\Exception;
 use Traversable;
 
+use function bzclose;
+use function bzcompress;
+use function bzdecompress;
+use function bzopen;
+use function bzread;
+use function bzwrite;
 use function extension_loaded;
 use function file_exists;
 use function is_int;

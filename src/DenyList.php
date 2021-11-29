@@ -41,7 +41,7 @@ class DenyList extends AbstractFilter
     /**
      * Returns whether the in_array() call should be "strict" or not. See in_array docs.
      *
-     * @return Boolean
+     * @return bool
      */
     public function getStrict()
     {
