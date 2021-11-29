@@ -9,7 +9,7 @@ This filter will return `null` if the value being filtered is not present the
 filter's allowed list of values. If the value is present, it will return that
 value.
 
-For the opposite functionality see the [DenyList](#denyList) filter.
+For the opposite functionality see the [DenyList](#denylist) filter.
 
 ### Supported Options
 
@@ -720,7 +720,7 @@ Previously known as `Blacklist`.
 This filter will return `null` if the value being filtered is present in the filter's list of
 values. If the value is not present, it will return that value.
 
-For the opposite functionality, see the [`AllowList` filter](#allowList).
+For the opposite functionality, see the [`AllowList` filter](#allowlist).
 
 ### Supported Options
 
