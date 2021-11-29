@@ -200,10 +200,12 @@ class Gz extends AbstractCompressionAlgorithm
             $file       = gzopen($archive, 'r');
             $compressed = gzread($file, $size);
             gzclose($file);
-        } elseif ($mode === 'deflate') {
+        } elseif ($mode === 'deflate' && null !== $content) {
             $compressed = gzinflate($content);
-        } else {
+        } elseif (null !== $content) {
             $compressed = gzuncompress($content);
+        } else {
+            $compressed = false;
         }
 
         if ($compressed === false) {
