@@ -155,7 +155,9 @@ class Bz2 extends AbstractCompressionAlgorithm
         } elseif (null !== $content) {
             $compressed = bzdecompress($content);
         } else {
-            $compressed = -4; // BZ_DATA_ERROR
+            // without strict types, bzdecompress(null) returns an empty string
+            // we need to simulate this behaviour to prevent a BC break!
+            $compressed = '';
         }
 
         if (is_int($compressed)) {

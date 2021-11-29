@@ -170,4 +170,12 @@ class Bz2Test extends TestCase
         $content2 = $filter2->decompress($archive);
         $this->assertEquals('compress me', $content2);
     }
+
+    public function testBz2DecompressNullValueIsAccepted()
+    {
+        $filter  = new Bz2Compression();
+        $result = $filter->decompress(null);
+
+        $this->assertEmpty($result);
+    }
 }

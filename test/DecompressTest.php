@@ -159,15 +159,4 @@ class DecompressTest extends TestCase
 
         $this->assertEquals($input, $filter($input));
     }
-
-    /**
-     * @dataProvider returnFilterType
-     */
-    public function testDecompressNullValueThrowsRuntimeException($filterType)
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage('Error during decompression');
-        $filter = new DecompressFilter($filterType);
-        $filter->filter(null);
-    }
 }

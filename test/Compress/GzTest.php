@@ -186,4 +186,15 @@ class GzTest extends TestCase
         $filter = new GzCompression();
         $this->assertEquals('Gz', $filter->toString());
     }
+
+    public function testGzDecompressNullThrowsRuntimeException()
+    {
+        $this->expectException(Exception\RuntimeException::class);
+        $this->expectExceptionMessage('Error during decompression');
+
+        $filter  = new GzCompression();
+        $result = $filter->decompress(null);
+
+        $this->assertEmpty($result);
+    }
 }
