@@ -11,6 +11,9 @@
     <!-- Show progress -->
     <arg value="p"/>
 
+    <!-- set minimal required PHP version (7.3) -->
+    <config name="php_version" value="70300"/>
+
     <!-- Paths to check -->
     <file>src</file>
     <file>test</file>
