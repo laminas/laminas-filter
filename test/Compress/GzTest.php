@@ -192,7 +192,7 @@ class GzTest extends TestCase
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('Error during decompression');
 
-        $filter  = new GzCompression();
+        $filter = new GzCompression();
         $result = $filter->decompress(null);
 
         $this->assertEmpty($result);

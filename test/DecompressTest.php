@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Decompress as DecompressFilter;
-use Laminas\Filter\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

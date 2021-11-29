@@ -173,7 +173,7 @@ class Bz2Test extends TestCase
 
     public function testBz2DecompressNullValueIsAccepted()
     {
-        $filter  = new Bz2Compression();
+        $filter = new Bz2Compression();
         $result = $filter->decompress(null);
 
         $this->assertEmpty($result);
