@@ -4,6 +4,9 @@ laminas-filter comes with a standard set of filters, available for immediate use
 
 ## AllowList
 
+TIP: **New Feature**
+Available since version 2.12.0
+
 Previously known as `Whitelist`.
 This filter will return `null` if the value being filtered is not present the
 filter's allowed list of values. If the value is present, it will return that
@@ -149,6 +152,12 @@ print $filter->filter('/vol/tmp/filename.txt');
 ```
 
 This will return '`filename.txt`'.
+
+## Blacklist
+
+CAUTION: **Deprecated**
+This filter is deprecated since version 2.12.0.
+Use the [DenyList filter](#denylist) instead.
 
 ## Boolean
 
@@ -715,6 +724,9 @@ methods for `target` are `getTarget()` and `setTarget()`. You can also use the `
 which accepts an array of all options.
 
 ## DenyList
+
+TIP: **New Feature**
+Available since version 2.12.0
 
 Previously known as `Blacklist`.
 This filter will return `null` if the value being filtered is present in the filter's list of
@@ -1908,3 +1920,9 @@ echo $filter->filter('www.example.com');
 ```
 
 The above results in the string `https://www.example.com`.
+
+## Whitelist
+
+CAUTION: **Deprecated**
+This filter is deprecated since version 2.12.0.
+Use the [AllowList filter](#allowlist) instead.
