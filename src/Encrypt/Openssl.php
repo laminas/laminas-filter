@@ -155,7 +155,11 @@ class Openssl implements EncryptionAlgorithmInterface
                     $this->keys['public'][$key] = $cert;
                     break;
                 case 'private':
-                    $test = openssl_pkey_get_private($cert, $this->passphrase);
+                    if (null !== $this->getPassphrase()) {
+                        $test = openssl_pkey_get_private($cert, $this->getPassphrase());
+                    } else {
+                        $test = openssl_pkey_get_private($cert);
+                    }
                     if ($test === false) {
                         throw new Exception\InvalidArgumentException("Private key '{$cert}' not valid");
                     }
@@ -430,7 +434,11 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         foreach ($this->keys['private'] as $cert) {
-            $keys = openssl_pkey_get_private($cert, $this->getPassphrase());
+            if (null !== $this->getPassphrase()) {
+                $keys = openssl_pkey_get_private($cert, $this->getPassphrase());
+            } else {
+                $keys = openssl_pkey_get_private($cert);
+            }
         }
 
         if ($this->package) {
