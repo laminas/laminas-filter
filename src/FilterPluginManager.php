@@ -12,23 +12,6 @@ use Laminas\I18n\Filter\NumberParse;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use Zend\Filter\File\LowerCase;
-use Zend\Filter\File\Rename;
-use Zend\Filter\File\RenameUpload;
-use Zend\Filter\File\UpperCase;
-use zend\filter\word\camelcasetodash;
-use zend\filter\word\camelcasetoseparator;
-use zend\filter\word\camelcasetounderscore;
-use zend\filter\word\dashtocamelcase;
-use zend\filter\word\dashtoseparator;
-use zend\filter\word\dashtounderscore;
-use zend\filter\word\separatortocamelcase;
-use zend\filter\word\separatortodash;
-use zend\filter\word\separatortoseparator;
-use zend\filter\word\underscoretocamelcase;
-use zend\filter\word\underscoretodash;
-use zend\filter\word\underscoretoseparator;
-use zend\filter\word\underscoretostudlycase;
 
 use function get_class;
 use function gettype;
@@ -46,7 +29,7 @@ use function sprintf;
 class FilterPluginManager extends AbstractPluginManager
 {
     protected $aliases = [
-
+        // @codingStandardsIgnoreStart
         // For the future
         'int'  => ToInt::class,
         'Int'  => ToInt::class,
@@ -223,61 +206,61 @@ class FilterPluginManager extends AbstractPluginManager
         'WordUnderscoreToSeparator'  => Word\UnderscoreToSeparator::class,
 
         // Legacy Zend Framework aliases
-        \Zend\I18n\Filter\Alnum::class        => Alnum::class,
-        \Zend\I18n\Filter\Alpha::class        => Alpha::class,
-        \Zend\I18n\Filter\NumberFormat::class => NumberFormat::class,
-        \Zend\I18n\Filter\NumberParse::class  => NumberParse::class,
-        \zend\filter\basename::class          => BaseName::class,
-        \zend\filter\blacklist::class         => DenyList::class,
-        \zend\filter\boolean::class           => Boolean::class,
-        \zend\filter\callback::class          => Callback::class,
-        \zend\filter\compress::class          => Compress::class,
-        \Zend\Filter\DataUnitFormatter::class => DataUnitFormatter::class,
-        \Zend\Filter\DateSelect::class        => DateSelect::class,
-        \Zend\Filter\DateTimeFormatter::class => DateTimeFormatter::class,
-        \zend\filter\datetimeselect::class    => DateTimeSelect::class,
-        \zend\filter\decompress::class        => Decompress::class,
-        \Zend\Filter\Decrypt::class           => Decrypt::class,
-        \Zend\Filter\Digits::class            => Digits::class,
-        \zend\filter\dir::class               => Dir::class,
-        \zend\filter\encrypt::class           => Encrypt::class,
-        \Zend\Filter\File\Decrypt::class      => File\Decrypt::class,
-        \Zend\Filter\File\Encrypt::class      => File\Encrypt::class,
-        LowerCase::class                      => File\LowerCase::class,
-        Rename::class                         => File\Rename::class,
-        RenameUpload::class                   => File\RenameUpload::class,
-        UpperCase::class                      => File\UpperCase::class,
-        \zend\filter\htmlentities::class      => HtmlEntities::class,
-        \zend\filter\inflector::class         => Inflector::class,
-        \zend\filter\toint::class             => ToInt::class,
-        \zend\filter\tofloat::class           => ToFloat::class,
-        \zend\filter\monthselect::class       => MonthSelect::class,
-        \Zend\Filter\ToNull::class            => ToNull::class,
-        \zend\filter\uppercasewords::class    => UpperCaseWords::class,
-        \zend\filter\pregreplace::class       => PregReplace::class,
-        \Zend\Filter\RealPath::class          => RealPath::class,
-        \zend\filter\stringprefix::class      => StringPrefix::class,
-        \Zend\Filter\StringSuffix::class      => StringSuffix::class,
-        \Zend\Filter\StringToLower::class     => StringToLower::class,
-        \Zend\Filter\StringToUpper::class     => StringToUpper::class,
-        \Zend\Filter\StringTrim::class        => StringTrim::class,
-        \Zend\Filter\StripNewlines::class     => StripNewlines::class,
-        \Zend\Filter\StripTags::class         => StripTags::class,
-        \zend\filter\urinormalize::class      => UriNormalize::class,
-        \zend\filter\whitelist::class         => AllowList::class,
-        camelcasetodash::class                => Word\CamelCaseToDash::class,
-        camelcasetoseparator::class           => Word\CamelCaseToSeparator::class,
-        camelcasetounderscore::class          => Word\CamelCaseToUnderscore::class,
-        dashtocamelcase::class                => Word\DashToCamelCase::class,
-        dashtoseparator::class                => Word\DashToSeparator::class,
-        dashtounderscore::class               => Word\DashToUnderscore::class,
-        separatortocamelcase::class           => Word\SeparatorToCamelCase::class,
-        separatortodash::class                => Word\SeparatorToDash::class,
-        separatortoseparator::class           => Word\SeparatorToSeparator::class,
-        underscoretocamelcase::class          => Word\UnderscoreToCamelCase::class,
-        underscoretostudlycase::class         => Word\UnderscoreToStudlyCase::class,
-        underscoretodash::class               => Word\UnderscoreToDash::class,
-        underscoretoseparator::class          => Word\UnderscoreToSeparator::class,
+        \Zend\I18n\Filter\Alnum::class                  => Alnum::class,
+        \Zend\I18n\Filter\Alpha::class                  => Alpha::class,
+        \Zend\I18n\Filter\NumberFormat::class           => NumberFormat::class,
+        \Zend\I18n\Filter\NumberParse::class            => NumberParse::class,
+        \Zend\Filter\BaseName::class                    => BaseName::class,
+        \Zend\Filter\Blacklist::class                   => DenyList::class,
+        \Zend\Filter\Boolean::class                     => Boolean::class,
+        \Zend\Filter\Callback::class                    => Callback::class,
+        \Zend\Filter\Compress::class                    => Compress::class,
+        \Zend\Filter\DataUnitFormatter::class           => DataUnitFormatter::class,
+        \Zend\Filter\DateSelect::class                  => DateSelect::class,
+        \Zend\Filter\DateTimeFormatter::class           => DateTimeFormatter::class,
+        \Zend\Filter\DateTimeSelect::class              => DateTimeSelect::class,
+        \Zend\Filter\Decompress::class                  => Decompress::class,
+        \Zend\Filter\Decrypt::class                     => Decrypt::class,
+        \Zend\Filter\Digits::class                      => Digits::class,
+        \Zend\Filter\Dir::class                         => Dir::class,
+        \Zend\Filter\Encrypt::class                     => Encrypt::class,
+        \Zend\Filter\File\Decrypt::class                => File\Decrypt::class,
+        \Zend\Filter\File\Encrypt::class                => File\Encrypt::class,
+        \Zend\Filter\File\LowerCase::class              => File\LowerCase::class,
+        \Zend\Filter\File\Rename::class                 => File\Rename::class,
+        \Zend\Filter\File\RenameUpload::class           => File\RenameUpload::class,
+        \Zend\Filter\File\UpperCase::class              => File\UpperCase::class,
+        \Zend\Filter\HtmlEntities::class                => HtmlEntities::class,
+        \Zend\Filter\Inflector::class                   => Inflector::class,
+        \Zend\Filter\ToInt::class                       => ToInt::class,
+        \Zend\Filter\ToFloat::class                     => ToFloat::class,
+        \Zend\Filter\MonthSelect::class                 => MonthSelect::class,
+        \Zend\Filter\ToNull::class                      => ToNull::class,
+        \Zend\Filter\UpperCaseWords::class              => UpperCaseWords::class,
+        \Zend\Filter\PregReplace::class                 => PregReplace::class,
+        \Zend\Filter\RealPath::class                    => RealPath::class,
+        \Zend\Filter\StringPrefix::class                => StringPrefix::class,
+        \Zend\Filter\StringSuffix::class                => StringSuffix::class,
+        \Zend\Filter\StringToLower::class               => StringToLower::class,
+        \Zend\Filter\StringToUpper::class               => StringToUpper::class,
+        \Zend\Filter\StringTrim::class                  => StringTrim::class,
+        \Zend\Filter\StripNewlines::class               => StripNewlines::class,
+        \Zend\Filter\StripTags::class                   => StripTags::class,
+        \Zend\Filter\UriNormalize::class                => UriNormalize::class,
+        \Zend\Filter\Whitelist::class                   => AllowList::class,
+        \Zend\Filter\Word\CamelCaseToDash::class        => Word\CamelCaseToDash::class,
+        \Zend\Filter\Word\CamelCaseToSeparator::class   => Word\CamelCaseToSeparator::class,
+        \Zend\Filter\Word\CamelCaseToUnderscore::class  => Word\CamelCaseToUnderscore::class,
+        \Zend\Filter\Word\DashToCamelCase::class        => Word\DashToCamelCase::class,
+        \Zend\Filter\Word\DashToSeparator::class        => Word\DashToSeparator::class,
+        \Zend\Filter\Word\DashToUnderscore::class       => Word\DashToUnderscore::class,
+        \Zend\Filter\Word\SeparatorToCamelCase::class   => Word\SeparatorToCamelCase::class,
+        \Zend\Filter\Word\SeparatorToDash::class        => Word\SeparatorToDash::class,
+        \Zend\Filter\Word\SeparatorToSeparator::class   => Word\SeparatorToSeparator::class,
+        \Zend\Filter\Word\UnderscoreToCamelCase::class  => Word\UnderscoreToCamelCase::class,
+        \Zend\Filter\Word\UnderscoreToStudlyCase::class => Word\UnderscoreToStudlyCase::class,
+        \Zend\Filter\Word\UnderscoreToDash::class       => Word\UnderscoreToDash::class,
+        \Zend\Filter\Word\UnderscoreToSeparator::class  => Word\UnderscoreToSeparator::class,
 
         // v2 normalized FQCNs
         'zendfiltertoint'                      => ToInt::class,
@@ -335,6 +318,7 @@ class FilterPluginManager extends AbstractPluginManager
         'zendfilterwordunderscoretostudlycase' => Word\UnderscoreToStudlyCase::class,
         'zendfilterwordunderscoretodash'       => Word\UnderscoreToDash::class,
         'zendfilterwordunderscoretoseparator'  => Word\UnderscoreToSeparator::class,
+        // @codingStandardsIgnoreEnd
     ];
 
     /**
