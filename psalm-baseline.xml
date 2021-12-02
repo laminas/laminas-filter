@@ -51,15 +51,6 @@
     </MixedReturnStatement>
   </file>
   <file src="src/AllowList.php">
-    <InvalidArgument occurrences="1">
-      <code>$this-&gt;getStrict()</code>
-    </InvalidArgument>
-    <InvalidReturnStatement occurrences="1">
-      <code>$this-&gt;strict</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>Boolean</code>
-    </InvalidReturnType>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
@@ -223,12 +214,10 @@
     </UnusedFunctionCall>
   </file>
   <file src="src/Compress/Gz.php">
-    <InvalidReturnStatement occurrences="2">
-      <code>$compressed</code>
+    <InvalidReturnStatement occurrences="1">
       <code>$compressed</code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="2">
-      <code>string</code>
+    <InvalidReturnType occurrences="1">
       <code>string</code>
     </InvalidReturnType>
     <MixedArgument occurrences="1">
@@ -1186,9 +1175,6 @@
       <code>\Zend\Filter\Blacklist::class</code>
       <code>\Zend\Filter\Whitelist::class</code>
     </DeprecatedClass>
-    <DocblockTypeContradiction occurrences="1">
-      <code>gettype($plugin)</code>
-    </DocblockTypeContradiction>
     <DuplicateArrayKey occurrences="2">
       <code>ToInt::class                       =&gt; InvokableFactory::class</code>
       <code>ToNull::class                      =&gt; InvokableFactory::class</code>
@@ -1196,9 +1182,6 @@
     <InvalidScalarArgument occurrences="1">
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
-    <MixedArgument occurrences="1">
-      <code>$plugin</code>
-    </MixedArgument>
     <MixedArrayOffset occurrences="2"/>
     <NonInvariantDocblockPropertyType occurrences="1">
       <code>$factories</code>
@@ -1206,9 +1189,6 @@
     <ParamNameMismatch occurrences="1">
       <code>$plugin</code>
     </ParamNameMismatch>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_object($plugin)</code>
-    </RedundantConditionGivenDocblockType>
     <UndefinedClass occurrences="26">
       <code>Alnum</code>
       <code>Alnum</code>
@@ -1254,6 +1234,9 @@
       <code>$config['filters']</code>
       <code>$this-&gt;creationOptions</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$options ?: []</code>
+    </MixedArgumentTypeCoercion>
     <ParamNameMismatch occurrences="1">
       <code>$container</code>
     </ParamNameMismatch>
@@ -3040,9 +3023,6 @@
     </MixedArgument>
   </file>
   <file src="test/StaticFilterTest.php">
-    <InvalidArgument occurrences="1">
-      <code>Exception\ExceptionInterface::class</code>
-    </InvalidArgument>
     <MissingClosureParamType occurrences="2">
       <code>$value</code>
       <code>$value</code>
