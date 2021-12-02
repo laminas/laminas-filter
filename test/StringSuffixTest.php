@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\InvalidArgumentException;
@@ -7,16 +9,13 @@ use Laminas\Filter\StringSuffix as StringSuffixFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function fopen;
+
 class StringSuffixTest extends TestCase
 {
-    /**
-     * @var StringSuffixFilter
-     */
+    /** @var StringSuffixFilter */
     protected $filter;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         $this->filter = new StringSuffixFilter();
@@ -68,7 +67,6 @@ class StringSuffixTest extends TestCase
 
     /**
      * @dataProvider invalidSuffixesDataProvider
-     *
      * @param mixed $suffix
      */
     public function testInvalidSuffixes($suffix)

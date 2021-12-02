@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Callback;
@@ -11,12 +13,13 @@ use Laminas\ServiceManager\Exception;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
+use const ENT_COMPAT;
+use const ENT_QUOTES;
+
 class StaticFilterTest extends TestCase
 {
     /**
      * Resets the default namespaces
-     *
-     * @return void
      */
     public function tearDown(): void
     {
@@ -26,7 +29,7 @@ class StaticFilterTest extends TestCase
     public function testUsesFilterPluginManagerByDefault()
     {
         $plugins = StaticFilter::getPluginManager();
-        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $plugins);
+        $this->assertInstanceOf(FilterPluginManager::class, $plugins);
     }
 
     public function testCanSpecifyCustomPluginManager()
@@ -44,7 +47,7 @@ class StaticFilterTest extends TestCase
         StaticFilter::setPluginManager(null);
         $registered = StaticFilter::getPluginManager();
         $this->assertNotSame($plugins, $registered);
-        $this->assertInstanceOf('Laminas\Filter\FilterPluginManager', $registered);
+        $this->assertInstanceOf(FilterPluginManager::class, $registered);
     }
 
     /**
@@ -91,7 +94,7 @@ class StaticFilterTest extends TestCase
 
     public function testUsesDifferentConfigurationOnEachRequest()
     {
-        $first = StaticFilter::execute('foo', Callback::class, [
+        $first  = StaticFilter::execute('foo', Callback::class, [
             'callback' => function ($value) {
                 return 'FOO';
             },

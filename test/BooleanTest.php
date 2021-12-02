@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Boolean as BooleanFilter;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function gettype;
+use function sprintf;
+use function var_export;
 
 class BooleanTest extends TestCase
 {
@@ -58,8 +64,8 @@ class BooleanTest extends TestCase
     {
         $filter = new BooleanFilter($type);
         foreach ($testData as $data) {
-            list($value, $expected) = $data;
-            $message = sprintf(
+            [$value, $expected] = $data;
+            $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s',
                 var_export($value, true),
                 gettype($value),
@@ -80,8 +86,8 @@ class BooleanTest extends TestCase
         foreach ($typeData as $type) {
             $filter = new BooleanFilter(['type' => $type]);
             foreach ($testData as $data) {
-                list($value, $expected) = $data;
-                $message = sprintf(
+                [$value, $expected] = $data;
+                $message            = sprintf(
                     '%s (%s) is not filtered as %s; type = %s',
                     var_export($value, true),
                     gettype($value),
@@ -96,7 +102,7 @@ class BooleanTest extends TestCase
     public function testLocalized()
     {
         $filter = new BooleanFilter([
-            'type' => BooleanFilter::TYPE_LOCALIZED,
+            'type'         => BooleanFilter::TYPE_LOCALIZED,
             'translations' => [
                 'yes' => true,
                 'y'   => true,
@@ -104,7 +110,7 @@ class BooleanTest extends TestCase
                 'n'   => false,
                 'yay' => true,
                 'nay' => false,
-            ]
+            ],
         ]);
 
         $this->assertTrue($filter->filter('yes'));
@@ -132,7 +138,6 @@ class BooleanTest extends TestCase
      * https://github.com/zendframework/zend-filter/issues/48
      *
      * @param mixed $type Type to double initialize
-     *
      * @dataProvider duplicateProvider
      */
     public function testDuplicateTypesWorkProperly($type, $expected)
@@ -211,7 +216,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_INTEGER,
@@ -233,7 +238,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_FLOAT,
@@ -255,7 +260,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_STRING,
@@ -277,7 +282,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_ZERO_STRING,
@@ -299,7 +304,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_EMPTY_ARRAY,
@@ -321,7 +326,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_NULL,
@@ -343,7 +348,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_PHP,
@@ -365,7 +370,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_FALSE_STRING,
@@ -387,7 +392,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             // default behaviour with no translations provided
             // all values filtered as true
@@ -411,7 +416,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
             [
                 BooleanFilter::TYPE_ALL,
@@ -433,7 +438,7 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
+                ],
             ],
         ];
     }
@@ -474,8 +479,8 @@ class BooleanTest extends TestCase
                     ['true', true],
                     ['no', true],
                     ['yes', true],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

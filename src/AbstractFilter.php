@@ -1,9 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\StringUtils;
 use Traversable;
+
+use function array_key_exists;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function method_exists;
+use function sprintf;
+use function str_replace;
+use function ucwords;
 
 abstract class AbstractFilter implements FilterInterface
 {
@@ -15,8 +27,9 @@ abstract class AbstractFilter implements FilterInterface
     protected $options = [];
 
     /**
-     * @return bool
      * @deprecated Since 2.1.0
+     *
+     * @return bool
      */
     public static function hasPcreUnicodeSupport()
     {
@@ -34,7 +47,7 @@ abstract class AbstractFilter implements FilterInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
-                (is_object($options) ? get_class($options) : gettype($options))
+                is_object($options) ? get_class($options) : gettype($options)
             ));
         }
 
@@ -74,7 +87,7 @@ abstract class AbstractFilter implements FilterInterface
      * Proxies to {@link filter()}
      *
      * @param  mixed $value
-     * @throws Exception\ExceptionInterface If filtering $value is impossible
+     * @throws Exception\ExceptionInterface If filtering $value is impossible.
      * @return mixed
      */
     public function __invoke($value)
@@ -88,6 +101,6 @@ abstract class AbstractFilter implements FilterInterface
      */
     protected static function isOptions($options)
     {
-        return (is_array($options) || $options instanceof Traversable);
+        return is_array($options) || $options instanceof Traversable;
     }
 }

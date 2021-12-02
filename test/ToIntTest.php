@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\ToInt as ToIntFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ToIntTest extends TestCase
 {
@@ -23,8 +26,8 @@ class ToIntTest extends TestCase
             '1.1'    => 1,
             '-1.1'   => -1,
             '0.9'    => 0,
-            '-0.9'   => 0
-            ];
+            '-0.9'   => 0,
+        ];
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $filter($input));
         }
@@ -34,11 +37,13 @@ class ToIntTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                '1',
-                -1
-            ]]
+            [new stdClass()],
+            [
+                [
+                    '1',
+                    -1,
+                ],
+            ],
         ];
     }
 

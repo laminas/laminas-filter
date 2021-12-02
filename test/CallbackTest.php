@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Callback as CallbackFilter;
@@ -26,7 +28,7 @@ class CallbackTest extends TestCase
     public function testStaticCallback()
     {
         $filter = new CallbackFilter(
-            [__CLASS__, 'staticCallback']
+            [self::class, 'staticCallback']
         );
         $this->assertEquals('staticCallback-test', $filter('test'));
     }

@@ -1,11 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Encrypt;
 
 use Laminas\Filter\Encrypt\Openssl as OpensslEncryption;
 use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+
+use function extension_loaded;
+use function phpversion;
+use function trim;
+use function version_compare;
 
 class OpensslTest extends TestCase
 {
@@ -23,17 +31,18 @@ class OpensslTest extends TestCase
      */
     public function testBasicOpenssl()
     {
-        $filter = new OpensslEncryption(__DIR__ . '/../_files/publickey.pem');
+        $filter         = new OpensslEncryption(__DIR__ . '/../_files/publickey.pem');
         $valuesExpected = [
             'STRING' => 'STRING',
             'ABC1@3' => 'ABC1@3',
-            'A b C'  => 'A B C'
+            'A b C'  => 'A B C',
         ];
 
         $key = $filter->getPublicKey();
         $this->assertEquals(
-            [__DIR__ . '/../_files/publickey.pem' =>
-                  '-----BEGIN CERTIFICATE-----
+            [
+                __DIR__ . '/../_files/publickey.pem'
+                  => '-----BEGIN CERTIFICATE-----
 MIIC3jCCAkegAwIBAgIBADANBgkqhkiG9w0BAQQFADCBtDELMAkGA1UEBhMCTkwx
 FjAUBgNVBAgTDU5vb3JkLUhvbGxhbmQxEDAOBgNVBAcTB1phYW5kYW0xFzAVBgNV
 BAoTDk1vYmlsZWZpc2guY29tMR8wHQYDVQQLExZDZXJ0aWZpY2F0aW9uIFNlcnZp
@@ -51,7 +60,8 @@ FDD4V7XpcNU63QIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAFQ22OU/PAN7rRDr23NS
 5jYy6v3b+zwEvY82EUieMldovdnpsS1EScjjvPfQ1lSgcTHT2QX5MjNv13xLnOgh
 PIDs9E7uuizAKDhRRRvho8BS
 -----END CERTIFICATE-----
-'],
+',
+            ],
             $key
         );
         foreach ($valuesExpected as $input => $output) {
@@ -72,7 +82,7 @@ PIDs9E7uuizAKDhRRRvho8BS
 
         $filter = new OpensslEncryption();
         $filter->setPublicKey(__DIR__ . '/../_files/publickey.pem');
-        $output = $filter->encrypt('teststring');
+        $output       = $filter->encrypt('teststring');
         $envelopekeys = $filter->getEnvelopeKey();
         $this->assertNotEquals('teststring', $output);
 
@@ -101,7 +111,7 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
 
         $filter = new OpensslEncryption();
         $filter->setPublicKey(__DIR__ . '/../_files/publickey.pem');
-        $output = $filter->encrypt('teststring');
+        $output       = $filter->encrypt('teststring');
         $envelopekeys = $filter->getEnvelopeKey();
         $this->assertNotEquals('teststring', $output);
 
@@ -157,8 +167,8 @@ qxzHN7QGmjSn9g36hmH+/rhwKGK9MxfsGkt+/KOOqNi5X8kGIFkxBPGP5LtMisk8
 cAkcoMuBcgWhIn/46C1PAkEAzLK/ibrdMQLOdO4SuDgj/2nc53NZ3agl61ew8Os6
 d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 -----END RSA PRIVATE KEY-----
-'], $test);
-
+',
+        ], $test);
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('not valid');
@@ -183,7 +193,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->assertStringContainsString('Please give a private key', $e->getMessage());
         }
 
@@ -191,7 +201,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->assertStringContainsString('Please give an envelope key', $e->getMessage());
         }
 
@@ -199,7 +209,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         try {
             $filter->decrypt('unknown');
             $this->fail();
-        } catch (\Laminas\Filter\Exception\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->assertStringContainsString('was not able to decrypt', $e->getMessage());
         }
     }
@@ -222,11 +232,12 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
     public function testMultipleOptionsAtInitiation()
     {
         $passphrase = 'test';
-        $filter = new OpensslEncryption([
-            'public' => __DIR__ . '/../_files/publickey_pass.pem',
+        $filter     = new OpensslEncryption([
+            'public'     => __DIR__ . '/../_files/publickey_pass.pem',
             'passphrase' => $passphrase,
-            'private' => __DIR__ . '/../_files/privatekey_pass.pem']);
-        $public = $filter->getPublicKey();
+            'private'    => __DIR__ . '/../_files/privatekey_pass.pem',
+        ]);
+        $public     = $filter->getPublicKey();
         $this->assertNotEmpty($public);
         $this->assertEquals($passphrase, $filter->getPassphrase());
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Encrypt;
 
 use Laminas\Filter\Compress;
@@ -7,6 +9,31 @@ use Laminas\Filter\Decompress;
 use Laminas\Filter\Exception;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function count;
+use function current;
+use function extension_loaded;
+use function fclose;
+use function fopen;
+use function fread;
+use function is_array;
+use function is_file;
+use function is_readable;
+use function is_string;
+use function md5;
+use function openssl_free_key;
+use function openssl_open;
+use function openssl_pkey_get_details;
+use function openssl_pkey_get_private;
+use function openssl_pkey_get_public;
+use function openssl_seal;
+use function pack;
+use function strlen;
+use function substr;
+use function unpack;
+
+use const PHP_VERSION_ID;
 
 /**
  * Encryption adapter for openssl
@@ -49,7 +76,6 @@ class Openssl implements EncryptionAlgorithmInterface
     protected $package = false;
 
     /**
-     * Class constructor
      * Available options
      *   'public'      => public key
      *   'private'     => private key
@@ -109,7 +135,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         foreach ($keys as $type => $key) {
-            if (is_file($key) && is_readable($key)) {
+            if (is_string($key) && is_file($key) && is_readable($key)) {
                 $file = fopen($key, 'r');
                 $cert = fread($file, 8192);
                 fclose($file);
@@ -129,7 +155,11 @@ class Openssl implements EncryptionAlgorithmInterface
                     $this->keys['public'][$key] = $cert;
                     break;
                 case 'private':
-                    $test = openssl_pkey_get_private($cert, $this->passphrase);
+                    if (null !== $this->getPassphrase()) {
+                        $test = openssl_pkey_get_private($cert, $this->getPassphrase());
+                    } else {
+                        $test = openssl_pkey_get_private($cert);
+                    }
                     if ($test === false) {
                         throw new Exception\InvalidArgumentException("Private key '{$cert}' not valid");
                     }
@@ -358,7 +388,7 @@ class Openssl implements EncryptionAlgorithmInterface
             $value    = $compress($value);
         }
 
-        $crypt  = openssl_seal($value, $encrypted, $encryptedkeys, $keys, 'RC4');
+        $crypt = openssl_seal($value, $encrypted, $encryptedkeys, $keys, 'RC4');
 
         $this->freeKeyResources($keys);
 
@@ -404,7 +434,11 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         foreach ($this->keys['private'] as $cert) {
-            $keys = openssl_pkey_get_private($cert, $this->getPassphrase());
+            if (null !== $this->getPassphrase()) {
+                $keys = openssl_pkey_get_private($cert, $this->getPassphrase());
+            } else {
+                $keys = openssl_pkey_get_private($cert);
+            }
         }
 
         if ($this->package) {
@@ -415,12 +449,12 @@ class Openssl implements EncryptionAlgorithmInterface
                 $fingerprint = md5("Laminas");
             }
 
-            $count = unpack('ncount', $value);
-            $count = $count['count'];
-            $length  = 2;
+            $count  = unpack('ncount', $value);
+            $count  = $count['count'];
+            $length = 2;
             for ($i = $count; $i > 0; --$i) {
-                $header = unpack('H32print/nsize', substr($value, $length, 18));
-                $length  += 18;
+                $header  = unpack('H32print/nsize', substr($value, $length, 18));
+                $length += 18;
                 if ($header['print'] === $fingerprint) {
                     $envelope = substr($value, $length, $header['size']);
                 }
@@ -432,7 +466,7 @@ class Openssl implements EncryptionAlgorithmInterface
             $value = substr($value, $length);
         }
 
-        $crypt  = openssl_open($value, $decrypted, $envelope, $keys, 'RC4');
+        $crypt = openssl_open($value, $decrypted, $envelope, $keys, 'RC4');
 
         $this->freeKeyResources([$keys]);
 

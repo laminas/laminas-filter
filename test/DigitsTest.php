@@ -1,9 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Digits as DigitsFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function extension_loaded;
+use function preg_match;
 
 class DigitsTest extends TestCase
 {
@@ -18,8 +24,6 @@ class DigitsTest extends TestCase
 
     /**
      * Creates a new Laminas_Filter_Digits object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -49,10 +53,10 @@ class DigitsTest extends TestCase
              */
             $valuesExpected = [
                 '1９2八3四８'     => '123',
-                'Ｃ 4.5B　6'      => '456',
+                'Ｃ 4.5B　6'    => '456',
                 '9壱8＠7．6，5＃4' => '987654',
-                '789'              => '789'
-                ];
+                '789'         => '789',
+            ];
         } else {
             // POSIX named classes are not supported, use alternative 0-9 match
             // Or filter for the value without mbstring
@@ -62,8 +66,8 @@ class DigitsTest extends TestCase
                 'abcxyz'  => '',
                 'AZ@#4.3' => '43',
                 '1.23'    => '123',
-                '0x9f'    => '09'
-                ];
+                '0x9f'    => '09',
+            ];
         }
 
         foreach ($valuesExpected as $input => $output) {
@@ -79,11 +83,13 @@ class DigitsTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                'abc123',
-                'abc 123'
-            ]],
+            [new stdClass()],
+            [
+                [
+                    'abc123',
+                    'abc 123',
+                ],
+            ],
             [true],
             [false],
         ];

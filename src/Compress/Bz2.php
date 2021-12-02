@@ -1,8 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
+use Traversable;
+
+use function bzclose;
+use function bzcompress;
+use function bzdecompress;
+use function bzopen;
+use function bzread;
+use function bzwrite;
+use function extension_loaded;
+use function file_exists;
+use function is_int;
+use function strpos;
 
 /**
  * Compression adapter for Bz2
@@ -24,10 +38,8 @@ class Bz2 extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * Class constructor
-     *
-     * @param null|array|\Traversable $options (Optional) Options to set
-     * @throws Exception\ExtensionNotLoadedException if bz2 extension not loaded
+     * @param null|array|Traversable $options (Optional) Options to set
+     * @throws Exception\ExtensionNotLoadedException If bz2 extension not loaded.
      */
     public function __construct($options = null)
     {
@@ -128,11 +140,11 @@ class Bz2 extends AbstractCompressionAlgorithm
         $archive = $this->getArchive();
 
         //check if there are null byte characters before doing a file_exists check
-        if (false === strpos($content, "\0") && file_exists($content)) {
+        if (null !== $content && false === strpos($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
-        if (file_exists($archive)) {
+        if (null !== $archive && file_exists($archive)) {
             $file = bzopen($archive, 'r');
             if (! $file) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $content . "'");
@@ -140,8 +152,12 @@ class Bz2 extends AbstractCompressionAlgorithm
 
             $compressed = bzread($file);
             bzclose($file);
-        } else {
+        } elseif (null !== $content) {
             $compressed = bzdecompress($content);
+        } else {
+            // without strict types, bzdecompress(null) returns an empty string
+            // we need to simulate this behaviour to prevent a BC break!
+            $compressed = '';
         }
 
         if (is_int($compressed)) {

@@ -1,9 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Decompress as DecompressFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function extension_loaded;
+use function file_exists;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class DecompressTest extends TestCase
 {
@@ -22,21 +35,34 @@ class DecompressTest extends TestCase
     public function tearDown(): void
     {
         if (is_dir($this->tmpDir)) {
-            if (file_exists($this->tmpDir . '/compressed.bz2')) {
-                unlink($this->tmpDir . '/compressed.bz2');
+            foreach ($this->returnFilterType() as $parameters) {
+                if (file_exists($this->tmpDir . '/compressed.' . $parameters[0])) {
+                    unlink($this->tmpDir . '/compressed.' . $parameters[0]);
+                }
             }
             rmdir($this->tmpDir);
+        }
+    }
+
+    public function returnFilterType(): iterable
+    {
+        if (extension_loaded('bz2')) {
+            yield ['bz2'];
+        }
+        if (extension_loaded('zlib')) {
+            yield ['gz'];
         }
     }
 
     /**
      * Basic usage
      *
+     * @dataProvider returnFilterType
      * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage($filterType)
     {
-        $filter  = new DecompressFilter('bz2');
+        $filter = new DecompressFilter($filterType);
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);
@@ -49,22 +75,23 @@ class DecompressTest extends TestCase
     /**
      * Setting Archive
      *
+     * @dataProvider returnFilterType
      * @return void
      */
-    public function testCompressToFile()
+    public function testCompressToFile($filterType)
     {
-        $filter  = new DecompressFilter('bz2');
-        $archive = $this->tmpDir . '/compressed.bz2';
+        $filter  = new DecompressFilter($filterType);
+        $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
         $this->assertTrue($content);
 
-        $filter2  = new DecompressFilter('bz2');
+        $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2($archive);
         $this->assertEquals('compress me', $content2);
 
-        $filter3 = new DecompressFilter('bz2');
+        $filter3 = new DecompressFilter($filterType);
         $filter3->setArchive($archive);
         $content3 = $filter3(null);
         $this->assertEquals('compress me', $content3);
@@ -73,55 +100,61 @@ class DecompressTest extends TestCase
     /**
      * Basic usage
      *
+     * @dataProvider returnFilterType
      * @return void
      */
-    public function testDecompressArchive()
+    public function testDecompressArchive($filterType)
     {
-        $filter  = new DecompressFilter('bz2');
-        $archive = $this->tmpDir . '/compressed.bz2';
+        $filter  = new DecompressFilter($filterType);
+        $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
         $this->assertTrue($content);
 
-        $filter2  = new DecompressFilter('bz2');
+        $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2($archive);
         $this->assertEquals('compress me', $content2);
     }
 
-    public function testFilterMethodProxiesToDecompress()
+    /**
+     * @dataProvider returnFilterType
+     */
+    public function testFilterMethodProxiesToDecompress($filterType)
     {
-        $filter  = new DecompressFilter('bz2');
-        $archive = $this->tmpDir . '/compressed.bz2';
+        $filter  = new DecompressFilter($filterType);
+        $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
         $this->assertTrue($content);
 
-        $filter2  = new DecompressFilter('bz2');
+        $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2->filter($archive);
         $this->assertEquals('compress me', $content2);
     }
 
-    public function returnUnfilteredDataProvider()
+    public function returnUnfilteredDataProvider(): iterable
     {
-        return [
-            [null],
-            [new \stdClass()],
-            [[
-                'decompress me',
-                'decompress me too, please'
-            ]]
-        ];
+        foreach ($this->returnFilterType() as $parameter) {
+            yield [$parameter[0], new stdClass()];
+            yield [
+                $parameter[0],
+                [
+                    'decompress me',
+                    'decompress me too, please',
+                ],
+            ];
+        }
     }
 
     /**
      * @dataProvider returnUnfilteredDataProvider
      * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($filterType, $input)
     {
-        $filter = new DecompressFilter('bz2');
+        $filter = new DecompressFilter($filterType);
 
         $this->assertEquals($input, $filter($input));
     }

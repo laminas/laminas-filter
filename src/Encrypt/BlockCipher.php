@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Encrypt;
 
 use Laminas\Crypt\BlockCipher as CryptBlockCipher;
@@ -10,6 +12,11 @@ use Laminas\Filter\Decompress;
 use Laminas\Filter\Exception;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function is_array;
+use function is_string;
+use function sprintf;
 
 /**
  * Encryption adapter for Laminas\Crypt\BlockCipher
@@ -47,8 +54,6 @@ class BlockCipher implements EncryptionAlgorithmInterface
     protected $compression;
 
     /**
-     * Class constructor
-     *
      * @param  string|array|Traversable $options Encryption Options
      * @throws Exception\RuntimeException
      * @throws Exception\InvalidArgumentException
@@ -56,7 +61,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
     public function __construct($options)
     {
         $cipherPluginManager = CryptBlockCipher::getSymmetricPluginManager();
-        $cipherType = $cipherPluginManager->has('openssl') ? 'openssl' : 'mcrypt';
+        $cipherType          = $cipherPluginManager->has('openssl') ? 'openssl' : 'mcrypt';
         try {
             $this->blockCipher = CryptBlockCipher::factory($cipherType, $this->encryption);
         } catch (SymmetricException\RuntimeException $e) {

@@ -1,16 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function array_shift;
+use function func_get_args;
+use function is_array;
+use function is_int;
+use function is_scalar;
+use function is_string;
+use function preg_match;
+use function preg_match_all;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strtolower;
+use function substr;
+use function trim;
 
 class StripTags extends AbstractFilter
 {
     /**
      * Unique ID prefix used for allowing comments
      */
-    const UNIQUE_ID_PREFIX = '__Laminas_Filter_StripTags__';
+    public const UNIQUE_ID_PREFIX = '__Laminas_Filter_StripTags__';
 
     /**
      * Array of allowed tags and allowed attributes for each allowed tag
@@ -45,9 +63,11 @@ class StripTags extends AbstractFilter
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
-        if ((! is_array($options)) || (is_array($options) && ! array_key_exists('allowTags', $options) &&
-            ! array_key_exists('allowAttribs', $options) && ! array_key_exists('allowComments', $options))) {
-            $options = func_get_args();
+        if (
+            (! is_array($options)) || (is_array($options) && ! array_key_exists('allowTags', $options) &&
+            ! array_key_exists('allowAttribs', $options) && ! array_key_exists('allowComments', $options))
+        ) {
+            $options           = func_get_args();
             $temp['allowTags'] = array_shift($options);
             if (! empty($options)) {
                 $temp['allowAttribs'] = array_shift($options);
@@ -111,7 +131,7 @@ class StripTags extends AbstractFilter
                 foreach ($element as $attribute) {
                     if (is_string($attribute)) {
                         // Canonicalize the attribute name
-                        $attributeName = strtolower($attribute);
+                        $attributeName                               = strtolower($attribute);
                         $this->tagsAllowed[$tagName][$attributeName] = null;
                     }
                 }
@@ -147,7 +167,7 @@ class StripTags extends AbstractFilter
         foreach ($attributesAllowed as $attribute) {
             if (is_string($attribute)) {
                 // Canonicalize the attribute name
-                $attributeName = strtolower($attribute);
+                $attributeName                           = strtolower($attribute);
                 $this->attributesAllowed[$attributeName] = null;
             }
         }
@@ -264,8 +284,10 @@ class StripTags extends AbstractFilter
                 $attributeValue     = $matches[3][$index] === '' ? $matches[5][$index] : $matches[3][$index];
 
                 // If the attribute is not allowed, then remove it entirely
-                if (! array_key_exists($attributeName, $this->tagsAllowed[$tagName])
-                    && ! array_key_exists($attributeName, $this->attributesAllowed)) {
+                if (
+                    ! array_key_exists($attributeName, $this->tagsAllowed[$tagName])
+                    && ! array_key_exists($attributeName, $this->attributesAllowed)
+                ) {
                     continue;
                 }
                 // Add the attribute to the accumulator

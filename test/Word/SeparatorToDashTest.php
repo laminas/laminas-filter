@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\SeparatorToDash as SeparatorToDashFilter;

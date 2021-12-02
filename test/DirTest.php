@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Dir as DirFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class DirTest extends TestCase
 {
@@ -14,12 +17,12 @@ class DirTest extends TestCase
      */
     public function testBasic()
     {
-        $filter = new DirFilter();
+        $filter         = new DirFilter();
         $valuesExpected = [
             'filename'              => '.',
             '/path/to/filename'     => '/path/to',
-            '/path/to/filename.ext' => '/path/to'
-            ];
+            '/path/to/filename.ext' => '/path/to',
+        ];
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $filter($input));
         }
@@ -29,11 +32,13 @@ class DirTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                '/path/to/filename',
-                '/path/to/filename.ext'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    '/path/to/filename',
+                    '/path/to/filename.ext',
+                ],
+            ],
         ];
     }
 

@@ -1,8 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
+use Traversable;
+
+use function end;
+use function extension_loaded;
+use function fclose;
+use function file_exists;
+use function fopen;
+use function fread;
+use function fseek;
+use function gzclose;
+use function gzcompress;
+use function gzdeflate;
+use function gzinflate;
+use function gzopen;
+use function gzread;
+use function gzuncompress;
+use function gzwrite;
+use function strpos;
+use function unpack;
+
+use const SEEK_END;
 
 /**
  * Compression adapter for Gzip (ZLib)
@@ -26,10 +49,8 @@ class Gz extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * Class constructor
-     *
-     * @param null|array|\Traversable $options (Optional) Options to set
-     * @throws Exception\ExtensionNotLoadedException if zlib extension not loaded
+     * @param null|array|Traversable $options (Optional) Options to set
+     * @throws Exception\ExtensionNotLoadedException If zlib extension not loaded.
      */
     public function __construct($options = null)
     {
@@ -81,7 +102,7 @@ class Gz extends AbstractCompressionAlgorithm
      *
      * @param  string $mode Supported are 'compress', 'deflate' and 'file'
      * @return self
-     * @throws Exception\InvalidArgumentException for invalid $mode value
+     * @throws Exception\InvalidArgumentException For invalid $mode value.
      */
     public function setMode($mode)
     {
@@ -120,7 +141,7 @@ class Gz extends AbstractCompressionAlgorithm
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException if unable to open archive or error during decompression
+     * @throws Exception\RuntimeException If unable to open archive or error during decompression.
      */
     public function compress($content)
     {
@@ -152,7 +173,7 @@ class Gz extends AbstractCompressionAlgorithm
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException if unable to open archive or error during decompression
+     * @throws Exception\RuntimeException If unable to open archive or error during decompression.
      */
     public function decompress($content)
     {
@@ -160,11 +181,11 @@ class Gz extends AbstractCompressionAlgorithm
         $mode    = $this->getMode();
 
         //check if there are null byte characters before doing a file_exists check
-        if (false === strpos($content, "\0") && file_exists($content)) {
+        if (null !== $content && false === strpos($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 
-        if (file_exists($archive)) {
+        if (null !== $archive && file_exists($archive)) {
             $handler = fopen($archive, 'rb');
             if (! $handler) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
@@ -179,10 +200,12 @@ class Gz extends AbstractCompressionAlgorithm
             $file       = gzopen($archive, 'r');
             $compressed = gzread($file, $size);
             gzclose($file);
-        } elseif ($mode === 'deflate') {
+        } elseif ($mode === 'deflate' && null !== $content) {
             $compressed = gzinflate($content);
-        } else {
+        } elseif (null !== $content) {
             $compressed = gzuncompress($content);
+        } else {
+            $compressed = false;
         }
 
         if ($compressed === false) {

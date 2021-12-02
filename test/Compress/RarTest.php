@@ -1,10 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Rar as RarCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function dirname;
+use function extension_loaded;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
 
 class RarTest extends TestCase
 {
@@ -28,7 +44,7 @@ class RarTest extends TestCase
             $this->tmp . '/_compress/Compress/zipextracted.txt',
             $this->tmp . '/_compress/Compress',
             $this->tmp . '/_compress/zipextracted.txt',
-            $this->tmp . '/_compress'
+            $this->tmp . '/_compress',
         ];
 
         foreach ($files as $file) {
@@ -53,7 +69,7 @@ class RarTest extends TestCase
             $this->tmp . '/_compress/Compress/zipextracted.txt',
             $this->tmp . '/_compress/Compress',
             $this->tmp . '/_compress/zipextracted.txt',
-            $this->tmp . '/_compress'
+            $this->tmp . '/_compress',
         ];
 
         foreach ($files as $file) {
@@ -74,11 +90,11 @@ class RarTest extends TestCase
      */
     public function testBasicUsage()
     {
-        $filter  = new RarCompression(
+        $filter = new RarCompression(
             [
                 'archive'  => dirname(__DIR__) . '/_files/compressed.rar',
                 'target'   => $this->tmp . '/zipextracted.txt',
-                'callback' => [__CLASS__, 'rarCompress']
+                'callback' => [self::class, 'rarCompress'],
             ]
         );
 
@@ -180,7 +196,7 @@ class RarTest extends TestCase
     {
         $filter = new RarCompression();
 
-        $callback = [__CLASS__, 'rarCompress'];
+        $callback = [self::class, 'rarCompress'];
         $filter->setCallback($callback);
         $this->assertEquals($callback, $filter->getCallback());
     }
@@ -210,11 +226,11 @@ class RarTest extends TestCase
      */
     public function testRarCompressFile()
     {
-        $filter  = new RarCompression(
+        $filter = new RarCompression(
             [
                 'archive'  => dirname(__DIR__) . '/_files/compressed.rar',
                 'target'   => $this->tmp . '/zipextracted.txt',
-                'callback' => [__CLASS__, 'rarCompress']
+                'callback' => [self::class, 'rarCompress'],
             ]
         );
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
@@ -242,7 +258,7 @@ class RarTest extends TestCase
             [
                 'archive'  => dirname(__DIR__) . '/_files/compressed.rar',
                 'target'   => $this->tmp . '/_compress',
-                'callback' => [__CLASS__, 'rarCompress']
+                'callback' => [self::class, 'rarCompress'],
             ]
         );
         $content = $filter->compress(dirname(__DIR__) . '/_files/Compress');
@@ -265,7 +281,7 @@ class RarTest extends TestCase
         $this->assertFileExists($base . 'zipextracted.txt');
         $this->assertFileExists($base . 'First' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
         $this->assertFileExists(
-            $base . 'First' . DIRECTORY_SEPARATOR .  'Second' . DIRECTORY_SEPARATOR . 'zipextracted.txt'
+            $base . 'First' . DIRECTORY_SEPARATOR . 'Second' . DIRECTORY_SEPARATOR . 'zipextracted.txt'
         );
     }
 

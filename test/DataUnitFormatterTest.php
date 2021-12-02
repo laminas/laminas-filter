@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\DataUnitFormatter as DataUnitFormatterFilter;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+
+use function pow;
 
 class DataUnitFormatterTest extends TestCase
 {
@@ -17,7 +21,7 @@ class DataUnitFormatterTest extends TestCase
     {
         $filter = new DataUnitFormatterFilter([
             'mode' => DataUnitFormatterFilter::MODE_DECIMAL,
-            'unit' => 'B'
+            'unit' => 'B',
         ]);
         $this->assertEquals($expected, $filter->filter($value));
     }
@@ -31,7 +35,7 @@ class DataUnitFormatterTest extends TestCase
     {
         $filter = new DataUnitFormatterFilter([
             'mode' => DataUnitFormatterFilter::MODE_BINARY,
-            'unit' => 'B'
+            'unit' => 'B',
         ]);
         $this->assertEquals($expected, $filter->filter($value));
     }
@@ -39,7 +43,7 @@ class DataUnitFormatterTest extends TestCase
     public function testPrecision()
     {
         $filter = new DataUnitFormatterFilter([
-            'unit' => 'B',
+            'unit'      => 'B',
             'precision' => 3,
         ]);
 
@@ -49,7 +53,7 @@ class DataUnitFormatterTest extends TestCase
     public function testCustomPrefixes()
     {
         $filter = new DataUnitFormatterFilter([
-            'unit' => 'B',
+            'unit'     => 'B',
             'prefixes' => ['', 'kilos'],
         ]);
 
@@ -91,7 +95,7 @@ class DataUnitFormatterTest extends TestCase
             [pow(1000, 6), '1.00 EB'],
             [pow(1000, 7), '1.00 ZB'],
             [pow(1000, 8), '1.00 YB'],
-            [pow(1000, 9), (pow(1000, 9) . ' B')],
+            [pow(1000, 9), pow(1000, 9) . ' B'],
         ];
     }
 
@@ -109,7 +113,7 @@ class DataUnitFormatterTest extends TestCase
             [pow(1024, 6), '1.00 EiB'],
             [pow(1024, 7), '1.00 ZiB'],
             [pow(1024, 8), '1.00 YiB'],
-            [pow(1024, 9), (pow(1024, 9) . ' B')],
+            [pow(1024, 9), pow(1024, 9) . ' B'],
         ];
     }
 }

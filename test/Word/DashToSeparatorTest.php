@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\DashToSeparator as DashToSeparatorFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class DashToSeparatorTest extends TestCase
 {
@@ -36,7 +39,7 @@ class DashToSeparatorTest extends TestCase
 
         $input = [
             'dash-separated-words',
-            'something-different'
+            'something-different',
         ];
 
         $filtered = $filter($input);
@@ -45,12 +48,11 @@ class DashToSeparatorTest extends TestCase
         $this->assertEquals(['dash separated words', 'something different'], $filtered);
     }
 
-
     public function returnUnfilteredDataProvider()
     {
         return [
             [null],
-            [new \stdClass()]
+            [new stdClass()],
         ];
     }
 

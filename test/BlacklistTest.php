@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Blacklist as BlacklistFilter;
@@ -19,7 +21,7 @@ class BlacklistTest extends TestCase
     public function testWithPluginManager(): void
     {
         $pluginManager = new FilterPluginManager(new ServiceManager());
-        $filter = $pluginManager->get('blacklist');
+        $filter        = $pluginManager->get('blacklist');
 
         $this->assertInstanceOf(DenyList::class, $filter);
     }

@@ -1,8 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word;
 
 use Laminas\Stdlib\StringUtils;
+
+use function extension_loaded;
+use function is_array;
+use function is_scalar;
+use function preg_quote;
+use function preg_replace_callback;
 
 class SeparatorToCamelCase extends AbstractSeparator
 {
@@ -23,7 +31,7 @@ class SeparatorToCamelCase extends AbstractSeparator
 
         if (StringUtils::hasPcreUnicodeSupport()) {
             $patterns = [
-                '#(' . $pregQuotedSeparator.')(\P{Z}{1})#u',
+                '#(' . $pregQuotedSeparator . ')(\P{Z}{1})#u',
                 '#(^\P{Z}{1})#u',
             ];
             if (! extension_loaded('mbstring')) {
@@ -50,8 +58,8 @@ class SeparatorToCamelCase extends AbstractSeparator
                 ];
             }
         } else {
-            $patterns = [
-                '#(' . $pregQuotedSeparator.')([\S]{1})#',
+            $patterns     = [
+                '#(' . $pregQuotedSeparator . ')([\S]{1})#',
                 '#(^[\S]{1})#',
             ];
             $replacements = [

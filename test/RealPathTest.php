@@ -1,9 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\RealPath as RealPathFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function strpos;
+
+use const DIRECTORY_SEPARATOR;
+use const PHP_OS;
 
 class RealPathTest extends TestCase
 {
@@ -25,8 +33,6 @@ class RealPathTest extends TestCase
 
     /**
      * Creates a new Laminas_Filter_Basename object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -100,13 +106,13 @@ class RealPathTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
+            [new stdClass()],
             [
                 [
                     $this->_filesPath . DIRECTORY_SEPARATOR . 'file.1',
-                    $this->_filesPath . DIRECTORY_SEPARATOR . 'file.2'
-                ]
-            ]
+                    $this->_filesPath . DIRECTORY_SEPARATOR . 'file.2',
+                ],
+            ],
         ];
     }
 

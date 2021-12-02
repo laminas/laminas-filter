@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word;
 
 use Laminas\Filter\AbstractFilter;
 use Laminas\Filter\Exception;
+
+use function is_array;
+use function is_string;
 
 abstract class AbstractSeparator extends AbstractFilter
 {

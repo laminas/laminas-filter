@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word\Service;
 
 use Interop\Container\ContainerInterface;
@@ -8,6 +10,13 @@ use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Traversable;
+
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function iterator_to_array;
+use function sprintf;
 
 class SeparatorToSeparatorFactory implements FactoryInterface
 {
@@ -31,8 +40,8 @@ class SeparatorToSeparatorFactory implements FactoryInterface
         if (! is_array($creationOptions)) {
             throw new InvalidServiceException(sprintf(
                 '%s cannot use non-array, non-traversable creation options; received %s',
-                __CLASS__,
-                (is_object($creationOptions) ? get_class($creationOptions) : gettype($creationOptions))
+                self::class,
+                is_object($creationOptions) ? get_class($creationOptions) : gettype($creationOptions)
             ));
         }
 
@@ -42,11 +51,11 @@ class SeparatorToSeparatorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         return new SeparatorToSeparator(
-            isset($options['search_separator']) ? $options['search_separator'] : ' ',
-            isset($options['replacement_separator']) ? $options['replacement_separator'] : '-'
+            $options['search_separator'] ?? ' ',
+            $options['replacement_separator'] ?? '-'
         );
     }
 

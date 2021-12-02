@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\ToFloat as ToFloatFilter;
@@ -43,10 +45,12 @@ class ToFloatTest extends TestCase
     {
         return [
             'null'   => [null],
-            'array'  => [[
-                '1',
-                -1,
-            ]],
+            'array'  => [
+                [
+                    '1',
+                    -1,
+                ],
+            ],
             'object' => [new stdClass()],
         ];
     }

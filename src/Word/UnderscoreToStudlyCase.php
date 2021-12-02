@@ -1,8 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word;
 
 use Laminas\Stdlib\StringUtils;
+
+use function array_map;
+use function extension_loaded;
+use function is_array;
+use function is_scalar;
+use function mb_strlen;
+use function mb_strtolower;
+use function mb_substr;
 
 class UnderscoreToStudlyCase extends UnderscoreToCamelCase
 {

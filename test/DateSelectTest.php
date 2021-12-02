@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\DateSelect as DateSelectFilter;
+use Laminas\Filter\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 class DateSelectTest extends TestCase
 {
     /**
      * @dataProvider provideFilter
-     * @param $options
-     * @param $input
-     * @param $expected
+     * @param array $options filter options
+     * @param array|mixed|null|string $input input provided to the filter
+     * @param array|mixed|null|string $expected expected output
      */
     public function testFilter($options, $input, $expected)
     {
@@ -33,7 +36,7 @@ class DateSelectTest extends TestCase
 
     public function testInvalidInput()
     {
-        $this->expectException(\Laminas\Filter\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $sut = new DateSelectFilter();
         $sut->filter(['year' => '2120', 'month' => '07']);
     }

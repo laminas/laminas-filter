@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\UpperCaseWords as UpperCaseWordsFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function function_exists;
+use function mb_internal_encoding;
 
 /**
  * @covers \Laminas\Filter\UpperCaseWords
@@ -22,8 +28,6 @@ class UpperCaseWordsTest extends TestCase
 
     /**
      * Creates a new Laminas_Filter_UpperCaseWords object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -37,11 +41,11 @@ class UpperCaseWordsTest extends TestCase
      */
     public function testBasic()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             'string' => 'String',
             'aBc1@3' => 'Abc1@3',
-            'A b C'  => 'A B C'
+            'A b C'  => 'A B C',
         ];
 
         foreach ($valuesExpected as $input => $output) {
@@ -57,11 +61,11 @@ class UpperCaseWordsTest extends TestCase
      */
     public function testWithEncoding()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             '√º'      => '√º',
             '√±'      => '√±',
-            '√º√±123' => '√º√±123'
+            '√º√±123' => '√º√±123',
         ];
 
         try {
@@ -75,7 +79,6 @@ class UpperCaseWordsTest extends TestCase
     }
 
     /**
-     *
      * @return void
      */
     public function testFalseEncoding()
@@ -97,12 +100,12 @@ class UpperCaseWordsTest extends TestCase
         $valuesExpected = [
             '√º'      => '√º',
             '√±'      => '√±',
-            '√º√±123' => '√º√±123'
+            '√º√±123' => '√º√±123',
         ];
 
         try {
             $filter = new UpperCaseWordsFilter([
-                'encoding' => 'UTF-8'
+                'encoding' => 'UTF-8',
             ]);
             foreach ($valuesExpected as $input => $output) {
                 $this->assertEquals($output, $filter($input));
@@ -117,11 +120,11 @@ class UpperCaseWordsTest extends TestCase
      */
     public function testCaseInsensitiveEncoding()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             '√º'      => '√º',
             '√±'      => '√±',
-            '√º√±123' => '√º√±123'
+            '√º√±123' => '√º√±123',
         ];
 
         try {
@@ -160,21 +163,20 @@ class UpperCaseWordsTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
+            [new stdClass()],
             [123],
             [123.456],
             [
                 [
                     'Upper CASE and lowerCase Words WRITTEN',
-                    'This Should Stay The Same'
-                ]
-            ]
+                    'This Should Stay The Same',
+                ],
+            ],
         ];
     }
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     *
      * @param mixed $input
      */
     public function testReturnUnfiltered($input)

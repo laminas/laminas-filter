@@ -1,10 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use ArrayObject;
+use Exception;
+use Laminas\Filter\Exception\DomainException;
 use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function dirname;
+use function file_get_contents;
+use function phpversion;
+use function restore_error_handler;
+use function set_error_handler;
+use function strlen;
+use function version_compare;
+
+use const E_NOTICE;
+use const E_WARNING;
+use const ENT_COMPAT;
+use const ENT_NOQUOTES;
+use const ENT_QUOTES;
 
 class HtmlEntitiesTest extends TestCase
 {
@@ -19,8 +38,6 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Creates a new Laminas\Filter\HtmlEntities object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -40,9 +57,9 @@ class HtmlEntitiesTest extends TestCase
             '>'      => '&gt;',
             '\''     => '&#039;',
             '"'      => '&quot;',
-            '&'      => '&amp;'
-            ];
-        $filter = $this->_filter;
+            '&'      => '&amp;',
+        ];
+        $filter         = $this->_filter;
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $filter($input));
         }
@@ -120,7 +137,7 @@ class HtmlEntitiesTest extends TestCase
     public function testFluentInterface()
     {
         $instance = $this->_filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES)->setDoubleQuote(false);
-        $this->assertInstanceOf('Laminas\Filter\HtmlEntities', $instance);
+        $this->assertInstanceOf(HtmlEntitiesFilter::class, $instance);
     }
 
     /**
@@ -246,8 +263,8 @@ class HtmlEntitiesTest extends TestCase
         try {
             $result = $this->_filter->filter($string);
             $this->fail('Expected exception from single non-utf-8 character');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Laminas\Filter\Exception\DomainException', $e);
+        } catch (Exception $e) {
+            $this->assertInstanceOf(DomainException::class, $e);
         }
     }
 
@@ -255,11 +272,13 @@ class HtmlEntitiesTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                '<',
-                '>'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    '<',
+                    '>',
+                ],
+            ],
         ];
     }
 

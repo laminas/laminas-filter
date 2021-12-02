@@ -1,10 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\ExtensionNotLoadedException;
 use Laminas\Filter\File\UpperCase as FileUpperCase;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function copy;
+use function dirname;
+use function file_exists;
+use function file_get_contents;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
 
 class UpperCaseTest extends TestCase
 {
@@ -17,13 +32,11 @@ class UpperCaseTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function setUp(): void
     {
-        $filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
-        $origFile  = $filesPath . 'testfile2.txt';
+        $filesPath      = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
+        $origFile       = $filesPath . 'testfile2.txt';
         $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
 
         copy($origFile, $this->testFile);
@@ -31,8 +44,6 @@ class UpperCaseTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function tearDown(): void
     {
@@ -84,7 +95,7 @@ class UpperCaseTest extends TestCase
             $filter = new FileUpperCase('ISO-8859-1');
             $filter($this->testFile);
             $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
-        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (ExtensionNotLoadedException $e) {
             $this->assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
@@ -100,7 +111,7 @@ class UpperCaseTest extends TestCase
             $filter->setEncoding('ISO-8859-1');
             $filter($this->testFile);
             $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
-        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (ExtensionNotLoadedException $e) {
             $this->assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
@@ -109,11 +120,13 @@ class UpperCaseTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                $this->testFile,
-                'something invalid'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    $this->testFile,
+                    'something invalid',
+                ],
+            ],
         ];
     }
 

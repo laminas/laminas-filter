@@ -25,20 +25,20 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0",
-        "laminas/laminas-stdlib": "^3.3"
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "laminas/laminas-stdlib": "^3.6.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~1.0.0",
-        "laminas/laminas-crypt": "^3.2.1",
-        "laminas/laminas-servicemanager": "^3.3",
-        "laminas/laminas-uri": "^2.6",
-        "pear/archive_tar": "^1.4.3",
-        "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.3",
-        "psalm/plugin-phpunit": "^0.15.1",
-        "psr/http-factory": "^1.0",
-        "vimeo/psalm": "^4.6"
+        "laminas/laminas-coding-standard": "^2.3.0",
+        "laminas/laminas-crypt": "^3.5.1",
+        "laminas/laminas-servicemanager": "^3.7.0",
+        "laminas/laminas-uri": "^2.9.1",
+        "pear/archive_tar": "^1.4.14",
+        "phpspec/prophecy-phpunit": "^2.0.1",
+        "phpunit/phpunit": "^9.5.10",
+        "psalm/plugin-phpunit": "^0.15.2",
+        "psr/http-factory": "^1.0.1",
+        "vimeo/psalm": "^4.13.1"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",

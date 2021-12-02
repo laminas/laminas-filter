@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use ArrayIterator;
@@ -9,6 +11,14 @@ use Laminas\Filter\StringToLower;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function function_exists;
+use function serialize;
+use function strtolower;
+use function strtoupper;
+use function trim;
+use function unserialize;
 
 class FilterChainTest extends TestCase
 {
@@ -33,7 +43,7 @@ class FilterChainTest extends TestCase
     {
         $chain = new FilterChain();
         $chain->attach(new TestAsset\StripUpperCase())
-            ->attach(new TestAsset\LowerCase, 100);
+            ->attach(new TestAsset\LowerCase(), 100);
         $value         = 'AbC';
         $valueExpected = 'b';
         $this->assertEquals($valueExpected, $chain->filter($value));
@@ -109,19 +119,19 @@ class FilterChainTest extends TestCase
     {
         return [
             'callbacks' => [
-                ['callback' => __CLASS__ . '::staticUcaseFilter'],
+                ['callback' => self::class . '::staticUcaseFilter'],
                 [
                     'priority' => 10000,
                     'callback' => function ($value) {
                         return trim($value);
-                    }
+                    },
                 ],
             ],
             'filters'   => [
                 [
                     'name'     => StripTags::class,
                     'options'  => ['allowTags' => 'img', 'allowAttribs' => 'id'],
-                    'priority' => 10100
+                    'priority' => 10100,
                 ],
             ],
         ];
@@ -176,7 +186,7 @@ class FilterChainTest extends TestCase
         $serialized = serialize($chain);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf('Laminas\Filter\FilterChain', $unserialized);
+        $this->assertInstanceOf(FilterChain::class, $unserialized);
         $this->assertEquals(2, count($unserialized));
         $value         = 'AbC';
         $valueExpected = 'abc';

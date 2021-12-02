@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\StringToUpper as StringToUpperFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function function_exists;
+use function mb_internal_encoding;
 
 class StringToUpperTest extends TestCase
 {
@@ -19,8 +25,6 @@ class StringToUpperTest extends TestCase
 
     /**
      * Creates a new Laminas_Filter_StringToUpper object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -34,11 +38,11 @@ class StringToUpperTest extends TestCase
      */
     public function testBasic()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             'STRING' => 'STRING',
             'ABC1@3' => 'ABC1@3',
-            'A b C'  => 'A B C'
+            'A b C'  => 'A B C',
         ];
 
         foreach ($valuesExpected as $input => $output) {
@@ -54,11 +58,11 @@ class StringToUpperTest extends TestCase
      */
     public function testWithEncoding()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             'ü'     => 'Ü',
             'ñ'     => 'Ñ',
-            'üñ123' => 'ÜÑ123'
+            'üñ123' => 'ÜÑ123',
         ];
 
         try {
@@ -93,7 +97,7 @@ class StringToUpperTest extends TestCase
         $valuesExpected = [
             'ü'     => 'Ü',
             'ñ'     => 'Ñ',
-            'üñ123' => 'ÜÑ123'
+            'üñ123' => 'ÜÑ123',
         ];
 
         try {
@@ -111,11 +115,11 @@ class StringToUpperTest extends TestCase
      */
     public function testCaseInsensitiveEncoding()
     {
-        $filter = $this->_filter;
+        $filter         = $this->_filter;
         $valuesExpected = [
             'ü'     => 'Ü',
             'ñ'     => 'Ñ',
-            'üñ123' => 'ÜÑ123'
+            'üñ123' => 'ÜÑ123',
         ];
 
         try {
@@ -154,11 +158,13 @@ class StringToUpperTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                'lower case written',
-                'This should stay the same'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    'lower case written',
+                    'This should stay the same',
+                ],
+            ],
         ];
     }
 

@@ -1,10 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Uri\Exception\ExceptionInterface as UriException;
 use Laminas\Uri\Uri;
 use Laminas\Uri\UriFactory;
+use Traversable;
+
+use function explode;
+use function is_scalar;
+use function strpos;
 
 class UriNormalize extends AbstractFilter
 {
@@ -25,7 +32,7 @@ class UriNormalize extends AbstractFilter
     /**
      * Sets filter options
      *
-     * @param array|\Traversable|null $options
+     * @param array|Traversable|null $options
      */
     public function __construct($options = null)
     {
@@ -113,15 +120,13 @@ class UriNormalize extends AbstractFilter
      *
      * This will also adjust the host and path parts of the URI as expected in
      * the case of scheme-less network URIs
-     *
-     * @param Uri $uri
      */
     protected function enforceScheme(Uri $uri)
     {
         $path = $uri->getPath();
         if (strpos($path, '/') !== false) {
-            list($host, $path) = explode('/', $path, 2);
-            $path = '/' . $path;
+            [$host, $path] = explode('/', $path, 2);
+            $path          = '/' . $path;
         } else {
             $host = $path;
             $path = '';

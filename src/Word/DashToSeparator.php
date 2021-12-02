@@ -1,6 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\Word;
+
+use function is_array;
+use function is_scalar;
+use function str_replace;
 
 class DashToSeparator extends AbstractSeparator
 {

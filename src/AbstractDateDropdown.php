@@ -1,8 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Traversable;
+
+use function array_reduce;
+use function count;
+use function is_array;
+use function ksort;
+use function sprintf;
+use function vsprintf;
 
 abstract class AbstractDateDropdown extends AbstractFilter
 {
@@ -27,9 +36,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
      */
     protected $format = '';
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $expectedInputs;
 
     /**
@@ -83,9 +90,9 @@ abstract class AbstractDateDropdown extends AbstractFilter
      * Attempts to filter an array of date/time information to a formatted
      * string.
      *
-     * @param  mixed $value
+     * @param  mixed $value input to the filter
      * @return mixed
-     * @throws Exception\RuntimeException If filtering $value is impossible
+     * @throws Exception\RuntimeException If filtering $value is impossible.
      */
     public function filter($value)
     {
@@ -95,14 +102,16 @@ abstract class AbstractDateDropdown extends AbstractFilter
         }
 
         // Convert the date to a specific format
-        if ($this->isNullOnEmpty()
-            && array_reduce($value, __CLASS__ . '::reduce', false)
+        if (
+            $this->isNullOnEmpty()
+            && array_reduce($value, self::class . '::reduce', false)
         ) {
             return null;
         }
 
-        if ($this->isNullOnAllEmpty()
-            && array_reduce($value, __CLASS__ . '::reduce', true)
+        if (
+            $this->isNullOnAllEmpty()
+            && array_reduce($value, self::class . '::reduce', true)
         ) {
             return null;
         }
@@ -118,7 +127,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
     /**
      * Ensures there are enough inputs in the array to properly format the date.
      *
-     * @param $value
+     * @param mixed $value
      * @throws Exception\RuntimeException
      */
     protected function filterable($value)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 class DateSelect extends AbstractDateDropdown
@@ -11,8 +13,6 @@ class DateSelect extends AbstractDateDropdown
      */
     protected $format = '%3$s-%2$s-%1$s';
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $expectedInputs = 3;
 }

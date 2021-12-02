@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\UnderscoreToCamelCase as UnderscoreToCamelCaseFilter;
@@ -22,7 +24,7 @@ class UnderscoreToCamelCaseTest extends TestCase
      */
     public function testSomeFilterValues()
     {
-        $filter   = new UnderscoreToCamelCaseFilter();
+        $filter = new UnderscoreToCamelCaseFilter();
 
         $string   = 'laminas_project';
         $filtered = $filter($string);

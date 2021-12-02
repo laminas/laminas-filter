@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\SeparatorToSeparator as SeparatorToSeparatorFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class SeparatorToSeparatorTest extends TestCase
 {
@@ -19,18 +22,18 @@ class SeparatorToSeparatorTest extends TestCase
 
     public function testFilterSupportArray()
     {
-        $filter   = new SeparatorToSeparatorFilter();
+        $filter = new SeparatorToSeparatorFilter();
 
-        $input = [
+        $input    = [
             'dash separated words',
-            '=test something'
+            '=test something',
         ];
         $filtered = $filter($input);
 
         $this->assertNotEquals($input, $filtered);
         $this->assertEquals([
             'dash-separated-words',
-            '=test-something'
+            '=test-something',
         ], $filtered);
     }
 
@@ -58,7 +61,7 @@ class SeparatorToSeparatorTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()]
+            [new stdClass()],
         ];
     }
 

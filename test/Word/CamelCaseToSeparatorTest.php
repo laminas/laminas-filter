@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\CamelCaseToSeparator as CamelCaseToSeparatorFilter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class CamelCaseToSeparatorTest extends TestCase
 {
@@ -46,7 +49,7 @@ class CamelCaseToSeparatorTest extends TestCase
 
         $input = [
             'CamelCasedWords',
-            'somethingDifferent'
+            'somethingDifferent',
         ];
 
         $filtered = $filter($input);
@@ -59,7 +62,7 @@ class CamelCaseToSeparatorTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()]
+            [new stdClass()],
         ];
     }
 

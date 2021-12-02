@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter\File;
 
 use Laminas\Filter\AbstractFilter;
@@ -9,11 +11,27 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
+use function basename;
+use function file_exists;
+use function filesize;
+use function is_array;
+use function is_dir;
+use function is_string;
+use function move_uploaded_file;
+use function pathinfo;
+use function spl_object_hash;
+use function sprintf;
+use function str_replace;
+use function strlen;
+use function uniqid;
+use function unlink;
+
+use const DIRECTORY_SEPARATOR;
+use const UPLOAD_ERR_OK;
+
 class RenameUpload extends AbstractFilter
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [
         'target'               => null,
         'use_upload_name'      => false,
@@ -227,7 +245,7 @@ class RenameUpload extends AbstractFilter
     protected function moveUploadedFile($sourceFile, $targetFile)
     {
         ErrorHandler::start();
-        $result = move_uploaded_file($sourceFile, $targetFile);
+        $result           = move_uploaded_file($sourceFile, $targetFile);
         $warningException = ErrorHandler::stop();
         if (! $result || null !== $warningException) {
             throw new Exception\RuntimeException(
@@ -261,9 +279,8 @@ class RenameUpload extends AbstractFilter
     }
 
     /**
-     * @param $source
-     * @param $clientFileName
-     *
+     * @param string $source
+     * @param string|null $clientFileName
      * @return string
      */
     protected function getFinalTarget($source, $clientFileName)
@@ -315,7 +332,7 @@ class RenameUpload extends AbstractFilter
      */
     protected function applyRandomToFilename($source, $filename)
     {
-        $info = pathinfo($filename);
+        $info     = pathinfo($filename);
         $filename = $info['filename'] . str_replace('.', '_', uniqid('_', true));
 
         $sourceinfo = pathinfo($source);
@@ -374,17 +391,16 @@ class RenameUpload extends AbstractFilter
         $this->checkFileExists($targetFile);
         $this->moveUploadedFile($sourceFile, $targetFile);
 
-        $this->alreadyFiltered[$sourceFile] = $fileData;
+        $this->alreadyFiltered[$sourceFile]             = $fileData;
         $this->alreadyFiltered[$sourceFile]['tmp_name'] = $targetFile;
 
         return $this->alreadyFiltered[$sourceFile];
     }
 
     /**
-     * @param  UploadedFileInterface $uploadedFile
      * @return UploadedFileInterface
-     * @throws Exception\RuntimeException if no stream factory is composed in the filter.
-     * @throws Exception\RuntimeException if no uploaded file factory is composed in the filter.
+     * @throws Exception\RuntimeException If no stream factory is composed in the filter.
+     * @throws Exception\RuntimeException If no uploaded file factory is composed in the filter.
      */
     private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile)
     {
@@ -394,7 +410,7 @@ class RenameUpload extends AbstractFilter
             return $this->alreadyFiltered[$alreadyFilteredKey];
         }
 
-        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
+        $sourceFile     = $uploadedFile->getStream()->getMetadata('uri');
         $clientFilename = $uploadedFile->getClientFilename();
         $targetFile     = $this->getFinalTarget($sourceFile, $clientFilename);
 

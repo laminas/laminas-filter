@@ -1,28 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\StringTrim;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function utf8_encode;
+
 class StringTrimTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * @var StringTrim
-     */
-    protected $_filter;
-    // @codingStandardsIgnoreEnd
+    /** @var StringTrim */
+    protected $filter;
 
     /**
      * Creates a new Laminas\Filter\StringTrim object for each test method
-     *
-     * @return void
      */
     public function setUp(): void
     {
-        $this->_filter = new StringTrim();
+        $this->filter = new StringTrim();
     }
 
     /**
@@ -32,12 +30,12 @@ class StringTrimTest extends TestCase
      */
     public function testBasic()
     {
-        $filter = $this->_filter;
+        $filter         = $this->filter;
         $valuesExpected = [
             'string' => 'string',
             ' str '  => 'str',
-            "\ns\t"  => 's'
-            ];
+            "\ns\t"  => 's',
+        ];
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $filter($input));
         }
@@ -50,7 +48,7 @@ class StringTrimTest extends TestCase
      */
     public function testUtf8()
     {
-        $this->assertEquals('a', $this->_filter->filter(utf8_encode("\xa0a\xa0")));
+        $this->assertEquals('a', $this->filter->filter(utf8_encode("\xa0a\xa0")));
     }
 
     /**
@@ -60,7 +58,7 @@ class StringTrimTest extends TestCase
      */
     public function testGetCharList()
     {
-        $this->assertEquals(null, $this->_filter->getCharList());
+        $this->assertEquals(null, $this->filter->getCharList());
     }
 
     /**
@@ -70,8 +68,8 @@ class StringTrimTest extends TestCase
      */
     public function testSetCharList()
     {
-        $this->_filter->setCharList('&');
-        $this->assertEquals('&', $this->_filter->getCharList());
+        $this->filter->setCharList('&');
+        $this->assertEquals('&', $this->filter->getCharList());
     }
 
     /**
@@ -81,7 +79,7 @@ class StringTrimTest extends TestCase
      */
     public function testCharList()
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $filter->setCharList('&');
         $this->assertEquals('a&b', $filter('&&a&b&&'));
     }
@@ -91,7 +89,7 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas7183()
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $this->assertEquals('Зенд', $filter('Зенд'));
     }
 
@@ -100,17 +98,16 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas170()
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $this->assertEquals('Расчет', $filter('Расчет'));
     }
-
 
     /**
      * @group Laminas-7902
      */
     public function testLaminas7902()
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $this->assertEquals('/', $filter('/'));
     }
 
@@ -119,13 +116,13 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas10891()
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $this->assertEquals('Зенд', $filter('   Зенд   '));
         $this->assertEquals('Зенд', $filter('Зенд   '));
         $this->assertEquals('Зенд', $filter('   Зенд'));
 
-        $trim_charlist = " \t\n\r\x0B・。";
-        $filter = new StringTrim($trim_charlist);
+        $trimCharlist = " \t\n\r\x0B・。";
+        $filter       = new StringTrim($trimCharlist);
         $this->assertEquals('Зенд', $filter->filter('。  Зенд  。'));
     }
 
@@ -147,7 +144,7 @@ class StringTrimTest extends TestCase
      */
     public function testShouldNotFilterNonStringValues($value)
     {
-        $filtered = $this->_filter->filter($value);
+        $filtered = $this->filter->filter($value);
         $this->assertSame($value, $filtered);
     }
 
@@ -158,7 +155,7 @@ class StringTrimTest extends TestCase
      */
     public function testEmptyCharList()
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $filter->setCharList('0');
         $this->assertEquals('a0b', $filter('00a0b00'));
 

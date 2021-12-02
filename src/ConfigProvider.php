@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 class ConfigProvider
@@ -24,7 +26,7 @@ class ConfigProvider
     public function getDependencyConfig()
     {
         return [
-            'aliases' => [
+            'aliases'   => [
                 'FilterManager' => FilterPluginManager::class,
 
                 // Legacy Zend Framework aliases

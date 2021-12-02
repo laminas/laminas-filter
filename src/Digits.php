@@ -1,8 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\StringUtils;
+
+use function extension_loaded;
+use function is_float;
+use function is_int;
+use function is_string;
+use function preg_replace;
 
 class Digits extends AbstractFilter
 {

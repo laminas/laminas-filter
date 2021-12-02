@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Encrypt as EncryptFilter;
+use Laminas\Filter\Encrypt\EncryptionAlgorithmInterface;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function extension_loaded;
 
 class EncryptTest extends TestCase
 {
@@ -22,7 +28,7 @@ class EncryptTest extends TestCase
      */
     public function testBasicBlockCipher()
     {
-        $filter = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
+        $filter         = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $valuesExpected = [
             'STRING' => 'STRING',
             'ABC1@3' => 'ABC1@3',
@@ -65,18 +71,19 @@ class EncryptTest extends TestCase
             $this->markTestSkipped('Openssl extension not installed');
         }
 
-        $filter = new EncryptFilter(['adapter' => 'Openssl']);
+        $filter         = new EncryptFilter(['adapter' => 'Openssl']);
         $valuesExpected = [
             'STRING' => 'STRING',
             'ABC1@3' => 'ABC1@3',
-            'A b C'  => 'A B C'
+            'A b C'  => 'A B C',
         ];
 
         $filter->setPublicKey(__DIR__ . '/_files/publickey.pem');
         $key = $filter->getPublicKey();
         $this->assertEquals(
-            [__DIR__ . '/_files/publickey.pem' =>
-                  '-----BEGIN CERTIFICATE-----
+            [
+                __DIR__ . '/_files/publickey.pem'
+                  => '-----BEGIN CERTIFICATE-----
 MIIC3jCCAkegAwIBAgIBADANBgkqhkiG9w0BAQQFADCBtDELMAkGA1UEBhMCTkwx
 FjAUBgNVBAgTDU5vb3JkLUhvbGxhbmQxEDAOBgNVBAcTB1phYW5kYW0xFzAVBgNV
 BAoTDk1vYmlsZWZpc2guY29tMR8wHQYDVQQLExZDZXJ0aWZpY2F0aW9uIFNlcnZp
@@ -94,7 +101,8 @@ FDD4V7XpcNU63QIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAFQ22OU/PAN7rRDr23NS
 5jYy6v3b+zwEvY82EUieMldovdnpsS1EScjjvPfQ1lSgcTHT2QX5MjNv13xLnOgh
 PIDs9E7uuizAKDhRRRvho8BS
 -----END CERTIFICATE-----
-'],
+',
+            ],
             $key
         );
         foreach ($valuesExpected as $input => $output) {
@@ -114,15 +122,15 @@ PIDs9E7uuizAKDhRRRvho8BS
         $filter = new EncryptFilter();
         $filter->setAdapter('Openssl');
         $this->assertEquals('Openssl', $filter->getAdapter());
-        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
         $this->assertEquals('BlockCipher', $filter->getAdapter());
-        $this->assertInstanceOf('Laminas\Filter\Encrypt\EncryptionAlgorithmInterface', $filter->getAdapterInstance());
+        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
-        $filter->setAdapter('\stdClass');
+        $filter->setAdapter(stdClass::class);
     }
 
     /**
@@ -140,11 +148,13 @@ PIDs9E7uuizAKDhRRRvho8BS
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                'encrypt me',
-                'encrypt me too, please'
-            ]]
+            [new stdClass()],
+            [
+                [
+                    'encrypt me',
+                    'encrypt me too, please',
+                ],
+            ],
         ];
     }
 

@@ -1,10 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\ExtensionNotLoadedException;
 use Laminas\Filter\File\LowerCase as FileLowerCase;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function copy;
+use function dirname;
+use function file_exists;
+use function file_get_contents;
+use function sprintf;
+use function sys_get_temp_dir;
+use function uniqid;
+use function unlink;
 
 class LowerCaseTest extends TestCase
 {
@@ -19,21 +32,17 @@ class LowerCaseTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function setUp(): void
     {
-        $source = dirname(__DIR__) . '/_files/testfile2.txt';
-        $this->testDir = sys_get_temp_dir();
+        $source         = dirname(__DIR__) . '/_files/testfile2.txt';
+        $this->testDir  = sys_get_temp_dir();
         $this->testFile = sprintf('%s/%s.txt', $this->testDir, uniqid('laminasilter'));
         copy($source, $this->testFile);
     }
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function tearDown(): void
     {
@@ -85,7 +94,7 @@ class LowerCaseTest extends TestCase
             $filter = new FileLowerCase('ISO-8859-1');
             $filter($this->testFile);
             $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
-        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (ExtensionNotLoadedException $e) {
             $this->assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
@@ -101,7 +110,7 @@ class LowerCaseTest extends TestCase
             $filter->setEncoding('ISO-8859-1');
             $filter($this->testFile);
             $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
-        } catch (\Laminas\Filter\Exception\ExtensionNotLoadedException $e) {
+        } catch (ExtensionNotLoadedException $e) {
             $this->assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
@@ -110,11 +119,13 @@ class LowerCaseTest extends TestCase
     {
         return [
             [null],
-            [new \stdClass()],
-            [[
-                sprintf('%s/%s.txt', $this->testDir, uniqid()),
-                sprintf('%s/%s.txt', $this->testDir, uniqid()),
-            ]]
+            [new stdClass()],
+            [
+                [
+                    sprintf('%s/%s.txt', $this->testDir, uniqid()),
+                    sprintf('%s/%s.txt', $this->testDir, uniqid()),
+                ],
+            ],
         ];
     }
 

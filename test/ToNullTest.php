@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\ToNull as ToNullFilter;
 use PHPUnit\Framework\TestCase;
+
+use function gettype;
+use function sprintf;
+use function var_export;
 
 class ToNullTest extends TestCase
 {
@@ -44,8 +50,8 @@ class ToNullTest extends TestCase
     {
         $filter = new ToNullFilter($type);
         foreach ($testData as $data) {
-            list($value, $expected) = $data;
-            $message = sprintf(
+            [$value, $expected] = $data;
+            $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s',
                 var_export($value, true),
                 gettype($value),
@@ -66,8 +72,8 @@ class ToNullTest extends TestCase
         foreach ($typeData as $type) {
             $filter = new ToNullFilter(['type' => $type]);
             foreach ($testData as $data) {
-                list($value, $expected) = $data;
-                $message = sprintf(
+                [$value, $expected] = $data;
+                $message            = sprintf(
                     '%s (%s) is not filtered as %s; type = %s',
                     var_export($value, true),
                     gettype($value),
@@ -98,7 +104,6 @@ class ToNullTest extends TestCase
      *
      * @param mixed $type Type to duplicate initialization
      * @param mixed $expected Expected resulting type
-     *
      * @dataProvider duplicateTypeProvider
      */
     public function testDuplicateInitializationResultsInCorrectType($type, $expected)
@@ -110,20 +115,20 @@ class ToNullTest extends TestCase
     public static function duplicateTypeProvider()
     {
         return [
-            [ToNullFilter::TYPE_BOOLEAN, ToNullFilter::TYPE_BOOLEAN,],
-            [ToNullFilter::TYPE_INTEGER, ToNullFilter::TYPE_INTEGER,],
-            [ToNullFilter::TYPE_EMPTY_ARRAY, ToNullFilter::TYPE_EMPTY_ARRAY,],
-            [ToNullFilter::TYPE_STRING, ToNullFilter::TYPE_STRING,],
-            [ToNullFilter::TYPE_ZERO_STRING, ToNullFilter::TYPE_ZERO_STRING,],
-            [ToNullFilter::TYPE_FLOAT, ToNullFilter::TYPE_FLOAT,],
-            [ToNullFilter::TYPE_ALL, ToNullFilter::TYPE_ALL,],
-            ['boolean', ToNullFilter::TYPE_BOOLEAN,],
-            ['integer', ToNullFilter::TYPE_INTEGER,],
-            ['array', ToNullFilter::TYPE_EMPTY_ARRAY,],
-            ['string', ToNullFilter::TYPE_STRING,],
-            ['zero', ToNullFilter::TYPE_ZERO_STRING,],
-            ['float', ToNullFilter::TYPE_FLOAT,],
-            ['all', ToNullFilter::TYPE_ALL,],
+            [ToNullFilter::TYPE_BOOLEAN, ToNullFilter::TYPE_BOOLEAN],
+            [ToNullFilter::TYPE_INTEGER, ToNullFilter::TYPE_INTEGER],
+            [ToNullFilter::TYPE_EMPTY_ARRAY, ToNullFilter::TYPE_EMPTY_ARRAY],
+            [ToNullFilter::TYPE_STRING, ToNullFilter::TYPE_STRING],
+            [ToNullFilter::TYPE_ZERO_STRING, ToNullFilter::TYPE_ZERO_STRING],
+            [ToNullFilter::TYPE_FLOAT, ToNullFilter::TYPE_FLOAT],
+            [ToNullFilter::TYPE_ALL, ToNullFilter::TYPE_ALL],
+            ['boolean', ToNullFilter::TYPE_BOOLEAN],
+            ['integer', ToNullFilter::TYPE_INTEGER],
+            ['array', ToNullFilter::TYPE_EMPTY_ARRAY],
+            ['string', ToNullFilter::TYPE_STRING],
+            ['zero', ToNullFilter::TYPE_ZERO_STRING],
+            ['float', ToNullFilter::TYPE_FLOAT],
+            ['all', ToNullFilter::TYPE_ALL],
         ];
     }
 
@@ -165,7 +170,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], []],
                     [[0], [0]],
-                ]
+                ],
             ],
             [
                 ToNullFilter::TYPE_INTEGER,
@@ -183,7 +188,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], []],
                     [[0], [0]],
-                ]
+                ],
             ],
             [
                 ToNullFilter::TYPE_EMPTY_ARRAY,
@@ -201,7 +206,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], null],
                     [[0], [0]],
-                ]
+                ],
             ],
             [
                 ToNullFilter::TYPE_STRING,
@@ -219,7 +224,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], []],
                     [[0], [0]],
-                ]
+                ],
             ],
             [
                 ToNullFilter::TYPE_ZERO_STRING,
@@ -237,7 +242,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], []],
                     [[0], [0]],
-                ]
+                ],
             ],
             [
                 ToNullFilter::TYPE_FLOAT,
@@ -255,7 +260,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], []],
                     [[0], [0]],
-                ]
+                ],
             ],
             [
                 ToNullFilter::TYPE_ALL,
@@ -273,7 +278,7 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], null],
                     [[0], [0]],
-                ]
+                ],
             ],
         ];
     }
@@ -310,8 +315,8 @@ class ToNullTest extends TestCase
                     ['1', '1'],
                     [[], []],
                     [[0], [0]],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }
