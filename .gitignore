@@ -7,3 +7,6 @@
 /laminas-mkdoc-theme/
 /phpunit.xml
 /vendor/
+.buildpath
+.project
+.settings/
