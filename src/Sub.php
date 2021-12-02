@@ -17,8 +17,8 @@ class Sub extends AbstractArithmeticOperation
             throw new InvalidArgumentException(sprintf('%s expects argument value; received none', __METHOD__));
         }
 
-        $value = (float) $value;
-        $operand = (float) $this->options['operand'];
+        $value = $value;
+        $operand = $this->options['operand'];
         return ($value - $operand);
     }
 }
