@@ -7,6 +7,7 @@ namespace Laminas\Filter;
 use Countable;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
+use ReturnTypeWillChange;
 use Traversable;
 
 use function call_user_func;
@@ -99,6 +100,7 @@ class FilterChain extends AbstractFilter implements Countable
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->filters);
