@@ -281,6 +281,10 @@
                     </li>
                 
                     <li class="toc__entry">
+                        <a href="#blacklist" class="toc__link nav-link">Blacklist</a>
+                    </li>
+                
+                    <li class="toc__entry">
                         <a href="#boolean" class="toc__link nav-link">Boolean</a>
                     </li>
                 
@@ -372,6 +376,10 @@
                         <a href="#urinormalize" class="toc__link nav-link">UriNormalize</a>
                     </li>
                 
+                    <li class="toc__entry">
+                        <a href="#whitelist" class="toc__link nav-link">Whitelist</a>
+                    </li>
+                
             </ul>
         </div>
     
@@ -416,11 +424,16 @@
     <h1 id="standard-filters">Standard Filters</h1>
 <p>laminas-filter comes with a standard set of filters, available for immediate use.</p>
 <h2 id="allowlist">AllowList</h2>
+<div class="admonition tip">
+<p class="admonition-title">New Feature</p>
+<p>
+Available since version 2.12.0</p>
+</div>
 <p>Previously known as <code>Whitelist</code>.
 This filter will return <code>null</code> if the value being filtered is not present the
 filter's allowed list of values. If the value is present, it will return that
 value.</p>
-<p>For the opposite functionality see the <a href="#denyList">DenyList</a> filter.</p>
+<p>For the opposite functionality see the <a href="#denylist">DenyList</a> filter.</p>
 <h3 id="supported-options">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\AllowList</code>:</p>
 <ul>
@@ -526,6 +539,13 @@ print $filter-&gt;filter('/vol/tmp/filename');</code></pre>
 
 print $filter-&gt;filter('/vol/tmp/filename.txt');</code></pre>
 <p>This will return '<code>filename.txt</code>'.</p>
+<h2 id="blacklist">Blacklist</h2>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+This filter is deprecated since version 2.12.0.
+Use the <a href="#denylist">DenyList filter</a> instead.</p>
+</div>
 <h2 id="boolean">Boolean</h2>
 <p>This filter changes a given input to be a <code>BOOLEAN</code> value. This is often useful when working with
 databases or when processing form values.</p>
@@ -1014,10 +1034,15 @@ always be written to a file.</p>
 methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>. You can also use the <code>setOptions()</code> method
 which accepts an array of all options.</p>
 <h2 id="denylist">DenyList</h2>
+<div class="admonition tip">
+<p class="admonition-title">New Feature</p>
+<p>
+Available since version 2.12.0</p>
+</div>
 <p>Previously known as <code>Blacklist</code>.
 This filter will return <code>null</code> if the value being filtered is present in the filter's list of
 values. If the value is not present, it will return that value.</p>
-<p>For the opposite functionality, see the <a href="#allowList"><code>AllowList</code> filter</a>.</p>
+<p>For the opposite functionality, see the <a href="#allowlist"><code>AllowList</code> filter</a>.</p>
 <h3 id="supported-options_7">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\DenyList</code>:</p>
 <ul>
@@ -1876,6 +1901,13 @@ as the result.</p>
 
 echo $filter-&gt;filter('www.example.com');</code></pre>
 <p>The above results in the string <code>https://www.example.com</code>.</p>
+<h2 id="whitelist">Whitelist</h2>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+This filter is deprecated since version 2.12.0.
+Use the <a href="#allowlist">AllowList filter</a> instead.</p>
+</div>
 
 
 
