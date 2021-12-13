@@ -36,10 +36,8 @@ class UpperCaseWordsTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter         = $this->_filter;
         $valuesExpected = [
@@ -49,17 +47,15 @@ class UpperCaseWordsTest extends TestCase
         ];
 
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
+            $this->assertSame($output, $filter($input));
         }
     }
 
     /**
      * Ensures that the filter follows expected behavior with
      * specified encoding
-     *
-     * @return void
      */
-    public function testWithEncoding()
+    public function testWithEncoding(): void
     {
         $filter         = $this->_filter;
         $valuesExpected = [
@@ -71,17 +67,14 @@ class UpperCaseWordsTest extends TestCase
         try {
             $filter->setEncoding('UTF-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertEquals($output, $filter($input));
+                $this->assertSame($output, $filter($input));
             }
         } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testFalseEncoding()
+    public function testFalseEncoding(): void
     {
         if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
@@ -95,7 +88,7 @@ class UpperCaseWordsTest extends TestCase
     /**
      * @Laminas-8989
      */
-    public function testInitiationWithEncoding()
+    public function testInitiationWithEncoding(): void
     {
         $valuesExpected = [
             '√º'      => '√º',
@@ -108,7 +101,7 @@ class UpperCaseWordsTest extends TestCase
                 'encoding' => 'UTF-8',
             ]);
             foreach ($valuesExpected as $input => $output) {
-                $this->assertEquals($output, $filter($input));
+                $this->assertSame($output, $filter($input));
             }
         } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
@@ -118,7 +111,7 @@ class UpperCaseWordsTest extends TestCase
     /**
      * @Laminas-9058
      */
-    public function testCaseInsensitiveEncoding()
+    public function testCaseInsensitiveEncoding(): void
     {
         $filter         = $this->_filter;
         $valuesExpected = [
@@ -130,17 +123,17 @@ class UpperCaseWordsTest extends TestCase
         try {
             $filter->setEncoding('UTF-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertEquals($output, $filter($input));
+                $this->assertSame($output, $filter($input));
             }
 
             $this->_filter->setEncoding('utf-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertEquals($output, $filter($input));
+                $this->assertSame($output, $filter($input));
             }
 
             $this->_filter->setEncoding('UtF-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertEquals($output, $filter($input));
+                $this->assertSame($output, $filter($input));
             }
         } catch (Exception\ExtensionNotLoadedException $e) {
             $this->assertContains('mbstring is required', $e->getMessage());
@@ -150,13 +143,13 @@ class UpperCaseWordsTest extends TestCase
     /**
      * @group Laminas-9854
      */
-    public function testDetectMbInternalEncoding()
+    public function testDetectMbInternalEncoding(): void
     {
         if (! function_exists('mb_internal_encoding')) {
             $this->markTestSkipped("Function 'mb_internal_encoding' not available");
         }
 
-        $this->assertEquals(mb_internal_encoding(), $this->_filter->getEncoding());
+        $this->assertSame(mb_internal_encoding(), $this->_filter->getEncoding());
     }
 
     public function returnUnfilteredDataProvider()
@@ -179,7 +172,7 @@ class UpperCaseWordsTest extends TestCase
      * @dataProvider returnUnfilteredDataProvider
      * @param mixed $input
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $this->assertSame($input, $this->_filter->filter($input));
     }

@@ -503,6 +503,7 @@ class Openssl implements EncryptionAlgorithmInterface
     {
         if (PHP_VERSION_ID < 80000) {
             foreach ($keys as $key) {
+                // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
                 openssl_free_key($key);
             }
         }

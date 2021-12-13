@@ -45,79 +45,78 @@ class DateTimeFormatterTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 
-    public function testFormatterFormatsZero()
+    public function testFormatterFormatsZero(): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(0);
-        $this->assertEquals('1970-01-01T00:00:00+0000', $result);
+        $this->assertSame('1970-01-01T00:00:00+0000', $result);
     }
 
-    public function testDateTimeFormatted()
+    public function testDateTimeFormatted(): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter('2012-01-01');
-        $this->assertEquals('2012-01-01T00:00:00+0000', $result);
+        $this->assertSame('2012-01-01T00:00:00+0000', $result);
     }
 
-    public function testDateTimeFormattedWithAlternateTimezones()
+    public function testDateTimeFormattedWithAlternateTimezones(): void
     {
         $filter = new DateTimeFormatter();
 
         date_default_timezone_set('Europe/Paris');
 
         $resultParis = $filter->filter('2012-01-01');
-        $this->assertEquals('2012-01-01T00:00:00+0100', $resultParis);
+        $this->assertSame('2012-01-01T00:00:00+0100', $resultParis);
 
         date_default_timezone_set('America/New_York');
 
         $resultNewYork = $filter->filter('2012-01-01');
-        $this->assertEquals('2012-01-01T00:00:00-0500', $resultNewYork);
+        $this->assertSame('2012-01-01T00:00:00-0500', $resultNewYork);
     }
 
-    public function testSetFormat()
+    public function testSetFormat(): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
         $filter->setFormat(DateTime::RFC1036);
         $result = $filter->filter('2012-01-01');
-        $this->assertEquals('Sun, 01 Jan 12 00:00:00 +0000', $result);
+        $this->assertSame('Sun, 01 Jan 12 00:00:00 +0000', $result);
     }
 
-    public function testFormatDateTimeFromTimestamp()
+    public function testFormatDateTimeFromTimestamp(): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(1359739801);
-        $this->assertEquals('2013-02-01T17:30:01+0000', $result);
+        $this->assertSame('2013-02-01T17:30:01+0000', $result);
     }
 
-    public function testAcceptDateTimeValue()
+    public function testAcceptDateTimeValue(): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(new DateTime('2012-01-01'));
-        $this->assertEquals('2012-01-01T00:00:00+0000', $result);
+        $this->assertSame('2012-01-01T00:00:00+0000', $result);
     }
 
-    public function testInvalidArgumentExceptionThrownOnInvalidInput()
+    public function testInvalidArgumentExceptionThrownOnInvalidInput(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
 

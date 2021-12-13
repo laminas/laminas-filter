@@ -16,7 +16,7 @@ use const E_DEPRECATED;
 
 class TarLoadArchiveTarTest extends TestCase
 {
-    public function testArchiveTarNotLoaded()
+    public function testArchiveTarNotLoaded(): void
     {
         set_error_handler(function ($errno, $errstr) {
             // PEAR class uses deprecated constructor, which emits a deprecation error

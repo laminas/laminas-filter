@@ -37,10 +37,8 @@ class GzTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage(): void
     {
         $filter = new GzCompression();
 
@@ -48,57 +46,51 @@ class GzTest extends TestCase
         $this->assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * Setting Options
-     *
-     * @return void
      */
-    public function testGzGetSetOptions()
+    public function testGzGetSetOptions(): void
     {
         $filter = new GzCompression();
-        $this->assertEquals(['mode' => 'compress', 'level' => 9, 'archive' => null], $filter->getOptions());
+        $this->assertSame(['level' => 9, 'mode' => 'compress', 'archive' => null], $filter->getOptions());
 
-        $this->assertEquals(9, $filter->getOptions('level'));
+        $this->assertSame(9, $filter->getOptions('level'));
 
         $this->assertNull($filter->getOptions('nooption'));
         $filter->setOptions(['nooption' => 'foo']);
         $this->assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['level' => 6]);
-        $this->assertEquals(6, $filter->getOptions('level'));
+        $this->assertSame(6, $filter->getOptions('level'));
 
         $filter->setOptions(['mode' => 'deflate']);
-        $this->assertEquals('deflate', $filter->getOptions('mode'));
+        $this->assertSame('deflate', $filter->getOptions('mode'));
 
         $filter->setOptions(['archive' => 'test.txt']);
-        $this->assertEquals('test.txt', $filter->getOptions('archive'));
+        $this->assertSame('test.txt', $filter->getOptions('archive'));
     }
 
     /**
      * Setting Options through constructor
-     *
-     * @return void
      */
-    public function testGzGetSetOptionsInConstructor()
+    public function testGzGetSetOptionsInConstructor(): void
     {
         $filter2 = new GzCompression(['level' => 8]);
-        $this->assertEquals(['mode' => 'compress', 'level' => 8, 'archive' => null], $filter2->getOptions());
+        $this->assertSame(['level' => 8, 'mode' => 'compress', 'archive' => null], $filter2->getOptions());
     }
 
     /**
      * Setting Level
-     *
-     * @return void
      */
-    public function testGzGetSetLevel()
+    public function testGzGetSetLevel(): void
     {
         $filter = new GzCompression();
-        $this->assertEquals(9, $filter->getLevel());
+        $this->assertSame(9, $filter->getLevel());
         $filter->setLevel(6);
-        $this->assertEquals(6, $filter->getOptions('level'));
+        $this->assertSame(6, $filter->getOptions('level'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('must be between');
@@ -107,15 +99,13 @@ class GzTest extends TestCase
 
     /**
      * Setting Mode
-     *
-     * @return void
      */
-    public function testGzGetSetMode()
+    public function testGzGetSetMode(): void
     {
         $filter = new GzCompression();
-        $this->assertEquals('compress', $filter->getMode());
+        $this->assertSame('compress', $filter->getMode());
         $filter->setMode('deflate');
-        $this->assertEquals('deflate', $filter->getOptions('mode'));
+        $this->assertSame('deflate', $filter->getOptions('mode'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('mode not supported');
@@ -124,24 +114,20 @@ class GzTest extends TestCase
 
     /**
      * Setting Archive
-     *
-     * @return void
      */
-    public function testGzGetSetArchive()
+    public function testGzGetSetArchive(): void
     {
         $filter = new GzCompression();
-        $this->assertEquals(null, $filter->getArchive());
+        $this->assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertEquals('Testfile.txt', $filter->getArchive());
-        $this->assertEquals('Testfile.txt', $filter->getOptions('archive'));
+        $this->assertSame('Testfile.txt', $filter->getArchive());
+        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
      * Setting Archive
-     *
-     * @return void
      */
-    public function testGzCompressToFile()
+    public function testGzCompressToFile(): void
     {
         $filter  = new GzCompression();
         $archive = $this->target;
@@ -152,20 +138,18 @@ class GzTest extends TestCase
 
         $filter2  = new GzCompression();
         $content2 = $filter2->decompress($archive);
-        $this->assertEquals('compress me', $content2);
+        $this->assertSame('compress me', $content2);
 
         $filter3 = new GzCompression();
         $filter3->setArchive($archive);
         $content3 = $filter3->decompress(null);
-        $this->assertEquals('compress me', $content3);
+        $this->assertSame('compress me', $content3);
     }
 
     /**
      * Test deflate
-     *
-     * @return void
      */
-    public function testGzDeflate()
+    public function testGzDeflate(): void
     {
         $filter = new GzCompression(['mode' => 'deflate']);
 
@@ -173,21 +157,19 @@ class GzTest extends TestCase
         $this->assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * testing toString
-     *
-     * @return void
      */
-    public function testGzToString()
+    public function testGzToString(): void
     {
         $filter = new GzCompression();
-        $this->assertEquals('Gz', $filter->toString());
+        $this->assertSame('Gz', $filter->toString());
     }
 
-    public function testGzDecompressNullThrowsRuntimeException()
+    public function testGzDecompressNullThrowsRuntimeException(): void
     {
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('Error during decompression');

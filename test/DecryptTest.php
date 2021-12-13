@@ -23,10 +23,8 @@ class DecryptTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasicMcrypt()
+    public function testBasicMcrypt(): void
     {
         $filter         = new DecryptFilter(['adapter' => 'BlockCipher']);
         $valuesExpected = [
@@ -45,22 +43,20 @@ class DecryptTest extends TestCase
     /**
      * Ensures that the encryption works fine
      */
-    public function testDecryptBlockCipher()
+    public function testDecryptBlockCipher(): void
     {
         $decrypt = new DecryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $decrypt->setVector('1234567890123456890');
         // @codingStandardsIgnoreStart
         $decrypted = $decrypt->filter('ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
         // @codingStandardsIgnoreEnd
-        $this->assertEquals($decrypted, 'test');
+        $this->assertSame($decrypted, 'test');
     }
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasicOpenssl()
+    public function testBasicOpenssl(): void
     {
         if (! extension_loaded('openssl')) {
             $this->markTestSkipped('Openssl extension not installed');
@@ -76,7 +72,7 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
         $filter->setPrivateKey(__DIR__ . '/_files/privatekey.pem');
 
         $key = $filter->getPrivateKey();
-        $this->assertEquals(
+        $this->assertSame(
             [
                 __DIR__ . '/_files/privatekey.pem'
                   => '-----BEGIN RSA PRIVATE KEY-----
@@ -100,10 +96,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testSettingAdapterManually()
+    public function testSettingAdapterManually(): void
     {
         if (! extension_loaded('openssl')) {
             $this->markTestSkipped('Openssl extension not installed');
@@ -111,11 +104,11 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 
         $filter = new DecryptFilter();
         $filter->setAdapter('Openssl');
-        $this->assertEquals('Openssl', $filter->getAdapter());
+        $this->assertSame('Openssl', $filter->getAdapter());
         $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
-        $this->assertEquals('BlockCipher', $filter->getAdapter());
+        $this->assertSame('BlockCipher', $filter->getAdapter());
         $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -123,10 +116,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter->setAdapter(stdClass::class);
     }
 
-    /**
-     * @return void
-     */
-    public function testCallingUnknownMethod()
+    public function testCallingUnknownMethod(): void
     {
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown method');
@@ -150,14 +140,13 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $decrypt = new DecryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $decrypt->setVector('1234567890123456890');
 
         $decrypted = $decrypt->filter($input);
-        $this->assertEquals($input, $decrypted);
+        $this->assertSame($input, $decrypted);
     }
 }

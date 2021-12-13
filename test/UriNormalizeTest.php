@@ -13,14 +13,14 @@ class UriNormalizeTest extends TestCase
     /**
      * @dataProvider abnormalUriProvider
      */
-    public function testUrisAreNormalized($url, $expected)
+    public function testUrisAreNormalized($url, $expected): void
     {
         $filter = new UriNormalize();
         $result = $filter->filter($url);
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
-    public function testDefaultSchemeAffectsNormalization()
+    public function testDefaultSchemeAffectsNormalization(): void
     {
         $this->markTestIncomplete();
     }
@@ -28,11 +28,11 @@ class UriNormalizeTest extends TestCase
     /**
      * @dataProvider enforcedSchemeTestcaseProvider
      */
-    public function testEnforcedScheme($scheme, $input, $expected)
+    public function testEnforcedScheme($scheme, $input, $expected): void
     {
         $filter = new UriNormalize(['enforcedScheme' => $scheme]);
         $result = $filter->filter($input);
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public static function abnormalUriProvider()
@@ -74,12 +74,11 @@ class UriNormalizeTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new UriNormalize();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

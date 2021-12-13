@@ -12,10 +12,8 @@ class DirTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter         = new DirFilter();
         $valuesExpected = [
@@ -24,7 +22,7 @@ class DirTest extends TestCase
             '/path/to/filename.ext' => '/path/to',
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
+            $this->assertSame($output, $filter($input));
         }
     }
 
@@ -44,12 +42,11 @@ class DirTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new DirFilter();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

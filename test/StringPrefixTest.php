@@ -23,10 +23,8 @@ class StringPrefixTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter = $this->filter;
 
@@ -36,7 +34,7 @@ class StringPrefixTest extends TestCase
         $this->assertStringStartsWith($prefix, $filter('sample'));
     }
 
-    public function testWithoutPrefix()
+    public function testWithoutPrefix(): void
     {
         $filter = $this->filter;
 
@@ -69,7 +67,7 @@ class StringPrefixTest extends TestCase
      * @dataProvider invalidPrefixesDataProvider
      * @param mixed $prefix
      */
-    public function testInvalidPrefixes($prefix)
+    public function testInvalidPrefixes($prefix): void
     {
         $filter = $this->filter;
 
@@ -80,7 +78,7 @@ class StringPrefixTest extends TestCase
         $filter('sample');
     }
 
-    public function testNonScalarInput()
+    public function testNonScalarInput(): void
     {
         $filter = $this->filter;
 

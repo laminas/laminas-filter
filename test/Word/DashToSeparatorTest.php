@@ -10,30 +10,27 @@ use stdClass;
 
 class DashToSeparatorTest extends TestCase
 {
-    public function testFilterSeparatesDashedWordsWithDefaultSpaces()
+    public function testFilterSeparatesDashedWordsWithDefaultSpaces(): void
     {
         $string   = 'dash-separated-words';
         $filter   = new DashToSeparatorFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('dash separated words', $filtered);
+        $this->assertSame('dash separated words', $filtered);
     }
 
-    public function testFilterSeparatesDashedWordsWithSomeString()
+    public function testFilterSeparatesDashedWordsWithSomeString(): void
     {
         $string   = 'dash-separated-words';
         $filter   = new DashToSeparatorFilter(':-:');
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('dash:-:separated:-:words', $filtered);
+        $this->assertSame('dash:-:separated:-:words', $filtered);
     }
 
-    /**
-     * @return void
-     */
-    public function testFilterSupportArray()
+    public function testFilterSupportArray(): void
     {
         $filter = new DashToSeparatorFilter();
 
@@ -45,7 +42,7 @@ class DashToSeparatorTest extends TestCase
         $filtered = $filter($input);
 
         $this->assertNotEquals($input, $filtered);
-        $this->assertEquals(['dash separated words', 'something different'], $filtered);
+        $this->assertSame(['dash separated words', 'something different'], $filtered);
     }
 
     public function returnUnfilteredDataProvider()
@@ -58,12 +55,11 @@ class DashToSeparatorTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new DashToSeparatorFilter();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

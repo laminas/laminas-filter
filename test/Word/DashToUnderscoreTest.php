@@ -9,13 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 class DashToUnderscoreTest extends TestCase
 {
-    public function testFilterSeparatesCamelCasedWordsWithDashes()
+    public function testFilterSeparatesCamelCasedWordsWithDashes(): void
     {
         $string   = 'dash-separated-words';
         $filter   = new DashToUnderscoreFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('dash_separated_words', $filtered);
+        $this->assertSame('dash_separated_words', $filtered);
     }
 }

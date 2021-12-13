@@ -20,7 +20,7 @@ class IntTest extends TestCase
         }
     }
 
-    public function testRaisesNoticeOnInstantiation()
+    public function testRaisesNoticeOnInstantiation(): void
     {
         $this->expectException('PHPUnit_Framework_Error_Deprecated');
         new IntFilter();

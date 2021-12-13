@@ -14,20 +14,20 @@ use function var_export;
 
 class ToNullTest extends TestCase
 {
-    public function testConstructorOptions()
+    public function testConstructorOptions(): void
     {
         $filter = new ToNullFilter([
             'type' => ToNullFilter::TYPE_INTEGER,
         ]);
 
-        $this->assertEquals(ToNullFilter::TYPE_INTEGER, $filter->getType());
+        $this->assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
     }
 
-    public function testConstructorParams()
+    public function testConstructorParams(): void
     {
         $filter = new ToNullFilter(ToNullFilter::TYPE_INTEGER);
 
-        $this->assertEquals(ToNullFilter::TYPE_INTEGER, $filter->getType());
+        $this->assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
     }
 
     /**
@@ -35,7 +35,7 @@ class ToNullTest extends TestCase
      * @param bool  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected)
+    public function testDefault($value, $expected): void
     {
         $filter = new ToNullFilter();
         $this->assertSame($expected, $filter->filter($value));
@@ -46,7 +46,7 @@ class ToNullTest extends TestCase
      * @param array $testData
      * @dataProvider typeTestProvider
      */
-    public function testTypes($type, $testData)
+    public function testTypes($type, $testData): void
     {
         $filter = new ToNullFilter($type);
         foreach ($testData as $data) {
@@ -67,7 +67,7 @@ class ToNullTest extends TestCase
      * @param array $testData
      * @dataProvider combinedTypeTestProvider
      */
-    public function testCombinedTypes($typeData, $testData)
+    public function testCombinedTypes($typeData, $testData): void
     {
         foreach ($typeData as $type) {
             $filter = new ToNullFilter(['type' => $type]);
@@ -85,7 +85,7 @@ class ToNullTest extends TestCase
         }
     }
 
-    public function testSettingFalseType()
+    public function testSettingFalseType(): void
     {
         $filter = new ToNullFilter();
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -93,10 +93,10 @@ class ToNullTest extends TestCase
         $filter->setType(true);
     }
 
-    public function testGettingDefaultType()
+    public function testGettingDefaultType(): void
     {
         $filter = new ToNullFilter();
-        $this->assertEquals(63, $filter->getType());
+        $this->assertSame(63, $filter->getType());
     }
 
     /**
@@ -106,10 +106,10 @@ class ToNullTest extends TestCase
      * @param mixed $expected Expected resulting type
      * @dataProvider duplicateTypeProvider
      */
-    public function testDuplicateInitializationResultsInCorrectType($type, $expected)
+    public function testDuplicateInitializationResultsInCorrectType($type, $expected): void
     {
         $filter = new ToNullFilter([$type, $type]);
-        $this->assertEquals($expected, $filter->getType());
+        $this->assertSame($expected, $filter->getType());
     }
 
     public static function duplicateTypeProvider()

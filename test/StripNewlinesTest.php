@@ -15,10 +15,8 @@ class StripNewlinesTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter         = new StripNewlinesFilter();
         $valuesExpected = [
@@ -32,21 +30,18 @@ class StripNewlinesTest extends TestCase
             "Some text\nthat we have\r\nstuff in" => 'Some textthat we havestuff in',
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
+            $this->assertSame($output, $filter($input));
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testArrayValues()
+    public function testArrayValues(): void
     {
         $filter   = new StripNewlinesFilter();
         $expected = [
             "Some text\nthat we have\r\nstuff in" => 'Some textthat we havestuff in',
             "Some text\n"                         => 'Some text',
         ];
-        $this->assertEquals(array_values($expected), $filter(array_keys($expected)));
+        $this->assertSame(array_values($expected), $filter(array_keys($expected)));
     }
 
     public function returnUnfilteredDataProvider()
@@ -59,12 +54,11 @@ class StripNewlinesTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new StripNewlinesFilter();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }
