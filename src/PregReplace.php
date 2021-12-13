@@ -137,8 +137,13 @@ class PregReplace extends AbstractFilter
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            if (! is_string($value)) {
+                $value = (string) $value;
+            }
         }
 
         if ($this->options['pattern'] === null) {

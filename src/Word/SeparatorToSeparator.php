@@ -9,6 +9,7 @@ use Laminas\Filter\Exception;
 
 use function is_array;
 use function is_scalar;
+use function is_string;
 use function preg_quote;
 use function preg_replace;
 
@@ -78,13 +79,18 @@ class SeparatorToSeparator extends AbstractFilter
      *
      * Returns the string $value, replacing the searched separators with the defined ones
      *
-     * @param  string|array $value
-     * @return string|array
+     * @param  mixed $value
+     * @return mixed
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            if (! is_string($value)) {
+                $value = (string) $value;
+            }
         }
 
         if ($this->searchSeparator === null) {

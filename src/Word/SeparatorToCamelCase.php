@@ -9,6 +9,7 @@ use Laminas\Stdlib\StringUtils;
 use function extension_loaded;
 use function is_array;
 use function is_scalar;
+use function is_string;
 use function preg_quote;
 use function preg_replace_callback;
 
@@ -17,13 +18,18 @@ class SeparatorToCamelCase extends AbstractSeparator
     /**
      * Defined by Laminas\Filter\Filter
      *
-     * @param  string|array $value
-     * @return string|array
+     * @param  mixed $value
+     * @return mixed
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            if (! is_string($value)) {
+                $value = (string) $value;
+            }
         }
 
         // a unicode safe way of converting characters to \x00\x00 notation

@@ -6,6 +6,7 @@ namespace Laminas\Filter;
 
 use function is_array;
 use function is_scalar;
+use function is_string;
 use function str_replace;
 
 class StripNewlines extends AbstractFilter
@@ -15,13 +16,18 @@ class StripNewlines extends AbstractFilter
      *
      * Returns $value without newline control characters
      *
-     * @param  string|array $value
-     * @return string|array
+     * @param  mixed $value
+     * @return mixed
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            if (! is_string($value)) {
+                $value = (string) $value;
+            }
         }
         return str_replace(["\n", "\r"], '', $value);
     }

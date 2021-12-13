@@ -131,4 +131,29 @@ class PregReplaceTest extends TestCase
 
         $this->assertSame($input, $filter->filter($input));
     }
+
+    /**
+     * @return array<int|float|bool>[]
+     */
+    public function returnNonStringScalarValues(): array
+    {
+        return [
+            [1],
+            [1.0],
+            [true],
+            [false],
+        ];
+    }
+
+    /**
+     * @dataProvider returnNonStringScalarValues
+     * @param int|float|bool $input
+     */
+    public function testShouldFilterNonStringScalarValues($input): void
+    {
+        $filter = $this->filter;
+        $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
+
+        $this->assertSame((string) $input, $filter($input));
+    }
 }

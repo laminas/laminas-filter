@@ -8,6 +8,7 @@ use Laminas\Stdlib\StringUtils;
 
 use function is_array;
 use function is_scalar;
+use function is_string;
 use function preg_replace;
 
 class CamelCaseToSeparator extends AbstractSeparator
@@ -15,13 +16,18 @@ class CamelCaseToSeparator extends AbstractSeparator
     /**
      * Defined by Laminas\Filter\Filter
      *
-     * @param  string|array $value
-     * @return string|array
+     * @param  mixed $value
+     * @return mixed
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            if (! is_string($value)) {
+                $value = (string) $value;
+            }
         }
 
         if (StringUtils::hasPcreUnicodeSupport()) {

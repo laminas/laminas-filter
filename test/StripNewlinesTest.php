@@ -61,4 +61,28 @@ class StripNewlinesTest extends TestCase
 
         $this->assertSame($input, $filter($input));
     }
+
+    /**
+     * @return array<int|float|bool>[]
+     */
+    public function returnNonStringScalarValues(): array
+    {
+        return [
+            [1],
+            [1.0],
+            [true],
+            [false],
+        ];
+    }
+
+    /**
+     * @dataProvider returnNonStringScalarValues
+     * @param int|float|bool $input
+     */
+    public function testShouldFilterNonStringScalarValues($input): void
+    {
+        $filter = new StripNewlinesFilter();
+
+        $this->assertSame((string) $input, $filter($input));
+    }
 }
