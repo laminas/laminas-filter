@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use function is_array;
-use function is_scalar;
-use function is_string;
+use Closure;
+
 use function str_replace;
 
 class StripNewlines extends AbstractFilter
@@ -21,14 +20,18 @@ class StripNewlines extends AbstractFilter
      */
     public function filter($value)
     {
-        if (! is_array($value)) {
-            if (! is_scalar($value)) {
-                return $value;
-            }
-            if (! is_string($value)) {
-                $value = (string) $value;
-            }
-        }
+        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+            $value,
+            Closure::fromCallable([$this, 'filterNormalizedValue'])
+        );
+    }
+
+    /**
+     * @param  string|string[] $value
+     * @return string|string[]
+     */
+    private function filterNormalizedValue($value)
+    {
         return str_replace(["\n", "\r"], '', $value);
     }
 }

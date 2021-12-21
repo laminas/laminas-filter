@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
+use Closure;
 use Traversable;
 
 use function func_get_args;
@@ -11,7 +12,6 @@ use function get_class;
 use function gettype;
 use function is_array;
 use function is_object;
-use function is_scalar;
 use function is_string;
 use function iterator_to_array;
 use function preg_match;
@@ -137,15 +137,18 @@ class PregReplace extends AbstractFilter
      */
     public function filter($value)
     {
-        if (! is_array($value)) {
-            if (! is_scalar($value)) {
-                return $value;
-            }
-            if (! is_string($value)) {
-                $value = (string) $value;
-            }
-        }
+        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+            $value,
+            Closure::fromCallable([$this, 'filterNormalizedValue'])
+        );
+    }
 
+    /**
+     * @param  string|string[] $value
+     * @return string|string[]
+     */
+    private function filterNormalizedValue($value)
+    {
         if ($this->options['pattern'] === null) {
             throw new Exception\RuntimeException(sprintf(
                 'Filter %s does not have a valid pattern set',
@@ -153,7 +156,12 @@ class PregReplace extends AbstractFilter
             ));
         }
 
-        return preg_replace($this->options['pattern'], $this->options['replacement'], $value);
+        /** @var string|string[] $pattern */
+        $pattern = $this->options['pattern'];
+        /** @var string|string[] $replacement */
+        $replacement = $this->options['replacement'];
+
+        return preg_replace($pattern, $replacement, $value);
     }
 
     /**

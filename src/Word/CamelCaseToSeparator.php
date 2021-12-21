@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
+use Closure;
 use Laminas\Stdlib\StringUtils;
 
-use function is_array;
-use function is_scalar;
-use function is_string;
 use function preg_replace;
 
 class CamelCaseToSeparator extends AbstractSeparator
@@ -21,15 +19,18 @@ class CamelCaseToSeparator extends AbstractSeparator
      */
     public function filter($value)
     {
-        if (! is_array($value)) {
-            if (! is_scalar($value)) {
-                return $value;
-            }
-            if (! is_string($value)) {
-                $value = (string) $value;
-            }
-        }
+        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+            $value,
+            Closure::fromCallable([$this, 'filterNormalizedValue'])
+        );
+    }
 
+    /**
+     * @param  string|string[] $value
+     * @return string|string[]
+     */
+    private function filterNormalizedValue($value)
+    {
         if (StringUtils::hasPcreUnicodeSupport()) {
             $pattern     = ['#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'];
             $replacement = [$this->separator . '\1', $this->separator . '\1'];
