@@ -12,30 +12,30 @@ use function extension_loaded;
 
 class SeparatorToCamelCaseTest extends TestCase
 {
-    public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault()
+    public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault(): void
     {
         $string   = 'camel cased words';
         $filter   = new SeparatorToCamelCaseFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('CamelCasedWords', $filtered);
+        $this->assertSame('CamelCasedWords', $filtered);
     }
 
-    public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator()
+    public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(): void
     {
         $string   = 'camel:-:cased:-:Words';
         $filter   = new SeparatorToCamelCaseFilter(':-:');
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('CamelCasedWords', $filtered);
+        $this->assertSame('CamelCasedWords', $filtered);
     }
 
     /**
      * @group Laminas-10517
      */
-    public function testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator()
+    public function testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator(): void
     {
         if (! extension_loaded('mbstring')) {
             $this->markTestSkipped('Extension mbstring not available');
@@ -46,13 +46,13 @@ class SeparatorToCamelCaseTest extends TestCase
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('CamelCasedWords', $filtered);
+        $this->assertSame('CamelCasedWords', $filtered);
     }
 
     /**
      * @group Laminas-10517
      */
-    public function testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator()
+    public function testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator(): void
     {
         if (! extension_loaded('mbstring')) {
             $this->markTestSkipped('Extension mbstring not available');
@@ -63,26 +63,23 @@ class SeparatorToCamelCaseTest extends TestCase
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('TestŠuma', $filtered);
+        $this->assertSame('TestŠuma', $filtered);
     }
 
     /**
      * @group 6151
      */
-    public function testFilterSeparatesCamelCasedNonAlphaWordsWithProvidedSeparator()
+    public function testFilterSeparatesCamelCasedNonAlphaWordsWithProvidedSeparator(): void
     {
         $string   = 'user_2_user';
         $filter   = new SeparatorToCamelCaseFilter('_');
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('User2User', $filtered);
+        $this->assertSame('User2User', $filtered);
     }
 
-    /**
-     * @return void
-     */
-    public function testFilterSupportArray()
+    public function testFilterSupportArray(): void
     {
         $filter = new SeparatorToCamelCaseFilter();
 
@@ -94,7 +91,7 @@ class SeparatorToCamelCaseTest extends TestCase
         $filtered = $filter($input);
 
         $this->assertNotEquals($input, $filtered);
-        $this->assertEquals(['CamelCasedWords', 'SomethingDifferent'], $filtered);
+        $this->assertSame(['CamelCasedWords', 'SomethingDifferent'], $filtered);
     }
 
     public function returnUnfilteredDataProvider()
@@ -107,12 +104,35 @@ class SeparatorToCamelCaseTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new SeparatorToCamelCaseFilter();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
+    }
+
+    /**
+     * @return array<int|float|bool>[]
+     */
+    public function returnNonStringScalarValues(): array
+    {
+        return [
+            [1],
+            [1.0],
+            [true],
+            [false],
+        ];
+    }
+
+    /**
+     * @dataProvider returnNonStringScalarValues
+     * @param int|float|bool $input
+     */
+    public function testShouldFilterNonStringScalarValues($input): void
+    {
+        $filter = new SeparatorToCamelCaseFilter();
+
+        $this->assertSame((string) $input, $filter($input));
     }
 }

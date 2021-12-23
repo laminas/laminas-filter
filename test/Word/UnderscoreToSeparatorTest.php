@@ -9,23 +9,23 @@ use PHPUnit\Framework\TestCase;
 
 class UnderscoreToSeparatorTest extends TestCase
 {
-    public function testFilterSeparatesCamelCasedWordsDefaultSeparator()
+    public function testFilterSeparatesCamelCasedWordsDefaultSeparator(): void
     {
         $string   = 'underscore_separated_words';
         $filter   = new UnderscoreToSeparatorFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('underscore separated words', $filtered);
+        $this->assertSame('underscore separated words', $filtered);
     }
 
-    public function testFilterSeparatesCamelCasedWordsProvidedSeparator()
+    public function testFilterSeparatesCamelCasedWordsProvidedSeparator(): void
     {
         $string   = 'underscore_separated_words';
         $filter   = new UnderscoreToSeparatorFilter(':=:');
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('underscore:=:separated:=:words', $filtered);
+        $this->assertSame('underscore:=:separated:=:words', $filtered);
     }
 }

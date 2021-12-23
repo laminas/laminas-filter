@@ -85,10 +85,8 @@ class RarTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage(): void
     {
         $filter = new RarCompression(
             [
@@ -99,7 +97,7 @@ class RarTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertEquals(
+        $this->assertSame(
             dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'compressed.rar',
             $content
         );
@@ -107,18 +105,16 @@ class RarTest extends TestCase
         $content = $filter->decompress($content);
         $this->assertTrue($content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * Setting Options
-     *
-     * @return void
      */
-    public function testRarGetSetOptions()
+    public function testRarGetSetOptions(): void
     {
         $filter = new RarCompression();
-        $this->assertEquals(
+        $this->assertSame(
             [
                 'archive'  => null,
                 'callback' => null,
@@ -128,59 +124,53 @@ class RarTest extends TestCase
             $filter->getOptions()
         );
 
-        $this->assertEquals(null, $filter->getOptions('archive'));
+        $this->assertSame(null, $filter->getOptions('archive'));
 
         $this->assertNull($filter->getOptions('nooption'));
         $filter->setOptions(['nooption' => 'foo']);
         $this->assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['archive' => 'temp.txt']);
-        $this->assertEquals('temp.txt', $filter->getOptions('archive'));
+        $this->assertSame('temp.txt', $filter->getOptions('archive'));
     }
 
     /**
      * Setting Archive
-     *
-     * @return void
      */
-    public function testRarGetSetArchive()
+    public function testRarGetSetArchive(): void
     {
         $filter = new RarCompression();
-        $this->assertEquals(null, $filter->getArchive());
+        $this->assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertEquals('Testfile.txt', $filter->getArchive());
-        $this->assertEquals('Testfile.txt', $filter->getOptions('archive'));
+        $this->assertSame('Testfile.txt', $filter->getArchive());
+        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
      * Setting Password
-     *
-     * @return void
      */
-    public function testRarGetSetPassword()
+    public function testRarGetSetPassword(): void
     {
         $filter = new RarCompression();
-        $this->assertEquals(null, $filter->getPassword());
+        $this->assertSame(null, $filter->getPassword());
         $filter->setPassword('test');
-        $this->assertEquals('test', $filter->getPassword());
-        $this->assertEquals('test', $filter->getOptions('password'));
+        $this->assertSame('test', $filter->getPassword());
+        $this->assertSame('test', $filter->getOptions('password'));
         $filter->setOptions(['password' => 'test2']);
-        $this->assertEquals('test2', $filter->getPassword());
-        $this->assertEquals('test2', $filter->getOptions('password'));
+        $this->assertSame('test2', $filter->getPassword());
+        $this->assertSame('test2', $filter->getOptions('password'));
     }
 
     /**
      * Setting Target
-     *
-     * @return void
      */
-    public function testRarGetSetTarget()
+    public function testRarGetSetTarget(): void
     {
         $filter = new RarCompression();
-        $this->assertEquals('.', $filter->getTarget());
+        $this->assertSame('.', $filter->getTarget());
         $filter->setTarget('Testfile.txt');
-        $this->assertEquals('Testfile.txt', $filter->getTarget());
-        $this->assertEquals('Testfile.txt', $filter->getOptions('target'));
+        $this->assertSame('Testfile.txt', $filter->getTarget());
+        $this->assertSame('Testfile.txt', $filter->getOptions('target'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not exist');
@@ -189,19 +179,17 @@ class RarTest extends TestCase
 
     /**
      * Setting Callback
-     *
-     * @return void
      */
-    public function testSettingCallback()
+    public function testSettingCallback(): void
     {
         $filter = new RarCompression();
 
         $callback = [self::class, 'rarCompress'];
         $filter->setCallback($callback);
-        $this->assertEquals($callback, $filter->getCallback());
+        $this->assertSame($callback, $filter->getCallback());
     }
 
-    public function testSettingCallbackThrowsExceptionOnMissingCallback()
+    public function testSettingCallbackThrowsExceptionOnMissingCallback(): void
     {
         $filter = new RarCompression();
 
@@ -210,7 +198,7 @@ class RarTest extends TestCase
         $filter->compress('test.txt');
     }
 
-    public function testSettingCallbackThrowsExceptionOnInvalidCallback()
+    public function testSettingCallbackThrowsExceptionOnInvalidCallback(): void
     {
         $filter = new RarCompression();
 
@@ -221,10 +209,8 @@ class RarTest extends TestCase
 
     /**
      * Compress to Archive
-     *
-     * @return void
      */
-    public function testRarCompressFile()
+    public function testRarCompressFile(): void
     {
         $filter = new RarCompression(
             [
@@ -236,7 +222,7 @@ class RarTest extends TestCase
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
 
         $content = $filter->compress($this->tmp . '/zipextracted.txt');
-        $this->assertEquals(
+        $this->assertSame(
             dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'compressed.rar',
             $content
         );
@@ -244,15 +230,13 @@ class RarTest extends TestCase
         $content = $filter->decompress($content);
         $this->assertTrue($content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * Compress directory to Filename
-     *
-     * @return void
      */
-    public function testRarCompressDirectory()
+    public function testRarCompressDirectory(): void
     {
         $filter  = new RarCompression(
             [
@@ -262,7 +246,7 @@ class RarTest extends TestCase
             ]
         );
         $content = $filter->compress(dirname(__DIR__) . '/_files/Compress');
-        $this->assertEquals(
+        $this->assertSame(
             dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'compressed.rar',
             $content
         );
@@ -287,13 +271,11 @@ class RarTest extends TestCase
 
     /**
      * testing toString
-     *
-     * @return void
      */
-    public function testRarToString()
+    public function testRarToString(): void
     {
         $filter = new RarCompression();
-        $this->assertEquals('Rar', $filter->toString());
+        $this->assertSame('Rar', $filter->toString());
     }
 
     /**

@@ -14,22 +14,22 @@ use function var_export;
 
 class BooleanTest extends TestCase
 {
-    public function testConstructorOptions()
+    public function testConstructorOptions(): void
     {
         $filter = new BooleanFilter([
             'type'    => BooleanFilter::TYPE_INTEGER,
             'casting' => false,
         ]);
 
-        $this->assertEquals(BooleanFilter::TYPE_INTEGER, $filter->getType());
+        $this->assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
         $this->assertFalse($filter->getCasting());
     }
 
-    public function testConstructorParams()
+    public function testConstructorParams(): void
     {
         $filter = new BooleanFilter(BooleanFilter::TYPE_INTEGER, false);
 
-        $this->assertEquals(BooleanFilter::TYPE_INTEGER, $filter->getType());
+        $this->assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
         $this->assertFalse($filter->getCasting());
     }
 
@@ -38,7 +38,7 @@ class BooleanTest extends TestCase
      * @param bool  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected)
+    public function testDefault($value, $expected): void
     {
         $filter = new BooleanFilter();
         $this->assertSame($expected, $filter->filter($value));
@@ -49,10 +49,10 @@ class BooleanTest extends TestCase
      * @param bool  $expected
      * @dataProvider noCastingTestProvider
      */
-    public function testNoCasting($value, $expected)
+    public function testNoCasting($value, $expected): void
     {
         $filter = new BooleanFilter('all', false);
-        $this->assertEquals($expected, $filter->filter($value));
+        $this->assertSame($expected, $filter->filter($value));
     }
 
     /**
@@ -60,7 +60,7 @@ class BooleanTest extends TestCase
      * @param array $testData
      * @dataProvider typeTestProvider
      */
-    public function testTypes($type, $testData)
+    public function testTypes($type, $testData): void
     {
         $filter = new BooleanFilter($type);
         foreach ($testData as $data) {
@@ -81,7 +81,7 @@ class BooleanTest extends TestCase
      * @param array $testData
      * @dataProvider combinedTypeTestProvider
      */
-    public function testCombinedTypes($typeData, $testData)
+    public function testCombinedTypes($typeData, $testData): void
     {
         foreach ($typeData as $type) {
             $filter = new BooleanFilter(['type' => $type]);
@@ -99,7 +99,7 @@ class BooleanTest extends TestCase
         }
     }
 
-    public function testLocalized()
+    public function testLocalized(): void
     {
         $filter = new BooleanFilter([
             'type'         => BooleanFilter::TYPE_LOCALIZED,
@@ -119,7 +119,7 @@ class BooleanTest extends TestCase
         $this->assertFalse($filter->filter('nay'));
     }
 
-    public function testSettingFalseType()
+    public function testSettingFalseType(): void
     {
         $filter = new BooleanFilter();
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -127,10 +127,10 @@ class BooleanTest extends TestCase
         $filter->setType(true);
     }
 
-    public function testGettingDefaultType()
+    public function testGettingDefaultType(): void
     {
         $filter = new BooleanFilter();
-        $this->assertEquals(127, $filter->getType());
+        $this->assertSame(127, $filter->getType());
     }
 
     /**
@@ -140,10 +140,10 @@ class BooleanTest extends TestCase
      * @param mixed $type Type to double initialize
      * @dataProvider duplicateProvider
      */
-    public function testDuplicateTypesWorkProperly($type, $expected)
+    public function testDuplicateTypesWorkProperly($type, $expected): void
     {
         $filter = new BooleanFilter([$type, $type]);
-        $this->assertEquals($expected, $filter->getType());
+        $this->assertSame($expected, $filter->getType());
     }
 
     public static function defaultTestProvider()
@@ -187,7 +187,7 @@ class BooleanTest extends TestCase
             ['2', '2'],
             [[], false],
             [[0], [0]],
-            [null, null],
+            [null, false],
             ['false', false],
             ['true', true],
         ];

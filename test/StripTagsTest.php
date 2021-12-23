@@ -31,31 +31,25 @@ class StripTagsTest extends TestCase
 
     /**
      * Ensures that getTagsAllowed() returns expected default value
-     *
-     * @return void
      */
-    public function testGetTagsAllowed()
+    public function testGetTagsAllowed(): void
     {
-        $this->assertEquals([], $this->_filter->getTagsAllowed());
+        $this->assertSame([], $this->_filter->getTagsAllowed());
     }
 
     /**
      * Ensures that setTagsAllowed() follows expected behavior when provided a single tag
-     *
-     * @return void
      */
-    public function testSetTagsAllowedString()
+    public function testSetTagsAllowedString(): void
     {
         $this->_filter->setTagsAllowed('b');
-        $this->assertEquals(['b' => []], $this->_filter->getTagsAllowed());
+        $this->assertSame(['b' => []], $this->_filter->getTagsAllowed());
     }
 
     /**
      * Ensures that setTagsAllowed() follows expected behavior when provided an array of tags
-     *
-     * @return void
      */
-    public function testSetTagsAllowedArray()
+    public function testSetTagsAllowedArray(): void
     {
         $tagsAllowed = [
             'b',
@@ -68,36 +62,30 @@ class StripTagsTest extends TestCase
             'a'   => ['href' => null],
             'div' => ['id' => null, 'class' => null],
         ];
-        $this->assertEquals($tagsAllowedExpected, $this->_filter->getTagsAllowed());
+        $this->assertSame($tagsAllowedExpected, $this->_filter->getTagsAllowed());
     }
 
     /**
      * Ensures that getAttributesAllowed() returns expected default value
-     *
-     * @return void
      */
-    public function testGetAttributesAllowed()
+    public function testGetAttributesAllowed(): void
     {
-        $this->assertEquals([], $this->_filter->getAttributesAllowed());
+        $this->assertSame([], $this->_filter->getAttributesAllowed());
     }
 
     /**
      * Ensures that setAttributesAllowed() follows expected behavior when provided a single attribute
-     *
-     * @return void
      */
-    public function testSetAttributesAllowedString()
+    public function testSetAttributesAllowedString(): void
     {
         $this->_filter->setAttributesAllowed('class');
-        $this->assertEquals(['class' => null], $this->_filter->getAttributesAllowed());
+        $this->assertSame(['class' => null], $this->_filter->getAttributesAllowed());
     }
 
     /**
      * Ensures that setAttributesAllowed() follows expected behavior when provided an array of attributes
-     *
-     * @return void
      */
-    public function testSetAttributesAllowedArray()
+    public function testSetAttributesAllowedArray(): void
     {
         $attributesAllowed = [
             'clAss',
@@ -111,7 +99,7 @@ class StripTagsTest extends TestCase
             'int'    => null,
             'string' => null,
         ];
-        $this->assertEquals($attributesAllowedExpected, $this->_filter->getAttributesAllowed());
+        $this->assertSame($attributesAllowedExpected, $this->_filter->getAttributesAllowed());
     }
 
     /**
@@ -124,7 +112,7 @@ class StripTagsTest extends TestCase
         $filter   = $this->_filter;
         $input    = '<a href="http://example.com" Some Text';
         $expected = '';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
@@ -137,7 +125,7 @@ class StripTagsTest extends TestCase
         $filter   = $this->_filter;
         $input    = '<a href="example.com">foo</a>';
         $expected = 'foo';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
@@ -150,7 +138,7 @@ class StripTagsTest extends TestCase
         $filter   = $this->_filter;
         $input    = '<a href="example.com"><b>foo</b></a>';
         $expected = 'foo';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
@@ -163,83 +151,71 @@ class StripTagsTest extends TestCase
         $filter   = $this->_filter;
         $input    = '<a href="example.com">foo</a><b>bar</b>';
         $expected = 'foobar';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that an allowed tag is returned as lowercase and with backward-compatible XHTML ending, where supplied
-     *
-     * @return void
      */
-    public function testFilterTagAllowedBackwardCompatible()
+    public function testFilterTagAllowedBackwardCompatible(): void
     {
         $filter   = $this->_filter;
         $input    = '<BR><Br><bR><br/><br  /><br / ></br></bR>';
         $expected = '<br><br><br><br /><br /><br></br></br>';
         $this->_filter->setTagsAllowed('br');
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that any greater-than symbols '>' are removed from text preceding a tag
-     *
-     * @return void
      */
-    public function testFilterTagPrefixGt()
+    public function testFilterTagPrefixGt(): void
     {
         $filter   = $this->_filter;
         $input    = '2 > 1 === true<br/>';
         $expected = '2  1 === true';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that any greater-than symbols '>' are removed from text having no tags
-     *
-     * @return void
      */
-    public function testFilterGt()
+    public function testFilterGt(): void
     {
         $filter   = $this->_filter;
         $input    = '2 > 1 === true ==> $object->property';
         $expected = '2  1 === true == $object-property';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that any greater-than symbols '>' are removed from text wrapping a tag
-     *
-     * @return void
      */
-    public function testFilterTagWrappedGt()
+    public function testFilterTagWrappedGt(): void
     {
         $filter   = $this->_filter;
         $input    = '2 > 1 === true <==> $object->property';
         $expected = '2  1 === true  $object-property';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that an attribute for an allowed tag is stripped
-     *
-     * @return void
      */
-    public function testFilterTagAllowedAttribute()
+    public function testFilterTagAllowedAttribute(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = 'img';
         $this->_filter->setTagsAllowed($tagsAllowed);
         $input    = '<IMG alt="foo" />';
         $expected = '<img />';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that an allowed tag with an allowed attribute is filtered as expected
-     *
-     * @return void
      */
-    public function testFilterTagAllowedAttributeAllowed()
+    public function testFilterTagAllowedAttributeAllowed(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -248,17 +224,15 @@ class StripTagsTest extends TestCase
         $this->_filter->setTagsAllowed($tagsAllowed);
         $input    = '<IMG ALT="FOO" />';
         $expected = '<img alt="FOO" />';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures expected behavior when a greater-than symbol '>' appears in an allowed attribute's value
      *
      * Currently this is not unsupported; these symbols should be escaped when used in an attribute value.
-     *
-     * @return void
      */
-    public function testFilterTagAllowedAttributeAllowedGt()
+    public function testFilterTagAllowedAttributeAllowedGt(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -267,15 +241,13 @@ class StripTagsTest extends TestCase
         $this->_filter->setTagsAllowed($tagsAllowed);
         $input    = '<img alt="$object->property" />';
         $expected = '<img>property" /';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures expected behavior when an escaped greater-than symbol '>' appears in an allowed attribute's value
-     *
-     * @return void
      */
-    public function testFilterTagAllowedAttributeAllowedGtEscaped()
+    public function testFilterTagAllowedAttributeAllowedGtEscaped(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -284,16 +256,14 @@ class StripTagsTest extends TestCase
         $this->_filter->setTagsAllowed($tagsAllowed);
         $input    = '<img alt="$object-&gt;property" />';
         $expected = '<img alt="$object-&gt;property" />';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that an unterminated attribute value does not affect other attributes but causes the corresponding
      * attribute to be removed in its entirety.
-     *
-     * @return void
      */
-    public function testFilterTagAllowedAttributeAllowedValueUnclosed()
+    public function testFilterTagAllowedAttributeAllowedValueUnclosed(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -302,15 +272,13 @@ class StripTagsTest extends TestCase
         $this->_filter->setTagsAllowed($tagsAllowed);
         $input    = '<img src="image.png" alt="square height="100" width="100" />';
         $expected = '<img src="image.png" alt="square height=" width="100" />';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that an allowed attribute having no value is removed (XHTML disallows attributes with no values)
-     *
-     * @return void
      */
-    public function testFilterTagAllowedAttributeAllowedValueMissing()
+    public function testFilterTagAllowedAttributeAllowedValueMissing(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -319,7 +287,7 @@ class StripTagsTest extends TestCase
         $this->_filter->setTagsAllowed($tagsAllowed);
         $input    = '<input name="foo" type="checkbox" checked />';
         $expected = '<input name="foo" type="checkbox" />';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
@@ -346,43 +314,37 @@ class StripTagsTest extends TestCase
                . '</param><param name="wmode" value="transparent"></param><embed '
                . 'src="http://www.example.com/path/to/movie" type="application/x-shockwave-flash" '
                . 'wmode="transparent" width="425" height="350"></embed></object>';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that a comment is stripped
-     *
-     * @return void
      */
-    public function testFilterComment()
+    public function testFilterComment(): void
     {
         $filter   = $this->_filter;
         $input    = '<!-- a comment -->';
         $expected = '';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that a comment wrapped with other strings is stripped
-     *
-     * @return void
      */
-    public function testFilterCommentWrapped()
+    public function testFilterCommentWrapped(): void
     {
         $filter   = $this->_filter;
         $input    = 'foo<!-- a comment -->bar';
         $expected = 'foobar';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * Ensures that a closing angle bracket in an allowed attribute does not break the parser
      *
      * @link   https://getlaminas.org/issues/browse/Laminas-3278
-     *
-     * @return void
      */
-    public function testClosingAngleBracketInAllowedAttributeValue()
+    public function testClosingAngleBracketInAllowedAttributeValue(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -391,7 +353,7 @@ class StripTagsTest extends TestCase
         $filter->setTagsAllowed($tagsAllowed);
         $input    = '<a href="Some &gt; Text">';
         $expected = '<a href="Some &gt; Text">';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
@@ -400,7 +362,7 @@ class StripTagsTest extends TestCase
      * @group Laminas-3293
      * @group Laminas-5983
      */
-    public function testAllowedAttributeValueMayEndWithEquals()
+    public function testAllowedAttributeValueMayEndWithEquals(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = [
@@ -408,13 +370,13 @@ class StripTagsTest extends TestCase
         ];
         $filter->setTagsAllowed($tagsAllowed);
         $input = '<element attribute="a=">contents</element>';
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 
     /**
      * @group Laminas-5983
      */
-    public function testDisallowedAttributesSplitOverMultipleLinesShouldBeStripped()
+    public function testDisallowedAttributesSplitOverMultipleLinesShouldBeStripped(): void
     {
         $filter      = $this->_filter;
         $tagsAllowed = ['a' => 'href'];
@@ -429,12 +391,12 @@ class StripTagsTest extends TestCase
     /**
      * @Laminas-8828
      */
-    public function testFilterIsoChars()
+    public function testFilterIsoChars(): void
     {
         $filter   = $this->_filter;
         $input    = 'äöü<!-- a comment -->äöü';
         $expected = 'äöüäöü';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
 
         $input  = 'äöü<!-- a comment -->äöü';
         $input  = iconv("UTF-8", "ISO-8859-1", $input);
@@ -445,12 +407,12 @@ class StripTagsTest extends TestCase
     /**
      * @Laminas-8828
      */
-    public function testFilterIsoCharsInComment()
+    public function testFilterIsoCharsInComment(): void
     {
         $filter   = $this->_filter;
         $input    = 'äöü<!--üßüßüß-->äöü';
         $expected = 'äöüäöü';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
 
         $input  = 'äöü<!-- a comment -->äöü';
         $input  = iconv("UTF-8", "ISO-8859-1", $input);
@@ -461,41 +423,41 @@ class StripTagsTest extends TestCase
     /**
      * @Laminas-8828
      */
-    public function testFilterSplitCommentTags()
+    public function testFilterSplitCommentTags(): void
     {
         $filter   = $this->_filter;
         $input    = 'äöü<!-->üßüßüß<-->äöü';
         $expected = 'äöüäöü';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * @group Laminas-9434
      */
-    public function testCommentWithTagInSameLine()
+    public function testCommentWithTagInSameLine(): void
     {
         $filter   = $this->_filter;
         $input    = 'test <!-- testcomment --> test <div>div-content</div>';
         $expected = 'test  test div-content';
-        $this->assertEquals($expected, $filter($input));
+        $this->assertSame($expected, $filter($input));
     }
 
     /**
      * @group Laminas-9833
      */
-    public function testMultiParamArray()
+    public function testMultiParamArray(): void
     {
         $filter = new StripTagsFilter(["a", "b", "hr"], [], true);
 
         $input    = 'test <a /> test <div>div-content</div>';
         $expected = 'test <a /> test div-content';
-        $this->assertEquals($expected, $filter->filter($input));
+        $this->assertSame($expected, $filter->filter($input));
     }
 
     /**
      * @group Laminas-9828
      */
-    public function testMultiQuoteInput()
+    public function testMultiQuoteInput(): void
     {
         $filter = new StripTagsFilter(
             [
@@ -506,7 +468,7 @@ class StripTagsTest extends TestCase
 
         $input    = '<img width="10" height="10" src=\'wont_be_matched.jpg\'>';
         $expected = '<img width="10" height="10" src=\'wont_be_matched.jpg\'>';
-        $this->assertEquals($expected, $filter->filter($input));
+        $this->assertSame($expected, $filter->filter($input));
     }
 
     public function badCommentProvider()
@@ -531,25 +493,25 @@ class StripTagsTest extends TestCase
      * @param string $input
      * @param string $expected
      */
-    public function testBadCommentTags($input, $expected)
+    public function testBadCommentTags($input, $expected): void
     {
-        $this->assertEquals($expected, $this->_filter->filter($input));
+        $this->assertSame($expected, $this->_filter->filter($input));
     }
 
      /**
       * @group Laminas-10256
       */
-    public function testNotClosedHtmlCommentAtEndOfString()
+    public function testNotClosedHtmlCommentAtEndOfString(): void
     {
         $input    = 'text<!-- not closed comment at the end';
         $expected = 'text';
-        $this->assertEquals($expected, $this->_filter->filter($input));
+        $this->assertSame($expected, $this->_filter->filter($input));
     }
 
     /**
      * @group Laminas-11617
      */
-    public function testFilterCanAllowHyphenatedAttributeNames()
+    public function testFilterCanAllowHyphenatedAttributeNames(): void
     {
         $input    = '<li data-disallowed="no!" data-name="Test User" data-id="11223"></li>';
         $expected = '<li data-name="Test User" data-id="11223"></li>';
@@ -557,7 +519,7 @@ class StripTagsTest extends TestCase
         $this->_filter->setTagsAllowed('li');
         $this->_filter->setAttributesAllowed(['data-id', 'data-name']);
 
-        $this->assertEquals($expected, $this->_filter->filter($input));
+        $this->assertSame($expected, $this->_filter->filter($input));
     }
 
     public function returnUnfilteredDataProvider()
@@ -576,22 +538,21 @@ class StripTagsTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
-        $this->assertEquals($input, $this->_filter->filter($input));
+        $this->assertSame($input, $this->_filter->filter($input));
     }
 
     /**
      * @link https://github.com/zendframework/zf2/issues/5465
      */
-    public function testAttributeValueofZeroIsNotRemoved()
+    public function testAttributeValueofZeroIsNotRemoved(): void
     {
         $input    = '<div id="0" data-custom="0" class="bogus"></div>';
         $expected = '<div id="0" data-custom="0"></div>';
         $this->_filter->setTagsAllowed('div');
         $this->_filter->setAttributesAllowed(['id', 'data-custom']);
-        $this->assertEquals($expected, $this->_filter->filter($input));
+        $this->assertSame($expected, $this->_filter->filter($input));
     }
 }

@@ -121,26 +121,21 @@ class RenameUploadTest extends TestCase
 
     /**
      * Test single parameter filter
-     *
-     * @return void
      */
-    public function testThrowsExceptionWithNonUploadedFile()
+    public function testThrowsExceptionWithNonUploadedFile(): void
     {
         $filter = new FileRenameUpload($this->targetFile);
-        $this->assertEquals($this->targetFile, $filter->getTarget());
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->targetFile, $filter->getTarget());
+        $this->assertSame('falsefile', $filter('falsefile'));
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('could not be renamed');
-        $this->assertEquals($this->targetFile, $filter($this->sourceFile));
+        $this->assertSame($this->targetFile, $filter($this->sourceFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testOptions()
+    public function testOptions(): void
     {
         $filter = new FileRenameUpload($this->targetFile);
-        $this->assertEquals($this->targetFile, $filter->getTarget());
+        $this->assertSame($this->targetFile, $filter->getTarget());
         $this->assertFalse($filter->getUseUploadName());
         $this->assertFalse($filter->getOverwrite());
         $this->assertFalse($filter->getRandomize());
@@ -151,31 +146,25 @@ class RenameUploadTest extends TestCase
             'overwrite'       => true,
             'randomize'       => true,
         ]);
-        $this->assertEquals($this->sourceFile, $filter->getTarget());
+        $this->assertSame($this->sourceFile, $filter->getTarget());
         $this->assertTrue($filter->getUseUploadName());
         $this->assertTrue($filter->getOverwrite());
         $this->assertTrue($filter->getRandomize());
     }
 
-    /**
-     * @return void
-     */
-    public function testStringConstructorParam()
+    public function testStringConstructorParam(): void
     {
         $filter = new RenameUploadMock($this->targetFile);
-        $this->assertEquals($this->targetFile, $filter->getTarget());
-        $this->assertEquals($this->targetFile, $filter($this->sourceFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->targetFile, $filter->getTarget());
+        $this->assertSame($this->targetFile, $filter($this->sourceFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testStringConstructorWithFilesArray()
+    public function testStringConstructorWithFilesArray(): void
     {
         $filter = new RenameUploadMock($this->targetFile);
-        $this->assertEquals($this->targetFile, $filter->getTarget());
-        $this->assertEquals(
+        $this->assertSame($this->targetFile, $filter->getTarget());
+        $this->assertSame(
             [
                 'tmp_name' => $this->targetFile,
                 'name'     => $this->targetFile,
@@ -185,14 +174,13 @@ class RenameUploadTest extends TestCase
                 'name'     => $this->targetFile,
             ])
         );
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * @requires PHP 7
-     * @return void
      */
-    public function testStringConstructorWithPsrFile()
+    public function testStringConstructorWithPsrFile(): void
     {
         $sourceFile = $this->sourceFile;
         $targetFile = $this->targetFile;
@@ -236,7 +224,7 @@ class RenameUploadTest extends TestCase
             ->will([$renamedFile, 'reveal']);
 
         $filter = new RenameUploadMock($targetFile);
-        $this->assertEquals($targetFile, $filter->getTarget());
+        $this->assertSame($targetFile, $filter->getTarget());
 
         $filter->setStreamFactory($streamFactory->reveal());
         $filter->setUploadFileFactory($fileFactory->reveal());
@@ -250,45 +238,33 @@ class RenameUploadTest extends TestCase
         $this->assertSame($moved, $secondResult);
     }
 
-    /**
-     * @return void
-     */
-    public function testArrayConstructorParam()
+    public function testArrayConstructorParam(): void
     {
         $filter = new RenameUploadMock([
             'target' => $this->targetFile,
         ]);
-        $this->assertEquals($this->targetFile, $filter->getTarget());
-        $this->assertEquals($this->targetFile, $filter($this->sourceFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->targetFile, $filter->getTarget());
+        $this->assertSame($this->targetFile, $filter($this->sourceFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testConstructTruncatedTarget()
+    public function testConstructTruncatedTarget(): void
     {
         $filter = new FileRenameUpload('*');
-        $this->assertEquals('*', $filter->getTarget());
-        $this->assertEquals($this->sourceFile, $filter($this->sourceFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame('*', $filter->getTarget());
+        $this->assertSame($this->sourceFile, $filter($this->sourceFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testTargetDirectory()
+    public function testTargetDirectory(): void
     {
         $filter = new RenameUploadMock($this->targetPath);
-        $this->assertEquals($this->targetPath, $filter->getTarget());
-        $this->assertEquals($this->targetPathFile, $filter($this->sourceFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->targetPath, $filter->getTarget());
+        $this->assertSame($this->targetPathFile, $filter($this->sourceFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testOverwriteWithExistingFile()
+    public function testOverwriteWithExistingFile(): void
     {
         $filter = new RenameUploadMock([
             'target'    => $this->targetFile,
@@ -297,14 +273,11 @@ class RenameUploadTest extends TestCase
 
         copy($this->sourceFile, $this->targetFile);
 
-        $this->assertEquals($this->targetFile, $filter->getTarget());
-        $this->assertEquals($this->targetFile, $filter($this->sourceFile));
+        $this->assertSame($this->targetFile, $filter->getTarget());
+        $this->assertSame($this->targetFile, $filter($this->sourceFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testCannotOverwriteExistingFile()
+    public function testCannotOverwriteExistingFile(): void
     {
         $filter = new RenameUploadMock([
             'target'    => $this->targetFile,
@@ -313,17 +286,14 @@ class RenameUploadTest extends TestCase
 
         copy($this->sourceFile, $this->targetFile);
 
-        $this->assertEquals($this->targetFile, $filter->getTarget());
+        $this->assertSame($this->targetFile, $filter->getTarget());
         $this->assertFalse($filter->getOverwrite());
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('already exists');
-        $this->assertEquals($this->targetFile, $filter($this->sourceFile));
+        $this->assertSame($this->targetFile, $filter($this->sourceFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetRandomizedFile()
+    public function testGetRandomizedFile(): void
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
         $filter    = new RenameUploadMock([
@@ -337,7 +307,7 @@ class RenameUploadTest extends TestCase
         );
     }
 
-    public function testGetFileWithOriginalExtension()
+    public function testGetFileWithOriginalExtension(): void
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
         $filter    = new RenameUploadMock([
@@ -354,7 +324,7 @@ class RenameUploadTest extends TestCase
         );
     }
 
-    public function testGetRandomizedFileWithOriginalExtension()
+    public function testGetRandomizedFileWithOriginalExtension(): void
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
         $filter    = new RenameUploadMock([
@@ -371,10 +341,7 @@ class RenameUploadTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testGetRandomizedFileWithoutExtension()
+    public function testGetRandomizedFileWithoutExtension(): void
     {
         $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
         $filter    = new RenameUploadMock([
@@ -388,20 +355,14 @@ class RenameUploadTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testInvalidConstruction()
+    public function testInvalidConstruction(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid target');
         $filter = new FileRenameUpload(1234);
     }
 
-    /**
-     * @return void
-     */
-    public function testCanFilterMultipleTimesWithSameResult()
+    public function testCanFilterMultipleTimesWithSameResult(): void
     {
         $filter = new RenameUploadMock([
             'target'    => $this->targetFile,
@@ -433,24 +394,21 @@ class RenameUploadTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new RenameUploadMock([
             'target'    => $this->targetFile,
             'randomize' => true,
         ]);
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 
     /**
      * @see https://github.com/zendframework/zend-filter/issues/77
-     *
-     * @return void
      */
-    public function testFilterDoesNotAlterUnknownFileDataAndCachesResultsOfFilteringSAPIUploads()
+    public function testFilterDoesNotAlterUnknownFileDataAndCachesResultsOfFilteringSAPIUploads(): void
     {
         $filter = new RenameUploadMock($this->targetPath);
 
@@ -472,16 +430,14 @@ class RenameUploadTest extends TestCase
         ];
 
         // Check the result twice for the `alreadyFiltered` cache path
-        $this->assertEquals($sapiTarget, $filter($sapiSource));
-        $this->assertEquals($sapiTarget, $filter($sapiSource));
+        $this->assertSame($sapiTarget, $filter($sapiSource));
+        $this->assertSame($sapiTarget, $filter($sapiSource));
     }
 
     /**
      * @see https://github.com/zendframework/zend-filter/issues/76
-     *
-     * @return void
      */
-    public function testFilterReturnsFileDataVerbatimUnderSAPIWhenTargetPathIsUnspecified()
+    public function testFilterReturnsFileDataVerbatimUnderSAPIWhenTargetPathIsUnspecified(): void
     {
         $filter = new RenameUploadMock();
 
@@ -490,6 +446,6 @@ class RenameUploadTest extends TestCase
             'name'     => basename($this->targetFile),
         ];
 
-        $this->assertEquals($source, $filter($source));
+        $this->assertSame($source, $filter($source));
     }
 }

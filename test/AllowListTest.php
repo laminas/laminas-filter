@@ -24,16 +24,16 @@ class AllowListTest extends TestCase
             'strict' => true,
         ]);
 
-        $this->assertEquals(true, $filter->getStrict());
-        $this->assertEquals(['test', 1], $filter->getList());
+        $this->assertSame(true, $filter->getStrict());
+        $this->assertSame(['test', 1], $filter->getList());
     }
 
     public function testConstructorDefaults(): void
     {
         $filter = new AllowListFilter();
 
-        $this->assertEquals(false, $filter->getStrict());
-        $this->assertEquals([], $filter->getList());
+        $this->assertSame(false, $filter->getStrict());
+        $this->assertSame([], $filter->getList());
     }
 
     public function testWithPluginManager(): void
@@ -59,7 +59,7 @@ class AllowListTest extends TestCase
         $filter = new AllowListFilter([
             'list' => $obj,
         ]);
-        $this->assertEquals($array, $filter->getList());
+        $this->assertSame($array, $filter->getList());
     }
 
     public function testSetStrictShouldCastToBoolean(): void

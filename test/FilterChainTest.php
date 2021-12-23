@@ -22,44 +22,44 @@ use function unserialize;
 
 class FilterChainTest extends TestCase
 {
-    public function testEmptyFilterChainReturnsOriginalValue()
+    public function testEmptyFilterChainReturnsOriginalValue(): void
     {
         $chain = new FilterChain();
         $value = 'something';
-        $this->assertEquals($value, $chain->filter($value));
+        $this->assertSame($value, $chain->filter($value));
     }
 
-    public function testFiltersAreExecutedInFifoOrder()
+    public function testFiltersAreExecutedInFifoOrder(): void
     {
         $chain = new FilterChain();
         $chain->attach(new TestAsset\LowerCase())
             ->attach(new TestAsset\StripUpperCase());
         $value         = 'AbC';
         $valueExpected = 'abc';
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 
-    public function testFiltersAreExecutedAccordingToPriority()
+    public function testFiltersAreExecutedAccordingToPriority(): void
     {
         $chain = new FilterChain();
         $chain->attach(new TestAsset\StripUpperCase())
             ->attach(new TestAsset\LowerCase(), 100);
         $value         = 'AbC';
         $valueExpected = 'b';
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 
-    public function testAllowsConnectingArbitraryCallbacks()
+    public function testAllowsConnectingArbitraryCallbacks(): void
     {
         $chain = new FilterChain();
         $chain->attach(function ($value) {
             return strtolower($value);
         });
         $value = 'AbC';
-        $this->assertEquals('abc', $chain->filter($value));
+        $this->assertSame('abc', $chain->filter($value));
     }
 
-    public function testAllowsConnectingViaClassShortName()
+    public function testAllowsConnectingViaClassShortName(): void
     {
         if (! function_exists('mb_strtolower')) {
             $this->markTestSkipped('mbstring required');
@@ -72,39 +72,39 @@ class FilterChainTest extends TestCase
 
         $value         = '<a name="foo"> ABC </a>';
         $valueExpected = 'abc';
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 
-    public function testAllowsConfiguringFilters()
+    public function testAllowsConfiguringFilters(): void
     {
         $config = $this->getChainConfig();
         $chain  = new FilterChain();
         $chain->setOptions($config);
         $value         = '<a name="foo"> abc </a><img id="bar" />';
         $valueExpected = 'ABC <IMG ID="BAR" />';
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 
-    public function testAllowsConfiguringFiltersViaConstructor()
+    public function testAllowsConfiguringFiltersViaConstructor(): void
     {
         $config        = $this->getChainConfig();
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
         $valueExpected = 'ABC';
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 
-    public function testConfigurationAllowsTraversableObjects()
+    public function testConfigurationAllowsTraversableObjects(): void
     {
         $config        = $this->getChainConfig();
         $config        = new ArrayIterator($config);
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
         $valueExpected = 'ABC';
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 
-    public function testCanRetrieveFilterWithUndefinedConstructor()
+    public function testCanRetrieveFilterWithUndefinedConstructor(): void
     {
         $chain    = new FilterChain([
             'filters' => [
@@ -112,7 +112,7 @@ class FilterChainTest extends TestCase
             ],
         ]);
         $filtered = $chain->filter('127.1');
-        $this->assertEquals(127, $filtered);
+        $this->assertSame(127, $filtered);
     }
 
     protected function getChainConfig()
@@ -145,7 +145,7 @@ class FilterChainTest extends TestCase
     /**
      * @group Laminas-412
      */
-    public function testCanAttachMultipleFiltersOfTheSameTypeAsDiscreteInstances()
+    public function testCanAttachMultipleFiltersOfTheSameTypeAsDiscreteInstances(): void
     {
         $chain = new FilterChain();
         $chain->attachByName(PregReplace::class, [
@@ -157,7 +157,7 @@ class FilterChainTest extends TestCase
             'replacement' => 'PARTY',
         ]);
 
-        $this->assertEquals(2, count($chain));
+        $this->assertSame(2, count($chain));
         $filters = $chain->getFilters();
         $compare = null;
         foreach ($filters as $filter) {
@@ -165,10 +165,10 @@ class FilterChainTest extends TestCase
             $compare = $filter;
         }
 
-        $this->assertEquals('Tu et PARTY', $chain->filter('Tu et Foo'));
+        $this->assertSame('Tu et PARTY', $chain->filter('Tu et Foo'));
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $chain = new FilterChain();
         $clone = clone $chain;
@@ -178,7 +178,7 @@ class FilterChainTest extends TestCase
         $this->assertCount(0, $clone);
     }
 
-    public function testCanSerializeFilterChain()
+    public function testCanSerializeFilterChain(): void
     {
         $chain = new FilterChain();
         $chain->attach(new TestAsset\LowerCase())
@@ -187,13 +187,13 @@ class FilterChainTest extends TestCase
 
         $unserialized = unserialize($serialized);
         $this->assertInstanceOf(FilterChain::class, $unserialized);
-        $this->assertEquals(2, count($unserialized));
+        $this->assertSame(2, count($unserialized));
         $value         = 'AbC';
         $valueExpected = 'abc';
-        $this->assertEquals($valueExpected, $unserialized->filter($value));
+        $this->assertSame($valueExpected, $unserialized->filter($value));
     }
 
-    public function testMergingTwoFilterChainsKeepFiltersPriority()
+    public function testMergingTwoFilterChainsKeepFiltersPriority(): void
     {
         $value         = 'AbC';
         $valueExpected = 'abc';
@@ -201,27 +201,27 @@ class FilterChainTest extends TestCase
         $chain = new FilterChain();
         $chain->attach(new TestAsset\StripUpperCase())
             ->attach(new TestAsset\LowerCase(), 1001);
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
         $chain->attach(new TestAsset\LowerCase(), 1001)
             ->attach(new TestAsset\StripUpperCase());
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
         $chain->attach(new TestAsset\LowerCase(), 1001);
         $chainToMerge = new FilterChain();
         $chainToMerge->attach(new TestAsset\StripUpperCase());
         $chain->merge($chainToMerge);
-        $this->assertEquals(2, $chain->count());
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame(2, $chain->count());
+        $this->assertSame($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
         $chain->attach(new TestAsset\StripUpperCase());
         $chainToMerge = new FilterChain();
         $chainToMerge->attach(new TestAsset\LowerCase(), 1001);
         $chain->merge($chainToMerge);
-        $this->assertEquals(2, $chain->count());
-        $this->assertEquals($valueExpected, $chain->filter($value));
+        $this->assertSame(2, $chain->count());
+        $this->assertSame($valueExpected, $chain->filter($value));
     }
 }

@@ -46,10 +46,8 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $valuesExpected = [
             'string' => 'string',
@@ -61,72 +59,61 @@ class HtmlEntitiesTest extends TestCase
         ];
         $filter         = $this->_filter;
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
+            $this->assertSame($output, $filter($input));
         }
     }
 
     /**
      * Ensures that getQuoteStyle() returns expected default value
-     *
-     * @return void
      */
-    public function testGetQuoteStyle()
+    public function testGetQuoteStyle(): void
     {
-        $this->assertEquals(ENT_QUOTES, $this->_filter->getQuoteStyle());
+        $this->assertSame(ENT_QUOTES, $this->_filter->getQuoteStyle());
     }
 
     /**
      * Ensures that setQuoteStyle() follows expected behavior
-     *
-     * @return void
      */
-    public function testSetQuoteStyle()
+    public function testSetQuoteStyle(): void
     {
         $this->_filter->setQuoteStyle(ENT_QUOTES);
-        $this->assertEquals(ENT_QUOTES, $this->_filter->getQuoteStyle());
+        $this->assertSame(ENT_QUOTES, $this->_filter->getQuoteStyle());
     }
 
     /**
      * Ensures that getCharSet() returns expected default value
      *
      * @group Laminas-8715
-     * @return void
      */
-    public function testGetCharSet()
+    public function testGetCharSet(): void
     {
-        $this->assertEquals('UTF-8', $this->_filter->getCharSet());
+        $this->assertSame('UTF-8', $this->_filter->getCharSet());
     }
 
     /**
      * Ensures that setCharSet() follows expected behavior
-     *
-     * @return void
      */
-    public function testSetCharSet()
+    public function testSetCharSet(): void
     {
         $this->_filter->setCharSet('UTF-8');
-        $this->assertEquals('UTF-8', $this->_filter->getCharSet());
+        $this->assertSame('UTF-8', $this->_filter->getCharSet());
     }
 
     /**
      * Ensures that getDoubleQuote() returns expected default value
-     *
-     * @return void
      */
-    public function testGetDoubleQuote()
+    public function testGetDoubleQuote(): void
     {
-        $this->assertEquals(true, $this->_filter->getDoubleQuote());
+        $this->assertSame(true, $this->_filter->getDoubleQuote());
     }
 
     /**
      * Ensures that setDoubleQuote() follows expected behavior
-     *
-     * @return void
      */
-    public function testSetDoubleQuote()
+    public function testSetDoubleQuote(): void
     {
         $this->_filter->setDoubleQuote(false);
-        $this->assertEquals(false, $this->_filter->getDoubleQuote());
+        $this->assertSame(false, $this->_filter->getDoubleQuote());
     }
 
     /**
@@ -134,7 +121,7 @@ class HtmlEntitiesTest extends TestCase
      *
      * @group Laminas-3172
      */
-    public function testFluentInterface()
+    public function testFluentInterface(): void
     {
         $instance = $this->_filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES)->setDoubleQuote(false);
         $this->assertInstanceOf(HtmlEntitiesFilter::class, $instance);
@@ -147,7 +134,7 @@ class HtmlEntitiesTest extends TestCase
      *
      * @group Laminas-8995
      */
-    public function testConfigObject()
+    public function testConfigObject(): void
     {
         $options = ['quotestyle' => 5, 'encoding' => 'ISO-8859-1'];
         $config  = new ArrayObject($options);
@@ -156,59 +143,56 @@ class HtmlEntitiesTest extends TestCase
             $config
         );
 
-        $this->assertEquals('ISO-8859-1', $filter->getEncoding());
-        $this->assertEquals(5, $filter->getQuoteStyle());
+        $this->assertSame('ISO-8859-1', $filter->getEncoding());
+        $this->assertSame(5, $filter->getQuoteStyle());
     }
 
     /**
      * Ensures that when ENT_QUOTES is set, the filtered value has both 'single' and "double" quotes encoded
      *
      * @group  Laminas-8962
-     * @return void
      */
-    public function testQuoteStyleQuotesEncodeBoth()
+    public function testQuoteStyleQuotesEncodeBoth(): void
     {
         $input  = "A 'single' and " . '"double"';
         $result = 'A &#039;single&#039; and &quot;double&quot;';
 
         $this->_filter->setQuoteStyle(ENT_QUOTES);
-        $this->assertEquals($result, $this->_filter->filter($input));
+        $this->assertSame($result, $this->_filter->filter($input));
     }
 
     /**
      * Ensures that when ENT_COMPAT is set, the filtered value has only "double" quotes encoded
      *
      * @group  Laminas-8962
-     * @return void
      */
-    public function testQuoteStyleQuotesEncodeDouble()
+    public function testQuoteStyleQuotesEncodeDouble(): void
     {
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and &quot;double&quot;";
 
         $this->_filter->setQuoteStyle(ENT_COMPAT);
-        $this->assertEquals($result, $this->_filter->filter($input));
+        $this->assertSame($result, $this->_filter->filter($input));
     }
 
     /**
      * Ensures that when ENT_NOQUOTES is set, the filtered value leaves both "double" and 'single' quotes un-altered
      *
      * @group  Laminas-8962
-     * @return void
      */
-    public function testQuoteStyleQuotesEncodeNone()
+    public function testQuoteStyleQuotesEncodeNone(): void
     {
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and " . '"double"';
 
         $this->_filter->setQuoteStyle(ENT_NOQUOTES);
-        $this->assertEquals($result, $this->_filter->filter($input));
+        $this->assertSame($result, $this->_filter->filter($input));
     }
 
     /**
      * @group Laminas-11344
      */
-    public function testCorrectsForEncodingMismatch()
+    public function testCorrectsForEncodingMismatch(): void
     {
         if (version_compare(phpversion(), '5.4', '>=')) {
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
@@ -228,7 +212,7 @@ class HtmlEntitiesTest extends TestCase
     /**
      * @group Laminas-11344
      */
-    public function testStripsUnknownCharactersWhenEncodingMismatchDetected()
+    public function testStripsUnknownCharactersWhenEncodingMismatchDetected(): void
     {
         if (version_compare(phpversion(), '5.4', '>=')) {
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
@@ -248,7 +232,7 @@ class HtmlEntitiesTest extends TestCase
     /**
      * @group Laminas-11344
      */
-    public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty()
+    public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty(): void
     {
         if (version_compare(phpversion(), '5.4', '>=')) {
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
@@ -284,11 +268,10 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
-        $this->assertEquals($input, $this->_filter->filter($input));
+        $this->assertSame($input, $this->_filter->filter($input));
     }
 
     /**

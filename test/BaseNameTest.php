@@ -12,10 +12,8 @@ class BaseNameTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter         = new BaseNameFilter();
         $valuesExpected = [
@@ -23,7 +21,7 @@ class BaseNameTest extends TestCase
             '/path/to/filename.ext' => 'filename.ext',
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
+            $this->assertSame($output, $filter($input));
         }
     }
 
@@ -43,12 +41,11 @@ class BaseNameTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new BaseNameFilter();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

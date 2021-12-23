@@ -20,10 +20,8 @@ class LzfTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage(): void
     {
         $filter = new LlaminasCompression();
 
@@ -32,17 +30,15 @@ class LzfTest extends TestCase
         $this->assertNotEquals($text, $compressed);
 
         $decompressed = $filter->decompress($compressed);
-        $this->assertEquals($text, $decompressed);
+        $this->assertSame($text, $decompressed);
     }
 
     /**
      * testing toString
-     *
-     * @return void
      */
-    public function testLlaminasToString()
+    public function testLlaminasToString(): void
     {
         $filter = new LlaminasCompression();
-        $this->assertEquals('Llaminas', $filter->toString());
+        $this->assertSame('Llaminas', $filter->toString());
     }
 }

@@ -42,10 +42,8 @@ class RealPathTest extends TestCase
 
     /**
      * Ensures expected behavior for existing file
-     *
-     * @return void
      */
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $filter   = $this->_filter;
         $filename = 'file.1';
@@ -54,24 +52,19 @@ class RealPathTest extends TestCase
 
     /**
      * Ensures expected behavior for nonexistent file
-     *
-     * @return void
      */
-    public function testFileNonexistent()
+    public function testFileNonexistent(): void
     {
         $filter = $this->_filter;
         $path   = '/path/to/nonexistent';
         if (false !== strpos(PHP_OS, 'BSD')) {
-            $this->assertEquals($path, $filter($path));
+            $this->assertSame($path, $filter($path));
         } else {
-            $this->assertEquals(false, $filter($path));
+            $this->assertSame(false, $filter($path));
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testGetAndSetExistsParameter()
+    public function testGetAndSetExistsParameter(): void
     {
         $this->assertTrue($this->_filter->getExists());
         $this->_filter->setExists(false);
@@ -81,25 +74,22 @@ class RealPathTest extends TestCase
         $this->assertTrue($this->_filter->getExists());
     }
 
-    /**
-     * @return void
-     */
-    public function testNonExistantPath()
+    public function testNonExistantPath(): void
     {
         $filter = $this->_filter;
         $filter->setExists(false);
 
         $path = __DIR__ . DIRECTORY_SEPARATOR . '_files';
-        $this->assertEquals($path, $filter($path));
+        $this->assertSame($path, $filter($path));
 
         $path2 = __DIR__ . DIRECTORY_SEPARATOR . '_files'
                . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files';
-        $this->assertEquals($path, $filter($path2));
+        $this->assertSame($path, $filter($path2));
 
         $path3 = __DIR__ . DIRECTORY_SEPARATOR . '_files'
                . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.'
                . DIRECTORY_SEPARATOR . '_files';
-        $this->assertEquals($path, $filter($path3));
+        $this->assertSame($path, $filter($path3));
     }
 
     public function returnUnfilteredDataProvider()
@@ -118,10 +108,9 @@ class RealPathTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
-        $this->assertEquals($input, $this->_filter->filter($input));
+        $this->assertSame($input, $this->_filter->filter($input));
     }
 }

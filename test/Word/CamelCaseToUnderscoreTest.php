@@ -9,37 +9,37 @@ use PHPUnit\Framework\TestCase;
 
 class CamelCaseToUnderscoreTest extends TestCase
 {
-    public function testFilterSeparatesCamelCasedWordsWithUnderscores()
+    public function testFilterSeparatesCamelCasedWordsWithUnderscores(): void
     {
         $string   = 'CamelCasedWords';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('Camel_Cased_Words', $filtered);
+        $this->assertSame('Camel_Cased_Words', $filtered);
     }
 
-    public function testFilterSeperatingNumbersToUnterscore()
+    public function testFilterSeperatingNumbersToUnterscore(): void
     {
         $string   = 'PaTitle';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('Pa_Title', $filtered);
+        $this->assertSame('Pa_Title', $filtered);
 
         $string   = 'Pa2Title';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('Pa2_Title', $filtered);
+        $this->assertSame('Pa2_Title', $filtered);
 
         $string   = 'Pa2aTitle';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('Pa2a_Title', $filtered);
+        $this->assertSame('Pa2a_Title', $filtered);
     }
 }

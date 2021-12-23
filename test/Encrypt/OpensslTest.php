@@ -26,10 +26,8 @@ class OpensslTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasicOpenssl()
+    public function testBasicOpenssl(): void
     {
         $filter         = new OpensslEncryption(__DIR__ . '/../_files/publickey.pem');
         $valuesExpected = [
@@ -39,7 +37,7 @@ class OpensslTest extends TestCase
         ];
 
         $key = $filter->getPublicKey();
-        $this->assertEquals(
+        $this->assertSame(
             [
                 __DIR__ . '/../_files/publickey.pem'
                   => '-----BEGIN CERTIFICATE-----
@@ -71,10 +69,8 @@ PIDs9E7uuizAKDhRRRvho8BS
 
     /**
      * Ensures that the filter allows de/encryption
-     *
-     * @return void
      */
-    public function testEncryptionWithDecryptionOpenssl()
+    public function testEncryptionWithDecryptionOpenssl(): void
     {
         if (version_compare(phpversion(), '5.4', '>=')) {
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
@@ -95,15 +91,13 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
         $filter->setPrivateKey(__DIR__ . '/../_files/privatekey.pem');
         $filter->setEnvelopeKey($envelopekeys);
         $input = $filter->decrypt($output);
-        $this->assertEquals('teststring', trim($input));
+        $this->assertSame('teststring', trim($input));
     }
 
     /**
      * Ensures that the filter allows de/encryption
-     *
-     * @return void
      */
-    public function testEncryptionWithDecryptionSingleOptionOpenssl()
+    public function testEncryptionWithDecryptionSingleOptionOpenssl(): void
     {
         if (version_compare(phpversion(), '5.4', '>=')) {
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
@@ -124,13 +118,10 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt';
         $filter->setPrivateKey(__DIR__ . '/../_files/privatekey.pem', $phrase);
         $filter->setEnvelopeKey($envelopekeys);
         $input = $filter->decrypt($output);
-        $this->assertEquals('teststring', trim($input));
+        $this->assertSame('teststring', trim($input));
     }
 
-    /**
-     * @return void
-     */
-    public function testSetPublicKey()
+    public function testSetPublicKey(): void
     {
         $filter = new OpensslEncryption();
 
@@ -142,16 +133,13 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt';
         $filter->setPublicKey(123);
     }
 
-    /**
-     * @return void
-     */
-    public function testSetPrivateKey()
+    public function testSetPrivateKey(): void
     {
         $filter = new OpensslEncryption();
 
         $filter->setPrivateKey(['public' => __DIR__ . '/../_files/privatekey.pem']);
         $test = $filter->getPrivateKey();
-        $this->assertEquals([
+        $this->assertSame([
             __DIR__ . '/../_files/privatekey.pem' => '-----BEGIN RSA PRIVATE KEY-----
 MIICXgIBAAKBgQDKTIp7FntJt1BioBZ0lmWBE8CyzngeGCHNMcAC4JLbi1Y0LwT4
 CSaQarbvAqBRmc+joHX+rcURm89wOibRaThrrZcvgl2pomzu7shJc0ObiRZC8H7p
@@ -175,19 +163,13 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter->setPrivateKey(123);
     }
 
-    /**
-     * @return void
-     */
-    public function testToString()
+    public function testToString(): void
     {
         $filter = new OpensslEncryption();
-        $this->assertEquals('Openssl', $filter->toString());
+        $this->assertSame('Openssl', $filter->toString());
     }
 
-    /**
-     * @return void
-     */
-    public function testInvalidDecryption()
+    public function testInvalidDecryption(): void
     {
         $filter = new OpensslEncryption();
         try {
@@ -214,10 +196,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testEncryptionWithoutPublicKey()
+    public function testEncryptionWithoutPublicKey(): void
     {
         $filter = new OpensslEncryption();
 
@@ -226,10 +205,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter->encrypt('unknown');
     }
 
-    /**
-     * @return void
-     */
-    public function testMultipleOptionsAtInitiation()
+    public function testMultipleOptionsAtInitiation(): void
     {
         $passphrase = 'test';
         $filter     = new OpensslEncryption([
@@ -239,15 +215,13 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         ]);
         $public     = $filter->getPublicKey();
         $this->assertNotEmpty($public);
-        $this->assertEquals($passphrase, $filter->getPassphrase());
+        $this->assertSame($passphrase, $filter->getPassphrase());
     }
 
     /**
      * Ensures that the filter allows de/encryption
-     *
-     * @return void
      */
-    public function testEncryptionWithDecryptionWithPackagedKeys()
+    public function testEncryptionWithDecryptionWithPackagedKeys(): void
     {
         $filter = new OpensslEncryption();
         $filter->setPublicKey(__DIR__ . '/../_files/publickey_pass.pem');
@@ -258,15 +232,13 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $phrase = 'test';
         $filter->setPrivateKey(__DIR__ . '/../_files/privatekey_pass.pem', $phrase);
         $input = $filter->decrypt($output);
-        $this->assertEquals('teststring', trim($input));
+        $this->assertSame('teststring', trim($input));
     }
 
     /**
      * Ensures that the filter allows de/encryption
-     *
-     * @return void
      */
-    public function testEncryptionWithDecryptionAndCompressionWithPackagedKeys()
+    public function testEncryptionWithDecryptionAndCompressionWithPackagedKeys(): void
     {
         if (! extension_loaded('bz2')) {
             $this->markTestSkipped('Bz2 extension for compression test needed');
@@ -282,10 +254,10 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $phrase = 'test';
         $filter->setPrivateKey(__DIR__ . '/../_files/privatekey_pass.pem', $phrase);
         $input = $filter->decrypt($output);
-        $this->assertEquals('teststring', trim($input));
+        $this->assertSame('teststring', trim($input));
     }
 
-    public function testPassCompressionConfigWillBeUnsetCorrectly()
+    public function testPassCompressionConfigWillBeUnsetCorrectly(): void
     {
         $filter = new OpensslEncryption([
             'compression' => 'bz2',
