@@ -107,6 +107,8 @@ abstract class AbstractFilter implements FilterInterface
     }
 
     /**
+     * @internal
+     *
      * @param  mixed $value
      * @return mixed
      */
