@@ -20,7 +20,7 @@ class FilterPluginManagerFactoryTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testFactoryReturnsPluginManager()
+    public function testFactoryReturnsPluginManager(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
         $factory   = new FilterPluginManagerFactory();
@@ -43,7 +43,7 @@ class FilterPluginManagerFactoryTest extends TestCase
     /**
      * @depends testFactoryReturnsPluginManager
      */
-    public function testFactoryConfiguresPluginManagerUnderContainerInterop()
+    public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
         $filter    = function ($value) {
@@ -82,7 +82,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $this->assertSame($filter, $filters->get('test'));
     }
 
-    public function testConfiguresFilterServicesWhenFound()
+    public function testConfiguresFilterServicesWhenFound(): void
     {
         $filter = $this->prophesize(FilterInterface::class)->reveal();
         $config = [
@@ -115,7 +115,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $this->assertSame($filter, $filters->get('test-too'));
     }
 
-    public function testDoesNotConfigureFilterServicesWhenServiceListenerPresent()
+    public function testDoesNotConfigureFilterServicesWhenServiceListenerPresent(): void
     {
         $filter = $this->prophesize(FilterInterface::class)->reveal();
         $config = [
@@ -146,7 +146,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $this->assertFalse($filters->has('test-too'));
     }
 
-    public function testDoesNotConfigureFilterServicesWhenConfigServiceNotPresent()
+    public function testDoesNotConfigureFilterServicesWhenConfigServiceNotPresent(): void
     {
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);
@@ -161,7 +161,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $this->assertInstanceOf(FilterPluginManager::class, $filters);
     }
 
-    public function testDoesNotConfigureFilterServicesWhenConfigServiceDoesNotContainFiltersConfig()
+    public function testDoesNotConfigureFilterServicesWhenConfigServiceDoesNotContainFiltersConfig(): void
     {
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);

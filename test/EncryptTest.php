@@ -23,10 +23,8 @@ class EncryptTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasicBlockCipher()
+    public function testBasicBlockCipher(): void
     {
         $filter         = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $valuesExpected = [
@@ -41,7 +39,7 @@ class EncryptTest extends TestCase
 
         $enc = $filter->getEncryption();
         $filter->setVector('1234567890123456');
-        $this->assertEquals('testkey', $enc['key']);
+        $this->assertSame('testkey', $enc['key']);
         foreach ($valuesExpected as $input => $output) {
             $this->assertNotEquals($output, $filter($input));
         }
@@ -50,22 +48,20 @@ class EncryptTest extends TestCase
     /**
      * Ensures that the encryption works fine
      */
-    public function testEncryptBlockCipher()
+    public function testEncryptBlockCipher(): void
     {
         $encrypt = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $encrypt->setVector('1234567890123456890');
         $encrypted = $encrypt->filter('test');
         // @codingStandardsIgnoreStart
-        $this->assertEquals($encrypted, 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
+        $this->assertSame($encrypted, 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
         // @codingStandardsIgnoreEnd
     }
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasicOpenssl()
+    public function testBasicOpenssl(): void
     {
         if (! extension_loaded('openssl')) {
             $this->markTestSkipped('Openssl extension not installed');
@@ -80,7 +76,7 @@ class EncryptTest extends TestCase
 
         $filter->setPublicKey(__DIR__ . '/_files/publickey.pem');
         $key = $filter->getPublicKey();
-        $this->assertEquals(
+        $this->assertSame(
             [
                 __DIR__ . '/_files/publickey.pem'
                   => '-----BEGIN CERTIFICATE-----
@@ -110,10 +106,7 @@ PIDs9E7uuizAKDhRRRvho8BS
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testSettingAdapterManually()
+    public function testSettingAdapterManually(): void
     {
         if (! extension_loaded('openssl')) {
             $this->markTestSkipped('Openssl extension not installed');
@@ -121,11 +114,11 @@ PIDs9E7uuizAKDhRRRvho8BS
 
         $filter = new EncryptFilter();
         $filter->setAdapter('Openssl');
-        $this->assertEquals('Openssl', $filter->getAdapter());
+        $this->assertSame('Openssl', $filter->getAdapter());
         $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
-        $this->assertEquals('BlockCipher', $filter->getAdapter());
+        $this->assertSame('BlockCipher', $filter->getAdapter());
         $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -133,10 +126,7 @@ PIDs9E7uuizAKDhRRRvho8BS
         $filter->setAdapter(stdClass::class);
     }
 
-    /**
-     * @return void
-     */
-    public function testCallingUnknownMethod()
+    public function testCallingUnknownMethod(): void
     {
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown method');
@@ -160,14 +150,13 @@ PIDs9E7uuizAKDhRRRvho8BS
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $encrypt = new EncryptFilter(['adapter' => 'BlockCipher', 'key' => 'testkey']);
         $encrypt->setVector('1234567890123456890');
 
         $encrypted = $encrypt->filter($input);
-        $this->assertEquals($input, $encrypted);
+        $this->assertSame($input, $encrypted);
     }
 }

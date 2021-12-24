@@ -34,10 +34,8 @@ class DigitsTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter = new DigitsFilter();
 
@@ -71,7 +69,7 @@ class DigitsTest extends TestCase
         }
 
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals(
+            $this->assertSame(
                 $output,
                 $result = $filter($input),
                 "Expected '$input' to filter to '$output', but received '$result' instead"
@@ -97,9 +95,8 @@ class DigitsTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new DigitsFilter();
 

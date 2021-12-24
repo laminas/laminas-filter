@@ -9,69 +9,69 @@ use PHPUnit\Framework\TestCase;
 
 class UnderscoreToStudlyCaseTest extends TestCase
 {
-    public function testFilterSeparatesStudlyCasedWordsWithDashes()
+    public function testFilterSeparatesStudlyCasedWordsWithDashes(): void
     {
         $string   = 'studly_cased_words';
         $filter   = new UnderscoreToStudlyCase();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('studlyCasedWords', $filtered);
+        $this->assertSame('studlyCasedWords', $filtered);
     }
 
-    public function testSomeFilterValues()
+    public function testSomeFilterValues(): void
     {
         $filter = new UnderscoreToStudlyCase();
 
         $string   = 'laminas_project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminasProject', $filtered);
+        $this->assertSame('laminasProject', $filtered);
 
         $string   = 'laminas_Project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminasProject', $filtered);
+        $this->assertSame('laminasProject', $filtered);
 
         $string   = 'laminasProject';
         $filtered = $filter($string);
-        $this->assertEquals('laminasProject', $filtered);
+        $this->assertSame('laminasProject', $filtered);
 
         $string   = 'laminas';
         $filtered = $filter($string);
-        $this->assertEquals('laminas', $filtered);
+        $this->assertSame('laminas', $filtered);
 
         $string   = '_laminas';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminas', $filtered);
+        $this->assertSame('laminas', $filtered);
 
         $string   = '_laminas_project';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('laminasProject', $filtered);
+        $this->assertSame('laminasProject', $filtered);
     }
 
-    public function testFiltersArray()
+    public function testFiltersArray(): void
     {
         $filter = new UnderscoreToStudlyCase();
 
         $string   = ['laminas_project', '_laminas_project'];
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals(['laminasProject', 'laminasProject'], $filtered);
+        $this->assertSame(['laminasProject', 'laminasProject'], $filtered);
     }
 
-    public function testWithEmpties()
+    public function testWithEmpties(): void
     {
         $filter = new UnderscoreToStudlyCase();
 
         $string   = '';
         $filtered = $filter($string);
-        $this->assertEquals('', $filtered);
+        $this->assertSame('', $filtered);
 
         $string   = ['', 'Laminas_Project'];
         $filtered = $filter($string);
-        $this->assertEquals(['', 'laminasProject'], $filtered);
+        $this->assertSame(['', 'laminasProject'], $filtered);
     }
 }

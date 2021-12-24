@@ -47,45 +47,40 @@ class EncryptTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter = new FileEncrypt();
         $filter->setFilename($this->testFile);
 
-        $this->assertEquals($this->testFile, $filter->getFilename());
+        $this->assertSame($this->testFile, $filter->getFilename());
 
         $filter->setKey('1234567890123456');
-        $this->assertEquals($this->testFile, $filter->filter($this->fileToEncrypt));
+        $this->assertSame($this->testFile, $filter->filter($this->fileToEncrypt));
 
-        $this->assertEquals('Encryption', file_get_contents($this->fileToEncrypt));
+        $this->assertSame('Encryption', file_get_contents($this->fileToEncrypt));
 
         $this->assertNotEquals('Encryption', file_get_contents($this->testFile));
     }
 
-    public function testEncryptionWithDecryption()
+    public function testEncryptionWithDecryption(): void
     {
         $filter = new FileEncrypt();
         $filter->setFilename($this->testFile);
         $filter->setKey('1234567890123456');
-        $this->assertEquals($this->testFile, $filter->filter($this->fileToEncrypt));
+        $this->assertSame($this->testFile, $filter->filter($this->fileToEncrypt));
 
         $this->assertNotEquals('Encryption', file_get_contents($this->testFile));
 
         $filter = new FileDecrypt();
         $filter->setKey('1234567890123456');
         $input = $filter->filter($this->testFile);
-        $this->assertEquals($this->testFile, $input);
+        $this->assertSame($this->testFile, $input);
 
-        $this->assertEquals('Encryption', trim(file_get_contents($this->testFile)));
+        $this->assertSame('Encryption', trim(file_get_contents($this->testFile)));
     }
 
-    /**
-     * @return void
-     */
-    public function testNonExistingFile()
+    public function testNonExistingFile(): void
     {
         $filter = new FileEncrypt();
         $filter->setKey('1234567890123456');
@@ -95,10 +90,7 @@ class EncryptTest extends TestCase
         $filter->filter(sprintf('%s/%s.txt', $this->testDir, uniqid()));
     }
 
-    /**
-     * @return void
-     */
-    public function testEncryptionInSameFile()
+    public function testEncryptionInSameFile(): void
     {
         $filter = new FileEncrypt();
         $filter->setKey('1234567890123456');
@@ -125,13 +117,12 @@ class EncryptTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new FileEncrypt();
         $filter->setKey('1234567890123456');
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

@@ -9,13 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 class DashToCamelCaseTest extends TestCase
 {
-    public function testFilterSeparatesCamelCasedWordsWithDashes()
+    public function testFilterSeparatesCamelCasedWordsWithDashes(): void
     {
         $string   = 'camel-cased-words';
         $filter   = new DashToCamelCaseFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('CamelCasedWords', $filtered);
+        $this->assertSame('CamelCasedWords', $filtered);
     }
 }

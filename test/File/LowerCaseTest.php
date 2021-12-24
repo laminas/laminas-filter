@@ -51,10 +51,7 @@ class LowerCaseTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testInstanceCreationAndNormalWorkflow()
+    public function testInstanceCreationAndNormalWorkflow(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileLowerCase();
@@ -62,10 +59,7 @@ class LowerCaseTest extends TestCase
         $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testNormalWorkflowWithFilesArray()
+    public function testNormalWorkflowWithFilesArray(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileLowerCase();
@@ -73,10 +67,7 @@ class LowerCaseTest extends TestCase
         $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testFileNotFoundException()
+    public function testFileNotFoundException(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
@@ -84,10 +75,7 @@ class LowerCaseTest extends TestCase
         $filter($this->testFile . 'unknown');
     }
 
-    /**
-     * @return void
-     */
-    public function testCheckSettingOfEncodingInIstance()
+    public function testCheckSettingOfEncodingInIstance(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
@@ -99,10 +87,7 @@ class LowerCaseTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testCheckSettingOfEncodingWithMethod()
+    public function testCheckSettingOfEncodingWithMethod(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
@@ -131,12 +116,11 @@ class LowerCaseTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new FileLowerCase();
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

@@ -65,10 +65,8 @@ class TarTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage(): void
     {
         $filter = new TarCompression(
             [
@@ -78,26 +76,24 @@ class TarTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertEquals(
+        $this->assertSame(
             $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
             $content
         );
 
         $content = $filter->decompress($content);
-        $this->assertEquals($this->tmp . DIRECTORY_SEPARATOR, $content);
+        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * Setting Options
-     *
-     * @return void
      */
-    public function testTarGetSetOptions()
+    public function testTarGetSetOptions(): void
     {
         $filter = new TarCompression();
-        $this->assertEquals(
+        $this->assertSame(
             [
                 'archive' => null,
                 'target'  => '.',
@@ -106,42 +102,38 @@ class TarTest extends TestCase
             $filter->getOptions()
         );
 
-        $this->assertEquals(null, $filter->getOptions('archive'));
+        $this->assertSame(null, $filter->getOptions('archive'));
 
         $this->assertNull($filter->getOptions('nooption'));
         $filter->setOptions(['nooptions' => 'foo']);
         $this->assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['archive' => 'temp.txt']);
-        $this->assertEquals('temp.txt', $filter->getOptions('archive'));
+        $this->assertSame('temp.txt', $filter->getOptions('archive'));
     }
 
     /**
      * Setting Archive
-     *
-     * @return void
      */
-    public function testTarGetSetArchive()
+    public function testTarGetSetArchive(): void
     {
         $filter = new TarCompression();
-        $this->assertEquals(null, $filter->getArchive());
+        $this->assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertEquals('Testfile.txt', $filter->getArchive());
-        $this->assertEquals('Testfile.txt', $filter->getOptions('archive'));
+        $this->assertSame('Testfile.txt', $filter->getArchive());
+        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
      * Setting Target
-     *
-     * @return void
      */
-    public function testTarGetSetTarget()
+    public function testTarGetSetTarget(): void
     {
         $filter = new TarCompression();
-        $this->assertEquals('.', $filter->getTarget());
+        $this->assertSame('.', $filter->getTarget());
         $filter->setTarget('Testfile.txt');
-        $this->assertEquals('Testfile.txt', $filter->getTarget());
-        $this->assertEquals('Testfile.txt', $filter->getOptions('target'));
+        $this->assertSame('Testfile.txt', $filter->getTarget());
+        $this->assertSame('Testfile.txt', $filter->getOptions('target'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not exist');
@@ -150,10 +142,8 @@ class TarTest extends TestCase
 
     /**
      * Setting Archive
-     *
-     * @return void
      */
-    public function testTarCompressToFile()
+    public function testTarCompressToFile(): void
     {
         $filter = new TarCompression(
             [
@@ -164,23 +154,21 @@ class TarTest extends TestCase
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
 
         $content = $filter->compress($this->tmp . '/zipextracted.txt');
-        $this->assertEquals(
+        $this->assertSame(
             $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
             $content
         );
 
         $content = $filter->decompress($content);
-        $this->assertEquals($this->tmp . DIRECTORY_SEPARATOR, $content);
+        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * Compress directory to Filename
-     *
-     * @return void
      */
-    public function testTarCompressDirectory()
+    public function testTarCompressDirectory(): void
     {
         $filter  = new TarCompression(
             [
@@ -189,13 +177,13 @@ class TarTest extends TestCase
             ]
         );
         $content = $filter->compress(dirname(__DIR__) . '/_files/Compress');
-        $this->assertEquals(
+        $this->assertSame(
             $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
             $content
         );
     }
 
-    public function testSetModeShouldWorkWithCaseInsensitive()
+    public function testSetModeShouldWorkWithCaseInsensitive(): void
     {
         $filter = new TarCompression();
         $filter->setTarget($this->tmp . '/zipextracted.txt');
@@ -208,25 +196,23 @@ class TarTest extends TestCase
             $filter->setArchive($archive);
             $filter->setMode($mode);
             $content = $filter->compress('compress me');
-            $this->assertEquals($archive, $content);
+            $this->assertSame($archive, $content);
         }
     }
 
     /**
      * testing toString
-     *
-     * @return void
      */
-    public function testTarToString()
+    public function testTarToString(): void
     {
         $filter = new TarCompression();
-        $this->assertEquals('Tar', $filter->toString());
+        $this->assertSame('Tar', $filter->toString());
     }
 
     /**
      * @see https://github.com/zendframework/zend-filter/issues/41
      */
-    public function testDecompressionDoesNotRequireArchive()
+    public function testDecompressionDoesNotRequireArchive(): void
     {
         $filter = new TarCompression([
             'archive' => $this->tmp . '/compressed.tar',

@@ -37,10 +37,8 @@ class Bz2Test extends TestCase
 
     /**
      * Basic usage
-     *
-     * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage(): void
     {
         $filter = new Bz2Compression();
 
@@ -48,7 +46,7 @@ class Bz2Test extends TestCase
         $this->assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
@@ -59,17 +57,17 @@ class Bz2Test extends TestCase
     public function testBz2GetSetOptions()
     {
         $filter = new Bz2Compression();
-        $this->assertEquals(['blocksize' => 4, 'archive' => null], $filter->getOptions());
+        $this->assertSame(['blocksize' => 4, 'archive' => null], $filter->getOptions());
 
-        $this->assertEquals(4, $filter->getOptions('blocksize'));
+        $this->assertSame(4, $filter->getOptions('blocksize'));
 
         $this->assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['blocksize' => 6]);
-        $this->assertEquals(6, $filter->getOptions('blocksize'));
+        $this->assertSame(6, $filter->getOptions('blocksize'));
 
         $filter->setOptions(['archive' => 'test.txt']);
-        $this->assertEquals('test.txt', $filter->getOptions('archive'));
+        $this->assertSame('test.txt', $filter->getOptions('archive'));
 
         $filter->setOptions(['nooption' => 0]);
         $this->assertNull($filter->getOptions('nooption'));
@@ -83,7 +81,7 @@ class Bz2Test extends TestCase
     public function testBz2GetSetOptionsInConstructor()
     {
         $filter2 = new Bz2Compression(['blocksize' => 8]);
-        $this->assertEquals(['blocksize' => 8, 'archive' => null], $filter2->getOptions());
+        $this->assertSame(['blocksize' => 8, 'archive' => null], $filter2->getOptions());
     }
 
     /**
@@ -94,9 +92,9 @@ class Bz2Test extends TestCase
     public function testBz2GetSetBlocksize()
     {
         $filter = new Bz2Compression();
-        $this->assertEquals(4, $filter->getBlocksize());
+        $this->assertSame(4, $filter->getBlocksize());
         $filter->setBlocksize(6);
-        $this->assertEquals(6, $filter->getOptions('blocksize'));
+        $this->assertSame(6, $filter->getOptions('blocksize'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('must be between');
@@ -111,10 +109,10 @@ class Bz2Test extends TestCase
     public function testBz2GetSetArchive()
     {
         $filter = new Bz2Compression();
-        $this->assertEquals(null, $filter->getArchive());
+        $this->assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertEquals('Testfile.txt', $filter->getArchive());
-        $this->assertEquals('Testfile.txt', $filter->getOptions('archive'));
+        $this->assertSame('Testfile.txt', $filter->getArchive());
+        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -133,12 +131,12 @@ class Bz2Test extends TestCase
 
         $filter2  = new Bz2Compression();
         $content2 = $filter2->decompress($archive);
-        $this->assertEquals('compress me', $content2);
+        $this->assertSame('compress me', $content2);
 
         $filter3 = new Bz2Compression();
         $filter3->setArchive($archive);
         $content3 = $filter3->decompress(null);
-        $this->assertEquals('compress me', $content3);
+        $this->assertSame('compress me', $content3);
     }
 
     /**
@@ -149,7 +147,7 @@ class Bz2Test extends TestCase
     public function testBz2ToString()
     {
         $filter = new Bz2Compression();
-        $this->assertEquals('Bz2', $filter->toString());
+        $this->assertSame('Bz2', $filter->toString());
     }
 
     /**
@@ -168,7 +166,7 @@ class Bz2Test extends TestCase
 
         $filter2  = new Bz2Compression();
         $content2 = $filter2->decompress($archive);
-        $this->assertEquals('compress me', $content2);
+        $this->assertSame('compress me', $content2);
     }
 
     public function testBz2DecompressNullValueIsAccepted()

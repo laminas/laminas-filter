@@ -52,10 +52,7 @@ class UpperCaseTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testInstanceCreationAndNormalWorkflow()
+    public function testInstanceCreationAndNormalWorkflow(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileUpperCase();
@@ -63,10 +60,7 @@ class UpperCaseTest extends TestCase
         $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testNormalWorkflowWithFilesArray()
+    public function testNormalWorkflowWithFilesArray(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileUpperCase();
@@ -74,10 +68,7 @@ class UpperCaseTest extends TestCase
         $this->assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testFileNotFoundException()
+    public function testFileNotFoundException(): void
     {
         $filter = new FileUpperCase();
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -85,10 +76,7 @@ class UpperCaseTest extends TestCase
         $filter($this->testFile . 'unknown');
     }
 
-    /**
-     * @return void
-     */
-    public function testCheckSettingOfEncodingInIstance()
+    public function testCheckSettingOfEncodingInIstance(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
@@ -100,10 +88,7 @@ class UpperCaseTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testCheckSettingOfEncodingWithMethod()
+    public function testCheckSettingOfEncodingWithMethod(): void
     {
         $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
@@ -132,13 +117,12 @@ class UpperCaseTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new FileUpperCase();
         $filter->setEncoding('ISO-8859-1');
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

@@ -25,10 +25,8 @@ class SnappyTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @return void
      */
-    public function testBasicUsage()
+    public function testBasicUsage(): void
     {
         $filter = new SnappyCompression();
 
@@ -36,15 +34,13 @@ class SnappyTest extends TestCase
         $this->assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertEquals('compress me', $content);
+        $this->assertSame('compress me', $content);
     }
 
     /**
      * Snappy should return NULL on invalid arguments.
-     *
-     * @return void
      */
-    public function testNonScalarInput()
+    public function testNonScalarInput(): void
     {
         $filter = new SnappyCompression();
 
@@ -59,24 +55,20 @@ class SnappyTest extends TestCase
 
     /**
      * Snappy should handle empty input data correctly.
-     *
-     * @return void
      */
-    public function testEmptyString()
+    public function testEmptyString(): void
     {
         $filter = new SnappyCompression();
 
         $content = $filter->compress(false);
         $content = $filter->decompress($content);
-        $this->assertEquals('', $content, 'Snappy failed to decompress empty string.');
+        $this->assertSame('', $content, 'Snappy failed to decompress empty string.');
     }
 
     /**
      * Snappy should throw an exception when decompressing invalid data.
-     *
-     * @return void
      */
-    public function testInvalidData()
+    public function testInvalidData(): void
     {
         $filter = new SnappyCompression();
 
@@ -92,13 +84,11 @@ class SnappyTest extends TestCase
 
     /**
      * testing toString
-     *
-     * @return void
      */
-    public function testSnappyToString()
+    public function testSnappyToString(): void
     {
         $filter = new SnappyCompression();
-        $this->assertEquals('Snappy', $filter->toString());
+        $this->assertSame('Snappy', $filter->toString());
     }
 
     /**

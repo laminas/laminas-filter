@@ -10,17 +10,17 @@ use stdClass;
 
 class SeparatorToSeparatorTest extends TestCase
 {
-    public function testFilterSeparatesWordsByDefault()
+    public function testFilterSeparatesWordsByDefault(): void
     {
         $string   = 'dash separated words';
         $filter   = new SeparatorToSeparatorFilter();
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('dash-separated-words', $filtered);
+        $this->assertSame('dash-separated-words', $filtered);
     }
 
-    public function testFilterSupportArray()
+    public function testFilterSupportArray(): void
     {
         $filter = new SeparatorToSeparatorFilter();
 
@@ -31,30 +31,30 @@ class SeparatorToSeparatorTest extends TestCase
         $filtered = $filter($input);
 
         $this->assertNotEquals($input, $filtered);
-        $this->assertEquals([
+        $this->assertSame([
             'dash-separated-words',
             '=test-something',
         ], $filtered);
     }
 
-    public function testFilterSeparatesWordsWithSearchSpecified()
+    public function testFilterSeparatesWordsWithSearchSpecified(): void
     {
         $string   = 'dash=separated=words';
         $filter   = new SeparatorToSeparatorFilter('=');
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('dash-separated-words', $filtered);
+        $this->assertSame('dash-separated-words', $filtered);
     }
 
-    public function testFilterSeparatesWordsWithSearchAndReplacementSpecified()
+    public function testFilterSeparatesWordsWithSearchAndReplacementSpecified(): void
     {
         $string   = 'dash=separated=words';
         $filter   = new SeparatorToSeparatorFilter('=', '?');
         $filtered = $filter($string);
 
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('dash?separated?words', $filtered);
+        $this->assertSame('dash?separated?words', $filtered);
     }
 
     public function returnUnfilteredDataProvider()
@@ -67,12 +67,35 @@ class SeparatorToSeparatorTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new SeparatorToSeparatorFilter('=', '?');
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
+    }
+
+    /**
+     * @return array<int|float|bool>[]
+     */
+    public function returnNonStringScalarValues(): array
+    {
+        return [
+            [1],
+            [1.0],
+            [true],
+            [false],
+        ];
+    }
+
+    /**
+     * @dataProvider returnNonStringScalarValues
+     * @param int|float|bool $input
+     */
+    public function testShouldFilterNonStringScalarValues($input): void
+    {
+        $filter = new SeparatorToSeparatorFilter('=', '?');
+
+        $this->assertSame((string) $input, $filter($input));
     }
 }

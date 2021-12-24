@@ -58,9 +58,8 @@ class DecompressTest extends TestCase
      * Basic usage
      *
      * @dataProvider returnFilterType
-     * @return void
      */
-    public function testBasicUsage($filterType)
+    public function testBasicUsage($filterType): void
     {
         $filter = new DecompressFilter($filterType);
 
@@ -69,16 +68,15 @@ class DecompressTest extends TestCase
         $this->assertNotEquals($text, $compressed);
 
         $decompressed = $filter($compressed);
-        $this->assertEquals($text, $decompressed);
+        $this->assertSame($text, $decompressed);
     }
 
     /**
      * Setting Archive
      *
      * @dataProvider returnFilterType
-     * @return void
      */
-    public function testCompressToFile($filterType)
+    public function testCompressToFile($filterType): void
     {
         $filter  = new DecompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
@@ -89,21 +87,20 @@ class DecompressTest extends TestCase
 
         $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2($archive);
-        $this->assertEquals('compress me', $content2);
+        $this->assertSame('compress me', $content2);
 
         $filter3 = new DecompressFilter($filterType);
         $filter3->setArchive($archive);
         $content3 = $filter3(null);
-        $this->assertEquals('compress me', $content3);
+        $this->assertSame('compress me', $content3);
     }
 
     /**
      * Basic usage
      *
      * @dataProvider returnFilterType
-     * @return void
      */
-    public function testDecompressArchive($filterType)
+    public function testDecompressArchive($filterType): void
     {
         $filter  = new DecompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
@@ -114,13 +111,13 @@ class DecompressTest extends TestCase
 
         $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2($archive);
-        $this->assertEquals('compress me', $content2);
+        $this->assertSame('compress me', $content2);
     }
 
     /**
      * @dataProvider returnFilterType
      */
-    public function testFilterMethodProxiesToDecompress($filterType)
+    public function testFilterMethodProxiesToDecompress($filterType): void
     {
         $filter  = new DecompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
@@ -131,7 +128,7 @@ class DecompressTest extends TestCase
 
         $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2->filter($archive);
-        $this->assertEquals('compress me', $content2);
+        $this->assertSame('compress me', $content2);
     }
 
     public function returnUnfilteredDataProvider(): iterable
@@ -150,12 +147,11 @@ class DecompressTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($filterType, $input)
+    public function testReturnUnfiltered($filterType, $input): void
     {
         $filter = new DecompressFilter($filterType);
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

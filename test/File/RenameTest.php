@@ -114,68 +114,62 @@ class RenameTest extends TestCase
 
     /**
      * Test single parameter filter
-     *
-     * @return void
      */
-    public function testConstructSingleValue()
+    public function testConstructSingleValue(): void
     {
         $filter = new FileRename($this->newFile);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
-                    'source'    => '*',
                     'target'    => $this->newFile,
+                    'source'    => '*',
                     'overwrite' => false,
                     'randomize' => false,
                 ],
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single parameter filter
-     *
-     * @return void
      */
-    public function testConstructSingleValueWithFilesArray()
+    public function testConstructSingleValueWithFilesArray(): void
     {
         $filter = new FileRename($this->newFile);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
-                    'source'    => '*',
                     'target'    => $this->newFile,
+                    'source'    => '*',
                     'overwrite' => false,
                     'randomize' => false,
                 ],
             ],
             $filter->getFile()
         );
-        $this->assertEquals(
+        $this->assertSame(
             ['tmp_name' => $this->newFile],
             $filter(['tmp_name' => $this->oldFile])
         );
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter
-     *
-     * @return void
      */
-    public function testConstructSingleArray()
+    public function testConstructSingleArray(): void
     {
         $filter = new FileRename([
             'source' => $this->oldFile,
             'target' => $this->newFile,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -186,16 +180,14 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test full array parameter filter
-     *
-     * @return void
      */
-    public function testConstructFullOptionsArray()
+    public function testConstructFullOptionsArray(): void
     {
         $filter = new FileRename([
             'source'    => $this->oldFile,
@@ -205,7 +197,7 @@ class RenameTest extends TestCase
             'unknown'   => false,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -216,16 +208,14 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter
-     *
-     * @return void
      */
-    public function testConstructDoubleArray()
+    public function testConstructDoubleArray(): void
     {
         $filter = new FileRename([
             0 => [
@@ -234,7 +224,7 @@ class RenameTest extends TestCase
             ],
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -245,22 +235,20 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter
-     *
-     * @return void
      */
-    public function testConstructTruncatedTarget()
+    public function testConstructTruncatedTarget(): void
     {
         $filter = new FileRename([
             'source' => $this->oldFile,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -271,73 +259,67 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->oldFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->oldFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter
-     *
-     * @return void
      */
-    public function testConstructTruncatedSource()
+    public function testConstructTruncatedSource(): void
     {
         $filter = new FileRename([
             'target' => $this->newFile,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
-                    'source'    => '*',
                     'target'    => $this->newFile,
+                    'source'    => '*',
                     'overwrite' => false,
                     'randomize' => false,
                 ],
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single parameter filter by using directory only
-     *
-     * @return void
      */
-    public function testConstructSingleDirectory()
+    public function testConstructSingleDirectory(): void
     {
         $filter = new FileRename($this->newDir);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
-                    'source'    => '*',
                     'target'    => $this->newDir,
+                    'source'    => '*',
                     'overwrite' => false,
                     'randomize' => false,
                 ],
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newDirFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter by using directory only
-     *
-     * @return void
      */
-    public function testConstructSingleArrayDirectory()
+    public function testConstructSingleArrayDirectory(): void
     {
         $filter = new FileRename([
             'source' => $this->oldFile,
             'target' => $this->newDir,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -348,16 +330,14 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newDirFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter by using directory only
-     *
-     * @return void
      */
-    public function testConstructDoubleArrayDirectory()
+    public function testConstructDoubleArrayDirectory(): void
     {
         $filter = new FileRename([
             0 => [
@@ -366,7 +346,7 @@ class RenameTest extends TestCase
             ],
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -377,40 +357,35 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newDirFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
     /**
      * Test single array parameter filter by using directory only
-     *
-     * @return void
      */
-    public function testConstructTruncatedSourceDirectory()
+    public function testConstructTruncatedSourceDirectory(): void
     {
         $filter = new FileRename([
             'target' => $this->newDir,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
-                    'source'    => '*',
                     'target'    => $this->newDir,
+                    'source'    => '*',
                     'overwrite' => false,
                     'randomize' => false,
                 ],
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newDirFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newDirFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testAddSameFileAgainAndOverwriteExistingTarget()
+    public function testAddSameFileAgainAndOverwriteExistingTarget(): void
     {
         $filter = new FileRename([
             'source' => $this->oldFile,
@@ -422,7 +397,7 @@ class RenameTest extends TestCase
             'target' => $this->newFile,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -433,21 +408,18 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetNewName()
+    public function testGetNewName(): void
     {
         $filter = new FileRename([
             'source' => $this->oldFile,
             'target' => $this->newDir,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -458,13 +430,10 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newDirFile, $filter->getNewName($this->oldFile));
+        $this->assertSame($this->newDirFile, $filter->getNewName($this->oldFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetNewNameExceptionWithExistingFile()
+    public function testGetNewNameExceptionWithExistingFile(): void
     {
         $filter = new FileRename([
             'source' => $this->oldFile,
@@ -473,7 +442,7 @@ class RenameTest extends TestCase
 
         copy($this->oldFile, $this->newFile);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -486,13 +455,10 @@ class RenameTest extends TestCase
         );
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('could not be renamed');
-        $this->assertEquals($this->newFile, $filter->getNewName($this->oldFile));
+        $this->assertSame($this->newFile, $filter->getNewName($this->oldFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetNewNameOverwriteWithExistingFile()
+    public function testGetNewNameOverwriteWithExistingFile(): void
     {
         $filter = new FileRename([
             'source'    => $this->oldFile,
@@ -502,7 +468,7 @@ class RenameTest extends TestCase
 
         copy($this->oldFile, $this->newFile);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
@@ -513,13 +479,10 @@ class RenameTest extends TestCase
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter->getNewName($this->oldFile));
+        $this->assertSame($this->newFile, $filter->getNewName($this->oldFile));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetRandomizedFile()
+    public function testGetRandomizedFile(): void
     {
         $filter = new FileRename([
             'source'    => $this->oldFile,
@@ -527,13 +490,13 @@ class RenameTest extends TestCase
             'randomize' => true,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
                     'target'    => $this->newFile,
-                    'overwrite' => false,
                     'randomize' => true,
+                    'overwrite' => false,
                 ],
             ],
             $filter->getFile()
@@ -545,10 +508,7 @@ class RenameTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testGetRandomizedFileWithoutExtension()
+    public function testGetRandomizedFileWithoutExtension(): void
     {
         $fileNoExt = $this->tmpPath . DIRECTORY_SEPARATOR . 'newfile';
         $filter    = new FileRename([
@@ -557,13 +517,13 @@ class RenameTest extends TestCase
             'randomize' => true,
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
                     'source'    => $this->oldFile,
                     'target'    => $fileNoExt,
-                    'overwrite' => false,
                     'randomize' => true,
+                    'overwrite' => false,
                 ],
             ],
             $filter->getFile()
@@ -574,33 +534,27 @@ class RenameTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testAddFileWithString()
+    public function testAddFileWithString(): void
     {
         $filter = new FileRename($this->oldFile);
         $filter->addFile($this->newFile);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 0 => [
-                    'source'    => '*',
                     'target'    => $this->newFile,
+                    'source'    => '*',
                     'overwrite' => false,
                     'randomize' => false,
                 ],
             ],
             $filter->getFile()
         );
-        $this->assertEquals($this->newFile, $filter($this->oldFile));
-        $this->assertEquals('falsefile', $filter('falsefile'));
+        $this->assertSame($this->newFile, $filter($this->oldFile));
+        $this->assertSame('falsefile', $filter('falsefile'));
     }
 
-    /**
-     * @return void
-     */
-    public function testAddFileWithInvalidOption()
+    public function testAddFileWithInvalidOption(): void
     {
         $filter = new FileRename($this->oldFile);
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -608,10 +562,7 @@ class RenameTest extends TestCase
         $filter->addFile(1234);
     }
 
-    /**
-     * @return void
-     */
-    public function testInvalidConstruction()
+    public function testInvalidConstruction(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options');
@@ -634,12 +585,11 @@ class RenameTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = new FileRename($this->newFile);
 
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

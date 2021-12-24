@@ -16,11 +16,11 @@ class DateSelectTest extends TestCase
      * @param array|mixed|null|string $input input provided to the filter
      * @param array|mixed|null|string $expected expected output
      */
-    public function testFilter($options, $input, $expected)
+    public function testFilter($options, $input, $expected): void
     {
         $sut = new DateSelectFilter();
         $sut->setOptions($options);
-        $this->assertEquals($expected, $sut->filter($input));
+        $this->assertSame($expected, $sut->filter($input));
     }
 
     public function provideFilter()
@@ -34,7 +34,7 @@ class DateSelectTest extends TestCase
         ];
     }
 
-    public function testInvalidInput()
+    public function testInvalidInput(): void
     {
         $this->expectException(RuntimeException::class);
         $sut = new DateSelectFilter();

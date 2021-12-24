@@ -8,10 +8,12 @@ use Laminas\Stdlib\StringUtils;
 use Traversable;
 
 use function array_key_exists;
+use function array_map;
 use function get_class;
 use function gettype;
 use function is_array;
 use function is_object;
+use function is_scalar;
 use function method_exists;
 use function sprintf;
 use function str_replace;
@@ -102,5 +104,22 @@ abstract class AbstractFilter implements FilterInterface
     protected static function isOptions($options)
     {
         return is_array($options) || $options instanceof Traversable;
+    }
+
+    /**
+     * @internal
+     *
+     * @param  mixed $value
+     * @return mixed
+     */
+    protected static function applyFilterOnlyToStringableValuesAndStringableArrayValues($value, callable $callback)
+    {
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            return $callback((string) $value);
+        }
+        return $callback(array_map(fn($item) => is_scalar($item) ? (string) $item : $item, $value));
     }
 }

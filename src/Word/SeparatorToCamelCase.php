@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
+use Closure;
 use Laminas\Stdlib\StringUtils;
 
 use function extension_loaded;
-use function is_array;
-use function is_scalar;
 use function preg_quote;
 use function preg_replace_callback;
 
@@ -17,15 +16,23 @@ class SeparatorToCamelCase extends AbstractSeparator
     /**
      * Defined by Laminas\Filter\Filter
      *
-     * @param  string|array $value
-     * @return string|array
+     * @param  mixed $value
+     * @return mixed
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
-        }
+        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+            $value,
+            Closure::fromCallable([$this, 'filterNormalizedValue'])
+        );
+    }
 
+    /**
+     * @param  string|string[] $value
+     * @return string|string[]
+     */
+    private function filterNormalizedValue($value)
+    {
         // a unicode safe way of converting characters to \x00\x00 notation
         $pregQuotedSeparator = preg_quote($this->separator, '#');
 

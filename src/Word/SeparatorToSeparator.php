@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
+use Closure;
 use Laminas\Filter\AbstractFilter;
 use Laminas\Filter\Exception;
 
-use function is_array;
-use function is_scalar;
 use function preg_quote;
 use function preg_replace;
 
@@ -78,20 +77,31 @@ class SeparatorToSeparator extends AbstractFilter
      *
      * Returns the string $value, replacing the searched separators with the defined ones
      *
-     * @param  string|array $value
-     * @return string|array
+     * @param  mixed $value
+     * @return mixed
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
-            return $value;
-        }
+        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+            $value,
+            Closure::fromCallable([$this, 'filterNormalizedValue'])
+        );
+    }
 
+    /**
+     * @param  string|string[] $value
+     * @return string|string[]
+     */
+    private function filterNormalizedValue($value)
+    {
         if ($this->searchSeparator === null) {
             throw new Exception\RuntimeException('You must provide a search separator for this filter to work.');
         }
 
-        $pattern = '#' . preg_quote($this->searchSeparator, '#') . '#';
-        return preg_replace($pattern, $this->replacementSeparator, $value);
+        return preg_replace(
+            '#' . preg_quote($this->searchSeparator, '#') . '#',
+            $this->replacementSeparator,
+            $value
+        );
     }
 }

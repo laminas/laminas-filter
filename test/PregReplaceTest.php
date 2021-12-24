@@ -21,52 +21,52 @@ class PregReplaceTest extends TestCase
         $this->filter = new PregReplaceFilter();
     }
 
-    public function testDetectsPcreUnicodeSupport()
+    public function testDetectsPcreUnicodeSupport(): void
     {
         $enabled = (bool) @preg_match('/\pL/u', 'a');
-        $this->assertEquals($enabled, PregReplaceFilter::hasPcreUnicodeSupport());
+        $this->assertSame($enabled, PregReplaceFilter::hasPcreUnicodeSupport());
     }
 
-    public function testPassingPatternToConstructorSetsPattern()
+    public function testPassingPatternToConstructorSetsPattern(): void
     {
         $pattern = '#^controller/(?P<action>[a-z_-]+)#';
         $filter  = new PregReplaceFilter($pattern);
-        $this->assertEquals($pattern, $filter->getPattern());
+        $this->assertSame($pattern, $filter->getPattern());
     }
 
-    public function testPassingReplacementToConstructorSetsReplacement()
+    public function testPassingReplacementToConstructorSetsReplacement(): void
     {
         $replace = 'foo/bar';
         $filter  = new PregReplaceFilter(null, $replace);
-        $this->assertEquals($replace, $filter->getReplacement());
+        $this->assertSame($replace, $filter->getReplacement());
     }
 
-    public function testPatternIsNullByDefault()
+    public function testPatternIsNullByDefault(): void
     {
         $this->assertNull($this->filter->getPattern());
     }
 
-    public function testPatternAccessorsWork()
+    public function testPatternAccessorsWork(): void
     {
         $pattern = '#^controller/(?P<action>[a-z_-]+)#';
         $this->filter->setPattern($pattern);
-        $this->assertEquals($pattern, $this->filter->getPattern());
+        $this->assertSame($pattern, $this->filter->getPattern());
     }
 
-    public function testReplacementIsEmptyByDefault()
+    public function testReplacementIsEmptyByDefault(): void
     {
         $replacement = $this->filter->getReplacement();
         $this->assertEmpty($replacement);
     }
 
-    public function testReplacementAccessorsWork()
+    public function testReplacementAccessorsWork(): void
     {
         $replacement = 'foo/bar';
         $this->filter->setReplacement($replacement);
-        $this->assertEquals($replacement, $this->filter->getReplacement());
+        $this->assertSame($replacement, $this->filter->getReplacement());
     }
 
-    public function testFilterPerformsRegexReplacement()
+    public function testFilterPerformsRegexReplacement(): void
     {
         $filter = $this->filter;
         $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
@@ -74,10 +74,10 @@ class PregReplaceTest extends TestCase
         $string   = 'controller/action';
         $filtered = $filter($string);
         $this->assertNotEquals($string, $filtered);
-        $this->assertEquals('foo/bar', $filtered);
+        $this->assertSame('foo/bar', $filtered);
     }
 
-    public function testFilterPerformsRegexReplacementWithArray()
+    public function testFilterPerformsRegexReplacementWithArray(): void
     {
         $filter = $this->filter;
         $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
@@ -89,13 +89,13 @@ class PregReplaceTest extends TestCase
 
         $filtered = $filter($input);
         $this->assertNotEquals($input, $filtered);
-        $this->assertEquals([
+        $this->assertSame([
             'foo/bar',
             'This should stay the same',
         ], $filtered);
     }
 
-    public function testFilterThrowsExceptionWhenNoMatchPatternPresent()
+    public function testFilterThrowsExceptionWhenNoMatchPatternPresent(): void
     {
         $filter = $this->filter;
         $string = 'controller/action';
@@ -105,7 +105,7 @@ class PregReplaceTest extends TestCase
         $filtered = $filter($string);
     }
 
-    public function testPassingPatternWithExecModifierRaisesException()
+    public function testPassingPatternWithExecModifierRaisesException(): void
     {
         $filter = new PregReplaceFilter();
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -123,13 +123,37 @@ class PregReplaceTest extends TestCase
 
     /**
      * @dataProvider returnUnfilteredDataProvider
-     * @return void
      */
-    public function testReturnUnfiltered($input)
+    public function testReturnUnfiltered($input): void
     {
         $filter = $this->filter;
         $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
 
-        $this->assertEquals($input, $filter->filter($input));
+        $this->assertSame($input, $filter->filter($input));
+    }
+
+    /**
+     * @return array<int|float|bool>[]
+     */
+    public function returnNonStringScalarValues(): array
+    {
+        return [
+            [1],
+            [1.0],
+            [true],
+            [false],
+        ];
+    }
+
+    /**
+     * @dataProvider returnNonStringScalarValues
+     * @param int|float|bool $input
+     */
+    public function testShouldFilterNonStringScalarValues($input): void
+    {
+        $filter = $this->filter;
+        $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
+
+        $this->assertSame((string) $input, $filter($input));
     }
 }

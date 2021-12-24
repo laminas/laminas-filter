@@ -13,9 +13,9 @@ class ToFloatTest extends TestCase
     public function filterableValuesProvider()
     {
         return [
-            'string word' => ['string', 0],
-            'string 1'    => ['1', 1],
-            'string -1'   => ['-1', -1],
+            'string word' => ['string', 0.0],
+            'string 1'    => ['1', 1.0],
+            'string -1'   => ['-1', -1.0],
             'string 1.1'  => ['1.1', 1.1],
             'string -1.1' => ['-1.1', -1.1],
             'string 0.9'  => ['0.9', 0.9],
@@ -35,10 +35,10 @@ class ToFloatTest extends TestCase
      * @param mixed $input
      * @param string $expectedOutput
      */
-    public function testCanFilterScalarValuesAsExpected($input, $expectedOutput)
+    public function testCanFilterScalarValuesAsExpected($input, $expectedOutput): void
     {
         $filter = new ToFloatFilter();
-        $this->assertEquals($expectedOutput, $filter($input));
+        $this->assertSame($expectedOutput, $filter($input));
     }
 
     public function unfilterableValuesProvider()
@@ -59,9 +59,9 @@ class ToFloatTest extends TestCase
      * @dataProvider unfilterableValuesProvider
      * @param mixed $input
      */
-    public function testReturnsUnfilterableInputVerbatim($input)
+    public function testReturnsUnfilterableInputVerbatim($input): void
     {
         $filter = new ToFloatFilter();
-        $this->assertEquals($input, $filter($input));
+        $this->assertSame($input, $filter($input));
     }
 }

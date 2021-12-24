@@ -28,6 +28,7 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
             return $value;
         }
 
+        /** @var string|array $value */
         $value          = parent::filter($value);
         $lowerCaseFirst = 'lcfirst';
 

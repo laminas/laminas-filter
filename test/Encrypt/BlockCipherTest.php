@@ -23,10 +23,8 @@ class BlockCipherTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasicBlockCipher()
+    public function testBasicBlockCipher(): void
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         // @codingStandardsIgnoreStart
@@ -38,25 +36,23 @@ class BlockCipherTest extends TestCase
         // @codingStandardsIgnoreEnd
         $filter->setVector('Laminas__Project');
         $enc = $filter->getEncryption();
-        $this->assertEquals('testkey', $enc['key']);
+        $this->assertSame('testkey', $enc['key']);
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter->encrypt($input));
+            $this->assertSame($output, $filter->encrypt($input));
         }
     }
 
     /**
      * Ensures that the vector can be set / returned
-     *
-     * @return void
      */
-    public function testGetSetVector()
+    public function testGetSetVector(): void
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
-        $this->assertEquals('1234567890123456', $filter->getVector());
+        $this->assertSame('1234567890123456', $filter->getVector());
     }
 
-    public function testWrongSizeVector()
+    public function testWrongSizeVector(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
@@ -65,20 +61,18 @@ class BlockCipherTest extends TestCase
 
     /**
      * Ensures that the filter allows default encryption
-     *
-     * @return void
      */
-    public function testDefaultEncryption()
+    public function testDefaultEncryption(): void
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
-        $this->assertEquals(
+        $this->assertSame(
             [
                 'key'           => 'testkey',
-                'algorithm'     => 'aes',
-                'vector'        => '1234567890123456',
                 'key_iteration' => 5000,
+                'algorithm'     => 'aes',
                 'hash'          => 'sha256',
+                'vector'        => '1234567890123456',
             ],
             $filter->getEncryption()
         );
@@ -86,23 +80,21 @@ class BlockCipherTest extends TestCase
 
     /**
      * Ensures that the filter allows setting options de/encryption
-     *
-     * @return void
      */
-    public function testGetSetEncryption()
+    public function testGetSetEncryption(): void
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
         $filter->setEncryption(
             ['algorithm' => 'blowfish']
         );
-        $this->assertEquals(
+        $this->assertSame(
             [
-                'key'           => 'testkey',
                 'algorithm'     => 'blowfish',
-                'vector'        => '1234567890123456',
+                'key'           => 'testkey',
                 'key_iteration' => 5000,
                 'hash'          => 'sha256',
+                'vector'        => '1234567890123456',
             ],
             $filter->getEncryption()
         );
@@ -110,10 +102,8 @@ class BlockCipherTest extends TestCase
 
     /**
      * Ensures that the filter allows de/encryption
-     *
-     * @return void
      */
-    public function testEncryptionWithDecryption()
+    public function testEncryptionWithDecryption(): void
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
@@ -122,47 +112,35 @@ class BlockCipherTest extends TestCase
         $this->assertNotEquals('teststring', $output);
 
         $input = $filter->decrypt($output);
-        $this->assertEquals('teststring', trim($input));
+        $this->assertSame('teststring', trim($input));
     }
 
-    /**
-     * @return void
-     */
-    public function testConstructionWithStringKey()
+    public function testConstructionWithStringKey(): void
     {
         $filter = new BlockCipherEncryption('testkey');
         $data   = $filter->getEncryption();
-        $this->assertEquals('testkey', $data['key']);
+        $this->assertSame('testkey', $data['key']);
     }
 
-    /**
-     * @return void
-     */
-    public function testConstructionWithInteger()
+    public function testConstructionWithInteger(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options argument');
         $filter = new BlockCipherEncryption(1234);
     }
 
-    /**
-     * @return void
-     */
-    public function testToString()
+    public function testToString(): void
     {
         $filter = new BlockCipherEncryption('testkey');
-        $this->assertEquals('BlockCipher', $filter->toString());
+        $this->assertSame('BlockCipher', $filter->toString());
     }
 
-    /**
-     * @return void
-     */
-    public function testSettingEncryptionOptions()
+    public function testSettingEncryptionOptions(): void
     {
         $filter = new BlockCipherEncryption('testkey');
         $filter->setEncryption('newkey');
         $test = $filter->getEncryption();
-        $this->assertEquals('newkey', $test['key']);
+        $this->assertSame('newkey', $test['key']);
 
         try {
             $filter->setEncryption(1234);
@@ -185,10 +163,7 @@ class BlockCipherTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testSettingEmptyVector()
+    public function testSettingEmptyVector(): void
     {
         $filter = new BlockCipherEncryption('newkey');
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -198,10 +173,8 @@ class BlockCipherTest extends TestCase
 
     /**
      * Ensures that the filter allows de/encryption with compression
-     *
-     * @return void
      */
-    public function testEncryptionWithDecryptionAndCompression()
+    public function testEncryptionWithDecryptionAndCompression(): void
     {
         if (! extension_loaded('bz2')) {
             $this->markTestSkipped('This adapter needs the bz2 extension');
@@ -215,6 +188,6 @@ class BlockCipherTest extends TestCase
         $this->assertNotEquals('teststring', $output);
 
         $input = $filter->decrypt($output);
-        $this->assertEquals('teststring', trim($input));
+        $this->assertSame('teststring', trim($input));
     }
 }

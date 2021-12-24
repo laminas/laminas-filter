@@ -25,10 +25,8 @@ class StringTrimTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $filter         = $this->filter;
         $valuesExpected = [
@@ -37,7 +35,7 @@ class StringTrimTest extends TestCase
             "\ns\t"  => 's',
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $filter($input));
+            $this->assertSame($output, $filter($input));
         }
     }
 
@@ -48,40 +46,34 @@ class StringTrimTest extends TestCase
      */
     public function testUtf8()
     {
-        $this->assertEquals('a', $this->filter->filter(utf8_encode("\xa0a\xa0")));
+        $this->assertSame('a', $this->filter->filter(utf8_encode("\xa0a\xa0")));
     }
 
     /**
      * Ensures that getCharList() returns expected default value
-     *
-     * @return void
      */
-    public function testGetCharList()
+    public function testGetCharList(): void
     {
-        $this->assertEquals(null, $this->filter->getCharList());
+        $this->assertSame(null, $this->filter->getCharList());
     }
 
     /**
      * Ensures that setCharList() follows expected behavior
-     *
-     * @return void
      */
-    public function testSetCharList()
+    public function testSetCharList(): void
     {
         $this->filter->setCharList('&');
-        $this->assertEquals('&', $this->filter->getCharList());
+        $this->assertSame('&', $this->filter->getCharList());
     }
 
     /**
      * Ensures expected behavior under custom character list
-     *
-     * @return void
      */
-    public function testCharList()
+    public function testCharList(): void
     {
         $filter = $this->filter;
         $filter->setCharList('&');
-        $this->assertEquals('a&b', $filter('&&a&b&&'));
+        $this->assertSame('a&b', $filter('&&a&b&&'));
     }
 
     /**
@@ -90,7 +82,7 @@ class StringTrimTest extends TestCase
     public function testLaminas7183()
     {
         $filter = $this->filter;
-        $this->assertEquals('Зенд', $filter('Зенд'));
+        $this->assertSame('Зенд', $filter('Зенд'));
     }
 
     /**
@@ -99,7 +91,7 @@ class StringTrimTest extends TestCase
     public function testLaminas170()
     {
         $filter = $this->filter;
-        $this->assertEquals('Расчет', $filter('Расчет'));
+        $this->assertSame('Расчет', $filter('Расчет'));
     }
 
     /**
@@ -108,7 +100,7 @@ class StringTrimTest extends TestCase
     public function testLaminas7902()
     {
         $filter = $this->filter;
-        $this->assertEquals('/', $filter('/'));
+        $this->assertSame('/', $filter('/'));
     }
 
     /**
@@ -117,13 +109,13 @@ class StringTrimTest extends TestCase
     public function testLaminas10891()
     {
         $filter = $this->filter;
-        $this->assertEquals('Зенд', $filter('   Зенд   '));
-        $this->assertEquals('Зенд', $filter('Зенд   '));
-        $this->assertEquals('Зенд', $filter('   Зенд'));
+        $this->assertSame('Зенд', $filter('   Зенд   '));
+        $this->assertSame('Зенд', $filter('Зенд   '));
+        $this->assertSame('Зенд', $filter('   Зенд'));
 
         $trimCharlist = " \t\n\r\x0B・。";
         $filter       = new StringTrim($trimCharlist);
-        $this->assertEquals('Зенд', $filter->filter('。  Зенд  。'));
+        $this->assertSame('Зенд', $filter->filter('。  Зенд  。'));
     }
 
     public function getNonStringValues()
@@ -142,7 +134,7 @@ class StringTrimTest extends TestCase
     /**
      * @dataProvider getNonStringValues
      */
-    public function testShouldNotFilterNonStringValues($value)
+    public function testShouldNotFilterNonStringValues($value): void
     {
         $filtered = $this->filter->filter($value);
         $this->assertSame($value, $filtered);
@@ -153,13 +145,13 @@ class StringTrimTest extends TestCase
      *
      * @group 6261
      */
-    public function testEmptyCharList()
+    public function testEmptyCharList(): void
     {
         $filter = $this->filter;
         $filter->setCharList('0');
-        $this->assertEquals('a0b', $filter('00a0b00'));
+        $this->assertSame('a0b', $filter('00a0b00'));
 
         $filter->setCharList('');
-        $this->assertEquals('str', $filter(' str '));
+        $this->assertSame('str', $filter(' str '));
     }
 }
