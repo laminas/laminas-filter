@@ -123,7 +123,8 @@ class UriNormalize extends AbstractFilter
      */
     protected function enforceScheme(Uri $uri)
     {
-        $path = $uri->getPath();
+        $path = $uri->getPath() ?? '';
+
         if (strpos($path, '/') !== false) {
             [$host, $path] = explode('/', $path, 2);
             $path          = '/' . $path;
