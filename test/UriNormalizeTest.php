@@ -55,6 +55,7 @@ class UriNormalizeTest extends TestCase
             ['http', 'www.example.com/foo/bar?q=q', 'http://www.example.com/foo/bar?q=q'],
             ['ftp', 'www.example.com/path/to/file.ext', 'ftp://www.example.com/path/to/file.ext'],
             ['http', '/just/a/path', '/just/a/path'], // cannot be enforced, no host
+            ['http', '', ''],
         ];
     }
 
