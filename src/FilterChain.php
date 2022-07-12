@@ -20,6 +20,9 @@ use function is_object;
 use function sprintf;
 use function strtolower;
 
+/**
+ * @final
+ */
 class FilterChain extends AbstractFilter implements Countable
 {
     /**
@@ -27,7 +30,7 @@ class FilterChain extends AbstractFilter implements Countable
      */
     public const DEFAULT_PRIORITY = 1000;
 
-    /** @var FilterPluginManager */
+    /** @var FilterPluginManager|null */
     protected $plugins;
 
     /**
@@ -113,10 +116,13 @@ class FilterChain extends AbstractFilter implements Countable
      */
     public function getPluginManager()
     {
-        if (! $this->plugins) {
-            $this->setPluginManager(new FilterPluginManager(new ServiceManager()));
+        $plugins = $this->plugins;
+        if (! $plugins instanceof FilterPluginManager) {
+            $plugins = new FilterPluginManager(new ServiceManager());
+            $this->setPluginManager($plugins);
         }
-        return $this->plugins;
+
+        return $plugins;
     }
 
     /**
@@ -133,9 +139,9 @@ class FilterChain extends AbstractFilter implements Countable
     /**
      * Retrieve a filter plugin by name
      *
-     * @param  mixed $name
-     * @param  array $options
-     * @return FilterInterface
+     * @param string $name
+     * @param array $options
+     * @return FilterInterface|callable
      */
     public function plugin($name, array $options = [])
     {

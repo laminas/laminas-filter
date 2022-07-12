@@ -11,6 +11,7 @@ use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 use function method_exists;
 
@@ -33,6 +34,7 @@ class FilterPluginManagerTest extends TestCase
     public function testRegisteringInvalidFilterRaisesException(): void
     {
         $this->expectException($this->getInvalidServiceException());
+        /** @psalm-suppress InvalidArgument */
         $this->filters->setService('test', $this);
         $this->filters->get('test');
     }
@@ -88,7 +90,8 @@ class FilterPluginManagerTest extends TestCase
         $this->assertNotEquals($filterOne, $filterTwo);
     }
 
-    protected function getInvalidServiceException()
+    /** @return class-string<Throwable> */
+    protected function getInvalidServiceException(): string
     {
         if (method_exists($this->filters, 'configure')) {
             return InvalidServiceException::class;

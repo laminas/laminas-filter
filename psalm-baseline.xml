@@ -1109,37 +1109,28 @@
     </PossiblyUndefinedVariable>
   </file>
   <file src="src/FilterChain.php">
-    <DocblockTypeContradiction occurrences="4">
-      <code>! $this-&gt;plugins</code>
-      <code>$this-&gt;plugins</code>
+    <DocblockTypeContradiction occurrences="2">
       <code>gettype($callback)</code>
       <code>gettype($options)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="9">
+    <MixedArgument occurrences="6">
       <code>$callback</code>
-      <code>$filter</code>
       <code>$item['data']</code>
-      <code>$item['priority']</code>
       <code>$key</code>
-      <code>$name</code>
       <code>$name</code>
       <code>$priority</code>
       <code>$priority</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="7">
-      <code>$item['data']</code>
-      <code>$item['priority']</code>
+    <MixedArrayAccess occurrences="5">
       <code>$spec['callback']</code>
       <code>$spec['name']</code>
       <code>$spec['options']</code>
       <code>$spec['priority']</code>
       <code>$spec['priority']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="14">
+    <MixedAssignment occurrences="12">
       <code>$callback</code>
       <code>$filter</code>
-      <code>$filter</code>
-      <code>$item</code>
       <code>$key</code>
       <code>$name</code>
       <code>$options</code>
@@ -1154,15 +1145,6 @@
     <MixedFunctionCall occurrences="1">
       <code>call_user_func($filter, $valueFiltered)</code>
     </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="1">
-      <code>FilterInterface</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$plugins-&gt;get($name, $options)</code>
-    </MixedReturnStatement>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$plugins</code>
-    </PropertyNotSetInConstructor>
     <RedundantConditionGivenDocblockType occurrences="2">
       <code>is_object($callback)</code>
       <code>is_object($options)</code>
@@ -1183,10 +1165,14 @@
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
     <MixedArrayOffset occurrences="2"/>
+    <MixedInferredReturnType occurrences="1">
+      <code>($name is class-string ? FilterInterface : callable)</code>
+    </MixedInferredReturnType>
     <NonInvariantDocblockPropertyType occurrences="1">
       <code>$factories</code>
     </NonInvariantDocblockPropertyType>
-    <ParamNameMismatch occurrences="1">
+    <ParamNameMismatch occurrences="2">
+      <code>$name</code>
       <code>$plugin</code>
     </ParamNameMismatch>
     <UndefinedClass occurrences="26">
@@ -1313,16 +1299,14 @@
     <MixedFunctionCall occurrences="1">
       <code>$ruleFilter($processedPart)</code>
     </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="3">
-      <code>FilterInterface</code>
+    <MixedInferredReturnType occurrences="2">
       <code>FilterInterface|false</code>
       <code>array|false</code>
     </MixedInferredReturnType>
     <MixedMethodCall occurrences="1">
       <code>new $options['pluginManager']()</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="3">
-      <code>$this-&gt;getPluginManager()-&gt;get($rule)</code>
+    <MixedReturnStatement occurrences="2">
       <code>$this-&gt;rules[$spec]</code>
       <code>$this-&gt;rules[$spec][$index]</code>
     </MixedReturnStatement>
@@ -1348,11 +1332,6 @@
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/Int.php">
-    <ReservedWord occurrences="1">
-      <code>Int</code>
-    </ReservedWord>
-  </file>
   <file src="src/Module.php">
     <MissingReturnType occurrences="1">
       <code>getConfig</code>
@@ -1360,11 +1339,6 @@
     <UndefinedDocblockClass occurrences="1">
       <code>ModuleManager</code>
     </UndefinedDocblockClass>
-  </file>
-  <file src="src/Null.php">
-    <ReservedWord occurrences="1">
-      <code>Null</code>
-    </ReservedWord>
   </file>
   <file src="src/PregReplace.php">
     <DocblockTypeContradiction occurrences="2">
@@ -1374,16 +1348,11 @@
     <InvalidNullableReturnType occurrences="1">
       <code>bool</code>
     </InvalidNullableReturnType>
-    <MixedArgument occurrences="5">
+    <MixedArgument occurrences="3">
       <code>$args[0]</code>
       <code>$args[1]</code>
       <code>$p</code>
-      <code>$this-&gt;options['pattern']</code>
-      <code>$this-&gt;options['replacement']</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
     <MixedArrayAccess occurrences="5">
       <code>$this-&gt;options['pattern']</code>
       <code>$this-&gt;options['pattern']</code>
@@ -1437,18 +1406,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/StaticFilter.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>null === static::$plugins</code>
-    </DocblockTypeContradiction>
     <InvalidThrow occurrences="1">
       <code>Exception\ExceptionInterface</code>
     </InvalidThrow>
-    <MixedAssignment occurrences="1">
-      <code>$filter</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>filter</code>
-    </MixedMethodCall>
   </file>
   <file src="src/StringPrefix.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1538,20 +1498,6 @@
       <code>(string) $value</code>
     </RedundantCast>
   </file>
-  <file src="src/StripNewlines.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
-    </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
-    <MixedReturnStatement occurrences="1">
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/StripTags.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_scalar($value)</code>
@@ -1632,9 +1578,8 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyNullArgument occurrences="2">
+    <PossiblyNullArgument occurrences="1">
       <code>$defaultScheme</code>
-      <code>$path</code>
     </PossiblyNullArgument>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(string) $value</code>
@@ -1658,46 +1603,19 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Word/CamelCaseToSeparator.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
-    </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
     <MixedOperand occurrences="4">
       <code>$this-&gt;separator</code>
       <code>$this-&gt;separator</code>
       <code>$this-&gt;separator</code>
       <code>$this-&gt;separator</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="1">
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Word/DashToSeparator.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
-    </DocblockTypeContradiction>
     <MixedArgument occurrences="1">
       <code>$this-&gt;separator</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
-    <MixedReturnStatement occurrences="1">
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Word/SeparatorToCamelCase.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
-    </DocblockTypeContradiction>
     <MissingClosureParamType occurrences="6">
       <code>$matches</code>
       <code>$matches</code>
@@ -1723,9 +1641,6 @@
       <code>$matches[2]</code>
       <code>$this-&gt;separator</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$filtered</code>
-    </MixedArgumentTypeCoercion>
     <MixedArrayAccess occurrences="6">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
@@ -1734,17 +1649,8 @@
       <code>$matches[2]</code>
       <code>$matches[2]</code>
     </MixedArrayAccess>
-    <MixedReturnStatement occurrences="1">
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Word/SeparatorToSeparator.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
-    </DocblockTypeContradiction>
     <MissingPropertyType occurrences="2">
       <code>$replacementSeparator</code>
       <code>$searchSeparator</code>
@@ -1753,21 +1659,14 @@
       <code>$this-&gt;replacementSeparator</code>
       <code>$this-&gt;searchSeparator</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
     <MixedInferredReturnType occurrences="2">
       <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="2">
       <code>$this-&gt;replacementSeparator</code>
       <code>$this-&gt;searchSeparator</code>
-      <code>$value</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Word/Service/SeparatorToSeparatorFactory.php">
     <DeprecatedInterface occurrences="1">
@@ -1857,21 +1756,11 @@
     <MissingParamType occurrences="1">
       <code>$expected</code>
     </MissingParamType>
-    <MissingReturnType occurrences="15">
+    <MissingReturnType occurrences="5">
       <code>combinedTypeTestProvider</code>
       <code>defaultTestProvider</code>
       <code>duplicateProvider</code>
       <code>noCastingTestProvider</code>
-      <code>testCombinedTypes</code>
-      <code>testConstructorOptions</code>
-      <code>testConstructorParams</code>
-      <code>testDefault</code>
-      <code>testDuplicateTypesWorkProperly</code>
-      <code>testGettingDefaultType</code>
-      <code>testLocalized</code>
-      <code>testNoCasting</code>
-      <code>testSettingFalseType</code>
-      <code>testTypes</code>
       <code>typeTestProvider</code>
     </MissingReturnType>
     <MixedArgument occurrences="4">
@@ -1906,18 +1795,10 @@
       <code>$value</code>
       <code>$value</code>
     </MissingParamType>
-    <MissingReturnType occurrences="11">
+    <MissingReturnType occurrences="3">
       <code>objectCallback</code>
       <code>objectCallbackWithParams</code>
       <code>staticCallback</code>
-      <code>testCallbackWithArrayParameters</code>
-      <code>testCallbackWithStringParameter</code>
-      <code>testConstructorWithOptions</code>
-      <code>testObjectCallback</code>
-      <code>testSettingDefaultOptions</code>
-      <code>testSettingDefaultOptionsAfterwards</code>
-      <code>testStaticCallback</code>
-      <code>testStringClassCallback</code>
     </MissingReturnType>
     <MixedOperand occurrences="5">
       <code>$param</code>
@@ -1963,9 +1844,6 @@
     <MissingPropertyType occurrences="1">
       <code>$target</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="1">
-      <code>testGzDecompressNullThrowsRuntimeException</code>
-    </MissingReturnType>
     <MixedArgument occurrences="5">
       <code>$archive</code>
       <code>$archive</code>
@@ -1982,9 +1860,8 @@
     </NullArgument>
   </file>
   <file src="test/Compress/LzfTest.php">
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="3">
       <code>$compressed</code>
-      <code>$decompressed</code>
       <code>$filter</code>
       <code>$filter</code>
     </MixedAssignment>
@@ -2014,10 +1891,6 @@
     <MissingPropertyType occurrences="1">
       <code>$tmp</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="2">
-      <code>testSettingCallbackThrowsExceptionOnInvalidCallback</code>
-      <code>testSettingCallbackThrowsExceptionOnMissingCallback</code>
-    </MissingReturnType>
     <MixedOperand occurrences="18">
       <code>$this-&gt;tmp</code>
       <code>$this-&gt;tmp</code>
@@ -2073,9 +1946,6 @@
       <code>$errno</code>
       <code>$errstr</code>
     </MissingClosureParamType>
-    <MissingReturnType occurrences="1">
-      <code>testArchiveTarNotLoaded</code>
-    </MissingReturnType>
     <UnusedClosureParam occurrences="2">
       <code>$errno</code>
       <code>$errstr</code>
@@ -2088,10 +1958,6 @@
     <MissingPropertyType occurrences="1">
       <code>$tmp</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="2">
-      <code>testDecompressionDoesNotRequireArchive</code>
-      <code>testSetModeShouldWorkWithCaseInsensitive</code>
-    </MissingReturnType>
     <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedAssignment occurrences="1">
       <code>$target</code>
@@ -2133,10 +1999,6 @@
     </MixedOperand>
   </file>
   <file src="test/Compress/ZipTest.php">
-    <MissingReturnType occurrences="2">
-      <code>testDecompressWhenNoArchieveInClass</code>
-      <code>testDecompressWillThrowExceptionWhenDecompressingWithNoTarget</code>
-    </MissingReturnType>
     <MixedOperand occurrences="53">
       <code>$this-&gt;tmp</code>
       <code>$this-&gt;tmp</code>
@@ -2243,12 +2105,8 @@
       <code>$parameters[0]</code>
       <code>$parameters[0]</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="7">
+    <MixedAssignment occurrences="3">
       <code>$compressed</code>
-      <code>$content2</code>
-      <code>$content2</code>
-      <code>$content3</code>
-      <code>$decompressed</code>
       <code>$parameters</code>
       <code>$parameters</code>
     </MixedAssignment>
@@ -2281,16 +2139,9 @@
       <code>1500</code>
       <code>1500</code>
     </InvalidScalarArgument>
-    <MissingReturnType occurrences="9">
+    <MissingReturnType occurrences="2">
       <code>binaryBytesTestProvider</code>
       <code>decimalBytesTestProvider</code>
-      <code>testBinaryBytes</code>
-      <code>testCustomPrefixes</code>
-      <code>testDecimalBytes</code>
-      <code>testPrecision</code>
-      <code>testSettingFalseMode</code>
-      <code>testSettingNoOptions</code>
-      <code>testSettingNoUnit</code>
     </MissingReturnType>
     <UnusedVariable occurrences="3">
       <code>$filter</code>
@@ -2299,10 +2150,8 @@
     </UnusedVariable>
   </file>
   <file src="test/DateSelectTest.php">
-    <MissingReturnType occurrences="3">
+    <MissingReturnType occurrences="1">
       <code>provideFilter</code>
-      <code>testFilter</code>
-      <code>testInvalidInput</code>
     </MissingReturnType>
   </file>
   <file src="test/DateTimeFormatterTest.php">
@@ -2312,15 +2161,8 @@
     <MissingPropertyType occurrences="1">
       <code>$defaultTimezone</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="8">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testAcceptDateTimeValue</code>
-      <code>testDateTimeFormatted</code>
-      <code>testDateTimeFormattedWithAlternateTimezones</code>
-      <code>testFormatDateTimeFromTimestamp</code>
-      <code>testFormatterFormatsZero</code>
-      <code>testInvalidArgumentExceptionThrownOnInvalidInput</code>
-      <code>testSetFormat</code>
     </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$this-&gt;defaultTimezone</code>
@@ -2330,10 +2172,8 @@
     </UnusedVariable>
   </file>
   <file src="test/DateTimeSelectTest.php">
-    <MissingReturnType occurrences="3">
+    <MissingReturnType occurrences="1">
       <code>provideFilter</code>
-      <code>testFilter</code>
-      <code>testInvalidInput</code>
     </MissingReturnType>
   </file>
   <file src="test/DecompressTest.php">
@@ -2348,9 +2188,6 @@
     <MissingPropertyType occurrences="1">
       <code>$tmpDir</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="1">
-      <code>testFilterMethodProxiesToDecompress</code>
-    </MissingReturnType>
     <MixedArgument occurrences="13">
       <code>$compressed</code>
       <code>$filterType</code>
@@ -2401,16 +2238,14 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="2">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testDecryptBlockCipher</code>
     </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$input</code>
     </MixedArgument>
-    <MixedAssignment occurrences="2">
+    <MixedAssignment occurrences="1">
       <code>$enc</code>
-      <code>$key</code>
     </MixedAssignment>
     <UnusedVariable occurrences="1">
       <code>$enc</code>
@@ -2457,9 +2292,6 @@
       <code>1234</code>
       <code>1234</code>
     </InvalidScalarArgument>
-    <MissingReturnType occurrences="1">
-      <code>testWrongSizeVector</code>
-    </MissingReturnType>
     <UndefinedMethod occurrences="2">
       <code>fail</code>
       <code>fail</code>
@@ -2473,9 +2305,6 @@
       <code>123</code>
       <code>123</code>
     </InvalidScalarArgument>
-    <MissingReturnType occurrences="1">
-      <code>testPassCompressionConfigWillBeUnsetCorrectly</code>
-    </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$r-&gt;getValue($filter)</code>
     </MixedArgument>
@@ -2485,9 +2314,8 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="2">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testEncryptBlockCipher</code>
     </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$input</code>
@@ -2495,9 +2323,8 @@
     <MixedArrayAccess occurrences="1">
       <code>$enc['key']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="2">
+    <MixedAssignment occurrences="1">
       <code>$enc</code>
-      <code>$key</code>
     </MixedAssignment>
   </file>
   <file src="test/File/DecryptTest.php">
@@ -2508,9 +2335,8 @@
       <code>$fileToEncrypt</code>
       <code>$tmpDir</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="2">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testEncryptionWithDecryption</code>
     </MissingReturnType>
     <MixedArgument occurrences="4">
       <code>$this-&gt;fileToEncrypt</code>
@@ -2551,9 +2377,8 @@
       <code>$testDir</code>
       <code>$testFile</code>
     </MissingPropertyType>
-    <MissingReturnType occurrences="2">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testEncryptionWithDecryption</code>
     </MissingReturnType>
     <MixedArgument occurrences="16">
       <code>$this-&gt;fileToEncrypt</code>
@@ -2617,11 +2442,9 @@
       <code>$dir</code>
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="4">
+    <MissingReturnType occurrences="2">
       <code>removeDir</code>
       <code>returnUnfilteredDataProvider</code>
-      <code>testGetFileWithOriginalExtension</code>
-      <code>testGetRandomizedFileWithOriginalExtension</code>
     </MissingReturnType>
     <MixedArgument occurrences="9">
       <code>$args</code>
@@ -2675,22 +2498,9 @@
     <MissingParamType occurrences="1">
       <code>$value</code>
     </MissingParamType>
-    <MissingReturnType occurrences="15">
+    <MissingReturnType occurrences="2">
       <code>getChainConfig</code>
       <code>staticUcaseFilter</code>
-      <code>testAllowsConfiguringFilters</code>
-      <code>testAllowsConfiguringFiltersViaConstructor</code>
-      <code>testAllowsConnectingArbitraryCallbacks</code>
-      <code>testAllowsConnectingViaClassShortName</code>
-      <code>testCanAttachMultipleFiltersOfTheSameTypeAsDiscreteInstances</code>
-      <code>testCanRetrieveFilterWithUndefinedConstructor</code>
-      <code>testCanSerializeFilterChain</code>
-      <code>testClone</code>
-      <code>testConfigurationAllowsTraversableObjects</code>
-      <code>testEmptyFilterChainReturnsOriginalValue</code>
-      <code>testFiltersAreExecutedAccordingToPriority</code>
-      <code>testFiltersAreExecutedInFifoOrder</code>
-      <code>testMergingTwoFilterChainsKeepFiltersPriority</code>
     </MissingReturnType>
     <MixedArgument occurrences="6">
       <code>$config</code>
@@ -2700,13 +2510,12 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
-    <MixedAssignment occurrences="6">
+    <MixedAssignment occurrences="5">
       <code>$compare</code>
       <code>$config</code>
       <code>$config</code>
       <code>$config</code>
       <code>$filter</code>
-      <code>$filtered</code>
     </MixedAssignment>
   </file>
   <file src="test/FilterPluginManagerCompatibilityTest.php">
@@ -2739,14 +2548,8 @@
       <code>function ($value) {</code>
       <code>function ($value) {</code>
     </MissingClosureReturnType>
-    <MissingReturnType occurrences="7">
-      <code>testConfiguresFilterServicesWhenFound</code>
-      <code>testDoesNotConfigureFilterServicesWhenConfigServiceDoesNotContainFiltersConfig</code>
-      <code>testDoesNotConfigureFilterServicesWhenConfigServiceNotPresent</code>
-      <code>testDoesNotConfigureFilterServicesWhenServiceListenerPresent</code>
-      <code>testFactoryConfiguresPluginManagerUnderContainerInterop</code>
+    <MissingReturnType occurrences="1">
       <code>testFactoryConfiguresPluginManagerUnderServiceManagerV2</code>
-      <code>testFactoryReturnsPluginManager</code>
     </MissingReturnType>
     <UnusedClosureParam occurrences="2">
       <code>$container</code>
@@ -2756,38 +2559,15 @@
       <code>$config</code>
     </UnusedVariable>
   </file>
-  <file src="test/FilterPluginManagerTest.php">
-    <MissingReturnType occurrences="6">
-      <code>getInvalidServiceException</code>
-      <code>testFilterSuccessfullyConstructed</code>
-      <code>testFilterSuccessfullyRetrieved</code>
-      <code>testFiltersConstructedAreDifferent</code>
-      <code>testLoadingInvalidFilterRaisesException</code>
-      <code>testRegisteringInvalidFilterRaisesException</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="2">
-      <code>$this-&gt;getInvalidServiceException()</code>
-      <code>$this-&gt;getInvalidServiceException()</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$filterOne</code>
-      <code>$filterTwo</code>
-    </MixedAssignment>
-  </file>
   <file src="test/HtmlEntitiesTest.php">
     <MissingParamType occurrences="3">
       <code>$errno</code>
       <code>$errstr</code>
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="7">
+    <MissingReturnType occurrences="2">
       <code>errorHandler</code>
       <code>returnUnfilteredDataProvider</code>
-      <code>testConfigObject</code>
-      <code>testCorrectsForEncodingMismatch</code>
-      <code>testFluentInterface</code>
-      <code>testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty</code>
-      <code>testStripsUnknownCharactersWhenEncodingMismatchDetected</code>
     </MissingReturnType>
     <MixedArgument occurrences="3">
       <code>$input</code>
@@ -2815,45 +2595,10 @@
     <MissingParamType occurrences="1">
       <code>$inflector</code>
     </MissingParamType>
-    <MissingReturnType occurrences="33">
+    <MissingReturnType occurrences="1">
       <code>_testOptions</code>
-      <code>getOptions</code>
-      <code>testAddFilterRuleAppendsRuleEntries</code>
-      <code>testAddFilterRuleMultipleTimes</code>
-      <code>testAddRulesCreatesAppropriateRuleEntries</code>
-      <code>testCheckInflectorWithPregBackreferenceLikeParts</code>
-      <code>testFilterTransformsStringAccordingToRules</code>
-      <code>testGetPluginManagerReturnsFilterManagerByDefault</code>
-      <code>testGetRule</code>
-      <code>testNoInflectableTarget</code>
-      <code>testPassingArrayToConstructorSetsStateAndRules</code>
-      <code>testPassingArrayToSetConfigSetsStateAndRules</code>
-      <code>testPassingConfigObjectToConstructorSetsStateAndRules</code>
-      <code>testPassingConfigObjectToSetConfigSetsStateAndRules</code>
-      <code>testPassingTargetToConstructorSetsTarget</code>
-      <code>testSetConfigSetsStateAndRules</code>
-      <code>testSetFilterRuleWithFilterObjectCreatesRuleEntryWithFilterObject</code>
-      <code>testSetFilterRuleWithStringRuleCreatesRuleEntryAndFilterObject</code>
-      <code>testSetPluginManagerAllowsSettingAlternatePluginManager</code>
-      <code>testSetRulesCreatesAppropriateRuleEntries</code>
-      <code>testSetStaticRuleCreatesScalarRuleEntry</code>
-      <code>testSetStaticRuleMultipleTimesOverwritesEntry</code>
-      <code>testSetStaticRuleReferenceAllowsUpdatingRuleByReference</code>
-      <code>testSetTargetByReferenceWorks</code>
-      <code>testTargetAccessorsWork</code>
-      <code>testTargetExceptionNotThrownOnIdentifierNotFollowedByCharacter</code>
-      <code>testTargetExceptionThrownWhenTargetSourceNotSatisfied</code>
-      <code>testTargetInitiallyNull</code>
-      <code>testTargetReplacementIdentiferAccessorsWork</code>
-      <code>testTargetReplacementIdentiferWorksWhenInflected</code>
-      <code>testTestForFalseInConstructorParams</code>
-      <code>testThrowTargetExceptionsAccessorsWork</code>
-      <code>testThrowTargetExceptionsOnAccessorsWork</code>
     </MissingReturnType>
-    <MixedArgument occurrences="11">
-      <code>$options</code>
-      <code>$options</code>
-      <code>$options</code>
+    <MixedArgument occurrences="8">
       <code>$options['rules'][':action']</code>
       <code>$options['rules'][':controller']</code>
       <code>$rule</code>
@@ -2863,26 +2608,10 @@
       <code>$rules['controller']</code>
       <code>$rules['controller'][$key]</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="8">
-      <code>$options['rules']</code>
-      <code>$options['rules']</code>
-      <code>$options['rules']</code>
-      <code>$options['target']</code>
-      <code>$options['targetReplacementIdentifier']</code>
-      <code>$rules['action']</code>
-      <code>$rules['controller']</code>
-      <code>$rules['suffix']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="12">
+    <MixedAssignment occurrences="6">
       <code>$filtered</code>
       <code>$filtered</code>
       <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$options</code>
-      <code>$options</code>
-      <code>$options</code>
-      <code>$options</code>
       <code>$rule</code>
       <code>$rule</code>
       <code>$rules</code>
@@ -2897,9 +2626,7 @@
     <MixedOperand occurrences="1">
       <code>$rule</code>
     </MixedOperand>
-    <PossiblyFalseArgument occurrences="17">
-      <code>$rules</code>
-      <code>$rules</code>
+    <PossiblyFalseArgument occurrences="15">
       <code>$rules</code>
       <code>$rules</code>
       <code>$rules</code>
@@ -2916,10 +2643,9 @@
       <code>$rules</code>
       <code>$rules</code>
     </PossiblyFalseArgument>
-    <PossiblyInvalidArrayAccess occurrences="8">
+    <PossiblyInvalidArrayAccess occurrences="7">
       <code>$rules['controller']</code>
       <code>$rules['controller']</code>
-      <code>$rules['suffix']</code>
       <code>$rules['suffix']</code>
       <code>$rules[0]</code>
       <code>$rules[0]</code>
@@ -2936,46 +2662,10 @@
       <code>$rule</code>
     </UnusedVariable>
   </file>
-  <file src="test/IntTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'PHPUnit_Framework_Error_Deprecated'</code>
-    </ArgumentTypeCoercion>
-    <DeprecatedClass occurrences="1">
-      <code>new IntFilter()</code>
-    </DeprecatedClass>
-    <MissingReturnType occurrences="1">
-      <code>testRaisesNoticeOnInstantiation</code>
-    </MissingReturnType>
-    <ReservedWord occurrences="1">
-      <code>IntFilter</code>
-    </ReservedWord>
-    <UndefinedClass occurrences="1">
-      <code>'PHPUnit_Framework_Error_Deprecated'</code>
-    </UndefinedClass>
-  </file>
   <file src="test/MonthSelectTest.php">
-    <MissingReturnType occurrences="3">
-      <code>provideFilter</code>
-      <code>testFilter</code>
-      <code>testInvalidInput</code>
-    </MissingReturnType>
-  </file>
-  <file src="test/NullTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'PHPUnit_Framework_Error_Deprecated'</code>
-    </ArgumentTypeCoercion>
-    <DeprecatedClass occurrences="1">
-      <code>new NullFilter()</code>
-    </DeprecatedClass>
     <MissingReturnType occurrences="1">
-      <code>testRaisesNoticeOnInstantiation</code>
+      <code>provideFilter</code>
     </MissingReturnType>
-    <ReservedWord occurrences="1">
-      <code>NullFilter</code>
-    </ReservedWord>
-    <UndefinedClass occurrences="1">
-      <code>'PHPUnit_Framework_Error_Deprecated'</code>
-    </UndefinedClass>
   </file>
   <file src="test/PregReplaceTest.php">
     <DeprecatedMethod occurrences="1">
@@ -2984,23 +2674,10 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="12">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testDetectsPcreUnicodeSupport</code>
-      <code>testFilterPerformsRegexReplacement</code>
-      <code>testFilterPerformsRegexReplacementWithArray</code>
-      <code>testFilterThrowsExceptionWhenNoMatchPatternPresent</code>
-      <code>testPassingPatternToConstructorSetsPattern</code>
-      <code>testPassingPatternWithExecModifierRaisesException</code>
-      <code>testPassingReplacementToConstructorSetsReplacement</code>
-      <code>testPatternAccessorsWork</code>
-      <code>testPatternIsNullByDefault</code>
-      <code>testReplacementAccessorsWork</code>
-      <code>testReplacementIsEmptyByDefault</code>
     </MissingReturnType>
-    <MixedAssignment occurrences="3">
-      <code>$filtered</code>
-      <code>$filtered</code>
+    <MixedAssignment occurrences="1">
       <code>$filtered</code>
     </MixedAssignment>
     <UnusedVariable occurrences="1">
@@ -3027,21 +2704,8 @@
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
-    <MissingReturnType occurrences="7">
-      <code>testCanResetPluginManagerByPassingNull</code>
-      <code>testCanSpecifyCustomPluginManager</code>
-      <code>testStaticFactory</code>
-      <code>testStaticFactoryClassNotFound</code>
-      <code>testStaticFactoryWithConstructorArguments</code>
-      <code>testUsesDifferentConfigurationOnEachRequest</code>
-      <code>testUsesFilterPluginManagerByDefault</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="5">
+    <MixedAssignment occurrences="1">
       <code>$filteredValue</code>
-      <code>$filteredValue</code>
-      <code>$filteredValue</code>
-      <code>$first</code>
-      <code>$second</code>
     </MixedAssignment>
     <UnusedClosureParam occurrences="2">
       <code>$value</code>
@@ -3049,11 +2713,6 @@
     </UnusedClosureParam>
   </file>
   <file src="test/StringPrefixTest.php">
-    <MissingReturnType occurrences="3">
-      <code>testInvalidPrefixes</code>
-      <code>testNonScalarInput</code>
-      <code>testWithoutPrefix</code>
-    </MissingReturnType>
     <MixedArgument occurrences="2">
       <code>$filter('sample')</code>
       <code>$prefix</code>
@@ -3063,11 +2722,6 @@
     </MixedInferredReturnType>
   </file>
   <file src="test/StringSuffixTest.php">
-    <MissingReturnType occurrences="3">
-      <code>testInvalidSuffixes</code>
-      <code>testNonScalarInput</code>
-      <code>testWithoutSuffix</code>
-    </MissingReturnType>
     <MixedArgument occurrences="2">
       <code>$filter('sample')</code>
       <code>$suffix</code>
@@ -3088,12 +2742,8 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="5">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testCaseInsensitiveEncoding</code>
-      <code>testDetectMbInternalEncoding</code>
-      <code>testFilterUsesGetEncodingMethod</code>
-      <code>testInitiationWithEncoding</code>
     </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$input</code>
@@ -3111,12 +2761,8 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="5">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testCaseInsensitiveEncoding</code>
-      <code>testDetectMbInternalEncoding</code>
-      <code>testFilterUsesGetEncodingMethod</code>
-      <code>testInitiationWithEncoding</code>
     </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$input</code>
@@ -3126,14 +2772,12 @@
     <MissingParamType occurrences="1">
       <code>$value</code>
     </MissingParamType>
-    <MissingReturnType occurrences="7">
+    <MissingReturnType occurrences="5">
       <code>getNonStringValues</code>
-      <code>testEmptyCharList</code>
       <code>testLaminas10891</code>
       <code>testLaminas170</code>
       <code>testLaminas7183</code>
       <code>testLaminas7902</code>
-      <code>testShouldNotFilterNonStringValues</code>
     </MissingReturnType>
     <MixedArgument occurrences="1">
       <code>$value</code>
@@ -3151,21 +2795,9 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="14">
+    <MissingReturnType occurrences="2">
       <code>badCommentProvider</code>
       <code>returnUnfilteredDataProvider</code>
-      <code>testAllowedAttributeValueMayEndWithEquals</code>
-      <code>testAttributeValueofZeroIsNotRemoved</code>
-      <code>testBadCommentTags</code>
-      <code>testCommentWithTagInSameLine</code>
-      <code>testDisallowedAttributesSplitOverMultipleLinesShouldBeStripped</code>
-      <code>testFilterCanAllowHyphenatedAttributeNames</code>
-      <code>testFilterIsoChars</code>
-      <code>testFilterIsoCharsInComment</code>
-      <code>testFilterSplitCommentTags</code>
-      <code>testMultiParamArray</code>
-      <code>testMultiQuoteInput</code>
-      <code>testNotClosedHtmlCommentAtEndOfString</code>
     </MissingReturnType>
     <MixedArgument occurrences="2">
       <code>$filtered</code>
@@ -3191,10 +2823,8 @@
     </MixedArgument>
   </file>
   <file src="test/ToFloatTest.php">
-    <MissingReturnType occurrences="4">
+    <MissingReturnType occurrences="2">
       <code>filterableValuesProvider</code>
-      <code>testCanFilterScalarValuesAsExpected</code>
-      <code>testReturnsUnfilterableInputVerbatim</code>
       <code>unfilterableValuesProvider</code>
     </MissingReturnType>
   </file>
@@ -3210,18 +2840,10 @@
     <InvalidScalarArgument occurrences="1">
       <code>true</code>
     </InvalidScalarArgument>
-    <MissingReturnType occurrences="12">
+    <MissingReturnType occurrences="4">
       <code>combinedTypeTestProvider</code>
       <code>defaultTestProvider</code>
       <code>duplicateTypeProvider</code>
-      <code>testCombinedTypes</code>
-      <code>testConstructorOptions</code>
-      <code>testConstructorParams</code>
-      <code>testDefault</code>
-      <code>testDuplicateInitializationResultsInCorrectType</code>
-      <code>testGettingDefaultType</code>
-      <code>testSettingFalseType</code>
-      <code>testTypes</code>
       <code>typeTestProvider</code>
     </MissingReturnType>
     <MixedArgument occurrences="3">
@@ -3249,12 +2871,8 @@
       <code>$e-&gt;getMessage()</code>
       <code>$e-&gt;getMessage()</code>
     </InvalidArgument>
-    <MissingReturnType occurrences="5">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testCaseInsensitiveEncoding</code>
-      <code>testDetectMbInternalEncoding</code>
-      <code>testInitiationWithEncoding</code>
-      <code>testReturnUnfiltered</code>
     </MissingReturnType>
   </file>
   <file src="test/UriNormalizeTest.php">
@@ -3266,13 +2884,10 @@
       <code>$scheme</code>
       <code>$url</code>
     </MissingParamType>
-    <MissingReturnType occurrences="6">
+    <MissingReturnType occurrences="3">
       <code>abnormalUriProvider</code>
       <code>enforcedSchemeTestcaseProvider</code>
       <code>returnUnfilteredDataProvider</code>
-      <code>testDefaultSchemeAffectsNormalization</code>
-      <code>testEnforcedScheme</code>
-      <code>testUrisAreNormalized</code>
     </MissingReturnType>
     <MixedArgument occurrences="2">
       <code>$input</code>
@@ -3283,14 +2898,6 @@
     <DeprecatedClass occurrences="1">
       <code>new WhitelistFilter()</code>
     </DeprecatedClass>
-  </file>
-  <file src="test/Word/CamelCaseToDashTest.php">
-    <MissingReturnType occurrences="1">
-      <code>testFilterSeparatesCamelCasedWordsWithDashes</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="1">
-      <code>$filtered</code>
-    </MixedAssignment>
   </file>
   <file src="test/Word/CamelCaseToSeparatorNoPcreUnicodeTest.php">
     <MissingPropertyType occurrences="1">
@@ -3307,36 +2914,13 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="4">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testFilterSeparatesCamelCasedWordsWithProvidedSeparator</code>
-      <code>testFilterSeparatesCamelCasedWordsWithSpacesByDefault</code>
-      <code>testFilterSeperatesMultipleUppercasedLettersAndUnderscores</code>
     </MissingReturnType>
-    <MixedAssignment occurrences="4">
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
   </file>
   <file src="test/Word/CamelCaseToUnderscoreTest.php">
-    <MissingReturnType occurrences="2">
-      <code>testFilterSeparatesCamelCasedWordsWithUnderscores</code>
-      <code>testFilterSeperatingNumbersToUnterscore</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="2">
       <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/Word/DashToCamelCaseTest.php">
-    <MissingReturnType occurrences="1">
-      <code>testFilterSeparatesCamelCasedWordsWithDashes</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="1">
       <code>$filtered</code>
     </MixedAssignment>
   </file>
@@ -3344,119 +2928,37 @@
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="3">
-      <code>returnUnfilteredDataProvider</code>
-      <code>testFilterSeparatesDashedWordsWithDefaultSpaces</code>
-      <code>testFilterSeparatesDashedWordsWithSomeString</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="3">
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/Word/DashToUnderscoreTest.php">
     <MissingReturnType occurrences="1">
-      <code>testFilterSeparatesCamelCasedWordsWithDashes</code>
+      <code>returnUnfilteredDataProvider</code>
     </MissingReturnType>
-    <MixedAssignment occurrences="1">
-      <code>$filtered</code>
-    </MixedAssignment>
   </file>
   <file src="test/Word/SeparatorToCamelCaseTest.php">
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="6">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testFilterSeparatesCamelCasedNonAlphaWordsWithProvidedSeparator</code>
-      <code>testFilterSeparatesCamelCasedWordsWithProvidedSeparator</code>
-      <code>testFilterSeparatesCamelCasedWordsWithSpacesByDefault</code>
-      <code>testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator</code>
-      <code>testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator</code>
     </MissingReturnType>
-    <MixedAssignment occurrences="6">
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/Word/SeparatorToDashTest.php">
-    <MissingReturnType occurrences="2">
-      <code>testFilterSeparatesDashedWordsWithDefaultSpaces</code>
-      <code>testFilterSeparatesDashedWordsWithSomeString</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="2">
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
   </file>
   <file src="test/Word/SeparatorToSeparatorTest.php">
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType occurrences="5">
+    <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
-      <code>testFilterSeparatesWordsByDefault</code>
-      <code>testFilterSeparatesWordsWithSearchAndReplacementSpecified</code>
-      <code>testFilterSeparatesWordsWithSearchSpecified</code>
-      <code>testFilterSupportArray</code>
     </MissingReturnType>
-    <MixedAssignment occurrences="4">
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
   </file>
   <file src="test/Word/UnderscoreToCamelCaseTest.php">
-    <MissingReturnType occurrences="2">
-      <code>testFilterSeparatesCamelCasedWordsWithDashes</code>
-      <code>testSomeFilterValues</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="7">
+    <MixedAssignment occurrences="5">
       <code>$filtered</code>
       <code>$filtered</code>
       <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/Word/UnderscoreToDashTest.php">
-    <MissingReturnType occurrences="1">
-      <code>testFilterSeparatesCamelCasedWordsWithDashes</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="1">
-      <code>$filtered</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/Word/UnderscoreToSeparatorTest.php">
-    <MissingReturnType occurrences="2">
-      <code>testFilterSeparatesCamelCasedWordsDefaultSeparator</code>
-      <code>testFilterSeparatesCamelCasedWordsProvidedSeparator</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="2">
       <code>$filtered</code>
       <code>$filtered</code>
     </MixedAssignment>
   </file>
   <file src="test/Word/UnderscoreToStudlyCaseTest.php">
-    <MissingReturnType occurrences="4">
-      <code>testFilterSeparatesStudlyCasedWordsWithDashes</code>
-      <code>testFiltersArray</code>
-      <code>testSomeFilterValues</code>
-      <code>testWithEmpties</code>
-    </MissingReturnType>
-    <MixedAssignment occurrences="10">
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
+    <MixedAssignment occurrences="6">
       <code>$filtered</code>
       <code>$filtered</code>
       <code>$filtered</code>

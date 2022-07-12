@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Filter\Boolean;
 use Laminas\Filter\FilterInterface;
 use Laminas\Filter\FilterPluginManager;
@@ -12,6 +11,7 @@ use Laminas\Filter\FilterPluginManagerFactory;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 use ReflectionObject;
 
 use function method_exists;

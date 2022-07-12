@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word\Service;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerInterface;
 use Traversable;
 
 use function get_class;
