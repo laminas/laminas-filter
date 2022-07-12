@@ -122,7 +122,7 @@ class FilterChainTest extends TestCase
                 ['callback' => self::class . '::staticUcaseFilter'],
                 [
                     'priority' => 10000,
-                    'callback' => function ($value) {
+                    'callback' => function (string $value): string {
                         return trim($value);
                     },
                 ],

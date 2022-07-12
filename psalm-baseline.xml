@@ -1112,30 +1112,24 @@
       <code>gettype($callback)</code>
       <code>gettype($options)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="8">
+    <MixedArgument occurrences="6">
       <code>$callback</code>
-      <code>$filter</code>
       <code>$item['data']</code>
-      <code>$item['priority']</code>
       <code>$key</code>
       <code>$name</code>
       <code>$priority</code>
       <code>$priority</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="7">
-      <code>$item['data']</code>
-      <code>$item['priority']</code>
+    <MixedArrayAccess occurrences="5">
       <code>$spec['callback']</code>
       <code>$spec['name']</code>
       <code>$spec['options']</code>
       <code>$spec['priority']</code>
       <code>$spec['priority']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="14">
+    <MixedAssignment occurrences="12">
       <code>$callback</code>
       <code>$filter</code>
-      <code>$filter</code>
-      <code>$item</code>
       <code>$key</code>
       <code>$name</code>
       <code>$options</code>
@@ -1150,12 +1144,6 @@
     <MixedFunctionCall occurrences="1">
       <code>call_user_func($filter, $valueFiltered)</code>
     </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="1">
-      <code>FilterInterface|callable(mixed): mixed</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$plugins-&gt;get($name, $options)</code>
-    </MixedReturnStatement>
     <RedundantConditionGivenDocblockType occurrences="2">
       <code>is_object($callback)</code>
       <code>is_object($options)</code>
@@ -1176,10 +1164,14 @@
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
     <MixedArrayOffset occurrences="2"/>
+    <MixedInferredReturnType occurrences="1">
+      <code>($name is class-string ? InstanceType : callable(mixed): mixed)</code>
+    </MixedInferredReturnType>
     <NonInvariantDocblockPropertyType occurrences="1">
       <code>$factories</code>
     </NonInvariantDocblockPropertyType>
-    <ParamNameMismatch occurrences="1">
+    <ParamNameMismatch occurrences="2">
+      <code>$name</code>
       <code>$plugin</code>
     </ParamNameMismatch>
     <UndefinedClass occurrences="26">
@@ -1306,16 +1298,14 @@
     <MixedFunctionCall occurrences="1">
       <code>$ruleFilter($processedPart)</code>
     </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="3">
-      <code>FilterInterface|callable(mixed): mixed</code>
+    <MixedInferredReturnType occurrences="2">
       <code>FilterInterface|false</code>
       <code>array|false</code>
     </MixedInferredReturnType>
     <MixedMethodCall occurrences="1">
       <code>new $options['pluginManager']()</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="3">
-      <code>$this-&gt;getPluginManager()-&gt;get($rule)</code>
+    <MixedReturnStatement occurrences="2">
       <code>$this-&gt;rules[$spec]</code>
       <code>$this-&gt;rules[$spec][$index]</code>
     </MixedReturnStatement>
@@ -1418,12 +1408,6 @@
     <InvalidThrow occurrences="1">
       <code>Exception\ExceptionInterface</code>
     </InvalidThrow>
-    <MixedAssignment occurrences="1">
-      <code>$filter</code>
-    </MixedAssignment>
-    <MixedFunctionCall occurrences="1">
-      <code>$filter($value)</code>
-    </MixedFunctionCall>
   </file>
   <file src="src/StringPrefix.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1948,14 +1932,6 @@
     </UnusedVariable>
   </file>
   <file src="test/Compress/TarLoadArchiveTarTest.php">
-    <MissingClosureParamType occurrences="2">
-      <code>$errno</code>
-      <code>$errstr</code>
-    </MissingClosureParamType>
-    <UnusedClosureParam occurrences="2">
-      <code>$errno</code>
-      <code>$errstr</code>
-    </UnusedClosureParam>
     <UnusedVariable occurrences="1">
       <code>$tar</code>
     </UnusedVariable>
@@ -2497,8 +2473,7 @@
     </MissingReturnType>
   </file>
   <file src="test/FilterChainTest.php">
-    <MissingClosureParamType occurrences="2">
-      <code>$value</code>
+    <MissingClosureParamType occurrences="1">
       <code>$value</code>
     </MissingClosureParamType>
     <MissingParamType occurrences="1">
@@ -2508,11 +2483,10 @@
       <code>getChainConfig</code>
       <code>staticUcaseFilter</code>
     </MissingReturnType>
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="5">
       <code>$config</code>
       <code>$config</code>
       <code>$config</code>
-      <code>$value</code>
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
@@ -2564,12 +2538,6 @@
     <UnusedVariable occurrences="1">
       <code>$config</code>
     </UnusedVariable>
-  </file>
-  <file src="test/FilterPluginManagerTest.php">
-    <MixedAssignment occurrences="2">
-      <code>$filterOne</code>
-      <code>$filterTwo</code>
-    </MixedAssignment>
   </file>
   <file src="test/HtmlEntitiesTest.php">
     <MissingParamType occurrences="3">
@@ -2711,27 +2679,7 @@
       <code>$input</code>
     </MixedArgument>
   </file>
-  <file src="test/StaticAnalysis/PluginRetrievalTest.php">
-    <MixedAssignment occurrences="1">
-      <code>$plugin</code>
-    </MixedAssignment>
-    <MixedFunctionCall occurrences="1">
-      <code>$plugin($value)</code>
-    </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$plugin-&gt;filter($value)</code>
-    </MixedReturnStatement>
-    <PossiblyInvalidMethodCall occurrences="1">
-      <code>filter</code>
-    </PossiblyInvalidMethodCall>
-  </file>
   <file src="test/StaticFilterTest.php">
-    <InvalidArgument occurrences="1">
-      <code>Exception\ExceptionInterface::class</code>
-    </InvalidArgument>
     <MissingClosureParamType occurrences="2">
       <code>$value</code>
       <code>$value</code>

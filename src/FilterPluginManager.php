@@ -509,4 +509,29 @@ class FilterPluginManager extends AbstractPluginManager
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
+
+    /**
+     * @inheritDoc
+     * @template InstanceType of FilterInterface
+     * @param class-string<InstanceType>|string $name Service name of plugin to retrieve.
+     * @param null|array<mixed> $options Options to use when creating the instance.
+     * @return InstanceType|callable(mixed): mixed
+     * @psalm-return ($name is class-string ? InstanceType : callable(mixed): mixed)
+     */
+    public function get($name, ?array $options = null)
+    {
+        /** @psalm-suppress MixedReturnStatement */
+        return parent::get($name, $options);
+    }
+
+    /**
+     * @param string $name
+     * @param FilterInterface|callable(mixed): mixed $service
+     * @return void
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function setService($name, $service)
+    {
+        parent::setService($name, $service);
+    }
 }

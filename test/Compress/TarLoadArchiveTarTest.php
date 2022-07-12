@@ -18,7 +18,7 @@ class TarLoadArchiveTarTest extends TestCase
 {
     public function testArchiveTarNotLoaded(): void
     {
-        set_error_handler(function ($errno, $errstr) {
+        set_error_handler(function () {
             // PEAR class uses deprecated constructor, which emits a deprecation error
             return true;
         }, E_DEPRECATED);
