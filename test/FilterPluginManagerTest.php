@@ -33,9 +33,9 @@ class FilterPluginManagerTest extends TestCase
 
     public function testRegisteringInvalidFilterRaisesException(): void
     {
-        $this->expectException($this->getInvalidServiceException());
         /** @psalm-suppress InvalidArgument */
         $this->filters->setService('test', $this);
+        $this->expectException($this->getInvalidServiceException());
         $this->filters->get('test');
     }
 

@@ -141,7 +141,7 @@ class FilterChain extends AbstractFilter implements Countable
      *
      * @param string $name
      * @param array $options
-     * @return FilterInterface|callable
+     * @return FilterInterface|callable(mixed): mixed
      */
     public function plugin($name, array $options = [])
     {
@@ -152,7 +152,7 @@ class FilterChain extends AbstractFilter implements Countable
     /**
      * Attach a filter to the chain
      *
-     * @param  callable|FilterInterface $callback A Filter implementation or valid PHP callback
+     * @param  callable(mixed): mixed|FilterInterface $callback A Filter implementation or valid PHP callback
      * @param  int $priority Priority at which to enqueue filter; defaults to 1000 (higher executes earlier)
      * @throws Exception\InvalidArgumentException
      * @return self

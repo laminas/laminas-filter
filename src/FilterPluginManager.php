@@ -27,7 +27,7 @@ use function sprintf;
  * available, as well as aliases for them.
  *
  * @final
- * @extends AbstractPluginManager<FilterInterface|callable>
+ * @extends AbstractPluginManager<FilterInterface|callable(mixed): mixed>
  */
 class FilterPluginManager extends AbstractPluginManager
 {
@@ -470,7 +470,7 @@ class FilterPluginManager extends AbstractPluginManager
     /**
      * {@inheritdoc}
      *
-     * @psalm-assert FilterInterface|callable $plugin
+     * @psalm-assert FilterInterface|callable(mixed): mixed $plugin
      */
     public function validate($plugin)
     {
@@ -514,8 +514,8 @@ class FilterPluginManager extends AbstractPluginManager
      * @inheritDoc
      * @param class-string<FilterInterface>|string $name Service name of plugin to retrieve.
      * @param null|array<mixed> $options Options to use when creating the instance.
-     * @return FilterInterface|callable
-     * @psalm-return ($name is class-string ? FilterInterface : callable)
+     * @return FilterInterface|callable(mixed): mixed
+     * @psalm-return ($name is class-string ? FilterInterface : callable(mixed): mixed)
      */
     public function get($name, ?array $options = null)
     {
@@ -525,7 +525,7 @@ class FilterPluginManager extends AbstractPluginManager
 
     /**
      * @param string $name
-     * @param FilterInterface|callable $service
+     * @param FilterInterface|callable(mixed): mixed $service
      * @return void
      * @psalm-suppress MoreSpecificImplementedParamType
      */

@@ -1165,9 +1165,7 @@
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
     <MixedArrayOffset occurrences="2"/>
-    <MixedInferredReturnType occurrences="1">
-      <code>($name is class-string ? FilterInterface : callable)</code>
-    </MixedInferredReturnType>
+    <MixedInferredReturnType occurrences="1"/>
     <NonInvariantDocblockPropertyType occurrences="1">
       <code>$factories</code>
     </NonInvariantDocblockPropertyType>
