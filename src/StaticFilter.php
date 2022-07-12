@@ -6,6 +6,9 @@ namespace Laminas\Filter;
 
 use Laminas\ServiceManager\ServiceManager;
 
+/**
+ * @deprecated Since version 2.15.0 This filter will be removed in version 3.0.0 of this component without replacement.
+ */
 class StaticFilter
 {
     /** @var FilterPluginManager|null */
