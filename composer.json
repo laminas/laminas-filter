@@ -43,7 +43,7 @@
         "pear/archive_tar": "^1.4.14",
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.10",
-        "psalm/plugin-phpunit": "^0.15.2",
+        "psalm/plugin-phpunit": "^0.17.0",
         "psr/http-factory": "^1.0.1",
         "vimeo/psalm": "^4.13.1"
     },
