@@ -16,8 +16,7 @@ final class PluginRetrievalTest
         $this->pluginManager = $pluginManager;
     }
 
-    /** @return mixed */
-    public function filterSomethingWithAKnownFilterClass(string $value)
+    public function filterSomethingWithAKnownFilterClass(string $value): string
     {
         $plugin = $this->pluginManager->get(StringToUpper::class);
 

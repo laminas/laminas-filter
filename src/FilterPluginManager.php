@@ -512,10 +512,11 @@ class FilterPluginManager extends AbstractPluginManager
 
     /**
      * @inheritDoc
-     * @param class-string<FilterInterface>|string $name Service name of plugin to retrieve.
+     * @template InstanceType of FilterInterface
+     * @param class-string<InstanceType>|string $name Service name of plugin to retrieve.
      * @param null|array<mixed> $options Options to use when creating the instance.
-     * @return FilterInterface|callable(mixed): mixed
-     * @psalm-return ($name is class-string ? FilterInterface : callable(mixed): mixed)
+     * @return InstanceType|callable(mixed): mixed
+     * @psalm-return ($name is class-string ? InstanceType : callable(mixed): mixed)
      */
     public function get($name, ?array $options = null)
     {
