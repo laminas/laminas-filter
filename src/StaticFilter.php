@@ -6,9 +6,12 @@ namespace Laminas\Filter;
 
 use Laminas\ServiceManager\ServiceManager;
 
+/**
+ * @deprecated Since version 2.15.0 This filter will be removed in version 3.0.0 of this component without replacement.
+ */
 class StaticFilter
 {
-    /** @var FilterPluginManager */
+    /** @var FilterPluginManager|null */
     protected static $plugins;
 
     /**
@@ -28,11 +31,14 @@ class StaticFilter
      */
     public static function getPluginManager()
     {
-        if (null === static::$plugins) {
-            static::setPluginManager(new FilterPluginManager(new ServiceManager()));
+        $plugins = static::$plugins;
+
+        if (! $plugins instanceof FilterPluginManager) {
+            $plugins = new FilterPluginManager(new ServiceManager());
+            static::setPluginManager($plugins);
         }
 
-        return static::$plugins;
+        return $plugins;
     }
 
     /**
@@ -56,6 +62,9 @@ class StaticFilter
         $plugins = static::getPluginManager();
 
         $filter = $plugins->get($classBaseName, $args);
-        return $filter->filter($value);
+
+        return $filter instanceof FilterInterface
+            ? $filter->filter($value)
+            : $filter($value);
     }
 }

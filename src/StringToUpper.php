@@ -40,8 +40,9 @@ class StringToUpper extends AbstractUnicode
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  string $value
+     * @param  mixed $value
      * @return string|mixed
+     * @psalm-return ($value is scalar ? string : mixed)
      */
     public function filter($value)
     {

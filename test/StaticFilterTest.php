@@ -13,9 +13,12 @@ use Laminas\ServiceManager\Exception;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
+use function strtoupper;
+
 use const ENT_COMPAT;
 use const ENT_QUOTES;
 
+/** @psalm-suppress DeprecatedClass */
 class StaticFilterTest extends TestCase
 {
     /**
@@ -107,5 +110,20 @@ class StaticFilterTest extends TestCase
         $this->assertNotSame($first, $second);
         $this->assertSame('FOO', $first);
         $this->assertSame('BAR', $second);
+    }
+
+    public function testThatCallablesRegisteredWithThePluginManagerCanBeExecuted(): void
+    {
+        $plugins = new FilterPluginManager(new ServiceManager());
+        $plugins->setService('doStuff', static function (string $value): string {
+            return strtoupper($value);
+        });
+
+        StaticFilter::setPluginManager($plugins);
+
+        self::assertEquals(
+            'FOO',
+            StaticFilter::execute('foo', 'doStuff')
+        );
     }
 }

@@ -25,6 +25,9 @@ use function sprintf;
  * Enforces that filters retrieved are either callbacks or instances of
  * FilterInterface. Additionally, it registers a number of default filters
  * available, as well as aliases for them.
+ *
+ * @final
+ * @extends AbstractPluginManager<FilterInterface|callable(mixed): mixed>
  */
 class FilterPluginManager extends AbstractPluginManager
 {
@@ -466,6 +469,8 @@ class FilterPluginManager extends AbstractPluginManager
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-assert FilterInterface|callable(mixed): mixed $plugin
      */
     public function validate($plugin)
     {
@@ -503,5 +508,30 @@ class FilterPluginManager extends AbstractPluginManager
         } catch (InvalidServiceException $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * @inheritDoc
+     * @template InstanceType of FilterInterface
+     * @param class-string<InstanceType>|string $name Service name of plugin to retrieve.
+     * @param null|array<mixed> $options Options to use when creating the instance.
+     * @return InstanceType|callable(mixed): mixed
+     * @psalm-return ($name is class-string ? InstanceType : callable(mixed): mixed)
+     */
+    public function get($name, ?array $options = null)
+    {
+        /** @psalm-suppress MixedReturnStatement */
+        return parent::get($name, $options);
+    }
+
+    /**
+     * @param string $name
+     * @param FilterInterface|callable(mixed): mixed $service
+     * @return void
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function setService($name, $service)
+    {
+        parent::setService($name, $service);
     }
 }

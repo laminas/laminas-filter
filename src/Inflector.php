@@ -481,7 +481,7 @@ class Inflector extends AbstractFilter
      * Resolve named filters and convert them to filter objects.
      *
      * @param  string $rule
-     * @return FilterInterface
+     * @return FilterInterface|callable(mixed): mixed
      */
     // @codingStandardsIgnoreStart
     protected function _getRule($rule)
