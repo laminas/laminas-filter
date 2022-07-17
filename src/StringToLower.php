@@ -40,8 +40,9 @@ class StringToLower extends AbstractUnicode
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  string $value
+     * @param  string|mixed $value
      * @return string|mixed
+     * @psalm-return ($value is string ? string : $value)
      */
     public function filter($value)
     {
