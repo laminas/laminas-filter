@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
+use Laminas\ServiceManager\ConfigInterface;
+
+/**
+ * @psalm-import-type ServiceManagerConfigurationType from ConfigInterface
+ */
 class ConfigProvider
 {
     /**
      * Return configuration for this component.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function __invoke()
     {
@@ -21,7 +26,7 @@ class ConfigProvider
     /**
      * Return dependency mappings for this component.
      *
-     * @return array
+     * @return ServiceManagerConfigurationType
      */
     public function getDependencyConfig()
     {
@@ -30,7 +35,7 @@ class ConfigProvider
                 'FilterManager' => FilterPluginManager::class,
 
                 // Legacy Zend Framework aliases
-                \Zend\Filter\FilterPluginManager::class => FilterPluginManager::class,
+                'Zend\Filter\FilterPluginManager' => FilterPluginManager::class,
             ],
             'factories' => [
                 FilterPluginManager::class => FilterPluginManagerFactory::class,

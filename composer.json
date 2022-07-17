@@ -45,7 +45,7 @@
         "phpunit/phpunit": "^9.5.10",
         "psalm/plugin-phpunit": "^0.17.0",
         "psr/http-factory": "^1.0.1",
-        "vimeo/psalm": "^4.13.1"
+        "vimeo/psalm": "^4.24.0"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",
