@@ -52,9 +52,7 @@ class FilterChainTest extends TestCase
     public function testAllowsConnectingArbitraryCallbacks(): void
     {
         $chain = new FilterChain();
-        $chain->attach(function ($value) {
-            return strtolower($value);
-        });
+        $chain->attach(static fn($value) => strtolower($value));
         $value = 'AbC';
         $this->assertSame('abc', $chain->filter($value));
     }
@@ -122,9 +120,7 @@ class FilterChainTest extends TestCase
                 ['callback' => self::class . '::staticUcaseFilter'],
                 [
                     'priority' => 10000,
-                    'callback' => function (string $value): string {
-                        return trim($value);
-                    },
+                    'callback' => static fn(string $value): string => trim($value),
                 ],
             ],
             'filters'   => [

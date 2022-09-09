@@ -18,10 +18,13 @@ class TarLoadArchiveTarTest extends TestCase
 {
     public function testArchiveTarNotLoaded(): void
     {
-        set_error_handler(function () {
+        set_error_handler(
+            static fn() =>
             // PEAR class uses deprecated constructor, which emits a deprecation error
-            return true;
-        }, E_DEPRECATED);
+            true,
+            E_DEPRECATED
+        );
+
         if (class_exists('Archive_Tar')) {
             restore_error_handler();
             $this->markTestSkipped('PEAR Archive_Tar is present; skipping test that expects its absence');
