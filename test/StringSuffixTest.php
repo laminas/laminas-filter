@@ -56,7 +56,7 @@ class StringSuffixTest extends TestCase
             'empty array'         => [[]],
             'resource'            => [fopen('php://memory', 'rb+')],
             'array with callable' => [
-                function () {
+                static function (): void {
                 },
             ],
             'object'              => [new stdClass()],

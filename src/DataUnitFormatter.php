@@ -11,7 +11,6 @@ use function in_array;
 use function is_numeric;
 use function log;
 use function number_format;
-use function pow;
 use function sprintf;
 use function strtolower;
 
@@ -25,10 +24,8 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * A list of all possible filter modes:
-     *
-     * @var array
      */
-    private static $modes = [
+    private static array $modes = [
         self::MODE_BINARY,
         self::MODE_DECIMAL,
     ];
@@ -37,10 +34,8 @@ final class DataUnitFormatter extends AbstractFilter
      * A list of standardized binary prefix formats for decimal and binary mode
      *
      * @link https://en.wikipedia.org/wiki/Binary_prefix
-     *
-     * @var array
      */
-    private static $standardizedPrefixes = [
+    private static array $standardizedPrefixes = [
         // binary IEC units:
         self::MODE_BINARY => ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi', 'Yi'],
         // decimal SI units:
@@ -230,7 +225,7 @@ final class DataUnitFormatter extends AbstractFilter
         }
 
         // return formatted value:
-        $result    = $amount / pow($base, $power);
+        $result    = $amount / $base ** $power;
         $formatted = number_format($result, $this->getPrecision());
         return $this->formatAmount($formatted, $prefix);
     }

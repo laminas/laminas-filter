@@ -1614,13 +1614,13 @@
       <code>$matches</code>
       <code>$matches</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="6">
-      <code>static function ($matches) {</code>
-      <code>static function ($matches) {</code>
-      <code>static function ($matches) {</code>
-      <code>static function ($matches) {</code>
-      <code>static function ($matches) {</code>
-      <code>static function ($matches) {</code>
+    <MissingClosureReturnType occurrences="7">
+      <code>static fn($matches)</code>
+      <code>static fn($matches)</code>
+      <code>static fn($matches)</code>
+      <code>static fn($matches)</code>
+      <code>static fn($matches)</code>
+      <code>static fn($matches)</code>
     </MissingClosureReturnType>
     <MixedArgument occurrences="7">
       <code>$matches[1]</code>
@@ -2522,11 +2522,11 @@
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="4">
-      <code>function ($container) use ($filter) {</code>
-      <code>function ($container) use ($filter) {</code>
-      <code>function ($value) {</code>
-      <code>function ($value) {</code>
+    <MissingClosureReturnType occurrences="6">
+      <code>static fn($container)</code>
+      <code>static fn($container)</code>
+      <code>static fn($value)</code>
+      <code>static fn($value)</code>
     </MissingClosureReturnType>
     <MissingReturnType occurrences="1">
       <code>testFactoryConfiguresPluginManagerUnderServiceManagerV2</code>

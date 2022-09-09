@@ -120,6 +120,6 @@ abstract class AbstractFilter implements FilterInterface
             }
             return $callback((string) $value);
         }
-        return $callback(array_map(fn($item) => is_scalar($item) ? (string) $item : $item, $value));
+        return $callback(array_map(static fn($item) => is_scalar($item) ? (string) $item : $item, $value));
     }
 }

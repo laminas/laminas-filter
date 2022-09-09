@@ -103,7 +103,7 @@ class DateTimeFormatterTest extends TestCase
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
-        $result = $filter->filter(1359739801);
+        $result = $filter->filter(1_359_739_801);
         $this->assertSame('2013-02-01T17:30:01+0000', $result);
     }
 

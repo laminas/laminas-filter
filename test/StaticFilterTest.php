@@ -98,14 +98,10 @@ class StaticFilterTest extends TestCase
     public function testUsesDifferentConfigurationOnEachRequest(): void
     {
         $first  = StaticFilter::execute('foo', Callback::class, [
-            'callback' => function ($value) {
-                return 'FOO';
-            },
+            'callback' => static fn($value) => 'FOO',
         ]);
         $second = StaticFilter::execute('foo', Callback::class, [
-            'callback' => function ($value) {
-                return 'BAR';
-            },
+            'callback' => static fn($value) => 'BAR',
         ]);
         $this->assertNotSame($first, $second);
         $this->assertSame('FOO', $first);
@@ -115,9 +111,7 @@ class StaticFilterTest extends TestCase
     public function testThatCallablesRegisteredWithThePluginManagerCanBeExecuted(): void
     {
         $plugins = new FilterPluginManager(new ServiceManager());
-        $plugins->setService('doStuff', static function (string $value): string {
-            return strtoupper($value);
-        });
+        $plugins->setService('doStuff', static fn(string $value): string => strtoupper($value));
 
         StaticFilter::setPluginManager($plugins);
 

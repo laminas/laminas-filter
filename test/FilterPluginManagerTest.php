@@ -17,8 +17,7 @@ use function method_exists;
 
 class FilterPluginManagerTest extends TestCase
 {
-    /** @var FilterPluginManager */
-    private $filters;
+    private FilterPluginManager $filters;
 
     public function setUp(): void
     {

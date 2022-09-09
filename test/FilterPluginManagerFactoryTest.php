@@ -46,9 +46,7 @@ class FilterPluginManagerFactoryTest extends TestCase
     public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
-        $filter    = function ($value) {
-            return $value;
-        };
+        $filter    = static fn($value) => $value;
 
         $factory = new FilterPluginManagerFactory();
         $filters = $factory($container, FilterPluginManagerFactory::class, [
@@ -67,9 +65,7 @@ class FilterPluginManagerFactoryTest extends TestCase
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);
 
-        $filter = function ($value) {
-            return $value;
-        };
+        $filter = static fn($value) => $value;
 
         $factory = new FilterPluginManagerFactory();
         $factory->setCreationOptions([
@@ -91,9 +87,7 @@ class FilterPluginManagerFactoryTest extends TestCase
                     'test' => Boolean::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($filter) {
-                        return $filter;
-                    },
+                    'test-too' => static fn($container) => $filter,
                 ],
             ],
         ];
@@ -124,9 +118,7 @@ class FilterPluginManagerFactoryTest extends TestCase
                     'test' => Boolean::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($filter) {
-                        return $filter;
-                    },
+                    'test-too' => static fn($container) => $filter,
                 ],
             ],
         ];

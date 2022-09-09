@@ -25,7 +25,7 @@ class SeparatorToSeparatorFactory implements FactoryInterface
      *
      * @param null|array
      */
-    private $creationOptions = [];
+    private array $creationOptions = [];
 
     public function __construct($creationOptions = null)
     {

@@ -11,7 +11,6 @@ use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function dirname;
 use function file_get_contents;
 use function phpversion;
 use function restore_error_handler;
@@ -198,7 +197,7 @@ class HtmlEntitiesTest extends TestCase
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
         }
 
-        $string = file_get_contents(dirname(__FILE__) . '/_files/latin-1-text.txt');
+        $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
 
         // restore_error_handler can emit an E_WARNING; let's ignore that, as
         // we want to test the returned value
@@ -218,7 +217,7 @@ class HtmlEntitiesTest extends TestCase
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
         }
 
-        $string = file_get_contents(dirname(__FILE__) . '/_files/latin-1-text.txt');
+        $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
 
         // restore_error_handler can emit an E_WARNING; let's ignore that, as
         // we want to test the returned value
@@ -238,7 +237,7 @@ class HtmlEntitiesTest extends TestCase
             $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
         }
 
-        $string = file_get_contents(dirname(__FILE__) . '/_files/latin-1-dash-only.txt');
+        $string = file_get_contents(__DIR__ . '/_files/latin-1-dash-only.txt');
 
         // restore_error_handler can emit an E_WARNING; let's ignore that, as
         // we want to test the returned value

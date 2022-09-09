@@ -44,23 +44,15 @@ class SeparatorToCamelCase extends AbstractSeparator
             if (! extension_loaded('mbstring')) {
                 $replacements = [
                     // @codingStandardsIgnoreStart
-                    static function ($matches) {
-                        return strtoupper($matches[2]);
-                    },
-                    static function ($matches) {
-                        return strtoupper($matches[1]);
-                    },
+                    static fn($matches) => strtoupper($matches[2]),
+                    static fn($matches) => strtoupper($matches[1]),
                     // @codingStandardsIgnoreEnd
                 ];
             } else {
                 $replacements = [
                     // @codingStandardsIgnoreStart
-                    static function ($matches) {
-                        return mb_strtoupper($matches[2], 'UTF-8');
-                    },
-                    static function ($matches) {
-                        return mb_strtoupper($matches[1], 'UTF-8');
-                    },
+                    static fn($matches) => mb_strtoupper($matches[2], 'UTF-8'),
+                    static fn($matches) => mb_strtoupper($matches[1], 'UTF-8'),
                     // @codingStandardsIgnoreEnd
                 ];
             }
@@ -71,12 +63,8 @@ class SeparatorToCamelCase extends AbstractSeparator
             ];
             $replacements = [
                 // @codingStandardsIgnoreStart
-                static function ($matches) {
-                    return strtoupper($matches[2]);
-                },
-                static function ($matches) {
-                    return strtoupper($matches[1]);
-                },
+                static fn($matches) => strtoupper($matches[2]),
+                static fn($matches) => strtoupper($matches[1]),
                 // @codingStandardsIgnoreEnd
             ];
         }
