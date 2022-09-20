@@ -231,9 +231,8 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
      */
     public function filter($value)
     {
-        $chain         = clone $this->filters;
         $valueFiltered = $value;
-        foreach ($chain as $filter) {
+        foreach ($this as $filter) {
             if ($filter instanceof FilterInterface) {
                 $valueFiltered = $filter->filter($valueFiltered);
 
