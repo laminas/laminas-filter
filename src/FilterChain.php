@@ -213,7 +213,7 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Get all the filters
      *
-     * @return PriorityQueue
+     * @return PriorityQueue<FilterInterface|callable(mixed): mixed, int>
      */
     public function getFilters()
     {

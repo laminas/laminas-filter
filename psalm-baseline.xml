@@ -2441,12 +2441,10 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
-    <MixedAssignment occurrences="5">
-      <code>$compare</code>
+    <MixedAssignment occurrences="3">
       <code>$config</code>
       <code>$config</code>
       <code>$config</code>
-      <code>$filter</code>
     </MixedAssignment>
   </file>
   <file src="test/FilterPluginManagerCompatibilityTest.php">
