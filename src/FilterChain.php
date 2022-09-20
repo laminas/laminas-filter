@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use Countable;
+use IteratorAggregate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
 use ReturnTypeWillChange;
@@ -22,8 +23,9 @@ use function strtolower;
 
 /**
  * @final
+ * @implements IteratorAggregate<array-key, FilterInterface|callable(mixed): mixed>
  */
-class FilterChain extends AbstractFilter implements Countable
+class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
 {
     /**
      * Default priority at which filters are added
@@ -36,7 +38,7 @@ class FilterChain extends AbstractFilter implements Countable
     /**
      * Filter chain
      *
-     * @var PriorityQueue
+     * @var PriorityQueue<FilterInterface|callable(mixed): mixed, int>
      */
     protected $filters;
 
@@ -211,7 +213,7 @@ class FilterChain extends AbstractFilter implements Countable
     /**
      * Get all the filters
      *
-     * @return PriorityQueue
+     * @return PriorityQueue<FilterInterface|callable(mixed): mixed, int>
      */
     public function getFilters()
     {
@@ -225,13 +227,18 @@ class FilterChain extends AbstractFilter implements Countable
      *
      * @param  mixed $value
      * @return mixed
+     * @psalm-suppress MixedAssignment values are always mixed
      */
     public function filter($value)
     {
-        $chain = clone $this->filters;
-
         $valueFiltered = $value;
-        foreach ($chain as $filter) {
+        foreach ($this as $filter) {
+            if ($filter instanceof FilterInterface) {
+                $valueFiltered = $filter->filter($valueFiltered);
+
+                continue;
+            }
+
             $valueFiltered = call_user_func($filter, $valueFiltered);
         }
 
@@ -257,5 +264,11 @@ class FilterChain extends AbstractFilter implements Countable
     public function __sleep()
     {
         return ['filters'];
+    }
+
+    /** @return Traversable<array-key, FilterInterface|callable(mixed): mixed> */
+    public function getIterator(): Traversable
+    {
+        return clone $this->filters;
     }
 }
