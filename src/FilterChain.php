@@ -24,6 +24,17 @@ use function strtolower;
 /**
  * @final
  * @implements IteratorAggregate<array-key, FilterInterface|callable(mixed): mixed>
+ * @psalm-type FilterChainConfiguration = array{
+ *    filters?: list<array{
+ *        name: string|class-string<FilterInterface>,
+ *        options?: array<string, mixed>,
+ *        priority?: int,
+ *    }>,
+ *    callbacks?: list<array{
+ *        callback: callable(mixed): mixed,
+ *        priority?: int,
+ *    }>
+ * }
  */
 class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
 {
@@ -45,7 +56,7 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Initialize filter chain
      *
-     * @param null|array|Traversable $options
+     * @param FilterChainConfiguration|Traversable|null $options
      */
     public function __construct($options = null)
     {
@@ -57,8 +68,8 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     }
 
     /**
-     * @param  array|Traversable $options
-     * @return self
+     * @param  FilterChainConfiguration|Traversable $options
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setOptions($options)

@@ -1088,38 +1088,19 @@
       <code>gettype($callback)</code>
       <code>gettype($options)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="5">
-      <code>$callback</code>
-      <code>$key</code>
-      <code>$name</code>
-      <code>$priority</code>
-      <code>$priority</code>
-    </MixedArgument>
-    <MixedArrayAccess occurrences="5">
-      <code>$spec['callback']</code>
-      <code>$spec['name']</code>
-      <code>$spec['options']</code>
-      <code>$spec['priority']</code>
-      <code>$spec['priority']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="9">
-      <code>$callback</code>
-      <code>$key</code>
-      <code>$name</code>
-      <code>$options</code>
-      <code>$priority</code>
-      <code>$priority</code>
-      <code>$spec</code>
-      <code>$spec</code>
-      <code>$value</code>
-    </MixedAssignment>
     <MixedPropertyTypeCoercion occurrences="1">
       <code>new PriorityQueue()</code>
     </MixedPropertyTypeCoercion>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$options</code>
+    </MoreSpecificImplementedParamType>
     <RedundantConditionGivenDocblockType occurrences="2">
       <code>is_object($callback)</code>
       <code>is_object($options)</code>
     </RedundantConditionGivenDocblockType>
+    <RedundantFunctionCall occurrences="1">
+      <code>strtolower</code>
+    </RedundantFunctionCall>
   </file>
   <file src="src/FilterPluginManager.php">
     <DeprecatedClass occurrences="2">
@@ -2425,27 +2406,6 @@
     <MissingReturnType occurrences="1">
       <code>returnUnfilteredDataProvider</code>
     </MissingReturnType>
-  </file>
-  <file src="test/FilterChainTest.php">
-    <MissingParamType occurrences="1">
-      <code>$value</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="2">
-      <code>getChainConfig</code>
-      <code>staticUcaseFilter</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="5">
-      <code>$config</code>
-      <code>$config</code>
-      <code>$config</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="3">
-      <code>$config</code>
-      <code>$config</code>
-      <code>$config</code>
-    </MixedAssignment>
   </file>
   <file src="test/FilterPluginManagerCompatibilityTest.php">
     <MissingReturnType occurrences="1">
