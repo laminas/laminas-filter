@@ -14,19 +14,21 @@ use PHPUnit\Framework\TestCase;
 
 use function count;
 use function function_exists;
+use function iterator_to_array;
 use function serialize;
 use function strtolower;
 use function strtoupper;
 use function trim;
 use function unserialize;
 
+/** @psalm-import-type FilterChainConfiguration from FilterChain */
 class FilterChainTest extends TestCase
 {
     public function testEmptyFilterChainReturnsOriginalValue(): void
     {
         $chain = new FilterChain();
         $value = 'something';
-        $this->assertSame($value, $chain->filter($value));
+        self::assertSame($value, $chain->filter($value));
     }
 
     public function testFiltersAreExecutedInFifoOrder(): void
@@ -36,7 +38,7 @@ class FilterChainTest extends TestCase
             ->attach(new TestAsset\StripUpperCase());
         $value         = 'AbC';
         $valueExpected = 'abc';
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
     }
 
     public function testFiltersAreExecutedAccordingToPriority(): void
@@ -46,21 +48,21 @@ class FilterChainTest extends TestCase
             ->attach(new TestAsset\LowerCase(), 100);
         $value         = 'AbC';
         $valueExpected = 'b';
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
     }
 
     public function testAllowsConnectingArbitraryCallbacks(): void
     {
         $chain = new FilterChain();
-        $chain->attach(static fn($value) => strtolower($value));
+        $chain->attach(static fn(string $value): string => strtolower($value));
         $value = 'AbC';
-        $this->assertSame('abc', $chain->filter($value));
+        self::assertSame('abc', $chain->filter($value));
     }
 
     public function testAllowsConnectingViaClassShortName(): void
     {
         if (! function_exists('mb_strtolower')) {
-            $this->markTestSkipped('mbstring required');
+            self::markTestSkipped('mbstring required');
         }
 
         $chain = new FilterChain();
@@ -70,7 +72,7 @@ class FilterChainTest extends TestCase
 
         $value         = '<a name="foo"> ABC </a>';
         $valueExpected = 'abc';
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
     }
 
     public function testAllowsConfiguringFilters(): void
@@ -80,7 +82,7 @@ class FilterChainTest extends TestCase
         $chain->setOptions($config);
         $value         = '<a name="foo"> abc </a><img id="bar" />';
         $valueExpected = 'ABC <IMG ID="BAR" />';
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
     }
 
     public function testAllowsConfiguringFiltersViaConstructor(): void
@@ -89,7 +91,7 @@ class FilterChainTest extends TestCase
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
         $valueExpected = 'ABC';
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
     }
 
     public function testConfigurationAllowsTraversableObjects(): void
@@ -99,7 +101,7 @@ class FilterChainTest extends TestCase
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
         $valueExpected = 'ABC';
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
     }
 
     public function testCanRetrieveFilterWithUndefinedConstructor(): void
@@ -110,14 +112,15 @@ class FilterChainTest extends TestCase
             ],
         ]);
         $filtered = $chain->filter('127.1');
-        $this->assertSame(127, $filtered);
+        self::assertSame(127, $filtered);
     }
 
-    protected function getChainConfig()
+    /** @return FilterChainConfiguration */
+    private function getChainConfig(): array
     {
         return [
             'callbacks' => [
-                ['callback' => self::class . '::staticUcaseFilter'],
+                ['callback' => [self::class, 'staticUcaseFilter']],
                 [
                     'priority' => 10000,
                     'callback' => static fn(string $value): string => trim($value),
@@ -133,7 +136,7 @@ class FilterChainTest extends TestCase
         ];
     }
 
-    public static function staticUcaseFilter($value)
+    public static function staticUcaseFilter(string $value): string
     {
         return strtoupper($value);
     }
@@ -153,15 +156,15 @@ class FilterChainTest extends TestCase
             'replacement' => 'PARTY',
         ]);
 
-        $this->assertSame(2, count($chain));
+        self::assertSame(2, count($chain));
         $filters = $chain->getFilters();
         $compare = null;
         foreach ($filters as $filter) {
-            $this->assertNotSame($compare, $filter);
+            self::assertNotSame($compare, $filter);
             $compare = $filter;
         }
 
-        $this->assertSame('Tu et PARTY', $chain->filter('Tu et Foo'));
+        self::assertSame('Tu et PARTY', $chain->filter('Tu et Foo'));
     }
 
     public function testClone(): void
@@ -171,7 +174,7 @@ class FilterChainTest extends TestCase
 
         $chain->attachByName(StripTags::class);
 
-        $this->assertCount(0, $clone);
+        self::assertCount(0, $clone);
     }
 
     public function testCanSerializeFilterChain(): void
@@ -182,11 +185,11 @@ class FilterChainTest extends TestCase
         $serialized = serialize($chain);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf(FilterChain::class, $unserialized);
-        $this->assertSame(2, count($unserialized));
+        self::assertInstanceOf(FilterChain::class, $unserialized);
+        self::assertSame(2, count($unserialized));
         $value         = 'AbC';
         $valueExpected = 'abc';
-        $this->assertSame($valueExpected, $unserialized->filter($value));
+        self::assertSame($valueExpected, $unserialized->filter($value));
     }
 
     public function testMergingTwoFilterChainsKeepFiltersPriority(): void
@@ -197,27 +200,59 @@ class FilterChainTest extends TestCase
         $chain = new FilterChain();
         $chain->attach(new TestAsset\StripUpperCase())
             ->attach(new TestAsset\LowerCase(), 1001);
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
         $chain->attach(new TestAsset\LowerCase(), 1001)
             ->attach(new TestAsset\StripUpperCase());
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
         $chain->attach(new TestAsset\LowerCase(), 1001);
         $chainToMerge = new FilterChain();
         $chainToMerge->attach(new TestAsset\StripUpperCase());
         $chain->merge($chainToMerge);
-        $this->assertSame(2, $chain->count());
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame(2, $chain->count());
+        self::assertSame($valueExpected, $chain->filter($value));
 
         $chain = new FilterChain();
         $chain->attach(new TestAsset\StripUpperCase());
         $chainToMerge = new FilterChain();
         $chainToMerge->attach(new TestAsset\LowerCase(), 1001);
         $chain->merge($chainToMerge);
-        $this->assertSame(2, $chain->count());
-        $this->assertSame($valueExpected, $chain->filter($value));
+        self::assertSame(2, $chain->count());
+        self::assertSame($valueExpected, $chain->filter($value));
+    }
+
+    public function testThatIteratingOverAFilterChainDirectlyYieldsExpectedFilters(): void
+    {
+        $filter1 = new StringToLower();
+        $filter2 = new StripTags();
+
+        $chain = new FilterChain();
+        $chain->attach($filter1, 10);
+        $chain->attach($filter2, 20);
+
+        $filters = iterator_to_array($chain);
+        self::assertEquals([
+            0 => $filter1,
+            1 => $filter2,
+        ], $filters);
+    }
+
+    public function testThatIteratingOverGetFiltersYieldsExpectedFilters(): void
+    {
+        $filter1 = new StringToLower();
+        $filter2 = new StripTags();
+
+        $chain = new FilterChain();
+        $chain->attach($filter1, 10);
+        $chain->attach($filter2, 20);
+
+        $filters = iterator_to_array($chain->getFilters());
+        self::assertEquals([
+            0 => $filter1,
+            1 => $filter2,
+        ], $filters);
     }
 }
