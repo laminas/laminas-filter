@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use function array_map;
+use function assert;
 use function function_exists;
 use function in_array;
+use function is_string;
 use function mb_internal_encoding;
 use function mb_list_encodings;
 use function sprintf;
@@ -53,7 +55,9 @@ abstract class AbstractUnicode extends AbstractFilter
      */
     public function getEncoding()
     {
-        if ($this->options['encoding'] === null && function_exists('mb_internal_encoding')) {
+        $encoding = $this->options['encoding'] ?? null;
+        assert($encoding === null || is_string($encoding));
+        if ($encoding === null && function_exists('mb_internal_encoding')) {
             $this->options['encoding'] = mb_internal_encoding();
         }
 
