@@ -1549,14 +1549,7 @@
       <code>$matches</code>
       <code>$matches</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="7">
-      <code>static fn($matches)</code>
-      <code>static fn($matches)</code>
-      <code>static fn($matches)</code>
-      <code>static fn($matches)</code>
-      <code>static fn($matches)</code>
-      <code>static fn($matches)</code>
-    </MissingClosureReturnType>
+    <MissingClosureReturnType occurrences="6"/>
     <MixedArgument occurrences="7">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
@@ -1600,16 +1593,12 @@
     <MissingParamType occurrences="1">
       <code>$creationOptions</code>
     </MissingParamType>
-    <MissingPropertyType occurrences="1">
-      <code>$creationOptions</code>
-    </MissingPropertyType>
     <MissingReturnType occurrences="1">
       <code>setCreationOptions</code>
     </MissingReturnType>
-    <MixedArgument occurrences="3">
+    <MixedArgument occurrences="2">
       <code>$options['replacement_separator'] ?? '-'</code>
       <code>$options['search_separator'] ?? ' '</code>
-      <code>$this-&gt;creationOptions</code>
     </MixedArgument>
   </file>
   <file src="src/Word/UnderscoreToStudlyCase.php">
@@ -2431,12 +2420,7 @@
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="6">
-      <code>static fn($container)</code>
-      <code>static fn($container)</code>
-      <code>static fn($value)</code>
-      <code>static fn($value)</code>
-    </MissingClosureReturnType>
+    <MissingClosureReturnType occurrences="4"/>
     <MissingReturnType occurrences="1">
       <code>testFactoryConfiguresPluginManagerUnderServiceManagerV2</code>
     </MissingReturnType>

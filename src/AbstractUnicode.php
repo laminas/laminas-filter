@@ -6,7 +6,6 @@ namespace Laminas\Filter;
 
 use function array_map;
 use function assert;
-use function function_exists;
 use function in_array;
 use function is_string;
 use function mb_internal_encoding;
@@ -27,13 +26,6 @@ abstract class AbstractUnicode extends AbstractFilter
     public function setEncoding($encoding = null)
     {
         if ($encoding !== null) {
-            if (! function_exists('mb_strtolower')) {
-                throw new Exception\ExtensionNotLoadedException(sprintf(
-                    '%s requires mbstring extension to be loaded',
-                    static::class
-                ));
-            }
-
             $encoding    = strtolower($encoding);
             $mbEncodings = array_map('strtolower', mb_list_encodings());
             if (! in_array($encoding, $mbEncodings, true)) {
@@ -57,7 +49,7 @@ abstract class AbstractUnicode extends AbstractFilter
     {
         $encoding = $this->options['encoding'] ?? null;
         assert($encoding === null || is_string($encoding));
-        if ($encoding === null && function_exists('mb_internal_encoding')) {
+        if ($encoding === null) {
             $this->options['encoding'] = mb_internal_encoding();
         }
 

@@ -9,7 +9,6 @@ use Laminas\Filter\StringToLower as StringToLowerFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function function_exists;
 use function mb_internal_encoding;
 
 class StringToLowerTest extends TestCase
@@ -73,10 +72,6 @@ class StringToLowerTest extends TestCase
 
     public function testFalseEncoding(): void
     {
-        if (! function_exists('mb_strtolower')) {
-            $this->markTestSkipped('mbstring required');
-        }
-
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('is not supported');
         $this->_filter->setEncoding('aaaaa');
@@ -140,10 +135,6 @@ class StringToLowerTest extends TestCase
      */
     public function testDetectMbInternalEncoding(): void
     {
-        if (! function_exists('mb_internal_encoding')) {
-            $this->markTestSkipped("Function 'mb_internal_encoding' not available");
-        }
-
         $this->assertSame(mb_internal_encoding(), $this->_filter->getEncoding());
     }
 
