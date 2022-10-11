@@ -668,6 +668,12 @@
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($this-&gt;compression)</code>
     </DocblockTypeContradiction>
+    <InvalidArgument occurrences="4">
+      <code>$key</code>
+      <code>$keys</code>
+      <code>[$test]</code>
+      <code>[$test]</code>
+    </InvalidArgument>
     <MissingPropertyType occurrences="5">
       <code>$keys</code>
       <code>$this-&gt;keys</code>
@@ -1111,6 +1117,9 @@
       <code>ToInt::class                       =&gt; InvokableFactory::class</code>
       <code>ToNull::class                      =&gt; InvokableFactory::class</code>
     </DuplicateArrayKey>
+    <MissingParamType occurrences="1">
+      <code>$plugin</code>
+    </MissingParamType>
     <MixedArrayOffset occurrences="1"/>
     <MixedInferredReturnType occurrences="1">
       <code>($name is class-string ? InstanceType : callable(mixed): mixed)</code>
@@ -1446,7 +1455,8 @@
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType occurrences="1">
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(string) $value</code>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
     <RedundantCondition occurrences="1">
@@ -1549,7 +1559,14 @@
       <code>$matches</code>
       <code>$matches</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="6"/>
+    <MissingClosureReturnType occurrences="6">
+      <code>static fn($matches) =&gt; mb_strtoupper($matches[1], 'UTF-8')</code>
+      <code>static fn($matches) =&gt; mb_strtoupper($matches[2], 'UTF-8')</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
+    </MissingClosureReturnType>
     <MixedArgument occurrences="7">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
@@ -2369,16 +2386,18 @@
     </DeprecatedMethod>
     <MissingClosureParamType occurrences="3">
       <code>$container</code>
-      <code>$container</code>
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="3"/>
+    <MissingClosureReturnType occurrences="3">
+      <code>static fn($container) =&gt; $filter</code>
+      <code>static fn($value) =&gt; $value</code>
+      <code>static fn($value) =&gt; $value</code>
+    </MissingClosureReturnType>
     <MissingReturnType occurrences="1">
       <code>testFactoryConfiguresPluginManagerUnderServiceManagerV2</code>
     </MissingReturnType>
     <UnusedClosureParam occurrences="1">
-      <code>$container</code>
       <code>$container</code>
     </UnusedClosureParam>
   </file>
