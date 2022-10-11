@@ -412,7 +412,7 @@ The following compression formats are supported by their own adapter:
 
 - **Bz2**
 - **Gz**
-- **Llaminas**
+- **Lzf**
 - **Rar**
 - **Tar**
 - **Zip**
@@ -622,17 +622,17 @@ All options can be set at initiation or by using a related method. For example, 
 for `level` are `getLevel()` and `setLevel()`. You can also use the `setOptions()` method which
 accepts an array of all options.
 
-### Llaminas Adapter
+### Lzf Adapter
 
-The Llaminas Adapter can compress and decompress:
+The Lzf Adapter can compress and decompress:
 
 - Strings
 
-> ### Llaminas supports only Strings
+> ### Lzf supports only Strings
 >
-> The Llaminas adapter can not handle files and directories.
+> The Lzf adapter can not handle files and directories.
 
-This adapter makes use of PHP's Llaminas extension.
+This adapter makes use of PHP's Lzf extension.
 
 There are no options available to customize this adapter.
 
