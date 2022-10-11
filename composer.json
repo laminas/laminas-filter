@@ -42,7 +42,6 @@
         "laminas/laminas-crypt": "^3.8",
         "laminas/laminas-uri": "^2.9.1",
         "pear/archive_tar": "^1.4.14",
-        "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.25",
         "psalm/plugin-phpunit": "^0.17.0",
         "psr/http-factory": "^1.0.1",
