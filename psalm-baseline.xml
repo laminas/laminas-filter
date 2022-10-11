@@ -668,6 +668,12 @@
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($this-&gt;compression)</code>
     </DocblockTypeContradiction>
+    <InvalidArgument occurrences="4">
+      <code>$key</code>
+      <code>$keys</code>
+      <code>[$test]</code>
+      <code>[$test]</code>
+    </InvalidArgument>
     <MissingPropertyType occurrences="5">
       <code>$keys</code>
       <code>$this-&gt;keys</code>
@@ -1111,6 +1117,9 @@
       <code>ToInt::class                       =&gt; InvokableFactory::class</code>
       <code>ToNull::class                      =&gt; InvokableFactory::class</code>
     </DuplicateArrayKey>
+    <MissingParamType occurrences="1">
+      <code>$plugin</code>
+    </MissingParamType>
     <MixedArrayOffset occurrences="1"/>
     <MixedInferredReturnType occurrences="1">
       <code>($name is class-string ? InstanceType : callable(mixed): mixed)</code>
@@ -1446,7 +1455,8 @@
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType occurrences="1">
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(string) $value</code>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
     <RedundantCondition occurrences="1">
@@ -1549,7 +1559,14 @@
       <code>$matches</code>
       <code>$matches</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="6"/>
+    <MissingClosureReturnType occurrences="6">
+      <code>static fn($matches) =&gt; mb_strtoupper($matches[1], 'UTF-8')</code>
+      <code>static fn($matches) =&gt; mb_strtoupper($matches[2], 'UTF-8')</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
+      <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
+    </MissingClosureReturnType>
     <MixedArgument occurrences="7">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
@@ -2323,54 +2340,23 @@
     <InvalidScalarArgument occurrences="1">
       <code>1234</code>
     </InvalidScalarArgument>
-    <MissingClosureParamType occurrences="3">
-      <code>$args</code>
-      <code>$args</code>
-      <code>$mock</code>
-    </MissingClosureParamType>
-    <MissingParamType occurrences="2">
-      <code>$dir</code>
-      <code>$input</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="2">
+    <MissingReturnType occurrences="1">
       <code>removeDir</code>
-      <code>returnUnfilteredDataProvider</code>
     </MissingReturnType>
-    <MixedArgument occurrences="9">
-      <code>$args</code>
-      <code>$dir</code>
-      <code>$dir</code>
+    <MixedArgument occurrences="5">
       <code>$filter($this-&gt;sourceFile)</code>
       <code>$filter($this-&gt;sourceFile)</code>
       <code>$filter($this-&gt;sourceFile)</code>
       <code>$filter($this-&gt;sourceFile)</code>
       <code>$firstResult</code>
-      <code>$targetFile</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>[$renamedStream, 'reveal']</code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="2">
+    <MixedAssignment occurrences="1">
       <code>$firstResult</code>
-      <code>$targetFile</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="2">
-      <code>getStream</code>
-      <code>willThrow</code>
-    </MixedMethodCall>
-    <MixedOperand occurrences="1">
-      <code>$dir</code>
-    </MixedOperand>
     <PossiblyUndefinedArrayOffset occurrences="2">
       <code>$oldFilePathInfo['extension']</code>
       <code>$oldFilePathInfo['extension']</code>
     </PossiblyUndefinedArrayOffset>
-    <UnusedClosureParam occurrences="1">
-      <code>$args</code>
-    </UnusedClosureParam>
-    <UnusedVariable occurrences="1">
-      <code>$filter</code>
-    </UnusedVariable>
   </file>
   <file src="test/File/UpperCaseTest.php">
     <MissingParamType occurrences="1">
@@ -2398,23 +2384,22 @@
     <DeprecatedMethod occurrences="1">
       <code>getServiceLocator</code>
     </DeprecatedMethod>
-    <MissingClosureParamType occurrences="4">
-      <code>$container</code>
+    <MissingClosureParamType occurrences="3">
       <code>$container</code>
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="4"/>
+    <MissingClosureReturnType occurrences="3">
+      <code>static fn($container) =&gt; $filter</code>
+      <code>static fn($value) =&gt; $value</code>
+      <code>static fn($value) =&gt; $value</code>
+    </MissingClosureReturnType>
     <MissingReturnType occurrences="1">
       <code>testFactoryConfiguresPluginManagerUnderServiceManagerV2</code>
     </MissingReturnType>
-    <UnusedClosureParam occurrences="2">
-      <code>$container</code>
+    <UnusedClosureParam occurrences="1">
       <code>$container</code>
     </UnusedClosureParam>
-    <UnusedVariable occurrences="1">
-      <code>$config</code>
-    </UnusedVariable>
   </file>
   <file src="test/HtmlEntitiesTest.php">
     <MissingParamType occurrences="3">
