@@ -13,7 +13,6 @@ use Laminas\Filter\StripTags;
 use PHPUnit\Framework\TestCase;
 
 use function count;
-use function function_exists;
 use function iterator_to_array;
 use function serialize;
 use function strtolower;
@@ -61,10 +60,6 @@ class FilterChainTest extends TestCase
 
     public function testAllowsConnectingViaClassShortName(): void
     {
-        if (! function_exists('mb_strtolower')) {
-            self::markTestSkipped('mbstring required');
-        }
-
         $chain = new FilterChain();
         $chain->attachByName(StringTrim::class, null, 100)
             ->attachByName(StripTags::class)

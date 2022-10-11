@@ -33,6 +33,7 @@
     },
     "require": {
         "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "ext-mbstring": "*",
         "laminas/laminas-servicemanager": "^3.14.0",
         "laminas/laminas-stdlib": "^3.13.0"
     },
