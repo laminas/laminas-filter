@@ -8,9 +8,12 @@ use Laminas\Filter\Compress;
 use Laminas\Filter\Decompress;
 use Laminas\Filter\Exception;
 use Laminas\Stdlib\ArrayUtils;
+use OpenSSLAsymmetricKey;
 use Traversable;
 
 use function array_key_exists;
+use function array_values;
+use function assert;
 use function count;
 use function current;
 use function extension_loaded;
@@ -32,16 +35,32 @@ use function unpack;
 
 /**
  * Encryption adapter for openssl
+ *
+ * @psalm-type Options = array{
+ *     public?: string,
+ *     private?: string,
+ *     envelope?: string,
+ *     passphrase?: string,
+ *     package?: bool,
+ *     compression?: string|array{adapter: string},
+ * }
+ * @psalm-type CompressionOptions = array{
+ *     adapter: string,
+ * }&array<string, mixed>
+ * @final
  */
 class Openssl implements EncryptionAlgorithmInterface
 {
     /**
      * Definitions for encryption
-     * array(
-     *     'public'   => public keys
-     *     'private'  => private keys
-     *     'envelope' => resulting envelope keys
-     * )
+     *
+     * @internal
+     *
+     * @var array{
+     *     public: string[],
+     *     private: string[],
+     *     envelope: string[],
+     * }
      */
     protected $keys = [
         'public'   => [],
@@ -52,19 +71,25 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Internal passphrase
      *
-     * @var string
+     * @internal
+     *
+     * @var string|null
      */
     protected $passphrase;
 
     /**
      * Internal compression
      *
-     * @var array
+     * @internal
+     *
+     * @var CompressionOptions|null
      */
     protected $compression;
 
     /**
      * Internal create package
+     *
+     * @internal
      *
      * @var bool
      */
@@ -79,7 +104,7 @@ class Openssl implements EncryptionAlgorithmInterface
      *   'compression' => compress value with this compression adapter
      *   'package'     => pack envelope keys into encrypted string, simplifies decryption
      *
-     * @param string|array|Traversable $options Options for this adapter
+     * @param string|Options|Traversable $options Options for this adapter
      * @throws Exception\ExtensionNotLoadedException
      */
     public function __construct($options = [])
@@ -117,7 +142,9 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Sets the encryption keys
      *
-     * @param  string|array $keys Key with type association
+     * @internal
+     *
+     * @param  array $keys Key with type association
      * @return $this
      * @throws Exception\InvalidArgumentException
      */
@@ -170,7 +197,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns all public keys
      *
-     * @return array
+     * @return string[]
      */
     public function getPublicKey()
     {
@@ -202,7 +229,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns all private keys
      *
-     * @return array
+     * @return string[]
      */
     public function getPrivateKey()
     {
@@ -239,7 +266,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns all envelope keys
      *
-     * @return array
+     * @return string[]
      */
     public function getEnvelopeKey()
     {
@@ -271,7 +298,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns the passphrase
      *
-     * @return string
+     * @return string|null
      */
     public function getPassphrase()
     {
@@ -293,7 +320,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns the compression
      *
-     * @return array
+     * @return CompressionOptions|null
      */
     public function getCompression()
     {
@@ -303,12 +330,12 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Sets an internal compression for values to encrypt
      *
-     * @param string|array $compression
+     * @param string|CompressionOptions $compression
      * @return self
      */
     public function setCompression($compression)
     {
-        if (is_string($this->compression)) {
+        if (is_string($compression)) {
             $compression = ['adapter' => $compression];
         }
 
@@ -348,18 +375,17 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function encrypt($value)
     {
-        $encrypted     = [];
-        $encryptedkeys = [];
-
         if (! $this->keys['public']) {
             throw new Exception\RuntimeException('Openssl can not encrypt without public keys');
         }
 
-        $keys         = [];
-        $fingerprints = [];
-        $count        = -1;
+        $encryptedkeys = [];
+        $keys          = [];
+        $fingerprints  = [];
+        $count         = -1;
         foreach ($this->keys['public'] as $key => $cert) {
             $keys[$key] = openssl_pkey_get_public($cert);
+            assert($keys[$key] instanceof OpenSSLAsymmetricKey);
             if ($this->package) {
                 $details = openssl_pkey_get_details($keys[$key]);
                 if ($details === false) {
@@ -374,12 +400,12 @@ class Openssl implements EncryptionAlgorithmInterface
         // compress prior to encryption
         if (! empty($this->compression)) {
             $compress = new Compress($this->compression);
-            $value    = $compress($value);
+            $value    = $compress->filter($value);
         }
 
-        $crypt = openssl_seal($value, $encrypted, $encryptedkeys, $keys, 'RC4');
+        $bytesSealed = openssl_seal($value, $encrypted, $encryptedkeys, array_values($keys), 'RC4');
 
-        if ($crypt === false) {
+        if ($bytesSealed === false) {
             throw new Exception\RuntimeException('Openssl was not able to encrypt your content with the given options');
         }
 

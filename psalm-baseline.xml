@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
+<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
   <file src="src/AbstractDateDropdown.php">
     <MissingReturnType occurrences="1">
       <code>filterable</code>
@@ -666,83 +666,31 @@
   </file>
   <file src="src/Encrypt/Openssl.php">
     <DocblockTypeContradiction occurrences="1">
-      <code>is_string($this-&gt;compression)</code>
+      <code>is_array($keys)</code>
     </DocblockTypeContradiction>
-    <InvalidArgument occurrences="4">
-      <code>$key</code>
-      <code>$keys</code>
-      <code>[$test]</code>
-      <code>[$test]</code>
-    </InvalidArgument>
-    <MissingPropertyType occurrences="5">
-      <code>$keys</code>
-      <code>$this-&gt;keys</code>
-      <code>$this-&gt;keys</code>
-      <code>$this-&gt;keys</code>
-      <code>$this-&gt;keys</code>
-    </MissingPropertyType>
-    <MixedArgument occurrences="21">
-      <code>$cert</code>
-      <code>$cert</code>
-      <code>$cert</code>
+    <MixedArgument occurrences="12">
       <code>$cert</code>
       <code>$cert</code>
       <code>$cert</code>
       <code>$details['key']</code>
       <code>$details['key']</code>
       <code>$envKey</code>
-      <code>$envelope</code>
       <code>$header['size']</code>
-      <code>$keys</code>
-      <code>$keys</code>
       <code>$length</code>
       <code>$length</code>
       <code>$options['compression']</code>
       <code>$options['package']</code>
       <code>$options['passphrase']</code>
-      <code>$this-&gt;keys[$type]</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$value</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
-      <code>$keys</code>
-      <code>[$keys]</code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="11">
-      <code>$this-&gt;keys[$type]</code>
-      <code>$this-&gt;keys['envelope']</code>
-      <code>$this-&gt;keys['envelope']</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$this-&gt;keys['public']</code>
-      <code>$this-&gt;keys['public']</code>
-      <code>$this-&gt;keys['public']</code>
-      <code>$this-&gt;keys['public']</code>
-    </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="4">
-      <code>$this-&gt;keys['envelope']</code>
-      <code>$this-&gt;keys['envelope']</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$this-&gt;keys['public']</code>
-    </MixedArrayAssignment>
-    <MixedArrayOffset occurrences="1">
-      <code>$keys[$key]</code>
-    </MixedArrayOffset>
     <MixedArrayTypeCoercion occurrences="1">
       <code>$fingerprints[$key]</code>
     </MixedArrayTypeCoercion>
-    <MixedAssignment occurrences="18">
-      <code>$cert</code>
-      <code>$cert</code>
+    <MixedAssignment occurrences="13">
       <code>$cert</code>
       <code>$count</code>
       <code>$envKey</code>
-      <code>$envelope</code>
       <code>$i</code>
       <code>$i</code>
-      <code>$key</code>
       <code>$key</code>
       <code>$key['envelope']</code>
       <code>$key['private']</code>
@@ -751,40 +699,20 @@
       <code>$option</code>
       <code>$option</code>
       <code>$option</code>
-      <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>array</code>
-      <code>array</code>
-      <code>array</code>
-    </MixedInferredReturnType>
     <MixedOperand occurrences="2">
       <code>$header['size']</code>
       <code>$i</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="3">
-      <code>$this-&gt;keys['envelope']</code>
-      <code>$this-&gt;keys['private']</code>
-      <code>$this-&gt;keys['public']</code>
-    </MixedReturnStatement>
-    <PossiblyInvalidPropertyAssignmentValue occurrences="1">
-      <code>$compression</code>
-    </PossiblyInvalidPropertyAssignmentValue>
-    <PossiblyUndefinedVariable occurrences="2">
-      <code>$keys</code>
-      <code>$keys</code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$compression</code>
-      <code>$passphrase</code>
-    </PropertyNotSetInConstructor>
+    <PropertyTypeCoercion occurrences="4">
+      <code>$this-&gt;keys</code>
+      <code>$this-&gt;keys</code>
+      <code>$this-&gt;keys</code>
+      <code>$this-&gt;keys</code>
+    </PropertyTypeCoercion>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $package</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>null !== $this-&gt;getPassphrase()</code>
-      <code>null !== $this-&gt;getPassphrase()</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Decrypt.php">
     <DocblockTypeContradiction occurrences="1">
@@ -2206,15 +2134,6 @@
     <UnusedVariable occurrences="1">
       <code>$filter</code>
     </UnusedVariable>
-  </file>
-  <file src="test/Encrypt/OpensslTest.php">
-    <InvalidScalarArgument occurrences="2">
-      <code>123</code>
-      <code>123</code>
-    </InvalidScalarArgument>
-    <MixedArgument occurrences="1">
-      <code>$r-&gt;getValue($filter)</code>
-    </MixedArgument>
   </file>
   <file src="test/EncryptTest.php">
     <InvalidArrayOffset occurrences="1"/>
