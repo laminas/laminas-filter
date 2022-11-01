@@ -22,7 +22,6 @@ use function is_file;
 use function is_readable;
 use function is_string;
 use function md5;
-use function openssl_free_key;
 use function openssl_open;
 use function openssl_pkey_get_details;
 use function openssl_pkey_get_private;
@@ -32,8 +31,6 @@ use function pack;
 use function strlen;
 use function substr;
 use function unpack;
-
-use const PHP_VERSION_ID;
 
 /**
  * Encryption adapter for openssl
@@ -151,7 +148,6 @@ class Openssl implements EncryptionAlgorithmInterface
                         throw new Exception\InvalidArgumentException("Public key '{$cert}' not valid");
                     }
 
-                    $this->freeKeyResources([$test]);
                     $this->keys['public'][$key] = $cert;
                     break;
                 case 'private':
@@ -164,7 +160,6 @@ class Openssl implements EncryptionAlgorithmInterface
                         throw new Exception\InvalidArgumentException("Private key '{$cert}' not valid");
                     }
 
-                    $this->freeKeyResources([$test]);
                     $this->keys['private'][$key] = $cert;
                     break;
                 case 'envelope':
@@ -390,8 +385,6 @@ class Openssl implements EncryptionAlgorithmInterface
 
         $crypt = openssl_seal($value, $encrypted, $encryptedkeys, $keys, 'RC4');
 
-        $this->freeKeyResources($keys);
-
         if ($crypt === false) {
             throw new Exception\RuntimeException('Openssl was not able to encrypt your content with the given options');
         }
@@ -468,8 +461,6 @@ class Openssl implements EncryptionAlgorithmInterface
 
         $crypt = openssl_open($value, $decrypted, $envelope, $keys, 'RC4');
 
-        $this->freeKeyResources([$keys]);
-
         if ($crypt === false) {
             throw new Exception\RuntimeException('Openssl was not able to decrypt you content with the given options');
         }
@@ -491,21 +482,5 @@ class Openssl implements EncryptionAlgorithmInterface
     public function toString()
     {
         return 'Openssl';
-    }
-
-    /**
-     * Free key resource if necessary.
-     * PHP 8 automatically frees the key instance and deprecates the function
-     *
-     * @param array<int,resource> $keys
-     */
-    private function freeKeyResources(array $keys): void
-    {
-        if (PHP_VERSION_ID < 80000) {
-            foreach ($keys as $key) {
-                // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
-                openssl_free_key($key);
-            }
-        }
     }
 }
