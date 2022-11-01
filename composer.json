@@ -39,8 +39,8 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.4.0",
-        "laminas/laminas-crypt": "^3.8",
-        "laminas/laminas-uri": "^2.9.1",
+        "laminas/laminas-crypt": "^3.9.0",
+        "laminas/laminas-uri": "^2.10.0",
         "pear/archive_tar": "^1.4.14",
         "phpunit/phpunit": "^9.5.25",
         "psalm/plugin-phpunit": "^0.17.0",
