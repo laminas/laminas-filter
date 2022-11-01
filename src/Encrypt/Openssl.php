@@ -14,9 +14,7 @@ use function array_key_exists;
 use function count;
 use function current;
 use function extension_loaded;
-use function fclose;
-use function fopen;
-use function fread;
+use function file_get_contents;
 use function is_array;
 use function is_file;
 use function is_readable;
@@ -120,22 +118,18 @@ class Openssl implements EncryptionAlgorithmInterface
      * Sets the encryption keys
      *
      * @param  string|array $keys Key with type association
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
-    protected function _setKeys($keys)
+    protected function _setKeys($keys) // phpcs:ignore
     {
-        // @codingStandardsIgnoreEnd
         if (! is_array($keys)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
         foreach ($keys as $type => $key) {
             if (is_string($key) && is_file($key) && is_readable($key)) {
-                $file = fopen($key, 'r');
-                $cert = fread($file, 8192);
-                fclose($file);
+                $cert = file_get_contents($key);
             } else {
                 $cert = $key;
                 $key  = count($this->keys[$type]);
