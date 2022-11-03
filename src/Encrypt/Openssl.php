@@ -36,6 +36,9 @@ use function unpack;
 /**
  * Encryption adapter for openssl
  *
+ * @deprecated The OpenSSL adapter is deprecated since 2.24.0. It uses an insecure algorithm that cannot be changed
+ *             without breaking BC, and also doesn't work with OpenSSL libs >= 3. Use of this adapter should be avoided
+ *
  * @psalm-type Options = array{
  *     public?: string,
  *     private?: string,

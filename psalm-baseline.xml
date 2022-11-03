@@ -2135,6 +2135,27 @@
       <code>$filter</code>
     </UnusedVariable>
   </file>
+  <file src="test/Encrypt/OpensslTest.php">
+    <DeprecatedClass occurrences="26">
+      <code>OpensslEncryption</code>
+      <code>OpensslEncryption</code>
+      <code>new OpensslEncryption($path)</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+      <code>new OpensslEncryption()</code>
+    </DeprecatedClass>
+  </file>
   <file src="test/EncryptTest.php">
     <InvalidArrayOffset occurrences="1"/>
     <MissingParamType occurrences="1">
