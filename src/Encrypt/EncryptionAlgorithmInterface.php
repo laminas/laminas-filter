@@ -6,6 +6,8 @@ namespace Laminas\Filter\Encrypt;
 
 /**
  * Encryption interface
+ *
+ * @deprecated Since 2.24.0. This interface will be removed in 3.0
  */
 interface EncryptionAlgorithmInterface
 {

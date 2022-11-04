@@ -505,6 +505,9 @@
     </PossiblyNullArgument>
   </file>
   <file src="src/Decrypt.php">
+    <DeprecatedClass occurrences="1">
+      <code>Encrypt</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
@@ -554,6 +557,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Encrypt.php">
+    <DeprecatedClass occurrences="1">
+      <code>Encrypt\EncryptionAlgorithmInterface</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_string($value)</code>
     </DocblockTypeContradiction>
@@ -597,6 +603,9 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Encrypt/BlockCipher.php">
+    <DeprecatedInterface occurrences="1">
+      <code>BlockCipher</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="3">
       <code>is_array($options)</code>
       <code>is_array($options)</code>
@@ -665,6 +674,9 @@
     </UndefinedMethod>
   </file>
   <file src="src/Encrypt/Openssl.php">
+    <DeprecatedInterface occurrences="1">
+      <code>Openssl</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
       <code>is_array($keys)</code>
     </DocblockTypeContradiction>
@@ -715,6 +727,10 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/File/Decrypt.php">
+    <DeprecatedClass occurrences="2">
+      <code>Filter\Decrypt</code>
+      <code>parent::filter($content)</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
     </DocblockTypeContradiction>
@@ -761,6 +777,10 @@
     </RedundantPropertyInitializationCheck>
   </file>
   <file src="src/File/Encrypt.php">
+    <DeprecatedClass occurrences="2">
+      <code>Filter\Encrypt</code>
+      <code>parent::filter($content)</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
     </DocblockTypeContradiction>
@@ -1037,8 +1057,30 @@
     </RedundantFunctionCall>
   </file>
   <file src="src/FilterPluginManager.php">
-    <DeprecatedClass occurrences="2">
+    <DeprecatedClass occurrences="24">
       <code>Blacklist::class</code>
+      <code>Decrypt::class</code>
+      <code>Decrypt::class</code>
+      <code>Decrypt::class</code>
+      <code>Decrypt::class</code>
+      <code>Decrypt::class</code>
+      <code>Encrypt::class</code>
+      <code>Encrypt::class</code>
+      <code>Encrypt::class</code>
+      <code>Encrypt::class</code>
+      <code>Encrypt::class</code>
+      <code>File\Decrypt::class</code>
+      <code>File\Decrypt::class</code>
+      <code>File\Decrypt::class</code>
+      <code>File\Decrypt::class</code>
+      <code>File\Decrypt::class</code>
+      <code>File\Decrypt::class</code>
+      <code>File\Encrypt::class</code>
+      <code>File\Encrypt::class</code>
+      <code>File\Encrypt::class</code>
+      <code>File\Encrypt::class</code>
+      <code>File\Encrypt::class</code>
+      <code>File\Encrypt::class</code>
       <code>Whitelist::class</code>
     </DeprecatedClass>
     <DuplicateArrayKey occurrences="2">
@@ -2070,6 +2112,14 @@
     </NullArgument>
   </file>
   <file src="test/DecryptTest.php">
+    <DeprecatedClass occurrences="6">
+      <code>new DecryptFilter()</code>
+      <code>new DecryptFilter()</code>
+      <code>new DecryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
+      <code>new DecryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
+      <code>new DecryptFilter(['adapter' =&gt; 'BlockCipher'])</code>
+      <code>new DecryptFilter(['adapter' =&gt; 'Openssl'])</code>
+    </DeprecatedClass>
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
@@ -2123,6 +2173,20 @@
     </MissingReturnType>
   </file>
   <file src="test/Encrypt/BlockCipherTest.php">
+    <DeprecatedClass occurrences="12">
+      <code>new BlockCipherEncryption('newkey')</code>
+      <code>new BlockCipherEncryption('testkey')</code>
+      <code>new BlockCipherEncryption('testkey')</code>
+      <code>new BlockCipherEncryption('testkey')</code>
+      <code>new BlockCipherEncryption(1234)</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
+    </DeprecatedClass>
     <InvalidScalarArgument occurrences="2">
       <code>1234</code>
       <code>1234</code>
@@ -2157,6 +2221,14 @@
     </DeprecatedClass>
   </file>
   <file src="test/EncryptTest.php">
+    <DeprecatedClass occurrences="6">
+      <code>new EncryptFilter()</code>
+      <code>new EncryptFilter()</code>
+      <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
+      <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
+      <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
+      <code>new EncryptFilter(['adapter' =&gt; 'Openssl'])</code>
+    </DeprecatedClass>
     <InvalidArrayOffset occurrences="1"/>
     <MissingParamType occurrences="1">
       <code>$input</code>
@@ -2175,6 +2247,14 @@
     </MixedAssignment>
   </file>
   <file src="test/File/DecryptTest.php">
+    <DeprecatedClass occurrences="6">
+      <code>new FileDecrypt()</code>
+      <code>new FileDecrypt()</code>
+      <code>new FileDecrypt()</code>
+      <code>new FileDecrypt()</code>
+      <code>new FileEncrypt()</code>
+      <code>new FileEncrypt()</code>
+    </DeprecatedClass>
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
@@ -2216,6 +2296,14 @@
     </MixedOperand>
   </file>
   <file src="test/File/EncryptTest.php">
+    <DeprecatedClass occurrences="6">
+      <code>new FileDecrypt()</code>
+      <code>new FileEncrypt()</code>
+      <code>new FileEncrypt()</code>
+      <code>new FileEncrypt()</code>
+      <code>new FileEncrypt()</code>
+      <code>new FileEncrypt()</code>
+    </DeprecatedClass>
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
