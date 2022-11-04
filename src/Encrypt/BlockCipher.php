@@ -20,6 +20,8 @@ use function sprintf;
 
 /**
  * Encryption adapter for Laminas\Crypt\BlockCipher
+ *
+ * @deprecated Since 2.24.0. This adapter will be removed in 3.0
  */
 class BlockCipher implements EncryptionAlgorithmInterface
 {

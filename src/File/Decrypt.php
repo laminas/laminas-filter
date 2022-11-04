@@ -16,6 +16,9 @@ use function is_writable;
 
 /**
  * Decrypts a given file and stores the decrypted file content
+ *
+ * @deprecated Since 2.24.0. This filter will be removed in 3.0. You are encouraged to use an alternative encryption
+ *             library and write your own filter.
  */
 class Decrypt extends Filter\Decrypt
 {

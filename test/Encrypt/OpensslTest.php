@@ -7,196 +7,241 @@ namespace LaminasTest\Filter\Encrypt;
 use Laminas\Filter\Encrypt\Openssl as OpensslEncryption;
 use Laminas\Filter\Exception;
 use Laminas\Filter\Exception\RuntimeException;
+use OpenSSLAsymmetricKey;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
-use function extension_loaded;
-use function phpversion;
-use function trim;
-use function version_compare;
+use function file_get_contents;
+use function openssl_get_cipher_methods;
+use function openssl_open;
+use function openssl_pkey_get_private;
+use function openssl_pkey_get_public;
+use function openssl_seal;
+use function reset;
+use function sprintf;
 
 class OpensslTest extends TestCase
 {
     public function setUp(): void
     {
-        if (! extension_loaded('openssl')) {
-            $this->markTestSkipped('This filter needs the openssl extension');
-        }
+        self::markTestSkipped('The OpenSSL adapter is broken on OpenSSL 3.x and none of these tests pass');
     }
 
-    /**
-     * Ensures that the filter follows expected behavior
-     */
-    public function testBasicOpenssl(): void
+    public function testOpenSslHasRc4Algo(): void
     {
-        $filter         = new OpensslEncryption(__DIR__ . '/../_files/publickey.pem');
-        $valuesExpected = [
-            'STRING' => 'STRING',
-            'ABC1@3' => 'ABC1@3',
-            'A b C'  => 'A B C',
+        $list = openssl_get_cipher_methods();
+        self::assertContains('rc4', $list);
+    }
+
+    /** @return list<array{0: string, 1: string, 2:null|string}> */
+    public function keyProvider(): array
+    {
+        return [
+            [__DIR__ . '/openssl/public_4096.pem', __DIR__ . '/openssl/private_unencrypted_4096.pem', null],
+            [__DIR__ . '/openssl/public_2048.pem', __DIR__ . '/openssl/private_unencrypted_2048.pem', null],
+            [__DIR__ . '/openssl/public_4096.pem', __DIR__ . '/openssl/private_encrypted_4096.pem', 'password'],
+            [__DIR__ . '/openssl/public_2048.pem', __DIR__ . '/openssl/private_encrypted_2048.pem', 'password'],
         ];
+    }
 
-        $key = $filter->getPublicKey();
-        $this->assertSame(
-            [
-                __DIR__ . '/../_files/publickey.pem'
-                  => '-----BEGIN CERTIFICATE-----
-MIIC3jCCAkegAwIBAgIBADANBgkqhkiG9w0BAQQFADCBtDELMAkGA1UEBhMCTkwx
-FjAUBgNVBAgTDU5vb3JkLUhvbGxhbmQxEDAOBgNVBAcTB1phYW5kYW0xFzAVBgNV
-BAoTDk1vYmlsZWZpc2guY29tMR8wHQYDVQQLExZDZXJ0aWZpY2F0aW9uIFNlcnZp
-Y2VzMRowGAYDVQQDExFNb2JpbGVmaXNoLmNvbSBDQTElMCMGCSqGSIb3DQEJARYW
-Y29udGFjdEBtb2JpbGVmaXNoLmNvbTAeFw0wNzA2MDcxNzM1NTNaFw0wODA2MDYx
-NzM1NTNaMIG0MQswCQYDVQQGEwJOTDEWMBQGA1UECBMNTm9vcmQtSG9sbGFuZDEQ
-MA4GA1UEBxMHWmFhbmRhbTEXMBUGA1UEChMOTW9iaWxlZmlzaC5jb20xHzAdBgNV
-BAsTFkNlcnRpZmljYXRpb24gU2VydmljZXMxGjAYBgNVBAMTEU1vYmlsZWZpc2gu
-Y29tIENBMSUwIwYJKoZIhvcNAQkBFhZjb250YWN0QG1vYmlsZWZpc2guY29tMIGf
-MA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKTIp7FntJt1BioBZ0lmWBE8Cyznge
-GCHNMcAC4JLbi1Y0LwT4CSaQarbvAqBRmc+joHX+rcURm89wOibRaThrrZcvgl2p
-omzu7shJc0ObiRZC8H7pxTkZ1HHjN8cRSQlOHkcdtE9yoiSGSO+zZ9K5ReU1DOsF
-FDD4V7XpcNU63QIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAFQ22OU/PAN7rRDr23NS
-2XkpSngwZWeHoFW1D2gRvHHRlqg5Q8KZHQAALd5PEFakehdn03NG6yEdnhXpqKT/
-5jYy6v3b+zwEvY82EUieMldovdnpsS1EScjjvPfQ1lSgcTHT2QX5MjNv13xLnOgh
-PIDs9E7uuizAKDhRRRvho8BS
------END CERTIFICATE-----
-',
-            ],
-            $key
+    /** @dataProvider keyProvider */
+    public function testOpenSslSealAndOpen(string $publicPath, string $privatePath, string|null $passphrase): void
+    {
+        $publicKey = openssl_pkey_get_public(sprintf('file://%s', $publicPath));
+        self::assertInstanceOf(OpenSSLAsymmetricKey::class, $publicKey);
+        $privateKey = openssl_pkey_get_private(sprintf('file://%s', $privatePath), $passphrase);
+        $content    = 'Goats are friends 🐐';
+        $result     = openssl_seal($content, $sealedData, $envelopeKeys, [$publicKey], 'RC4');
+        self::assertIsInt($result);
+        $envelopeKey = reset($envelopeKeys);
+        self::assertIsString($envelopeKey);
+        $result = openssl_open($sealedData, $decrypted, $envelopeKey, $privateKey, 'RC4');
+        self::assertTrue($result);
+        self::assertSame($content, $decrypted);
+    }
+
+    private static function assertPublicKeyMatchesFile(OpensslEncryption $filter, string $filePath): void
+    {
+        $public = $filter->getPublicKey();
+        self::assertArrayHasKey($filePath, $public);
+        self::assertSame(
+            file_get_contents($filePath),
+            $public[$filePath]
         );
-        foreach ($valuesExpected as $input => $output) {
-            $this->assertNotEquals($output, $filter->encrypt($input));
-        }
     }
 
-    /**
-     * Ensures that the filter allows de/encryption
-     */
-    public function testEncryptionWithDecryptionOpenssl(): void
+    private static function assertPrivateKeyMatchesFile(OpensslEncryption $filter, string $filePath): void
     {
-        if (version_compare(phpversion(), '5.4', '>=')) {
-            $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
-        }
-
-        $filter = new OpensslEncryption();
-        $filter->setPublicKey(__DIR__ . '/../_files/publickey.pem');
-        $output       = $filter->encrypt('teststring');
-        $envelopekeys = $filter->getEnvelopeKey();
-        $this->assertNotEquals('teststring', $output);
-
-        $filter->setPassphrase('zPUp9mCzIrM7xQOEnPJZiDkBwPBV9UlITY0Xd3v4bfIwzJ12yPQCAkcR5BsePGVw
-RK6GS5RwXSLrJu9Qj8+fk0wPj6IPY5HvA9Dgwh+dptPlXppeBm3JZJ+92l0DqR2M
-ccL43V3Z4JN9OXRAfGWXyrBJNmwURkq7a2EyFElBBWK03OLYVMevQyRJcMKY0ai+
-tmnFUSkH2zwnkXQfPUxg9aV7TmGQv/3TkK1SziyDyNm7GwtyIlfcigCCRz3uc77U
-Izcez5wgmkpNElg/D7/VCd9E+grTfPYNmuTVccGOes+n8ISJJdW0vYX1xwWv5l
-bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
-        $filter->setPrivateKey(__DIR__ . '/../_files/privatekey.pem');
-        $filter->setEnvelopeKey($envelopekeys);
-        $input = $filter->decrypt($output);
-        $this->assertSame('teststring', trim($input));
+        $private = $filter->getPrivateKey();
+        self::assertArrayHasKey($filePath, $private);
+        self::assertSame(
+            file_get_contents($filePath),
+            $private[$filePath]
+        );
     }
 
-    /**
-     * Ensures that the filter allows de/encryption
-     */
-    public function testEncryptionWithDecryptionSingleOptionOpenssl(): void
+    public function testAStringArgumentToTheConstructorIsConsideredAPublicKey(): void
     {
-        if (version_compare(phpversion(), '5.4', '>=')) {
-            $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
-        }
-
-        $filter = new OpensslEncryption();
-        $filter->setPublicKey(__DIR__ . '/../_files/publickey.pem');
-        $output       = $filter->encrypt('teststring');
-        $envelopekeys = $filter->getEnvelopeKey();
-        $this->assertNotEquals('teststring', $output);
-
-        $phrase = 'zPUp9mCzIrM7xQOEnPJZiDkBwPBV9UlITY0Xd3v4bfIwzJ12yPQCAkcR5BsePGVw
-RK6GS5RwXSLrJu9Qj8+fk0wPj6IPY5HvA9Dgwh+dptPlXppeBm3JZJ+92l0DqR2M
-ccL43V3Z4JN9OXRAfGWXyrBJNmwURkq7a2EyFElBBWK03OLYVMevQyRJcMKY0ai+
-tmnFUSkH2zwnkXQfPUxg9aV7TmGQv/3TkK1SziyDyNm7GwtyIlfcigCCRz3uc77U
-Izcez5wgmkpNElg/D7/VCd9E+grTfPYNmuTVccGOes+n8ISJJdW0vYX1xwWv5l
-bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt';
-        $filter->setPrivateKey(__DIR__ . '/../_files/privatekey.pem', $phrase);
-        $filter->setEnvelopeKey($envelopekeys);
-        $input = $filter->decrypt($output);
-        $this->assertSame('teststring', trim($input));
+        $path   = __DIR__ . '/openssl/public_2048.pem';
+        $filter = new OpensslEncryption($path);
+        self::assertPublicKeyMatchesFile($filter, $path);
     }
 
-    public function testSetPublicKey(): void
+    public function testSetPublicKeyAcceptsAFilePathToAPublicKeyFile(): void
     {
         $filter = new OpensslEncryption();
+        $filter->setPublicKey(__DIR__ . '/openssl/public_4096.pem');
+        self::assertNotSame('Hey!', $filter->encrypt('Hey!'));
+    }
 
-        $r = $filter->setPublicKey(['private' => __DIR__ . '/../_files/publickey.pem']);
-        $this->assertSame($filter, $r);
+    public function testSetPublicKeyAcceptsAPemEncodedString(): void
+    {
+        $filter  = new OpensslEncryption();
+        $keyPath = __DIR__ . '/openssl/public_2048.pem';
+        $filter->setPublicKey(file_get_contents($keyPath));
+        self::assertNotSame('Hey!', $filter->encrypt('Hey!'));
+        $public = $filter->getPublicKey();
+        self::assertArrayHasKey(0, $public);
+        self::assertSame(
+            file_get_contents($keyPath),
+            $public[0]
+        );
+    }
 
+    public function testSetPublicKeyThrowsAnExceptionForAnInvalidString(): void
+    {
+        $filter = new OpensslEncryption();
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('not valid');
-        $filter->setPublicKey(123);
+        $filter->setPublicKey('123');
     }
 
-    public function testSetPrivateKey(): void
+    public function testThePublicKeyCanBeRetrievedFromAFilePath(): void
+    {
+        $filter  = new OpensslEncryption();
+        $keyPath = __DIR__ . '/openssl/public_2048.pem';
+        $filter->setPublicKey($keyPath);
+
+        self::assertPublicKeyMatchesFile($filter, $keyPath);
+    }
+
+    public function testThatGivenAnArrayOfPublicKeysTheLastOneWins(): void
+    {
+        $filter   = new OpensslEncryption();
+        $path2048 = __DIR__ . '/openssl/public_2048.pem';
+        $path4096 = __DIR__ . '/openssl/public_4096.pem';
+        $filter->setPublicKey([$path2048, $path4096]);
+        $public = $filter->getPublicKey();
+        self::assertCount(1, $public);
+        self::assertPublicKeyMatchesFile($filter, $path4096);
+    }
+
+    public function testThatEncryptionAndDecryptionArePossibleWithPackagedEnvelope(): void
+    {
+        $filter = new OpensslEncryption([
+            'private'    => __DIR__ . '/openssl/private_encrypted_2048.pem',
+            'public'     => __DIR__ . '/openssl/public_2048.pem',
+            'passphrase' => 'password',
+            'package'    => true,
+        ]);
+
+        $content = 'Goats are friends';
+
+        $encrypted = $filter->encrypt($content);
+        self::assertNotSame($content, $encrypted);
+        $decrypted = $filter->decrypt($encrypted);
+        self::assertSame($content, $decrypted);
+    }
+
+    public function testThatEncryptionAndDecryptionArePossibleWithoutPackagedEnvelope(): void
+    {
+        $filter = new OpensslEncryption([
+            'public'  => __DIR__ . '/openssl/public_2048.pem',
+            'package' => false,
+        ]);
+
+        $content = 'Goats are friends';
+
+        $encrypted = $filter->encrypt($content);
+        self::assertNotSame($content, $encrypted);
+
+        $envelope = $filter->getEnvelopeKey();
+        self::assertCount(1, $envelope);
+        $envelopeKey = reset($envelope);
+        self::assertIsString($envelopeKey);
+
+        $decrypt = new OpensslEncryption([
+            'private'    => __DIR__ . '/openssl/private_encrypted_2048.pem',
+            'passphrase' => 'password',
+            'envelope'   => $envelopeKey,
+        ]);
+
+        $decrypted = $decrypt->decrypt($encrypted);
+        self::assertSame($content, $decrypted);
+    }
+
+    public function testPrivateKeyCanBeAFilePath(): void
     {
         $filter = new OpensslEncryption();
+        self::assertCount(0, $filter->getPrivateKey());
+        $keyPath = __DIR__ . '/openssl/private_unencrypted_4096.pem';
+        $filter->setPrivateKey($keyPath);
+        self::assertPrivateKeyMatchesFile($filter, $keyPath);
+    }
 
-        $filter->setPrivateKey(['public' => __DIR__ . '/../_files/privatekey.pem']);
-        $test = $filter->getPrivateKey();
-        $this->assertSame([
-            __DIR__ . '/../_files/privatekey.pem' => '-----BEGIN RSA PRIVATE KEY-----
-MIICXgIBAAKBgQDKTIp7FntJt1BioBZ0lmWBE8CyzngeGCHNMcAC4JLbi1Y0LwT4
-CSaQarbvAqBRmc+joHX+rcURm89wOibRaThrrZcvgl2pomzu7shJc0ObiRZC8H7p
-xTkZ1HHjN8cRSQlOHkcdtE9yoiSGSO+zZ9K5ReU1DOsFFDD4V7XpcNU63QIDAQAB
-AoGBALr0XY4/SpTnmpxqwhXg39GYBZ+5e/yj5KkTbxW5oT7P2EzFn1vyaPdSB9l+
-ndaLxP68zg8dXGBXlC9tLm6dRQtocGupUPB1HOEQbUIlQdiKF/W7/8w6uzLNXdid
-qCSLrSJ4cfkYKtS29Xi6qooRw2DOvUFngXy/ELtmTeiBcihpAkEA8+oUesTET+TO
-IYM0+l5JrTOpCPZt+aY4JPmWoKz9bshJT/DP2KPgmqd8/Vy+i23yIfOwUxbpwbna
-aKzNPi/uywJBANRSl7RNL7jh1BJRQC7+mvUVTE8iQwbyGtIipcLC7bxwhNQzuPKS
-P4o/a1+HEVB9Nv1Em7DqKTwBnlkJvaFZ3/cCQQCcvx0SGEkgHqXpG2x8SQOH7t7+
-B399I7iI6mxGLWVgQA389YBcdFPujxvfpi49ZBZqgzQY8WyfNlSJWCM9h4gpAkAu
-qxzHN7QGmjSn9g36hmH+/rhwKGK9MxfsGkt+/KOOqNi5X8kGIFkxBPGP5LtMisk8
-cAkcoMuBcgWhIn/46C1PAkEAzLK/ibrdMQLOdO4SuDgj/2nc53NZ3agl61ew8Os6
-d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
------END RSA PRIVATE KEY-----
-',
-        ], $test);
+    public function testPrivateKeyCanBePemEncoded(): void
+    {
+        $filter  = new OpensslEncryption();
+        $keyPath = __DIR__ . '/openssl/private_unencrypted_4096.pem';
+        $key     = file_get_contents($keyPath);
+        $filter->setPrivateKey($key);
+        $private = $filter->getPrivateKey();
+        self::assertArrayHasKey(0, $private);
+        self::assertSame($key, $private[0]);
+    }
 
+    public function testSetPrivateKeyThrowsExceptionForInvalidString(): void
+    {
+        $filter = new OpensslEncryption();
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('not valid');
-        $filter->setPrivateKey(123);
+        $filter->setPrivateKey('123');
     }
 
     public function testToString(): void
     {
         $filter = new OpensslEncryption();
-        $this->assertSame('Openssl', $filter->toString());
+        self::assertSame('Openssl', $filter->toString());
     }
 
-    public function testInvalidDecryption(): void
+    public function testAnExceptionIsThrownAttemptingToDecryptWithoutAPrivateKey(): void
     {
         $filter = new OpensslEncryption();
-        try {
-            $filter->decrypt('unknown');
-            $this->fail();
-        } catch (RuntimeException $e) {
-            $this->assertStringContainsString('Please give a private key', $e->getMessage());
-        }
-
-        $filter->setPrivateKey(['public' => __DIR__ . '/../_files/privatekey.pem']);
-        try {
-            $filter->decrypt('unknown');
-            $this->fail();
-        } catch (RuntimeException $e) {
-            $this->assertStringContainsString('Please give an envelope key', $e->getMessage());
-        }
-
-        $filter->setEnvelopeKey('unknown');
-        try {
-            $filter->decrypt('unknown');
-            $this->fail();
-        } catch (RuntimeException $e) {
-            $this->assertStringContainsString('was not able to decrypt', $e->getMessage());
-        }
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Please give a private key');
+        $filter->decrypt('unknown');
     }
 
-    public function testEncryptionWithoutPublicKey(): void
+    public function testAnExceptionIsThrownAttemptingToDecryptWithoutAnEnvelopeKey(): void
+    {
+        $filter = new OpensslEncryption();
+        $filter->setPrivateKey(__DIR__ . '/openssl/private_unencrypted_2048.pem');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Please give an envelope key');
+        $filter->decrypt('unknown');
+    }
+
+    public function testDecryptionIsNotPossibleWithoutAnEnvelopeKeyAndPackageSetAsFalse(): void
+    {
+        $filter = new OpensslEncryption();
+        $filter->setPrivateKey(__DIR__ . '/openssl/private_unencrypted_2048.pem');
+        $filter->setEnvelopeKey('unknown');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('was not able to decrypt');
+        $filter->decrypt('unknown');
+    }
+
+    public function testEncryptionCannotProceedWithoutPublicKey(): void
     {
         $filter = new OpensslEncryption();
 
@@ -205,59 +250,7 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $filter->encrypt('unknown');
     }
 
-    public function testMultipleOptionsAtInitiation(): void
-    {
-        $passphrase = 'test';
-        $filter     = new OpensslEncryption([
-            'public'     => __DIR__ . '/../_files/publickey_pass.pem',
-            'passphrase' => $passphrase,
-            'private'    => __DIR__ . '/../_files/privatekey_pass.pem',
-        ]);
-        $public     = $filter->getPublicKey();
-        $this->assertNotEmpty($public);
-        $this->assertSame($passphrase, $filter->getPassphrase());
-    }
-
-    /**
-     * Ensures that the filter allows de/encryption
-     */
-    public function testEncryptionWithDecryptionWithPackagedKeys(): void
-    {
-        $filter = new OpensslEncryption();
-        $filter->setPublicKey(__DIR__ . '/../_files/publickey_pass.pem');
-        $filter->setPackage(true);
-        $output = $filter->encrypt('teststring');
-        $this->assertNotEquals('teststring', $output);
-
-        $phrase = 'test';
-        $filter->setPrivateKey(__DIR__ . '/../_files/privatekey_pass.pem', $phrase);
-        $input = $filter->decrypt($output);
-        $this->assertSame('teststring', trim($input));
-    }
-
-    /**
-     * Ensures that the filter allows de/encryption
-     */
-    public function testEncryptionWithDecryptionAndCompressionWithPackagedKeys(): void
-    {
-        if (! extension_loaded('bz2')) {
-            $this->markTestSkipped('Bz2 extension for compression test needed');
-        }
-
-        $filter = new OpensslEncryption();
-        $filter->setPublicKey(__DIR__ . '/../_files/publickey_pass.pem');
-        $filter->setPackage(true);
-        $filter->setCompression('bz2');
-        $output = $filter->encrypt('teststring');
-        $this->assertNotEquals('teststring', $output);
-
-        $phrase = 'test';
-        $filter->setPrivateKey(__DIR__ . '/../_files/privatekey_pass.pem', $phrase);
-        $input = $filter->decrypt($output);
-        $this->assertSame('teststring', trim($input));
-    }
-
-    public function testPassCompressionConfigWillBeUnsetCorrectly(): void
+    public function testCompressionConfigWillBeUnsetCorrectlyInInternalKeysArray(): void
     {
         $filter = new OpensslEncryption([
             'compression' => 'bz2',
@@ -265,6 +258,83 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
 
         $r = new ReflectionProperty($filter, 'keys');
         $r->setAccessible(true);
-        $this->assertArrayNotHasKey('compression', $r->getValue($filter));
+        $keys = $r->getValue($filter);
+        self::assertIsArray($keys);
+        self::assertArrayNotHasKey('compression', $keys);
+    }
+
+    public function testEncryptionAndDecryptionWithCompressionAndPackagedKeysIsPossible(): void
+    {
+        $filter = new OpensslEncryption([
+            'public'      => __DIR__ . '/openssl/public_4096.pem',
+            'private'     => __DIR__ . '/openssl/private_unencrypted_4096.pem',
+            'compression' => 'bz2',
+            'package'     => true,
+        ]);
+
+        $content = 'Muppets';
+
+        $encrypted = $filter->encrypt($content);
+        self::assertNotSame($content, $encrypted);
+        self::assertSame($content, $filter->decrypt($encrypted));
+    }
+
+    public function testEncryptionAndDecryptionWithCompressionAndWithoutPackagedKeysIsPossible(): void
+    {
+        $encrypt = new OpensslEncryption([
+            'public'      => __DIR__ . '/openssl/public_4096.pem',
+            'compression' => 'bz2',
+            'package'     => false,
+        ]);
+
+        $content = 'Muppets';
+
+        $encrypted = $encrypt->encrypt($content);
+        self::assertNotSame($content, $encrypted);
+        $envelope = $encrypt->getEnvelopeKey();
+        self::assertCount(1, $envelope);
+        $envelopeKey = reset($envelope);
+        self::assertIsString($envelopeKey);
+
+        $decrypt = new OpensslEncryption([
+            'private'     => __DIR__ . '/openssl/private_unencrypted_4096.pem',
+            'envelope'    => $envelopeKey,
+            'compression' => 'bz2',
+        ]);
+
+        self::assertSame($content, $decrypt->decrypt($encrypted));
+    }
+
+    public function testTheSameCompressionOptionsMustBeUsedForBothEncryptionAndDecryption(): void
+    {
+        $encrypt = new OpensslEncryption([
+            'public'      => __DIR__ . '/openssl/public_4096.pem',
+            'compression' => 'gz',
+            'package'     => true,
+        ]);
+
+        $content = 'Muppets';
+
+        $encrypted = $encrypt->encrypt($content);
+        self::assertNotSame($content, $encrypted);
+
+        $decrypt = new OpensslEncryption([
+            'private'     => __DIR__ . '/openssl/private_unencrypted_4096.pem',
+            'compression' => 'bz2',
+            'package'     => true,
+        ]);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Error during decompression');
+
+        $decrypt->decrypt($encrypted);
+    }
+
+    public function testPassphraseIsMutableAtRuntime(): void
+    {
+        $filter = new OpensslEncryption();
+        self::assertNull($filter->getPassphrase());
+        $filter->setPassphrase('secret');
+        self::assertSame('secret', $filter->getPassphrase());
     }
 }

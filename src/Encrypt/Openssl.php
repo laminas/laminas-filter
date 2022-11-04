@@ -8,21 +8,21 @@ use Laminas\Filter\Compress;
 use Laminas\Filter\Decompress;
 use Laminas\Filter\Exception;
 use Laminas\Stdlib\ArrayUtils;
+use OpenSSLAsymmetricKey;
 use Traversable;
 
 use function array_key_exists;
+use function array_values;
+use function assert;
 use function count;
 use function current;
 use function extension_loaded;
-use function fclose;
-use function fopen;
-use function fread;
+use function file_get_contents;
 use function is_array;
 use function is_file;
 use function is_readable;
 use function is_string;
 use function md5;
-use function openssl_free_key;
 use function openssl_open;
 use function openssl_pkey_get_details;
 use function openssl_pkey_get_private;
@@ -33,20 +33,37 @@ use function strlen;
 use function substr;
 use function unpack;
 
-use const PHP_VERSION_ID;
-
 /**
  * Encryption adapter for openssl
+ *
+ * @deprecated The OpenSSL adapter is deprecated since 2.24.0. It uses an insecure algorithm that cannot be changed
+ *             without breaking BC, and also doesn't work with OpenSSL libs >= 3. Use of this adapter should be avoided
+ *
+ * @psalm-type Options = array{
+ *     public?: string,
+ *     private?: string,
+ *     envelope?: string,
+ *     passphrase?: string,
+ *     package?: bool,
+ *     compression?: string|array{adapter: string},
+ * }
+ * @psalm-type CompressionOptions = array{
+ *     adapter: string,
+ * }&array<string, mixed>
+ * @final
  */
 class Openssl implements EncryptionAlgorithmInterface
 {
     /**
      * Definitions for encryption
-     * array(
-     *     'public'   => public keys
-     *     'private'  => private keys
-     *     'envelope' => resulting envelope keys
-     * )
+     *
+     * @internal
+     *
+     * @var array{
+     *     public: string[],
+     *     private: string[],
+     *     envelope: string[],
+     * }
      */
     protected $keys = [
         'public'   => [],
@@ -57,19 +74,25 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Internal passphrase
      *
-     * @var string
+     * @internal
+     *
+     * @var string|null
      */
     protected $passphrase;
 
     /**
      * Internal compression
      *
-     * @var array
+     * @internal
+     *
+     * @var CompressionOptions|null
      */
     protected $compression;
 
     /**
      * Internal create package
+     *
+     * @internal
      *
      * @var bool
      */
@@ -84,7 +107,7 @@ class Openssl implements EncryptionAlgorithmInterface
      *   'compression' => compress value with this compression adapter
      *   'package'     => pack envelope keys into encrypted string, simplifies decryption
      *
-     * @param string|array|Traversable $options Options for this adapter
+     * @param string|Options|Traversable $options Options for this adapter
      * @throws Exception\ExtensionNotLoadedException
      */
     public function __construct($options = [])
@@ -122,23 +145,21 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Sets the encryption keys
      *
-     * @param  string|array $keys Key with type association
-     * @return self
+     * @internal
+     *
+     * @param  array $keys Key with type association
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
-    protected function _setKeys($keys)
+    protected function _setKeys($keys) // phpcs:ignore
     {
-        // @codingStandardsIgnoreEnd
         if (! is_array($keys)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
         foreach ($keys as $type => $key) {
             if (is_string($key) && is_file($key) && is_readable($key)) {
-                $file = fopen($key, 'r');
-                $cert = fread($file, 8192);
-                fclose($file);
+                $cert = file_get_contents($key);
             } else {
                 $cert = $key;
                 $key  = count($this->keys[$type]);
@@ -151,7 +172,6 @@ class Openssl implements EncryptionAlgorithmInterface
                         throw new Exception\InvalidArgumentException("Public key '{$cert}' not valid");
                     }
 
-                    $this->freeKeyResources([$test]);
                     $this->keys['public'][$key] = $cert;
                     break;
                 case 'private':
@@ -164,7 +184,6 @@ class Openssl implements EncryptionAlgorithmInterface
                         throw new Exception\InvalidArgumentException("Private key '{$cert}' not valid");
                     }
 
-                    $this->freeKeyResources([$test]);
                     $this->keys['private'][$key] = $cert;
                     break;
                 case 'envelope':
@@ -181,7 +200,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns all public keys
      *
-     * @return array
+     * @return string[]
      */
     public function getPublicKey()
     {
@@ -213,7 +232,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns all private keys
      *
-     * @return array
+     * @return string[]
      */
     public function getPrivateKey()
     {
@@ -250,7 +269,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns all envelope keys
      *
-     * @return array
+     * @return string[]
      */
     public function getEnvelopeKey()
     {
@@ -282,7 +301,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns the passphrase
      *
-     * @return string
+     * @return string|null
      */
     public function getPassphrase()
     {
@@ -304,7 +323,7 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Returns the compression
      *
-     * @return array
+     * @return CompressionOptions|null
      */
     public function getCompression()
     {
@@ -314,12 +333,12 @@ class Openssl implements EncryptionAlgorithmInterface
     /**
      * Sets an internal compression for values to encrypt
      *
-     * @param string|array $compression
+     * @param string|CompressionOptions $compression
      * @return self
      */
     public function setCompression($compression)
     {
-        if (is_string($this->compression)) {
+        if (is_string($compression)) {
             $compression = ['adapter' => $compression];
         }
 
@@ -359,18 +378,17 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function encrypt($value)
     {
-        $encrypted     = [];
-        $encryptedkeys = [];
-
         if (! $this->keys['public']) {
             throw new Exception\RuntimeException('Openssl can not encrypt without public keys');
         }
 
-        $keys         = [];
-        $fingerprints = [];
-        $count        = -1;
+        $encryptedkeys = [];
+        $keys          = [];
+        $fingerprints  = [];
+        $count         = -1;
         foreach ($this->keys['public'] as $key => $cert) {
             $keys[$key] = openssl_pkey_get_public($cert);
+            assert($keys[$key] instanceof OpenSSLAsymmetricKey);
             if ($this->package) {
                 $details = openssl_pkey_get_details($keys[$key]);
                 if ($details === false) {
@@ -385,14 +403,12 @@ class Openssl implements EncryptionAlgorithmInterface
         // compress prior to encryption
         if (! empty($this->compression)) {
             $compress = new Compress($this->compression);
-            $value    = $compress($value);
+            $value    = $compress->filter($value);
         }
 
-        $crypt = openssl_seal($value, $encrypted, $encryptedkeys, $keys, 'RC4');
+        $bytesSealed = openssl_seal($value, $encrypted, $encryptedkeys, array_values($keys), 'RC4');
 
-        $this->freeKeyResources($keys);
-
-        if ($crypt === false) {
+        if ($bytesSealed === false) {
             throw new Exception\RuntimeException('Openssl was not able to encrypt your content with the given options');
         }
 
@@ -468,8 +484,6 @@ class Openssl implements EncryptionAlgorithmInterface
 
         $crypt = openssl_open($value, $decrypted, $envelope, $keys, 'RC4');
 
-        $this->freeKeyResources([$keys]);
-
         if ($crypt === false) {
             throw new Exception\RuntimeException('Openssl was not able to decrypt you content with the given options');
         }
@@ -491,21 +505,5 @@ class Openssl implements EncryptionAlgorithmInterface
     public function toString()
     {
         return 'Openssl';
-    }
-
-    /**
-     * Free key resource if necessary.
-     * PHP 8 automatically frees the key instance and deprecates the function
-     *
-     * @param array<int,resource> $keys
-     */
-    private function freeKeyResources(array $keys): void
-    {
-        if (PHP_VERSION_ID < 80000) {
-            foreach ($keys as $key) {
-                // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
-                openssl_free_key($key);
-            }
-        }
     }
 }
