@@ -19,6 +19,14 @@ use function is_string;
 use function sprintf;
 use function strtolower;
 
+/**
+ * @psalm-type Options = array{
+ *     type: int,
+ *     casting: bool,
+ *     translations: array,
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class Boolean extends AbstractFilter
 {
     public const TYPE_BOOLEAN      = 1;
@@ -33,7 +41,7 @@ class Boolean extends AbstractFilter
     public const TYPE_LOCALIZED    = 256;
     public const TYPE_ALL          = 511;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $constants = [
         self::TYPE_BOOLEAN      => 'boolean',
         self::TYPE_INTEGER      => 'integer',
@@ -48,7 +56,7 @@ class Boolean extends AbstractFilter
         self::TYPE_ALL          => 'all',
     ];
 
-    /** @var array */
+    /** @var Options */
     protected $options = [
         'type'         => self::TYPE_PHP,
         'casting'      => true,
@@ -56,9 +64,7 @@ class Boolean extends AbstractFilter
     ];
 
     /**
-     * Constructor
-     *
-     * @param int|string|array|Traversable|null $typeOrOptions
+     * @param int|string|Options|iterable|null $typeOrOptions
      * @param bool  $casting
      * @param array $translations
      */

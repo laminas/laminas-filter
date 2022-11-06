@@ -4,23 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Traversable;
-
 use function is_scalar;
 use function mb_strtolower;
-use function strtolower;
 
+/** @psalm-import-type UnicodeOptions from AbstractUnicode */
 class StringToLower extends AbstractUnicode
 {
-    /** @var array */
-    protected $options = [
-        'encoding' => null,
-    ];
-
     /**
-     * Constructor
-     *
-     * @param string|array|Traversable $encodingOrOptions OPTIONAL
+     * @param string|UnicodeOptions|iterable|null $encodingOrOptions
      */
     public function __construct($encodingOrOptions = null)
     {
@@ -40,7 +31,7 @@ class StringToLower extends AbstractUnicode
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  string|mixed $value
+     * @param mixed $value
      * @return string|mixed
      * @psalm-return ($value is string ? string : $value)
      */
@@ -49,12 +40,7 @@ class StringToLower extends AbstractUnicode
         if (! is_scalar($value)) {
             return $value;
         }
-        $value = (string) $value;
 
-        if (null !== $this->getEncoding()) {
-            return mb_strtolower($value, $this->options['encoding']);
-        }
-
-        return strtolower($value);
+        return mb_strtolower((string) $value, $this->getEncoding());
     }
 }

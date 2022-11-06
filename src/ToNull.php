@@ -16,6 +16,12 @@ use function is_string;
 use function iterator_to_array;
 use function sprintf;
 
+/**
+ * @psalm-type Options = array{
+ *     type: int,
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class ToNull extends AbstractFilter
 {
     public const TYPE_BOOLEAN     = 1;
@@ -26,7 +32,7 @@ class ToNull extends AbstractFilter
     public const TYPE_FLOAT       = 32;
     public const TYPE_ALL         = 63;
 
-    /** @var array */
+    /** @var array<int, string> */
     protected $constants = [
         self::TYPE_BOOLEAN     => 'boolean',
         self::TYPE_INTEGER     => 'integer',
@@ -37,7 +43,7 @@ class ToNull extends AbstractFilter
         self::TYPE_ALL         => 'all',
     ];
 
-    /** @var array */
+    /** @var Options */
     protected $options = [
         'type' => self::TYPE_ALL,
     ];
@@ -45,7 +51,7 @@ class ToNull extends AbstractFilter
     /**
      * Constructor
      *
-     * @param int|string|array|Traversable|null $typeOrOptions
+     * @param int|string|Options|iterable|null $typeOrOptions
      */
     public function __construct($typeOrOptions = null)
     {

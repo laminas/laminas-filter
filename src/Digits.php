@@ -21,8 +21,9 @@ class Digits extends AbstractFilter
      *
      * If the value provided is not integer, float or string, the value will remain unfiltered
      *
-     * @param  string $value
+     * @param  mixed $value
      * @return string|mixed
+     * @psalm-return ($value is int|float|string ? numeric-string : mixed)
      */
     public function filter($value)
     {

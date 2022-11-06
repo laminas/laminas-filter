@@ -4,10 +4,6 @@
     <MissingReturnType occurrences="1">
       <code>filterable</code>
     </MissingReturnType>
-    <MixedArgument occurrences="2">
-      <code>$value</code>
-      <code>$value</code>
-    </MixedArgument>
     <PropertyNotSetInConstructor occurrences="1">
       <code>$expectedInputs</code>
     </PropertyNotSetInConstructor>
@@ -22,57 +18,33 @@
     <DocblockTypeContradiction occurrences="1">
       <code>gettype($options)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="4">
-      <code>$key</code>
-      <code>$key</code>
-      <code>$key</code>
-      <code>$key</code>
-    </MixedArgument>
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;options[$key]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="2">
-      <code>$key</code>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>[]</code>
+    </InvalidPropertyAssignmentValue>
+    <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyInvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;options</code>
+    </PossiblyInvalidPropertyAssignmentValue>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_object($options)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AbstractUnicode.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;options['encoding']</code>
-    </MixedReturnStatement>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_string($encoding)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AllowList.php">
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/BaseName.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>is_scalar($value)</code>
-    </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(string) $value</code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/Boolean.php">
     <DocblockTypeContradiction occurrences="1">
       <code>gettype($translations)</code>
     </DocblockTypeContradiction>
-    <InvalidOperand occurrences="1">
-      <code>$found</code>
-    </InvalidOperand>
-    <MixedArrayAssignment occurrences="1">
-      <code>$this-&gt;options['translations'][$message]</code>
-    </MixedArrayAssignment>
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;options['translations'][$message]</code>
     </MixedArrayOffset>
@@ -81,16 +53,6 @@
       <code>$message</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>array</code>
-      <code>bool</code>
-      <code>int</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
-      <code>$this-&gt;options['casting']</code>
-      <code>$this-&gt;options['translations']</code>
-      <code>$this-&gt;options['type']</code>
-    </MixedReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
@@ -105,9 +67,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Callback.php">
-    <InvalidArgument occurrences="1">
-      <code>$callbackOrOptions</code>
-    </InvalidArgument>
     <MixedFunctionCall occurrences="1">
       <code>call_user_func_array($this-&gt;options['callback'], $params)</code>
     </MixedFunctionCall>
@@ -130,10 +89,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Compress.php">
-    <DocblockTypeContradiction occurrences="3">
+    <DocblockTypeContradiction occurrences="2">
       <code>! is_array($options)</code>
       <code>is_string($adapter)</code>
-      <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <LessSpecificImplementedReturnType occurrences="1">
       <code>mixed</code>
@@ -159,13 +117,11 @@
     <MixedMethodCall occurrences="1">
       <code>new $adapter($options)</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="2">
+    <MixedReturnStatement occurrences="1">
       <code>$this-&gt;adapterOptions</code>
-      <code>$value</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="2">
+    <MoreSpecificImplementedParamType occurrences="1">
       <code>$options</code>
-      <code>$value</code>
     </MoreSpecificImplementedParamType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getOptions</code>
@@ -178,6 +134,9 @@
     <MixedAssignment occurrences="1">
       <code>$option</code>
     </MixedAssignment>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;options[$option]</code>
+    </MixedReturnStatement>
   </file>
   <file src="src/Compress/Bz2.php">
     <InvalidReturnStatement occurrences="1">
@@ -245,12 +204,6 @@
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>bool</code>
     </ImplementedReturnTypeMismatch>
-    <MixedArrayAccess occurrences="1">
-      <code>$options['callback']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="1">
-      <code>$options</code>
-    </MixedAssignment>
     <MixedInferredReturnType occurrences="4">
       <code>string</code>
       <code>string</code>
@@ -396,73 +349,30 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/DataUnitFormatter.php">
-    <InvalidArgument occurrences="1">
-      <code>$prefix</code>
-    </InvalidArgument>
+    <InvalidParamDefault occurrences="1">
+      <code>Options</code>
+    </InvalidParamDefault>
     <MissingReturnType occurrences="4">
       <code>setMode</code>
       <code>setPrecision</code>
       <code>setPrefixes</code>
       <code>setUnit</code>
     </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$amount</code>
-    </MixedArgument>
     <MixedArrayOffset occurrences="1">
       <code>$prefixes[$index]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="1">
-      <code>$prefixes</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="5">
-      <code>array</code>
-      <code>int</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string|null</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="6">
-      <code>$prefixes</code>
-      <code>$prefixes[$index] ?? null</code>
-      <code>$this-&gt;options['mode']</code>
-      <code>$this-&gt;options['precision']</code>
-      <code>$this-&gt;options['unit']</code>
-      <code>self::$standardizedPrefixes[$this-&gt;getMode()]</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <NullArgument occurrences="1">
-      <code>$prefix</code>
-    </NullArgument>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(int) $precision</code>
       <code>(string) $unit</code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/DateTimeFormatter.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>$result === false</code>
-      <code>$value === null</code>
-      <code>$value === null</code>
-    </DocblockTypeContradiction>
-    <InvalidReturnStatement occurrences="2">
-      <code>$value</code>
-      <code>$value</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="2">
-      <code>string</code>
-      <code>string</code>
-    </InvalidReturnType>
     <InvalidScalarArgument occurrences="1">
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <NullableReturnStatement occurrences="1">
-      <code>$value</code>
-    </NullableReturnStatement>
+    <MixedAssignment occurrences="1">
+      <code>$result</code>
+    </MixedAssignment>
   </file>
   <file src="src/Decompress.php">
     <DocblockTypeContradiction occurrences="1">
@@ -503,32 +413,6 @@
   <file src="src/DenyList.php">
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $strict</code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Digits.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>! is_float($value) &amp;&amp; ! is_string($value)</code>
-      <code>is_int($value)</code>
-    </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>! is_float($value)</code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/Dir.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>is_scalar($value)</code>
-    </DocblockTypeContradiction>
-    <MixedReturnStatement occurrences="1">
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Encrypt.php">
@@ -1125,9 +1009,8 @@
     </ParamNameMismatch>
   </file>
   <file src="src/HtmlEntities.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="1">
       <code>is_array($options)</code>
-      <code>is_scalar($value)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="3">
       <code>$options['doublequote']</code>
@@ -1139,15 +1022,11 @@
       <code>$temp['charset']</code>
       <code>$temp['quotestyle']</code>
     </MixedAssignment>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType occurrences="3">
+    <RedundantCastGivenDocblockType occurrences="2">
       <code>(bool) $doubleQuote</code>
-      <code>(string) $value</code>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
   </file>
@@ -1245,56 +1124,22 @@
     <InvalidNullableReturnType occurrences="1">
       <code>bool</code>
     </InvalidNullableReturnType>
-    <MixedArgument occurrences="3">
+    <MixedArgument occurrences="2">
       <code>$args[0]</code>
       <code>$args[1]</code>
-      <code>$p</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="5">
-      <code>$this-&gt;options['pattern']</code>
-      <code>$this-&gt;options['pattern']</code>
-      <code>$this-&gt;options['pattern']</code>
-      <code>$this-&gt;options['replacement']</code>
-      <code>$this-&gt;options['replacement']</code>
-    </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="2">
-      <code>$this-&gt;options['pattern']</code>
-      <code>$this-&gt;options['replacement']</code>
-    </MixedArrayAssignment>
-    <MixedAssignment occurrences="3">
-      <code>$p</code>
-      <code>$this-&gt;options</code>
-      <code>$this-&gt;options</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>string|array</code>
-      <code>string|array</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;options['pattern']</code>
-      <code>$this-&gt;options['replacement']</code>
-    </MixedReturnStatement>
   </file>
   <file src="src/RealPath.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>is_string($value)</code>
-    </DocblockTypeContradiction>
     <MixedInferredReturnType occurrences="1">
       <code>bool</code>
     </MixedInferredReturnType>
     <MixedReturnStatement occurrences="1">
       <code>$this-&gt;options['exists']</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyInvalidArgument occurrences="2">
       <code>$existsOrOptions</code>
       <code>$existsOrOptions</code>
     </PossiblyInvalidArgument>
-    <RedundantCast occurrences="1">
-      <code>(string) $value</code>
-    </RedundantCast>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $flag</code>
     </RedundantCastGivenDocblockType>
@@ -1306,71 +1151,23 @@
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($prefix)</code>
     </DocblockTypeContradiction>
-    <NonInvariantDocblockPropertyType occurrences="1">
-      <code>$options</code>
-    </NonInvariantDocblockPropertyType>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$options</code>
-    </PossiblyInvalidArgument>
   </file>
   <file src="src/StringSuffix.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($suffix)</code>
     </DocblockTypeContradiction>
-    <NonInvariantDocblockPropertyType occurrences="1">
-      <code>$options</code>
-    </NonInvariantDocblockPropertyType>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$options</code>
-    </PossiblyInvalidArgument>
   </file>
   <file src="src/StringToLower.php">
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;options['encoding']</code>
-    </MixedArgument>
     <PossiblyInvalidArgument occurrences="2">
       <code>$encodingOrOptions</code>
       <code>$encodingOrOptions</code>
     </PossiblyInvalidArgument>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>null !== $this-&gt;getEncoding()</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/StringToUpper.php">
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;options['encoding']</code>
-    </MixedArgument>
     <PossiblyInvalidArgument occurrences="2">
       <code>$encodingOrOptions</code>
       <code>$encodingOrOptions</code>
     </PossiblyInvalidArgument>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>null !== $this-&gt;getEncoding()</code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/StringTrim.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>is_string($value)</code>
-    </DocblockTypeContradiction>
-    <InvalidArgument occurrences="1">
-      <code>$charlistOrOptions</code>
-    </InvalidArgument>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;options['charlist']</code>
-    </MixedArgument>
-    <MixedInferredReturnType occurrences="1">
-      <code>string|null</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;options['charlist']</code>
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <RedundantCast occurrences="1">
-      <code>(string) $value</code>
-    </RedundantCast>
   </file>
   <file src="src/StripTags.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1404,18 +1201,9 @@
     </RedundantCondition>
   </file>
   <file src="src/ToNull.php">
-    <InvalidOperand occurrences="1">
-      <code>$found</code>
-    </InvalidOperand>
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>int</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;options['type']</code>
-    </MixedReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
@@ -1424,20 +1212,10 @@
     </PossiblyNullArgument>
   </file>
   <file src="src/UpperCaseWords.php">
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;options['encoding']</code>
-    </MixedArgument>
-    <MixedArrayAccess occurrences="2">
-      <code>$this-&gt;options['encoding']</code>
-      <code>$this-&gt;options['encoding']</code>
-    </MixedArrayAccess>
     <PossiblyInvalidArgument occurrences="2">
       <code>$encodingOrOptions</code>
       <code>$encodingOrOptions</code>
     </PossiblyInvalidArgument>
-    <RedundantCast occurrences="1">
-      <code>(string) $value</code>
-    </RedundantCast>
   </file>
   <file src="src/UriNormalize.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1721,12 +1499,9 @@
     </UnusedVariable>
   </file>
   <file src="test/DataUnitFormatterTest.php">
-    <InvalidScalarArgument occurrences="4">
-      <code>$value</code>
-      <code>$value</code>
-      <code>1500</code>
-      <code>1500</code>
-    </InvalidScalarArgument>
+    <InvalidArgument occurrences="6">
+      <code>[]</code>
+    </InvalidArgument>
   </file>
   <file src="test/DecompressTest.php">
     <MixedArgument occurrences="2">
@@ -2023,17 +1798,6 @@
       <code>$container</code>
     </UnusedClosureParam>
   </file>
-  <file src="test/HtmlEntitiesTest.php">
-    <MixedArgument occurrences="3">
-      <code>$input</code>
-      <code>$result</code>
-      <code>$result</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$result</code>
-      <code>$result</code>
-    </MixedAssignment>
-  </file>
   <file src="test/InflectorTest.php">
     <MissingParamType occurrences="1">
       <code>$inflector</code>
@@ -2113,9 +1877,6 @@
     <InvalidArgument occurrences="1">
       <code>['unknown']</code>
     </InvalidArgument>
-    <MixedArgument occurrences="1">
-      <code>$input</code>
-    </MixedArgument>
   </file>
   <file src="test/StaticFilterTest.php">
     <DeprecatedClass occurrences="16">
@@ -2172,9 +1933,9 @@
     </DeprecatedMethod>
   </file>
   <file src="test/StringTrimTest.php">
-    <MixedArgument occurrences="1">
-      <code>$value</code>
-    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$filtered</code>
+    </MixedAssignment>
   </file>
   <file src="test/StripTagsTest.php">
     <MixedArgument occurrences="2">

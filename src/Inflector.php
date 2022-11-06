@@ -26,6 +26,15 @@ use function str_replace;
 
 /**
  * Filter chain for string inflection
+ *
+ * @psalm-type Options = array{
+ *     target?: string,
+ *     rules?: array,
+ *     throwTargetExceptionsOn: bool,
+ *     targetReplacementIdentifier?: string,
+ *     pluginManager?: FilterPluginManager,
+ * }
+ * @extends AbstractFilter<Options>
  */
 class Inflector extends AbstractFilter
 {
@@ -45,8 +54,6 @@ class Inflector extends AbstractFilter
     protected $rules = [];
 
     /**
-     * Constructor
-     *
      * @param string|array|Traversable $options Options to set
      */
     public function __construct($options = null)
@@ -108,7 +115,7 @@ class Inflector extends AbstractFilter
     /**
      * Set options
      *
-     * @param  array|Traversable $options
+     * @param  array|Options|iterable $options
      * @return self
      */
     public function setOptions($options)

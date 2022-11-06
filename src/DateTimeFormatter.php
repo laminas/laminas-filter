@@ -48,9 +48,9 @@ class DateTimeFormatter extends AbstractFilter
     /**
      * Filter a datetime string by normalizing it to the filters specified format
      *
-     * @param  DateTime|string|integer $value
+     * @param  DateTime|string|int|mixed $value
      * @throws Exception\InvalidArgumentException
-     * @return string
+     * @return string|mixed
      */
     public function filter($value)
     {
@@ -71,8 +71,8 @@ class DateTimeFormatter extends AbstractFilter
     /**
      * Normalize the provided value to a formatted string
      *
-     * @param  string|int|DateTime $value
-     * @return string
+     * @param  mixed $value
+     * @return string|mixed
      */
     protected function normalizeDateTime($value)
     {

@@ -74,8 +74,9 @@ class RealPath extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  string $value
+     * @param  mixed $value
      * @return string|mixed
+     * @psalm-return ($value is string ? string : mixed)
      */
     public function filter($value)
     {

@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Traversable;
-
 use function is_string;
 use function mb_convert_case;
-use function strtolower;
-use function ucwords;
 
 use const MB_CASE_TITLE;
 
+/** @psalm-import-type UnicodeOptions from AbstractUnicode */
 final class UpperCaseWords extends AbstractUnicode
 {
     /**
@@ -23,14 +20,12 @@ final class UpperCaseWords extends AbstractUnicode
     ];
 
     /**
-     * Constructor
-     *
-     * @param string|array|Traversable $encodingOrOptions OPTIONAL
+     * @param string|UnicodeOptions|iterable|null $encodingOrOptions OPTIONAL
      */
     public function __construct($encodingOrOptions = null)
     {
         if ($encodingOrOptions !== null) {
-            if (static::isOptions($encodingOrOptions)) {
+            if (self::isOptions($encodingOrOptions)) {
                 $this->setOptions($encodingOrOptions);
             } else {
                 $this->setEncoding($encodingOrOptions);
@@ -47,6 +42,7 @@ final class UpperCaseWords extends AbstractUnicode
      *
      * @param  string|mixed $value
      * @return string|mixed
+     * @psalm-return ($value is string ? string : mixed)
      */
     public function filter($value)
     {
@@ -54,12 +50,6 @@ final class UpperCaseWords extends AbstractUnicode
             return $value;
         }
 
-        $value = (string) $value;
-
-        if ($this->options['encoding'] !== null) {
-            return mb_convert_case($value, MB_CASE_TITLE, $this->options['encoding']);
-        }
-
-        return ucwords(strtolower($value));
+        return mb_convert_case((string) $value, MB_CASE_TITLE, $this->getEncoding());
     }
 }

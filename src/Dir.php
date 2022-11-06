@@ -14,8 +14,9 @@ class Dir extends AbstractFilter
      *
      * Returns dirname($value)
      *
-     * @param  string $value
-     * @return string
+     * @param  mixed $value
+     * @return string|mixed
+     * @psalm-return ($value is scalar ? string : mixed)
      */
     public function filter($value)
     {

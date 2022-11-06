@@ -39,6 +39,7 @@ abstract class AbstractCompressionAlgorithm implements CompressionAlgorithmInter
      *
      * @param  string|null $option Option to return
      * @return mixed
+     * @psalm-return ($option is null ? TOptions : mixed)
      */
     public function getOptions($option = null)
     {

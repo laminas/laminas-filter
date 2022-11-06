@@ -91,8 +91,9 @@ abstract class AbstractDateDropdown extends AbstractFilter
      * string.
      *
      * @param  mixed $value input to the filter
-     * @return mixed
+     * @return mixed|string|null
      * @throws Exception\RuntimeException If filtering $value is impossible.
+     * @psalm-return ($value is array ? string|null : mixed)
      */
     public function filter($value)
     {
@@ -127,7 +128,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
     /**
      * Ensures there are enough inputs in the array to properly format the date.
      *
-     * @param mixed $value
+     * @param array $value
      * @throws Exception\RuntimeException
      */
     protected function filterable($value)

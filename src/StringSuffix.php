@@ -4,24 +4,27 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Traversable;
-
-use function get_class;
 use function gettype;
 use function is_object;
 use function is_scalar;
 use function is_string;
 use function sprintf;
 
+/**
+ * @psalm-type Options = array{
+ *     suffix: null|string,
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class StringSuffix extends AbstractFilter
 {
-    /** @var array<string, string|null> */
+    /** @var Options */
     protected $options = [
         'suffix' => null,
     ];
 
     /**
-     * @param string|array|Traversable $options
+     * @param Options|iterable|null $options
      */
     public function __construct($options = null)
     {
@@ -43,7 +46,7 @@ class StringSuffix extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects "suffix" to be string; received "%s"',
                 __METHOD__,
-                is_object($suffix) ? get_class($suffix) : gettype($suffix)
+                is_object($suffix) ? $suffix::class : gettype($suffix)
             ));
         }
 

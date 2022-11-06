@@ -13,6 +13,13 @@ use function mb_list_encodings;
 use function sprintf;
 use function strtolower;
 
+/**
+ * @psalm-type UnicodeOptions = array{
+ *     encoding?: string|null,
+ * }
+ * @template TOptions of UnicodeOptions
+ * @extends AbstractFilter<UnicodeOptions>
+ */
 abstract class AbstractUnicode extends AbstractFilter
 {
     /**
@@ -50,9 +57,11 @@ abstract class AbstractUnicode extends AbstractFilter
         $encoding = $this->options['encoding'] ?? null;
         assert($encoding === null || is_string($encoding));
         if ($encoding === null) {
-            $this->options['encoding'] = mb_internal_encoding();
+            $encoding = mb_internal_encoding();
+            assert(is_string($encoding));
+            $this->options['encoding'] = $encoding;
         }
 
-        return $this->options['encoding'];
+        return $encoding;
     }
 }

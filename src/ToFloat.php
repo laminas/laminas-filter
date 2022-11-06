@@ -17,6 +17,7 @@ class ToFloat extends AbstractFilter
      *
      * @param  mixed $value
      * @return float|mixed
+     * @psalm-return ($value is scalar ? float : mixed)
      */
     public function filter($value)
     {

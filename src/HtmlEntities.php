@@ -180,9 +180,10 @@ class HtmlEntities extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  string $value
+     * @param  mixed $value
      * @return string|mixed
      * @throws Exception\DomainException On encoding mismatches.
+     * @psalm-return ($value is scalar ? string : mixed)
      */
     public function filter($value)
     {
