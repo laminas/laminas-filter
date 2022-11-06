@@ -15,7 +15,7 @@ class DashToCamelCaseTest extends TestCase
         $filter   = new DashToCamelCaseFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('CamelCasedWords', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('CamelCasedWords', $filtered);
     }
 }

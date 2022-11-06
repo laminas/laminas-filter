@@ -16,8 +16,8 @@ class SeparatorToSeparatorTest extends TestCase
         $filter   = new SeparatorToSeparatorFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash-separated-words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash-separated-words', $filtered);
     }
 
     public function testFilterSupportArray(): void
@@ -30,8 +30,8 @@ class SeparatorToSeparatorTest extends TestCase
         ];
         $filtered = $filter($input);
 
-        $this->assertNotEquals($input, $filtered);
-        $this->assertSame([
+        self::assertNotEquals($input, $filtered);
+        self::assertSame([
             'dash-separated-words',
             '=test-something',
         ], $filtered);
@@ -43,8 +43,8 @@ class SeparatorToSeparatorTest extends TestCase
         $filter   = new SeparatorToSeparatorFilter('=');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash-separated-words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash-separated-words', $filtered);
     }
 
     public function testFilterSeparatesWordsWithSearchAndReplacementSpecified(): void
@@ -53,11 +53,12 @@ class SeparatorToSeparatorTest extends TestCase
         $filter   = new SeparatorToSeparatorFilter('=', '?');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash?separated?words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash?separated?words', $filtered);
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -68,11 +69,11 @@ class SeparatorToSeparatorTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new SeparatorToSeparatorFilter('=', '?');
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 
     /**
@@ -90,12 +91,11 @@ class SeparatorToSeparatorTest extends TestCase
 
     /**
      * @dataProvider returnNonStringScalarValues
-     * @param int|float|bool $input
      */
-    public function testShouldFilterNonStringScalarValues($input): void
+    public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
         $filter = new SeparatorToSeparatorFilter('=', '?');
 
-        $this->assertSame((string) $input, $filter($input));
+        self::assertSame((string) $input, $filter($input));
     }
 }

@@ -15,7 +15,7 @@ class DashToUnderscoreTest extends TestCase
         $filter   = new DashToUnderscoreFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash_separated_words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash_separated_words', $filtered);
     }
 }

@@ -15,8 +15,8 @@ class SeparatorToDashTest extends TestCase
         $filter   = new SeparatorToDashFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash-separated-words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash-separated-words', $filtered);
     }
 
     public function testFilterSeparatesDashedWordsWithSomeString(): void
@@ -25,7 +25,7 @@ class SeparatorToDashTest extends TestCase
         $filter   = new SeparatorToDashFilter('=');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash-separated-words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash-separated-words', $filtered);
     }
 }

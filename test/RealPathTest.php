@@ -15,29 +15,11 @@ use const PHP_OS;
 
 class RealPathTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * Path to test files
-     *
-     * @var string
-     */
-    protected $_filesPath;
+    private RealPathFilter $filter;
 
-    /**
-     * Laminas_Filter_Basename object
-     *
-     * @var RealPathFilter
-     */
-    protected $_filter;
-    // @codingStandardsIgnoreEnd
-
-    /**
-     * Creates a new Laminas_Filter_Basename object for each test method
-     */
     public function setUp(): void
     {
-        $this->_filesPath = __DIR__ . DIRECTORY_SEPARATOR . '_files';
-        $this->_filter    = new RealPathFilter();
+        $this->filter = new RealPathFilter();
     }
 
     /**
@@ -45,9 +27,10 @@ class RealPathTest extends TestCase
      */
     public function testFileExists(): void
     {
-        $filter   = $this->_filter;
-        $filename = 'file.1';
-        $this->assertStringContainsString($filename, $filter($this->_filesPath . DIRECTORY_SEPARATOR . $filename));
+        $filename = __DIR__ . '/_files/file.1';
+        $result   = $this->filter->filter($filename);
+        self::assertIsString($result);
+        self::assertStringContainsString($filename, $result);
     }
 
     /**
@@ -55,52 +38,52 @@ class RealPathTest extends TestCase
      */
     public function testFileNonexistent(): void
     {
-        $filter = $this->_filter;
-        $path   = '/path/to/nonexistent';
+        $path = '/path/to/nonexistent';
         if (false !== strpos(PHP_OS, 'BSD')) {
-            $this->assertSame($path, $filter($path));
+            self::assertSame($path, $this->filter->filter($path));
         } else {
-            $this->assertSame(false, $filter($path));
+            self::assertSame(false, $this->filter->filter($path));
         }
     }
 
     public function testGetAndSetExistsParameter(): void
     {
-        $this->assertTrue($this->_filter->getExists());
-        $this->_filter->setExists(false);
-        $this->assertFalse($this->_filter->getExists());
+        self::assertTrue($this->filter->getExists());
+        $this->filter->setExists(false);
+        self::assertFalse($this->filter->getExists());
 
-        $this->_filter->setExists(['unknown']);
-        $this->assertTrue($this->_filter->getExists());
+        $this->filter->setExists(['unknown']);
+        self::assertTrue($this->filter->getExists());
     }
 
-    public function testNonExistantPath(): void
+    public function testNonExistentPath(): void
     {
-        $filter = $this->_filter;
+        $filter = $this->filter;
         $filter->setExists(false);
 
         $path = __DIR__ . DIRECTORY_SEPARATOR . '_files';
-        $this->assertSame($path, $filter($path));
+        self::assertSame($path, $filter($path));
 
         $path2 = __DIR__ . DIRECTORY_SEPARATOR . '_files'
                . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files';
-        $this->assertSame($path, $filter($path2));
+        self::assertSame($path, $filter($path2));
 
         $path3 = __DIR__ . DIRECTORY_SEPARATOR . '_files'
                . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.'
                . DIRECTORY_SEPARATOR . '_files';
-        $this->assertSame($path, $filter($path3));
+        self::assertSame($path, $filter($path3));
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
             [new stdClass()],
             [
                 [
-                    $this->_filesPath . DIRECTORY_SEPARATOR . 'file.1',
-                    $this->_filesPath . DIRECTORY_SEPARATOR . 'file.2',
+                    __DIR__ . '/_files/file.1',
+                    __DIR__ . '/_files/file.2',
                 ],
             ],
         ];
@@ -109,8 +92,8 @@ class RealPathTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
-        $this->assertSame($input, $this->_filter->filter($input));
+        self::assertSame($input, (new RealPathFilter())->filter($input));
     }
 }

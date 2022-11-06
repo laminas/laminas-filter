@@ -15,31 +15,31 @@ class CamelCaseToUnderscoreTest extends TestCase
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Camel_Cased_Words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Camel_Cased_Words', $filtered);
     }
 
-    public function testFilterSeperatingNumbersToUnterscore(): void
+    public function testFilterSeparatingNumbersToUnderscore(): void
     {
         $string   = 'PaTitle';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Pa_Title', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Pa_Title', $filtered);
 
         $string   = 'Pa2Title';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Pa2_Title', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Pa2_Title', $filtered);
 
         $string   = 'Pa2aTitle';
         $filter   = new CamelCaseToUnderscoreFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Pa2a_Title', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Pa2a_Title', $filtered);
     }
 }

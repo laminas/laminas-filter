@@ -30,7 +30,7 @@ class StripNewlinesTest extends TestCase
             "Some text\nthat we have\r\nstuff in" => 'Some textthat we havestuff in',
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame($output, $filter($input));
+            self::assertSame($output, $filter($input));
         }
     }
 
@@ -41,10 +41,11 @@ class StripNewlinesTest extends TestCase
             "Some text\nthat we have\r\nstuff in" => 'Some textthat we havestuff in',
             "Some text\n"                         => 'Some text',
         ];
-        $this->assertSame(array_values($expected), $filter(array_keys($expected)));
+        self::assertSame(array_values($expected), $filter(array_keys($expected)));
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -55,11 +56,11 @@ class StripNewlinesTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new StripNewlinesFilter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 
     /**
@@ -77,12 +78,11 @@ class StripNewlinesTest extends TestCase
 
     /**
      * @dataProvider returnNonStringScalarValues
-     * @param int|float|bool $input
      */
-    public function testShouldFilterNonStringScalarValues($input): void
+    public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
         $filter = new StripNewlinesFilter();
 
-        $this->assertSame((string) $input, $filter($input));
+        self::assertSame((string) $input, $filter($input));
     }
 }

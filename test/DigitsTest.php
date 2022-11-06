@@ -8,28 +8,21 @@ use Laminas\Filter\Digits as DigitsFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function extension_loaded;
 use function preg_match;
 
 class DigitsTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
     /**
      * Is PCRE is compiled with UTF-8 and Unicode support
-     *
-     * @var mixed
      **/
-    protected static $_unicodeEnabled;
-    // @codingStandardsIgnoreEnd
+    private bool $unicodeEnabled;
 
     /**
      * Creates a new Laminas_Filter_Digits object for each test method
      */
     public function setUp(): void
     {
-        if (null === static::$_unicodeEnabled) {
-            static::$_unicodeEnabled = (bool) @preg_match('/\pL/u', 'a');
-        }
+        $this->unicodeEnabled = (bool) @preg_match('/\pL/u', 'a');
     }
 
     /**
@@ -39,7 +32,7 @@ class DigitsTest extends TestCase
     {
         $filter = new DigitsFilter();
 
-        if (static::$_unicodeEnabled && extension_loaded('mbstring')) {
+        if ($this->unicodeEnabled) {
             // Filter for the value with mbstring
             /**
              * The first element of $valuesExpected contains multibyte digit characters.
@@ -69,7 +62,7 @@ class DigitsTest extends TestCase
         }
 
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame(
+            self::assertSame(
                 $output,
                 $result = $filter($input),
                 "Expected '$input' to filter to '$output', but received '$result' instead"
@@ -77,7 +70,8 @@ class DigitsTest extends TestCase
         }
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -96,10 +90,10 @@ class DigitsTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new DigitsFilter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

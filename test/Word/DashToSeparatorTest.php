@@ -16,8 +16,8 @@ class DashToSeparatorTest extends TestCase
         $filter   = new DashToSeparatorFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash separated words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash separated words', $filtered);
     }
 
     public function testFilterSeparatesDashedWordsWithSomeString(): void
@@ -26,8 +26,8 @@ class DashToSeparatorTest extends TestCase
         $filter   = new DashToSeparatorFilter(':-:');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('dash:-:separated:-:words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('dash:-:separated:-:words', $filtered);
     }
 
     public function testFilterSupportArray(): void
@@ -41,11 +41,12 @@ class DashToSeparatorTest extends TestCase
 
         $filtered = $filter($input);
 
-        $this->assertNotEquals($input, $filtered);
-        $this->assertSame(['dash separated words', 'something different'], $filtered);
+        self::assertNotEquals($input, $filtered);
+        self::assertSame(['dash separated words', 'something different'], $filtered);
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -56,11 +57,11 @@ class DashToSeparatorTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new DashToSeparatorFilter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 
     /**
@@ -78,12 +79,11 @@ class DashToSeparatorTest extends TestCase
 
     /**
      * @dataProvider returnNonStringScalarValues
-     * @param int|float|bool $input
      */
-    public function testShouldFilterNonStringScalarValues($input): void
+    public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
         $filter = new DashToSeparatorFilter();
 
-        $this->assertSame((string) $input, $filter($input));
+        self::assertSame((string) $input, $filter($input));
     }
 }

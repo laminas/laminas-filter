@@ -13,11 +13,11 @@ class UriNormalizeTest extends TestCase
     /**
      * @dataProvider abnormalUriProvider
      */
-    public function testUrisAreNormalized($url, $expected): void
+    public function testUrisAreNormalized(string $url, string $expected): void
     {
         $filter = new UriNormalize();
         $result = $filter->filter($url);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function testDefaultSchemeAffectsNormalization(): void
@@ -28,14 +28,15 @@ class UriNormalizeTest extends TestCase
     /**
      * @dataProvider enforcedSchemeTestcaseProvider
      */
-    public function testEnforcedScheme($scheme, $input, $expected): void
+    public function testEnforcedScheme(string $scheme, string $input, string $expected): void
     {
         $filter = new UriNormalize(['enforcedScheme' => $scheme]);
         $result = $filter->filter($input);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
-    public static function abnormalUriProvider()
+    /** @return list<array{0: string, 1: string}> */
+    public static function abnormalUriProvider(): array
     {
         return [
             ['http://www.example.com', 'http://www.example.com/'],
@@ -47,7 +48,8 @@ class UriNormalizeTest extends TestCase
         ];
     }
 
-    public static function enforcedSchemeTestcaseProvider()
+    /** @return list<string[]> */
+    public static function enforcedSchemeTestcaseProvider(): array
     {
         return [
             ['ftp', 'http://www.example.com', 'http://www.example.com/'], // no effect - this one has a scheme
@@ -59,7 +61,8 @@ class UriNormalizeTest extends TestCase
         ];
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -76,10 +79,10 @@ class UriNormalizeTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new UriNormalize();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

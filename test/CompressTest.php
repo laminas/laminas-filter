@@ -23,12 +23,12 @@ use function unlink;
 
 class CompressTest extends TestCase
 {
-    public $tmpDir;
+    private string $tmpDir;
 
     public function setUp(): void
     {
         if (! extension_loaded('bz2') && ! extension_loaded('zlib')) {
-            $this->markTestSkipped('This filter requires bz2 of zlib extension');
+            self::markTestSkipped('This filter requires bz2 of zlib extension');
         }
 
         $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasfilter'));
@@ -47,6 +47,7 @@ class CompressTest extends TestCase
         }
     }
 
+    /** @return iterable<array-key, array{0: string}> */
     public function returnFilterType(): iterable
     {
         if (extension_loaded('bz2')) {
@@ -62,16 +63,16 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testBasicUsage($filterType): void
+    public function testBasicUsage(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
 
         $text       = 'compress me';
         $compressed = $filter($text);
-        $this->assertNotEquals($text, $compressed);
+        self::assertNotEquals($text, $compressed);
 
         $decompressed = $filter->decompress($compressed);
-        $this->assertSame($text, $decompressed);
+        self::assertSame($text, $decompressed);
     }
 
     /**
@@ -79,7 +80,7 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testGetSetAdapterOptionsInConstructor($filterType): void
+    public function testGetSetAdapterOptionsInConstructor(string $filterType): void
     {
         $filter = new CompressFilter([
             'adapter' => $filterType,
@@ -88,13 +89,13 @@ class CompressTest extends TestCase
             ],
         ]);
 
-        $this->assertSame(
+        self::assertSame(
             ['archive' => 'test.txt'],
             $filter->getAdapterOptions()
         );
 
         $adapter = $filter->getAdapter();
-        $this->assertSame('test.txt', $adapter->getArchive());
+        self::assertSame('test.txt', $adapter->getArchive());
     }
 
     /**
@@ -102,18 +103,18 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testGetSetAdapterOptions($filterType): void
+    public function testGetSetAdapterOptions(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
         $filter->setAdapterOptions([
             'archive' => 'test.txt',
         ]);
-        $this->assertSame(
+        self::assertSame(
             ['archive' => 'test.txt'],
             $filter->getAdapterOptions()
         );
         $adapter = $filter->getAdapter();
-        $this->assertSame('test.txt', $adapter->getArchive());
+        self::assertSame('test.txt', $adapter->getArchive());
     }
 
     /**
@@ -122,13 +123,13 @@ class CompressTest extends TestCase
     public function testGetSetBlocksize(): void
     {
         if (! extension_loaded('bz2')) {
-            $this->markTestSkipped('Extension bz2 is required for this test');
+            self::markTestSkipped('Extension bz2 is required for this test');
         }
 
         $filter = new CompressFilter('bz2');
-        $this->assertSame(4, $filter->getBlocksize());
+        self::assertSame(4, $filter->getBlocksize());
         $filter->setBlocksize(6);
-        $this->assertSame(6, $filter->getOptions('blocksize'));
+        self::assertSame(6, $filter->getOptions('blocksize'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('must be between');
@@ -140,13 +141,13 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testGetSetArchive($filterType): void
+    public function testGetSetArchive(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
-        $this->assertSame(null, $filter->getArchive());
+        self::assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertSame('Testfile.txt', $filter->getArchive());
-        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
+        self::assertSame('Testfile.txt', $filter->getArchive());
+        self::assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -154,23 +155,23 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testCompressToFile($filterType): void
+    public function testCompressToFile(string $filterType): void
     {
         $filter  = new CompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter('compress me');
-        $this->assertTrue($content);
+        self::assertTrue($content);
 
         $filter2  = new CompressFilter($filterType);
         $content2 = $filter2->decompress($archive);
-        $this->assertSame('compress me', $content2);
+        self::assertSame('compress me', $content2);
 
         $filter3 = new CompressFilter($filterType);
         $filter3->setArchive($archive);
         $content3 = $filter3->decompress(null);
-        $this->assertSame('compress me', $content3);
+        self::assertSame('compress me', $content3);
     }
 
     /**
@@ -178,10 +179,10 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testToString($filterType): void
+    public function testToString(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
-        $this->assertEqualsIgnoringCase($filterType, $filter->toString());
+        self::assertEqualsIgnoringCase($filterType, $filter->toString());
     }
 
     /**
@@ -189,12 +190,12 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testGetAdapter($filterType): void
+    public function testGetAdapter(string $filterType): void
     {
         $filter  = new CompressFilter($filterType);
         $adapter = $filter->getAdapter();
-        $this->assertInstanceOf(CompressionAlgorithmInterface::class, $adapter);
-        $this->assertEqualsIgnoringCase($filterType, $filter->getAdapterName());
+        self::assertInstanceOf(CompressionAlgorithmInterface::class, $adapter);
+        self::assertEqualsIgnoringCase($filterType, $filter->getAdapterName());
     }
 
     /**
@@ -203,11 +204,11 @@ class CompressTest extends TestCase
     public function testSetAdapter(): void
     {
         if (! extension_loaded('zlib')) {
-            $this->markTestSkipped('This filter is tested with the zlib extension');
+            self::markTestSkipped('This filter is tested with the zlib extension');
         }
 
         $filter = new CompressFilter();
-        $this->assertSame('Gz', $filter->getAdapterName());
+        self::assertSame('Gz', $filter->getAdapterName());
 
         $filter->setAdapter(Boolean::class);
 
@@ -221,18 +222,18 @@ class CompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testDecompressArchive($filterType): void
+    public function testDecompressArchive(string $filterType): void
     {
         $filter  = new CompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter('compress me');
-        $this->assertTrue($content);
+        self::assertTrue($content);
 
         $filter2  = new CompressFilter($filterType);
         $content2 = $filter2->decompress($archive);
-        $this->assertSame('compress me', $content2);
+        self::assertSame('compress me', $content2);
     }
 
     /**
@@ -247,6 +248,7 @@ class CompressTest extends TestCase
         $filter->invalidMethod();
     }
 
+    /** @return iterable<array-key, array{0: string, 1: mixed}> */
     public function returnUnfilteredDataProvider(): iterable
     {
         foreach ($this->returnFilterType() as $parameters) {
@@ -265,10 +267,10 @@ class CompressTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($filterType, $input): void
+    public function testReturnUnfiltered(string $filterType, mixed $input): void
     {
         $filter = new CompressFilter($filterType);
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

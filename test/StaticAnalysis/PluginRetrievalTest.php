@@ -23,8 +23,7 @@ final class PluginRetrievalTest
         return $plugin->filter($value);
     }
 
-    /** @return mixed */
-    public function filterSomethingWithAnAlias(string $value)
+    public function filterSomethingWithAnAlias(string $value): mixed
     {
         $plugin = $this->pluginManager->get('stringToUpper');
 

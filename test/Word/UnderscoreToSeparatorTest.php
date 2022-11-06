@@ -15,8 +15,8 @@ class UnderscoreToSeparatorTest extends TestCase
         $filter   = new UnderscoreToSeparatorFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('underscore separated words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('underscore separated words', $filtered);
     }
 
     public function testFilterSeparatesCamelCasedWordsProvidedSeparator(): void
@@ -25,7 +25,7 @@ class UnderscoreToSeparatorTest extends TestCase
         $filter   = new UnderscoreToSeparatorFilter(':=:');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('underscore:=:separated:=:words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('underscore:=:separated:=:words', $filtered);
     }
 }

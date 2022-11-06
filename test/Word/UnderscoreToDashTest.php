@@ -15,7 +15,7 @@ class UnderscoreToDashTest extends TestCase
         $filter   = new UnderscoreToDashFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('underscore-separated-words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('underscore-separated-words', $filtered);
     }
 }

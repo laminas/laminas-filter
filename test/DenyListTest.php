@@ -24,16 +24,16 @@ class DenyListTest extends TestCase
             'strict' => true,
         ]);
 
-        $this->assertSame(true, $filter->getStrict());
-        $this->assertSame(['test', 1], $filter->getList());
+        self::assertSame(true, $filter->getStrict());
+        self::assertSame(['test', 1], $filter->getList());
     }
 
     public function testConstructorDefaults(): void
     {
         $filter = new DenyListFilter();
 
-        $this->assertSame(false, $filter->getStrict());
-        $this->assertSame([], $filter->getList());
+        self::assertSame(false, $filter->getStrict());
+        self::assertSame([], $filter->getList());
     }
 
     public function testWithPluginManager(): void
@@ -41,13 +41,13 @@ class DenyListTest extends TestCase
         $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter        = $pluginManager->get('DenyList');
 
-        $this->assertInstanceOf(DenyListFilter::class, $filter);
+        self::assertInstanceOf(DenyListFilter::class, $filter);
     }
 
     public function testNullListShouldThrowException(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
-        $filter = new DenyListFilter([
+        new DenyListFilter([
             'list' => null,
         ]);
     }
@@ -59,7 +59,7 @@ class DenyListTest extends TestCase
         $filter = new DenyListFilter([
             'list' => $obj,
         ]);
-        $this->assertSame($array, $filter->getList());
+        self::assertSame($array, $filter->getList());
     }
 
     public function testSetStrictShouldCastToBoolean(): void
@@ -67,18 +67,16 @@ class DenyListTest extends TestCase
         $filter = new DenyListFilter([
             'strict' => 1,
         ]);
-        $this->assertSame(true, $filter->getStrict());
+        self::assertSame(true, $filter->getStrict());
     }
 
     /**
-     * @param mixed $value
-     * @param mixed  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected): void
+    public function testDefault(mixed $value, mixed $expected): void
     {
         $filter = new DenyListFilter();
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertSame($expected, $filter->filter($value));
     }
 
     /**
@@ -100,10 +98,11 @@ class DenyListTest extends TestCase
                 gettype($value),
                 (int) $strict
             );
-            $this->assertSame($expected, $filter->filter($value), $message);
+            self::assertSame($expected, $filter->filter($value), $message);
         }
     }
 
+    /** @return list<array{0: mixed, 1: mixed}> */
     public static function defaultTestProvider(): array
     {
         return [
@@ -115,6 +114,7 @@ class DenyListTest extends TestCase
         ];
     }
 
+    /** @return list<array{0: bool, 1: array, 2: array}> */
     public static function listTestProvider(): array
     {
         return [

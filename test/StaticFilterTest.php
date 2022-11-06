@@ -18,7 +18,6 @@ use function strtoupper;
 use const ENT_COMPAT;
 use const ENT_QUOTES;
 
-/** @psalm-suppress DeprecatedClass */
 class StaticFilterTest extends TestCase
 {
     /**
@@ -32,25 +31,25 @@ class StaticFilterTest extends TestCase
     public function testUsesFilterPluginManagerByDefault(): void
     {
         $plugins = StaticFilter::getPluginManager();
-        $this->assertInstanceOf(FilterPluginManager::class, $plugins);
+        self::assertInstanceOf(FilterPluginManager::class, $plugins);
     }
 
     public function testCanSpecifyCustomPluginManager(): void
     {
         $plugins = new FilterPluginManager(new ServiceManager());
         StaticFilter::setPluginManager($plugins);
-        $this->assertSame($plugins, StaticFilter::getPluginManager());
+        self::assertSame($plugins, StaticFilter::getPluginManager());
     }
 
     public function testCanResetPluginManagerByPassingNull(): void
     {
         $plugins = new FilterPluginManager(new ServiceManager());
         StaticFilter::setPluginManager($plugins);
-        $this->assertSame($plugins, StaticFilter::getPluginManager());
+        self::assertSame($plugins, StaticFilter::getPluginManager());
         StaticFilter::setPluginManager(null);
         $registered = StaticFilter::getPluginManager();
-        $this->assertNotSame($plugins, $registered);
-        $this->assertInstanceOf(FilterPluginManager::class, $registered);
+        self::assertNotSame($plugins, $registered);
+        self::assertInstanceOf(FilterPluginManager::class, $registered);
     }
 
     /**
@@ -61,7 +60,7 @@ class StaticFilterTest extends TestCase
     public function testStaticFactory(): void
     {
         $filteredValue = StaticFilter::execute('1a2b3c4d', Digits::class);
-        $this->assertSame('1234', $filteredValue);
+        self::assertSame('1234', $filteredValue);
     }
 
     /**
@@ -72,13 +71,13 @@ class StaticFilterTest extends TestCase
     {
         // Test HtmlEntities with one ctor argument.
         $filteredValue = StaticFilter::execute('"O\'Reilly"', HtmlEntities::class, ['quotestyle' => ENT_COMPAT]);
-        $this->assertSame('&quot;O\'Reilly&quot;', $filteredValue);
+        self::assertSame('&quot;O\'Reilly&quot;', $filteredValue);
 
         // Test HtmlEntities with a different ctor argument,
         // and make sure it gives the correct response
         // so we know it passed the arg to the ctor.
         $filteredValue = StaticFilter::execute('"O\'Reilly"', HtmlEntities::class, ['quotestyle' => ENT_QUOTES]);
-        $this->assertSame('&quot;O&#039;Reilly&quot;', $filteredValue);
+        self::assertSame('&quot;O&#039;Reilly&quot;', $filteredValue);
     }
 
     /**
@@ -103,9 +102,9 @@ class StaticFilterTest extends TestCase
         $second = StaticFilter::execute('foo', Callback::class, [
             'callback' => static fn($value) => 'BAR',
         ]);
-        $this->assertNotSame($first, $second);
-        $this->assertSame('FOO', $first);
-        $this->assertSame('BAR', $second);
+        self::assertNotSame($first, $second);
+        self::assertSame('FOO', $first);
+        self::assertSame('BAR', $second);
     }
 
     public function testThatCallablesRegisteredWithThePluginManagerCanBeExecuted(): void

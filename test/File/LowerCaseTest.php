@@ -21,14 +21,8 @@ use function unlink;
 
 class LowerCaseTest extends TestCase
 {
-    protected $testDir;
-
-    /**
-     * Testfile
-     *
-     * @var string
-     */
-    protected $testFile;
+    private ?string $testDir  = null;
+    private ?string $testFile = null;
 
     /**
      * Sets the path to test files
@@ -53,18 +47,18 @@ class LowerCaseTest extends TestCase
 
     public function testInstanceCreationAndNormalWorkflow(): void
     {
-        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileLowerCase();
         $filter($this->testFile);
-        $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
+        self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
     }
 
     public function testNormalWorkflowWithFilesArray(): void
     {
-        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
         $filter = new FileLowerCase();
         $filter(['tmp_name' => $this->testFile]);
-        $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
+        self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
     }
 
     public function testFileNotFoundException(): void
@@ -77,26 +71,26 @@ class LowerCaseTest extends TestCase
 
     public function testCheckSettingOfEncodingInIstance(): void
     {
-        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileLowerCase('ISO-8859-1');
             $filter($this->testFile);
-            $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
+            self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
         } catch (ExtensionNotLoadedException $e) {
-            $this->assertStringContainsString('mbstring is required', $e->getMessage());
+            self::assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
 
     public function testCheckSettingOfEncodingWithMethod(): void
     {
-        $this->assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
         try {
             $filter = new FileLowerCase();
             $filter->setEncoding('ISO-8859-1');
             $filter($this->testFile);
-            $this->assertStringContainsString('this is a file', file_get_contents($this->testFile));
+            self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
         } catch (ExtensionNotLoadedException $e) {
-            $this->assertStringContainsString('mbstring is required', $e->getMessage());
+            self::assertStringContainsString('mbstring is required', $e->getMessage());
         }
     }
 
@@ -121,6 +115,6 @@ class LowerCaseTest extends TestCase
     {
         $filter = new FileLowerCase();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

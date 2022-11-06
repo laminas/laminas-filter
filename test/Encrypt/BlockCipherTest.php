@@ -17,7 +17,7 @@ class BlockCipherTest extends TestCase
     public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
-            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
+            self::markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
 
@@ -36,9 +36,9 @@ class BlockCipherTest extends TestCase
         // @codingStandardsIgnoreEnd
         $filter->setVector('Laminas__Project');
         $enc = $filter->getEncryption();
-        $this->assertSame('testkey', $enc['key']);
+        self::assertSame('testkey', $enc['key']);
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame($output, $filter->encrypt($input));
+            self::assertSame($output, $filter->encrypt($input));
         }
     }
 
@@ -49,7 +49,7 @@ class BlockCipherTest extends TestCase
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
-        $this->assertSame('1234567890123456', $filter->getVector());
+        self::assertSame('1234567890123456', $filter->getVector());
     }
 
     public function testWrongSizeVector(): void
@@ -66,7 +66,7 @@ class BlockCipherTest extends TestCase
     {
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
         $filter->setVector('1234567890123456');
-        $this->assertSame(
+        self::assertSame(
             [
                 'key'           => 'testkey',
                 'key_iteration' => 5000,
@@ -88,7 +88,7 @@ class BlockCipherTest extends TestCase
         $filter->setEncryption(
             ['algorithm' => 'aes']
         );
-        $this->assertSame(
+        self::assertSame(
             [
                 'algorithm'     => 'aes',
                 'key'           => 'testkey',
@@ -109,17 +109,17 @@ class BlockCipherTest extends TestCase
         $filter->setVector('1234567890123456');
         $output = $filter->encrypt('teststring');
 
-        $this->assertNotEquals('teststring', $output);
+        self::assertNotEquals('teststring', $output);
 
         $input = $filter->decrypt($output);
-        $this->assertSame('teststring', trim($input));
+        self::assertSame('teststring', trim($input));
     }
 
     public function testConstructionWithStringKey(): void
     {
         $filter = new BlockCipherEncryption('testkey');
         $data   = $filter->getEncryption();
-        $this->assertSame('testkey', $data['key']);
+        self::assertSame('testkey', $data['key']);
     }
 
     public function testConstructionWithInteger(): void
@@ -132,7 +132,7 @@ class BlockCipherTest extends TestCase
     public function testToString(): void
     {
         $filter = new BlockCipherEncryption('testkey');
-        $this->assertSame('BlockCipher', $filter->toString());
+        self::assertSame('BlockCipher', $filter->toString());
     }
 
     public function testSettingEncryptionOptions(): void
@@ -140,26 +140,26 @@ class BlockCipherTest extends TestCase
         $filter = new BlockCipherEncryption('testkey');
         $filter->setEncryption('newkey');
         $test = $filter->getEncryption();
-        $this->assertSame('newkey', $test['key']);
+        self::assertSame('newkey', $test['key']);
 
         try {
             $filter->setEncryption(1234);
             $filter->fail();
         } catch (InvalidArgumentException $e) {
-            $this->assertStringContainsString('Invalid options argument', $e->getMessage());
+            self::assertStringContainsString('Invalid options argument', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(['algorithm' => 'unknown']);
             $filter->fail();
         } catch (InvalidArgumentException $e) {
-            $this->assertStringContainsString('The algorithm', $e->getMessage());
+            self::assertStringContainsString('The algorithm', $e->getMessage());
         }
 
         try {
             $filter->setEncryption(['mode' => 'unknown']);
         } catch (InvalidArgumentException $e) {
-            $this->assertStringContainsString('The mode', $e->getMessage());
+            self::assertStringContainsString('The mode', $e->getMessage());
         }
     }
 
@@ -177,7 +177,7 @@ class BlockCipherTest extends TestCase
     public function testEncryptionWithDecryptionAndCompression(): void
     {
         if (! extension_loaded('bz2')) {
-            $this->markTestSkipped('This adapter needs the bz2 extension');
+            self::markTestSkipped('This adapter needs the bz2 extension');
         }
 
         $filter = new BlockCipherEncryption(['key' => 'testkey']);
@@ -185,9 +185,9 @@ class BlockCipherTest extends TestCase
         $filter->setCompression('bz2');
         $output = $filter->encrypt('teststring');
 
-        $this->assertNotEquals('teststring', $output);
+        self::assertNotEquals('teststring', $output);
 
         $input = $filter->decrypt($output);
-        $this->assertSame('teststring', trim($input));
+        self::assertSame('teststring', trim($input));
     }
 }

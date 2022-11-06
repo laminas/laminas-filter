@@ -13,21 +13,11 @@ use function mb_internal_encoding;
 
 class StringToLowerTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * Laminas_Filter_StringToLower object
-     *
-     * @var StringToLowerFilter
-     */
-    protected $_filter;
-    // @codingStandardsIgnoreEnd
+    private StringToLowerFilter $filter;
 
-    /**
-     * Creates a new Laminas_Filter_StringToLower object for each test method
-     */
     public function setUp(): void
     {
-        $this->_filter = new StringToLowerFilter();
+        $this->filter = new StringToLowerFilter();
     }
 
     /**
@@ -35,7 +25,7 @@ class StringToLowerTest extends TestCase
      */
     public function testBasic(): void
     {
-        $filter         = $this->_filter;
+        $filter         = $this->filter;
         $valuesExpected = [
             'string' => 'string',
             'aBc1@3' => 'abc1@3',
@@ -43,7 +33,7 @@ class StringToLowerTest extends TestCase
         ];
 
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame($output, $filter($input));
+            self::assertSame($output, $filter($input));
         }
     }
 
@@ -53,20 +43,16 @@ class StringToLowerTest extends TestCase
      */
     public function testWithEncoding(): void
     {
-        $filter         = $this->_filter;
+        $filter         = $this->filter;
         $valuesExpected = [
             'Ü'     => 'ü',
             'Ñ'     => 'ñ',
             'ÜÑ123' => 'üñ123',
         ];
 
-        try {
-            $filter->setEncoding('UTF-8');
-            foreach ($valuesExpected as $input => $output) {
-                $this->assertSame($output, $filter($input));
-            }
-        } catch (Exception\ExtensionNotLoadedException $e) {
-            $this->assertContains('mbstring is required', $e->getMessage());
+        $filter->setEncoding('UTF-8');
+        foreach ($valuesExpected as $input => $output) {
+            self::assertSame($output, $filter($input));
         }
     }
 
@@ -74,7 +60,7 @@ class StringToLowerTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('is not supported');
-        $this->_filter->setEncoding('aaaaa');
+        $this->filter->setEncoding('aaaaa');
     }
 
     /**
@@ -88,13 +74,9 @@ class StringToLowerTest extends TestCase
             'ÜÑ123' => 'üñ123',
         ];
 
-        try {
-            $filter = new StringToLowerFilter(['encoding' => 'UTF-8']);
-            foreach ($valuesExpected as $input => $output) {
-                $this->assertSame($output, $filter($input));
-            }
-        } catch (Exception\ExtensionNotLoadedException $e) {
-            $this->assertContains('mbstring is required', $e->getMessage());
+        $filter = new StringToLowerFilter(['encoding' => 'UTF-8']);
+        foreach ($valuesExpected as $input => $output) {
+            self::assertSame($output, $filter($input));
         }
     }
 
@@ -103,7 +85,7 @@ class StringToLowerTest extends TestCase
      */
     public function testCaseInsensitiveEncoding(): void
     {
-        $filter         = $this->_filter;
+        $filter         = $this->filter;
         $valuesExpected = [
             'Ü'     => 'ü',
             'Ñ'     => 'ñ',
@@ -113,20 +95,20 @@ class StringToLowerTest extends TestCase
         try {
             $filter->setEncoding('UTF-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertSame($output, $filter($input));
+                self::assertSame($output, $filter($input));
             }
 
-            $this->_filter->setEncoding('utf-8');
+            $this->filter->setEncoding('utf-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertSame($output, $filter($input));
+                self::assertSame($output, $filter($input));
             }
 
-            $this->_filter->setEncoding('UtF-8');
+            $this->filter->setEncoding('UtF-8');
             foreach ($valuesExpected as $input => $output) {
-                $this->assertSame($output, $filter($input));
+                self::assertSame($output, $filter($input));
             }
         } catch (Exception\ExtensionNotLoadedException $e) {
-            $this->assertContains('mbstring is required', $e->getMessage());
+            self::assertContains('mbstring is required', $e->getMessage());
         }
     }
 
@@ -135,10 +117,11 @@ class StringToLowerTest extends TestCase
      */
     public function testDetectMbInternalEncoding(): void
     {
-        $this->assertSame(mb_internal_encoding(), $this->_filter->getEncoding());
+        self::assertSame(mb_internal_encoding(), $this->filter->getEncoding());
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -155,9 +138,9 @@ class StringToLowerTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
-        $this->assertSame($input, $this->_filter->filter($input));
+        self::assertSame($input, $this->filter->filter($input));
     }
 
     /**

@@ -17,12 +17,12 @@ use function unlink;
 
 class GzTest extends TestCase
 {
-    public $target;
+    public string $target;
 
     public function setUp(): void
     {
         if (! extension_loaded('zlib')) {
-            $this->markTestSkipped('This adapter needs the zlib extension');
+            self::markTestSkipped('This adapter needs the zlib extension');
         }
 
         $this->target = sprintf('%s/%s.gz', sys_get_temp_dir(), uniqid('laminasilter'));
@@ -43,10 +43,10 @@ class GzTest extends TestCase
         $filter = new GzCompression();
 
         $content = $filter->compress('compress me');
-        $this->assertNotEquals('compress me', $content);
+        self::assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -55,22 +55,22 @@ class GzTest extends TestCase
     public function testGzGetSetOptions(): void
     {
         $filter = new GzCompression();
-        $this->assertSame(['level' => 9, 'mode' => 'compress', 'archive' => null], $filter->getOptions());
+        self::assertSame(['level' => 9, 'mode' => 'compress', 'archive' => null], $filter->getOptions());
 
-        $this->assertSame(9, $filter->getOptions('level'));
+        self::assertSame(9, $filter->getOptions('level'));
 
-        $this->assertNull($filter->getOptions('nooption'));
+        self::assertNull($filter->getOptions('nooption'));
         $filter->setOptions(['nooption' => 'foo']);
-        $this->assertNull($filter->getOptions('nooption'));
+        self::assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['level' => 6]);
-        $this->assertSame(6, $filter->getOptions('level'));
+        self::assertSame(6, $filter->getOptions('level'));
 
         $filter->setOptions(['mode' => 'deflate']);
-        $this->assertSame('deflate', $filter->getOptions('mode'));
+        self::assertSame('deflate', $filter->getOptions('mode'));
 
         $filter->setOptions(['archive' => 'test.txt']);
-        $this->assertSame('test.txt', $filter->getOptions('archive'));
+        self::assertSame('test.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -79,7 +79,7 @@ class GzTest extends TestCase
     public function testGzGetSetOptionsInConstructor(): void
     {
         $filter2 = new GzCompression(['level' => 8]);
-        $this->assertSame(['level' => 8, 'mode' => 'compress', 'archive' => null], $filter2->getOptions());
+        self::assertSame(['level' => 8, 'mode' => 'compress', 'archive' => null], $filter2->getOptions());
     }
 
     /**
@@ -88,9 +88,9 @@ class GzTest extends TestCase
     public function testGzGetSetLevel(): void
     {
         $filter = new GzCompression();
-        $this->assertSame(9, $filter->getLevel());
+        self::assertSame(9, $filter->getLevel());
         $filter->setLevel(6);
-        $this->assertSame(6, $filter->getOptions('level'));
+        self::assertSame(6, $filter->getOptions('level'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('must be between');
@@ -103,9 +103,9 @@ class GzTest extends TestCase
     public function testGzGetSetMode(): void
     {
         $filter = new GzCompression();
-        $this->assertSame('compress', $filter->getMode());
+        self::assertSame('compress', $filter->getMode());
         $filter->setMode('deflate');
-        $this->assertSame('deflate', $filter->getOptions('mode'));
+        self::assertSame('deflate', $filter->getOptions('mode'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('mode not supported');
@@ -118,10 +118,10 @@ class GzTest extends TestCase
     public function testGzGetSetArchive(): void
     {
         $filter = new GzCompression();
-        $this->assertSame(null, $filter->getArchive());
+        self::assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertSame('Testfile.txt', $filter->getArchive());
-        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
+        self::assertSame('Testfile.txt', $filter->getArchive());
+        self::assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -134,16 +134,16 @@ class GzTest extends TestCase
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
-        $this->assertTrue($content);
+        self::assertTrue($content);
 
         $filter2  = new GzCompression();
         $content2 = $filter2->decompress($archive);
-        $this->assertSame('compress me', $content2);
+        self::assertSame('compress me', $content2);
 
         $filter3 = new GzCompression();
         $filter3->setArchive($archive);
         $content3 = $filter3->decompress(null);
-        $this->assertSame('compress me', $content3);
+        self::assertSame('compress me', $content3);
     }
 
     /**
@@ -154,10 +154,10 @@ class GzTest extends TestCase
         $filter = new GzCompression(['mode' => 'deflate']);
 
         $content = $filter->compress('compress me');
-        $this->assertNotEquals('compress me', $content);
+        self::assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -166,7 +166,7 @@ class GzTest extends TestCase
     public function testGzToString(): void
     {
         $filter = new GzCompression();
-        $this->assertSame('Gz', $filter->toString());
+        self::assertSame('Gz', $filter->toString());
     }
 
     public function testGzDecompressNullThrowsRuntimeException(): void

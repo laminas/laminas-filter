@@ -16,8 +16,8 @@ class CamelCaseToSeparatorTest extends TestCase
         $filter   = new CamelCaseToSeparatorFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Camel Cased Words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Camel Cased Words', $filtered);
     }
 
     public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(): void
@@ -26,8 +26,8 @@ class CamelCaseToSeparatorTest extends TestCase
         $filter   = new CamelCaseToSeparatorFilter(':-#');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Camel:-#Cased:-#Words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Camel:-#Cased:-#Words', $filtered);
     }
 
     public function testFilterSeperatesMultipleUppercasedLettersAndUnderscores(): void
@@ -36,8 +36,8 @@ class CamelCaseToSeparatorTest extends TestCase
         $filter   = new CamelCaseToSeparatorFilter('_');
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('These_Are_SOME_Camel_CASED_Words', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('These_Are_SOME_Camel_CASED_Words', $filtered);
     }
 
     public function testFilterSupportArray(): void
@@ -51,11 +51,12 @@ class CamelCaseToSeparatorTest extends TestCase
 
         $filtered = $filter($input);
 
-        $this->assertNotEquals($input, $filtered);
-        $this->assertSame(['Camel Cased Words', 'something Different'], $filtered);
+        self::assertNotEquals($input, $filtered);
+        self::assertSame(['Camel Cased Words', 'something Different'], $filtered);
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -66,11 +67,11 @@ class CamelCaseToSeparatorTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new CamelCaseToSeparatorFilter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 
     /**
@@ -88,12 +89,11 @@ class CamelCaseToSeparatorTest extends TestCase
 
     /**
      * @dataProvider returnNonStringScalarValues
-     * @param int|float|bool $input
      */
-    public function testShouldFilterNonStringScalarValues($input): void
+    public function testShouldFilterNonStringScalarValues(int|float|bool $input): void
     {
         $filter = new CamelCaseToSeparatorFilter();
 
-        $this->assertSame((string) $input, $filter($input));
+        self::assertSame((string) $input, $filter($input));
     }
 }

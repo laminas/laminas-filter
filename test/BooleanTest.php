@@ -21,46 +21,41 @@ class BooleanTest extends TestCase
             'casting' => false,
         ]);
 
-        $this->assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
-        $this->assertFalse($filter->getCasting());
+        self::assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
+        self::assertFalse($filter->getCasting());
     }
 
     public function testConstructorParams(): void
     {
         $filter = new BooleanFilter(BooleanFilter::TYPE_INTEGER, false);
 
-        $this->assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
-        $this->assertFalse($filter->getCasting());
+        self::assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
+        self::assertFalse($filter->getCasting());
     }
 
     /**
-     * @param mixed $value
-     * @param bool  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected): void
+    public function testDefault(mixed $value, bool $expected): void
     {
         $filter = new BooleanFilter();
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertSame($expected, $filter->filter($value));
     }
 
     /**
-     * @param mixed $value
-     * @param bool  $expected
      * @dataProvider noCastingTestProvider
      */
-    public function testNoCasting($value, $expected): void
+    public function testNoCasting(mixed $value, mixed $expected): void
     {
         $filter = new BooleanFilter('all', false);
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertSame($expected, $filter->filter($value));
     }
 
     /**
-     * @param int $type
-     * @param array $testData
+     * @param array{0: mixed, 1: mixed} $testData
      * @dataProvider typeTestProvider
      */
-    public function testTypes($type, $testData): void
+    public function testTypes(int $type, array $testData): void
     {
         $filter = new BooleanFilter($type);
         foreach ($testData as $data) {
@@ -72,7 +67,7 @@ class BooleanTest extends TestCase
                 var_export($expected, true),
                 $type
             );
-            $this->assertSame($expected, $filter->filter($value), $message);
+            self::assertSame($expected, $filter->filter($value), $message);
         }
     }
 
@@ -94,7 +89,7 @@ class BooleanTest extends TestCase
                     var_export($expected, true),
                     var_export($type, true)
                 );
-                $this->assertSame($expected, $filter->filter($value), $message);
+                self::assertSame($expected, $filter->filter($value), $message);
             }
         }
     }
@@ -113,10 +108,10 @@ class BooleanTest extends TestCase
             ],
         ]);
 
-        $this->assertTrue($filter->filter('yes'));
-        $this->assertTrue($filter->filter('yay'));
-        $this->assertFalse($filter->filter('n'));
-        $this->assertFalse($filter->filter('nay'));
+        self::assertTrue($filter->filter('yes'));
+        self::assertTrue($filter->filter('yay'));
+        self::assertFalse($filter->filter('n'));
+        self::assertFalse($filter->filter('nay'));
     }
 
     public function testSettingFalseType(): void
@@ -130,7 +125,7 @@ class BooleanTest extends TestCase
     public function testGettingDefaultType(): void
     {
         $filter = new BooleanFilter();
-        $this->assertSame(127, $filter->getType());
+        self::assertSame(127, $filter->getType());
     }
 
     /**
@@ -140,13 +135,14 @@ class BooleanTest extends TestCase
      * @param mixed $type Type to double initialize
      * @dataProvider duplicateProvider
      */
-    public function testDuplicateTypesWorkProperly($type, $expected): void
+    public function testDuplicateTypesWorkProperly(int|string $type, int $expected): void
     {
         $filter = new BooleanFilter([$type, $type]);
-        $this->assertSame($expected, $filter->getType());
+        self::assertSame($expected, $filter->getType());
     }
 
-    public static function defaultTestProvider()
+    /** @return list<array{0: mixed, 1: bool}> */
+    public static function defaultTestProvider(): array
     {
         return [
             [false, false],
@@ -169,7 +165,8 @@ class BooleanTest extends TestCase
         ];
     }
 
-    public static function noCastingTestProvider()
+    /** @return list<array{0: mixed, 1: mixed}> */
+    public static function noCastingTestProvider(): array
     {
         return [
             [false, false],
@@ -193,7 +190,8 @@ class BooleanTest extends TestCase
         ];
     }
 
-    public static function typeTestProvider()
+    /** @return list<array{0: int, 1: mixed[]}> */
+    public static function typeTestProvider(): array
     {
         return [
             [
@@ -443,7 +441,7 @@ class BooleanTest extends TestCase
         ];
     }
 
-    public static function combinedTypeTestProvider()
+    public static function combinedTypeTestProvider(): array
     {
         return [
             [
@@ -484,7 +482,8 @@ class BooleanTest extends TestCase
         ];
     }
 
-    public static function duplicateProvider()
+    /** @return list<array{0: int|string, 1: int}> */
+    public static function duplicateProvider(): array
     {
         return [
             [BooleanFilter::TYPE_BOOLEAN, BooleanFilter::TYPE_BOOLEAN],
