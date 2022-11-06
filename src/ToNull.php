@@ -33,7 +33,7 @@ class ToNull extends AbstractFilter
     public const TYPE_ALL         = 63;
 
     /**
-     * @deprecated
+     * @deprecated since 2.26 - superseded by self::CONSTANTS
      *
      * @var array<self::TYPE_*, string>
      */

@@ -41,7 +41,11 @@ class Boolean extends AbstractFilter
     public const TYPE_LOCALIZED    = 256;
     public const TYPE_ALL          = 511;
 
-    /** @var array<self::TYPE_*, string> */
+    /**
+     * @deprecated since 2.26 - superseded by self::CONSTANTS
+     *
+     * @var array<self::TYPE_*, string>
+     */
     protected $constants = self::CONSTANTS;
 
     private const CONSTANTS = [
@@ -110,13 +114,13 @@ class Boolean extends AbstractFilter
             foreach ($type as $value) {
                 if (is_int($value)) {
                     $detected |= $value;
-                } elseif (($found = array_search($value, $this->constants, true)) !== false) {
+                } elseif (($found = array_search($value, self::CONSTANTS, true)) !== false) {
                     $detected |= $found;
                 }
             }
 
             $type = $detected;
-        } elseif (is_string($type) && ($found = array_search($type, $this->constants, true)) !== false) {
+        } elseif (is_string($type) && ($found = array_search($type, self::CONSTANTS, true)) !== false) {
             $type = $found;
         }
 
