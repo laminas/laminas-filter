@@ -8,8 +8,6 @@ use Laminas\Filter\Word\SeparatorToCamelCase as SeparatorToCamelCaseFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function extension_loaded;
-
 class SeparatorToCamelCaseTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault(): void
@@ -37,10 +35,6 @@ class SeparatorToCamelCaseTest extends TestCase
      */
     public function testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator(): void
     {
-        if (! extension_loaded('mbstring')) {
-            self::markTestSkipped('Extension mbstring not available');
-        }
-
         $string   = 'camel:-:cased:-:Words';
         $filter   = new SeparatorToCamelCaseFilter(':-:');
         $filtered = $filter($string);
@@ -54,10 +48,6 @@ class SeparatorToCamelCaseTest extends TestCase
      */
     public function testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator(): void
     {
-        if (! extension_loaded('mbstring')) {
-            self::markTestSkipped('Extension mbstring not available');
-        }
-
         $string   = 'test šuma';
         $filter   = new SeparatorToCamelCaseFilter(' ');
         $filtered = $filter($string);

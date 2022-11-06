@@ -1273,7 +1273,7 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Word/SeparatorToCamelCase.php">
-    <MissingClosureParamType occurrences="6">
+    <MissingClosureParamType occurrences="4">
       <code>$matches</code>
       <code>$matches</code>
       <code>$matches</code>
@@ -1281,7 +1281,7 @@
       <code>$matches</code>
       <code>$matches</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="6">
+    <MissingClosureReturnType occurrences="4">
       <code>static fn($matches) =&gt; mb_strtoupper($matches[1], 'UTF-8')</code>
       <code>static fn($matches) =&gt; mb_strtoupper($matches[2], 'UTF-8')</code>
       <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
@@ -1289,7 +1289,7 @@
       <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
       <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="4">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
       <code>$matches[1]</code>
@@ -1297,7 +1297,7 @@
       <code>$matches[2]</code>
       <code>$matches[2]</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="6">
+    <MixedArrayAccess occurrences="4">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
       <code>$matches[1]</code>
