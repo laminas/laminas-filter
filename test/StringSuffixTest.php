@@ -13,8 +13,7 @@ use function fopen;
 
 class StringSuffixTest extends TestCase
 {
-    /** @var StringSuffixFilter */
-    protected $filter;
+    private StringSuffixFilter $filter;
 
     public function setUp(): void
     {
@@ -31,7 +30,7 @@ class StringSuffixTest extends TestCase
         $suffix = 'ABC123';
         $filter->setSuffix($suffix);
 
-        $this->assertStringEndsWith($suffix, $filter('sample'));
+        self::assertStringEndsWith($suffix, $filter('sample'));
     }
 
     public function testWithoutSuffix(): void
@@ -44,9 +43,9 @@ class StringSuffixTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array{0: mixed}>
      */
-    public function invalidSuffixesDataProvider()
+    public function invalidSuffixesDataProvider(): array
     {
         return [
             'int'                 => [1],
@@ -65,9 +64,8 @@ class StringSuffixTest extends TestCase
 
     /**
      * @dataProvider invalidSuffixesDataProvider
-     * @param mixed $suffix
      */
-    public function testInvalidSuffixes($suffix): void
+    public function testInvalidSuffixes(mixed $suffix): void
     {
         $filter = $this->filter;
 
@@ -85,6 +83,6 @@ class StringSuffixTest extends TestCase
         $suffix = 'ABC123';
         $filter->setSuffix($suffix);
 
-        $this->assertInstanceOf(stdClass::class, $filter(new stdClass()));
+        self::assertInstanceOf(stdClass::class, $filter(new stdClass()));
     }
 }

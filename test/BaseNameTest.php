@@ -21,11 +21,12 @@ class BaseNameTest extends TestCase
             '/path/to/filename.ext' => 'filename.ext',
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame($output, $filter($input));
+            self::assertSame($output, $filter($input));
         }
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -42,10 +43,10 @@ class BaseNameTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new BaseNameFilter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

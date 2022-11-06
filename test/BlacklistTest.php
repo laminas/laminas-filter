@@ -15,7 +15,7 @@ class BlacklistTest extends TestCase
     public function testConstructor(): void
     {
         $filter = new BlacklistFilter();
-        $this->assertInstanceOf(DenyList::class, $filter);
+        self::assertInstanceOf(DenyList::class, $filter);
     }
 
     public function testWithPluginManager(): void
@@ -23,6 +23,6 @@ class BlacklistTest extends TestCase
         $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter        = $pluginManager->get('blacklist');
 
-        $this->assertInstanceOf(DenyList::class, $filter);
+        self::assertInstanceOf(DenyList::class, $filter);
     }
 }

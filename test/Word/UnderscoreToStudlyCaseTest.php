@@ -15,8 +15,8 @@ class UnderscoreToStudlyCaseTest extends TestCase
         $filter   = new UnderscoreToStudlyCase();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('studlyCasedWords', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('studlyCasedWords', $filtered);
     }
 
     public function testSomeFilterValues(): void
@@ -25,31 +25,31 @@ class UnderscoreToStudlyCaseTest extends TestCase
 
         $string   = 'laminas_project';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('laminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('laminasProject', $filtered);
 
         $string   = 'laminas_Project';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('laminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('laminasProject', $filtered);
 
         $string   = 'laminasProject';
         $filtered = $filter($string);
-        $this->assertSame('laminasProject', $filtered);
+        self::assertSame('laminasProject', $filtered);
 
         $string   = 'laminas';
         $filtered = $filter($string);
-        $this->assertSame('laminas', $filtered);
+        self::assertSame('laminas', $filtered);
 
         $string   = '_laminas';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('laminas', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('laminas', $filtered);
 
         $string   = '_laminas_project';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('laminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('laminasProject', $filtered);
     }
 
     public function testFiltersArray(): void
@@ -58,8 +58,8 @@ class UnderscoreToStudlyCaseTest extends TestCase
 
         $string   = ['laminas_project', '_laminas_project'];
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame(['laminasProject', 'laminasProject'], $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame(['laminasProject', 'laminasProject'], $filtered);
     }
 
     public function testWithEmpties(): void
@@ -68,10 +68,10 @@ class UnderscoreToStudlyCaseTest extends TestCase
 
         $string   = '';
         $filtered = $filter($string);
-        $this->assertSame('', $filtered);
+        self::assertSame('', $filtered);
 
         $string   = ['', 'Laminas_Project'];
         $filtered = $filter($string);
-        $this->assertSame(['', 'laminasProject'], $filtered);
+        self::assertSame(['', 'laminasProject'], $filtered);
     }
 }

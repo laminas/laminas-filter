@@ -19,7 +19,7 @@ class SnappyTest extends TestCase
     public function setUp(): void
     {
         if (! extension_loaded('snappy')) {
-            $this->markTestSkipped('This adapter needs the snappy extension');
+            self::markTestSkipped('This adapter needs the snappy extension');
         }
     }
 
@@ -31,10 +31,10 @@ class SnappyTest extends TestCase
         $filter = new SnappyCompression();
 
         $content = $filter->compress('compress me');
-        $this->assertNotEquals('compress me', $content);
+        self::assertNotEquals('compress me', $content);
 
         $content = $filter->decompress($content);
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -50,7 +50,7 @@ class SnappyTest extends TestCase
         $content = $filter->compress([]);
         restore_error_handler();
 
-        $this->assertNull($content);
+        self::assertNull($content);
     }
 
     /**
@@ -62,7 +62,7 @@ class SnappyTest extends TestCase
 
         $content = $filter->compress(false);
         $content = $filter->decompress($content);
-        $this->assertSame('', $content, 'Snappy failed to decompress empty string.');
+        self::assertSame('', $content, 'Snappy failed to decompress empty string.');
     }
 
     /**
@@ -88,7 +88,7 @@ class SnappyTest extends TestCase
     public function testSnappyToString(): void
     {
         $filter = new SnappyCompression();
-        $this->assertSame('Snappy', $filter->toString());
+        self::assertSame('Snappy', $filter->toString());
     }
 
     /**

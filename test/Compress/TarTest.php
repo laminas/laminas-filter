@@ -27,7 +27,7 @@ use const DIRECTORY_SEPARATOR;
 
 class TarTest extends TestCase
 {
-    public $tmp;
+    public string $tmp;
 
     public function setUp(): void
     {
@@ -76,15 +76,15 @@ class TarTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertSame(
+        self::assertSame(
             $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
             $content
         );
 
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -93,7 +93,7 @@ class TarTest extends TestCase
     public function testTarGetSetOptions(): void
     {
         $filter = new TarCompression();
-        $this->assertSame(
+        self::assertSame(
             [
                 'archive' => null,
                 'target'  => '.',
@@ -102,14 +102,14 @@ class TarTest extends TestCase
             $filter->getOptions()
         );
 
-        $this->assertSame(null, $filter->getOptions('archive'));
+        self::assertSame(null, $filter->getOptions('archive'));
 
-        $this->assertNull($filter->getOptions('nooption'));
+        self::assertNull($filter->getOptions('nooption'));
         $filter->setOptions(['nooptions' => 'foo']);
-        $this->assertNull($filter->getOptions('nooption'));
+        self::assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['archive' => 'temp.txt']);
-        $this->assertSame('temp.txt', $filter->getOptions('archive'));
+        self::assertSame('temp.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -118,10 +118,10 @@ class TarTest extends TestCase
     public function testTarGetSetArchive(): void
     {
         $filter = new TarCompression();
-        $this->assertSame(null, $filter->getArchive());
+        self::assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertSame('Testfile.txt', $filter->getArchive());
-        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
+        self::assertSame('Testfile.txt', $filter->getArchive());
+        self::assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -130,10 +130,10 @@ class TarTest extends TestCase
     public function testTarGetSetTarget(): void
     {
         $filter = new TarCompression();
-        $this->assertSame('.', $filter->getTarget());
+        self::assertSame('.', $filter->getTarget());
         $filter->setTarget('Testfile.txt');
-        $this->assertSame('Testfile.txt', $filter->getTarget());
-        $this->assertSame('Testfile.txt', $filter->getOptions('target'));
+        self::assertSame('Testfile.txt', $filter->getTarget());
+        self::assertSame('Testfile.txt', $filter->getOptions('target'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not exist');
@@ -154,15 +154,15 @@ class TarTest extends TestCase
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
 
         $content = $filter->compress($this->tmp . '/zipextracted.txt');
-        $this->assertSame(
+        self::assertSame(
             $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
             $content
         );
 
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -177,7 +177,7 @@ class TarTest extends TestCase
             ]
         );
         $content = $filter->compress(dirname(__DIR__) . '/_files/Compress');
-        $this->assertSame(
+        self::assertSame(
             $this->tmp . DIRECTORY_SEPARATOR . 'compressed.tar',
             $content
         );
@@ -196,7 +196,7 @@ class TarTest extends TestCase
             $filter->setArchive($archive);
             $filter->setMode($mode);
             $content = $filter->compress('compress me');
-            $this->assertSame($archive, $content);
+            self::assertSame($archive, $content);
         }
     }
 
@@ -206,7 +206,7 @@ class TarTest extends TestCase
     public function testTarToString(): void
     {
         $filter = new TarCompression();
-        $this->assertSame('Tar', $filter->toString());
+        self::assertSame('Tar', $filter->toString());
     }
 
     /**

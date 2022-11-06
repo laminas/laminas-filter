@@ -23,14 +23,14 @@ use function unlink;
 
 class EncryptTest extends TestCase
 {
-    public $fileToEncrypt;
-    public $testDir;
-    public $testFile;
+    public string $fileToEncrypt;
+    public string $testDir;
+    public string $testFile;
 
     public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
-            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
+            self::markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
 
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
@@ -53,14 +53,14 @@ class EncryptTest extends TestCase
         $filter = new FileEncrypt();
         $filter->setFilename($this->testFile);
 
-        $this->assertSame($this->testFile, $filter->getFilename());
+        self::assertSame($this->testFile, $filter->getFilename());
 
         $filter->setKey('1234567890123456');
-        $this->assertSame($this->testFile, $filter->filter($this->fileToEncrypt));
+        self::assertSame($this->testFile, $filter->filter($this->fileToEncrypt));
 
-        $this->assertSame('Encryption', file_get_contents($this->fileToEncrypt));
+        self::assertSame('Encryption', file_get_contents($this->fileToEncrypt));
 
-        $this->assertNotEquals('Encryption', file_get_contents($this->testFile));
+        self::assertNotEquals('Encryption', file_get_contents($this->testFile));
     }
 
     public function testEncryptionWithDecryption(): void
@@ -68,16 +68,16 @@ class EncryptTest extends TestCase
         $filter = new FileEncrypt();
         $filter->setFilename($this->testFile);
         $filter->setKey('1234567890123456');
-        $this->assertSame($this->testFile, $filter->filter($this->fileToEncrypt));
+        self::assertSame($this->testFile, $filter->filter($this->fileToEncrypt));
 
-        $this->assertNotEquals('Encryption', file_get_contents($this->testFile));
+        self::assertNotEquals('Encryption', file_get_contents($this->testFile));
 
         $filter = new FileDecrypt();
         $filter->setKey('1234567890123456');
         $input = $filter->filter($this->testFile);
-        $this->assertSame($this->testFile, $input);
+        self::assertSame($this->testFile, $input);
 
-        $this->assertSame('Encryption', trim(file_get_contents($this->testFile)));
+        self::assertSame('Encryption', trim(file_get_contents($this->testFile)));
     }
 
     public function testNonExistingFile(): void
@@ -98,7 +98,7 @@ class EncryptTest extends TestCase
         copy($this->fileToEncrypt, $this->testFile);
         $filter->filter($this->testFile);
 
-        $this->assertNotEquals('Encryption', trim(file_get_contents($this->testFile)));
+        self::assertNotEquals('Encryption', trim(file_get_contents($this->testFile)));
     }
 
     public function returnUnfilteredDataProvider()
@@ -123,6 +123,6 @@ class EncryptTest extends TestCase
         $filter = new FileEncrypt();
         $filter->setKey('1234567890123456');
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

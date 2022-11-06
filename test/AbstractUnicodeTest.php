@@ -15,8 +15,7 @@ use function strtolower;
 
 class AbstractUnicodeTest extends TestCase
 {
-    /** @var AbstractUnicode */
-    private $filter;
+    private AbstractUnicode $filter;
 
     protected function setUp(): void
     {

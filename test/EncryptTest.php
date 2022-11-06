@@ -17,7 +17,7 @@ class EncryptTest extends TestCase
     public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
-            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
+            self::markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
 
@@ -39,9 +39,9 @@ class EncryptTest extends TestCase
 
         $enc = $filter->getEncryption();
         $filter->setVector('1234567890123456');
-        $this->assertSame('testkey', $enc['key']);
+        self::assertSame('testkey', $enc['key']);
         foreach ($valuesExpected as $input => $output) {
-            $this->assertNotEquals($output, $filter($input));
+            self::assertNotEquals($output, $filter($input));
         }
     }
 
@@ -54,7 +54,7 @@ class EncryptTest extends TestCase
         $encrypt->setVector('1234567890123456890');
         $encrypted = $encrypt->filter('test');
         // @codingStandardsIgnoreStart
-        $this->assertSame($encrypted, 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
+        self::assertSame($encrypted, 'ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
         // @codingStandardsIgnoreEnd
     }
 
@@ -66,7 +66,7 @@ class EncryptTest extends TestCase
         self::markTestSkipped('The OpenSSL Adapter is deprecated and tests will not pass on OpenSSL 3.x');
 
         if (! extension_loaded('openssl')) {
-            $this->markTestSkipped('Openssl extension not installed');
+            self::markTestSkipped('Openssl extension not installed');
         }
 
         $filter         = new EncryptFilter(['adapter' => 'Openssl']);
@@ -78,7 +78,7 @@ class EncryptTest extends TestCase
 
         $filter->setPublicKey(__DIR__ . '/_files/publickey.pem');
         $key = $filter->getPublicKey();
-        $this->assertSame(
+        self::assertSame(
             [
                 __DIR__ . '/_files/publickey.pem'
                   => '-----BEGIN CERTIFICATE-----
@@ -104,7 +104,7 @@ PIDs9E7uuizAKDhRRRvho8BS
             $key
         );
         foreach ($valuesExpected as $input => $output) {
-            $this->assertNotEquals($output, $filter($input));
+            self::assertNotEquals($output, $filter($input));
         }
     }
 
@@ -113,8 +113,8 @@ PIDs9E7uuizAKDhRRRvho8BS
         $filter = new EncryptFilter();
 
         $filter->setAdapter('BlockCipher');
-        $this->assertSame('BlockCipher', $filter->getAdapter());
-        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
+        self::assertSame('BlockCipher', $filter->getAdapter());
+        self::assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
@@ -152,6 +152,6 @@ PIDs9E7uuizAKDhRRRvho8BS
         $encrypt->setVector('1234567890123456890');
 
         $encrypted = $encrypt->filter($input);
-        $this->assertSame($input, $encrypted);
+        self::assertSame($input, $encrypted);
     }
 }

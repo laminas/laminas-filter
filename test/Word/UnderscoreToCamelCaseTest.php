@@ -15,8 +15,8 @@ class UnderscoreToCamelCaseTest extends TestCase
         $filter   = new UnderscoreToCamelCaseFilter();
         $filtered = $filter($string);
 
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('CamelCasedWords', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('CamelCasedWords', $filtered);
     }
 
     /**
@@ -28,32 +28,32 @@ class UnderscoreToCamelCaseTest extends TestCase
 
         $string   = 'laminas_project';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('LaminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('LaminasProject', $filtered);
 
         $string   = 'laminas_Project';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('LaminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('LaminasProject', $filtered);
 
         $string   = 'laminasProject';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('LaminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('LaminasProject', $filtered);
 
         $string   = 'laminasproject';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Laminasproject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Laminasproject', $filtered);
 
         $string   = '_laminasproject';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('Laminasproject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('Laminasproject', $filtered);
 
         $string   = '_laminas_project';
         $filtered = $filter($string);
-        $this->assertNotEquals($string, $filtered);
-        $this->assertSame('LaminasProject', $filtered);
+        self::assertNotEquals($string, $filtered);
+        self::assertSame('LaminasProject', $filtered);
     }
 }

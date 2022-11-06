@@ -11,31 +11,27 @@ use PHPUnit\Framework\TestCase;
 class DataUnitFormatterTest extends TestCase
 {
     /**
-     * @param float $value
-     * @param string $expected
      * @dataProvider decimalBytesTestProvider
      */
-    public function testDecimalBytes($value, $expected): void
+    public function testDecimalBytes(float $value, string $expected): void
     {
         $filter = new DataUnitFormatterFilter([
             'mode' => DataUnitFormatterFilter::MODE_DECIMAL,
             'unit' => 'B',
         ]);
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertSame($expected, $filter->filter($value));
     }
 
     /**
-     * @param float $value
-     * @param string $expected
      * @dataProvider binaryBytesTestProvider
      */
-    public function testBinaryBytes($value, $expected): void
+    public function testBinaryBytes(float $value, string $expected): void
     {
         $filter = new DataUnitFormatterFilter([
             'mode' => DataUnitFormatterFilter::MODE_BINARY,
             'unit' => 'B',
         ]);
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertSame($expected, $filter->filter($value));
     }
 
     public function testPrecision(): void
@@ -45,7 +41,7 @@ class DataUnitFormatterTest extends TestCase
             'precision' => 3,
         ]);
 
-        $this->assertSame('1.500 kB', $filter->filter(1500));
+        self::assertSame('1.500 kB', $filter->filter(1500));
     }
 
     public function testCustomPrefixes(): void
@@ -55,31 +51,32 @@ class DataUnitFormatterTest extends TestCase
             'prefixes' => ['', 'kilos'],
         ]);
 
-        $this->assertSame('1.50 kilosB', $filter->filter(1500));
+        self::assertSame('1.50 kilosB', $filter->filter(1500));
     }
 
     public function testSettingNoOptions(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
-        $filter = new DataUnitFormatterFilter();
+        new DataUnitFormatterFilter();
     }
 
     public function testSettingNoUnit(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
-        $filter = new DataUnitFormatterFilter([]);
+        new DataUnitFormatterFilter([]);
     }
 
     public function testSettingFalseMode(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
-        $filter = new DataUnitFormatterFilter([
+        new DataUnitFormatterFilter([
             'unit' => 'B',
             'mode' => 'invalid',
         ]);
     }
 
-    public static function decimalBytesTestProvider()
+    /** @return list<array{0: float, 1: string}> */
+    public static function decimalBytesTestProvider(): array
     {
         return [
             [0, '0 B'],
@@ -97,7 +94,8 @@ class DataUnitFormatterTest extends TestCase
         ];
     }
 
-    public static function binaryBytesTestProvider()
+    /** @return list<array{0: float, 1: string}> */
+    public static function binaryBytesTestProvider(): array
     {
         return [
             [0, '0 B'],

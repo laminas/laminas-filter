@@ -24,10 +24,12 @@ use const DIRECTORY_SEPARATOR;
 
 class ZipTest extends TestCase
 {
+    private string $tmp;
+
     public function setUp(): void
     {
         if (! extension_loaded('zip')) {
-            $this->markTestSkipped('This adapter needs the zip extension');
+            self::markTestSkipped('This adapter needs the zip extension');
         }
 
         $this->tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', self::class);
@@ -104,7 +106,7 @@ class ZipTest extends TestCase
     public function testBasicUsage(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
-            $this->markTestSkipped('ZIP compression tests are currently disabled');
+            self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
         $filter = new ZipCompression(
@@ -115,12 +117,12 @@ class ZipTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
 
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -129,16 +131,16 @@ class ZipTest extends TestCase
     public function testZipGetSetOptions(): void
     {
         $filter = new ZipCompression();
-        $this->assertSame(['archive' => null, 'target' => null], $filter->getOptions());
+        self::assertSame(['archive' => null, 'target' => null], $filter->getOptions());
 
-        $this->assertSame(null, $filter->getOptions('archive'));
+        self::assertSame(null, $filter->getOptions('archive'));
 
-        $this->assertNull($filter->getOptions('nooption'));
+        self::assertNull($filter->getOptions('nooption'));
         $filter->setOptions(['nooption' => 'foo']);
-        $this->assertNull($filter->getOptions('nooption'));
+        self::assertNull($filter->getOptions('nooption'));
 
         $filter->setOptions(['archive' => 'temp.txt']);
-        $this->assertSame('temp.txt', $filter->getOptions('archive'));
+        self::assertSame('temp.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -147,10 +149,10 @@ class ZipTest extends TestCase
     public function testZipGetSetArchive(): void
     {
         $filter = new ZipCompression();
-        $this->assertSame(null, $filter->getArchive());
+        self::assertSame(null, $filter->getArchive());
         $filter->setArchive('Testfile.txt');
-        $this->assertSame('Testfile.txt', $filter->getArchive());
-        $this->assertSame('Testfile.txt', $filter->getOptions('archive'));
+        self::assertSame('Testfile.txt', $filter->getArchive());
+        self::assertSame('Testfile.txt', $filter->getOptions('archive'));
     }
 
     /**
@@ -159,10 +161,10 @@ class ZipTest extends TestCase
     public function testZipGetSetTarget(): void
     {
         $filter = new ZipCompression();
-        $this->assertNull($filter->getTarget());
+        self::assertNull($filter->getTarget());
         $filter->setTarget('Testfile.txt');
-        $this->assertSame('Testfile.txt', $filter->getTarget());
-        $this->assertSame('Testfile.txt', $filter->getOptions('target'));
+        self::assertSame('Testfile.txt', $filter->getTarget());
+        self::assertSame('Testfile.txt', $filter->getOptions('target'));
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not exist');
@@ -175,7 +177,7 @@ class ZipTest extends TestCase
     public function testZipCompressFile(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
-            $this->markTestSkipped('ZIP compression tests are currently disabled');
+            self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
         $filter = new ZipCompression(
@@ -187,12 +189,12 @@ class ZipTest extends TestCase
         file_put_contents($this->tmp . '/zipextracted.txt', 'compress me');
 
         $content = $filter->compress($this->tmp . '/zipextracted.txt');
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
 
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zipextracted.txt');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -201,7 +203,7 @@ class ZipTest extends TestCase
     public function testCompressNonExistingTargetFile(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
-            $this->markTestSkipped('ZIP compression tests are currently disabled');
+            self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
         $filter = new ZipCompression(
@@ -212,12 +214,12 @@ class ZipTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
 
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/zip.tmp');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -226,7 +228,7 @@ class ZipTest extends TestCase
     public function testZipCompressDirectory(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
-            $this->markTestSkipped('ZIP compression tests are currently disabled');
+            self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
         $filter  = new ZipCompression(
@@ -236,21 +238,21 @@ class ZipTest extends TestCase
             ]
         );
         $content = $filter->compress($this->tmp . '/Compress');
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
 
         mkdir($this->tmp . DIRECTORY_SEPARATOR . '_compress');
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . '_compress'
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . '_compress'
                             . DIRECTORY_SEPARATOR, $content);
 
         $base = $this->tmp . DIRECTORY_SEPARATOR . '_compress' . DIRECTORY_SEPARATOR . 'Compress' . DIRECTORY_SEPARATOR;
-        $this->assertFileExists($base);
-        $this->assertFileExists($base . 'zipextracted.txt');
-        $this->assertFileExists($base . 'First' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
-        $this->assertFileExists($base . 'First' . DIRECTORY_SEPARATOR
+        self::assertFileExists($base);
+        self::assertFileExists($base . 'zipextracted.txt');
+        self::assertFileExists($base . 'First' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
+        self::assertFileExists($base . 'First' . DIRECTORY_SEPARATOR
                           . 'Second' . DIRECTORY_SEPARATOR . 'zipextracted.txt');
         $content = file_get_contents($this->tmp . '/Compress/zipextracted.txt');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -259,13 +261,13 @@ class ZipTest extends TestCase
     public function testZipToString(): void
     {
         $filter = new ZipCompression();
-        $this->assertSame('Zip', $filter->toString());
+        self::assertSame('Zip', $filter->toString());
     }
 
     public function testDecompressWillThrowExceptionWhenDecompressingWithNoTarget(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
-            $this->markTestSkipped('ZIP compression tests are currently disabled');
+            self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
         $filter = new ZipCompression(
@@ -276,7 +278,7 @@ class ZipTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
 
         $filter  = new ZipCompression(
             [
@@ -285,9 +287,9 @@ class ZipTest extends TestCase
             ]
         );
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/_compress');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 
     /**
@@ -297,7 +299,7 @@ class ZipTest extends TestCase
     public function testDecompressWhenNoArchieveInClass(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
-            $this->markTestSkipped('ZIP compression tests are currently disabled');
+            self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
         $filter = new ZipCompression(
@@ -308,7 +310,7 @@ class ZipTest extends TestCase
         );
 
         $content = $filter->compress('compress me');
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR . 'compressed.zip', $content);
 
         $filter  = new ZipCompression(
             [
@@ -316,8 +318,8 @@ class ZipTest extends TestCase
             ]
         );
         $content = $filter->decompress($content);
-        $this->assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
+        self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/_compress');
-        $this->assertSame('compress me', $content);
+        self::assertSame('compress me', $content);
     }
 }

@@ -20,33 +20,29 @@ class ToNullTest extends TestCase
             'type' => ToNullFilter::TYPE_INTEGER,
         ]);
 
-        $this->assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
+        self::assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
     }
 
     public function testConstructorParams(): void
     {
         $filter = new ToNullFilter(ToNullFilter::TYPE_INTEGER);
 
-        $this->assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
+        self::assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
     }
 
     /**
-     * @param mixed $value
-     * @param bool  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected): void
+    public function testDefault(mixed $value, mixed $expected): void
     {
         $filter = new ToNullFilter();
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertSame($expected, $filter->filter($value));
     }
 
     /**
-     * @param int $type
-     * @param array $testData
      * @dataProvider typeTestProvider
      */
-    public function testTypes($type, $testData): void
+    public function testTypes(int $type, array $testData): void
     {
         $filter = new ToNullFilter($type);
         foreach ($testData as $data) {
@@ -58,7 +54,7 @@ class ToNullTest extends TestCase
                 var_export($expected, true),
                 $type
             );
-            $this->assertSame($expected, $filter->filter($value), $message);
+            self::assertSame($expected, $filter->filter($value), $message);
         }
     }
 
@@ -67,7 +63,7 @@ class ToNullTest extends TestCase
      * @param array $testData
      * @dataProvider combinedTypeTestProvider
      */
-    public function testCombinedTypes($typeData, $testData): void
+    public function testCombinedTypes(array $typeData, array $testData): void
     {
         foreach ($typeData as $type) {
             $filter = new ToNullFilter(['type' => $type]);
@@ -80,7 +76,7 @@ class ToNullTest extends TestCase
                     var_export($expected, true),
                     var_export($type, true)
                 );
-                $this->assertSame($expected, $filter->filter($value), $message);
+                self::assertSame($expected, $filter->filter($value), $message);
             }
         }
     }
@@ -96,23 +92,22 @@ class ToNullTest extends TestCase
     public function testGettingDefaultType(): void
     {
         $filter = new ToNullFilter();
-        $this->assertSame(63, $filter->getType());
+        self::assertSame(63, $filter->getType());
     }
 
     /**
      * Ensures that providing a duplicate initializing type results in the expected type
      *
-     * @param mixed $type Type to duplicate initialization
-     * @param mixed $expected Expected resulting type
      * @dataProvider duplicateTypeProvider
      */
-    public function testDuplicateInitializationResultsInCorrectType($type, $expected): void
+    public function testDuplicateInitializationResultsInCorrectType(int|string $type, int $expected): void
     {
         $filter = new ToNullFilter([$type, $type]);
-        $this->assertSame($expected, $filter->getType());
+        self::assertSame($expected, $filter->getType());
     }
 
-    public static function duplicateTypeProvider()
+    /** @return list<array{0: int|string, 1: int}> */
+    public static function duplicateTypeProvider(): array
     {
         return [
             [ToNullFilter::TYPE_BOOLEAN, ToNullFilter::TYPE_BOOLEAN],
@@ -132,7 +127,8 @@ class ToNullTest extends TestCase
         ];
     }
 
-    public static function defaultTestProvider()
+    /** @return list<array{0: mixed, 1: mixed}> */
+    public static function defaultTestProvider(): array
     {
         return [
             [null, null],
@@ -151,7 +147,8 @@ class ToNullTest extends TestCase
         ];
     }
 
-    public static function typeTestProvider()
+    /** @return list<array{0: int, 1: array}> */
+    public static function typeTestProvider(): array
     {
         return [
             [
@@ -283,7 +280,8 @@ class ToNullTest extends TestCase
         ];
     }
 
-    public static function combinedTypeTestProvider()
+    /** @return list<array[]> */
+    public static function combinedTypeTestProvider(): array
     {
         return [
             [

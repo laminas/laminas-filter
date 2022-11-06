@@ -10,7 +10,8 @@ use stdClass;
 
 class ToFloatTest extends TestCase
 {
-    public function filterableValuesProvider()
+    /** @return array<string, array{0: mixed, 1: float}> */
+    public function filterableValuesProvider(): array
     {
         return [
             'string word' => ['string', 0.0],
@@ -32,16 +33,15 @@ class ToFloatTest extends TestCase
      * Ensures that the filter follows expected behavior
      *
      * @dataProvider filterableValuesProvider
-     * @param mixed $input
-     * @param string $expectedOutput
      */
-    public function testCanFilterScalarValuesAsExpected($input, $expectedOutput): void
+    public function testCanFilterScalarValuesAsExpected(mixed $input, float $expectedOutput): void
     {
         $filter = new ToFloatFilter();
-        $this->assertSame($expectedOutput, $filter($input));
+        self::assertSame($expectedOutput, $filter($input));
     }
 
-    public function unfilterableValuesProvider()
+    /** @return array<string, array{0: mixed}> */
+    public function unfilterableValuesProvider(): array
     {
         return [
             'null'   => [null],
@@ -57,11 +57,10 @@ class ToFloatTest extends TestCase
 
     /**
      * @dataProvider unfilterableValuesProvider
-     * @param mixed $input
      */
-    public function testReturnsUnfilterableInputVerbatim($input): void
+    public function testReturnsUnfilterableInputVerbatim(mixed $input): void
     {
         $filter = new ToFloatFilter();
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

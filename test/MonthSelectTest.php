@@ -12,18 +12,16 @@ class MonthSelectTest extends TestCase
 {
     /**
      * @dataProvider provideFilter
-     * @param array $options filter options
-     * @param array|mixed|null|string $input input provided to the filter
-     * @param array|mixed|null|string $expected expected output
      */
-    public function testFilter($options, $input, $expected): void
+    public function testFilter(array $options, array $input, ?string $expected): void
     {
         $sut = new MonthSelectFilter();
         $sut->setOptions($options);
-        $this->assertSame($expected, $sut->filter($input));
+        self::assertSame($expected, $sut->filter($input));
     }
 
-    public function provideFilter()
+    /** @return list<array{0: array, 1: array, 2: string|null}> */
+    public function provideFilter(): array
     {
         return [
             [[], ['year' => '2014', 'month' => '10'], '2014-10'],

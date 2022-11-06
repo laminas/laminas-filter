@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use DateTime;
+use DateTimeInterface;
 use Laminas\Filter\DateTimeFormatter;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,7 @@ use function date_default_timezone_set;
 
 class DateTimeFormatterTest extends TestCase
 {
-    protected $defaultTimezone;
+    private string $defaultTimezone;
 
     public function setUp(): void
     {
@@ -27,7 +28,8 @@ class DateTimeFormatterTest extends TestCase
         date_default_timezone_set($this->defaultTimezone);
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -46,13 +48,13 @@ class DateTimeFormatterTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 
     public function testFormatterFormatsZero(): void
@@ -61,7 +63,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(0);
-        $this->assertSame('1970-01-01T00:00:00+0000', $result);
+        self::assertSame('1970-01-01T00:00:00+0000', $result);
     }
 
     public function testDateTimeFormatted(): void
@@ -70,7 +72,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter('2012-01-01');
-        $this->assertSame('2012-01-01T00:00:00+0000', $result);
+        self::assertSame('2012-01-01T00:00:00+0000', $result);
     }
 
     public function testDateTimeFormattedWithAlternateTimezones(): void
@@ -80,12 +82,12 @@ class DateTimeFormatterTest extends TestCase
         date_default_timezone_set('Europe/Paris');
 
         $resultParis = $filter->filter('2012-01-01');
-        $this->assertSame('2012-01-01T00:00:00+0100', $resultParis);
+        self::assertSame('2012-01-01T00:00:00+0100', $resultParis);
 
         date_default_timezone_set('America/New_York');
 
         $resultNewYork = $filter->filter('2012-01-01');
-        $this->assertSame('2012-01-01T00:00:00-0500', $resultNewYork);
+        self::assertSame('2012-01-01T00:00:00-0500', $resultNewYork);
     }
 
     public function testSetFormat(): void
@@ -93,9 +95,9 @@ class DateTimeFormatterTest extends TestCase
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
-        $filter->setFormat(DateTime::RFC1036);
+        $filter->setFormat(DateTimeInterface::RFC1036);
         $result = $filter->filter('2012-01-01');
-        $this->assertSame('Sun, 01 Jan 12 00:00:00 +0000', $result);
+        self::assertSame('Sun, 01 Jan 12 00:00:00 +0000', $result);
     }
 
     public function testFormatDateTimeFromTimestamp(): void
@@ -104,7 +106,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(1_359_739_801);
-        $this->assertSame('2013-02-01T17:30:01+0000', $result);
+        self::assertSame('2013-02-01T17:30:01+0000', $result);
     }
 
     public function testAcceptDateTimeValue(): void
@@ -113,14 +115,13 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(new DateTime('2012-01-01'));
-        $this->assertSame('2012-01-01T00:00:00+0000', $result);
+        self::assertSame('2012-01-01T00:00:00+0000', $result);
     }
 
     public function testInvalidArgumentExceptionThrownOnInvalidInput(): void
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
-
         $filter = new DateTimeFormatter();
-        $result = $filter->filter('2013-31-31');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $filter->filter('2013-31-31');
     }
 }

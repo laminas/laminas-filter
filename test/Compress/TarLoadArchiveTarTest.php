@@ -27,7 +27,7 @@ class TarLoadArchiveTarTest extends TestCase
 
         if (class_exists('Archive_Tar')) {
             restore_error_handler();
-            $this->markTestSkipped('PEAR Archive_Tar is present; skipping test that expects its absence');
+            self::markTestSkipped('PEAR Archive_Tar is present; skipping test that expects its absence');
         }
         restore_error_handler();
 

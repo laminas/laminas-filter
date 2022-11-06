@@ -12,7 +12,7 @@ use function preg_replace;
 
 class Alpha extends AbstractFilter
 {
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value) && ! is_array($value)) {
             return $value;

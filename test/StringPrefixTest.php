@@ -13,8 +13,7 @@ use function fopen;
 
 class StringPrefixTest extends TestCase
 {
-    /** @var StringPrefixFilter */
-    protected $filter;
+    private StringPrefixFilter $filter;
 
     public function setUp(): void
     {
@@ -31,7 +30,7 @@ class StringPrefixTest extends TestCase
         $prefix = 'ABC123';
         $filter->setPrefix($prefix);
 
-        $this->assertStringStartsWith($prefix, $filter('sample'));
+        self::assertStringStartsWith($prefix, $filter('sample'));
     }
 
     public function testWithoutPrefix(): void
@@ -44,9 +43,9 @@ class StringPrefixTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array{0: mixed}>
      */
-    public function invalidPrefixesDataProvider()
+    public function invalidPrefixesDataProvider(): array
     {
         return [
             'int'                 => [1],
@@ -65,9 +64,8 @@ class StringPrefixTest extends TestCase
 
     /**
      * @dataProvider invalidPrefixesDataProvider
-     * @param mixed $prefix
      */
-    public function testInvalidPrefixes($prefix): void
+    public function testInvalidPrefixes(mixed $prefix): void
     {
         $filter = $this->filter;
 
@@ -85,6 +83,6 @@ class StringPrefixTest extends TestCase
         $prefix = 'ABC123';
         $filter->setPrefix($prefix);
 
-        $this->assertInstanceOf(stdClass::class, $filter(new stdClass()));
+        self::assertInstanceOf(stdClass::class, $filter(new stdClass()));
     }
 }

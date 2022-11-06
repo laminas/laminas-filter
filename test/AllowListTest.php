@@ -24,16 +24,16 @@ class AllowListTest extends TestCase
             'strict' => true,
         ]);
 
-        $this->assertSame(true, $filter->getStrict());
-        $this->assertSame(['test', 1], $filter->getList());
+        self::assertSame(true, $filter->getStrict());
+        self::assertSame(['test', 1], $filter->getList());
     }
 
     public function testConstructorDefaults(): void
     {
         $filter = new AllowListFilter();
 
-        $this->assertSame(false, $filter->getStrict());
-        $this->assertSame([], $filter->getList());
+        self::assertSame(false, $filter->getStrict());
+        self::assertSame([], $filter->getList());
     }
 
     public function testWithPluginManager(): void
@@ -41,13 +41,13 @@ class AllowListTest extends TestCase
         $pluginManager = new FilterPluginManager(new ServiceManager());
         $filter        = $pluginManager->get('AllowList');
 
-        $this->assertInstanceOf(AllowListFilter::class, $filter);
+        self::assertInstanceOf(AllowListFilter::class, $filter);
     }
 
     public function testNullListShouldThrowException(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
-        $filter = new AllowListFilter([
+        new AllowListFilter([
             'list' => null,
         ]);
     }
@@ -59,7 +59,7 @@ class AllowListTest extends TestCase
         $filter = new AllowListFilter([
             'list' => $obj,
         ]);
-        $this->assertSame($array, $filter->getList());
+        self::assertSame($array, $filter->getList());
     }
 
     public function testSetStrictShouldCastToBoolean(): void
@@ -67,26 +67,22 @@ class AllowListTest extends TestCase
         $filter = new AllowListFilter([
             'strict' => 1,
         ]);
-        $this->assertSame(true, $filter->getStrict());
+        self::assertSame(true, $filter->getStrict());
     }
 
     /**
-     * @param mixed $value
-     * @param bool  $expected
      * @dataProvider defaultTestProvider
      */
-    public function testDefault($value, $expected): void
+    public function testDefault(mixed $value): void
     {
         $filter = new AllowListFilter();
-        $this->assertSame($expected, $filter->filter($value));
+        self::assertNull($filter->filter($value));
     }
 
     /**
-     * @param bool $strict
-     * @param array $testData
      * @dataProvider listTestProvider
      */
-    public function testList($strict, $list, $testData): void
+    public function testList(bool $strict, array $list, array $testData): void
     {
         $filter = new AllowListFilter([
             'strict' => $strict,
@@ -101,10 +97,11 @@ class AllowListTest extends TestCase
                 var_export($expected, true),
                 $strict
             );
-            $this->assertSame($expected, $filter->filter($value), $message);
+            self::assertSame($expected, $filter->filter($value), $message);
         }
     }
 
+    /** @return list<array{0: mixed, 1: null}> */
     public static function defaultTestProvider(): array
     {
         return [
@@ -116,6 +113,7 @@ class AllowListTest extends TestCase
         ];
     }
 
+    /** @return list<array{0: bool, 1: array, 2: array}> */
     public static function listTestProvider(): array
     {
         return [

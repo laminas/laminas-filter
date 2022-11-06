@@ -25,14 +25,13 @@ use function unlink;
 
 class DecryptTest extends TestCase
 {
-    public $fileToEncrypt;
+    private ?string $fileToEncrypt;
+    private ?string $tmpDir = null;
 
-    public $tmpDir;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
-            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
+            self::markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
 
         $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
@@ -41,9 +40,9 @@ class DecryptTest extends TestCase
         $this->fileToEncrypt = dirname(__DIR__) . '/_files/encryption.txt';
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
-        if (is_dir($this->tmpDir)) {
+        if ($this->tmpDir !== null && is_dir($this->tmpDir)) {
             if (file_exists($this->tmpDir . '/newencryption.txt')) {
                 unlink($this->tmpDir . '/newencryption.txt');
             }
@@ -64,7 +63,7 @@ class DecryptTest extends TestCase
         $filter = new FileEncrypt();
         $filter->setFilename($this->tmpDir . '/newencryption.txt');
 
-        $this->assertSame(
+        self::assertSame(
             $this->tmpDir . '/newencryption.txt',
             $filter->getFilename()
         );
@@ -74,18 +73,18 @@ class DecryptTest extends TestCase
 
         $filter = new FileDecrypt();
 
-        $this->assertNotEquals(
+        self::assertNotEquals(
             'Encryption',
             file_get_contents($this->tmpDir . '/newencryption.txt')
         );
 
         $filter->setKey('1234567890123456');
-        $this->assertSame(
+        self::assertSame(
             $this->tmpDir . '/newencryption.txt',
             $filter->filter($this->tmpDir . '/newencryption.txt')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'Encryption',
             trim(file_get_contents($this->tmpDir . '/newencryption.txt'))
         );
@@ -96,12 +95,12 @@ class DecryptTest extends TestCase
         $filter = new FileEncrypt();
         $filter->setFilename($this->tmpDir . '/newencryption.txt');
         $filter->setKey('1234567890123456');
-        $this->assertSame(
+        self::assertSame(
             $this->tmpDir . '/newencryption.txt',
             $filter->filter($this->fileToEncrypt)
         );
 
-        $this->assertNotEquals(
+        self::assertNotEquals(
             'Encryption',
             file_get_contents($this->tmpDir . '/newencryption.txt')
         );
@@ -109,16 +108,16 @@ class DecryptTest extends TestCase
         $filter = new FileDecrypt();
         $filter->setFilename($this->tmpDir . '/newencryption2.txt');
 
-        $this->assertSame(
+        self::assertSame(
             $this->tmpDir . '/newencryption2.txt',
             $filter->getFilename()
         );
 
         $filter->setKey('1234567890123456');
         $input = $filter->filter($this->tmpDir . '/newencryption.txt');
-        $this->assertSame($this->tmpDir . '/newencryption2.txt', $input);
+        self::assertSame($this->tmpDir . '/newencryption2.txt', $input);
 
-        $this->assertSame(
+        self::assertSame(
             'Encryption',
             trim(file_get_contents($this->tmpDir . '/newencryption2.txt'))
         );
@@ -156,6 +155,6 @@ class DecryptTest extends TestCase
         $filter = new FileDecrypt();
         $filter->setKey('1234567890123456');
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

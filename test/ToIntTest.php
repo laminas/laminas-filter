@@ -27,11 +27,12 @@ class ToIntTest extends TestCase
             '-0.9'   => 0,
         ];
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame($output, $filter($input));
+            self::assertSame($output, $filter($input));
         }
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -48,10 +49,10 @@ class ToIntTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new ToIntFilter();
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

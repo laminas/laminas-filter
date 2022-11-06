@@ -5,42 +5,28 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use ArrayObject;
-use Exception;
 use Laminas\Filter\Exception\DomainException;
 use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function file_get_contents;
-use function phpversion;
-use function restore_error_handler;
-use function set_error_handler;
 use function strlen;
-use function version_compare;
 
-use const E_NOTICE;
-use const E_WARNING;
 use const ENT_COMPAT;
 use const ENT_NOQUOTES;
 use const ENT_QUOTES;
 
 class HtmlEntitiesTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * Laminas\Filter\HtmlEntities object
-     *
-     * @var \Laminas\Filter\HtmlEntities
-     */
-    protected $_filter;
-    // @codingStandardsIgnoreEnd
+    private HtmlEntitiesFilter $filter;
 
     /**
      * Creates a new Laminas\Filter\HtmlEntities object for each test method
      */
     public function setUp(): void
     {
-        $this->_filter = new HtmlEntitiesFilter();
+        $this->filter = new HtmlEntitiesFilter();
     }
 
     /**
@@ -56,9 +42,9 @@ class HtmlEntitiesTest extends TestCase
             '"'      => '&quot;',
             '&'      => '&amp;',
         ];
-        $filter         = $this->_filter;
+        $filter         = $this->filter;
         foreach ($valuesExpected as $input => $output) {
-            $this->assertSame($output, $filter($input));
+            self::assertSame($output, $filter($input));
         }
     }
 
@@ -67,7 +53,7 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testGetQuoteStyle(): void
     {
-        $this->assertSame(ENT_QUOTES, $this->_filter->getQuoteStyle());
+        self::assertSame(ENT_QUOTES, $this->filter->getQuoteStyle());
     }
 
     /**
@@ -75,8 +61,8 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testSetQuoteStyle(): void
     {
-        $this->_filter->setQuoteStyle(ENT_QUOTES);
-        $this->assertSame(ENT_QUOTES, $this->_filter->getQuoteStyle());
+        $this->filter->setQuoteStyle(ENT_QUOTES);
+        self::assertSame(ENT_QUOTES, $this->filter->getQuoteStyle());
     }
 
     /**
@@ -86,7 +72,7 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testGetCharSet(): void
     {
-        $this->assertSame('UTF-8', $this->_filter->getCharSet());
+        self::assertSame('UTF-8', $this->filter->getCharSet());
     }
 
     /**
@@ -94,8 +80,8 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testSetCharSet(): void
     {
-        $this->_filter->setCharSet('UTF-8');
-        $this->assertSame('UTF-8', $this->_filter->getCharSet());
+        $this->filter->setCharSet('UTF-8');
+        self::assertSame('UTF-8', $this->filter->getCharSet());
     }
 
     /**
@@ -103,7 +89,7 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testGetDoubleQuote(): void
     {
-        $this->assertSame(true, $this->_filter->getDoubleQuote());
+        self::assertSame(true, $this->filter->getDoubleQuote());
     }
 
     /**
@@ -111,8 +97,8 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testSetDoubleQuote(): void
     {
-        $this->_filter->setDoubleQuote(false);
-        $this->assertSame(false, $this->_filter->getDoubleQuote());
+        $this->filter->setDoubleQuote(false);
+        self::assertSame(false, $this->filter->getDoubleQuote());
     }
 
     /**
@@ -122,8 +108,8 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testFluentInterface(): void
     {
-        $instance = $this->_filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES)->setDoubleQuote(false);
-        $this->assertInstanceOf(HtmlEntitiesFilter::class, $instance);
+        $instance = $this->filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES)->setDoubleQuote(false);
+        self::assertInstanceOf(HtmlEntitiesFilter::class, $instance);
     }
 
     /**
@@ -142,8 +128,8 @@ class HtmlEntitiesTest extends TestCase
             $config
         );
 
-        $this->assertSame('ISO-8859-1', $filter->getEncoding());
-        $this->assertSame(5, $filter->getQuoteStyle());
+        self::assertSame('ISO-8859-1', $filter->getEncoding());
+        self::assertSame(5, $filter->getQuoteStyle());
     }
 
     /**
@@ -156,8 +142,8 @@ class HtmlEntitiesTest extends TestCase
         $input  = "A 'single' and " . '"double"';
         $result = 'A &#039;single&#039; and &quot;double&quot;';
 
-        $this->_filter->setQuoteStyle(ENT_QUOTES);
-        $this->assertSame($result, $this->_filter->filter($input));
+        $this->filter->setQuoteStyle(ENT_QUOTES);
+        self::assertSame($result, $this->filter->filter($input));
     }
 
     /**
@@ -170,8 +156,8 @@ class HtmlEntitiesTest extends TestCase
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and &quot;double&quot;";
 
-        $this->_filter->setQuoteStyle(ENT_COMPAT);
-        $this->assertSame($result, $this->_filter->filter($input));
+        $this->filter->setQuoteStyle(ENT_COMPAT);
+        self::assertSame($result, $this->filter->filter($input));
     }
 
     /**
@@ -184,8 +170,8 @@ class HtmlEntitiesTest extends TestCase
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and " . '"double"';
 
-        $this->_filter->setQuoteStyle(ENT_NOQUOTES);
-        $this->assertSame($result, $this->_filter->filter($input));
+        $this->filter->setQuoteStyle(ENT_NOQUOTES);
+        self::assertSame($result, $this->filter->filter($input));
     }
 
     /**
@@ -193,19 +179,9 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testCorrectsForEncodingMismatch(): void
     {
-        if (version_compare(phpversion(), '5.4', '>=')) {
-            $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
-        }
-
         $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
-
-        // restore_error_handler can emit an E_WARNING; let's ignore that, as
-        // we want to test the returned value
-        set_error_handler([$this, 'errorHandler'], E_NOTICE | E_WARNING);
-        $result = $this->_filter->filter($string);
-        restore_error_handler();
-
-        $this->assertGreaterThan(0, strlen($result));
+        $result = $this->filter->filter($string);
+        self::assertGreaterThan(0, strlen($result));
     }
 
     /**
@@ -213,19 +189,9 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testStripsUnknownCharactersWhenEncodingMismatchDetected(): void
     {
-        if (version_compare(phpversion(), '5.4', '>=')) {
-            $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
-        }
-
         $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
-
-        // restore_error_handler can emit an E_WARNING; let's ignore that, as
-        // we want to test the returned value
-        set_error_handler([$this, 'errorHandler'], E_NOTICE | E_WARNING);
-        $result = $this->_filter->filter($string);
-        restore_error_handler();
-
-        $this->assertContains('&quot;&quot;', $result);
+        $result = $this->filter->filter($string);
+        self::assertStringContainsString('&quot;&quot;', $result);
     }
 
     /**
@@ -233,25 +199,13 @@ class HtmlEntitiesTest extends TestCase
      */
     public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty(): void
     {
-        if (version_compare(phpversion(), '5.4', '>=')) {
-            $this->markTestIncomplete('Code to test is not compatible with PHP 5.4 ');
-        }
-
         $string = file_get_contents(__DIR__ . '/_files/latin-1-dash-only.txt');
-
-        // restore_error_handler can emit an E_WARNING; let's ignore that, as
-        // we want to test the returned value
-        // Also, explicit try, so that we don't mess up PHPUnit error handlers
-        set_error_handler([$this, 'errorHandler'], E_NOTICE | E_WARNING);
-        try {
-            $result = $this->_filter->filter($string);
-            $this->fail('Expected exception from single non-utf-8 character');
-        } catch (Exception $e) {
-            $this->assertInstanceOf(DomainException::class, $e);
-        }
+        $this->expectException(DomainException::class);
+        $this->filter->filter($string);
     }
 
-    public function returnUnfilteredDataProvider()
+    /** @return list<array{0: mixed}> */
+    public function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -268,15 +222,8 @@ class HtmlEntitiesTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
-        $this->assertSame($input, $this->_filter->filter($input));
-    }
-
-    /**
-     * Null error handler; used when wanting to ignore specific error types
-     */
-    public function errorHandler($errno, $errstr)
-    {
+        self::assertSame($input, $this->filter->filter($input));
     }
 }

@@ -17,7 +17,7 @@ class DecryptTest extends TestCase
     public function setUp(): void
     {
         if (! extension_loaded('mcrypt') && ! extension_loaded('openssl')) {
-            $this->markTestSkipped('This filter needs the mcrypt or openssl extension');
+            self::markTestSkipped('This filter needs the mcrypt or openssl extension');
         }
     }
 
@@ -36,7 +36,7 @@ class DecryptTest extends TestCase
         $enc = $filter->getEncryption();
         $filter->setKey('1234567890123456');
         foreach ($valuesExpected as $input => $output) {
-            $this->assertNotEquals($output, $filter($input));
+            self::assertNotEquals($output, $filter($input));
         }
     }
 
@@ -50,7 +50,7 @@ class DecryptTest extends TestCase
         // @codingStandardsIgnoreStart
         $decrypted = $decrypt->filter('ec133eb7460682b0020b736ad6d2ef14c35de0f1e5976330ae1dd096ef3b4cb7MTIzNDU2Nzg5MDEyMzQ1NoZvxY1JkeL6TnQP3ug5F0k=');
         // @codingStandardsIgnoreEnd
-        $this->assertSame($decrypted, 'test');
+        self::assertSame($decrypted, 'test');
     }
 
     /**
@@ -59,7 +59,7 @@ class DecryptTest extends TestCase
     public function testBasicOpenssl(): void
     {
         if (! extension_loaded('openssl')) {
-            $this->markTestSkipped('Openssl extension not installed');
+            self::markTestSkipped('Openssl extension not installed');
         }
 
         $filter = new DecryptFilter(['adapter' => 'Openssl']);
@@ -72,7 +72,7 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
         $filter->setPrivateKey(__DIR__ . '/_files/privatekey.pem');
 
         $key = $filter->getPrivateKey();
-        $this->assertSame(
+        self::assertSame(
             [
                 __DIR__ . '/_files/privatekey.pem'
                   => '-----BEGIN RSA PRIVATE KEY-----
@@ -99,17 +99,17 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
     public function testSettingAdapterManually(): void
     {
         if (! extension_loaded('openssl')) {
-            $this->markTestSkipped('Openssl extension not installed');
+            self::markTestSkipped('Openssl extension not installed');
         }
 
         $filter = new DecryptFilter();
         $filter->setAdapter('Openssl');
-        $this->assertSame('Openssl', $filter->getAdapter());
-        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
+        self::assertSame('Openssl', $filter->getAdapter());
+        self::assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $filter->setAdapter('BlockCipher');
-        $this->assertSame('BlockCipher', $filter->getAdapter());
-        $this->assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
+        self::assertSame('BlockCipher', $filter->getAdapter());
+        self::assertInstanceOf(EncryptionAlgorithmInterface::class, $filter->getAdapterInstance());
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
@@ -147,6 +147,6 @@ d/fxzPfuO/bLpADozTAnYT9Hu3wPrQVLeAfCp0ojqH7DYg==
         $decrypt->setVector('1234567890123456890');
 
         $decrypted = $decrypt->filter($input);
-        $this->assertSame($input, $decrypted);
+        self::assertSame($input, $decrypted);
     }
 }

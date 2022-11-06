@@ -20,12 +20,12 @@ use function unlink;
 
 class DecompressTest extends TestCase
 {
-    public $tmpDir;
+    private string $tmpDir;
 
     public function setUp(): void
     {
         if (! extension_loaded('bz2')) {
-            $this->markTestSkipped('This filter is tested with the bz2 extension');
+            self::markTestSkipped('This filter is tested with the bz2 extension');
         }
 
         $this->tmpDir = sprintf('%s/%s', sys_get_temp_dir(), uniqid('laminasilter'));
@@ -44,6 +44,7 @@ class DecompressTest extends TestCase
         }
     }
 
+    /** @return iterable<array-key, array{0: string}> */
     public function returnFilterType(): iterable
     {
         if (extension_loaded('bz2')) {
@@ -59,16 +60,16 @@ class DecompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testBasicUsage($filterType): void
+    public function testBasicUsage(string $filterType): void
     {
         $filter = new DecompressFilter($filterType);
 
         $text       = 'compress me';
         $compressed = $filter->compress($text);
-        $this->assertNotEquals($text, $compressed);
+        self::assertNotEquals($text, $compressed);
 
         $decompressed = $filter($compressed);
-        $this->assertSame($text, $decompressed);
+        self::assertSame($text, $decompressed);
     }
 
     /**
@@ -76,23 +77,23 @@ class DecompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testCompressToFile($filterType): void
+    public function testCompressToFile(string $filterType): void
     {
         $filter  = new DecompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
-        $this->assertTrue($content);
+        self::assertTrue($content);
 
         $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2($archive);
-        $this->assertSame('compress me', $content2);
+        self::assertSame('compress me', $content2);
 
         $filter3 = new DecompressFilter($filterType);
         $filter3->setArchive($archive);
         $content3 = $filter3(null);
-        $this->assertSame('compress me', $content3);
+        self::assertSame('compress me', $content3);
     }
 
     /**
@@ -100,37 +101,38 @@ class DecompressTest extends TestCase
      *
      * @dataProvider returnFilterType
      */
-    public function testDecompressArchive($filterType): void
+    public function testDecompressArchive(string $filterType): void
     {
         $filter  = new DecompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
-        $this->assertTrue($content);
+        self::assertTrue($content);
 
         $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2($archive);
-        $this->assertSame('compress me', $content2);
+        self::assertSame('compress me', $content2);
     }
 
     /**
      * @dataProvider returnFilterType
      */
-    public function testFilterMethodProxiesToDecompress($filterType): void
+    public function testFilterMethodProxiesToDecompress(string $filterType): void
     {
         $filter  = new DecompressFilter($filterType);
         $archive = $this->tmpDir . '/compressed.' . $filterType;
         $filter->setArchive($archive);
 
         $content = $filter->compress('compress me');
-        $this->assertTrue($content);
+        self::assertTrue($content);
 
         $filter2  = new DecompressFilter($filterType);
         $content2 = $filter2->filter($archive);
-        $this->assertSame('compress me', $content2);
+        self::assertSame('compress me', $content2);
     }
 
+    /** @return iterable<array-key, array{0: string, 1: mixed}> */
     public function returnUnfilteredDataProvider(): iterable
     {
         foreach ($this->returnFilterType() as $parameter) {
@@ -148,10 +150,10 @@ class DecompressTest extends TestCase
     /**
      * @dataProvider returnUnfilteredDataProvider
      */
-    public function testReturnUnfiltered($filterType, $input): void
+    public function testReturnUnfiltered(string $filterType, mixed $input): void
     {
         $filter = new DecompressFilter($filterType);
 
-        $this->assertSame($input, $filter($input));
+        self::assertSame($input, $filter($input));
     }
 }

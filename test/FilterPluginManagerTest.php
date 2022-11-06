@@ -27,7 +27,7 @@ class FilterPluginManagerTest extends TestCase
     public function testFilterSuccessfullyRetrieved(): void
     {
         $filter = $this->filters->get('int');
-        $this->assertInstanceOf(ToInt::class, $filter);
+        self::assertInstanceOf(ToInt::class, $filter);
     }
 
     public function testRegisteringInvalidFilterRaisesException(): void
@@ -59,9 +59,9 @@ class FilterPluginManagerTest extends TestCase
 
         $filter = $this->filters->get('wordseparatortoseparator', $options);
 
-        $this->assertInstanceOf(SeparatorToSeparator::class, $filter);
-        $this->assertSame($searchSeparator, $filter->getSearchSeparator());
-        $this->assertSame($replacementSeparator, $filter->getReplacementSeparator());
+        self::assertInstanceOf(SeparatorToSeparator::class, $filter);
+        self::assertSame($searchSeparator, $filter->getSearchSeparator());
+        self::assertSame($replacementSeparator, $filter->getReplacementSeparator());
     }
 
     /**
@@ -85,7 +85,7 @@ class FilterPluginManagerTest extends TestCase
             ]
         );
 
-        $this->assertNotEquals($filterOne, $filterTwo);
+        self::assertNotEquals($filterOne, $filterTwo);
     }
 
     /** @return class-string<Throwable> */
