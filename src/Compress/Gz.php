@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
-use Traversable;
 
 use function end;
 use function extension_loaded;
@@ -22,6 +21,7 @@ use function gzopen;
 use function gzread;
 use function gzuncompress;
 use function gzwrite;
+use function is_string;
 use function strpos;
 use function unpack;
 
@@ -29,6 +29,13 @@ use const SEEK_END;
 
 /**
  * Compression adapter for Gzip (ZLib)
+ *
+ * @psalm-type Options = array{
+ *     level: int,
+ *     mode: string,
+ *     archive: string|null,
+ * }
+ * @extends AbstractCompressionAlgorithm<Options>
  */
 class Gz extends AbstractCompressionAlgorithm
 {
@@ -40,7 +47,7 @@ class Gz extends AbstractCompressionAlgorithm
      *     'archive'  => Archive to use
      * )
      *
-     * @var array
+     * @var Options
      */
     protected $options = [
         'level'   => 9,
@@ -49,7 +56,7 @@ class Gz extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * @param null|array|Traversable $options (Optional) Options to set
+     * @param null|Options|iterable $options (Optional) Options to set
      * @throws Exception\ExtensionNotLoadedException If zlib extension not loaded.
      */
     public function __construct($options = null)
@@ -117,7 +124,7 @@ class Gz extends AbstractCompressionAlgorithm
     /**
      * Returns the set archive
      *
-     * @return string
+     * @return string|null
      */
     public function getArchive()
     {
@@ -146,10 +153,10 @@ class Gz extends AbstractCompressionAlgorithm
     public function compress($content)
     {
         $archive = $this->getArchive();
-        if (! empty($archive)) {
+        if (is_string($archive) && $archive !== '') {
             $file = gzopen($archive, 'w' . $this->getLevel());
             if (! $file) {
-                throw new Exception\RuntimeException("Error opening the archive '" . $this->options['archive'] . "'");
+                throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
             }
 
             gzwrite($file, $content);

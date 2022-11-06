@@ -22,9 +22,6 @@
     <DocblockTypeContradiction occurrences="1">
       <code>gettype($options)</code>
     </DocblockTypeContradiction>
-    <InvalidThrow occurrences="1">
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
     <MixedArgument occurrences="4">
       <code>$key</code>
       <code>$key</code>
@@ -175,6 +172,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/Compress/AbstractCompressionAlgorithm.php">
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>[]</code>
+    </InvalidPropertyAssignmentValue>
     <MixedAssignment occurrences="1">
       <code>$option</code>
     </MixedAssignment>
@@ -186,14 +186,6 @@
     <InvalidReturnType occurrences="1">
       <code>string</code>
     </InvalidReturnType>
-    <MixedInferredReturnType occurrences="2">
-      <code>int</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;options['archive']</code>
-      <code>$this-&gt;options['blocksize']</code>
-    </MixedReturnStatement>
     <ParamNameMismatch occurrences="2">
       <code>$content</code>
       <code>$content</code>
@@ -202,8 +194,7 @@
       <code>(int) $blocksize</code>
       <code>(string) $archive</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>null !== $archive</code>
+    <RedundantConditionGivenDocblockType occurrences="2">
       <code>null !== $content</code>
       <code>null !== $content</code>
     </RedundantConditionGivenDocblockType>
@@ -226,19 +217,6 @@
     <MixedAssignment occurrences="1">
       <code>$size</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>int</code>
-      <code>string</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedOperand occurrences="1">
-      <code>$this-&gt;options['archive']</code>
-    </MixedOperand>
-    <MixedReturnStatement occurrences="3">
-      <code>$this-&gt;options['archive']</code>
-      <code>$this-&gt;options['level']</code>
-      <code>$this-&gt;options['mode']</code>
-    </MixedReturnStatement>
     <ParamNameMismatch occurrences="2">
       <code>$content</code>
       <code>$content</code>
@@ -247,9 +225,8 @@
       <code>(int) $level</code>
       <code>(string) $archive</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="5">
+    <RedundantConditionGivenDocblockType occurrences="4">
       <code>$mode === 'deflate' &amp;&amp; null !== $content</code>
-      <code>null !== $archive</code>
       <code>null !== $content</code>
       <code>null !== $content</code>
       <code>null !== $content</code>
@@ -336,6 +313,9 @@
     <DocblockTypeContradiction occurrences="1">
       <code>$result === false</code>
     </DocblockTypeContradiction>
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
     <MixedArgument occurrences="1">
       <code>$content</code>
     </MixedArgument>
@@ -348,19 +328,12 @@
       <code>$file[]</code>
       <code>$info</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-    </MixedInferredReturnType>
     <MixedMethodCall occurrences="1">
       <code>isFile</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="3">
-      <code>$this-&gt;options['archive']</code>
-      <code>$this-&gt;options['mode']</code>
-      <code>$this-&gt;options['target']</code>
-    </MixedReturnStatement>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;getArchive()</code>
+    </NullableReturnStatement>
     <ParamNameMismatch occurrences="2">
       <code>$content</code>
       <code>$content</code>
@@ -368,6 +341,9 @@
     <PossiblyInvalidArgument occurrences="1">
       <code>$content</code>
     </PossiblyInvalidArgument>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;getArchive()</code>
+    </PossiblyNullArgument>
     <PossiblyUndefinedVariable occurrences="2">
       <code>$file</code>
       <code>$file</code>
@@ -385,6 +361,9 @@
       <code>$res</code>
       <code>$res</code>
     </InvalidArgument>
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
     <InvalidScalarArgument occurrences="2">
       <code>$res</code>
       <code>$res</code>
@@ -392,16 +371,9 @@
     <MixedArgument occurrences="1">
       <code>$res</code>
     </MixedArgument>
-    <MixedInferredReturnType occurrences="3">
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <NullableReturnStatement occurrences="1">
       <code>$this-&gt;options['archive']</code>
-      <code>$this-&gt;options['archive']</code>
-      <code>$this-&gt;options['target']</code>
-    </MixedReturnStatement>
+    </NullableReturnStatement>
     <ParamNameMismatch occurrences="2">
       <code>$content</code>
       <code>$content</code>
@@ -410,6 +382,9 @@
       <code>strrpos($content, DIRECTORY_SEPARATOR)</code>
       <code>strrpos($content, DIRECTORY_SEPARATOR)</code>
     </PossiblyFalseOperand>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;getArchive()</code>
+    </PossiblyNullArgument>
     <RedundantCast occurrences="1">
       <code>(string) $target</code>
     </RedundantCast>
@@ -1327,11 +1302,6 @@
       <code>$existsOrOptions !== null</code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/StaticFilter.php">
-    <InvalidThrow occurrences="1">
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
-  </file>
   <file src="src/StringPrefix.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($prefix)</code>
@@ -2193,8 +2163,6 @@
       <code>setMethods</code>
     </DeprecatedMethod>
     <InvalidArgument occurrences="1">
-      <code>$e-&gt;getMessage()</code>
-      <code>$e-&gt;getMessage()</code>
       <code>$e-&gt;getMessage()</code>
     </InvalidArgument>
   </file>

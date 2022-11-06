@@ -23,6 +23,13 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Compression adapter for Tar
+ *
+ * @psalm-type Options = array{
+ *     archive?: string|null,
+ *     target: string,
+ *     mode?: 'gz'|'bz2'|null,
+ * }
+ * @extends AbstractCompressionAlgorithm<Options>
  */
 class Tar extends AbstractCompressionAlgorithm
 {
@@ -33,7 +40,7 @@ class Tar extends AbstractCompressionAlgorithm
      *     'target'  => Target to write the files to
      * )
      *
-     * @var array
+     * @var Options
      */
     protected $options = [
         'archive' => null,
@@ -42,7 +49,7 @@ class Tar extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * @param array $options (Optional) Options to set
+     * @param Options $options (Optional) Options to set
      * @throws Exception\ExtensionNotLoadedException If Archive_Tar component not available.
      */
     public function __construct($options = null)
@@ -60,11 +67,11 @@ class Tar extends AbstractCompressionAlgorithm
     /**
      * Returns the set archive
      *
-     * @return string
+     * @return string|null
      */
     public function getArchive()
     {
-        return $this->options['archive'];
+        return $this->options['archive'] ?? null;
     }
 
     /**
@@ -112,11 +119,11 @@ class Tar extends AbstractCompressionAlgorithm
     /**
      * Returns the set compression mode
      *
-     * @return string
+     * @return string|null
      */
     public function getMode()
     {
-        return $this->options['mode'];
+        return $this->options['mode'] ?? null;
     }
 
     /**

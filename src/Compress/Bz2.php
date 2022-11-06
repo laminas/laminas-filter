@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
-use Traversable;
 
 use function bzclose;
 use function bzcompress;
@@ -20,6 +19,12 @@ use function strpos;
 
 /**
  * Compression adapter for Bz2
+ *
+ * @psalm-type Options = array{
+ *     blocksize: int,
+ *     archive: string|null,
+ * }
+ * @extends AbstractCompressionAlgorithm<Options>
  */
 class Bz2 extends AbstractCompressionAlgorithm
 {
@@ -30,7 +35,7 @@ class Bz2 extends AbstractCompressionAlgorithm
      *     'archive'   => Archive to use
      * )
      *
-     * @var array
+     * @var Options
      */
     protected $options = [
         'blocksize' => 4,
@@ -38,7 +43,7 @@ class Bz2 extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * @param null|array|Traversable $options (Optional) Options to set
+     * @param null|Options|iterable $options (Optional) Options to set
      * @throws Exception\ExtensionNotLoadedException If bz2 extension not loaded.
      */
     public function __construct($options = null)
@@ -79,7 +84,7 @@ class Bz2 extends AbstractCompressionAlgorithm
     /**
      * Returns the set archive
      *
-     * @return string
+     * @return string|null
      */
     public function getArchive()
     {

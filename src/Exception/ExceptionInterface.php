@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Exception;
 
-interface ExceptionInterface
+use Throwable;
+
+interface ExceptionInterface extends Throwable
 {
 }

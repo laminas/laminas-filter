@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Filter\Compress;
 
 use Laminas\Filter\Exception;
-use Traversable;
 use ZipArchive;
 
 use function array_pop;
@@ -16,6 +15,7 @@ use function extension_loaded;
 use function file_exists;
 use function is_dir;
 use function is_file;
+use function is_string;
 use function realpath;
 use function rtrim;
 use function str_replace;
@@ -26,6 +26,13 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Compression adapter for zip
+ *
+ * @psalm-type Options = array{
+ *     archive: string|null,
+ *     password?: string|null,
+ *     target: string|null,
+ * }
+ * @extends AbstractCompressionAlgorithm<Options>
  */
 class Zip extends AbstractCompressionAlgorithm
 {
@@ -37,7 +44,7 @@ class Zip extends AbstractCompressionAlgorithm
      *     'target'   => Target to write the files to
      * )
      *
-     * @var array
+     * @var Options
      */
     protected $options = [
         'archive' => null,
@@ -45,7 +52,7 @@ class Zip extends AbstractCompressionAlgorithm
     ];
 
     /**
-     * @param null|array|Traversable $options (Optional) Options to set
+     * @param null|Options|iterable $options (Optional) Options to set
      * @throws Exception\ExtensionNotLoadedException If zip extension not loaded.
      */
     public function __construct($options = null)
@@ -59,7 +66,7 @@ class Zip extends AbstractCompressionAlgorithm
     /**
      * Returns the set archive
      *
-     * @return string
+     * @return string|null
      */
     public function getArchive()
     {
@@ -83,7 +90,7 @@ class Zip extends AbstractCompressionAlgorithm
     /**
      * Returns the set targetpath
      *
-     * @return string
+     * @return string|null
      */
     public function getTarget()
     {
@@ -168,7 +175,7 @@ class Zip extends AbstractCompressionAlgorithm
             }
         } else {
             $file = $this->getTarget();
-            if (! is_dir($file)) {
+            if (is_string($file) && ! is_dir($file)) {
                 $file = basename($file);
             } else {
                 $file = 'zip.tmp';
