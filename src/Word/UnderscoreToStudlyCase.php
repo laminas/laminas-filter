@@ -19,8 +19,9 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
     /**
      * Defined by Laminas\Filter\Filter
      *
-     * @param  string|array $value
+     * @param  mixed $value
      * @return string|array
+     * @psalm-return ($value is scalar ? string : $value is array ? array : mixed)
      */
     public function filter($value)
     {

@@ -11,9 +11,7 @@ use function str_replace;
 class DashToSeparator extends AbstractSeparator
 {
     /**
-     * Defined by Laminas\Filter\Filter
-     *
-     * @param  mixed $value
+     * @param mixed $value
      * @return mixed
      */
     public function filter($value)
