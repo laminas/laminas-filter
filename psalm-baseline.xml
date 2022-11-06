@@ -45,13 +45,15 @@
     <DocblockTypeContradiction occurrences="1">
       <code>gettype($translations)</code>
     </DocblockTypeContradiction>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$typeOrOptions</code>
+    </MixedArgumentTypeCoercion>
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;options['translations'][$message]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="2">
       <code>$flag</code>
       <code>$message</code>
-      <code>$value</code>
     </MixedAssignment>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
@@ -59,10 +61,14 @@
     <PossiblyNullArgument occurrences="1">
       <code>$type</code>
     </PossiblyNullArgument>
+    <PropertyTypeCoercion occurrences="1">
+      <code>$this-&gt;options</code>
+    </PropertyTypeCoercion>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $flag</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>is_int($value)</code>
       <code>is_object($translations)</code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -1201,15 +1207,25 @@
     </RedundantCondition>
   </file>
   <file src="src/ToNull.php">
-    <MixedAssignment occurrences="1">
-      <code>$value</code>
-    </MixedAssignment>
+    <DocblockTypeContradiction occurrences="2">
+      <code>$typeOrOptions === ''</code>
+      <code>$typeOrOptions === ''</code>
+    </DocblockTypeContradiction>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$typeOrOptions</code>
+    </MixedArgumentTypeCoercion>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
     <PossiblyNullArgument occurrences="1">
       <code>$type</code>
     </PossiblyNullArgument>
+    <PropertyTypeCoercion occurrences="1">
+      <code>$this-&gt;options</code>
+    </PropertyTypeCoercion>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_int($value)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/UpperCaseWords.php">
     <PossiblyInvalidArgument occurrences="2">
@@ -1381,9 +1397,12 @@
     </DeprecatedClass>
   </file>
   <file src="test/BooleanTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$type</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="1">
       <code>true</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArgument occurrences="4">
       <code>$value</code>
       <code>$value</code>
@@ -1962,9 +1981,12 @@
     </MixedArgument>
   </file>
   <file src="test/ToNullTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$type</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="1">
       <code>true</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArgument occurrences="3">
       <code>$value</code>
       <code>$value</code>

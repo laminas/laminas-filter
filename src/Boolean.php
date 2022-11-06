@@ -21,7 +21,7 @@ use function strtolower;
 
 /**
  * @psalm-type Options = array{
- *     type: int,
+ *     type: int-mask-of<self::TYPE_*>,
  *     casting: bool,
  *     translations: array,
  * }
@@ -41,8 +41,10 @@ class Boolean extends AbstractFilter
     public const TYPE_LOCALIZED    = 256;
     public const TYPE_ALL          = 511;
 
-    /** @var array<int, string> */
-    protected $constants = [
+    /** @var array<self::TYPE_*, string> */
+    protected $constants = self::CONSTANTS;
+
+    private const CONSTANTS = [
         self::TYPE_BOOLEAN      => 'boolean',
         self::TYPE_INTEGER      => 'integer',
         self::TYPE_FLOAT        => 'float',
@@ -64,41 +66,40 @@ class Boolean extends AbstractFilter
     ];
 
     /**
-     * @param int|string|Options|iterable|null $typeOrOptions
+     * @param self::TYPE_*|value-of<self::CONSTANTS>|list<self::TYPE_*>|Options|iterable|null $typeOrOptions
      * @param bool  $casting
      * @param array $translations
      */
     public function __construct($typeOrOptions = null, $casting = true, $translations = [])
     {
-        if ($typeOrOptions !== null) {
-            if ($typeOrOptions instanceof Traversable) {
-                $typeOrOptions = ArrayUtils::iteratorToArray($typeOrOptions);
-            }
-
-            if (is_array($typeOrOptions)) {
-                if (
-                    isset($typeOrOptions['type'])
-                    || isset($typeOrOptions['casting'])
-                    || isset($typeOrOptions['translations'])
-                ) {
-                    $this->setOptions($typeOrOptions);
-                } else {
-                    $this->setType($typeOrOptions);
-                    $this->setCasting($casting);
-                    $this->setTranslations($translations);
-                }
-            } else {
-                $this->setType($typeOrOptions);
-                $this->setCasting($casting);
-                $this->setTranslations($translations);
-            }
+        if ($typeOrOptions instanceof Traversable) {
+            $typeOrOptions = ArrayUtils::iteratorToArray($typeOrOptions);
         }
+
+        if (
+            is_array($typeOrOptions) && (
+                isset($typeOrOptions['type'])
+                || isset($typeOrOptions['casting'])
+                || isset($typeOrOptions['translations'])
+            )
+        ) {
+            $this->setOptions($typeOrOptions);
+
+            return;
+        }
+
+        if (is_array($typeOrOptions) || is_int($typeOrOptions) || is_string($typeOrOptions)) {
+            $this->setType($typeOrOptions);
+        }
+
+        $this->setCasting($casting);
+        $this->setTranslations($translations);
     }
 
     /**
      * Set boolean types
      *
-     * @param  int|string|array $type
+     * @param  self::TYPE_*|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
      * @throws Exception\InvalidArgumentException
      * @return self
      */
@@ -134,7 +135,7 @@ class Boolean extends AbstractFilter
     /**
      * Returns defined boolean types
      *
-     * @return int
+     * @return int-mask-of<self::TYPE_*>
      */
     public function getType()
     {
