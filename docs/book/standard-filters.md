@@ -624,9 +624,9 @@ accepts an array of all options.
 
 ### Lzf Adapter
 
-> ### Deprecated Adapter
->
-> This compression adapter has been deprecated for removal in version 3.0. Please consider an alternative compression format such as `gz` or `bz2`
+CAUTION: **Deprecated**
+This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
+Consider an alternative compression format such as `gz` or `bz2`.
 
 The Lzf Adapter can compress and decompress:
 
@@ -642,9 +642,9 @@ There are no options available to customize this adapter.
 
 ### Rar Adapter
 
-> ### Deprecated Adapter
->
-> This compression adapter has been deprecated for removal in version 3.0. Please consider an alternative compression format such as `gz` or `bz2`
+CAUTION: **Deprecated**
+This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
+Consider an alternative compression format such as `gz` or `bz2`.
 
 The Rar Adapter can compress and decompress:
 
