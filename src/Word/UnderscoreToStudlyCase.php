@@ -7,7 +7,6 @@ namespace Laminas\Filter\Word;
 use Laminas\Stdlib\StringUtils;
 
 use function array_map;
-use function extension_loaded;
 use function is_array;
 use function is_scalar;
 use function mb_strlen;
@@ -19,8 +18,9 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
     /**
      * Defined by Laminas\Filter\Filter
      *
-     * @param  string|array $value
+     * @param  mixed $value
      * @return string|array
+     * @psalm-return ($value is scalar ? string : $value is array ? array : mixed)
      */
     public function filter($value)
     {
@@ -32,7 +32,7 @@ class UnderscoreToStudlyCase extends UnderscoreToCamelCase
         $value          = parent::filter($value);
         $lowerCaseFirst = 'lcfirst';
 
-        if (StringUtils::hasPcreUnicodeSupport() && extension_loaded('mbstring')) {
+        if (StringUtils::hasPcreUnicodeSupport()) {
             $lowerCaseFirst = static function ($value) {
                 if (0 === mb_strlen($value)) {
                     return $value;

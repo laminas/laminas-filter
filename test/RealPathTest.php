@@ -29,7 +29,6 @@ class RealPathTest extends TestCase
     {
         $filename = __DIR__ . '/_files/file.1';
         $result   = $this->filter->filter($filename);
-        self::assertIsString($result);
         self::assertStringContainsString($filename, $result);
     }
 

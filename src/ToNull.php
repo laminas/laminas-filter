@@ -16,6 +16,12 @@ use function is_string;
 use function iterator_to_array;
 use function sprintf;
 
+/**
+ * @psalm-type Options = array{
+ *     type: int-mask-of<self::TYPE_*>,
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class ToNull extends AbstractFilter
 {
     public const TYPE_BOOLEAN     = 1;
@@ -26,8 +32,14 @@ class ToNull extends AbstractFilter
     public const TYPE_FLOAT       = 32;
     public const TYPE_ALL         = 63;
 
-    /** @var array */
-    protected $constants = [
+    /**
+     * @deprecated since 2.26 - superseded by self::CONSTANTS
+     *
+     * @var array<self::TYPE_*, string>
+     */
+    protected $constants = self::CONSTANTS;
+
+    private const CONSTANTS = [
         self::TYPE_BOOLEAN     => 'boolean',
         self::TYPE_INTEGER     => 'integer',
         self::TYPE_EMPTY_ARRAY => 'array',
@@ -37,39 +49,38 @@ class ToNull extends AbstractFilter
         self::TYPE_ALL         => 'all',
     ];
 
-    /** @var array */
+    /** @var Options */
     protected $options = [
         'type' => self::TYPE_ALL,
     ];
 
     /**
-     * Constructor
-     *
-     * @param int|string|array|Traversable|null $typeOrOptions
+     * @phpcs:disable Generic.Files.LineLength.TooLong
+     * @param int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|Options|iterable|null $typeOrOptions
      */
     public function __construct($typeOrOptions = null)
     {
-        if ($typeOrOptions !== null) {
-            if ($typeOrOptions instanceof Traversable) {
-                $typeOrOptions = iterator_to_array($typeOrOptions);
-            }
-
-            if (is_array($typeOrOptions)) {
-                if (isset($typeOrOptions['type'])) {
-                    $this->setOptions($typeOrOptions);
-                } else {
-                    $this->setType($typeOrOptions);
-                }
-            } else {
-                $this->setType($typeOrOptions);
-            }
+        if ($typeOrOptions === null || $typeOrOptions === '') {
+            return;
         }
+
+        if ($typeOrOptions instanceof Traversable) {
+            $typeOrOptions = iterator_to_array($typeOrOptions);
+        }
+
+        if (is_array($typeOrOptions) && isset($typeOrOptions['type'])) {
+            $this->setOptions($typeOrOptions);
+
+            return;
+        }
+
+        $this->setType($typeOrOptions);
     }
 
     /**
      * Set boolean types
      *
-     * @param  int|string|array $type
+     * @param int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
      * @throws Exception\InvalidArgumentException
      * @return self
      */
@@ -80,13 +91,13 @@ class ToNull extends AbstractFilter
             foreach ($type as $value) {
                 if (is_int($value)) {
                     $detected |= $value;
-                } elseif (($found = array_search($value, $this->constants, true)) !== false) {
+                } elseif (($found = array_search($value, self::CONSTANTS, true)) !== false) {
                     $detected |= $found;
                 }
             }
 
             $type = $detected;
-        } elseif (is_string($type) && ($found = array_search($type, $this->constants, true)) !== false) {
+        } elseif (is_string($type) && ($found = array_search($type, self::CONSTANTS, true)) !== false) {
             $type = $found;
         }
 
@@ -105,7 +116,7 @@ class ToNull extends AbstractFilter
     /**
      * Returns defined boolean types
      *
-     * @return int
+     * @return int-mask-of<self::TYPE_*>
      */
     public function getType()
     {

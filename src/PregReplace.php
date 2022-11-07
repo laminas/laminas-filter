@@ -19,8 +19,16 @@ use function preg_replace;
 use function sprintf;
 use function strpos;
 
+/**
+ * @psalm-type Options = array{
+ *     pattern: string|list<string>|null,
+ *     replacement: string|list<string>,
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class PregReplace extends AbstractFilter
 {
+    /** @var Options */
     protected $options = [
         'pattern'     => null,
         'replacement' => '',
@@ -32,7 +40,7 @@ class PregReplace extends AbstractFilter
      *     'pattern'     => matching pattern
      *     'replacement' => replace with this
      *
-     * @param  array|Traversable|string|null $options
+     * @param  iterable|Options|string|null $options
      */
     public function __construct($options = null)
     {
@@ -58,7 +66,7 @@ class PregReplace extends AbstractFilter
      *
      * @see preg_replace()
      *
-     * @param  string|array $pattern - same as the first argument of preg_replace
+     * @param  string|list<string> $pattern - same as the first argument of preg_replace
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -68,7 +76,7 @@ class PregReplace extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects pattern to be array or string; received "%s"',
                 __METHOD__,
-                is_object($pattern) ? get_class($pattern) : gettype($pattern)
+                is_object($pattern) ? $pattern::class : gettype($pattern)
             ));
         }
 
@@ -89,7 +97,7 @@ class PregReplace extends AbstractFilter
     /**
      * Get currently set match pattern
      *
-     * @return string|array
+     * @return string|list<string>|null
      */
     public function getPattern()
     {
@@ -101,7 +109,7 @@ class PregReplace extends AbstractFilter
      *
      * @see preg_replace()
      *
-     * @param  array|string $replacement - same as the second argument of preg_replace
+     * @param  string|list<string> $replacement - same as the second argument of preg_replace
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -121,7 +129,7 @@ class PregReplace extends AbstractFilter
     /**
      * Get currently set replacement value
      *
-     * @return string|array
+     * @return string|list<string>
      */
     public function getReplacement()
     {

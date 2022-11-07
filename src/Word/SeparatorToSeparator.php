@@ -13,12 +13,12 @@ use function preg_replace;
 
 class SeparatorToSeparator extends AbstractFilter
 {
+    /** @var string */
     protected $searchSeparator;
+    /** @var string */
     protected $replacementSeparator;
 
     /**
-     * Constructor
-     *
      * @param  string $searchSeparator      Separator to search for
      * @param  string $replacementSeparator Separator to replace with
      */
@@ -77,8 +77,9 @@ class SeparatorToSeparator extends AbstractFilter
      *
      * Returns the string $value, replacing the searched separators with the defined ones
      *
-     * @param  mixed $value
+     * @param  string|mixed $value
      * @return mixed
+     * @psalm-return ($value is string ? string : mixed)
      */
     public function filter($value)
     {
@@ -89,8 +90,8 @@ class SeparatorToSeparator extends AbstractFilter
     }
 
     /**
-     * @param  string|string[] $value
-     * @return string|string[]
+     * @param  string $value
+     * @return string
      */
     private function filterNormalizedValue($value)
     {

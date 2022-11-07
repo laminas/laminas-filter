@@ -7,16 +7,15 @@ namespace Laminas\Filter\Word;
 use Closure;
 use Laminas\Stdlib\StringUtils;
 
-use function extension_loaded;
+use function mb_strtoupper;
 use function preg_quote;
 use function preg_replace_callback;
+use function strtoupper;
 
 class SeparatorToCamelCase extends AbstractSeparator
 {
     /**
-     * Defined by Laminas\Filter\Filter
-     *
-     * @param  mixed $value
+     * @param mixed $value
      * @return mixed
      */
     public function filter($value)
@@ -37,35 +36,22 @@ class SeparatorToCamelCase extends AbstractSeparator
         $pregQuotedSeparator = preg_quote($this->separator, '#');
 
         if (StringUtils::hasPcreUnicodeSupport()) {
-            $patterns = [
+            $patterns     = [
                 '#(' . $pregQuotedSeparator . ')(\P{Z}{1})#u',
                 '#(^\P{Z}{1})#u',
             ];
-            if (! extension_loaded('mbstring')) {
-                $replacements = [
-                    // @codingStandardsIgnoreStart
-                    static fn($matches) => strtoupper($matches[2]),
-                    static fn($matches) => strtoupper($matches[1]),
-                    // @codingStandardsIgnoreEnd
-                ];
-            } else {
-                $replacements = [
-                    // @codingStandardsIgnoreStart
-                    static fn($matches) => mb_strtoupper($matches[2], 'UTF-8'),
-                    static fn($matches) => mb_strtoupper($matches[1], 'UTF-8'),
-                    // @codingStandardsIgnoreEnd
-                ];
-            }
+            $replacements = [
+                static fn($matches) => mb_strtoupper($matches[2], 'UTF-8'),
+                static fn($matches) => mb_strtoupper($matches[1], 'UTF-8'),
+            ];
         } else {
             $patterns     = [
                 '#(' . $pregQuotedSeparator . ')([\S]{1})#',
                 '#(^[\S]{1})#',
             ];
             $replacements = [
-                // @codingStandardsIgnoreStart
                 static fn($matches) => strtoupper($matches[2]),
                 static fn($matches) => strtoupper($matches[1]),
-                // @codingStandardsIgnoreEnd
             ];
         }
 

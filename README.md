@@ -1,6 +1,7 @@
 # laminas-filter
 
 [![Build Status](https://github.com/laminas/laminas-filter/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-filter/actions?query=workflow%3A"Continuous+Integration")
+[![Type Coverage](https://shepherd.dev/github/laminas/laminas-filter/coverage.svg)](https://shepherd.dev/github/laminas/laminas-filter)
 
 > ## 🇷🇺 Русским гражданам
 >

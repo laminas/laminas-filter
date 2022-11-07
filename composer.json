@@ -39,13 +39,13 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.4.0",
-        "laminas/laminas-crypt": "^3.8",
-        "laminas/laminas-uri": "^2.9.1",
+        "laminas/laminas-crypt": "^3.9",
+        "laminas/laminas-uri": "^2.10",
         "pear/archive_tar": "^1.4.14",
-        "phpunit/phpunit": "^9.5.25",
-        "psalm/plugin-phpunit": "^0.18.0",
+        "phpunit/phpunit": "^9.5.26",
+        "psalm/plugin-phpunit": "^0.18.3",
         "psr/http-factory": "^1.0.1",
-        "vimeo/psalm": "^4.28"
+        "vimeo/psalm": "^4.30"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",

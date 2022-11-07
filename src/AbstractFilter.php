@@ -9,22 +9,25 @@ use Traversable;
 
 use function array_key_exists;
 use function array_map;
-use function get_class;
 use function gettype;
 use function is_array;
 use function is_object;
 use function is_scalar;
+use function is_string;
 use function method_exists;
 use function sprintf;
 use function str_replace;
 use function ucwords;
 
+/**
+ * @template TOptions of array
+ */
 abstract class AbstractFilter implements FilterInterface
 {
     /**
      * Filter options
      *
-     * @var array
+     * @var TOptions
      */
     protected $options = [];
 
@@ -39,7 +42,7 @@ abstract class AbstractFilter implements FilterInterface
     }
 
     /**
-     * @param  array|Traversable $options
+     * @param  TOptions|iterable $options
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -49,22 +52,24 @@ abstract class AbstractFilter implements FilterInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
-                is_object($options) ? get_class($options) : gettype($options)
+                is_object($options) ? $options::class : gettype($options)
             ));
         }
 
         foreach ($options as $key => $value) {
-            $setter = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
-            if (method_exists($this, $setter)) {
+            $setter = is_string($key)
+                ? 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)))
+                : null;
+            if ($setter && method_exists($this, $setter)) {
                 $this->{$setter}($value);
-            } elseif (array_key_exists($key, $this->options)) {
+            } elseif (is_string($key) && array_key_exists($key, $this->options)) {
                 $this->options[$key] = $value;
             } else {
                 throw new Exception\InvalidArgumentException(
                     sprintf(
                         'The option "%s" does not have a matching %s setter method or options[%s] array key',
                         $key,
-                        $setter,
+                        (string) $setter,
                         $key
                     )
                 );
@@ -76,7 +81,7 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Retrieve options representing object state
      *
-     * @return array
+     * @return TOptions
      */
     public function getOptions()
     {
