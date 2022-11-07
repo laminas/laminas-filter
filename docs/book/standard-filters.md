@@ -814,7 +814,7 @@ This returns `C:/Temp`.
 ## Encrypt and Decrypt
 
 CAUTION: **Deprecated**
-These filters were deprecated in version 2.24.0. and will be removed in version 3.0.0.
+These filters were deprecated in version 2.24.0 and will be removed in version 3.0.0.
 You are encouraged to implement your own encryption or decryption filters by implementing `FilterInterface` around a dedicated crypto library.
 See [Writing Filters](writing-filters.md)
 
