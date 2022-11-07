@@ -8,8 +8,6 @@ use Laminas\Filter\Compress\Snappy as SnappyCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
 
-use TypeError;
-
 use function extension_loaded;
 use function restore_error_handler;
 use function set_error_handler;

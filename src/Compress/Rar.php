@@ -11,6 +11,9 @@ use function extension_loaded;
 use function file_exists;
 use function is_callable;
 use function is_dir;
+use function rar_close;
+use function rar_list;
+use function rar_open;
 use function realpath;
 use function str_replace;
 
