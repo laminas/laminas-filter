@@ -8,6 +8,8 @@ use Laminas\Filter\Compress\Snappy as SnappyCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
 
+use TypeError;
+
 use function extension_loaded;
 use function restore_error_handler;
 use function set_error_handler;
@@ -37,20 +39,28 @@ class SnappyTest extends TestCase
         self::assertSame('compress me', $content);
     }
 
-    /**
-     * Snappy should return NULL on invalid arguments.
-     */
-    public function testNonScalarInput(): void
+    public function testANonStringWillYieldATypeErrorDuringCompression(): void
+    {
+        $this->expectError();
+        $this->expectErrorMessage('snappy_compress : expects parameter to be string');
+        /** @psalm-suppress InvalidArgument, InvalidCast */
+        (new SnappyCompression())->compress([]);
+    }
+
+    public function testNonScalarInputCausesAnException(): void
     {
         $filter = new SnappyCompression();
-
-        // restore_error_handler can emit an E_WARNING; let's ignore that, as
-        // we want to test the returned value
-        set_error_handler([$this, 'errorHandler'], E_WARNING);
-        $content = $filter->compress([]);
-        restore_error_handler();
-
-        self::assertNull($content);
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static fn (int $num, string $msg): bool => true, E_WARNING);
+        try {
+            /** @psalm-suppress InvalidArgument, InvalidCast */
+            $filter->compress([]);
+            self::fail('No exception was thrown');
+        } catch (Exception\RuntimeException $e) {
+            self::assertStringContainsString('Error while compressing', $e->getMessage());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -60,7 +70,7 @@ class SnappyTest extends TestCase
     {
         $filter = new SnappyCompression();
 
-        $content = $filter->compress(false);
+        $content = $filter->compress('');
         $content = $filter->decompress($content);
         self::assertSame('', $content, 'Snappy failed to decompress empty string.');
     }
@@ -75,10 +85,9 @@ class SnappyTest extends TestCase
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('Error while decompressing.');
 
-        // restore_error_handler can emit an E_WARNING; let's ignore that, as
-        // we want to test the returned value
-        set_error_handler([$this, 'errorHandler'], E_WARNING);
-        $content = $filter->decompress('123');
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static fn (int $num, string $msg): bool => true, E_WARNING);
+        $filter->decompress('123');
         restore_error_handler();
     }
 
@@ -94,7 +103,7 @@ class SnappyTest extends TestCase
     /**
      * Null error handler; used when wanting to ignore specific error types
      */
-    public function errorHandler($errno, $errstr)
+    public function errorHandler($errno, $errstr): void
     {
     }
 }
