@@ -8,6 +8,8 @@ use Laminas\Filter\Exception;
 use Traversable;
 
 use function extension_loaded;
+use function snappy_compress;
+use function snappy_uncompress;
 
 /**
  * Compression adapter for php snappy (http://code.google.com/p/php-snappy/)

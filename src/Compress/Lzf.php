@@ -7,6 +7,8 @@ namespace Laminas\Filter\Compress;
 use Laminas\Filter\Exception;
 
 use function extension_loaded;
+use function lzf_compress;
+use function lzf_decompress;
 
 /**
  * Compression adapter for Lzf

@@ -114,7 +114,7 @@ class RarTest extends TestCase
     public function testRarGetSetOptions(): void
     {
         $filter = new RarCompression();
-        self::assertSame(
+        self::assertEquals(
             [
                 'archive'  => null,
                 'callback' => null,
@@ -204,6 +204,7 @@ class RarTest extends TestCase
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
+        /** @psalm-suppress UndefinedFunction */
         $filter->setCallback('invalidCallback');
     }
 

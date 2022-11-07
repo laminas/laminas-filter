@@ -1,0 +1,39 @@
+#!/bin/bash
+
+WORKING_DIRECTORY=$2
+JOB=$3
+PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
+
+cd "$TMPDIR" || exit 1;
+
+apt install -y make g++
+
+pecl channel-update pecl.php.net
+
+# Install lzf
+pecl install lzf || exit 1
+echo "extension=lzf.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
+
+# Install rar
+pecl install rar
+echo "extension=rar.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
+
+# Install snappy
+git clone --recursive --depth=1 https://github.com/kjdev/php-ext-snappy.git
+cd php-ext-snappy || exit 1;
+phpize
+./configure
+make
+make install
+
+echo "extension=snappy.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
+
+# Debug output
+php --ri lzf
+echo ""
+php --ri rar
+echo ""
+php --ri snappy
+echo ""
+
+cd "$WORKING_DIRECTORY" || exit 1;
