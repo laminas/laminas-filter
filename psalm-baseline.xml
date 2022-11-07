@@ -204,28 +204,20 @@
     </ParamNameMismatch>
   </file>
   <file src="src/Compress/Rar.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>$callback === null</code>
-    </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch occurrences="1">
+    <ImplementedReturnTypeMismatch occurrences="2">
       <code>bool</code>
+      <code>string|null</code>
     </ImplementedReturnTypeMismatch>
-    <MixedInferredReturnType occurrences="4">
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="4">
-      <code>$this-&gt;options['archive']</code>
-      <code>$this-&gt;options['callback']</code>
-      <code>$this-&gt;options['password']</code>
-      <code>$this-&gt;options['target']</code>
-    </MixedReturnStatement>
+    <MixedMethodCall occurrences="1">
+      <code>extract</code>
+    </MixedMethodCall>
     <ParamNameMismatch occurrences="2">
       <code>$content</code>
       <code>$content</code>
     </ParamNameMismatch>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$this-&gt;options['password']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCast occurrences="2">
       <code>(string) $archive</code>
       <code>(string) $target</code>
@@ -233,18 +225,15 @@
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(string) $password</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$password !== null</code>
-    </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType occurrences="4">
       <code>! $archive</code>
       <code>! $filelist</code>
       <code>$archive</code>
       <code>$filelist</code>
     </TypeDoesNotContainType>
-    <UndefinedClass occurrences="1">
-      <code>$filelist</code>
-    </UndefinedClass>
+    <UnusedFunctionCall occurrences="1">
+      <code>rar_close</code>
+    </UnusedFunctionCall>
   </file>
   <file src="src/Compress/Snappy.php">
     <MixedAssignment occurrences="2">
@@ -1278,30 +1267,22 @@
       <code>$matches</code>
       <code>$matches</code>
       <code>$matches</code>
-      <code>$matches</code>
-      <code>$matches</code>
     </MissingClosureParamType>
     <MissingClosureReturnType occurrences="4">
       <code>static fn($matches) =&gt; mb_strtoupper($matches[1], 'UTF-8')</code>
       <code>static fn($matches) =&gt; mb_strtoupper($matches[2], 'UTF-8')</code>
       <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
-      <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
-      <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
       <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
     </MissingClosureReturnType>
     <MixedArgument occurrences="4">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
-      <code>$matches[1]</code>
-      <code>$matches[2]</code>
       <code>$matches[2]</code>
       <code>$matches[2]</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="4">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
-      <code>$matches[1]</code>
-      <code>$matches[2]</code>
       <code>$matches[2]</code>
       <code>$matches[2]</code>
     </MixedArrayAccess>
@@ -1423,12 +1404,6 @@
     </NullArgument>
   </file>
   <file src="test/Compress/RarTest.php">
-    <InvalidArgument occurrences="1">
-      <code>$callback</code>
-    </InvalidArgument>
-    <InvalidCast occurrences="1">
-      <code>$callback</code>
-    </InvalidCast>
     <InvalidReturnStatement occurrences="1">
       <code>true</code>
     </InvalidReturnStatement>
@@ -1440,35 +1415,10 @@
     </UndefinedDocblockClass>
   </file>
   <file src="test/Compress/SnappyTest.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>assertNull</code>
-    </DocblockTypeContradiction>
-    <InvalidArgument occurrences="2">
-      <code>[]</code>
-      <code>false</code>
-    </InvalidArgument>
-    <InvalidCast occurrences="1">
-      <code>[]</code>
-    </InvalidCast>
     <MissingParamType occurrences="2">
       <code>$errno</code>
       <code>$errstr</code>
     </MissingParamType>
-    <MissingReturnType occurrences="1">
-      <code>errorHandler</code>
-    </MissingReturnType>
-    <MixedArgumentTypeCoercion occurrences="2">
-      <code>[$this, 'errorHandler']</code>
-      <code>[$this, 'errorHandler']</code>
-    </MixedArgumentTypeCoercion>
-    <UnusedVariable occurrences="1">
-      <code>$content</code>
-    </UnusedVariable>
-  </file>
-  <file src="test/Compress/TarLoadArchiveTarTest.php">
-    <UnusedVariable occurrences="1">
-      <code>$tar</code>
-    </UnusedVariable>
   </file>
   <file src="test/CompressTest.php">
     <MixedAssignment occurrences="1">

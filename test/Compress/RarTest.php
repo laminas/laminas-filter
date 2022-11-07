@@ -204,6 +204,7 @@ class RarTest extends TestCase
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
+        /** @psalm-suppress UndefinedFunction */
         $filter->setCallback('invalidCallback');
     }
 
