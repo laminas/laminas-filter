@@ -9,6 +9,7 @@ use Laminas\Filter\FilterInterface;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\FilterPluginManagerFactory;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use ReflectionObject;
@@ -83,7 +84,7 @@ class FilterPluginManagerFactoryTest extends TestCase
                     'test' => Boolean::class,
                 ],
                 'factories' => [
-                    'test-too' => static fn($container) => $filter,
+                    'test-too' => static fn($container): MockObject => $filter,
                 ],
             ],
         ];

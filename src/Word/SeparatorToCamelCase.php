@@ -41,8 +41,8 @@ class SeparatorToCamelCase extends AbstractSeparator
                 '#(^\P{Z}{1})#u',
             ];
             $replacements = [
-                static fn($matches) => mb_strtoupper($matches[2], 'UTF-8'),
-                static fn($matches) => mb_strtoupper($matches[1], 'UTF-8'),
+                static fn($matches): string => mb_strtoupper($matches[2], 'UTF-8'),
+                static fn($matches): string => mb_strtoupper($matches[1], 'UTF-8'),
             ];
         } else {
             $patterns     = [
@@ -50,8 +50,8 @@ class SeparatorToCamelCase extends AbstractSeparator
                 '#(^[\S]{1})#',
             ];
             $replacements = [
-                static fn($matches) => strtoupper($matches[2]),
-                static fn($matches) => strtoupper($matches[1]),
+                static fn($matches): string => strtoupper($matches[2]),
+                static fn($matches): string => strtoupper($matches[1]),
             ];
         }
 

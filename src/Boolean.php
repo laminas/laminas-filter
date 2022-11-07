@@ -8,13 +8,12 @@ use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
 use function array_search;
-use function get_class;
+use function get_debug_type;
 use function gettype;
 use function is_array;
 use function is_bool;
 use function is_float;
 use function is_int;
-use function is_object;
 use function is_string;
 use function sprintf;
 use function strtolower;
@@ -181,7 +180,7 @@ class Boolean extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
-                is_object($translations) ? get_class($translations) : gettype($translations)
+                get_debug_type($translations)
             ));
         }
 

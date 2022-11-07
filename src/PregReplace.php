@@ -8,7 +8,7 @@ use Closure;
 use Traversable;
 
 use function func_get_args;
-use function get_class;
+use function get_debug_type;
 use function gettype;
 use function is_array;
 use function is_object;
@@ -17,7 +17,7 @@ use function iterator_to_array;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
-use function strpos;
+use function str_contains;
 
 /**
  * @psalm-type Options = array{
@@ -119,7 +119,7 @@ class PregReplace extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects replacement to be array or string; received "%s"',
                 __METHOD__,
-                is_object($replacement) ? get_class($replacement) : gettype($replacement)
+                get_debug_type($replacement)
             ));
         }
         $this->options['replacement'] = $replacement;
@@ -185,7 +185,7 @@ class PregReplace extends AbstractFilter
             return true;
         }
 
-        if (false !== strpos($matches['modifier'], 'e')) {
+        if (str_contains($matches['modifier'], 'e')) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Pattern for a PregReplace filter may not contain the "e" pattern modifier; received "%s"',
                 $pattern

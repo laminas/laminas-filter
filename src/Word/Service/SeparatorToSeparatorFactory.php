@@ -11,10 +11,8 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Psr\Container\ContainerInterface;
 use Traversable;
 
-use function get_class;
-use function gettype;
+use function get_debug_type;
 use function is_array;
-use function is_object;
 use function iterator_to_array;
 use function sprintf;
 
@@ -41,7 +39,7 @@ class SeparatorToSeparatorFactory implements FactoryInterface
             throw new InvalidServiceException(sprintf(
                 '%s cannot use non-array, non-traversable creation options; received %s',
                 self::class,
-                is_object($creationOptions) ? get_class($creationOptions) : gettype($creationOptions)
+                get_debug_type($creationOptions)
             ));
         }
 

@@ -15,8 +15,8 @@ use function is_string;
 use function preg_match;
 use function preg_replace;
 use function realpath;
+use function str_starts_with;
 use function stripos;
-use function strpos;
 use function substr;
 
 use const DIRECTORY_SEPARATOR;
@@ -104,11 +104,11 @@ class RealPath extends AbstractFilter
             } else {
                 $cwd   = getcwd();
                 $drive = substr($cwd, 0, 2);
-                if (strpos($path, DIRECTORY_SEPARATOR) !== 0) {
+                if (! str_starts_with($path, DIRECTORY_SEPARATOR)) {
                     $path = substr($cwd, 3) . DIRECTORY_SEPARATOR . $path;
                 }
             }
-        } elseif (strpos($path, DIRECTORY_SEPARATOR) !== 0) {
+        } elseif (! str_starts_with($path, DIRECTORY_SEPARATOR)) {
             $path = getcwd() . DIRECTORY_SEPARATOR . $path;
         }
 

@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 use function array_values;
 use function count;
-use function get_class;
 
 use const DIRECTORY_SEPARATOR;
 
@@ -332,12 +331,12 @@ class InflectorTest extends TestCase
         $rules = $inflector->getRules();
         /** @psalm-suppress MixedArrayAccess */
         foreach (array_values($options['rules'][':controller']) as $key => $rule) {
-            $class = get_class($rules['controller'][$key]);
+            $class = $rules['controller'][$key]::class;
             self::assertStringContainsString($rule, $class);
         }
         /** @psalm-suppress MixedArrayAccess */
         foreach (array_values($options['rules'][':action']) as $key => $rule) {
-            $class = get_class($rules['action'][$key]);
+            $class = $rules['action'][$key]::class;
             self::assertStringContainsString($rule, $class);
         }
         /** @psalm-suppress MixedArrayAccess */

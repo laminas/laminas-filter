@@ -11,7 +11,7 @@ use Traversable;
 
 use function explode;
 use function is_scalar;
-use function strpos;
+use function str_contains;
 
 class UriNormalize extends AbstractFilter
 {
@@ -101,7 +101,7 @@ class UriNormalize extends AbstractFilter
             if ($this->enforcedScheme && ! $uri->getScheme()) {
                 $this->enforceScheme($uri);
             }
-        } catch (UriException $ex) {
+        } catch (UriException) {
             // We are unable to parse / enfore scheme with the given config and input
             return $value;
         }
@@ -125,7 +125,7 @@ class UriNormalize extends AbstractFilter
     {
         $path = $uri->getPath() ?? '';
 
-        if (strpos($path, '/') !== false) {
+        if (str_contains($path, '/')) {
             [$host, $path] = explode('/', $path, 2);
             $path          = '/' . $path;
         } else {

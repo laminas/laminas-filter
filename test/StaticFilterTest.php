@@ -97,10 +97,10 @@ class StaticFilterTest extends TestCase
     public function testUsesDifferentConfigurationOnEachRequest(): void
     {
         $first  = StaticFilter::execute('foo', Callback::class, [
-            'callback' => static fn($value) => 'FOO',
+            'callback' => static fn($value): string => 'FOO',
         ]);
         $second = StaticFilter::execute('foo', Callback::class, [
-            'callback' => static fn($value) => 'BAR',
+            'callback' => static fn($value): string => 'BAR',
         ]);
         self::assertNotSame($first, $second);
         self::assertSame('FOO', $first);

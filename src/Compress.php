@@ -10,10 +10,8 @@ use Traversable;
 
 use function call_user_func_array;
 use function class_exists;
-use function get_class;
-use function gettype;
+use function get_debug_type;
 use function is_array;
-use function is_object;
 use function is_string;
 use function method_exists;
 use function sprintf;
@@ -64,7 +62,7 @@ class Compress extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '"%s" expects an array or Traversable; received "%s"',
                 __METHOD__,
-                is_object($options) ? get_class($options) : gettype($options)
+                get_debug_type($options)
             ));
         }
 
@@ -163,7 +161,6 @@ class Compress extends AbstractFilter
     /**
      * Set adapter options
      *
-     * @param  array $options
      * @return self
      */
     public function setAdapterOptions(array $options)
