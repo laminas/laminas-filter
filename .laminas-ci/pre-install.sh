@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# @todo The compression adapters that require these non-standard extensions have been deprecated for removal in 3.0
+#       This file can be removed along with the adapters.
+#
+
 WORKING_DIRECTORY=$2
 JOB=$3
 PHP_VERSION=$(echo "${JOB}" | jq -r '.php')

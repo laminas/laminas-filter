@@ -412,10 +412,10 @@ The following compression formats are supported by their own adapter:
 
 - **Bz2**
 - **Gz**
-- **Lzf**
-- **Rar**
 - **Tar**
 - **Zip**
+- **Lzf**
+- **Rar**
 
 Each compression format has different capabilities as described below. All
 compression filters may be used in approximately the same ways, and differ
@@ -624,6 +624,10 @@ accepts an array of all options.
 
 ### Lzf Adapter
 
+> ### Deprecated Adapter
+>
+> This compression adapter has been deprecated for removal in version 3.0. Please consider an alternative compression format such as `gz` or `bz2`
+
 The Lzf Adapter can compress and decompress:
 
 - Strings
@@ -637,6 +641,10 @@ This adapter makes use of PHP's Lzf extension.
 There are no options available to customize this adapter.
 
 ### Rar Adapter
+
+> ### Deprecated Adapter
+>
+> This compression adapter has been deprecated for removal in version 3.0. Please consider an alternative compression format such as `gz` or `bz2`
 
 The Rar Adapter can compress and decompress:
 
