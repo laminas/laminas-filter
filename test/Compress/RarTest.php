@@ -114,7 +114,7 @@ class RarTest extends TestCase
     public function testRarGetSetOptions(): void
     {
         $filter = new RarCompression();
-        self::assertSame(
+        self::assertEquals(
             [
                 'archive'  => null,
                 'callback' => null,
