@@ -12,6 +12,9 @@ use function lzf_decompress;
 
 /**
  * Compression adapter for Lzf
+ *
+ * @deprecated Since 2.28. This adapter will be removed in version 3.0 of this component. Other compression formats
+ *             remain available.
  */
 class Lzf implements CompressionAlgorithmInterface
 {

@@ -42,9 +42,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Boolean.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>gettype($translations)</code>
-    </DocblockTypeContradiction>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$typeOrOptions</code>
     </MixedArgumentTypeCoercion>
@@ -67,9 +64,8 @@
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $flag</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="2">
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_int($value)</code>
-      <code>is_object($translations)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Callback.php">
@@ -892,20 +888,12 @@
     </PossiblyUndefinedVariable>
   </file>
   <file src="src/FilterChain.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>gettype($callback)</code>
-      <code>gettype($options)</code>
-    </DocblockTypeContradiction>
     <MixedPropertyTypeCoercion occurrences="1">
       <code>new PriorityQueue()</code>
     </MixedPropertyTypeCoercion>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$options</code>
     </MoreSpecificImplementedParamType>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>is_object($callback)</code>
-      <code>is_object($options)</code>
-    </RedundantConditionGivenDocblockType>
     <RedundantFunctionCall occurrences="1">
       <code>strtolower</code>
     </RedundantFunctionCall>
@@ -1268,12 +1256,6 @@
       <code>$matches</code>
       <code>$matches</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="4">
-      <code>static fn($matches) =&gt; mb_strtoupper($matches[1], 'UTF-8')</code>
-      <code>static fn($matches) =&gt; mb_strtoupper($matches[2], 'UTF-8')</code>
-      <code>static fn($matches) =&gt; strtoupper($matches[1])</code>
-      <code>static fn($matches) =&gt; strtoupper($matches[2])</code>
-    </MissingClosureReturnType>
     <MixedArgument occurrences="4">
       <code>$matches[1]</code>
       <code>$matches[1]</code>
@@ -1403,7 +1385,23 @@
       <code>null</code>
     </NullArgument>
   </file>
+  <file src="test/Compress/LzfTest.php">
+    <DeprecatedClass occurrences="2">
+      <code>new Lzf()</code>
+      <code>new Lzf()</code>
+    </DeprecatedClass>
+  </file>
   <file src="test/Compress/RarTest.php">
+    <DeprecatedClass occurrences="11">
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+      <code>new RarCompression()</code>
+    </DeprecatedClass>
     <InvalidReturnStatement occurrences="1">
       <code>true</code>
     </InvalidReturnStatement>
@@ -1415,6 +1413,14 @@
     </UndefinedDocblockClass>
   </file>
   <file src="test/Compress/SnappyTest.php">
+    <DeprecatedClass occurrences="6">
+      <code>new SnappyCompression()</code>
+      <code>new SnappyCompression()</code>
+      <code>new SnappyCompression()</code>
+      <code>new SnappyCompression()</code>
+      <code>new SnappyCompression()</code>
+      <code>new SnappyCompression()</code>
+    </DeprecatedClass>
     <MissingParamType occurrences="2">
       <code>$errno</code>
       <code>$errstr</code>
@@ -1720,8 +1726,7 @@
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="3">
-      <code>static fn($container) =&gt; $filter</code>
+    <MissingClosureReturnType occurrences="2">
       <code>static fn($value) =&gt; $value</code>
       <code>static fn($value) =&gt; $value</code>
     </MissingClosureReturnType>
@@ -1739,15 +1744,13 @@
     <MissingReturnType occurrences="1">
       <code>_testOptions</code>
     </MissingReturnType>
-    <MixedArgument occurrences="8">
+    <MixedArgument occurrences="6">
       <code>$options['rules'][':action']</code>
       <code>$options['rules'][':controller']</code>
       <code>$rule</code>
       <code>$rule</code>
-      <code>$rules['action'][$key]</code>
       <code>$rules['controller']</code>
       <code>$rules['controller']</code>
-      <code>$rules['controller'][$key]</code>
     </MixedArgument>
     <MixedAssignment occurrences="6">
       <code>$filtered</code>

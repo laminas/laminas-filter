@@ -22,6 +22,9 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Compression adapter for Rar
  *
+ * @deprecated Since 2.28. This adapter will be removed in version 3.0 of this component. Other compression formats
+ *             remain available.
+ *
  * @psalm-type Options = array{
  *     callback: callable|null,
  *     archive: string|null,
