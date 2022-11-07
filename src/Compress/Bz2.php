@@ -15,7 +15,7 @@ use function bzwrite;
 use function extension_loaded;
 use function file_exists;
 use function is_int;
-use function strpos;
+use function str_contains;
 
 /**
  * Compression adapter for Bz2
@@ -145,7 +145,7 @@ class Bz2 extends AbstractCompressionAlgorithm
         $archive = $this->getArchive();
 
         //check if there are null byte characters before doing a file_exists check
-        if (null !== $content && false === strpos($content, "\0") && file_exists($content)) {
+        if (null !== $content && ! str_contains($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 

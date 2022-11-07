@@ -8,7 +8,7 @@ use Laminas\Filter\RealPath as RealPathFilter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function strpos;
+use function str_contains;
 
 use const DIRECTORY_SEPARATOR;
 use const PHP_OS;
@@ -38,7 +38,7 @@ class RealPathTest extends TestCase
     public function testFileNonexistent(): void
     {
         $path = '/path/to/nonexistent';
-        if (false !== strpos(PHP_OS, 'BSD')) {
+        if (str_contains(PHP_OS, 'BSD')) {
             self::assertSame($path, $this->filter->filter($path));
         } else {
             self::assertSame(false, $this->filter->filter($path));

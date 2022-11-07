@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Traversable;
-
 use function array_reduce;
 use function count;
 use function is_array;
+use function is_iterable;
 use function ksort;
 use function sprintf;
 use function vsprintf;
@@ -43,9 +42,9 @@ abstract class AbstractDateDropdown extends AbstractFilter
      * @param mixed $options If array or Traversable, passes value to
      *     setOptions().
      */
-    public function __construct($options = null)
+    public function __construct(mixed $options = null)
     {
-        if (is_array($options) || $options instanceof Traversable) {
+        if (is_iterable($options)) {
             $this->setOptions($options);
         }
     }

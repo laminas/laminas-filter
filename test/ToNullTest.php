@@ -59,8 +59,6 @@ class ToNullTest extends TestCase
     }
 
     /**
-     * @param array $typeData
-     * @param array $testData
      * @dataProvider combinedTypeTestProvider
      */
     public function testCombinedTypes(array $typeData, array $testData): void

@@ -71,10 +71,9 @@ class DateTimeFormatter extends AbstractFilter
     /**
      * Normalize the provided value to a formatted string
      *
-     * @param  mixed $value
      * @return string|mixed
      */
-    protected function normalizeDateTime($value)
+    protected function normalizeDateTime(mixed $value)
     {
         if ($value === '' || $value === null) {
             return $value;

@@ -51,13 +51,12 @@ class StaticFilter
      * creates an instance, and applies the filter() method to the data input. You can also pass
      * an array of constructor arguments, if they are needed for the filter class.
      *
-     * @param  mixed        $value
      * @param  string       $classBaseName
      * @param  array        $args          OPTIONAL
      * @return mixed
      * @throws Exception\ExceptionInterface
      */
-    public static function execute($value, $classBaseName, array $args = [])
+    public static function execute(mixed $value, $classBaseName, array $args = [])
     {
         $plugins = static::getPluginManager();
 

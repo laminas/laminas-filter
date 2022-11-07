@@ -11,6 +11,7 @@ use function array_key_exists;
 use function array_map;
 use function gettype;
 use function is_array;
+use function is_iterable;
 use function is_object;
 use function is_scalar;
 use function is_string;
@@ -93,32 +94,31 @@ abstract class AbstractFilter implements FilterInterface
      *
      * Proxies to {@link filter()}
      *
-     * @param  mixed $value
      * @throws Exception\ExceptionInterface If filtering $value is impossible.
      * @return mixed
      */
-    public function __invoke($value)
+    public function __invoke(mixed $value)
     {
         return $this->filter($value);
     }
 
     /**
-     * @param  mixed $options
      * @return bool
      */
-    protected static function isOptions($options)
+    protected static function isOptions(mixed $options)
     {
-        return is_array($options) || $options instanceof Traversable;
+        return is_iterable($options);
     }
 
     /**
      * @internal
      *
-     * @param  mixed $value
      * @return mixed
      */
-    protected static function applyFilterOnlyToStringableValuesAndStringableArrayValues($value, callable $callback)
-    {
+    protected static function applyFilterOnlyToStringableValuesAndStringableArrayValues(
+        mixed $value,
+        callable $callback
+    ) {
         if (! is_array($value)) {
             if (! is_scalar($value)) {
                 return $value;

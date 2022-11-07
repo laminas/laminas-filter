@@ -22,7 +22,7 @@ use function gzread;
 use function gzuncompress;
 use function gzwrite;
 use function is_string;
-use function strpos;
+use function str_contains;
 use function unpack;
 
 use const SEEK_END;
@@ -188,7 +188,7 @@ class Gz extends AbstractCompressionAlgorithm
         $mode    = $this->getMode();
 
         //check if there are null byte characters before doing a file_exists check
-        if (null !== $content && false === strpos($content, "\0") && file_exists($content)) {
+        if (null !== $content && ! str_contains($content, "\0") && file_exists($content)) {
             $archive = $content;
         }
 

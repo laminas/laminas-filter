@@ -196,10 +196,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Find the prefix at a specific location in the prefixes array.
      *
-     * @param mixed $index
      * @return string|null
      */
-    protected function getPrefixAt($index)
+    protected function getPrefixAt(mixed $index)
     {
         $prefixes = $this->getPrefixes();
         return $prefixes[$index] ?? null;

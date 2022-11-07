@@ -182,7 +182,7 @@ class RenameUploadTest extends TestCase
 
         $originalFile->expects(self::once())
             ->method('moveTo')
-            ->with(self::callback(function ($argument) {
+            ->with(self::callback(function ($argument): bool {
                 self::assertSame($this->targetFile, $argument);
                 copy($this->sourceFile, $this->targetFile);
 

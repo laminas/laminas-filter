@@ -13,10 +13,8 @@ use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
-use function get_class;
-use function gettype;
+use function get_debug_type;
 use function is_callable;
-use function is_object;
 use function sprintf;
 
 /**
@@ -486,7 +484,7 @@ class FilterPluginManager extends AbstractPluginManager
 
         throw new InvalidServiceException(sprintf(
             'Plugin of type %s is invalid; must implement %s\FilterInterface or be callable',
-            is_object($plugin) ? get_class($plugin) : gettype($plugin),
+            get_debug_type($plugin),
             __NAMESPACE__
         ));
     }
@@ -497,11 +495,10 @@ class FilterPluginManager extends AbstractPluginManager
      * Checks that the filter loaded is either a valid callback or an instance
      * of FilterInterface.
      *
-     * @param  mixed $plugin
      * @return void
      * @throws RuntimeException If invalid.
      */
-    public function validatePlugin($plugin)
+    public function validatePlugin(mixed $plugin)
     {
         try {
             $this->validate($plugin);
