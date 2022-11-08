@@ -795,10 +795,10 @@ $filter-&gt;filter(['value' =&gt; 'Hello']);</code></pre>
 <ul>
 <li><strong>Bz2</strong></li>
 <li><strong>Gz</strong></li>
-<li><strong>Lzf</strong></li>
-<li><strong>Rar</strong></li>
 <li><strong>Tar</strong></li>
 <li><strong>Zip</strong></li>
+<li><strong>Lzf</strong></li>
+<li><strong>Rar</strong></li>
 </ul>
 <p>Each compression format has different capabilities as described below. All
 compression filters may be used in approximately the same ways, and differ
@@ -952,6 +952,12 @@ methods for 'blocksize' are <code>getBlocksize()</code> and <code>setBlocksize()
 for <code>level</code> are <code>getLevel()</code> and <code>setLevel()</code>. You can also use the <code>setOptions()</code> method which
 accepts an array of all options.</p>
 <h3 id="lzf-adapter">Lzf Adapter</h3>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
+Consider an alternative compression format such as <code>gz</code> or <code>bz2</code>.</p>
+</div>
 <p>The Lzf Adapter can compress and decompress:</p>
 <ul>
 <li>Strings</li>
@@ -963,6 +969,12 @@ accepts an array of all options.</p>
 <p>This adapter makes use of PHP's Lzf extension.</p>
 <p>There are no options available to customize this adapter.</p>
 <h3 id="rar-adapter">Rar Adapter</h3>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
+Consider an alternative compression format such as <code>gz</code> or <code>bz2</code>.</p>
+</div>
 <p>The Rar Adapter can compress and decompress:</p>
 <ul>
 <li>Files</li>
@@ -1089,6 +1101,13 @@ print $filter-&gt;filter('/etc/passwd');</code></pre>
 print $filter-&gt;filter('C:/Temp/x');</code></pre>
 <p>This returns <code>C:/Temp</code>.</p>
 <h2 id="encrypt-and-decrypt">Encrypt and Decrypt</h2>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+These filters were deprecated in version 2.24.0 and will be removed in version 3.0.0.
+You are encouraged to implement your own encryption or decryption filters by implementing <code>FilterInterface</code> around a dedicated crypto library.
+See <a href="../writing-filters/">Writing Filters</a></p>
+</div>
 <p>These filters allow encrypting and decrypting any given string; they do so via
 the use of adapters. Included adapters support <code>Laminas\Crypt\BlockCipher</code> and
 PHP's OpenSSL extension.</p>
