@@ -287,7 +287,7 @@ Type Constant | Type String | True | False
 ---- | ---- | ---- | -----
 `Laminas\Filter\Boolean::TYPE_BOOLEAN` | `boolean` | `TRUE` | `FALSE`
 `Laminas\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array` | | `[]`
-`Laminas\Filter\Boolean::TYPE_FALSE_STRING` | `false` | `'false'` (case insensitive) | `'true'` (case insensitive)
+`Laminas\Filter\Boolean::TYPE_FALSE_STRING` | `false` | `'true'` (case insensitive) | `'false'` (case insensitive)
 `Laminas\Filter\Boolean::TYPE_FLOAT` | `float` | `1.0` | `0.0`
 `Laminas\Filter\Boolean::TYPE_INTEGER` | `integer` | `1` | `0`
 `Laminas\Filter\Boolean::TYPE_NULL` | `null` |  | `NULL`
