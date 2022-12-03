@@ -51,7 +51,7 @@ class RenameUpload extends AbstractFilter
         'use_upload_name'      => false,
         'use_upload_extension' => false,
         'overwrite'            => false,
-        '`randomize`'            => false,
+        'randomize'            => false,
         'stream_factory'       => null,
         'upload_file_factory'  => null,
     ];

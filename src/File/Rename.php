@@ -38,7 +38,7 @@ class Rename extends Filter\AbstractFilter
 {
     /**
      * Internal array of array(source, target, overwrite)
-     * 
+     *
      * @var list<array{source: string, target: string, overwrite: bool, randomize: bool}>
      */
     protected $files = [];

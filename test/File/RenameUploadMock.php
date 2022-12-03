@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\File\RenameUpload;
-
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
+
 use function rename;
 
 /**
+ * @see StreamFactoryInterface
+ * @see UploadedFileFactoryInterface
+ *
  * @psalm-type Options = array{
  *     target: string|null,
  *     use_upload_name: bool,

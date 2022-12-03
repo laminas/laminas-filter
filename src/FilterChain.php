@@ -32,7 +32,6 @@ use function strtolower;
  *        priority?: int,
  *    }>
  * }
- *
  * @extends AbstractFilter<FilterChainConfiguration>
  * @implements IteratorAggregate<array-key, FilterInterface|callable(mixed): mixed>
  */

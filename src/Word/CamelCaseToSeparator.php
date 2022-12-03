@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Filter\Word;
 
 use Closure;
-use Laminas\Filter\AbstractFilter;
 use Laminas\Stdlib\StringUtils;
 
 use function preg_replace;
