@@ -12,6 +12,14 @@ use function preg_quote;
 use function preg_replace_callback;
 use function strtoupper;
 
+/**
+ * @psalm-type Options = array{
+ *     separator: string,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @extends AbstractSeparator<TOptions>
+ */
 class SeparatorToCamelCase extends AbstractSeparator
 {
     /**

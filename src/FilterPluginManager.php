@@ -468,23 +468,23 @@ class FilterPluginManager extends AbstractPluginManager
     /**
      * {@inheritdoc}
      *
-     * @psalm-assert FilterInterface|callable(mixed): mixed $plugin
+     * @psalm-assert FilterInterface|callable(mixed): mixed $instance
      */
-    public function validate($plugin)
+    public function validate(mixed $instance)
     {
-        if ($plugin instanceof $this->instanceOf) {
+        if ($instance instanceof $this->instanceOf) {
             // we're okay
             return;
         }
 
-        if (is_callable($plugin)) {
+        if (is_callable($instance)) {
             // also okay
             return;
         }
 
         throw new InvalidServiceException(sprintf(
             'Plugin of type %s is invalid; must implement %s\FilterInterface or be callable',
-            get_debug_type($plugin),
+            get_debug_type($instance),
             __NAMESPACE__
         ));
     }

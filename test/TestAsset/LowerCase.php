@@ -8,6 +8,7 @@ use Laminas\Filter\AbstractFilter;
 
 use function strtolower;
 
+/** @template-extends AbstractFilter<array{}> */
 class LowerCase extends AbstractFilter
 {
     public function filter($value)

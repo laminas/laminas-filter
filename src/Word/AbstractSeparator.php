@@ -13,8 +13,10 @@ use function is_string;
 /**
  * @psalm-type Options = array{
  *     separator: string,
+ *     ...
  * }
- * @extends AbstractFilter<Options>
+ * @template TOptions of Options
+ * @extends AbstractFilter<TOptions>
  */
 abstract class AbstractSeparator extends AbstractFilter
 {

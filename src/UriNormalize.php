@@ -13,6 +13,15 @@ use function explode;
 use function is_scalar;
 use function str_contains;
 
+/**
+ * @psalm-type Options = array{
+ *     default_scheme?: string,
+ *     enforced_scheme?: string,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @template-extends AbstractFilter<TOptions>
+ */
 class UriNormalize extends AbstractFilter
 {
     /**

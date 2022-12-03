@@ -12,6 +12,14 @@ use function class_exists;
 use function is_callable;
 use function is_string;
 
+/**
+ * @psalm-type Options = array{
+ *     callback: callable,
+ *     callback_params: array,
+ *     ...
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class Callback extends AbstractFilter
 {
     /** @var array */

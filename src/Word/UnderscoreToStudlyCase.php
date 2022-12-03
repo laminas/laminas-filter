@@ -13,6 +13,14 @@ use function mb_strlen;
 use function mb_strtolower;
 use function mb_substr;
 
+/**
+ * @psalm-type Options = array{
+ *     separator: string,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @template-extends UnderscoreToCamelCase<TOptions>
+ */
 class UnderscoreToStudlyCase extends UnderscoreToCamelCase
 {
     /**

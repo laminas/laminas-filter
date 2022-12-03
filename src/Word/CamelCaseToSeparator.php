@@ -5,10 +5,19 @@ declare(strict_types=1);
 namespace Laminas\Filter\Word;
 
 use Closure;
+use Laminas\Filter\AbstractFilter;
 use Laminas\Stdlib\StringUtils;
 
 use function preg_replace;
 
+/**
+ * @psalm-type Options = array{
+ *     separator: string,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @extends AbstractSeparator<TOptions>
+ */
 class CamelCaseToSeparator extends AbstractSeparator
 {
     /**

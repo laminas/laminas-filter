@@ -18,6 +18,15 @@ use function strlen;
 
 use const ENT_QUOTES;
 
+/**
+ * @psalm-type Options = array{
+ *     quote_style: int,
+ *     encoding: string,
+ *     double_quote: bool,
+ *     ...
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class HtmlEntities extends AbstractFilter
 {
     /**

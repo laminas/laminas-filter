@@ -24,6 +24,14 @@ use function strtolower;
 use function substr;
 use function trim;
 
+/**
+ * @psalm-type Options = array{
+ *     tags_allowed: array<string>|string,
+ *     attributes_allowed: array<string>|string,
+ *     ...
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class StripTags extends AbstractFilter
 {
     /**

@@ -7,6 +7,10 @@ namespace Laminas\Filter;
 use function dirname;
 use function is_scalar;
 
+/**
+ * @psalm-type Options = array{}
+ * @extends AbstractFilter<Options>
+ */
 class Dir extends AbstractFilter
 {
     /**

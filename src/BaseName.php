@@ -7,6 +7,10 @@ namespace Laminas\Filter;
 use function basename;
 use function is_scalar;
 
+/**
+ * @psalm-type Options = array{}
+ * @extends AbstractFilter<Options>
+ */
 class BaseName extends AbstractFilter
 {
     /**

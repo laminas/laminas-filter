@@ -7,7 +7,10 @@ namespace Laminas\Filter;
 use function is_scalar;
 use function mb_strtolower;
 
-/** @psalm-import-type UnicodeOptions from AbstractUnicode */
+/**
+ * @psalm-import-type UnicodeOptions from AbstractUnicode
+ * @extends AbstractUnicode<UnicodeOptions>
+ */
 class StringToLower extends AbstractUnicode
 {
     /**

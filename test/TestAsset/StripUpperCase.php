@@ -8,6 +8,7 @@ use Laminas\Filter\AbstractFilter;
 
 use function preg_replace;
 
+/** @template-extends AbstractFilter<array{}> */
 class StripUpperCase extends AbstractFilter
 {
     public function filter($value)
