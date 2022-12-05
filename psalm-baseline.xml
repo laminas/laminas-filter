@@ -211,6 +211,9 @@
       <code>bool</code>
       <code>string|null</code>
     </ImplementedReturnTypeMismatch>
+    <MixedMethodCall occurrences="1">
+      <code>extract</code>
+    </MixedMethodCall>
     <ParamNameMismatch occurrences="2">
       <code>$content</code>
       <code>$content</code>
@@ -231,9 +234,9 @@
       <code>$archive</code>
       <code>$filelist</code>
     </TypeDoesNotContainType>
-    <UndefinedClass occurrences="1">
-      <code>$filelist</code>
-    </UndefinedClass>
+    <UnusedFunctionCall occurrences="1">
+      <code>rar_close</code>
+    </UnusedFunctionCall>
   </file>
   <file src="src/Compress/Snappy.php">
     <MixedAssignment occurrences="2">
@@ -413,7 +416,8 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Encrypt.php">
-    <DeprecatedInterface occurrences="1">
+    <DeprecatedInterface occurrences="2">
+      <code>Encrypt</code>
       <code>Encrypt\EncryptionAlgorithmInterface</code>
     </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
@@ -591,6 +595,9 @@
       <code>Filter\Decrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
+    <DeprecatedInterface occurrences="1">
+      <code>Decrypt</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
     </DocblockTypeContradiction>
@@ -1500,13 +1507,6 @@
       <code>1234</code>
       <code>1234</code>
     </InvalidArgument>
-    <MixedArgument occurrences="1">
-      <code>$input</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$input</code>
-      <code>$output</code>
-    </MixedAssignment>
     <UndefinedMethod occurrences="2">
       <code>fail</code>
       <code>fail</code>
