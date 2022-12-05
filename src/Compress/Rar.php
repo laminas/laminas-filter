@@ -26,10 +26,10 @@ use const DIRECTORY_SEPARATOR;
  *             remain available.
  *
  * @psalm-type Options = array{
- *     callback: callable|null,
- *     archive: string|null,
+ *     callback?: callable|null,
+ *     archive?: string|null,
  *     password?: string|null,
- *     target: string,
+ *     target?: string,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
  */

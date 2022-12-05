@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
   <file src="src/AbstractDateDropdown.php">
     <MissingReturnType occurrences="1">
       <code>filterable</code>
@@ -32,6 +32,10 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AbstractUnicode.php">
+    <RedundantCondition occurrences="2">
+      <code>assert(is_string($encoding))</code>
+      <code>is_string($encoding)</code>
+    </RedundantCondition>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_string($encoding)</code>
     </RedundantConditionGivenDocblockType>
@@ -42,6 +46,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Boolean.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>! is_array($translations) &amp;&amp; ! $translations instanceof Traversable</code>
+    </DocblockTypeContradiction>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$typeOrOptions</code>
     </MixedArgumentTypeCoercion>
@@ -58,9 +65,11 @@
     <PossiblyNullArgument occurrences="1">
       <code>$type</code>
     </PossiblyNullArgument>
-    <PropertyTypeCoercion occurrences="1">
-      <code>$this-&gt;options</code>
-    </PropertyTypeCoercion>
+    <PossiblyUndefinedArrayOffset occurrences="3">
+      <code>$this-&gt;options['casting']</code>
+      <code>$this-&gt;options['translations']</code>
+      <code>$this-&gt;options['type']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $flag</code>
     </RedundantCastGivenDocblockType>
@@ -83,6 +92,9 @@
       <code>$this-&gt;options['callback']</code>
       <code>$this-&gt;options['callback_params']</code>
     </MixedReturnStatement>
+    <NonInvariantDocblockPropertyType occurrences="1">
+      <code>$options</code>
+    </NonInvariantDocblockPropertyType>
     <PossiblyInvalidArgument occurrences="1">
       <code>$callbackOrOptions</code>
     </PossiblyInvalidArgument>
@@ -151,6 +163,10 @@
       <code>$content</code>
       <code>$content</code>
     </ParamNameMismatch>
+    <PossiblyUndefinedArrayOffset occurrences="2">
+      <code>$this-&gt;options['archive']</code>
+      <code>$this-&gt;options['blocksize']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(int) $blocksize</code>
       <code>(string) $archive</code>
@@ -182,6 +198,12 @@
       <code>$content</code>
       <code>$content</code>
     </ParamNameMismatch>
+    <PossiblyUndefinedArrayOffset occurrences="4">
+      <code>$this-&gt;options['archive']</code>
+      <code>$this-&gt;options['level']</code>
+      <code>$this-&gt;options['mode']</code>
+      <code>$this-&gt;options['mode']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(int) $level</code>
       <code>(string) $archive</code>
@@ -211,8 +233,11 @@
       <code>$content</code>
       <code>$content</code>
     </ParamNameMismatch>
-    <PossiblyUndefinedArrayOffset occurrences="1">
+    <PossiblyUndefinedArrayOffset occurrences="4">
+      <code>$this-&gt;options['archive']</code>
+      <code>$this-&gt;options['callback']</code>
       <code>$this-&gt;options['password']</code>
+      <code>$this-&gt;options['target']</code>
     </PossiblyUndefinedArrayOffset>
     <RedundantCast occurrences="2">
       <code>(string) $archive</code>
@@ -288,6 +313,9 @@
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;getArchive()</code>
     </PossiblyNullArgument>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$this-&gt;options['target']</code>
+    </PossiblyUndefinedArrayOffset>
     <PossiblyUndefinedVariable occurrences="2">
       <code>$file</code>
       <code>$file</code>
@@ -300,7 +328,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Compress/Zip.php">
-    <InvalidArgument occurrences="3">
+    <InvalidArgument occurrences="5">
+      <code>$res</code>
+      <code>$res</code>
       <code>$res</code>
       <code>$res</code>
       <code>$res</code>
@@ -308,13 +338,9 @@
     <InvalidNullableReturnType occurrences="1">
       <code>string</code>
     </InvalidNullableReturnType>
-    <InvalidScalarArgument occurrences="2">
+    <NoValue occurrences="1">
       <code>$res</code>
-      <code>$res</code>
-    </InvalidScalarArgument>
-    <MixedArgument occurrences="1">
-      <code>$res</code>
-    </MixedArgument>
+    </NoValue>
     <NullableReturnStatement occurrences="1">
       <code>$this-&gt;options['archive']</code>
     </NullableReturnStatement>
@@ -329,6 +355,11 @@
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;getArchive()</code>
     </PossiblyNullArgument>
+    <PossiblyUndefinedArrayOffset occurrences="3">
+      <code>$this-&gt;options['archive']</code>
+      <code>$this-&gt;options['archive']</code>
+      <code>$this-&gt;options['target']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCast occurrences="1">
       <code>(string) $target</code>
     </RedundantCast>
@@ -340,9 +371,6 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/DataUnitFormatter.php">
-    <InvalidParamDefault occurrences="1">
-      <code>Options</code>
-    </InvalidParamDefault>
     <MissingReturnType occurrences="4">
       <code>setMode</code>
       <code>setPrecision</code>
@@ -352,18 +380,24 @@
     <MixedArrayOffset occurrences="1">
       <code>$prefixes[$index]</code>
     </MixedArrayOffset>
+    <PossiblyUndefinedArrayOffset occurrences="4">
+      <code>$this-&gt;options['mode']</code>
+      <code>$this-&gt;options['precision']</code>
+      <code>$this-&gt;options['prefixes']</code>
+      <code>$this-&gt;options['unit']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(int) $precision</code>
       <code>(string) $unit</code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/DateTimeFormatter.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$e-&gt;getCode()</code>
-    </InvalidScalarArgument>
     <MixedAssignment occurrences="1">
       <code>$result</code>
     </MixedAssignment>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </PossiblyInvalidArgument>
   </file>
   <file src="src/Decompress.php">
     <DocblockTypeContradiction occurrences="1">
@@ -372,7 +406,8 @@
     <MixedReturnStatement occurrences="1">
       <code>$value</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="2">
+    <MoreSpecificImplementedParamType occurrences="3">
+      <code>$value</code>
       <code>$value</code>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
@@ -384,6 +419,9 @@
     <DeprecatedClass occurrences="1">
       <code>Encrypt</code>
     </DeprecatedClass>
+    <DeprecatedInterface occurrences="1">
+      <code>Decrypt</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
@@ -407,9 +445,10 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Encrypt.php">
-    <DeprecatedClass occurrences="1">
+    <DeprecatedInterface occurrences="2">
+      <code>Encrypt</code>
       <code>Encrypt\EncryptionAlgorithmInterface</code>
-    </DeprecatedClass>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_string($value)</code>
     </DocblockTypeContradiction>
@@ -530,6 +569,9 @@
     <DocblockTypeContradiction occurrences="1">
       <code>is_array($keys)</code>
     </DocblockTypeContradiction>
+    <InvalidArgument occurrences="1">
+      <code>array_values($keys)</code>
+    </InvalidArgument>
     <MixedArgument occurrences="12">
       <code>$cert</code>
       <code>$cert</code>
@@ -577,14 +619,19 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/File/Decrypt.php">
-    <DeprecatedClass occurrences="2">
+    <DeprecatedClass occurrences="3">
+      <code>Filter\Decrypt</code>
       <code>Filter\Decrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
+    <DeprecatedInterface occurrences="1">
+      <code>Decrypt</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
     </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch occurrences="1">
+    <ImplementedReturnTypeMismatch occurrences="2">
+      <code>string|array</code>
       <code>string|array</code>
     </ImplementedReturnTypeMismatch>
     <MixedArgument occurrences="5">
@@ -605,7 +652,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>string|array</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="4">
+      <code>$this-&gt;filename</code>
       <code>$this-&gt;filename</code>
       <code>$uploadData</code>
       <code>$value</code>
@@ -655,7 +703,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>string|array</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="4">
+      <code>$this-&gt;filename</code>
       <code>$this-&gt;filename</code>
       <code>$uploadData</code>
       <code>$value</code>
@@ -694,20 +743,15 @@
       <code>$files['overwrite']</code>
       <code>$files['randomize']</code>
     </InvalidArgument>
-    <InvalidReturnStatement occurrences="4">
+    <InvalidReturnStatement occurrences="3">
       <code>$file</code>
-      <code>$rename</code>
       <code>$this</code>
       <code>$this</code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="2">
+    <InvalidReturnType occurrences="1">
       <code>array</code>
-      <code>array|string</code>
     </InvalidReturnType>
-    <MissingPropertyType occurrences="1">
-      <code>$files</code>
-    </MissingPropertyType>
-    <MixedArgument occurrences="14">
+    <MixedArgument occurrences="9">
       <code>$file['source']</code>
       <code>$file['source']</code>
       <code>$file['target']</code>
@@ -715,58 +759,33 @@
       <code>$file['target']</code>
       <code>$file['target']</code>
       <code>$file['target']</code>
-      <code>$rename['source']</code>
-      <code>$rename['target']</code>
-      <code>$rename['target']</code>
-      <code>$rename['target']</code>
-      <code>$this-&gt;files</code>
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="8">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$options</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="4">
       <code>$file['source']</code>
       <code>$file['target']</code>
       <code>$file['target']</code>
       <code>$file['target']</code>
-      <code>$rename['target'][strlen($rename['target']) - 1]</code>
-      <code>$value['source']</code>
-      <code>$value['source']</code>
-      <code>$value['source']</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="4">
-      <code>$rename['source']</code>
-      <code>$this-&gt;files[$count]</code>
-      <code>$this-&gt;files[$key]</code>
+    <MixedArrayAssignment occurrences="1">
       <code>$uploadData['tmp_name']</code>
     </MixedArrayAssignment>
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;files[$key]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="10">
-      <code>$key</code>
-      <code>$last</code>
-      <code>$rename</code>
-      <code>$rename</code>
-      <code>$rename['target']</code>
+    <MixedAssignment occurrences="3">
       <code>$uploadData['tmp_name']</code>
-      <code>$value</code>
-      <code>$value</code>
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>array</code>
+    <MixedInferredReturnType occurrences="2">
       <code>string</code>
       <code>string|array</code>
     </MixedInferredReturnType>
-    <MixedOperand occurrences="2">
-      <code>$rename['target']</code>
-      <code>$rename['target']</code>
-    </MixedOperand>
-    <MixedReturnStatement occurrences="6">
+    <MixedReturnStatement occurrences="5">
       <code>$file['target']</code>
       <code>$file['target']</code>
-      <code>$this-&gt;files</code>
       <code>$uploadData</code>
       <code>$uploadData</code>
       <code>$value</code>
@@ -774,10 +793,16 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$rename['randomize']</code>
+    </PossiblyUndefinedArrayOffset>
     <PossiblyUndefinedVariable occurrences="2">
       <code>$uploadData</code>
       <code>$uploadData</code>
     </PossiblyUndefinedVariable>
+    <PropertyTypeCoercion occurrences="1">
+      <code>$this-&gt;files</code>
+    </PropertyTypeCoercion>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_string($file)</code>
     </RedundantConditionGivenDocblockType>
@@ -787,6 +812,18 @@
       <code>$target === null</code>
       <code>is_string($target)</code>
     </DocblockTypeContradiction>
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
+    <InvalidPropertyAssignmentValue occurrences="8">
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+    </InvalidPropertyAssignmentValue>
     <MixedArgument occurrences="6">
       <code>$clientFilename</code>
       <code>$sourceFile</code>
@@ -808,29 +845,15 @@
       <code>$sourceFile</code>
       <code>$sourceFile</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="10">
+    <MixedInferredReturnType occurrences="3">
       <code>UploadedFileInterface</code>
       <code>array&lt;string, string&gt;</code>
-      <code>bool</code>
-      <code>bool</code>
-      <code>bool</code>
-      <code>bool</code>
-      <code>null|StreamFactoryInterface</code>
-      <code>null|UploadedFileFactoryInterface</code>
-      <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="10">
+    <MixedReturnStatement occurrences="3">
       <code>$this-&gt;alreadyFiltered[$alreadyFilteredKey]</code>
       <code>$this-&gt;alreadyFiltered[$fileName]</code>
       <code>$this-&gt;alreadyFiltered[$sourceFile]</code>
-      <code>$this-&gt;options['overwrite']</code>
-      <code>$this-&gt;options['randomize']</code>
-      <code>$this-&gt;options['stream_factory']</code>
-      <code>$this-&gt;options['target']</code>
-      <code>$this-&gt;options['upload_file_factory']</code>
-      <code>$this-&gt;options['use_upload_extension']</code>
-      <code>$this-&gt;options['use_upload_name']</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="2">
       <code>$fileData</code>
@@ -839,6 +862,9 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;options['target']</code>
+    </NullableReturnStatement>
     <PossiblyInvalidArgument occurrences="2">
       <code>$sourceFile</code>
       <code>$sourceFile</code>
@@ -852,6 +878,15 @@
       <code>$clientFileName</code>
       <code>$clientFileName</code>
     </PossiblyNullArgument>
+    <PossiblyUndefinedArrayOffset occurrences="7">
+      <code>$this-&gt;options['overwrite']</code>
+      <code>$this-&gt;options['randomize']</code>
+      <code>$this-&gt;options['stream_factory']</code>
+      <code>$this-&gt;options['target']</code>
+      <code>$this-&gt;options['upload_file_factory']</code>
+      <code>$this-&gt;options['use_upload_extension']</code>
+      <code>$this-&gt;options['use_upload_name']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCastGivenDocblockType occurrences="4">
       <code>(bool) $flag</code>
       <code>(bool) $flag</code>
@@ -875,12 +910,14 @@
     <MixedInferredReturnType occurrences="1">
       <code>string|array</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="4">
       <code>$uploadData</code>
       <code>$value</code>
       <code>$value</code>
+      <code>$value</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$value</code>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
     <PossiblyUndefinedVariable occurrences="1">
@@ -929,19 +966,14 @@
       <code>ToInt::class                       =&gt; InvokableFactory::class</code>
       <code>ToNull::class                      =&gt; InvokableFactory::class</code>
     </DuplicateArrayKey>
-    <MissingParamType occurrences="1">
-      <code>$plugin</code>
-    </MissingParamType>
-    <MixedArrayOffset occurrences="1"/>
     <MixedInferredReturnType occurrences="1">
       <code>($name is class-string ? InstanceType : callable(mixed): mixed)</code>
     </MixedInferredReturnType>
     <NonInvariantDocblockPropertyType occurrences="1">
       <code>$factories</code>
     </NonInvariantDocblockPropertyType>
-    <ParamNameMismatch occurrences="2">
+    <ParamNameMismatch occurrences="1">
       <code>$name</code>
-      <code>$plugin</code>
     </ParamNameMismatch>
     <UndefinedClass occurrences="22">
       <code>Alnum</code>
@@ -969,6 +1001,9 @@
     </UndefinedClass>
   </file>
   <file src="src/FilterPluginManagerFactory.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$options ?: []</code>
+    </ArgumentTypeCoercion>
     <DeprecatedInterface occurrences="1">
       <code>FilterPluginManagerFactory</code>
     </DeprecatedInterface>
@@ -984,9 +1019,6 @@
       <code>$config['filters']</code>
       <code>$this-&gt;creationOptions</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$options ?: []</code>
-    </MixedArgumentTypeCoercion>
     <ParamNameMismatch occurrences="1">
       <code>$container</code>
     </ParamNameMismatch>
@@ -1014,9 +1046,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Inflector.php">
-    <InvalidArgument occurrences="1">
+    <ArgumentTypeCoercion occurrences="1">
       <code>$options['pluginManager']</code>
-    </InvalidArgument>
+    </ArgumentTypeCoercion>
     <InvalidArrayAccess occurrences="1">
       <code>$spec[0]</code>
     </InvalidArrayAccess>
@@ -1082,12 +1114,14 @@
       <code>$pluginManager</code>
       <code>$target</code>
     </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType occurrences="6">
+    <RedundantCast occurrences="1">
+      <code>(string) $targetReplacementIdentifier</code>
+    </RedundantCast>
+    <RedundantCastGivenDocblockType occurrences="5">
       <code>(bool) $throwTargetExceptionsOn</code>
       <code>(string) $rule</code>
       <code>(string) $spec</code>
       <code>(string) $target</code>
-      <code>(string) $targetReplacementIdentifier</code>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
   </file>
@@ -1111,18 +1145,26 @@
       <code>$args[0]</code>
       <code>$args[1]</code>
     </MixedArgument>
+    <PossiblyUndefinedArrayOffset occurrences="5">
+      <code>$this-&gt;options['pattern']</code>
+      <code>$this-&gt;options['pattern']</code>
+      <code>$this-&gt;options['pattern']</code>
+      <code>$this-&gt;options['replacement']</code>
+      <code>$this-&gt;options['replacement']</code>
+    </PossiblyUndefinedArrayOffset>
   </file>
   <file src="src/RealPath.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>bool</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;options['exists']</code>
-    </MixedReturnStatement>
+    <InvalidPropertyAssignmentValue occurrences="2">
+      <code>$this-&gt;options</code>
+    </InvalidPropertyAssignmentValue>
     <PossiblyInvalidArgument occurrences="2">
       <code>$existsOrOptions</code>
       <code>$existsOrOptions</code>
     </PossiblyInvalidArgument>
+    <PossiblyUndefinedArrayOffset occurrences="2">
+      <code>$this-&gt;options['exists']</code>
+      <code>$this-&gt;options['exists']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(bool) $flag</code>
     </RedundantCastGivenDocblockType>
@@ -1152,6 +1194,13 @@
       <code>$encodingOrOptions</code>
     </PossiblyInvalidArgument>
   </file>
+  <file src="src/StringTrim.php">
+    <PossiblyUndefinedArrayOffset occurrences="3">
+      <code>$this-&gt;options['charlist']</code>
+      <code>$this-&gt;options['charlist']</code>
+      <code>$this-&gt;options['charlist']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
   <file src="src/StripTags.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_scalar($value)</code>
@@ -1161,6 +1210,9 @@
       <code>$options['allowTags']</code>
       <code>$this-&gt;tagsAllowed[$tagName]</code>
     </MixedArgument>
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;tagsAllowed[$tagName][$attributeName]</code>
+    </MixedArrayAssignment>
     <MixedAssignment occurrences="6">
       <code>$attribute</code>
       <code>$attribute</code>
@@ -1197,9 +1249,9 @@
     <PossiblyNullArgument occurrences="1">
       <code>$type</code>
     </PossiblyNullArgument>
-    <PropertyTypeCoercion occurrences="1">
-      <code>$this-&gt;options</code>
-    </PropertyTypeCoercion>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$this-&gt;options['type']</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_int($value)</code>
     </RedundantConditionGivenDocblockType>
@@ -1244,10 +1296,6 @@
     <PossiblyInvalidCast occurrences="1">
       <code>$separator</code>
     </PossiblyInvalidCast>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>is_array($separator) &amp;&amp; isset($separator['separator']) &amp;&amp; is_string($separator['separator'])</code>
-      <code>is_string($separator['separator'])</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Word/SeparatorToCamelCase.php">
     <MissingClosureParamType occurrences="4">
@@ -1306,10 +1354,15 @@
       <code>is_array($value) ? array_map($lowerCaseFirst, $value) : $lowerCaseFirst($value)</code>
     </MixedReturnStatement>
   </file>
+  <file src="test/AbstractUnicodeTest.php">
+    <MissingTemplateParam occurrences="1">
+      <code>class extends AbstractUnicode {</code>
+    </MissingTemplateParam>
+  </file>
   <file src="test/AllowListTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$strict</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArrayAccess occurrences="2">
       <code>$expected</code>
       <code>$value</code>
@@ -1438,11 +1491,6 @@
       <code>$adapter</code>
     </UnusedVariable>
   </file>
-  <file src="test/DataUnitFormatterTest.php">
-    <InvalidArgument occurrences="6">
-      <code>[]</code>
-    </InvalidArgument>
-  </file>
   <file src="test/DecompressTest.php">
     <MixedArgument occurrences="2">
       <code>$compressed</code>
@@ -1490,11 +1538,6 @@
       <code>[$value, $expected]</code>
     </MixedAssignment>
   </file>
-  <file src="test/DigitsTest.php">
-    <MixedAssignment occurrences="1">
-      <code>$result</code>
-    </MixedAssignment>
-  </file>
   <file src="test/Encrypt/BlockCipherTest.php">
     <DeprecatedClass occurrences="12">
       <code>new BlockCipherEncryption('newkey')</code>
@@ -1510,10 +1553,10 @@
       <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
       <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
     </DeprecatedClass>
-    <InvalidScalarArgument occurrences="2">
+    <InvalidArgument occurrences="2">
       <code>1234</code>
       <code>1234</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedMethod occurrences="2">
       <code>fail</code>
       <code>fail</code>
@@ -1552,7 +1595,6 @@
       <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
       <code>new EncryptFilter(['adapter' =&gt; 'Openssl'])</code>
     </DeprecatedClass>
-    <InvalidArrayOffset occurrences="1"/>
     <MissingParamType occurrences="1">
       <code>$input</code>
     </MissingParamType>
@@ -1645,10 +1687,10 @@
     </PossiblyNullOperand>
   </file>
   <file src="test/File/RenameTest.php">
-    <InvalidScalarArgument occurrences="2">
+    <InvalidArgument occurrences="3">
       <code>1234</code>
       <code>1234</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <PossiblyNullArgument occurrences="20">
       <code>$this-&gt;newDir</code>
       <code>$this-&gt;newDir</code>
@@ -1677,9 +1719,9 @@
     </PossiblyNullOperand>
   </file>
   <file src="test/File/RenameUploadTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>1234</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArgument occurrences="5">
       <code>$filter($this-&gt;sourceFile)</code>
       <code>$filter($this-&gt;sourceFile)</code>
@@ -1738,26 +1780,30 @@
     </UnusedClosureParam>
   </file>
   <file src="test/InflectorTest.php">
+    <InvalidCast occurrences="2">
+      <code>$rule</code>
+      <code>$rule</code>
+    </InvalidCast>
     <MissingParamType occurrences="1">
       <code>$inflector</code>
     </MissingParamType>
     <MissingReturnType occurrences="1">
       <code>_testOptions</code>
     </MissingReturnType>
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="4">
       <code>$options['rules'][':action']</code>
       <code>$options['rules'][':controller']</code>
-      <code>$rule</code>
-      <code>$rule</code>
       <code>$rules['controller']</code>
       <code>$rules['controller']</code>
     </MixedArgument>
-    <MixedAssignment occurrences="6">
-      <code>$filtered</code>
-      <code>$filtered</code>
-      <code>$filtered</code>
+    <MixedArgumentTypeCoercion occurrences="2">
       <code>$rule</code>
       <code>$rule</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="4">
+      <code>$filtered</code>
+      <code>$filtered</code>
+      <code>$filtered</code>
       <code>$rules</code>
     </MixedAssignment>
     <MixedMethodCall occurrences="5">
@@ -1800,9 +1846,13 @@
       <code>$this-&gt;_context</code>
       <code>$this-&gt;_context</code>
     </UndefinedThisPropertyAssignment>
-    <UnusedVariable occurrences="2">
+    <UnusedPsalmSuppress occurrences="1">
+      <code>UnusedVariable</code>
+    </UnusedPsalmSuppress>
+    <UnusedVariable occurrences="3">
       <code>$filtered</code>
       <code>$rule</code>
+      <code>$target</code>
     </UnusedVariable>
   </file>
   <file src="test/PregReplaceTest.php">

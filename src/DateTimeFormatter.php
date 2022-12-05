@@ -11,6 +11,13 @@ use Traversable;
 use function is_int;
 use function is_string;
 
+/**
+ * @psalm-type Options = array{
+ *     format?: string,
+ *     ...
+ * }
+ * @extends AbstractFilter<Options>
+ */
 class DateTimeFormatter extends AbstractFilter
 {
     /**

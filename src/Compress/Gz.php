@@ -31,9 +31,9 @@ use const SEEK_END;
  * Compression adapter for Gzip (ZLib)
  *
  * @psalm-type Options = array{
- *     level: int,
- *     mode: string,
- *     archive: string|null,
+ *     level?: int,
+ *     mode?: string,
+ *     archive?: string|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
  */

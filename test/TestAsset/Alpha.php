@@ -10,6 +10,7 @@ use function is_array;
 use function is_scalar;
 use function preg_replace;
 
+/** @template-extends AbstractFilter<array{}> */
 class Alpha extends AbstractFilter
 {
     public function filter(mixed $value): mixed

@@ -11,6 +11,15 @@ use Laminas\Filter\Exception;
 use function preg_quote;
 use function preg_replace;
 
+/**
+ * @psalm-type Options = array{
+ *     search_separator?: string,
+ *     replacement_separator?: string,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @template-extends AbstractFilter<TOptions>
+ */
 class SeparatorToSeparator extends AbstractFilter
 {
     /** @var string */

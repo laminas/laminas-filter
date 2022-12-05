@@ -12,6 +12,15 @@ use function ksort;
 use function sprintf;
 use function vsprintf;
 
+/**
+ * @psalm-type Options = array{
+ *     null_on_empty?: bool,
+ *     null_on_all_empty?: bool,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @template-extends AbstractFilter<TOptions>
+ */
 abstract class AbstractDateDropdown extends AbstractFilter
 {
     /**

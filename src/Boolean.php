@@ -20,9 +20,9 @@ use function strtolower;
 
 /**
  * @psalm-type Options = array{
- *     type: int-mask-of<self::TYPE_*>,
- *     casting: bool,
- *     translations: array,
+ *     type?: int-mask-of<self::TYPE_*>,
+ *     casting?: bool,
+ *     translations?: array,
  * }
  * @extends AbstractFilter<Options>
  */

@@ -29,9 +29,23 @@ use function unlink;
 use const DIRECTORY_SEPARATOR;
 use const UPLOAD_ERR_OK;
 
+/**
+ * @psalm-type Options = array{
+ *     target?: string|null,
+ *     use_upload_name?: bool,
+ *     use_upload_extension?: bool,
+ *     overwrite?: bool,
+ *     randomize?: bool,
+ *     stream_factory?: StreamFactoryInterface|null,
+ *     upload_file_factory?: UploadedFileFactoryInterface|null,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @extends AbstractFilter<TOptions>
+ */
 class RenameUpload extends AbstractFilter
 {
-    /** @var array */
+    /** @var TOptions */
     protected $options = [
         'target'               => null,
         'use_upload_name'      => false,

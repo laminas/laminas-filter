@@ -21,8 +21,8 @@ use function str_contains;
 
 /**
  * @psalm-type Options = array{
- *     pattern: string|list<string>|null,
- *     replacement: string|list<string>,
+ *     pattern?: string|list<string>|null,
+ *     replacement?: string|list<string>,
  * }
  * @extends AbstractFilter<Options>
  */

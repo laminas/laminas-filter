@@ -9,7 +9,10 @@ use function mb_convert_case;
 
 use const MB_CASE_TITLE;
 
-/** @psalm-import-type UnicodeOptions from AbstractUnicode */
+/**
+ * @psalm-import-type UnicodeOptions from AbstractUnicode
+ * @extends AbstractUnicode<UnicodeOptions>
+ */
 final class UpperCaseWords extends AbstractUnicode
 {
     /**

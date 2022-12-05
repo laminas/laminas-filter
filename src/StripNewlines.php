@@ -8,6 +8,10 @@ use Closure;
 
 use function str_replace;
 
+/**
+ * @psalm-type Options = array{}
+ * @extends AbstractFilter<Options>
+ */
 class StripNewlines extends AbstractFilter
 {
     /**

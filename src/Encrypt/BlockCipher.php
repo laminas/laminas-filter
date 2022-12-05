@@ -103,7 +103,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
      * Sets new encryption options
      *
      * @param  string|array $options Encryption options
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setEncryption($options)
@@ -169,7 +169,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
      * Set the inizialization vector
      *
      * @param  string $vector
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setVector($vector)
@@ -187,7 +187,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
      * Set the encryption key
      *
      * @param  string $key
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setKey($key)
@@ -225,7 +225,7 @@ class BlockCipher implements EncryptionAlgorithmInterface
      * Sets an internal compression for values to encrypt
      *
      * @param  string|array $compression
-     * @return self
+     * @return $this
      */
     public function setCompression($compression)
     {

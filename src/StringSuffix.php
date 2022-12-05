@@ -12,7 +12,7 @@ use function sprintf;
 
 /**
  * @psalm-type Options = array{
- *     suffix: null|string,
+ *     suffix?: null|string,
  * }
  * @extends AbstractFilter<Options>
  */

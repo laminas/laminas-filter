@@ -9,6 +9,14 @@ use Laminas\Stdlib\StringUtils;
 
 use function preg_replace;
 
+/**
+ * @psalm-type Options = array{
+ *     separator?: string,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @extends AbstractSeparator<TOptions>
+ */
 class CamelCaseToSeparator extends AbstractSeparator
 {
     /**

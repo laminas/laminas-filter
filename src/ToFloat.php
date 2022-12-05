@@ -6,6 +6,10 @@ namespace Laminas\Filter;
 
 use function is_scalar;
 
+/**
+ * @psalm-type Options = array{}
+ * @extends AbstractFilter<Options>
+ */
 class ToFloat extends AbstractFilter
 {
     /**

@@ -16,10 +16,10 @@ use function strtolower;
 
 /**
  * @psalm-type Options = array{
- *     mode: string,
- *     unit: string,
- *     precision: int,
- *     prefixes: list<string>,
+ *     mode?: string,
+ *     unit?: string,
+ *     precision?: int,
+ *     prefixes?: list<string>,
  * }
  * @extends AbstractFilter<Options>
  */

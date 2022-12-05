@@ -22,9 +22,17 @@ use function substr;
 use const DIRECTORY_SEPARATOR;
 use const PHP_OS;
 
+/**
+ * @psalm-type Options = array{
+ *     exists?: bool,
+ *     ...
+ * }
+ * @template TOptions of Options
+ * @extends AbstractFilter<TOptions>
+ */
 class RealPath extends AbstractFilter
 {
-    /** @var array $options */
+    /** @var TOptions $options */
     protected $options = [
         'exists' => true,
     ];

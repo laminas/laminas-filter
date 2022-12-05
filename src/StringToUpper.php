@@ -7,7 +7,10 @@ namespace Laminas\Filter;
 use function is_scalar;
 use function mb_strtoupper;
 
-/** @psalm-import-type UnicodeOptions from AbstractUnicode */
+/**
+ * @psalm-import-type UnicodeOptions from AbstractUnicode
+ * @extends AbstractUnicode<UnicodeOptions>
+ */
 class StringToUpper extends AbstractUnicode
 {
     /**

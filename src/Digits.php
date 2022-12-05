@@ -11,6 +11,10 @@ use function is_int;
 use function is_string;
 use function preg_replace;
 
+/**
+ * @psalm-type Options = array{}
+ * @extends AbstractFilter<Options>
+ */
 class Digits extends AbstractFilter
 {
     /**
