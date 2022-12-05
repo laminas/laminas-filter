@@ -13,7 +13,7 @@ use function is_string;
 
 /**
  * @psalm-type Options = array{
- *     format: string,
+ *     format?: string,
  *     ...
  * }
  * @extends AbstractFilter<Options>

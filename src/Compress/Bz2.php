@@ -21,8 +21,8 @@ use function str_contains;
  * Compression adapter for Bz2
  *
  * @psalm-type Options = array{
- *     blocksize: int,
- *     archive: string|null,
+ *     blocksize?: int,
+ *     archive?: string|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
  */

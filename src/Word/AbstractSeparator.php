@@ -12,7 +12,7 @@ use function is_string;
 
 /**
  * @psalm-type Options = array{
- *     separator: string,
+ *     separator?: string,
  *     ...
  * }
  * @template TOptions of Options

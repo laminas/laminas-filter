@@ -26,8 +26,8 @@ use function trim;
 
 /**
  * @psalm-type Options = array{
- *     tags_allowed: array<string>|string,
- *     attributes_allowed: array<string>|string,
+ *     tags_allowed?: array<string>|string,
+ *     attributes_allowed?: array<string>|string,
  *     ...
  * }
  * @extends AbstractFilter<Options>

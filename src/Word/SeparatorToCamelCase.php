@@ -14,7 +14,7 @@ use function strtoupper;
 
 /**
  * @psalm-type Options = array{
- *     separator: string,
+ *     separator?: string,
  *     ...
  * }
  * @template TOptions of Options

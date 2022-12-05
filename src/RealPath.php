@@ -24,7 +24,7 @@ use const PHP_OS;
 
 /**
  * @psalm-type Options = array{
- *     exists: bool,
+ *     exists?: bool,
  *     ...
  * }
  * @template TOptions of Options

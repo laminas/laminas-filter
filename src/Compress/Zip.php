@@ -28,9 +28,9 @@ use const DIRECTORY_SEPARATOR;
  * Compression adapter for zip
  *
  * @psalm-type Options = array{
- *     archive: string|null,
+ *     archive?: string|null,
  *     password?: string|null,
- *     target: string|null,
+ *     target?: string|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
  */

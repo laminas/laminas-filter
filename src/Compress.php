@@ -21,8 +21,8 @@ use function ucfirst;
  * Compresses a given string
  *
  * @psalm-type Options = array{
- *     adapter: Compress\CompressionAlgorithmInterface|'Bz2'|'Gz'|'Lzf'|'Rar'|'Snappy'|'Tar'|'Zip',
- *     adapter_options: array,
+ *     adapter?: Compress\CompressionAlgorithmInterface|'Bz2'|'Gz'|'Lzf'|'Rar'|'Snappy'|'Tar'|'Zip',
+ *     adapter_options?: array,
  *     ...
  * }
  * @extends AbstractFilter<Options>

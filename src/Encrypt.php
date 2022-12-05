@@ -24,7 +24,7 @@ use function ucfirst;
  *             library and write your own filter.
  *
  * @psalm-type Options = array{
- *     adapter: Encrypt\EncryptionAlgorithmInterface,
+ *     adapter?: Encrypt\EncryptionAlgorithmInterface,
  *     ...
  * }
  * @extends AbstractFilter<Options>

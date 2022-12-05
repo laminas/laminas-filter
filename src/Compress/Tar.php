@@ -26,7 +26,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @psalm-type Options = array{
  *     archive?: string|null,
- *     target: string,
+ *     target?: string,
  *     mode?: 'gz'|'bz2'|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>

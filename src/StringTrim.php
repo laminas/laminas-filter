@@ -13,7 +13,7 @@ use function strlen;
 
 /**
  * @psalm-type Options = array{
- *     charlist: string|null,
+ *     charlist?: string|null,
  * }
  * @extends AbstractFilter<Options>
  */

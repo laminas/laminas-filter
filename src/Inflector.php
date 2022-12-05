@@ -30,7 +30,7 @@ use function str_replace;
  * @psalm-type Options = array{
  *     target?: string,
  *     rules?: array,
- *     throwTargetExceptionsOn: bool,
+ *     throwTargetExceptionsOn?: bool,
  *     targetReplacementIdentifier?: string,
  *     pluginManager?: FilterPluginManager,
  * }

@@ -12,8 +12,8 @@ use function is_array;
 
 /**
  * @psalm-type Options = array{
- *     strict: bool,
- *     list: array,
+ *     strict?: bool,
+ *     list?: array,
  *     ...
  * }
  * @extends AbstractFilter<Options>

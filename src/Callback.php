@@ -14,8 +14,8 @@ use function is_string;
 
 /**
  * @psalm-type Options = array{
- *     callback: callable,
- *     callback_params: array,
+ *     callback?: callable,
+ *     callback_params?: array,
  *     ...
  * }
  * @extends AbstractFilter<Options>
