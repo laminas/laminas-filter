@@ -41,7 +41,7 @@ class UriNormalize extends AbstractFilter
     /**
      * Sets filter options
      *
-     * @param array|Traversable|null $options
+     * @param Options|Traversable|null $options
      */
     public function __construct($options = null)
     {
@@ -57,7 +57,7 @@ class UriNormalize extends AbstractFilter
      * normalize the URI and thus may affect the resulting normalize URI.
      *
      * @param  string $defaultScheme
-     * @return self
+     * @return $this
      */
     public function setDefaultScheme($defaultScheme)
     {
@@ -77,7 +77,7 @@ class UriNormalize extends AbstractFilter
      * real-world user mishaps, it may yield unexpected results at times.
      *
      * @param  string $enforcedScheme
-     * @return self
+     * @return $this
      */
     public function setEnforcedScheme($enforcedScheme)
     {
@@ -88,8 +88,8 @@ class UriNormalize extends AbstractFilter
     /**
      * Filter the URL by normalizing it and applying a default scheme if set
      *
-     * @param  string $value
-     * @return string
+     * @param  mixed $value
+     * @return mixed|string
      */
     public function filter($value)
     {
@@ -111,7 +111,7 @@ class UriNormalize extends AbstractFilter
                 $this->enforceScheme($uri);
             }
         } catch (UriException) {
-            // We are unable to parse / enfore scheme with the given config and input
+            // We are unable to parse / enforce scheme with the given config and input
             return $value;
         }
 
@@ -129,6 +129,8 @@ class UriNormalize extends AbstractFilter
      *
      * This will also adjust the host and path parts of the URI as expected in
      * the case of scheme-less network URIs
+     *
+     * @return void
      */
     protected function enforceScheme(Uri $uri)
     {
