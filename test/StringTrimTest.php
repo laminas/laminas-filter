@@ -8,7 +8,7 @@ use Laminas\Filter\StringTrim;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function utf8_encode;
+use function mb_convert_encoding;
 
 class StringTrimTest extends TestCase
 {
@@ -40,7 +40,8 @@ class StringTrimTest extends TestCase
      */
     public function testUtf8(): void
     {
-        self::assertSame('a', $this->filter->filter(utf8_encode("\xa0a\xa0")));
+        $value = mb_convert_encoding("\xa0a\xa0", 'UTF-8', 'ISO-8859-1');
+        self::assertSame('a', $this->filter->filter($value));
     }
 
     /**
