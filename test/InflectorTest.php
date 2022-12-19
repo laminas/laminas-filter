@@ -422,8 +422,8 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules('controller');
         /** @psalm-suppress PossiblyFalseArgument */
         self::assertSame(3, count($rules));
-        $this->_context = StringToLower::class;
-        $this->inflector->setStaticRuleReference('context', $this->_context);
+        $context = StringToLower::class;
+        $this->inflector->setStaticRuleReference('context', $context);
         $this->inflector->addFilterRule('controller', [TestAsset\Alpha::class, StringToLower::class]);
         $rules = $this->inflector->getRules('controller');
         /** @psalm-suppress PossiblyFalseArgument */
