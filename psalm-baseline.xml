@@ -1760,11 +1760,6 @@
       <code>setMethods</code>
     </DeprecatedMethod>
   </file>
-  <file src="test/StringTrimTest.php">
-    <MixedAssignment occurrences="1">
-      <code>$filtered</code>
-    </MixedAssignment>
-  </file>
   <file src="test/StripTagsTest.php">
     <MixedArgument occurrences="2">
       <code>$filtered</code>

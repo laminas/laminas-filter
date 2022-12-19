@@ -24,14 +24,13 @@ class StringTrimTest extends TestCase
      */
     public function testBasic(): void
     {
-        $filter         = $this->filter;
         $valuesExpected = [
             'string' => 'string',
             ' str '  => 'str',
             "\ns\t"  => 's',
         ];
         foreach ($valuesExpected as $input => $output) {
-            self::assertSame($output, $filter($input));
+            self::assertSame($output, $this->filter->filter($input));
         }
     }
 
@@ -66,9 +65,8 @@ class StringTrimTest extends TestCase
      */
     public function testCharList(): void
     {
-        $filter = $this->filter;
-        $filter->setCharList('&');
-        self::assertSame('a&b', $filter('&&a&b&&'));
+        $this->filter->setCharList('&');
+        self::assertSame('a&b', $this->filter->__invoke('&&a&b&&'));
     }
 
     /**
@@ -76,8 +74,7 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas7183(): void
     {
-        $filter = $this->filter;
-        self::assertSame('Зенд', $filter('Зенд'));
+        self::assertSame('Зенд', $this->filter->filter('Зенд'));
     }
 
     /**
@@ -85,8 +82,7 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas170(): void
     {
-        $filter = $this->filter;
-        self::assertSame('Расчет', $filter('Расчет'));
+        self::assertSame('Расчет', $this->filter->filter('Расчет'));
     }
 
     /**
@@ -94,8 +90,7 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas7902(): void
     {
-        $filter = $this->filter;
-        self::assertSame('/', $filter('/'));
+        self::assertSame('/', $this->filter->filter('/'));
     }
 
     /**
@@ -103,13 +98,12 @@ class StringTrimTest extends TestCase
      */
     public function testLaminas10891(): void
     {
-        $filter = $this->filter;
-        self::assertSame('Зенд', $filter('   Зенд   '));
-        self::assertSame('Зенд', $filter('Зенд   '));
-        self::assertSame('Зенд', $filter('   Зенд'));
+        self::assertSame('Зенд', $this->filter->filter('   Зенд   '));
+        self::assertSame('Зенд', $this->filter->filter('Зенд   '));
+        self::assertSame('Зенд', $this->filter->filter('   Зенд'));
 
-        $trimCharlist = " \t\n\r\x0B・。";
-        $filter       = new StringTrim($trimCharlist);
+        $trimCharList = " \t\n\r\x0B・。";
+        $filter       = new StringTrim($trimCharList);
         self::assertSame('Зенд', $filter->filter('。  Зенд  。'));
     }
 
@@ -132,8 +126,7 @@ class StringTrimTest extends TestCase
      */
     public function testShouldNotFilterNonStringValues(mixed $value): void
     {
-        $filtered = $this->filter->filter($value);
-        self::assertSame($value, $filtered);
+        self::assertSame($value, $this->filter->filter($value));
     }
 
     /**
@@ -143,11 +136,10 @@ class StringTrimTest extends TestCase
      */
     public function testEmptyCharList(): void
     {
-        $filter = $this->filter;
-        $filter->setCharList('0');
-        self::assertSame('a0b', $filter('00a0b00'));
+        $this->filter->setCharList('0');
+        self::assertSame('a0b', $this->filter->filter('00a0b00'));
 
-        $filter->setCharList('');
-        self::assertSame('str', $filter(' str '));
+        $this->filter->setCharList('');
+        self::assertSame('str', $this->filter->filter(' str '));
     }
 }
