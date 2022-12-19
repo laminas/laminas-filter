@@ -70,6 +70,8 @@ class FilterPluginManagerCompatibilityTest extends TestCase
         $aliases = $r->getValue($pluginManager);
 
         foreach ($aliases as $alias => $target) {
+            self::assertIsString($alias);
+            self::assertIsString($target);
             // Skipping as laminas-i18n is not required by this package
             if (strpos($target, '\\I18n\\')) {
                 continue;
