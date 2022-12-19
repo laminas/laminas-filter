@@ -46,6 +46,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Boolean.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$typeOrOptions</code>
+    </ArgumentTypeCoercion>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($translations) &amp;&amp; ! $translations instanceof Traversable</code>
     </DocblockTypeContradiction>
@@ -676,6 +679,9 @@
       <code>Filter\Encrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
+    <DeprecatedInterface occurrences="1">
+      <code>Encrypt</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_scalar($value) &amp;&amp; ! is_array($value)</code>
     </DocblockTypeContradiction>
@@ -1233,6 +1239,9 @@
     </RedundantCondition>
   </file>
   <file src="src/ToNull.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$typeOrOptions</code>
+    </ArgumentTypeCoercion>
     <DocblockTypeContradiction occurrences="2">
       <code>$typeOrOptions === ''</code>
       <code>$typeOrOptions === ''</code>
@@ -1290,6 +1299,10 @@
     <PossiblyInvalidCast occurrences="1">
       <code>$separator</code>
     </PossiblyInvalidCast>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>is_array($separator) &amp;&amp; isset($separator['separator']) &amp;&amp; is_string($separator['separator'])</code>
+      <code>is_string($separator['separator'])</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Word/SeparatorToCamelCase.php">
     <MissingClosureParamType occurrences="4">
