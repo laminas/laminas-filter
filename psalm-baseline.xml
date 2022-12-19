@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
+<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
   <file src="src/AbstractDateDropdown.php">
     <MissingReturnType occurrences="1">
       <code>filterable</code>
@@ -49,9 +49,6 @@
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($translations) &amp;&amp; ! $translations instanceof Traversable</code>
     </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$typeOrOptions</code>
-    </MixedArgumentTypeCoercion>
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;options['translations'][$message]</code>
     </MixedArrayOffset>
@@ -1240,9 +1237,6 @@
       <code>$typeOrOptions === ''</code>
       <code>$typeOrOptions === ''</code>
     </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$typeOrOptions</code>
-    </MixedArgumentTypeCoercion>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
@@ -1503,31 +1497,6 @@
       <code>null</code>
     </NullArgument>
   </file>
-  <file src="test/DecryptTest.php">
-    <DeprecatedClass occurrences="6">
-      <code>new DecryptFilter()</code>
-      <code>new DecryptFilter()</code>
-      <code>new DecryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
-      <code>new DecryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
-      <code>new DecryptFilter(['adapter' =&gt; 'BlockCipher'])</code>
-      <code>new DecryptFilter(['adapter' =&gt; 'Openssl'])</code>
-    </DeprecatedClass>
-    <MissingParamType occurrences="1">
-      <code>$input</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="1">
-      <code>returnUnfilteredDataProvider</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$input</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$enc</code>
-    </MixedAssignment>
-    <UnusedVariable occurrences="1">
-      <code>$enc</code>
-    </UnusedVariable>
-  </file>
   <file src="test/DenyListTest.php">
     <MixedArrayAccess occurrences="2">
       <code>$expected</code>
@@ -1537,134 +1506,6 @@
       <code>$data</code>
       <code>[$value, $expected]</code>
     </MixedAssignment>
-  </file>
-  <file src="test/Encrypt/BlockCipherTest.php">
-    <DeprecatedClass occurrences="12">
-      <code>new BlockCipherEncryption('newkey')</code>
-      <code>new BlockCipherEncryption('testkey')</code>
-      <code>new BlockCipherEncryption('testkey')</code>
-      <code>new BlockCipherEncryption('testkey')</code>
-      <code>new BlockCipherEncryption(1234)</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-      <code>new BlockCipherEncryption(['key' =&gt; 'testkey'])</code>
-    </DeprecatedClass>
-    <InvalidArgument occurrences="2">
-      <code>1234</code>
-      <code>1234</code>
-    </InvalidArgument>
-    <UndefinedMethod occurrences="2">
-      <code>fail</code>
-      <code>fail</code>
-    </UndefinedMethod>
-    <UnusedVariable occurrences="1">
-      <code>$filter</code>
-    </UnusedVariable>
-  </file>
-  <file src="test/Encrypt/OpensslTest.php">
-    <DeprecatedClass occurrences="26">
-      <code>OpensslEncryption</code>
-      <code>OpensslEncryption</code>
-      <code>new OpensslEncryption($path)</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-      <code>new OpensslEncryption()</code>
-    </DeprecatedClass>
-  </file>
-  <file src="test/EncryptTest.php">
-    <DeprecatedClass occurrences="6">
-      <code>new EncryptFilter()</code>
-      <code>new EncryptFilter()</code>
-      <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
-      <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
-      <code>new EncryptFilter(['adapter' =&gt; 'BlockCipher', 'key' =&gt; 'testkey'])</code>
-      <code>new EncryptFilter(['adapter' =&gt; 'Openssl'])</code>
-    </DeprecatedClass>
-    <MissingParamType occurrences="1">
-      <code>$input</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="1">
-      <code>returnUnfilteredDataProvider</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$input</code>
-    </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>$enc['key']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="1">
-      <code>$enc</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/File/DecryptTest.php">
-    <DeprecatedClass occurrences="6">
-      <code>new FileDecrypt()</code>
-      <code>new FileDecrypt()</code>
-      <code>new FileDecrypt()</code>
-      <code>new FileDecrypt()</code>
-      <code>new FileEncrypt()</code>
-      <code>new FileEncrypt()</code>
-    </DeprecatedClass>
-    <MissingParamType occurrences="1">
-      <code>$input</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="1">
-      <code>returnUnfilteredDataProvider</code>
-    </MissingReturnType>
-    <PossiblyNullArgument occurrences="2">
-      <code>$this-&gt;fileToEncrypt</code>
-      <code>$this-&gt;fileToEncrypt</code>
-    </PossiblyNullArgument>
-    <PossiblyNullOperand occurrences="17">
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-      <code>$this-&gt;tmpDir</code>
-    </PossiblyNullOperand>
-  </file>
-  <file src="test/File/EncryptTest.php">
-    <DeprecatedClass occurrences="6">
-      <code>new FileDecrypt()</code>
-      <code>new FileEncrypt()</code>
-      <code>new FileEncrypt()</code>
-      <code>new FileEncrypt()</code>
-      <code>new FileEncrypt()</code>
-      <code>new FileEncrypt()</code>
-    </DeprecatedClass>
-    <MissingParamType occurrences="1">
-      <code>$input</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="1">
-      <code>returnUnfilteredDataProvider</code>
-    </MissingReturnType>
   </file>
   <file src="test/File/LowerCaseTest.php">
     <MissingParamType occurrences="1">
@@ -1746,17 +1587,8 @@
     </MissingReturnType>
   </file>
   <file src="test/FilterPluginManagerCompatibilityTest.php">
-    <MissingReturnType occurrences="1">
-      <code>aliasProvider</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="2">
-      <code>$target</code>
-      <code>$target</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="3">
-      <code>$alias</code>
+    <MixedAssignment occurrences="1">
       <code>$aliases</code>
-      <code>$target</code>
     </MixedAssignment>
   </file>
   <file src="test/FilterPluginManagerFactoryTest.php">
@@ -1842,10 +1674,6 @@
       <code>$rules[0]</code>
       <code>$rules[1]</code>
     </PossiblyInvalidArrayAccess>
-    <UndefinedThisPropertyAssignment occurrences="2">
-      <code>$this-&gt;_context</code>
-      <code>$this-&gt;_context</code>
-    </UndefinedThisPropertyAssignment>
     <UnusedPsalmSuppress occurrences="1">
       <code>UnusedVariable</code>
     </UnusedPsalmSuppress>
