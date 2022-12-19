@@ -1266,25 +1266,10 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/UriNormalize.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>is_scalar($value)</code>
-    </DocblockTypeContradiction>
     <InvalidCatch occurrences="1"/>
-    <MissingReturnType occurrences="1">
-      <code>enforceScheme</code>
-    </MissingReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyNullArgument occurrences="1">
       <code>$defaultScheme</code>
     </PossiblyNullArgument>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(string) $value</code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Word/AbstractSeparator.php">
     <DocblockTypeContradiction occurrences="1">
