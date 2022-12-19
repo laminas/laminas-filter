@@ -42,10 +42,10 @@
         "laminas/laminas-crypt": "^3.9",
         "laminas/laminas-uri": "^2.10",
         "pear/archive_tar": "^1.4.14",
-        "phpunit/phpunit": "^9.5.26",
-        "psalm/plugin-phpunit": "^0.18.3",
+        "phpunit/phpunit": "^9.5.27",
+        "psalm/plugin-phpunit": "^0.18.4",
         "psr/http-factory": "^1.0.1",
-        "vimeo/psalm": "^5.0"
+        "vimeo/psalm": "^5.3"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",
