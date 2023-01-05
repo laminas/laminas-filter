@@ -38,7 +38,7 @@
         "laminas/laminas-stdlib": "^3.13.0"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~2.4.0",
+        "laminas/laminas-coding-standard": "~2.5.0",
         "laminas/laminas-crypt": "^3.9",
         "laminas/laminas-uri": "^2.10",
         "pear/archive_tar": "^1.4.14",
