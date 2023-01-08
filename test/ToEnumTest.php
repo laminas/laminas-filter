@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Filter\ToEnum;
 use LaminasTest\Filter\TestAsset\TestIntBackedEnum;
@@ -29,9 +28,9 @@ class ToEnumTest extends TestCase
 
     /**
      * @dataProvider filterableValuesProvider
-     * @param string|int $value
+     * @param class-string<UnitEnum> $enumClass
      */
-    public function testCanFilterToEnum(string $enumClass, $value, UnitEnum $expectedFilteredValue): void
+    public function testCanFilterToEnum(string $enumClass, string|int $value, UnitEnum $expectedFilteredValue): void
     {
         $filter = new ToEnum($enumClass);
 
@@ -40,9 +39,9 @@ class ToEnumTest extends TestCase
 
     /**
      * @dataProvider filterableValuesProvider
-     * @param string|int $value
+     * @param class-string<UnitEnum> $enumClass
      */
-    public function testCanFilterToEnumWithOptions(string $enumClass, $value, UnitEnum $expectedFilteredValue): void
+    public function testCanFilterToEnumWithOptions(string $enumClass, string|int $value, UnitEnum $expectedFilteredValue): void
     {
         $filter = new ToEnum(['enum' => $enumClass]);
 
@@ -63,9 +62,9 @@ class ToEnumTest extends TestCase
 
     /**
      * @dataProvider unfilterableValuesProvider
-     * @param mixed $value
+     * @param class-string<UnitEnum> $enumClass
      */
-    public function testFiltersToNull(string $enumClass, $value): void
+    public function testFiltersToNull(string $enumClass, mixed $value): void
     {
         $filter = new ToEnum($enumClass);
 
@@ -80,15 +79,5 @@ class ToEnumTest extends TestCase
         $filter = new ToEnum([]);
 
         $filter->filter('foo');
-    }
-
-    public function testThrowsExceptionIfEnumNotOfEnumType(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('enum is not of type enum');
-
-        $filter = new ToEnum([]);
-
-        $filter->setEnum('foo');
     }
 }

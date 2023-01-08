@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use BackedEnum;
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
@@ -16,15 +15,16 @@ use function is_string;
 use function is_subclass_of;
 
 /**
- * @psalm-type Options array{enum: class-string<UnitEnum>}
- * @extends AbstractFilter<Options>
+ * @psalm-type Options = array{
+ *     enum: class-string<UnitEnum>,
+ * }
  */
-class ToEnum extends AbstractFilter
+final class ToEnum implements FilterInterface
 {
-    /** @var Options */
-    protected $options = [
-        'enum' => null,
-    ];
+    /**
+     * @var class-string<UnitEnum>|null
+     */
+    private ?string $enumClass = null;
 
     /**
      * @param class-string<UnitEnum>|Traversable|Options $enumOrOptions
@@ -39,7 +39,7 @@ class ToEnum extends AbstractFilter
             is_array($enumOrOptions) &&
             isset($enumOrOptions['enum'])
         ) {
-            $this->setOptions($enumOrOptions);
+            $this->setEnum($enumOrOptions['enum']);
 
             return;
         }
@@ -52,24 +52,11 @@ class ToEnum extends AbstractFilter
     /**
      * @param class-string<UnitEnum> $enum
      */
-    public function setEnum(string $enum): self
+    protected function setEnum(string $enum): self
     {
-        if (! is_subclass_of($enum, UnitEnum::class)) {
-            throw new Exception\InvalidArgumentException(
-                'enum is not of type enum'
-            );
-        }
+        $this->enumClass = $enum;
 
-        $this->options['enum'] = $enum;
         return $this;
-    }
-
-    /**
-     * @return class-string<UnitEnum>|null
-     */
-    public function getEnum(): ?string
-    {
-        return $this->options['enum'];
     }
 
     /**
@@ -77,12 +64,12 @@ class ToEnum extends AbstractFilter
      *
      * Returns an enum representation of $value or null
      *
-     * @param  null|array|bool|float|int|string $value
-     * @return UnitEnum|BackedEnum|null
+     * @param  mixed $value
+     * @return UnitEnum|null
      */
-    public function filter($value)
+    public function filter($value): ?UnitEnum
     {
-        $enum = $this->getEnum();
+        $enum = $this->enumClass;
 
         if ($enum === null) {
             throw new RuntimeException(
