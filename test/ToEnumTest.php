@@ -11,12 +11,14 @@ use LaminasTest\Filter\TestAsset\TestStringBackedEnum;
 use LaminasTest\Filter\TestAsset\TestUnitEnum;
 use PHPUnit\Framework\TestCase;
 use UnitEnum;
+use BackedEnum;
 
 /**
  * @requires PHP 8.1
  */
 class ToEnumTest extends TestCase
 {
+    /** @return array<string, array{0: class-string<UnitEnum>, 1: string|int, 2: UnitEnum|BackedEnum}> */
     public function filterableValuesProvider(): array
     {
         return [
@@ -48,6 +50,7 @@ class ToEnumTest extends TestCase
         self::assertSame($expectedFilteredValue, $filter->filter($value));
     }
 
+    /** @return array<string, array{0: class-string<UnitEnum>, 1: mixed}> */
     public function unfilterableValuesProvider(): array
     {
         return [
@@ -68,7 +71,7 @@ class ToEnumTest extends TestCase
     {
         $filter = new ToEnum($enumClass);
 
-        self::assertNull($filter->filter($value));
+        self::assertEquals($value, $filter->filter($value));
     }
 
     public function testThrowsExceptionIfEnumNotSet(): void
@@ -76,6 +79,9 @@ class ToEnumTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('enum class not set');
 
+        /**
+         * @psalm-suppress InvalidArgument
+         */
         $filter = new ToEnum([]);
 
         $filter->filter('foo');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
+use BackedEnum;
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
@@ -27,7 +28,7 @@ final class ToEnum implements FilterInterface
     private ?string $enumClass = null;
 
     /**
-     * @param class-string<UnitEnum>|Traversable|Options $enumOrOptions
+     * @param Traversable|class-string<UnitEnum>|Options $enumOrOptions
      */
     public function __construct($enumOrOptions)
     {
@@ -52,7 +53,7 @@ final class ToEnum implements FilterInterface
     /**
      * @param class-string<UnitEnum> $enum
      */
-    protected function setEnum(string $enum): self
+    private function setEnum(string $enum): self
     {
         $this->enumClass = $enum;
 
@@ -62,12 +63,12 @@ final class ToEnum implements FilterInterface
     /**
      * Defined by Laminas\Filter\FilterInterface
      *
-     * Returns an enum representation of $value or null
+     * Returns an enum representation of $value if matching.
      *
      * @param  mixed $value
-     * @return UnitEnum|null
+     * @return UnitEnum|mixed
      */
-    public function filter($value): ?UnitEnum
+    public function filter($value): mixed
     {
         $enum = $this->enumClass;
 
@@ -78,23 +79,21 @@ final class ToEnum implements FilterInterface
         }
 
         if (! is_string($value) && ! is_int($value)) {
-            return null;
+            return $value;
         }
 
-        if (is_subclass_of($enum, 'BackedEnum')) {
-            return $enum::tryFrom($value);
+        if (is_subclass_of($enum, BackedEnum::class)) {
+            return $enum::tryFrom($value) ?: $value;
         }
 
-        if (! is_string($value) || ! is_subclass_of($enum, 'UnitEnum')) {
-            return null;
+        if (! is_subclass_of($enum, UnitEnum::class)) {
+            return $value;
         }
 
-        foreach ($enum::cases() as $enumCase) {
-            if ($enumCase->name === $value) {
-                return $enumCase;
-            }
+        if (in_array($value, array_column($enum::cases(), 'name'), true)) {
+            return constant($enum . '::' . $value);
         }
 
-        return null;
+        return $value;
     }
 }
