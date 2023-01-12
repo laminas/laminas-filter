@@ -31,7 +31,7 @@ final class ToEnum implements FilterInterface
     /**
      * @param Traversable|class-string<UnitEnum>|Options $enumOrOptions
      */
-    public function __construct($enumOrOptions)
+    public function __construct($enumOrOptions = [])
     {
         if ($enumOrOptions instanceof Traversable) {
             /** @var Options $enumOrOptions */
