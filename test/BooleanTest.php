@@ -119,6 +119,7 @@ class BooleanTest extends TestCase
         $filter = new BooleanFilter();
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown type value');
+        /** @psalm-suppress InvalidScalarArgument */
         $filter->setType(true);
     }
 

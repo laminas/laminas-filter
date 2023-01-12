@@ -69,7 +69,8 @@ class Boolean extends AbstractFilter
     ];
 
     /**
-     * @param self::TYPE_*|value-of<self::CONSTANTS>|list<self::TYPE_*>|Options|iterable|null $typeOrOptions
+     * phpcs:ignore Generic.Files.LineLength.TooLong
+     * @param self::TYPE_*|value-of<self::CONSTANTS>|list<self::TYPE_*>|int-mask-of<self::TYPE_*>|Options|iterable|null $typeOrOptions
      * @param bool  $casting
      * @param array $translations
      */
@@ -102,7 +103,7 @@ class Boolean extends AbstractFilter
     /**
      * Set boolean types
      *
-     * @param  self::TYPE_*|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
+     * @param  self::TYPE_*|int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
      * @throws Exception\InvalidArgumentException
      * @return self
      */
