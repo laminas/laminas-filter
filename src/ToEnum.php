@@ -33,6 +33,7 @@ final class ToEnum implements FilterInterface
     public function __construct($enumOrOptions)
     {
         if ($enumOrOptions instanceof Traversable) {
+            /** @var Options $enumOrOptions */
             $enumOrOptions = ArrayUtils::iteratorToArray($enumOrOptions);
         }
 
@@ -40,24 +41,14 @@ final class ToEnum implements FilterInterface
             is_array($enumOrOptions) &&
             isset($enumOrOptions['enum'])
         ) {
-            $this->setEnum($enumOrOptions['enum']);
+            $this->enumClass = $enumOrOptions['enum'];
 
             return;
         }
 
         if (is_string($enumOrOptions)) {
-            $this->setEnum($enumOrOptions);
+            $this->enumClass = $enumOrOptions;
         }
-    }
-
-    /**
-     * @param class-string<UnitEnum> $enum
-     */
-    private function setEnum(string $enum): self
-    {
-        $this->enumClass = $enum;
-
-        return $this;
     }
 
     /**
