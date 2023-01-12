@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
+use BackedEnum;
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Filter\ToEnum;
 use LaminasTest\Filter\TestAsset\TestIntBackedEnum;
@@ -11,7 +12,6 @@ use LaminasTest\Filter\TestAsset\TestStringBackedEnum;
 use LaminasTest\Filter\TestAsset\TestUnitEnum;
 use PHPUnit\Framework\TestCase;
 use UnitEnum;
-use BackedEnum;
 
 /**
  * @requires PHP 8.1
@@ -43,8 +43,11 @@ class ToEnumTest extends TestCase
      * @dataProvider filterableValuesProvider
      * @param class-string<UnitEnum> $enumClass
      */
-    public function testCanFilterToEnumWithOptions(string $enumClass, string|int $value, UnitEnum $expectedFilteredValue): void
-    {
+    public function testCanFilterToEnumWithOptions(
+        string $enumClass,
+        string|int $value,
+        UnitEnum $expectedFilteredValue
+    ): void {
         $filter = new ToEnum(['enum' => $enumClass]);
 
         self::assertSame($expectedFilteredValue, $filter->filter($value));

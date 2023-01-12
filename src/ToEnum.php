@@ -10,6 +10,9 @@ use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 use UnitEnum;
 
+use function array_column;
+use function constant;
+use function in_array;
 use function is_array;
 use function is_int;
 use function is_string;
@@ -22,9 +25,7 @@ use function is_subclass_of;
  */
 final class ToEnum implements FilterInterface
 {
-    /**
-     * @var class-string<UnitEnum>|null
-     */
+    /** @var class-string<UnitEnum>|null */
     private ?string $enumClass = null;
 
     /**
@@ -55,7 +56,6 @@ final class ToEnum implements FilterInterface
      * Returns an enum representation of $value if matching.
      *
      * @param  mixed $value
-     * @return UnitEnum|mixed
      */
     public function filter($value): mixed
     {
