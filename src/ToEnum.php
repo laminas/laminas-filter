@@ -42,8 +42,6 @@ final class ToEnum implements FilterInterface
             isset($enumOrOptions['enum'])
         ) {
             $this->enumClass = $enumOrOptions['enum'];
-
-            return;
         }
 
         if (is_string($enumOrOptions)) {
