@@ -56,7 +56,7 @@ final class ToEnum implements FilterInterface
      * Returns an enum representation of $value if matching.
      *
      * @param  mixed $value
-     * @return UnitEnum|mixed
+     * @psalm-return UnitEnum|mixed
      */
     public function filter($value): mixed
     {
