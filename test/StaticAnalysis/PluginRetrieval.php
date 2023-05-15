@@ -8,7 +8,7 @@ use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\StringToUpper;
 
 /** @psalm-suppress UnusedClass */
-final class PluginRetrievalTest
+final class PluginRetrieval
 {
     public function __construct(private FilterPluginManager $pluginManager)
     {
