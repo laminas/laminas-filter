@@ -1399,19 +1399,6 @@
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/StaticFilterTest.php">
-    <MissingClosureParamType>
-      <code>$value</code>
-      <code>$value</code>
-    </MissingClosureParamType>
-    <MixedAssignment>
-      <code>$filteredValue</code>
-    </MixedAssignment>
-    <UnusedClosureParam>
-      <code>$value</code>
-      <code>$value</code>
-    </UnusedClosureParam>
-  </file>
   <file src="test/StringPrefixTest.php">
     <MixedArgument>
       <code><![CDATA[$filter('sample')]]></code>
