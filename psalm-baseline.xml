@@ -617,10 +617,6 @@
     </RedundantFunctionCall>
   </file>
   <file src="src/FilterPluginManager.php">
-    <DeprecatedClass>
-      <code>Blacklist::class</code>
-      <code>Whitelist::class</code>
-    </DeprecatedClass>
     <DuplicateArrayKey>
       <code><![CDATA[ToInt::class                       => InvokableFactory::class]]></code>
       <code><![CDATA[ToNull::class                      => InvokableFactory::class]]></code>
@@ -1093,11 +1089,6 @@
     <PossiblyUnusedMethod>
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/BlacklistTest.php">
-    <DeprecatedClass>
-      <code>new BlacklistFilter()</code>
-    </DeprecatedClass>
   </file>
   <file src="test/BooleanTest.php">
     <ArgumentTypeCoercion>
