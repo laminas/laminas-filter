@@ -232,68 +232,6 @@
       <code>null !== $content</code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/Compress/Lzf.php">
-    <ParamNameMismatch>
-      <code>$content</code>
-      <code>$content</code>
-    </ParamNameMismatch>
-    <PossiblyUnusedParam>
-      <code>$options</code>
-    </PossiblyUnusedParam>
-  </file>
-  <file src="src/Compress/Rar.php">
-    <ImplementedReturnTypeMismatch>
-      <code>bool</code>
-      <code>string|null</code>
-    </ImplementedReturnTypeMismatch>
-    <ParamNameMismatch>
-      <code>$content</code>
-      <code>$content</code>
-    </ParamNameMismatch>
-    <PossiblyUndefinedArrayOffset>
-      <code><![CDATA[$this->options['archive']]]></code>
-      <code><![CDATA[$this->options['callback']]]></code>
-      <code><![CDATA[$this->options['password']]]></code>
-      <code><![CDATA[$this->options['target']]]></code>
-    </PossiblyUndefinedArrayOffset>
-    <RedundantCast>
-      <code>(string) $archive</code>
-      <code>(string) $target</code>
-    </RedundantCast>
-    <RedundantCastGivenDocblockType>
-      <code>(string) $password</code>
-    </RedundantCastGivenDocblockType>
-    <TypeDoesNotContainType>
-      <code>! $archive</code>
-      <code>! $filelist</code>
-      <code>$archive</code>
-      <code>$filelist</code>
-    </TypeDoesNotContainType>
-    <UndefinedClass>
-      <code>$filelist</code>
-    </UndefinedClass>
-  </file>
-  <file src="src/Compress/Snappy.php">
-    <MixedAssignment>
-      <code>$compressed</code>
-      <code>$compressed</code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>string</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code>$compressed</code>
-      <code>$compressed</code>
-    </MixedReturnStatement>
-    <ParamNameMismatch>
-      <code>$content</code>
-      <code>$content</code>
-    </ParamNameMismatch>
-    <PossiblyUnusedParam>
-      <code>$options</code>
-    </PossiblyUnusedParam>
-  </file>
   <file src="src/Compress/Tar.php">
     <DocblockTypeContradiction>
       <code>$result === false</code>
@@ -1577,27 +1515,6 @@
       <code>null</code>
       <code>null</code>
     </NullArgument>
-  </file>
-  <file src="test/Compress/LzfTest.php">
-    <DeprecatedClass>
-      <code>new Lzf()</code>
-      <code>new Lzf()</code>
-    </DeprecatedClass>
-  </file>
-  <file src="test/Compress/RarTest.php">
-    <PossiblyUnusedReturnValue>
-      <code>bool</code>
-    </PossiblyUnusedReturnValue>
-  </file>
-  <file src="test/Compress/SnappyTest.php">
-    <DeprecatedClass>
-      <code>new SnappyCompression()</code>
-      <code>new SnappyCompression()</code>
-      <code>new SnappyCompression()</code>
-      <code>new SnappyCompression()</code>
-      <code>new SnappyCompression()</code>
-      <code>new SnappyCompression()</code>
-    </DeprecatedClass>
   </file>
   <file src="test/CompressTest.php">
     <MixedAssignment>

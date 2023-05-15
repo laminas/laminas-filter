@@ -414,8 +414,6 @@ The following compression formats are supported by their own adapter:
 - **Gz**
 - **Tar**
 - **Zip**
-- **Lzf**
-- **Rar**
 
 Each compression format has different capabilities as described below. All
 compression filters may be used in approximately the same ways, and differ
@@ -483,12 +481,6 @@ $filter     = new Laminas\Filter\Decompress('Bz2');
 $compressed = $filter->filter('Compressed string');
 // Returns the original, uncompressed string
 ```
-
-> ### Note on String Compression
->
-> Not all adapters support string compression. Compression formats like **Rar**
-> can only handle files and directories. For details, consult the section for
-> the adapter you wish to use.
 
 ### Creating an Archive
 
@@ -621,59 +613,6 @@ To customize the compression this adapter supports the following options:
 All options can be set at initiation or by using a related method. For example, the related methods
 for `level` are `getLevel()` and `setLevel()`. You can also use the `setOptions()` method which
 accepts an array of all options.
-
-### Lzf Adapter
-
-CAUTION: **Deprecated**
-This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
-Consider an alternative compression format such as `gz` or `bz2`.
-
-The Lzf Adapter can compress and decompress:
-
-- Strings
-
-> ### Lzf supports only Strings
->
-> The Lzf adapter can not handle files and directories.
-
-This adapter makes use of PHP's Lzf extension.
-
-There are no options available to customize this adapter.
-
-### Rar Adapter
-
-CAUTION: **Deprecated**
-This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
-Consider an alternative compression format such as `gz` or `bz2`.
-
-The Rar Adapter can compress and decompress:
-
-- Files
-- Directories
-
-> ### Rar does not support Strings
->
-> The Rar Adapter can not handle strings.
-
-This adapter makes use of PHP's Rar extension.
-
-> ### Rar Compression not supported
->
-> Due to restrictions with the Rar compression format, there is no compression
-> available for free. When you want to compress files into a new Rar archive,
-> you must provide a callback to the adapter that can invoke a Rar compression
-> program.
-
-To customize compression, this adapter supports the following options:
-
-- `archive`: This parameter sets the archive file which should be used or created.
-- `callback`: A callback which provides compression support to this adapter.
-- `password`: The password which has to be used for decompression.
-- `target`: The target where the decompressed files will be written to.
-
-All options can be set at instantiation or by using a related method. For example, the related
-methods for `target` are `getTarget()` and `setTarget()`. You can also use the `setOptions()` method
-which accepts an array of all options.
 
 ### Tar Adapter
 
