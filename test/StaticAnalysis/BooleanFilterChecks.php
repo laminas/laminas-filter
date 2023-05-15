@@ -6,6 +6,7 @@ namespace LaminasTest\Filter\StaticAnalysis;
 
 use Laminas\Filter;
 
+/** @psalm-suppress UnusedClass */
 final class BooleanFilterChecks
 {
     public function constructorAcceptsSingleTypeConstant(): Filter\Boolean

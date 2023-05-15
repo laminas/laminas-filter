@@ -282,10 +282,8 @@ class RarTest extends TestCase
 
     /**
      * Test callback for compression
-     *
-     * @return unknown
      */
-    public static function rarCompress()
+    public static function rarCompress(): bool
     {
         return true;
     }

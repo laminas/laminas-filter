@@ -4,6 +4,10 @@
     <MissingReturnType>
       <code>filterable</code>
     </MissingReturnType>
+    <PossiblyUnusedMethod>
+      <code>setNullOnAllEmpty</code>
+      <code>setNullOnEmpty</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$expectedInputs</code>
     </PropertyNotSetInConstructor>
@@ -41,6 +45,10 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AllowList.php">
+    <PossiblyUnusedMethod>
+      <code>setList</code>
+      <code>setStrict</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
@@ -70,6 +78,12 @@
       <code><![CDATA[$this->options['translations']]]></code>
       <code><![CDATA[$this->options['type']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>getTranslations</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$constants</code>
+    </PossiblyUnusedProperty>
     <RedundantCastGivenDocblockType>
       <code>(bool) $flag</code>
     </RedundantCastGivenDocblockType>
@@ -98,6 +112,9 @@
     <PossiblyInvalidArgument>
       <code>$callbackOrOptions</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>getCallback</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(array) $params</code>
     </RedundantCastGivenDocblockType>
@@ -220,6 +237,9 @@
       <code>$content</code>
       <code>$content</code>
     </ParamNameMismatch>
+    <PossiblyUnusedParam>
+      <code>$options</code>
+    </PossiblyUnusedParam>
   </file>
   <file src="src/Compress/Rar.php">
     <ImplementedReturnTypeMismatch>
@@ -270,6 +290,9 @@
       <code>$content</code>
       <code>$content</code>
     </ParamNameMismatch>
+    <PossiblyUnusedParam>
+      <code>$options</code>
+    </PossiblyUnusedParam>
     <UndefinedFunction>
       <code>snappy_compress($content)</code>
       <code>snappy_uncompress($content)</code>
@@ -383,6 +406,13 @@
       <code><![CDATA[$this->options['prefixes']]]></code>
       <code><![CDATA[$this->options['unit']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>isDecimalMode</code>
+      <code>setMode</code>
+      <code>setPrecision</code>
+      <code>setPrefixes</code>
+      <code>setUnit</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(int) $precision</code>
       <code>(string) $unit</code>
@@ -437,13 +467,16 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/DenyList.php">
+    <PossiblyUnusedMethod>
+      <code>setList</code>
+      <code>setStrict</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Encrypt.php">
     <DeprecatedInterface>
-      <code>Encrypt</code>
       <code>Encrypt\EncryptionAlgorithmInterface</code>
     </DeprecatedInterface>
     <DocblockTypeContradiction>
@@ -487,6 +520,11 @@
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>getAdapter</code>
+      <code>getAdapterInstance</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Encrypt/BlockCipher.php">
     <DeprecatedInterface>
@@ -549,6 +587,13 @@
     <PossiblyInvalidPropertyAssignmentValue>
       <code>$compression</code>
     </PossiblyInvalidPropertyAssignmentValue>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+      <code>getCompression</code>
+      <code>getEncryption</code>
+      <code>getKey</code>
+      <code>getVector</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$compression</code>
     </PropertyNotSetInConstructor>
@@ -558,6 +603,13 @@
       <code>setKeyIteration</code>
       <code>setSalt</code>
     </UndefinedMethod>
+  </file>
+  <file src="src/Encrypt/EncryptionAlgorithmInterface.php">
+    <PossiblyUnusedMethod>
+      <code>decrypt</code>
+      <code>encrypt</code>
+      <code>toString</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Encrypt/Openssl.php">
     <DeprecatedInterface>
@@ -609,6 +661,16 @@
     <MixedPropertyTypeCoercion>
       <code><![CDATA[$this->keys]]></code>
     </MixedPropertyTypeCoercion>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+      <code>getCompression</code>
+      <code>getPackage</code>
+      <code>getPrivateKey</code>
+      <code>getPublicKey</code>
+      <code>setEnvelopeKey</code>
+      <code>setPrivateKey</code>
+      <code>setPublicKey</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(bool) $package</code>
     </RedundantCastGivenDocblockType>
@@ -622,9 +684,6 @@
       <code>Filter\Decrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
-    <DeprecatedInterface>
-      <code>Decrypt</code>
-    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
     </DocblockTypeContradiction>
@@ -665,6 +724,10 @@
     <PossiblyUndefinedVariable>
       <code>$uploadData</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>getFilename</code>
+      <code>setFilename</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$filename</code>
     </PropertyNotSetInConstructor>
@@ -677,9 +740,6 @@
       <code>Filter\Encrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
-    <DeprecatedInterface>
-      <code>Encrypt</code>
-    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
     </DocblockTypeContradiction>
@@ -719,6 +779,10 @@
     <PossiblyUndefinedVariable>
       <code>$uploadData</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>getFilename</code>
+      <code>setFilename</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$filename</code>
     </PropertyNotSetInConstructor>
@@ -897,6 +961,15 @@
       <code><![CDATA[$this->options['use_upload_extension']]]></code>
       <code><![CDATA[$this->options['use_upload_name']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>setOverwrite</code>
+      <code>setRandomize</code>
+      <code>setUseUploadExtension</code>
+      <code>setUseUploadName</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>bool</code>
+    </PossiblyUnusedReturnValue>
     <RedundantCastGivenDocblockType>
       <code>(bool) $flag</code>
       <code>(bool) $flag</code>
@@ -941,6 +1014,9 @@
     <MoreSpecificImplementedParamType>
       <code>$options</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyUnusedMethod>
+      <code>plugin</code>
+    </PossiblyUnusedMethod>
     <RedundantFunctionCall>
       <code>strtolower</code>
     </RedundantFunctionCall>
@@ -985,6 +1061,12 @@
     <ParamNameMismatch>
       <code>$name</code>
     </ParamNameMismatch>
+    <PossiblyUnusedMethod>
+      <code>validatePlugin</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$shareByDefault</code>
+    </PossiblyUnusedProperty>
     <UndefinedClass>
       <code>Alnum</code>
       <code>Alnum</code>
@@ -1035,6 +1117,11 @@
     <ParamNameMismatch>
       <code>$container</code>
     </ParamNameMismatch>
+  </file>
+  <file src="src/FilterProviderInterface.php">
+    <UnusedClass>
+      <code>FilterProviderInterface</code>
+    </UnusedClass>
   </file>
   <file src="src/HtmlEntities.php">
     <DocblockTypeContradiction>
@@ -1123,6 +1210,13 @@
     <ParamNameMismatch>
       <code>$source</code>
     </ParamNameMismatch>
+    <PossiblyUnusedParam>
+      <code>$reference</code>
+      <code>$target</code>
+    </PossiblyUnusedParam>
+    <PossiblyUnusedReturnValue>
+      <code>self</code>
+    </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
       <code>$pluginManager</code>
       <code>$target</code>
@@ -1142,9 +1236,15 @@
     <MissingReturnType>
       <code>getConfig</code>
     </MissingReturnType>
+    <PossiblyUnusedParam>
+      <code>$moduleManager</code>
+    </PossiblyUnusedParam>
     <UndefinedDocblockClass>
       <code>ModuleManager</code>
     </UndefinedDocblockClass>
+    <UnusedClass>
+      <code>Module</code>
+    </UnusedClass>
   </file>
   <file src="src/PregReplace.php">
     <DocblockTypeContradiction>
@@ -1165,6 +1265,9 @@
       <code><![CDATA[$this->options['replacement']]]></code>
       <code><![CDATA[$this->options['replacement']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedReturnValue>
+      <code>bool</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="src/RealPath.php">
     <InvalidPropertyAssignmentValue>
@@ -1268,6 +1371,9 @@
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$this->options['type']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedProperty>
+      <code>$constants</code>
+    </PossiblyUnusedProperty>
     <RedundantConditionGivenDocblockType>
       <code>is_int($value)</code>
     </RedundantConditionGivenDocblockType>
@@ -1293,6 +1399,10 @@
     <PossiblyNullArgument>
       <code>$defaultScheme</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>setDefaultScheme</code>
+      <code>setEnforcedScheme</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Word/AbstractSeparator.php">
     <DocblockTypeContradiction>
@@ -1307,6 +1417,9 @@
     <PossiblyInvalidCast>
       <code>$separator</code>
     </PossiblyInvalidCast>
+    <PossiblyUnusedMethod>
+      <code>getSeparator</code>
+    </PossiblyUnusedMethod>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[is_array($separator) && isset($separator['separator']) && is_string($separator['separator'])]]></code>
       <code><![CDATA[is_string($separator['separator'])]]></code>
@@ -1357,6 +1470,10 @@
       <code><![CDATA[$options['replacement_separator'] ?? '-']]></code>
       <code><![CDATA[$options['search_separator'] ?? ' ']]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+      <code>setCreationOptions</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Word/UnderscoreToStudlyCase.php">
     <MissingClosureParamType>
@@ -1432,6 +1549,9 @@
       <code><![CDATA['param']]></code>
       <code><![CDATA['param']]></code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>objectCallbackWithParams</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Compress/Bz2Test.php">
     <DocblockTypeContradiction>
@@ -1462,15 +1582,9 @@
     </DeprecatedClass>
   </file>
   <file src="test/Compress/RarTest.php">
-    <InvalidReturnStatement>
-      <code>true</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code>unknown</code>
-    </InvalidReturnType>
-    <UndefinedDocblockClass>
-      <code>unknown</code>
-    </UndefinedDocblockClass>
+    <PossiblyUnusedReturnValue>
+      <code>bool</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="test/Compress/SnappyTest.php">
     <DeprecatedClass>
@@ -1485,10 +1599,6 @@
       <code>expectError</code>
       <code>expectErrorMessage</code>
     </DeprecatedMethod>
-    <MissingParamType>
-      <code>$errno</code>
-      <code>$errstr</code>
-    </MissingParamType>
   </file>
   <file src="test/CompressTest.php">
     <MixedAssignment>
@@ -1603,6 +1713,11 @@
       <code>returnUnfilteredDataProvider</code>
     </MissingReturnType>
   </file>
+  <file src="test/FilterChainTest.php">
+    <PossiblyUnusedMethod>
+      <code>staticUcaseFilter</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/FilterPluginManagerCompatibilityTest.php">
     <MixedAssignment>
       <code>$aliases</code>
@@ -1682,15 +1797,6 @@
       <code>$rules</code>
       <code>$rules</code>
     </PossiblyFalseArgument>
-    <PossiblyInvalidArrayAccess>
-      <code><![CDATA[$rules['controller']]]></code>
-      <code><![CDATA[$rules['controller']]]></code>
-      <code><![CDATA[$rules['suffix']]]></code>
-      <code>$rules[0]</code>
-      <code>$rules[0]</code>
-      <code>$rules[0]</code>
-      <code>$rules[1]</code>
-    </PossiblyInvalidArrayAccess>
     <UnusedPsalmSuppress>
       <code>UnusedVariable</code>
     </UnusedPsalmSuppress>
@@ -1822,17 +1928,5 @@
       <code>$filtered</code>
       <code>$filtered</code>
     </MixedAssignment>
-  </file>
-  <file src="test/_files/TestNamespace/StringEquals.php">
-    <MixedAssignment>
-      <code>$element</code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <RedundantCastGivenDocblockType>
-      <code>(array) $value</code>
-      <code>(array) $value</code>
-    </RedundantCastGivenDocblockType>
   </file>
 </files>

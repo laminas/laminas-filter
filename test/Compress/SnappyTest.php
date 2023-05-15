@@ -97,11 +97,4 @@ class SnappyTest extends TestCase
         $filter = new SnappyCompression();
         self::assertSame('Snappy', $filter->toString());
     }
-
-    /**
-     * Null error handler; used when wanting to ignore specific error types
-     */
-    public function errorHandler($errno, $errstr): void
-    {
-    }
 }
