@@ -46,7 +46,7 @@ class FilterPluginManagerCompatibilityTest extends TestCase
         'zendfilterfileencrypt',
     ];
 
-    protected function getPluginManager(): FilterPluginManager
+    protected static function getPluginManager(): FilterPluginManager
     {
         return new FilterPluginManager(new ServiceManager());
     }
