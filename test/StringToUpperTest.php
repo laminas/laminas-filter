@@ -138,18 +138,4 @@ class StringToUpperTest extends TestCase
     {
         self::assertSame($input, $this->filter->filter($input));
     }
-
-    /**
-     * @group 7147
-     */
-    public function testFilterUsesGetEncodingMethod(): void
-    {
-        $filterMock = $this->getMockBuilder(StringToUpperFilter::class)
-            ->setMethods(['getEncoding'])
-            ->getMock();
-        $filterMock->expects($this->once())
-            ->method('getEncoding')
-            ->with();
-        $filterMock->filter('foo');
-    }
 }

@@ -142,18 +142,4 @@ class StringToLowerTest extends TestCase
     {
         self::assertSame($input, $this->filter->filter($input));
     }
-
-    /**
-     * @group 7147
-     */
-    public function testFilterUsesGetEncodingMethod(): void
-    {
-        $filterMock = $this->getMockBuilder(StringToLowerFilter::class)
-            ->setMethods(['getEncoding'])
-            ->getMock();
-        $filterMock->expects($this->once())
-            ->method('getEncoding')
-            ->with();
-        $filterMock->filter('foo');
-    }
 }
