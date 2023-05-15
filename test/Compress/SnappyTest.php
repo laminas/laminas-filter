@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\Compress;
 
-use Error;
 use Laminas\Filter\Compress\Snappy as SnappyCompression;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 use function extension_loaded;
 use function restore_error_handler;
@@ -40,10 +40,16 @@ class SnappyTest extends TestCase
 
     public function testANonStringWillYieldATypeErrorDuringCompression(): void
     {
-        $this->expectException(Error::class);
+        set_error_handler(function ($num, $message): never {
+            throw new TypeError($message);
+        });
+
+        $this->expectException(TypeError::class);
         $this->expectExceptionMessage('snappy_compress : expects parameter to be string');
         /** @psalm-suppress InvalidArgument, InvalidCast */
         (new SnappyCompression())->compress([]);
+
+        restore_error_handler();
     }
 
     public function testNonScalarInputCausesAnException(): void
