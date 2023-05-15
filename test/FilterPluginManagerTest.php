@@ -10,6 +10,7 @@ use Laminas\Filter\ToInt;
 use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
+use LaminasTest\Filter\TestAsset\NotAValidFilter;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -39,7 +40,7 @@ class FilterPluginManagerTest extends TestCase
 
     public function testLoadingInvalidFilterRaisesException(): void
     {
-        $this->filters->setInvokableClass('test', static::class);
+        $this->filters->setInvokableClass('test', NotAValidFilter::class);
         $this->expectException($this->getInvalidServiceException());
         $this->filters->get('test');
     }
