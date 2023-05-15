@@ -28,6 +28,7 @@ use function ucfirst;
  *     ...
  * }
  * @extends AbstractFilter<Options>
+ * @psalm-suppress DeprecatedInterface
  */
 class Encrypt extends AbstractFilter
 {

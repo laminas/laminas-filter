@@ -293,10 +293,6 @@
     <PossiblyUnusedParam>
       <code>$options</code>
     </PossiblyUnusedParam>
-    <UndefinedFunction>
-      <code>snappy_compress($content)</code>
-      <code>snappy_uncompress($content)</code>
-    </UndefinedFunction>
   </file>
   <file src="src/Compress/Tar.php">
     <DocblockTypeContradiction>
@@ -476,10 +472,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Encrypt.php">
-    <DeprecatedInterface>
-      <code>Encrypt</code>
-      <code>Encrypt\EncryptionAlgorithmInterface</code>
-    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code>! is_string($value)</code>
     </DocblockTypeContradiction>
@@ -685,9 +677,6 @@
       <code>Filter\Decrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
-    <DeprecatedInterface>
-      <code>Decrypt</code>
-    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
     </DocblockTypeContradiction>
@@ -744,9 +733,6 @@
       <code>Filter\Encrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
-    <DeprecatedInterface>
-      <code>Encrypt</code>
-    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
     </DocblockTypeContradiction>
