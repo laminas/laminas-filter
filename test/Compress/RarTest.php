@@ -22,6 +22,7 @@ use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
+/** @psalm-suppress DeprecatedClass */
 class RarTest extends TestCase
 {
     public string $tmp;

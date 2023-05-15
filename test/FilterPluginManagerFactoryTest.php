@@ -30,7 +30,6 @@ class FilterPluginManagerFactoryTest extends TestCase
             // laminas-servicemanager v3
             $r = new ReflectionObject($filters);
             $p = $r->getProperty('creationContext');
-            $p->setAccessible(true);
             self::assertSame($container, $p->getValue($filters));
         } else {
             // laminas-servicemanager v2

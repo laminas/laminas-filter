@@ -18,6 +18,9 @@ use function strtoupper;
 use const ENT_COMPAT;
 use const ENT_QUOTES;
 
+/**
+ * @psalm-suppress DeprecatedClass
+ */
 class StaticFilterTest extends TestCase
 {
     /**

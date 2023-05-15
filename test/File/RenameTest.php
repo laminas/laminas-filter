@@ -352,6 +352,9 @@ class RenameTest extends TestCase
 
     public function testAddSameFileAgainAndOverwriteExistingTarget(): void
     {
+        self::assertIsString($this->oldFile);
+        self::assertIsString($this->newFile);
+
         $filter = new FileRename([
             'source' => $this->oldFile,
             'target' => $this->newDir,

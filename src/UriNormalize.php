@@ -9,6 +9,8 @@ use Laminas\Uri\Uri;
 use Laminas\Uri\UriFactory;
 use Traversable;
 
+use function assert;
+use function count;
 use function explode;
 use function is_scalar;
 use function str_contains;
@@ -137,7 +139,9 @@ class UriNormalize extends AbstractFilter
         $path = $uri->getPath() ?? '';
 
         if (str_contains($path, '/')) {
-            [$host, $path] = explode('/', $path, 2);
+            $parts = explode('/', $path, 2);
+            assert(count($parts) >= 2);
+            [$host, $path] = $parts;
             $path          = '/' . $path;
         } else {
             $host = $path;

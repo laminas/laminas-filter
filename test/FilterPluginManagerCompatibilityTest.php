@@ -66,8 +66,7 @@ class FilterPluginManagerCompatibilityTest extends TestCase
     {
         $pluginManager = $this->getPluginManager();
         $r             = new ReflectionProperty($pluginManager, 'aliases');
-        $r->setAccessible(true);
-        $aliases = $r->getValue($pluginManager);
+        $aliases       = $r->getValue($pluginManager);
 
         foreach ($aliases as $alias => $target) {
             self::assertIsString($alias);
