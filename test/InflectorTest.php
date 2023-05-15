@@ -123,7 +123,6 @@ class InflectorTest extends TestCase
         self::assertSame(0, count($rules));
         $this->inflector->setStaticRule('controller', 'foobar');
         $rules = $this->inflector->getRules('controller');
-        self::assertIsArray($rules);
         /** @psalm-suppress DocblockTypeContradiction */
         self::assertSame('foobar', $rules);
     }
@@ -135,12 +134,10 @@ class InflectorTest extends TestCase
         self::assertSame(0, count($rules));
         $this->inflector->setStaticRule('controller', 'foobar');
         $rules = $this->inflector->getRules('controller');
-        self::assertIsArray($rules);
         /** @psalm-suppress DocblockTypeContradiction */
         self::assertSame('foobar', $rules);
         $this->inflector->setStaticRule('controller', 'bazbat');
         $rules = $this->inflector->getRules('controller');
-        self::assertIsArray($rules);
         /** @psalm-suppress DocblockTypeContradiction */
         self::assertSame('bazbat', $rules);
     }
@@ -153,12 +150,10 @@ class InflectorTest extends TestCase
         self::assertSame(0, count($rules));
         $this->inflector->setStaticRuleReference('controller', $rule);
         $rules = $this->inflector->getRules('controller');
-        self::assertIsArray($rules);
         /** @psalm-suppress DocblockTypeContradiction */
         self::assertSame('foobar', $rules);
         $rule .= '/baz';
         $rules = $this->inflector->getRules('controller');
-        self::assertIsArray($rules);
         /** @psalm-suppress DocblockTypeContradiction */
         self::assertSame('foobar/baz', $rules);
     }
