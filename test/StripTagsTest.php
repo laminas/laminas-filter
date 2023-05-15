@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\StripTags as StripTagsFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -338,10 +340,9 @@ class StripTagsTest extends TestCase
 
     /**
      * Ensures that an allowed attribute's value may end with an equals sign '='
-     *
-     * @group Laminas-3293
-     * @group Laminas-5983
      */
+    #[Group('Laminas-3293')]
+    #[Group('Laminas-5983')]
     public function testAllowedAttributeValueMayEndWithEquals(): void
     {
         $filter      = $this->filter;
@@ -353,9 +354,7 @@ class StripTagsTest extends TestCase
         self::assertSame($input, $filter($input));
     }
 
-    /**
-     * @group Laminas-5983
-     */
+    #[Group('Laminas-5983')]
     public function testDisallowedAttributesSplitOverMultipleLinesShouldBeStripped(): void
     {
         $filter      = $this->filter;
@@ -411,9 +410,7 @@ class StripTagsTest extends TestCase
         self::assertSame($expected, $filter($input));
     }
 
-    /**
-     * @group Laminas-9434
-     */
+    #[Group('Laminas-9434')]
     public function testCommentWithTagInSameLine(): void
     {
         $filter   = $this->filter;
@@ -422,9 +419,7 @@ class StripTagsTest extends TestCase
         self::assertSame($expected, $filter($input));
     }
 
-    /**
-     * @group Laminas-9833
-     */
+    #[Group('Laminas-9833')]
     public function testMultiParamArray(): void
     {
         $filter = new StripTagsFilter(["a", "b", "hr"], [], true);
@@ -434,9 +429,7 @@ class StripTagsTest extends TestCase
         self::assertSame($expected, $filter->filter($input));
     }
 
-    /**
-     * @group Laminas-9828
-     */
+    #[Group('Laminas-9828')]
     public function testMultiQuoteInput(): void
     {
         $filter = new StripTagsFilter(
@@ -452,7 +445,7 @@ class StripTagsTest extends TestCase
     }
 
     /** @return list<array{0: string, 1: string}> */
-    public function badCommentProvider(): array
+    public static function badCommentProvider(): array
     {
         return [
             ['A <!--> B', 'A '], // Should be treated as just an open
@@ -469,17 +462,13 @@ class StripTagsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider badCommentProvider
-     */
+    #[DataProvider('badCommentProvider')]
     public function testBadCommentTags(string $input, string $expected): void
     {
         self::assertSame($expected, $this->filter->filter($input));
     }
 
-     /**
-      * @group Laminas-10256
-      */
+     #[Group('Laminas-10256')]
     public function testNotClosedHtmlCommentAtEndOfString(): void
     {
         $input    = 'text<!-- not closed comment at the end';
@@ -487,9 +476,7 @@ class StripTagsTest extends TestCase
         self::assertSame($expected, $this->filter->filter($input));
     }
 
-    /**
-     * @group Laminas-11617
-     */
+    #[Group('Laminas-11617')]
     public function testFilterCanAllowHyphenatedAttributeNames(): void
     {
         $input    = '<li data-disallowed="no!" data-name="Test User" data-id="11223"></li>';
@@ -502,7 +489,7 @@ class StripTagsTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -516,9 +503,7 @@ class StripTagsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         self::assertSame($input, $this->filter->filter($input));

@@ -6,6 +6,7 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\StringPrefix as StringPrefixFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -45,7 +46,7 @@ class StringPrefixTest extends TestCase
     /**
      * @return array<string, array{0: mixed}>
      */
-    public function invalidPrefixesDataProvider(): array
+    public static function invalidPrefixesDataProvider(): array
     {
         return [
             'int'                 => [1],
@@ -62,9 +63,7 @@ class StringPrefixTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidPrefixesDataProvider
-     */
+    #[DataProvider('invalidPrefixesDataProvider')]
     public function testInvalidPrefixes(mixed $prefix): void
     {
         $filter = $this->filter;

@@ -6,6 +6,7 @@ namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\File\RenameUpload as FileRenameUpload;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
@@ -370,7 +371,7 @@ class RenameUploadTest extends TestCase
     }
 
     /** @return list<array{0:mixed|null}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -384,9 +385,7 @@ class RenameUploadTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new RenameUploadMock([

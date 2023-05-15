@@ -6,6 +6,7 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\StringSuffix as StringSuffixFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -45,7 +46,7 @@ class StringSuffixTest extends TestCase
     /**
      * @return array<string, array{0: mixed}>
      */
-    public function invalidSuffixesDataProvider(): array
+    public static function invalidSuffixesDataProvider(): array
     {
         return [
             'int'                 => [1],
@@ -62,9 +63,7 @@ class StringSuffixTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidSuffixesDataProvider
-     */
+    #[DataProvider('invalidSuffixesDataProvider')]
     public function testInvalidSuffixes(mixed $suffix): void
     {
         $filter = $this->filter;

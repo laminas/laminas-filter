@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Digits as DigitsFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -71,7 +72,7 @@ class DigitsTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -87,9 +88,7 @@ class DigitsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new DigitsFilter();

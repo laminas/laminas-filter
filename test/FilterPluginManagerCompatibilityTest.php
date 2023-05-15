@@ -62,11 +62,12 @@ class FilterPluginManagerCompatibilityTest extends TestCase
     }
 
     /** @return Generator<string, array{0: string, 1: string}> */
-    public function aliasProvider(): Generator
+    public static function aliasProvider(): Generator
     {
-        $pluginManager = $this->getPluginManager();
+        $pluginManager = self::getPluginManager();
         $r             = new ReflectionProperty($pluginManager, 'aliases');
         $aliases       = $r->getValue($pluginManager);
+        self::assertIsArray($aliases);
 
         foreach ($aliases as $alias => $target) {
             self::assertIsString($alias);

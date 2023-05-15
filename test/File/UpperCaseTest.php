@@ -7,6 +7,7 @@ namespace LaminasTest\Filter\File;
 use Laminas\Filter\Exception;
 use Laminas\Filter\Exception\ExtensionNotLoadedException;
 use Laminas\Filter\File\UpperCase as FileUpperCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -23,23 +24,27 @@ use const DIRECTORY_SEPARATOR;
 
 class UpperCaseTest extends TestCase
 {
-    /**
-     * Testfile
-     *
-     * @var string
-     */
-    protected $testFile;
+    private string $testFile;
+
+    private static function testFilePath(): string
+    {
+        return sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminas-filter'));
+    }
+
+    private static function createTestFile(string $filePath): void
+    {
+        $filesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
+        $origFile  = $filesPath . 'testfile2.txt';
+        copy($origFile, $filePath);
+    }
 
     /**
      * Sets the path to test files
      */
     public function setUp(): void
     {
-        $filesPath      = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
-        $origFile       = $filesPath . 'testfile2.txt';
-        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
-
-        copy($origFile, $this->testFile);
+        $this->testFile = self::testFilePath();
+        self::createTestFile($this->testFile);
     }
 
     /**
@@ -101,23 +106,21 @@ class UpperCaseTest extends TestCase
         }
     }
 
-    public function returnUnfilteredDataProvider()
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
             [new stdClass()],
             [
                 [
-                    $this->testFile,
+                    self::testFilePath(),
                     'something invalid',
                 ],
             ],
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered($input): void
     {
         $filter = new FileUpperCase();

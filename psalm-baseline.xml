@@ -477,6 +477,7 @@
   </file>
   <file src="src/Encrypt.php">
     <DeprecatedInterface>
+      <code>Encrypt</code>
       <code>Encrypt\EncryptionAlgorithmInterface</code>
     </DeprecatedInterface>
     <DocblockTypeContradiction>
@@ -684,6 +685,9 @@
       <code>Filter\Decrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
+    <DeprecatedInterface>
+      <code>Decrypt</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
     </DocblockTypeContradiction>
@@ -740,6 +744,9 @@
       <code>Filter\Encrypt</code>
       <code>parent::filter($content)</code>
     </DeprecatedClass>
+    <DeprecatedInterface>
+      <code>Encrypt</code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
     </DocblockTypeContradiction>
@@ -1495,6 +1502,9 @@
     <MissingTemplateParam>
       <code>class extends AbstractUnicode {</code>
     </MissingTemplateParam>
+    <PossiblyUnusedMethod>
+      <code>encodingProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/AllowListTest.php">
     <InvalidArgument>
@@ -1508,6 +1518,15 @@
       <code>$data</code>
       <code>[$value, $expected]</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>defaultTestProvider</code>
+      <code>listTestProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/BaseNameTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/BlacklistTest.php">
     <DeprecatedClass>
@@ -1537,21 +1556,19 @@
       <code>[$value, $expected]</code>
       <code>[$value, $expected]</code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>array</code>
-    </MixedInferredReturnType>
-    <PossiblyInvalidArgument>
-      <code>testTypes</code>
-    </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>combinedTypeTestProvider</code>
+      <code>defaultTestProvider</code>
+      <code>duplicateProvider</code>
+      <code>noCastingTestProvider</code>
+      <code>typeTestProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
     <InvalidArgument>
       <code><![CDATA['param']]></code>
       <code><![CDATA['param']]></code>
     </InvalidArgument>
-    <PossiblyUnusedMethod>
-      <code>objectCallbackWithParams</code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/Compress/Bz2Test.php">
     <DocblockTypeContradiction>
@@ -1595,15 +1612,14 @@
       <code>new SnappyCompression()</code>
       <code>new SnappyCompression()</code>
     </DeprecatedClass>
-    <DeprecatedMethod>
-      <code>expectError</code>
-      <code>expectErrorMessage</code>
-    </DeprecatedMethod>
   </file>
   <file src="test/CompressTest.php">
     <MixedAssignment>
       <code>$compressed</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
     <UndefinedInterfaceMethod>
       <code>getArchive</code>
       <code>getArchive</code>
@@ -1611,6 +1627,27 @@
     <UnusedVariable>
       <code>$adapter</code>
     </UnusedVariable>
+  </file>
+  <file src="test/DataUnitFormatterTest.php">
+    <PossiblyUnusedMethod>
+      <code>binaryBytesTestProvider</code>
+      <code>decimalBytesTestProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DateSelectTest.php">
+    <PossiblyUnusedMethod>
+      <code>provideFilter</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DateTimeFormatterTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DateTimeSelectTest.php">
+    <PossiblyUnusedMethod>
+      <code>provideFilter</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/DecompressTest.php">
     <MixedArgument>
@@ -1623,6 +1660,9 @@
     <NullArgument>
       <code>null</code>
     </NullArgument>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/DenyListTest.php">
     <MixedArrayAccess>
@@ -1633,26 +1673,28 @@
       <code>$data</code>
       <code>[$value, $expected]</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>defaultTestProvider</code>
+      <code>listTestProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DigitsTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DirTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/LowerCaseTest.php">
     <MissingParamType>
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType>
+    <PossiblyUnusedMethod>
       <code>returnUnfilteredDataProvider</code>
-    </MissingReturnType>
-    <PossiblyNullArgument>
-      <code><![CDATA[$this->testDir]]></code>
-      <code><![CDATA[$this->testDir]]></code>
-      <code><![CDATA[$this->testFile]]></code>
-      <code><![CDATA[$this->testFile]]></code>
-      <code><![CDATA[$this->testFile]]></code>
-      <code><![CDATA[$this->testFile]]></code>
-      <code><![CDATA[$this->testFile]]></code>
-    </PossiblyNullArgument>
-    <PossiblyNullOperand>
-      <code><![CDATA[$this->testFile]]></code>
-    </PossiblyNullOperand>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/RenameTest.php">
     <InvalidArgument>
@@ -1685,6 +1727,9 @@
       <code><![CDATA[$this->tmpPath]]></code>
       <code><![CDATA[$this->tmpPath]]></code>
     </PossiblyNullOperand>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/RenameUploadTest.php">
     <InvalidArgument>
@@ -1704,24 +1749,22 @@
       <code><![CDATA[$oldFilePathInfo['extension']]]></code>
       <code><![CDATA[$oldFilePathInfo['extension']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/UpperCaseTest.php">
     <MissingParamType>
       <code>$input</code>
     </MissingParamType>
-    <MissingReturnType>
+    <PossiblyUnusedMethod>
       <code>returnUnfilteredDataProvider</code>
-    </MissingReturnType>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/FilterChainTest.php">
     <PossiblyUnusedMethod>
       <code>staticUcaseFilter</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/FilterPluginManagerCompatibilityTest.php">
-    <MixedAssignment>
-      <code>$aliases</code>
-    </MixedAssignment>
   </file>
   <file src="test/FilterPluginManagerFactoryTest.php">
     <DeprecatedMethod>
@@ -1742,6 +1785,11 @@
     <UnusedClosureParam>
       <code>$container</code>
     </UnusedClosureParam>
+  </file>
+  <file src="test/HtmlEntitiesTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/InflectorTest.php">
     <InvalidCast>
@@ -1783,19 +1831,6 @@
     <PossiblyFalseArgument>
       <code>$rules</code>
       <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
-      <code>$rules</code>
     </PossiblyFalseArgument>
     <UnusedPsalmSuppress>
       <code>UnusedVariable</code>
@@ -1806,15 +1841,27 @@
       <code>$target</code>
     </UnusedVariable>
   </file>
+  <file src="test/MonthSelectTest.php">
+    <PossiblyUnusedMethod>
+      <code>provideFilter</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/PregReplaceTest.php">
     <DeprecatedMethod>
       <code>PregReplaceFilter::hasPcreUnicodeSupport()</code>
     </DeprecatedMethod>
+    <PossiblyUnusedMethod>
+      <code>returnNonStringScalarValues</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/RealPathTest.php">
     <InvalidArgument>
       <code><![CDATA[['unknown']]]></code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StaticFilterTest.php">
     <MissingClosureParamType>
@@ -1834,25 +1881,42 @@
       <code><![CDATA[$filter('sample')]]></code>
       <code>$prefix</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>invalidPrefixesDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StringSuffixTest.php">
     <MixedArgument>
       <code><![CDATA[$filter('sample')]]></code>
       <code>$suffix</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>invalidSuffixesDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StringToLowerTest.php">
-    <DeprecatedMethod>
-      <code>setMethods</code>
-    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$e->getMessage()]]></code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StringToUpperTest.php">
-    <DeprecatedMethod>
-      <code>setMethods</code>
-    </DeprecatedMethod>
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/StringTrimTest.php">
+    <PossiblyUnusedMethod>
+      <code>getNonStringValues</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/StripNewlinesTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnNonStringScalarValues</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StripTagsTest.php">
     <MixedArgument>
@@ -1862,11 +1926,20 @@
     <MixedAssignment>
       <code>$filtered</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>badCommentProvider</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/Alpha.php">
     <MixedArgumentTypeCoercion>
       <code>$value</code>
     </MixedArgumentTypeCoercion>
+  </file>
+  <file src="test/TestAsset/CallbackClass.php">
+    <PossiblyUnusedMethod>
+      <code>objectCallbackWithParams</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/LowerCase.php">
     <MixedArgument>
@@ -1877,6 +1950,17 @@
     <MixedArgument>
       <code>$value</code>
     </MixedArgument>
+  </file>
+  <file src="test/ToFloatTest.php">
+    <PossiblyUnusedMethod>
+      <code>filterableValuesProvider</code>
+      <code>unfilterableValuesProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/ToIntTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/ToNullTest.php">
     <ArgumentTypeCoercion>
@@ -1903,12 +1987,54 @@
       <code>[$value, $expected]</code>
       <code>[$value, $expected]</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>combinedTypeTestProvider</code>
+      <code>defaultTestProvider</code>
+      <code>duplicateTypeProvider</code>
+      <code>typeTestProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/UpperCaseWordsTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/UriNormalizeTest.php">
+    <PossiblyUnusedMethod>
+      <code>abnormalUriProvider</code>
+      <code>enforcedSchemeTestcaseProvider</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Word/CamelCaseToSeparatorTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnNonStringScalarValues</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Word/CamelCaseToUnderscoreTest.php">
     <MixedAssignment>
       <code>$filtered</code>
       <code>$filtered</code>
     </MixedAssignment>
+  </file>
+  <file src="test/Word/DashToSeparatorTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnNonStringScalarValues</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Word/SeparatorToCamelCaseTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnNonStringScalarValues</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Word/SeparatorToSeparatorTest.php">
+    <PossiblyUnusedMethod>
+      <code>returnNonStringScalarValues</code>
+      <code>returnUnfilteredDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Word/UnderscoreToCamelCaseTest.php">
     <MixedAssignment>

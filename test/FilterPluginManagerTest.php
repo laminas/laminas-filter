@@ -11,6 +11,7 @@ use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use LaminasTest\Filter\TestAsset\NotAValidFilter;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -45,9 +46,7 @@ class FilterPluginManagerTest extends TestCase
         $this->filters->get('test');
     }
 
-    /**
-     * @group 7169
-     */
+    #[Group('7169')]
     public function testFilterSuccessfullyConstructed(): void
     {
         $searchSeparator      = ';';
@@ -65,9 +64,7 @@ class FilterPluginManagerTest extends TestCase
         self::assertSame($replacementSeparator, $filter->getReplacementSeparator());
     }
 
-    /**
-     * @group 7169
-     */
+    #[Group('7169')]
     public function testFiltersConstructedAreDifferent(): void
     {
         $filterOne = $this->filters->get(

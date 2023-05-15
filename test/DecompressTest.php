@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Decompress as DecompressFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -35,7 +36,7 @@ class DecompressTest extends TestCase
     public function tearDown(): void
     {
         if (is_dir($this->tmpDir)) {
-            foreach ($this->returnFilterType() as $parameters) {
+            foreach (self::returnFilterType() as $parameters) {
                 if (file_exists($this->tmpDir . '/compressed.' . $parameters[0])) {
                     unlink($this->tmpDir . '/compressed.' . $parameters[0]);
                 }
@@ -45,7 +46,7 @@ class DecompressTest extends TestCase
     }
 
     /** @return iterable<array-key, array{0: string}> */
-    public function returnFilterType(): iterable
+    public static function returnFilterType(): iterable
     {
         if (extension_loaded('bz2')) {
             yield ['bz2'];
@@ -57,9 +58,8 @@ class DecompressTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testBasicUsage(string $filterType): void
     {
         $filter = new DecompressFilter($filterType);
@@ -74,9 +74,8 @@ class DecompressTest extends TestCase
 
     /**
      * Setting Archive
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testCompressToFile(string $filterType): void
     {
         $filter  = new DecompressFilter($filterType);
@@ -98,9 +97,8 @@ class DecompressTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testDecompressArchive(string $filterType): void
     {
         $filter  = new DecompressFilter($filterType);
@@ -115,9 +113,7 @@ class DecompressTest extends TestCase
         self::assertSame('compress me', $content2);
     }
 
-    /**
-     * @dataProvider returnFilterType
-     */
+    #[DataProvider('returnFilterType')]
     public function testFilterMethodProxiesToDecompress(string $filterType): void
     {
         $filter  = new DecompressFilter($filterType);
@@ -133,9 +129,9 @@ class DecompressTest extends TestCase
     }
 
     /** @return iterable<array-key, array{0: string, 1: mixed}> */
-    public function returnUnfilteredDataProvider(): iterable
+    public static function returnUnfilteredDataProvider(): iterable
     {
-        foreach ($this->returnFilterType() as $parameter) {
+        foreach (self::returnFilterType() as $parameter) {
             yield [$parameter[0], new stdClass()];
             yield [
                 $parameter[0],
@@ -147,9 +143,7 @@ class DecompressTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(string $filterType, mixed $input): void
     {
         $filter = new DecompressFilter($filterType);

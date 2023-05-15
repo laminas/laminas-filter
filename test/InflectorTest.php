@@ -15,6 +15,7 @@ use Laminas\Filter\StringToUpper;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_values;
@@ -441,9 +442,7 @@ class InflectorTest extends TestCase
         self::assertSame(5, count($rules));
     }
 
-    /**
-     * @group Laminas-8997
-     */
+    #[Group('Laminas-8997')]
     public function testPassingArrayToConstructorSetsStateAndRules(): void
     {
         $options   = $this->getOptions();
@@ -451,9 +450,7 @@ class InflectorTest extends TestCase
         $this->_testOptions($inflector);
     }
 
-    /**
-     * @group Laminas-8997
-     */
+    #[Group('Laminas-8997')]
     public function testPassingArrayToSetConfigSetsStateAndRules(): void
     {
         $options   = $this->getOptions();
@@ -462,9 +459,7 @@ class InflectorTest extends TestCase
         $this->_testOptions($inflector);
     }
 
-    /**
-     * @group Laminas-8997
-     */
+    #[Group('Laminas-8997')]
     public function testPassingConfigObjectToConstructorSetsStateAndRules(): void
     {
         $config    = $this->getConfig();
@@ -472,9 +467,7 @@ class InflectorTest extends TestCase
         $this->_testOptions($inflector);
     }
 
-    /**
-     * @group Laminas-8997
-     */
+    #[Group('Laminas-8997')]
     public function testPassingConfigObjectToSetConfigSetsStateAndRules(): void
     {
         $config    = $this->getConfig();

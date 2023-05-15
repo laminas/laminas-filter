@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\CamelCaseToSeparator as CamelCaseToSeparatorFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -56,7 +57,7 @@ class CamelCaseToSeparatorTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -64,9 +65,7 @@ class CamelCaseToSeparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new CamelCaseToSeparatorFilter();
@@ -77,7 +76,7 @@ class CamelCaseToSeparatorTest extends TestCase
     /**
      * @return array<int|float|bool>[]
      */
-    public function returnNonStringScalarValues(): array
+    public static function returnNonStringScalarValues(): array
     {
         return [
             [1],
@@ -87,9 +86,7 @@ class CamelCaseToSeparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnNonStringScalarValues
-     */
+    #[DataProvider('returnNonStringScalarValues')]
     public function testShouldFilterNonStringScalarValues(int|float|bool $input): void
     {
         $filter = new CamelCaseToSeparatorFilter();

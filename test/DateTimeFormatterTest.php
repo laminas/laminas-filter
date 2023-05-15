@@ -8,6 +8,7 @@ use DateTime;
 use DateTimeInterface;
 use Laminas\Filter\DateTimeFormatter;
 use Laminas\Filter\Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -29,7 +30,7 @@ class DateTimeFormatterTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -45,9 +46,7 @@ class DateTimeFormatterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         date_default_timezone_set('UTC');

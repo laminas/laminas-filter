@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\DashToSeparator as DashToSeparatorFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -46,7 +47,7 @@ class DashToSeparatorTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -54,9 +55,7 @@ class DashToSeparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new DashToSeparatorFilter();
@@ -67,7 +66,7 @@ class DashToSeparatorTest extends TestCase
     /**
      * @return array<int|float|bool>[]
      */
-    public function returnNonStringScalarValues(): array
+    public static function returnNonStringScalarValues(): array
     {
         return [
             [1],
@@ -77,9 +76,7 @@ class DashToSeparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnNonStringScalarValues
-     */
+    #[DataProvider('returnNonStringScalarValues')]
     public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
         $filter = new DashToSeparatorFilter();

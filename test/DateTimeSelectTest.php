@@ -6,13 +6,12 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\DateTimeSelect as DateTimeSelectFilter;
 use Laminas\Filter\Exception\RuntimeException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeSelectTest extends TestCase
 {
-    /**
-     * @dataProvider provideFilter
-     */
+    #[DataProvider('provideFilter')]
     public function testFilter(array $options, array $input, ?string $expected): void
     {
         $sut = new DateTimeSelectFilter();
@@ -21,7 +20,7 @@ class DateTimeSelectTest extends TestCase
     }
 
     /** @return list<array{0: array, 1: array, 2: null|string}> */
-    public function provideFilter(): array
+    public static function provideFilter(): array
     {
         return [
             [

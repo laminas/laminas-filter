@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\UriNormalize;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class UriNormalizeTest extends TestCase
 {
-    /**
-     * @dataProvider abnormalUriProvider
-     */
+    #[DataProvider('abnormalUriProvider')]
     public function testUrisAreNormalized(string $url, string $expected): void
     {
         $filter = new UriNormalize();
@@ -25,9 +24,7 @@ class UriNormalizeTest extends TestCase
         $this->markTestIncomplete();
     }
 
-    /**
-     * @dataProvider enforcedSchemeTestcaseProvider
-     */
+    #[DataProvider('enforcedSchemeTestcaseProvider')]
     public function testEnforcedScheme(string $scheme, string $input, string $expected): void
     {
         $filter = new UriNormalize(['enforcedScheme' => $scheme]);
@@ -62,7 +59,7 @@ class UriNormalizeTest extends TestCase
     }
 
     /** @return list<array> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -76,9 +73,7 @@ class UriNormalizeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new UriNormalize();

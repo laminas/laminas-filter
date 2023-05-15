@@ -6,6 +6,7 @@ namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\File\Rename as FileRename;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -538,23 +539,27 @@ class RenameTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
+        $tmpPath = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('returnUnfilteredDataProvider'));
+        mkdir($tmpPath, 0775, true);
+
+        $oldFile  = sprintf('%s%stestfile.txt', $tmpPath, DIRECTORY_SEPARATOR);
+        $origFile = sprintf('%s%soriginal.file', $tmpPath, DIRECTORY_SEPARATOR);
+
         return [
             [null],
             [new stdClass()],
             [
                 [
-                    $this->oldFile,
-                    $this->origFile,
+                    $oldFile,
+                    $origFile,
                 ],
             ],
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new FileRename($this->newFile);

@@ -10,6 +10,7 @@ use Laminas\Filter\PregReplace;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -136,9 +137,7 @@ class FilterChainTest extends TestCase
         return strtoupper($value);
     }
 
-    /**
-     * @group Laminas-412
-     */
+    #[Group('Laminas-412')]
     public function testCanAttachMultipleFiltersOfTheSameTypeAsDiscreteInstances(): void
     {
         $chain = new FilterChain();
