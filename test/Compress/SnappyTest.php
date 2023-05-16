@@ -44,12 +44,15 @@ class SnappyTest extends TestCase
             throw new TypeError($message);
         });
 
-        $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('snappy_compress : expects parameter to be string');
-        /** @psalm-suppress InvalidArgument, InvalidCast */
-        (new SnappyCompression())->compress([]);
-
-        restore_error_handler();
+        try {
+            /** @psalm-suppress InvalidArgument, InvalidCast */
+            (new SnappyCompression())->compress([]);
+            self::fail('An exception was expected');
+        } catch (TypeError $e) {
+            self::assertStringContainsString('snappy_compress : expects parameter to be string', $e->getMessage());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testNonScalarInputCausesAnException(): void
