@@ -7,6 +7,8 @@ namespace LaminasTest\Filter;
 use ArrayObject;
 use Laminas\Filter\Exception\DomainException;
 use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -67,9 +69,8 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Ensures that getCharSet() returns expected default value
-     *
-     * @group Laminas-8715
      */
+    #[Group('Laminas-8715')]
     public function testGetCharSet(): void
     {
         self::assertSame('UTF-8', $this->filter->getCharSet());
@@ -103,9 +104,8 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Ensure that fluent interfaces are supported
-     *
-     * @group Laminas-3172
      */
+    #[Group('Laminas-3172')]
     public function testFluentInterface(): void
     {
         $instance = $this->filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES)->setDoubleQuote(false);
@@ -116,9 +116,8 @@ class HtmlEntitiesTest extends TestCase
      * This test uses an ArrayObject in place of a Laminas\Config\Config instance;
      * they two are interchangeable in this scenario, as HtmlEntitiesFilter is
      * checking for arrays or Traversable instances.
-     *
-     * @group Laminas-8995
      */
+    #[Group('Laminas-8995')]
     public function testConfigObject(): void
     {
         $options = ['quotestyle' => 5, 'encoding' => 'ISO-8859-1'];
@@ -134,9 +133,8 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Ensures that when ENT_QUOTES is set, the filtered value has both 'single' and "double" quotes encoded
-     *
-     * @group  Laminas-8962
      */
+    #[Group('Laminas-8962')]
     public function testQuoteStyleQuotesEncodeBoth(): void
     {
         $input  = "A 'single' and " . '"double"';
@@ -148,9 +146,8 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Ensures that when ENT_COMPAT is set, the filtered value has only "double" quotes encoded
-     *
-     * @group  Laminas-8962
      */
+    #[Group('Laminas-8962')]
     public function testQuoteStyleQuotesEncodeDouble(): void
     {
         $input  = "A 'single' and " . '"double"';
@@ -162,9 +159,8 @@ class HtmlEntitiesTest extends TestCase
 
     /**
      * Ensures that when ENT_NOQUOTES is set, the filtered value leaves both "double" and 'single' quotes un-altered
-     *
-     * @group  Laminas-8962
      */
+    #[Group('Laminas-8962')]
     public function testQuoteStyleQuotesEncodeNone(): void
     {
         $input  = "A 'single' and " . '"double"';
@@ -174,9 +170,7 @@ class HtmlEntitiesTest extends TestCase
         self::assertSame($result, $this->filter->filter($input));
     }
 
-    /**
-     * @group Laminas-11344
-     */
+    #[Group('Laminas-11344')]
     public function testCorrectsForEncodingMismatch(): void
     {
         $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
@@ -184,9 +178,7 @@ class HtmlEntitiesTest extends TestCase
         self::assertGreaterThan(0, strlen($result));
     }
 
-    /**
-     * @group Laminas-11344
-     */
+    #[Group('Laminas-11344')]
     public function testStripsUnknownCharactersWhenEncodingMismatchDetected(): void
     {
         $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
@@ -194,9 +186,7 @@ class HtmlEntitiesTest extends TestCase
         self::assertStringContainsString('&quot;&quot;', $result);
     }
 
-    /**
-     * @group Laminas-11344
-     */
+    #[Group('Laminas-11344')]
     public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty(): void
     {
         $string = file_get_contents(__DIR__ . '/_files/latin-1-dash-only.txt');
@@ -205,7 +195,7 @@ class HtmlEntitiesTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -219,9 +209,7 @@ class HtmlEntitiesTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         self::assertSame($input, $this->filter->filter($input));

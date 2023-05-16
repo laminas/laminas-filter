@@ -6,13 +6,12 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\DataUnitFormatter as DataUnitFormatterFilter;
 use Laminas\Filter\Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DataUnitFormatterTest extends TestCase
 {
-    /**
-     * @dataProvider decimalBytesTestProvider
-     */
+    #[DataProvider('decimalBytesTestProvider')]
     public function testDecimalBytes(float $value, string $expected): void
     {
         $filter = new DataUnitFormatterFilter([
@@ -22,9 +21,7 @@ class DataUnitFormatterTest extends TestCase
         self::assertSame($expected, $filter->filter($value));
     }
 
-    /**
-     * @dataProvider binaryBytesTestProvider
-     */
+    #[DataProvider('binaryBytesTestProvider')]
     public function testBinaryBytes(float $value, string $expected): void
     {
         $filter = new DataUnitFormatterFilter([

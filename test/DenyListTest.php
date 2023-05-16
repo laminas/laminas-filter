@@ -9,6 +9,7 @@ use Laminas\Filter\FilterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function gettype;
@@ -70,18 +71,14 @@ class DenyListTest extends TestCase
         self::assertSame(true, $filter->getStrict());
     }
 
-    /**
-     * @dataProvider defaultTestProvider
-     */
+    #[DataProvider('defaultTestProvider')]
     public function testDefault(mixed $value, mixed $expected): void
     {
         $filter = new DenyListFilter();
         self::assertSame($expected, $filter->filter($value));
     }
 
-    /**
-     * @dataProvider listTestProvider
-     */
+    #[DataProvider('listTestProvider')]
     public function testList(bool $strict, array $list, array $testData): void
     {
         $filter = new DenyListFilter([

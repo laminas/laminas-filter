@@ -147,7 +147,7 @@ class Openssl implements EncryptionAlgorithmInterface
      *
      * @internal
      *
-     * @param  array $keys Key with type association
+     * @param  array<string, string> $keys Key with type association
      * @return $this
      * @throws Exception\InvalidArgumentException
      */

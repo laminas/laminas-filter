@@ -6,6 +6,7 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Boolean as BooleanFilter;
 use Laminas\Filter\Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function gettype;
@@ -33,18 +34,14 @@ class BooleanTest extends TestCase
         self::assertFalse($filter->getCasting());
     }
 
-    /**
-     * @dataProvider defaultTestProvider
-     */
+    #[DataProvider('defaultTestProvider')]
     public function testDefault(mixed $value, bool $expected): void
     {
         $filter = new BooleanFilter();
         self::assertSame($expected, $filter->filter($value));
     }
 
-    /**
-     * @dataProvider noCastingTestProvider
-     */
+    #[DataProvider('noCastingTestProvider')]
     public function testNoCasting(mixed $value, mixed $expected): void
     {
         $filter = new BooleanFilter('all', false);
@@ -53,8 +50,8 @@ class BooleanTest extends TestCase
 
     /**
      * @param array{0: mixed, 1: mixed} $testData
-     * @dataProvider typeTestProvider
      */
+    #[DataProvider('typeTestProvider')]
     public function testTypes(int $type, array $testData): void
     {
         $filter = new BooleanFilter($type);
@@ -74,8 +71,8 @@ class BooleanTest extends TestCase
     /**
      * @param array $typeData
      * @param array $testData
-     * @dataProvider combinedTypeTestProvider
      */
+    #[DataProvider('combinedTypeTestProvider')]
     public function testCombinedTypes($typeData, $testData): void
     {
         foreach ($typeData as $type) {
@@ -119,7 +116,7 @@ class BooleanTest extends TestCase
         $filter = new BooleanFilter();
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown type value');
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress InvalidArgument */
         $filter->setType(true);
     }
 
@@ -134,8 +131,8 @@ class BooleanTest extends TestCase
      * https://github.com/zendframework/zend-filter/issues/48
      *
      * @param mixed $type Type to double initialize
-     * @dataProvider duplicateProvider
      */
+    #[DataProvider('duplicateProvider')]
     public function testDuplicateTypesWorkProperly(int|string $type, int $expected): void
     {
         $filter = new BooleanFilter([$type, $type]);

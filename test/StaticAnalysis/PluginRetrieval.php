@@ -7,7 +7,8 @@ namespace LaminasTest\Filter\StaticAnalysis;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\StringToUpper;
 
-final class PluginRetrievalTest
+/** @psalm-suppress UnusedClass */
+final class PluginRetrieval
 {
     public function __construct(private FilterPluginManager $pluginManager)
     {

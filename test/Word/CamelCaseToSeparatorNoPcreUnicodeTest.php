@@ -22,7 +22,6 @@ class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
         }
 
         $this->reflection = new ReflectionProperty(StringUtils::class, 'hasPcreUnicodeSupport');
-        $this->reflection->setAccessible(true);
         $this->reflection->setValue(false);
     }
 

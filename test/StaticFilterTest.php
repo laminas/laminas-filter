@@ -11,6 +11,7 @@ use Laminas\Filter\HtmlEntities;
 use Laminas\Filter\StaticFilter;
 use Laminas\ServiceManager\Exception;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function strtoupper;
@@ -18,6 +19,9 @@ use function strtoupper;
 use const ENT_COMPAT;
 use const ENT_QUOTES;
 
+/**
+ * @psalm-suppress DeprecatedClass
+ */
 class StaticFilterTest extends TestCase
 {
     /**
@@ -85,9 +89,8 @@ class StaticFilterTest extends TestCase
      * exist in the namespace, get() throws an exception.
      *
      * Refactored to conform with Laminas-2724.
-     *
-     * @group  Laminas-2724
      */
+    #[Group('Laminas-2724')]
     public function testStaticFactoryClassNotFound(): void
     {
         $this->expectException(Exception\ExceptionInterface::class);

@@ -6,6 +6,7 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\AbstractUnicode;
 use Laminas\Filter\Exception\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function assert;
@@ -32,7 +33,7 @@ class AbstractUnicodeTest extends TestCase
     }
 
     /** @return list<array{0: string, 1: string}> */
-    public function encodingProvider(): array
+    public static function encodingProvider(): array
     {
         return [
             ['ISO-8859-16', 'iso-8859-16'],
@@ -41,7 +42,7 @@ class AbstractUnicodeTest extends TestCase
         ];
     }
 
-    /** @dataProvider encodingProvider */
+    #[DataProvider('encodingProvider')]
     public function testThatEncodingOptionIsLowerCased(string $encoding, string $expectedEncoding): void
     {
         $this->filter->setEncoding($encoding);

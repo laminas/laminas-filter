@@ -6,14 +6,13 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\UpperCaseWords as UpperCaseWordsFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function mb_internal_encoding;
 
-/**
- * @covers \Laminas\Filter\UpperCaseWords
- */
 class UpperCaseWordsTest extends TestCase
 {
     private UpperCaseWordsFilter $filter;
@@ -113,16 +112,14 @@ class UpperCaseWordsTest extends TestCase
         }
     }
 
-    /**
-     * @group Laminas-9854
-     */
+    #[Group('Laminas-9854')]
     public function testDetectMbInternalEncoding(): void
     {
         self::assertSame(mb_internal_encoding(), $this->filter->getEncoding());
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -138,9 +135,7 @@ class UpperCaseWordsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         self::assertSame($input, $this->filter->filter($input));

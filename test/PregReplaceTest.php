@@ -6,6 +6,7 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\PregReplace as PregReplaceFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -113,7 +114,7 @@ class PregReplaceTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -121,9 +122,7 @@ class PregReplaceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = $this->filter;
@@ -135,7 +134,7 @@ class PregReplaceTest extends TestCase
     /**
      * @return array<int|float|bool>[]
      */
-    public function returnNonStringScalarValues(): array
+    public static function returnNonStringScalarValues(): array
     {
         return [
             [1],
@@ -145,9 +144,7 @@ class PregReplaceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnNonStringScalarValues
-     */
+    #[DataProvider('returnNonStringScalarValues')]
     public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
         $filter = $this->filter;

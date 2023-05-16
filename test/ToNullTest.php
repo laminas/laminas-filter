@@ -6,6 +6,7 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\ToNull as ToNullFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function gettype;
@@ -30,18 +31,14 @@ class ToNullTest extends TestCase
         self::assertSame(ToNullFilter::TYPE_INTEGER, $filter->getType());
     }
 
-    /**
-     * @dataProvider defaultTestProvider
-     */
+    #[DataProvider('defaultTestProvider')]
     public function testDefault(mixed $value, mixed $expected): void
     {
         $filter = new ToNullFilter();
         self::assertSame($expected, $filter->filter($value));
     }
 
-    /**
-     * @dataProvider typeTestProvider
-     */
+    #[DataProvider('typeTestProvider')]
     public function testTypes(int $type, array $testData): void
     {
         $filter = new ToNullFilter($type);
@@ -58,9 +55,7 @@ class ToNullTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider combinedTypeTestProvider
-     */
+    #[DataProvider('combinedTypeTestProvider')]
     public function testCombinedTypes(array $typeData, array $testData): void
     {
         foreach ($typeData as $type) {
@@ -95,9 +90,8 @@ class ToNullTest extends TestCase
 
     /**
      * Ensures that providing a duplicate initializing type results in the expected type
-     *
-     * @dataProvider duplicateTypeProvider
      */
+    #[DataProvider('duplicateTypeProvider')]
     public function testDuplicateInitializationResultsInCorrectType(int|string $type, int $expected): void
     {
         $filter = new ToNullFilter([$type, $type]);

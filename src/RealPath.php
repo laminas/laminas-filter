@@ -38,7 +38,7 @@ class RealPath extends AbstractFilter
     ];
 
     /**
-     * @param  bool|Traversable $existsOrOptions Options to set
+     * @param  bool|Traversable|Options $existsOrOptions Options to set
      */
     public function __construct($existsOrOptions = true)
     {

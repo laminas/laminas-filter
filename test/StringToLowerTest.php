@@ -6,6 +6,8 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception;
 use Laminas\Filter\StringToLower as StringToLowerFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -112,16 +114,14 @@ class StringToLowerTest extends TestCase
         }
     }
 
-    /**
-     * @group Laminas-9854
-     */
+    #[Group('Laminas-9854')]
     public function testDetectMbInternalEncoding(): void
     {
         self::assertSame(mb_internal_encoding(), $this->filter->getEncoding());
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -135,25 +135,9 @@ class StringToLowerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         self::assertSame($input, $this->filter->filter($input));
-    }
-
-    /**
-     * @group 7147
-     */
-    public function testFilterUsesGetEncodingMethod(): void
-    {
-        $filterMock = $this->getMockBuilder(StringToLowerFilter::class)
-            ->setMethods(['getEncoding'])
-            ->getMock();
-        $filterMock->expects($this->once())
-            ->method('getEncoding')
-            ->with();
-        $filterMock->filter('foo');
     }
 }

@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Callback as CallbackFilter;
+use LaminasTest\Filter\TestAsset\CallbackClass;
 use PHPUnit\Framework\TestCase;
 
 class CallbackTest extends TestCase
 {
     public function testObjectCallback(): void
     {
-        $filter = new CallbackFilter([$this, 'objectCallback']);
+        $filter = new CallbackFilter([new CallbackClass(), 'objectCallback']);
         self::assertSame('objectCallback-test', $filter('test'));
     }
 
     public function testConstructorWithOptions(): void
     {
         $filter = new CallbackFilter([
-            'callback'        => [$this, 'objectCallbackWithParams'],
+            'callback'        => [new CallbackClass(), 'objectCallbackWithParams'],
             'callback_params' => 0,
         ]);
 
@@ -28,27 +29,27 @@ class CallbackTest extends TestCase
     public function testStaticCallback(): void
     {
         $filter = new CallbackFilter(
-            [self::class, 'staticCallback']
+            [CallbackClass::class, 'staticCallback']
         );
         self::assertSame('staticCallback-test', $filter('test'));
     }
 
     public function testStringClassCallback(): void
     {
-        $filter = new CallbackFilter(self::class);
+        $filter = new CallbackFilter(CallbackClass::class);
         self::assertSame('stringClassCallback-test', $filter('test'));
     }
 
     public function testSettingDefaultOptions(): void
     {
-        $filter = new CallbackFilter([$this, 'objectCallback'], 'param');
+        $filter = new CallbackFilter([new CallbackClass(), 'objectCallback'], 'param');
         self::assertSame(['param'], $filter->getCallbackParams());
         self::assertSame('objectCallback-test', $filter('test'));
     }
 
     public function testSettingDefaultOptionsAfterwards(): void
     {
-        $filter = new CallbackFilter([$this, 'objectCallback']);
+        $filter = new CallbackFilter([new CallbackClass(), 'objectCallback']);
         $filter->setCallbackParams('param');
         self::assertSame(['param'], $filter->getCallbackParams());
         self::assertSame('objectCallback-test', $filter('test'));
@@ -64,25 +65,5 @@ class CallbackTest extends TestCase
     {
         $filter = new CallbackFilter('strrev');
         self::assertSame('!olleH', $filter('Hello!'));
-    }
-
-    public function objectCallback(string $value): string
-    {
-        return 'objectCallback-' . $value;
-    }
-
-    public static function staticCallback(string $value): string
-    {
-        return 'staticCallback-' . $value;
-    }
-
-    public function __invoke(string $value): string
-    {
-        return 'stringClassCallback-' . $value;
-    }
-
-    public function objectCallbackWithParams(string $value, int|string|null $param = null): string
-    {
-        return 'objectCallbackWithParams-' . $value . '-' . (string) $param;
     }
 }

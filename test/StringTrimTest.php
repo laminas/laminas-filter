@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\StringTrim;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -69,33 +71,25 @@ class StringTrimTest extends TestCase
         self::assertSame('a&b', $this->filter->__invoke('&&a&b&&'));
     }
 
-    /**
-     * @group Laminas-7183
-     */
+    #[Group('Laminas-7183')]
     public function testLaminas7183(): void
     {
         self::assertSame('Зенд', $this->filter->filter('Зенд'));
     }
 
-    /**
-     * @group Laminas-170
-     */
+    #[Group('Laminas-170')]
     public function testLaminas170(): void
     {
         self::assertSame('Расчет', $this->filter->filter('Расчет'));
     }
 
-    /**
-     * @group Laminas-7902
-     */
+    #[Group('Laminas-7902')]
     public function testLaminas7902(): void
     {
         self::assertSame('/', $this->filter->filter('/'));
     }
 
-    /**
-     * @group Laminas-10891
-     */
+    #[Group('Laminas-10891')]
     public function testLaminas10891(): void
     {
         self::assertSame('Зенд', $this->filter->filter('   Зенд   '));
@@ -108,7 +102,7 @@ class StringTrimTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function getNonStringValues(): array
+    public static function getNonStringValues(): array
     {
         return [
             [1],
@@ -121,9 +115,7 @@ class StringTrimTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getNonStringValues
-     */
+    #[DataProvider('getNonStringValues')]
     public function testShouldNotFilterNonStringValues(mixed $value): void
     {
         self::assertSame($value, $this->filter->filter($value));
@@ -131,9 +123,8 @@ class StringTrimTest extends TestCase
 
     /**
      * Ensures expected behavior with '0' as character list
-     *
-     * @group 6261
      */
+    #[Group('6261')]
     public function testEmptyCharList(): void
     {
         $this->filter->setCharList('0');

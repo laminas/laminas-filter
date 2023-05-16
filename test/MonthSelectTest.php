@@ -6,13 +6,12 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Filter\MonthSelect as MonthSelectFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class MonthSelectTest extends TestCase
 {
-    /**
-     * @dataProvider provideFilter
-     */
+    #[DataProvider('provideFilter')]
     public function testFilter(array $options, array $input, ?string $expected): void
     {
         $sut = new MonthSelectFilter();
@@ -21,7 +20,7 @@ class MonthSelectTest extends TestCase
     }
 
     /** @return list<array{0: array, 1: array, 2: string|null}> */
-    public function provideFilter(): array
+    public static function provideFilter(): array
     {
         return [
             [[], ['year' => '2014', 'month' => '10'], '2014-10'],

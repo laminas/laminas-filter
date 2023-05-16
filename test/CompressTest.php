@@ -8,6 +8,7 @@ use Laminas\Filter\Boolean;
 use Laminas\Filter\Compress as CompressFilter;
 use Laminas\Filter\Compress\CompressionAlgorithmInterface;
 use Laminas\Filter\Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -38,7 +39,7 @@ class CompressTest extends TestCase
     public function tearDown(): void
     {
         if (is_dir($this->tmpDir)) {
-            foreach ($this->returnFilterType() as $parameters) {
+            foreach (self::returnFilterType() as $parameters) {
                 if (file_exists($this->tmpDir . '/compressed.' . $parameters[0])) {
                     unlink($this->tmpDir . '/compressed.' . $parameters[0]);
                 }
@@ -48,7 +49,7 @@ class CompressTest extends TestCase
     }
 
     /** @return iterable<array-key, array{0: string}> */
-    public function returnFilterType(): iterable
+    public static function returnFilterType(): iterable
     {
         if (extension_loaded('bz2')) {
             yield ['bz2'];
@@ -60,9 +61,8 @@ class CompressTest extends TestCase
 
     /**
      * Basic usage
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testBasicUsage(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
@@ -77,9 +77,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Options
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testGetSetAdapterOptionsInConstructor(string $filterType): void
     {
         $filter = new CompressFilter([
@@ -100,9 +99,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Options through constructor
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testGetSetAdapterOptions(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
@@ -138,9 +136,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Archive
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testGetSetArchive(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
@@ -152,9 +149,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Archive
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testCompressToFile(string $filterType): void
     {
         $filter  = new CompressFilter($filterType);
@@ -176,9 +172,8 @@ class CompressTest extends TestCase
 
     /**
      * testing toString
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testToString(string $filterType): void
     {
         $filter = new CompressFilter($filterType);
@@ -187,9 +182,8 @@ class CompressTest extends TestCase
 
     /**
      * testing getAdapter
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testGetAdapter(string $filterType): void
     {
         $filter  = new CompressFilter($filterType);
@@ -219,9 +213,8 @@ class CompressTest extends TestCase
 
     /**
      * Decompress archiv
-     *
-     * @dataProvider returnFilterType
      */
+    #[DataProvider('returnFilterType')]
     public function testDecompressArchive(string $filterType): void
     {
         $filter  = new CompressFilter($filterType);
@@ -249,9 +242,9 @@ class CompressTest extends TestCase
     }
 
     /** @return iterable<array-key, array{0: string, 1: mixed}> */
-    public function returnUnfilteredDataProvider(): iterable
+    public static function returnUnfilteredDataProvider(): iterable
     {
-        foreach ($this->returnFilterType() as $parameters) {
+        foreach (self::returnFilterType() as $parameters) {
             yield [$parameters[0], null];
             yield [$parameters[0], new stdClass()];
             yield [
@@ -264,9 +257,7 @@ class CompressTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(string $filterType, mixed $input): void
     {
         $filter = new CompressFilter($filterType);

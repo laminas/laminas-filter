@@ -6,6 +6,7 @@ namespace LaminasTest\Filter\Compress;
 
 use Laminas\Filter\Compress\Zip as ZipCompression;
 use Laminas\Filter\Exception;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function extension_loaded;
@@ -292,10 +293,7 @@ class ZipTest extends TestCase
         self::assertSame('compress me', $content);
     }
 
-    /**
-     * @group 6026
-     * @covers \Laminas\Filter\Compress\Zip::decompress
-     */
+    #[Group('6026')]
     public function testDecompressWhenNoArchieveInClass(): void
     {
         if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {

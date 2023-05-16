@@ -7,6 +7,7 @@ namespace LaminasTest\Filter\File;
 use Laminas\Filter\Exception;
 use Laminas\Filter\Exception\ExtensionNotLoadedException;
 use Laminas\Filter\File\LowerCase as FileLowerCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -21,8 +22,7 @@ use function unlink;
 
 class LowerCaseTest extends TestCase
 {
-    private ?string $testDir  = null;
-    private ?string $testFile = null;
+    private string $testFile;
 
     /**
      * Sets the path to test files
@@ -30,8 +30,7 @@ class LowerCaseTest extends TestCase
     public function setUp(): void
     {
         $source         = dirname(__DIR__) . '/_files/testfile2.txt';
-        $this->testDir  = sys_get_temp_dir();
-        $this->testFile = sprintf('%s/%s.txt', $this->testDir, uniqid('laminasilter'));
+        $this->testFile = sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid('laminasilter'));
         copy($source, $this->testFile);
     }
 
@@ -94,23 +93,21 @@ class LowerCaseTest extends TestCase
         }
     }
 
-    public function returnUnfilteredDataProvider()
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
             [new stdClass()],
             [
                 [
-                    sprintf('%s/%s.txt', $this->testDir, uniqid()),
-                    sprintf('%s/%s.txt', $this->testDir, uniqid()),
+                    sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid()),
+                    sprintf('%s/%s.txt', sys_get_temp_dir(), uniqid()),
                 ],
             ],
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered($input): void
     {
         $filter = new FileLowerCase();

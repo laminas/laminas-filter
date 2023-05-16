@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\ToFloat as ToFloatFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class ToFloatTest extends TestCase
 {
     /** @return array<string, array{0: mixed, 1: float}> */
-    public function filterableValuesProvider(): array
+    public static function filterableValuesProvider(): array
     {
         return [
             'string word' => ['string', 0.0],
@@ -31,9 +32,8 @@ class ToFloatTest extends TestCase
 
     /**
      * Ensures that the filter follows expected behavior
-     *
-     * @dataProvider filterableValuesProvider
      */
+    #[DataProvider('filterableValuesProvider')]
     public function testCanFilterScalarValuesAsExpected(mixed $input, float $expectedOutput): void
     {
         $filter = new ToFloatFilter();
@@ -41,7 +41,7 @@ class ToFloatTest extends TestCase
     }
 
     /** @return array<string, array{0: mixed}> */
-    public function unfilterableValuesProvider(): array
+    public static function unfilterableValuesProvider(): array
     {
         return [
             'null'   => [null],
@@ -55,9 +55,7 @@ class ToFloatTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider unfilterableValuesProvider
-     */
+    #[DataProvider('unfilterableValuesProvider')]
     public function testReturnsUnfilterableInputVerbatim(mixed $input): void
     {
         $filter = new ToFloatFilter();

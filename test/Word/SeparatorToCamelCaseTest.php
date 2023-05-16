@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\SeparatorToCamelCase as SeparatorToCamelCaseFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -30,9 +32,7 @@ class SeparatorToCamelCaseTest extends TestCase
         self::assertSame('CamelCasedWords', $filtered);
     }
 
-    /**
-     * @group Laminas-10517
-     */
+    #[Group('Laminas-10517')]
     public function testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator(): void
     {
         $string   = 'camel:-:cased:-:Words';
@@ -43,9 +43,7 @@ class SeparatorToCamelCaseTest extends TestCase
         self::assertSame('CamelCasedWords', $filtered);
     }
 
-    /**
-     * @group Laminas-10517
-     */
+    #[Group('Laminas-10517')]
     public function testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator(): void
     {
         $string   = 'test šuma';
@@ -56,9 +54,7 @@ class SeparatorToCamelCaseTest extends TestCase
         self::assertSame('TestŠuma', $filtered);
     }
 
-    /**
-     * @group 6151
-     */
+    #[Group('6151')]
     public function testFilterSeparatesCamelCasedNonAlphaWordsWithProvidedSeparator(): void
     {
         $string   = 'user_2_user';
@@ -85,7 +81,7 @@ class SeparatorToCamelCaseTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function returnUnfilteredDataProvider(): array
+    public static function returnUnfilteredDataProvider(): array
     {
         return [
             [null],
@@ -93,9 +89,7 @@ class SeparatorToCamelCaseTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnUnfilteredDataProvider
-     */
+    #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new SeparatorToCamelCaseFilter();
@@ -106,7 +100,7 @@ class SeparatorToCamelCaseTest extends TestCase
     /**
      * @return array<int|float|bool>[]
      */
-    public function returnNonStringScalarValues(): array
+    public static function returnNonStringScalarValues(): array
     {
         return [
             [1],
@@ -116,9 +110,7 @@ class SeparatorToCamelCaseTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider returnNonStringScalarValues
-     */
+    #[DataProvider('returnNonStringScalarValues')]
     public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
         $filter = new SeparatorToCamelCaseFilter();
