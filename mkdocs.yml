@@ -2,17 +2,32 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - Home: index.md
-    - Introduction: intro.md
-    - Reference:
-      - 'Standard Filters': standard-filters.md
-      - 'Word Filters': word.md
-      - 'File Filters': file.md
-      - 'Filter Chains': filter-chains.md
-      - 'String Inflection': inflector.md
-      - 'Static Filter': static-filter.md
-      - 'Writing Filters': writing-filters.md
+    - v2:
+      - Introduction: v2/intro.md
+      - Reference:
+        - 'Standard Filters': v2/standard-filters.md
+        - 'Word Filters': v2/word.md
+        - 'File Filters': v2/file.md
+        - 'Filter Chains': v2/filter-chains.md
+        - 'String Inflection': v2/inflector.md
+        - 'Static Filter': v2/static-filter.md
+        - 'Writing Filters': v2/writing-filters.md
 site_name: laminas-filter
 site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
 extra:
     project: Components
+    current_version: v2
+    versions:
+      - v2
+plugins:
+  - redirects:
+      redirect_maps:
+        intro.md: v2/intro.md
+        standard-filters.md: v2/standard-filters.md
+        word.md: v2/word.md
+        file.md: v2/file.md
+        filter-chains.md: v2/filter-chains.md
+        inflector.md: v2/inflector.md
+        static-filter.md: v2/static-filter.md
+        writing-filters.md: v2/writing-filters.md
