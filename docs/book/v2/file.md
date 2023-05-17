@@ -9,6 +9,50 @@ performing file operations such as renaming.
 > *or* a `$_FILES` array as the supplied argument. When a `$_FILES` array is
 > passed in, the `tmp_name` is used for the file path.
 
+## Encrypt and Decrypt
+
+These filters allow encrypting and decrypting file contents, and are derived
+from the `Laminas\Filter\Encrypt` and `Laminas\Filter\Decrypt` filters. Only file reading and
+writing operations are performed by the filer; encryption and decryption operations
+are performed by the parent classes.
+
+Usage:
+
+```php
+use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request->getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new EncryptFileFilter([
+    'adapter' => 'BlockCipher',
+    'key' => '--our-super-secret-key--',
+]);
+$filter->filter($files['my-upload']);
+```
+
+In the above example, we pass options to our constructor in order to configure
+the filter. We could instead use use setter methods to inject these options:
+
+```php
+use Laminas\Filter\File\Encrypt as EncryptFileFilter;
+use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request->getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new EncryptFileFilter();
+$filter->setAdapter('BlockCipher');
+$filter->setKey('--our-super-secret-key--');
+$filter->filter($files['my-upload']);
+```
+
+Check the [Encrypt and Decrypt filter documentation](/laminas-filter/standard-filters/#encrypt-and-decrypt)
+for more information about options and adapters.
+
 ## Lowercase
 
 `Laminas\Filter\File\Lowercase` can be used to convert all file contents to

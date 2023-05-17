@@ -7,6 +7,7 @@ laminas-filter comes with a standard set of filters, available for immediate use
 TIP: **New Feature**
 Available since version 2.12.0
 
+Previously known as `Whitelist`.
 This filter will return `null` if the value being filtered is not present the
 filter's allowed list of values. If the value is present, it will return that
 value.
@@ -151,6 +152,12 @@ print $filter->filter('/vol/tmp/filename.txt');
 ```
 
 This will return '`filename.txt`'.
+
+## Blacklist
+
+CAUTION: **Deprecated**
+This filter is deprecated since version 2.12.0.
+Use the [DenyList filter](#denylist) instead.
 
 ## Boolean
 
@@ -407,6 +414,8 @@ The following compression formats are supported by their own adapter:
 - **Gz**
 - **Tar**
 - **Zip**
+- **Lzf**
+- **Rar**
 
 Each compression format has different capabilities as described below. All
 compression filters may be used in approximately the same ways, and differ
@@ -474,6 +483,12 @@ $filter     = new Laminas\Filter\Decompress('Bz2');
 $compressed = $filter->filter('Compressed string');
 // Returns the original, uncompressed string
 ```
+
+> ### Note on String Compression
+>
+> Not all adapters support string compression. Compression formats like **Rar**
+> can only handle files and directories. For details, consult the section for
+> the adapter you wish to use.
 
 ### Creating an Archive
 
@@ -607,6 +622,59 @@ All options can be set at initiation or by using a related method. For example, 
 for `level` are `getLevel()` and `setLevel()`. You can also use the `setOptions()` method which
 accepts an array of all options.
 
+### Lzf Adapter
+
+CAUTION: **Deprecated**
+This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
+Consider an alternative compression format such as `gz` or `bz2`.
+
+The Lzf Adapter can compress and decompress:
+
+- Strings
+
+> ### Lzf supports only Strings
+>
+> The Lzf adapter can not handle files and directories.
+
+This adapter makes use of PHP's Lzf extension.
+
+There are no options available to customize this adapter.
+
+### Rar Adapter
+
+CAUTION: **Deprecated**
+This adapter is deprecated since version 2.28.0. and will be removed with version 3.0.0.
+Consider an alternative compression format such as `gz` or `bz2`.
+
+The Rar Adapter can compress and decompress:
+
+- Files
+- Directories
+
+> ### Rar does not support Strings
+>
+> The Rar Adapter can not handle strings.
+
+This adapter makes use of PHP's Rar extension.
+
+> ### Rar Compression not supported
+>
+> Due to restrictions with the Rar compression format, there is no compression
+> available for free. When you want to compress files into a new Rar archive,
+> you must provide a callback to the adapter that can invoke a Rar compression
+> program.
+
+To customize compression, this adapter supports the following options:
+
+- `archive`: This parameter sets the archive file which should be used or created.
+- `callback`: A callback which provides compression support to this adapter.
+- `password`: The password which has to be used for decompression.
+- `target`: The target where the decompressed files will be written to.
+
+All options can be set at instantiation or by using a related method. For example, the related
+methods for `target` are `getTarget()` and `setTarget()`. You can also use the `setOptions()` method
+which accepts an array of all options.
+
 ### Tar Adapter
 
 The Tar Adapter can compress and decompress:
@@ -668,6 +736,7 @@ which accepts an array of all options.
 TIP: **New Feature**
 Available since version 2.12.0
 
+Previously known as `Blacklist`.
 This filter will return `null` if the value being filtered is present in the filter's list of
 values. If the value is not present, it will return that value.
 
@@ -741,6 +810,376 @@ print $filter->filter('C:/Temp/x');
 ```
 
 This returns `C:/Temp`.
+
+## Encrypt and Decrypt
+
+CAUTION: **Deprecated**
+These filters were deprecated in version 2.24.0 and will be removed in version 3.0.0.
+You are encouraged to implement your own encryption or decryption filters by implementing `FilterInterface` around a dedicated crypto library.
+See [Writing Filters](writing-filters.md)
+
+These filters allow encrypting and decrypting any given string; they do so via
+the use of adapters. Included adapters support `Laminas\Crypt\BlockCipher` and
+PHP's OpenSSL extension.
+
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Encrypt` and
+`Laminas\Filter\Decrypt`, and segregated by adapter.
+
+#### General Options
+
+- `adapter`: This sets the encryption adapter to use.
+- `compression`: If the encrypted value should be compressed. Default is no
+  compression.
+
+#### BlockCipher Options
+
+- `algorithm`: The algorithm to use with `Laminas\Crypt\Symmetric\Mcrypt` (use the
+  the `getSupportedAlgorithms()` method of that class to determine what is
+  supported). If not set, it defaults to `aes`, the Advanced Encryption Standard
+  (see the [laminas-crypt BlockCipher documentation](https://docs.laminas.dev/laminas-crypt/block-cipher/)
+  for details).
+- `key`: The encryption key with which the input will be encrypted. You need the
+  same key for decryption.
+- `mode`: The encryption mode to use. It should be a
+  [valid PHP mcrypt modes](http://php.net/manual/en/mcrypt.constants.php).
+  If not set, it defaults to 'cbc'.
+- `mode_directory`: The directory where the mode can be found. If not set, it
+  defaults to the path set within the `Mcrypt` extension.
+- `vector`: The initialization vector which shall be used. If not set, it will
+  be a random vector.
+
+#### OpenSSL Options
+
+- `envelope`: The encrypted envelope key from the user who encrypted the
+  content. You can either provide the path and filename of the key file, or just
+  the content of the key file itself. When the `package` option has been set,
+  then you can omit this parameter.
+- `package`: If the envelope key should be packed with the encrypted value.
+  Default is `FALSE`.
+- `private`: The private key to use for encrypting the content. You can either
+  provide the path and filename of the key file, or just the content of the key
+  file itself.
+- `public`: The public key of the user for whom you want to provide the
+  encrypted content. You can either provide the path and filename of the key
+  file, or just the content of the key file itself.
+
+### Adapter Usage
+
+As these two encryption methodologies work completely different, the usage
+of the adapters differ. You have to select the adapter you want to use when
+initiating the filter.
+
+```php
+// Use the BlockCipher adapter
+$filter1 = new Laminas\Filter\Encrypt(['adapter' => 'BlockCipher']);
+
+// Use the OpenSSL adapter
+$filter2 = new Laminas\Filter\Encrypt(['adapter' => 'openssl']);
+```
+
+To set another adapter, you can use `setAdapter()`; `getAdapter()` will return
+the currently composed adapter.
+
+```php
+// Use the OpenSSL adapter
+$filter = new Laminas\Filter\Encrypt();
+$filter->setAdapter('openssl');
+```
+
+> ### Default Adapter
+>
+> When you do not supply the `adapter` option or do not call `setAdapter()`, the
+> `BlockCipher` adapter will be used per default.
+
+### Encryption with BlockCipher
+
+To encrypt a string using the `BlockCipher` adapter, you have to specify the
+encryption key by either calling the `setKey()` method or passing it to the
+constructor.
+
+```php
+// Use the default AES encryption algorithm
+$filter = new Laminas\Filter\Encrypt(['adapter' => 'BlockCipher']);
+$filter->setKey('encryption key');
+
+// or
+// $filter = new Laminas\Filter\Encrypt([
+//     'adapter' => 'BlockCipher',
+//     'key'     => 'encryption key'
+// ]);
+
+$encrypted = $filter->filter('text to be encrypted');
+printf ("Encrypted text: %s\n", $encrypted);
+```
+
+You can get and set the encryption values after construction using the
+`getEncryption()` and `setEncryption()` methods:
+
+```php
+// Use the default AES encryption algorithm
+$filter = new Laminas\Filter\Encrypt(['adapter' => 'BlockCipher']);
+$filter->setKey('encryption key');
+var_dump($filter->getEncryption());
+
+// Will print:
+//array(4) {
+//  ["key_iteration"]=>
+//  int(5000)
+//  ["algorithm"]=>
+//  string(3) "aes"
+//  ["hash"]=>
+//  string(6) "sha256"
+//  ["key"]=>
+//  string(14) "encryption key"
+//}
+```
+
+> ### Default BlockCipher Algorithm
+>
+> The `BlockCipher` adapter uses the [Mcrypt](http://php.net/mcrypt) extension
+> by default. That means you will need to install the Mcrypt module in your PHP
+> environment.
+
+If you don't specify an initialization Vector (salt or iv), the `BlockCipher` will
+generate a random value during each encryption. If you try to execute the
+following code, the output will always be different (note that even if the output
+is always different, you can still decrypt it using the same key).
+
+```php
+$key  = 'encryption key';
+$text = 'message to encrypt';
+
+// use the default adapter that is BlockCipher
+$filter = new \Laminas\Filter\Encrypt();
+$filter->setKey('encryption key');
+for ($i = 0; $i < 10; $i++) {
+   printf("%d) %s\n", $i, $filter->filter($text));
+}
+```
+
+If you want to obtain the same output, you need to specify a fixed vector, using
+the `setVector()` method. This following example always produces the same
+encryption output:
+
+```php
+// use the default adapter that is BlockCipher
+$filter = new \Laminas\Filter\Encrypt();
+$filter->setKey('encryption key');
+$filter->setVector('12345678901234567890');
+printf("%s\n", $filter->filter('message'));
+
+// output:
+//
+04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=
+```
+
+> ### Use different Vectors
+>
+> For security purposes, it's always better to use a different vector on each
+> encryption. We suggest using `setVector()` only in exceptional circumstances.
+
+### Decryption with BlockCipher
+
+For decrypting content previously encrypted with `BlockCipher`, you need to use
+the same options used for encryption.
+
+If you used only the encryption key, you can just use it to decrypt the content.
+As soon as you have provided all options, decryption works the same as
+encryption.
+
+```php
+$content = '04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=';
+// use the default adapter (BlockCipher):
+$filter = new Laminas\Filter\Decrypt();
+$filter->setKey('encryption key');
+printf("Decrypt: %s\n", $filter->filter($content));
+
+// output:
+// Decrypt: message
+```
+
+Note that even if we did not specify the same vector, the `BlockCipher` is able
+to decrypt the message because the vector is stored in the encryption string
+itself (note that the vector can be stored in plaintext; it is not a secret, and
+only used to improve the randomness of the encryption algorithm).
+
+### Encryption with OpenSSL
+
+If you have installed the `OpenSSL` extension, you can also use the `OpenSSL`
+adapter. You can get or set the public key either during instantiation, or later
+via the `setPublicKey()` method. The private key can also be set after-the-fact
+via the `setPrivateKey()` method.
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Encrypt([
+   'adapter' => 'openssl',
+   'private' => '/path/to/mykey/private.pem',
+]);
+
+// Add the private key separately:
+$filter->setPublicKey('/public/key/path/public.pem');
+```
+
+> ### Valid Keys are required
+>
+> The `OpenSSL` adapter will not work with invalid or missing keys.
+
+When you want to decode content encoded with a passphrase, you will not only
+need the public key, but also the passphrase:
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Encrypt([
+   'adapter' => 'openssl',
+   'passphrase' => 'enter here the passphrase for the private key',
+   'private' => '/path/to/mykey/private.pem',
+   'public' => '/public/key/path/public.pem'
+]);
+```
+
+When providing the encrypted content to the recipient, you will also need to
+ensure they have the passphrase and the envelope keys so they may decrypt the
+message. You can get the envelope keys using the `getEnvelopeKey()` method:
+
+A complete example for encrypting content with `OpenSSL` looks like the
+following:
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Encrypt([
+   'adapter' => 'openssl',
+   'passphrase' => 'enter here the passphrase for the private key',
+   'private' => '/path/to/mykey/private.pem',
+   'public' => '/public/key/path/public.pem'
+]);
+
+$encrypted = $filter->filter('text_to_be_encoded');
+$envelope  = $filter->getEnvelopeKey();
+print $encrypted;
+
+// For decryption look at the Decrypt filter
+```
+
+### Simplified usage with OpenSSL
+
+As noted in the previous section, you need to provide the envelope key to the
+recipient in order for them to decrypt the message. This adds complexity,
+particularly if you are encrypting multiple values.
+
+To simplify usage, you can set the `package` option to `TRUE` when creating your
+`Encrypt` instance (the default value is `FALSE`). This will return a value
+containing both the encrypted message *and* the envelope key:
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Encrypt([
+   'adapter' => 'openssl',
+   'private' => '/path/to/mykey/private.pem',
+   'public'  => '/public/key/path/public.pem',
+   'package' => true,
+]);
+
+$encrypted = $filter->filter('text_to_be_encoded');
+print $encrypted;
+
+// For decryption look at the Decrypt filter
+```
+
+Now the returned value contains the encrypted value and the envelope. You don't
+need to fetch the envelope key separately.
+
+However, there is one negative aspect to this: the encrypted value can now only
+be decrypted by using `Laminas\Filter\Encrypt`.
+
+### Compressing Content
+
+Based on the original value, the encrypted value can be a very large string. To
+reduce the value, `Laminas\Filter\Encrypt` allows the usage of compression.
+
+The `compression` option can either be set to the name of a compression adapter,
+or to an array which sets all required options for the compression adapter.
+
+```php
+// Use basic compression adapter
+$filter1 = new Laminas\Filter\Encrypt([
+   'adapter'     => 'openssl',
+   'private'     => '/path/to/mykey/private.pem',
+   'public'      => '/public/key/path/public.pem',
+   'package'     => true,
+   'compression' => 'bz2'
+]);
+
+// Compression adatper with options:
+$filter2 = new Laminas\Filter\Encrypt([
+   'adapter'     => 'openssl',
+   'private'     => '/path/to/mykey/private.pem',
+   'public'      => '/public/key/path/public.pem',
+   'package'     => true,
+   'compression' => ['adapter' => 'zip', 'target' => '\usr\tmp\tmp.zip']
+]);
+```
+
+> ### Decrypt using the same Settings
+>
+> When you want to decrypt a value which is additionally compressed, then you
+> need to set the same compression settings for decryption as for encryption;
+> otherwise decryption will fail.
+
+### Decryption with OpenSSL
+
+Decryption with `OpenSSL` follows the same patterns as for encryption, with one
+difference: you must have all data, including the envelope key, from the person
+who encrypted the content.
+
+As an example:
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Decrypt([
+   'adapter' => 'openssl',
+   'private' => '/path/to/mykey/private.pem'
+]);
+
+// Add the envelope key; you can also add this during instantiation.
+$filter->setEnvelopeKey('/key/from/encoder/envelope_key.pem');
+```
+
+If encyption used a passphrase, you'll need to provide that as well:
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Decrypt([
+   'adapter' => 'openssl',
+   'passphrase' => 'enter here the passphrase for the private key',
+   'private' => '/path/to/mykey/private.pem'
+]);
+
+// Add the envelope key; you can also add this during instantiation.
+$filter->setEnvelopeKey('/key/from/encoder/envelope_key.pem');
+```
+
+Finally, you can decode the content.
+
+Our complete example for decrypting the previously encrypted content looks like
+this:
+
+```php
+// Use openssl and provide a private key
+$filter = new Laminas\Filter\Decrypt([
+   'adapter' => 'openssl',
+   'passphrase' => 'enter here the passphrase for the private key',
+   'private' => '/path/to/mykey/private.pem'
+]);
+
+// Add the envelope key; you can also add this during instantiation.
+$filter->setEnvelopeKey('/key/from/encoder/envelope_key.pem');
+
+$decrypted = $filter->filter('encoded_text_normally_unreadable');
+print $decrypted;
+```
 
 ## HtmlEntities
 
@@ -1494,3 +1933,9 @@ echo $filter->filter('www.example.com');
 ```
 
 The above results in the string `https://www.example.com`.
+
+## Whitelist
+
+CAUTION: **Deprecated**
+This filter is deprecated since version 2.12.0.
+Use the [AllowList filter](#allowlist) instead.
