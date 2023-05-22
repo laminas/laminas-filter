@@ -23,15 +23,15 @@ echo "extension=lzf.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
 #pecl install rar
 #echo "extension=rar.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
 
-# Install snappy
-git clone --recursive --depth=1 https://github.com/kjdev/php-ext-snappy.git
-cd php-ext-snappy || exit 1;
-phpize
-./configure
-make
-make install
-
-echo "extension=snappy.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
+# Install snappy - May 2023 - Extension no longer compiles
+# git clone --recursive --depth=1 https://github.com/kjdev/php-ext-snappy.git
+# cd php-ext-snappy || exit 1;
+# phpize
+# ./configure
+# make
+# make install
+#
+# echo "extension=snappy.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
 
 # Debug output
 php --ri lzf
