@@ -21,7 +21,7 @@ use function ucfirst;
  * Compresses a given string
  *
  * @psalm-type Options = array{
- *     adapter?: Compress\CompressionAlgorithmInterface|'Bz2'|'Gz'|'Lzf'|'Rar'|'Snappy'|'Tar'|'Zip',
+ *     adapter?: Compress\CompressionAlgorithmInterface|'Bz2'|'Gz'|'Tar'|'Zip',
  *     adapter_options?: array,
  *     ...
  * }
