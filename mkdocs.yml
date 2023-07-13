@@ -20,8 +20,9 @@ nav:
         - 'File Filters': v3/file.md
         - 'Filter Chains': v3/filter-chains.md
         - 'String Inflection': v3/inflector.md
-        - 'Static Filter': v3/static-filter.md
         - 'Writing Filters': v3/writing-filters.md
+      - Migration:
+        - "Migration from Version 2 to 3": v3/migration/v2-to-v3.md
 site_name: laminas-filter
 site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
@@ -40,5 +41,5 @@ plugins:
         file.md: v3/file.md
         filter-chains.md: v3/filter-chains.md
         inflector.md: v3/inflector.md
-        static-filter.md: v3/static-filter.md
+        static-filter.md: v2/static-filter.md
         writing-filters.md: v3/writing-filters.md
