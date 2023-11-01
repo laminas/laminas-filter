@@ -26,12 +26,12 @@ use const DIRECTORY_SEPARATOR;
 
 class RenameTest extends TestCase
 {
-    private ?string $tmpPath    = null;
-    private ?string $origFile   = null;
-    private ?string $oldFile    = null;
-    private ?string $newFile    = null;
-    private ?string $newDir     = null;
-    private ?string $newDirFile = null;
+    private string $tmpPath;
+    private string $origFile;
+    private string $oldFile;
+    private string $newFile;
+    private string $newDir;
+    private string $newDirFile;
 
     /**
      * Sets the path to test files
@@ -353,9 +353,6 @@ class RenameTest extends TestCase
 
     public function testAddSameFileAgainAndOverwriteExistingTarget(): void
     {
-        self::assertIsString($this->oldFile);
-        self::assertIsString($this->newFile);
-
         $filter = new FileRename([
             'source' => $this->oldFile,
             'target' => $this->newDir,
