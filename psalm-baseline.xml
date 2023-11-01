@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
   <file src="src/AbstractDateDropdown.php">
     <MissingReturnType>
       <code>filterable</code>
@@ -265,10 +265,10 @@
       <code><![CDATA[$this->options['target']]]></code>
     </PossiblyUndefinedArrayOffset>
     <RedundantCast>
-      <code>(string) $archive</code>
       <code>(string) $target</code>
     </RedundantCast>
     <RedundantCastGivenDocblockType>
+      <code>(string) $archive</code>
       <code>(string) $password</code>
     </RedundantCastGivenDocblockType>
     <TypeDoesNotContainType>
@@ -1076,30 +1076,6 @@
     <PossiblyUnusedProperty>
       <code>$shareByDefault</code>
     </PossiblyUnusedProperty>
-    <UndefinedClass>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-    </UndefinedClass>
   </file>
   <file src="src/FilterPluginManagerFactory.php">
     <ArgumentTypeCoercion>
@@ -1158,6 +1134,9 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$options['pluginManager']]]></code>
     </ArgumentTypeCoercion>
+    <InvalidArgument>
+      <code>array_values($processedParts)</code>
+    </InvalidArgument>
     <InvalidArrayAccess>
       <code>$spec[0]</code>
     </InvalidArrayAccess>
@@ -1256,6 +1235,9 @@
     </UnusedClass>
   </file>
   <file src="src/PregReplace.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($pattern) && ! is_string($pattern)]]></code>
       <code><![CDATA[! is_array($replacement) && ! is_string($replacement)]]></code>
