@@ -9,6 +9,8 @@ use Laminas\Filter\AbstractFilter;
 use function is_array;
 
 /**
+ * @internal
+ *
  * @psalm-type Options = array{
  *     separator?: string,
  *     ...

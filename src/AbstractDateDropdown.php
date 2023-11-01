@@ -123,6 +123,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
      *
      * @param array $value
      * @throws Exception\RuntimeException
+     * @psalm-assert TInput $value
      */
     protected function filterable(array $value): void
     {
