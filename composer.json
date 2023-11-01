@@ -40,9 +40,10 @@
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.5.0",
         "laminas/laminas-crypt": "^3.10",
+        "laminas/laminas-i18n": "^2.23.1",
         "laminas/laminas-uri": "^2.10",
         "pear/archive_tar": "^1.4.14",
-        "phpunit/phpunit": "^10.2.3",
+        "phpunit/phpunit": "^10.2.6",
         "psalm/plugin-phpunit": "^0.18.4",
         "psr/http-factory": "^1.0.2",
         "vimeo/psalm": "^5.13.1"
