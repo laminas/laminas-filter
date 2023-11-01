@@ -209,7 +209,7 @@ class Boolean extends AbstractFilter
      * @param  null|array|bool|float|int|string $value
      * @return bool|mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         $type    = $this->getType();
         $casting = $this->getCasting();

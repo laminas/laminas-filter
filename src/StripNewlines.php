@@ -19,11 +19,8 @@ class StripNewlines extends AbstractFilter
      * Defined by Laminas\Filter\FilterInterface
      *
      * Returns $value without newline control characters
-     *
-     * @param  mixed $value
-     * @return mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,

@@ -19,11 +19,9 @@ class Dir extends AbstractFilter
      *
      * Returns dirname($value)
      *
-     * @param  mixed $value
-     * @return string|mixed
      * @psalm-return ($value is scalar ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

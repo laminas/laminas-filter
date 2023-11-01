@@ -86,7 +86,7 @@ class AllowList extends AbstractFilter
      *
      * Will return $value if its present in the white-list. If $value is rejected then it will return null.
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return in_array($value, $this->getList(), $this->getStrict()) ? $value : null;
     }

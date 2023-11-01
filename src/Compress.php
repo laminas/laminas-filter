@@ -211,11 +211,11 @@ class Compress extends AbstractFilter
      *
      * Compresses the content $value with the defined settings
      *
-     * @param  mixed $value Content to compress
-     * @return string|mixed The compressed content
+     * @param mixed $value Content to compress
+     * @return mixed The compressed content
      * @psalm-return ($value is string ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_string($value)) {
             return $value;

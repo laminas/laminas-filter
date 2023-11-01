@@ -140,11 +140,9 @@ class PregReplace extends AbstractFilter
     /**
      * Perform regexp replacement as filter
      *
-     * @param  mixed $value
-     * @return mixed
      * @throws Exception\RuntimeException
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,

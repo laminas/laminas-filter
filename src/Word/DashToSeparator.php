@@ -19,11 +19,7 @@ use function str_replace;
  */
 class DashToSeparator extends AbstractSeparator
 {
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,

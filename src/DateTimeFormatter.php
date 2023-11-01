@@ -58,9 +58,8 @@ class DateTimeFormatter extends AbstractFilter
      *
      * @param  DateTime|string|int|mixed $value
      * @throws Exception\InvalidArgumentException
-     * @return string|mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         try {
             $result = $this->normalizeDateTime($value);

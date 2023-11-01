@@ -190,11 +190,9 @@ class StripTags extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @todo   improve docblock descriptions
-     * @param  string $value
-     * @return string|mixed
+     * @psalm-return ($value is scalar ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;
