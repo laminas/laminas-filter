@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
   <file src="src/AbstractDateDropdown.php">
-    <MissingReturnType>
-      <code>filterable</code>
-    </MissingReturnType>
     <MixedArgumentTypeCoercion>
       <code>$value</code>
     </MixedArgumentTypeCoercion>
@@ -11,15 +8,6 @@
       <code>setNullOnAllEmpty</code>
       <code>setNullOnEmpty</code>
     </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code>$expectedInputs</code>
-    </PropertyNotSetInConstructor>
-    <RedundantCondition>
-      <code><![CDATA[array_reduce($value, self::class . '::reduce', true)]]></code>
-    </RedundantCondition>
-    <TypeDoesNotContainType>
-      <code><![CDATA[array_reduce($value, self::class . '::reduce', false)]]></code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/AbstractFilter.php">
     <DocblockTypeContradiction>
@@ -36,15 +24,6 @@
     </PossiblyInvalidPropertyAssignmentValue>
     <RedundantConditionGivenDocblockType>
       <code>is_object($options)</code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/AbstractUnicode.php">
-    <RedundantCondition>
-      <code>assert(is_string($encoding))</code>
-      <code>is_string($encoding)</code>
-    </RedundantCondition>
-    <RedundantConditionGivenDocblockType>
-      <code>is_string($encoding)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AllowList.php">
@@ -367,16 +346,18 @@
     <MixedArgumentTypeCoercion>
       <code>$value</code>
     </MixedArgumentTypeCoercion>
-  </file>
-  <file src="src/Decompress.php">
-    <DocblockTypeContradiction>
-      <code>! is_string($value)</code>
-    </DocblockTypeContradiction>
     <MixedReturnStatement>
       <code>$value</code>
     </MixedReturnStatement>
+  </file>
+  <file src="src/Decompress.php">
+    <MixedInferredReturnType>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->filter($value)]]></code>
+    </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
-      <code>$value</code>
       <code>$value</code>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
@@ -403,7 +384,6 @@
   </file>
   <file src="src/File/Rename.php">
     <DocblockTypeContradiction>
-      <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
       <code>is_array($options)</code>
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
@@ -449,18 +429,10 @@
     </MixedAssignment>
     <MixedInferredReturnType>
       <code>string</code>
-      <code>string|array</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code>$uploadData</code>
-      <code>$uploadData</code>
-      <code>$value</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$rename['randomize']]]></code>
     </PossiblyUndefinedArrayOffset>
@@ -644,30 +616,6 @@
     <PossiblyUnusedProperty>
       <code>$shareByDefault</code>
     </PossiblyUnusedProperty>
-    <UndefinedClass>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alnum</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>Alpha</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberFormat</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-      <code>NumberParse</code>
-    </UndefinedClass>
   </file>
   <file src="src/FilterPluginManagerFactory.php">
     <ArgumentTypeCoercion>
@@ -733,7 +681,7 @@
       <code>$spec[0]</code>
     </InvalidArrayAccess>
     <InvalidArrayOffset>
-      <code><![CDATA[$source[ltrim($sourceName, ':')]]]></code>
+      <code><![CDATA[$value[ltrim($sourceName, ':')]]]></code>
     </InvalidArrayOffset>
     <MixedArgument>
       <code><![CDATA[$options['pluginManager']]]></code>
@@ -744,8 +692,8 @@
       <code>$processedPart</code>
       <code>$rule</code>
       <code>$rules[$spec]</code>
-      <code>$source[$ruleName]</code>
       <code>$spec</code>
+      <code>$value[$ruleName]</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$sourceName</code>
@@ -761,11 +709,11 @@
       <code>$ruleFilter</code>
       <code>$ruleValue</code>
       <code>$sourceValue</code>
-      <code><![CDATA[$source[ltrim($sourceName, ':')]]]></code>
       <code><![CDATA[$temp['rules']]]></code>
       <code><![CDATA[$temp['target']]]></code>
       <code><![CDATA[$temp['targetReplacementIdentifier']]]></code>
       <code><![CDATA[$temp['throwTargetExceptionsOn']]]></code>
+      <code><![CDATA[$value[ltrim($sourceName, ':')]]]></code>
     </MixedAssignment>
     <MixedFunctionCall>
       <code>$ruleFilter($processedPart)</code>
@@ -782,14 +730,15 @@
       <code><![CDATA[$this->rules[$spec][$index]]]></code>
     </MixedReturnStatement>
     <MixedStringOffsetAssignment>
-      <code><![CDATA[$source[ltrim($sourceName, ':')]]]></code>
+      <code><![CDATA[$value[ltrim($sourceName, ':')]]]></code>
     </MixedStringOffsetAssignment>
     <MoreSpecificImplementedParamType>
-      <code>$source</code>
+      <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <ParamNameMismatch>
-      <code>$source</code>
-    </ParamNameMismatch>
+    <PossiblyUnusedParam>
+      <code>$reference</code>
+      <code>$target</code>
+    </PossiblyUnusedParam>
     <PossiblyUnusedReturnValue>
       <code>self</code>
     </PossiblyUnusedReturnValue>
@@ -807,10 +756,6 @@
       <code>(string) $target</code>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
-    <UnusedParam>
-      <code>$reference</code>
-      <code>$target</code>
-    </UnusedParam>
   </file>
   <file src="src/Module.php">
     <MissingReturnType>
@@ -827,9 +772,6 @@
     </UnusedClass>
   </file>
   <file src="src/PregReplace.php">
-    <ArgumentTypeCoercion>
-      <code>$pattern</code>
-    </ArgumentTypeCoercion>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($pattern) && ! is_string($pattern)]]></code>
       <code><![CDATA[! is_array($replacement) && ! is_string($replacement)]]></code>
@@ -843,9 +785,6 @@
     </MixedArgument>
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$this->options['pattern']]]></code>
-      <code><![CDATA[$this->options['pattern']]]></code>
-      <code><![CDATA[$this->options['pattern']]]></code>
-      <code><![CDATA[$this->options['replacement']]]></code>
       <code><![CDATA[$this->options['replacement']]]></code>
     </PossiblyUndefinedArrayOffset>
     <PossiblyUnusedReturnValue>
@@ -904,9 +843,6 @@
     </PossiblyUndefinedArrayOffset>
   </file>
   <file src="src/StripTags.php">
-    <DocblockTypeContradiction>
-      <code>is_scalar($value)</code>
-    </DocblockTypeContradiction>
     <MixedArgument>
       <code><![CDATA[$options['allowAttribs']]]></code>
       <code><![CDATA[$options['allowTags']]]></code>
@@ -923,16 +859,9 @@
       <code><![CDATA[$temp['allowComments']]]></code>
       <code><![CDATA[$temp['allowTags']]]></code>
     </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType>
-      <code>(string) $value</code>
-      <code>(string) $value</code>
-    </RedundantCastGivenDocblockType>
     <RedundantConditionGivenDocblockType>
       <code>is_array($options)</code>
     </RedundantConditionGivenDocblockType>
@@ -945,9 +874,6 @@
       <code><![CDATA[$typeOrOptions === '']]></code>
       <code><![CDATA[$typeOrOptions === '']]></code>
     </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyNullArgument>
       <code>$type</code>
     </PossiblyNullArgument>
@@ -988,12 +914,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Word/AbstractSeparator.php">
-    <DocblockTypeContradiction>
-      <code>is_string($separator)</code>
-    </DocblockTypeContradiction>
-    <MixedOperand>
-      <code>$separator</code>
-    </MixedOperand>
     <PossiblyInvalidArgument>
       <code>$separator</code>
     </PossiblyInvalidArgument>
@@ -1003,10 +923,6 @@
     <PossiblyUnusedMethod>
       <code>getSeparator</code>
     </PossiblyUnusedMethod>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_array($separator) && isset($separator['separator']) && is_string($separator['separator'])]]></code>
-      <code><![CDATA[is_string($separator['separator'])]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Word/SeparatorToCamelCase.php">
     <MissingClosureParamType>
@@ -1251,6 +1167,32 @@
       <code>1234</code>
       <code>1234</code>
     </InvalidArgument>
+    <PossiblyNullArgument>
+      <code><![CDATA[$this->newDir]]></code>
+      <code><![CDATA[$this->newDir]]></code>
+      <code><![CDATA[$this->newDirFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->newFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->oldFile]]></code>
+      <code><![CDATA[$this->origFile]]></code>
+      <code><![CDATA[$this->tmpPath]]></code>
+    </PossiblyNullArgument>
+    <PossiblyNullOperand>
+      <code><![CDATA[$this->tmpPath]]></code>
+      <code><![CDATA[$this->tmpPath]]></code>
+    </PossiblyNullOperand>
     <PossiblyUnusedMethod>
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
@@ -1316,10 +1258,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/InflectorTest.php">
-    <DocblockTypeContradiction>
-      <code>assertNull</code>
-      <code>assertSame</code>
-    </DocblockTypeContradiction>
     <InvalidCast>
       <code>$rule</code>
       <code>$rule</code>
@@ -1360,6 +1298,9 @@
       <code>$rules</code>
       <code>$rules</code>
     </PossiblyFalseArgument>
+    <UnusedPsalmSuppress>
+      <code>UnusedVariable</code>
+    </UnusedPsalmSuppress>
     <UnusedVariable>
       <code>$filtered</code>
       <code>$rule</code>
@@ -1433,7 +1374,6 @@
   <file src="test/StripTagsTest.php">
     <MixedArgument>
       <code>$filtered</code>
-      <code>$input</code>
     </MixedArgument>
     <MixedAssignment>
       <code>$filtered</code>
@@ -1481,11 +1421,6 @@
     <InvalidArgument>
       <code>true</code>
     </InvalidArgument>
-    <MixedArgument>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MixedArgument>
     <MixedArrayAccess>
       <code>$expected</code>
       <code>$expected</code>

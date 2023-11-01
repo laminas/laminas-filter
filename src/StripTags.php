@@ -218,7 +218,7 @@ class StripTags extends AbstractFilter
         $dataFiltered = '';
         // Parse the input data iteratively as regular pre-tag text followed by a
         // tag; either may be empty strings
-        preg_match_all('/([^<]*)(<?[^>]*>?)/', (string) $value, $matches);
+        preg_match_all('/([^<]*)(<?[^>]*>?)/', $value, $matches);
 
         // Iterate over each set of matches
         foreach ($matches[1] as $index => $preTag) {

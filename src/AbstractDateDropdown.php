@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use function array_reduce;
+use function assert;
 use function count;
 use function is_array;
 use function is_iterable;
@@ -111,6 +112,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
         }
 
         $this->filterable($value);
+        assert(is_array($value));
 
         ksort($value);
         return vsprintf($this->format, $value);
@@ -121,7 +123,6 @@ abstract class AbstractDateDropdown extends AbstractFilter
      *
      * @param array $value
      * @throws Exception\RuntimeException
-     * @psalm-assert TInput $value
      */
     protected function filterable(array $value): void
     {

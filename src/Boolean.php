@@ -207,7 +207,6 @@ class Boolean extends AbstractFilter
      * Returns a boolean representation of $value
      *
      * @param  null|array|bool|float|int|string $value
-     * @return bool|mixed
      */
     public function filter(mixed $value): mixed
     {

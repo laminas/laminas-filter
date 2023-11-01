@@ -21,7 +21,7 @@ use function str_contains;
 
 /**
  * @psalm-type Options = array{
- *     pattern?: string|list<string>|null,
+ *     pattern?: non-empty-string|list<non-empty-string>|null,
  *     replacement?: string|list<string>,
  * }
  * @extends AbstractFilter<Options>
@@ -67,7 +67,7 @@ class PregReplace extends AbstractFilter
      *
      * @see preg_replace()
      *
-     * @param  string|list<string> $pattern - same as the first argument of preg_replace
+     * @param  non-empty-string|list<non-empty-string> $pattern - same as the first argument of preg_replace
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -98,7 +98,7 @@ class PregReplace extends AbstractFilter
     /**
      * Get currently set match pattern
      *
-     * @return string|list<string>|null
+     * @return non-empty-string|list<non-empty-string>|null
      */
     public function getPattern()
     {
@@ -156,17 +156,16 @@ class PregReplace extends AbstractFilter
      */
     private function filterNormalizedValue($value)
     {
-        if ($this->options['pattern'] === null) {
+        $pattern = $this->options['pattern'] ?? null;
+        if ($pattern === null) {
             throw new Exception\RuntimeException(sprintf(
                 'Filter %s does not have a valid pattern set',
                 static::class
             ));
         }
 
-        /** @var string|string[] $pattern */
-        $pattern = $this->options['pattern'];
         /** @var string|string[] $replacement */
-        $replacement = $this->options['replacement'];
+        $replacement = $this->options['replacement'] ?? '';
 
         return preg_replace($pattern, $replacement, $value);
     }

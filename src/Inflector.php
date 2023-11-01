@@ -407,7 +407,7 @@ class Inflector extends AbstractFilter
     /**
      * Inflect
      *
-     * @param  string|array $source
+     * @param  string|array $value
      * @throws Exception\RuntimeException
      */
     public function filter(mixed $value): mixed
