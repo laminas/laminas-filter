@@ -19,8 +19,6 @@ use function is_writable;
  *
  * @deprecated Since 2.24.0. This filter will be removed in 3.0. You are encouraged to use an alternative encryption
  *             library and write your own filter.
- *
- * @psalm-suppress DeprecatedInterface
  */
 class Decrypt extends Filter\Decrypt
 {
