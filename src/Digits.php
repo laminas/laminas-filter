@@ -14,6 +14,7 @@ use function preg_replace;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
+ * @final
  */
 class Digits extends AbstractFilter
 {

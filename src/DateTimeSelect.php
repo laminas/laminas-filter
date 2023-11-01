@@ -16,6 +16,7 @@ use function vsprintf;
  * }
  * @template TOptions of Options
  * @template-extends AbstractDateDropdown<TOptions>
+ * @final
  */
 class DateTimeSelect extends AbstractDateDropdown
 {

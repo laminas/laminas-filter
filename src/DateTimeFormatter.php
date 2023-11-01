@@ -17,6 +17,7 @@ use function is_string;
  *     ...
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class DateTimeFormatter extends AbstractFilter
 {

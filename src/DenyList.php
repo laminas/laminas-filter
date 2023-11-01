@@ -17,6 +17,7 @@ use function is_array;
  *     ...
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class DenyList extends AbstractFilter
 {

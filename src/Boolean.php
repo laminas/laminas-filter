@@ -25,6 +25,7 @@ use function strtolower;
  *     translations?: array,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class Boolean extends AbstractFilter
 {

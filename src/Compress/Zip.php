@@ -33,6 +33,7 @@ use const DIRECTORY_SEPARATOR;
  *     target?: string|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
+ * @final
  */
 class Zip extends AbstractCompressionAlgorithm
 {

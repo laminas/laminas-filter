@@ -31,6 +31,7 @@ use function trim;
  *     ...
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class StripTags extends AbstractFilter
 {

@@ -33,6 +33,7 @@ use const DIRECTORY_SEPARATOR;
  * }
  * @template TOptions of Options
  * @template-extends Filter\AbstractFilter<TOptions>
+ * @final
  */
 class Rename extends Filter\AbstractFilter
 {

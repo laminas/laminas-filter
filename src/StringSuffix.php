@@ -15,6 +15,7 @@ use function sprintf;
  *     suffix?: null|string,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class StringSuffix extends AbstractFilter
 {

@@ -15,6 +15,7 @@ use function str_replace;
  * }
  * @template TOptions of Options
  * @extends AbstractSeparator<TOptions>
+ * @final
  */
 class DashToSeparator extends AbstractSeparator
 {
