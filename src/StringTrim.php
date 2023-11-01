@@ -16,6 +16,7 @@ use function strlen;
  *     charlist?: string|null,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class StringTrim extends AbstractFilter
 {

@@ -25,6 +25,7 @@ use function str_contains;
  *     replacement?: string|list<string>,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class PregReplace extends AbstractFilter
 {

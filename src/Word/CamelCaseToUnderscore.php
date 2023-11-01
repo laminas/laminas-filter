@@ -11,6 +11,7 @@ namespace Laminas\Filter\Word;
  * }
  * @template TOptions of Options
  * @extends CamelCaseToSeparator<TOptions>
+ * @final
  */
 class CamelCaseToUnderscore extends CamelCaseToSeparator
 {

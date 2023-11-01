@@ -21,6 +21,7 @@ use function sprintf;
  *     type?: int-mask-of<self::TYPE_*>,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class ToNull extends AbstractFilter
 {

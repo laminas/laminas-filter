@@ -30,6 +30,7 @@ use const DIRECTORY_SEPARATOR;
  *     mode?: 'gz'|'bz2'|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
+ * @final
  */
 class Tar extends AbstractCompressionAlgorithm
 {

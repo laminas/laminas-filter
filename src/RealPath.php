@@ -29,6 +29,7 @@ use const PHP_OS;
  * }
  * @template TOptions of Options
  * @extends AbstractFilter<TOptions>
+ * @final
  */
 class RealPath extends AbstractFilter
 {

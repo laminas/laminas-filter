@@ -11,6 +11,7 @@ namespace Laminas\Filter\Word;
  * }
  * @template TOptions of Options
  * @extends SeparatorToCamelCase<TOptions>
+ * @final
  */
 class DashToCamelCase extends SeparatorToCamelCase
 {
