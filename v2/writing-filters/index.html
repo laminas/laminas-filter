@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/writing-filters/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>laminas-filter - Laminas Docs</title>
+    <title>Writing Filters - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -124,7 +124,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">laminas-filter</a>
+            <a href="../..">laminas-filter</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -137,7 +137,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/intro/" class="subnavigation__link">Introduction</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -148,43 +148,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/standard-filters/" class="subnavigation__link">Standard Filters</a>
+        <a href="../standard-filters/" class="subnavigation__link">Standard Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/word/" class="subnavigation__link">Word Filters</a>
+        <a href="../word/" class="subnavigation__link">Word Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/file/" class="subnavigation__link">File Filters</a>
+        <a href="../file/" class="subnavigation__link">File Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/filter-chains/" class="subnavigation__link">Filter Chains</a>
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/inflector/" class="subnavigation__link">String Inflection</a>
+        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/static-filter/" class="subnavigation__link">Static Filter</a>
+        <a href="../static-filter/" class="subnavigation__link">Static Filter</a>
     </li>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v2/writing-filters/" class="subnavigation__link">Writing Filters</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
@@ -245,7 +245,7 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="v2/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v2 (latest)
                         
@@ -275,6 +275,24 @@
             <div class="col-md-9 col-sm-12 content" role="main">
                 
                 
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#example" class="toc__link nav-link">Example</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
 
                 
                     <nav aria-label="breadcrumb">
@@ -284,7 +302,23 @@
             <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
 
             
-                <li class="breadcrumb-item">laminas-filter</li>
+                <li class="breadcrumb-item"><a href="../..">laminas-filter</a></li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Writing Filters</li>
             
         
     </ol>
@@ -294,22 +328,40 @@
 
 
 
-    <h1>laminas-filter</h1>
-<p>Programmatically filter and normalize data and files.</p>
 
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
 
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre><code class="language-bash">$ composer require laminas/laminas-filter</code></pre>
+    <h1 id="writing-filters">Writing Filters</h1>
+<p><code>Laminas\Filter</code> supplies a set of commonly needed filters, but developers will
+often need to write custom filters for their particular use cases. You can do
+so by writing classes that implement <code>Laminas\Filter\FilterInterface</code>, which
+defines a single method, <code>filter()</code>.</p>
+<h2 id="example">Example</h2>
+<pre class="highlight"><code class="language-php">namespace Application\Filter;
 
+use Laminas\Filter\FilterInterface;
 
-<h2>Support</h2>
-<ul>
-    <li>Issues: <a href="https://github.com/laminas/laminas-filter/issues">github.com/laminas/laminas-filter/issues</a></li>
-    <li>Source: <a href="https://github.com/laminas/laminas-filter">github.com/laminas/laminas-filter</a></li>
-    <li>Chat: <a href="https://laminas.dev/chat">laminas.dev/chat</a></li>
-    <li>Forum: <a href="https://discourse.laminas.dev/">discourse.laminas.dev</a></li>
-</ul>
+class MyFilter implements FilterInterface
+{
+    public function filter($value)
+    {
+        // perform some transformation upon $value to arrive on $valueFiltered
+
+        return $valueFiltered;
+    }
+}</code></pre>
+<p>To attach an instance of the filter defined above to a filter chain:</p>
+<pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain();
+$filterChain-&gt;attach(new Application\Filter\MyFilter());</code></pre>
+<p>Alternately, add it to the <code>FilterPluginManager</code>:</p>
+<pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain();
+$filterChain
+    -&gt;getPluginManager()
+    -&gt;setInvokableClass('myfilter', Application\Filter\MyFilter::class)
+$filterChain-&gt;attachByName('myfilter');</code></pre>
 
 
 
@@ -320,16 +372,16 @@
         
         <li class="page-nav__item">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../static-filter/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Static Filter
+                </a>
+            
         </li>
 
         
         <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v2/intro/">
-                    <small class="page-nav__label">Next</small>
-                    Introduction
-                    <i class="fa fa-chevron-right"></i>
-                </a>
             
         </li>
     </ul>
@@ -360,7 +412,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">laminas-filter</a>
+            <a href="../..">laminas-filter</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -373,7 +425,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/intro/" class="subnavigation__link">Introduction</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -384,43 +436,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/standard-filters/" class="subnavigation__link">Standard Filters</a>
+        <a href="../standard-filters/" class="subnavigation__link">Standard Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/word/" class="subnavigation__link">Word Filters</a>
+        <a href="../word/" class="subnavigation__link">Word Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/file/" class="subnavigation__link">File Filters</a>
+        <a href="../file/" class="subnavigation__link">File Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/filter-chains/" class="subnavigation__link">Filter Chains</a>
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/inflector/" class="subnavigation__link">String Inflection</a>
+        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/static-filter/" class="subnavigation__link">Static Filter</a>
+        <a href="../static-filter/" class="subnavigation__link">Static Filter</a>
     </li>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v2/writing-filters/" class="subnavigation__link">Writing Filters</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
@@ -516,13 +568,13 @@
 </footer>
 
     <script>
-        let base_url = '.',
+        let base_url = '../..',
             project  = "components",
             siteName = 'laminas-filter';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="search/main.js"></script>
+        <script src="../../search/main.js"></script>
     
 
     
@@ -551,8 +603,3 @@
 
 
 </html>
-
-<!--
-MkDocs version : 1.5.3
-Build Date UTC : 2023-11-03 13:33:26.092508+00:00
--->

@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-filter/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/file/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/file/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/filter-chains/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/filter-chains/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/inflector/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/inflector/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/intro/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/intro/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/standard-filters/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/standard-filters/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/static-filter/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/static-filter/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/word/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/word/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.laminas.dev/laminas-filter/writing-filters/</loc>
-         <lastmod>2023-05-16</lastmod>
+         <loc>https://docs.laminas.dev/laminas-filter/v2/writing-filters/</loc>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
