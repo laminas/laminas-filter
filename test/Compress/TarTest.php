@@ -185,6 +185,10 @@ class TarTest extends TestCase
 
     public function testSetModeShouldWorkWithCaseInsensitive(): void
     {
+        if (! extension_loaded('bz2')) {
+            self::markTestSkipped('This adapter needs the bz2 extension');
+        }
+
         $filter = new TarCompression();
         $filter->setTarget($this->tmp . '/zipextracted.txt');
 
