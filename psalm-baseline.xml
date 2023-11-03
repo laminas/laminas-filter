@@ -344,9 +344,6 @@
       <code>$file</code>
       <code>$file</code>
     </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code>setMode</code>
-    </PossiblyUnusedMethod>
     <RedundantCast>
       <code>(string) $target</code>
     </RedundantCast>
