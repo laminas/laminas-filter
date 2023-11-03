@@ -22,11 +22,11 @@ class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
         }
 
         $this->reflection = new ReflectionProperty(StringUtils::class, 'hasPcreUnicodeSupport');
-        $this->reflection->setValue(false);
+        $this->reflection->setValue(false, null);
     }
 
     public function tearDown(): void
     {
-        $this->reflection->setValue(true);
+        $this->reflection->setValue(true, null);
     }
 }
