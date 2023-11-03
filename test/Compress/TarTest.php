@@ -9,6 +9,7 @@ use Laminas\Filter\Exception;
 use PHPUnit\Framework\TestCase;
 
 use function dirname;
+use function extension_loaded;
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
@@ -185,6 +186,10 @@ class TarTest extends TestCase
 
     public function testSetModeShouldWorkWithCaseInsensitive(): void
     {
+        if (! extension_loaded('bz2')) {
+            self::markTestSkipped('This adapter needs the bz2 extension');
+        }
+
         $filter = new TarCompression();
         $filter->setTarget($this->tmp . '/zipextracted.txt');
 

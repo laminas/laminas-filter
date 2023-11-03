@@ -1799,9 +1799,6 @@
       <code>$rules</code>
       <code>$rules</code>
     </PossiblyFalseArgument>
-    <UnusedPsalmSuppress>
-      <code>UnusedVariable</code>
-    </UnusedPsalmSuppress>
     <UnusedVariable>
       <code>$filtered</code>
       <code>$rule</code>

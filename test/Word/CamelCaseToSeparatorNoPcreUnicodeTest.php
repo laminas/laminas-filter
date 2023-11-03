@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Stdlib\StringUtils;
-use ReflectionProperty;
+use ReflectionClass;
 
 /**
  * Test class for Laminas\Filter\Word\CamelCaseToSeparator which simulates the
@@ -13,20 +13,19 @@ use ReflectionProperty;
  */
 class CamelCaseToSeparatorNoPcreUnicodeTest extends CamelCaseToSeparatorTest
 {
-    protected ReflectionProperty $reflection;
-
     public function setUp(): void
     {
         if (! StringUtils::hasPcreUnicodeSupport()) {
             self::markTestSkipped('PCRE is not compiled with Unicode support');
         }
 
-        $this->reflection = new ReflectionProperty(StringUtils::class, 'hasPcreUnicodeSupport');
-        $this->reflection->setValue(false);
+        $reflectionClass = new ReflectionClass(StringUtils::class);
+        $reflectionClass->setStaticPropertyValue('hasPcreUnicodeSupport', false);
     }
 
     public function tearDown(): void
     {
-        $this->reflection->setValue(true);
+        $reflectionClass = new ReflectionClass(StringUtils::class);
+        $reflectionClass->setStaticPropertyValue('hasPcreUnicodeSupport', true);
     }
 }
