@@ -36,6 +36,7 @@ use const SEEK_END;
  *     archive?: string|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
+ * @final
  */
 class Gz extends AbstractCompressionAlgorithm
 {

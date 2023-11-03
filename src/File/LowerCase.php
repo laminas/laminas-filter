@@ -16,6 +16,7 @@ use function is_scalar;
 use function is_string;
 use function is_writable;
 
+/** @final */
 class LowerCase extends StringToLower
 {
     /**

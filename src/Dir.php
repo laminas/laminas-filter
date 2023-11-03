@@ -10,6 +10,7 @@ use function is_scalar;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
+ * @final
  */
 class Dir extends AbstractFilter
 {

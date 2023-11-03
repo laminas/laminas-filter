@@ -15,6 +15,7 @@ use function sprintf;
  *     prefix?: null|string,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class StringPrefix extends AbstractFilter
 {

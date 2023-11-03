@@ -20,6 +20,7 @@ use function mb_substr;
  * }
  * @template TOptions of Options
  * @template-extends UnderscoreToCamelCase<TOptions>
+ * @final
  */
 class UnderscoreToStudlyCase extends UnderscoreToCamelCase
 {

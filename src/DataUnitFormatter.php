@@ -22,6 +22,7 @@ use function strtolower;
  *     prefixes?: list<string>,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 final class DataUnitFormatter extends AbstractFilter
 {

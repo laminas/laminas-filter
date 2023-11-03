@@ -35,6 +35,7 @@ use function str_replace;
  *     pluginManager?: FilterPluginManager,
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class Inflector extends AbstractFilter
 {

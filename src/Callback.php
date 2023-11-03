@@ -19,6 +19,7 @@ use function is_string;
  *     ...
  * }
  * @extends AbstractFilter<Options>
+ * @final
  */
 class Callback extends AbstractFilter
 {
