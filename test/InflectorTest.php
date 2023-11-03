@@ -71,7 +71,6 @@ class InflectorTest extends TestCase
         $this->inflector->setTargetReference($target);
         self::assertSame('foo/:bar/:baz', $this->inflector->getTarget());
         /* this variable is used by-ref through `setTargetReference` above */
-        /** @psalm-suppress UnusedVariable */
         $target .= '/:bat';
         self::assertSame('foo/:bar/:baz/:bat', $this->inflector->getTarget());
     }
