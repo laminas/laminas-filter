@@ -204,15 +204,16 @@ class CompressTest extends TestCase
         $filter = new CompressFilter();
         self::assertSame('Gz', $filter->getAdapterName());
 
+        /** @psalm-suppress InvalidArgument */
         $filter->setAdapter(Boolean::class);
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
-        $adapter = $filter->getAdapter();
+        $filter->getAdapter();
     }
 
     /**
-     * Decompress archiv
+     * Decompress archive
      */
     #[DataProvider('returnFilterType')]
     public function testDecompressArchive(string $filterType): void

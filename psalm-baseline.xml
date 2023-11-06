@@ -102,43 +102,21 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Compress.php">
-    <DocblockTypeContradiction>
-      <code>! is_array($options)</code>
-      <code>is_string($adapter)</code>
-    </DocblockTypeContradiction>
-    <LessSpecificImplementedReturnType>
-      <code>mixed</code>
-    </LessSpecificImplementedReturnType>
-    <MissingPropertyType>
-      <code>$adapter</code>
-      <code>$adapterOptions</code>
-    </MissingPropertyType>
-    <MixedArgument>
-      <code>$adapter</code>
-      <code>$adapter</code>
-      <code>$key</code>
-      <code><![CDATA[$this->adapter]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code>$adapter</code>
-      <code>$key</code>
-      <code>$value</code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>array</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code>new $adapter($options)</code>
-    </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->adapterOptions]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
+    <ArgumentTypeCoercion>
       <code>$options</code>
-    </MoreSpecificImplementedParamType>
-    <UndefinedInterfaceMethod>
-      <code>getOptions</code>
-    </UndefinedInterfaceMethod>
+    </ArgumentTypeCoercion>
+    <LessSpecificImplementedReturnType>
+      <code>($option is null ? array : mixed)</code>
+    </LessSpecificImplementedReturnType>
+    <MixedArgumentTypeCoercion>
+      <code>$adapterOptions</code>
+    </MixedArgumentTypeCoercion>
+    <MixedReturnStatement>
+      <code><![CDATA[$adapter->getOptions($option)]]></code>
+    </MixedReturnStatement>
+    <NullableReturnStatement>
+      <code>is_string($option) ? null : []</code>
+    </NullableReturnStatement>
   </file>
   <file src="src/Compress/AbstractCompressionAlgorithm.php">
     <InvalidPropertyAssignmentValue>
@@ -1090,9 +1068,6 @@
       <code>getArchive</code>
       <code>getArchive</code>
     </UndefinedInterfaceMethod>
-    <UnusedVariable>
-      <code>$adapter</code>
-    </UnusedVariable>
   </file>
   <file src="test/DataUnitFormatterTest.php">
     <PossiblyUnusedMethod>
