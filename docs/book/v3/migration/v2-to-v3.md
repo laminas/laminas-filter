@@ -3,8 +3,6 @@
 laminas-filter version 3 makes a number of changes that may affect your application.
 This document details those changes, and provides suggestions on how to update your application to work with version 3.
 
-## Signature Changes
-
 ## Removed Filters
 
 The following filters were deprecated in the 2.0.x series of releases and have now been removed:
