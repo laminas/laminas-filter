@@ -25,9 +25,8 @@ use function str_contains;
  *     replacement?: string|list<string>,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class PregReplace extends AbstractFilter
+final class PregReplace extends AbstractFilter
 {
     /** @var Options */
     protected $options = [

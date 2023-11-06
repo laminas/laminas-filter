@@ -19,9 +19,8 @@ use function is_string;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class Callback extends AbstractFilter
+final class Callback extends AbstractFilter
 {
     /** @var array */
     protected $options = [

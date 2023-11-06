@@ -16,9 +16,8 @@ use function strlen;
  *     charlist?: string|null,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StringTrim extends AbstractFilter
+final class StringTrim extends AbstractFilter
 {
     /** @var Options */
     protected $options = [

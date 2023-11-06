@@ -11,9 +11,8 @@ use function str_replace;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
- * @final
  */
-class StripNewlines extends AbstractFilter
+final class StripNewlines extends AbstractFilter
 {
     /**
      * Defined by Laminas\Filter\FilterInterface

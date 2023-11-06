@@ -25,9 +25,8 @@ use function strtolower;
  *     translations?: array,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class Boolean extends AbstractFilter
+final class Boolean extends AbstractFilter
 {
     public const TYPE_BOOLEAN      = 1;
     public const TYPE_INTEGER      = 2;

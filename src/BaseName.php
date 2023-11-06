@@ -10,9 +10,8 @@ use function is_scalar;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
- * @final
  */
-class BaseName extends AbstractFilter
+final class BaseName extends AbstractFilter
 {
     /**
      * Defined by Laminas\Filter\FilterInterface

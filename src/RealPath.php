@@ -29,9 +29,8 @@ use const PHP_OS;
  * }
  * @template TOptions of Options
  * @extends AbstractFilter<TOptions>
- * @final
  */
-class RealPath extends AbstractFilter
+final class RealPath extends AbstractFilter
 {
     /** @var TOptions $options */
     protected $options = [

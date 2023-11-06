@@ -23,9 +23,8 @@ use function str_contains;
  * }
  * @template TOptions of Options
  * @template-extends AbstractFilter<TOptions>
- * @final
  */
-class UriNormalize extends AbstractFilter
+final class UriNormalize extends AbstractFilter
 {
     /**
      * The default scheme to use when parsing scheme-less URIs

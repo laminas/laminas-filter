@@ -39,6 +39,12 @@ $filtered = $filter->filter('A String');
 
 ## Removed Features
 
+### Final by default
+
+Nearly all the shipped filters now have the final keyword applied to the class. Individual filters were not designed for inheritance, so if you have filters that do extend from any of the shipped filters, you will likely have to re-consider your design. 
+
+### Removal of supported compression formats
+
 `Laminas\Filter\Compress` no longer supports the compression formats `Lzf`, `Rar` and `Snappy`.
 Support for these formats has been removed so the following classes are no longer available:
 

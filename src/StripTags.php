@@ -31,9 +31,8 @@ use function trim;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StripTags extends AbstractFilter
+final class StripTags extends AbstractFilter
 {
     /**
      * Unique ID prefix used for allowing comments

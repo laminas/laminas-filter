@@ -20,9 +20,8 @@ use function mb_substr;
  * }
  * @template TOptions of Options
  * @template-extends UnderscoreToCamelCase<TOptions>
- * @final
  */
-class UnderscoreToStudlyCase extends UnderscoreToCamelCase
+final class UnderscoreToStudlyCase extends UnderscoreToCamelCase
 {
     /**
      * Defined by Laminas\Filter\Filter

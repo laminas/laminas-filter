@@ -16,9 +16,8 @@ namespace Laminas\Filter;
  *  }
  * @template TOptions of Options
  * @template-extends AbstractDateDropdown<TOptions, InputArray>
- * @final
  */
-class MonthSelect extends AbstractDateDropdown
+final class MonthSelect extends AbstractDateDropdown
 {
     /**
      * Year-Month

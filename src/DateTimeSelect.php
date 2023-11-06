@@ -24,9 +24,8 @@ use function vsprintf;
  * }
  * @template TOptions of Options
  * @template-extends AbstractDateDropdown<TOptions, InputArray>
- * @final
  */
-class DateTimeSelect extends AbstractDateDropdown
+final class DateTimeSelect extends AbstractDateDropdown
 {
     /**
      * Year-Month-Day Hour:Min:Sec

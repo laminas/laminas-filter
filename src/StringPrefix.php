@@ -15,9 +15,8 @@ use function sprintf;
  *     prefix?: null|string,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StringPrefix extends AbstractFilter
+final class StringPrefix extends AbstractFilter
 {
     /** @var Options */
     protected $options = [

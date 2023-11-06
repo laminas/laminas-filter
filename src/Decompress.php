@@ -8,10 +8,8 @@ use function is_string;
 
 /**
  * Decompresses a given string
- *
- * @final
  */
-class Decompress extends Compress
+final class Decompress extends Compress
 {
     /**
      * Use filter as functor

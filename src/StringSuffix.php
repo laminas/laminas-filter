@@ -15,9 +15,8 @@ use function sprintf;
  *     suffix?: null|string,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StringSuffix extends AbstractFilter
+final class StringSuffix extends AbstractFilter
 {
     /** @var Options */
     protected $options = [
