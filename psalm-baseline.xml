@@ -735,10 +735,6 @@
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyUnusedParam>
-      <code>$reference</code>
-      <code>$target</code>
-    </PossiblyUnusedParam>
     <PossiblyUnusedReturnValue>
       <code>self</code>
     </PossiblyUnusedReturnValue>
@@ -756,6 +752,10 @@
       <code>(string) $target</code>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
+    <UnusedParam>
+      <code>$reference</code>
+      <code>$target</code>
+    </UnusedParam>
   </file>
   <file src="src/Module.php">
     <MissingReturnType>
@@ -1167,32 +1167,6 @@
       <code>1234</code>
       <code>1234</code>
     </InvalidArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$this->newDir]]></code>
-      <code><![CDATA[$this->newDir]]></code>
-      <code><![CDATA[$this->newDirFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->newFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->oldFile]]></code>
-      <code><![CDATA[$this->origFile]]></code>
-      <code><![CDATA[$this->tmpPath]]></code>
-    </PossiblyNullArgument>
-    <PossiblyNullOperand>
-      <code><![CDATA[$this->tmpPath]]></code>
-      <code><![CDATA[$this->tmpPath]]></code>
-    </PossiblyNullOperand>
     <PossiblyUnusedMethod>
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
@@ -1258,6 +1232,10 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/InflectorTest.php">
+    <DocblockTypeContradiction>
+      <code>assertNull</code>
+      <code>assertSame</code>
+    </DocblockTypeContradiction>
     <InvalidCast>
       <code>$rule</code>
       <code>$rule</code>
@@ -1298,9 +1276,6 @@
       <code>$rules</code>
       <code>$rules</code>
     </PossiblyFalseArgument>
-    <UnusedPsalmSuppress>
-      <code>UnusedVariable</code>
-    </UnusedPsalmSuppress>
     <UnusedVariable>
       <code>$filtered</code>
       <code>$rule</code>
