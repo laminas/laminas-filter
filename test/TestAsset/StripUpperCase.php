@@ -11,7 +11,7 @@ use function preg_replace;
 /** @template-extends AbstractFilter<array{}> */
 class StripUpperCase extends AbstractFilter
 {
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return preg_replace('/[A-Z]/', '', $value);
     }

@@ -90,11 +90,8 @@ class UriNormalize extends AbstractFilter
 
     /**
      * Filter the URL by normalizing it and applying a default scheme if set
-     *
-     * @param  mixed $value
-     * @return mixed|string
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

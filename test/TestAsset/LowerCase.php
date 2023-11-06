@@ -11,7 +11,7 @@ use function strtolower;
 /** @template-extends AbstractFilter<array{}> */
 class LowerCase extends AbstractFilter
 {
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return strtolower($value);
     }

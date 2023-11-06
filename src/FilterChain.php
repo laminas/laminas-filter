@@ -233,11 +233,9 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
      *
      * Filters are run in the order in which they were added to the chain (FIFO)
      *
-     * @param  mixed $value
-     * @return mixed
      * @psalm-suppress MixedAssignment values are always mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         $valueFiltered = $value;
         foreach ($this as $filter) {

@@ -190,11 +190,9 @@ class StripTags extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @todo   improve docblock descriptions
-     * @param  string $value
-     * @return string|mixed
+     * @psalm-return ($value is scalar ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;
@@ -220,7 +218,7 @@ class StripTags extends AbstractFilter
         $dataFiltered = '';
         // Parse the input data iteratively as regular pre-tag text followed by a
         // tag; either may be empty strings
-        preg_match_all('/([^<]*)(<?[^>]*>?)/', (string) $value, $matches);
+        preg_match_all('/([^<]*)(<?[^>]*>?)/', $value, $matches);
 
         // Iterate over each set of matches
         foreach ($matches[1] as $index => $preTag) {

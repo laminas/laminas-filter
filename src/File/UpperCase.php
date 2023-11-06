@@ -27,7 +27,7 @@ class UpperCase extends StringToUpper
      * @throws Exception\RuntimeException
      * @throws Exception\InvalidArgumentException
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value) && ! is_array($value)) {
             return $value;
