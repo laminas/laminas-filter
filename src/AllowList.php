@@ -5,53 +5,58 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\ArrayUtils;
-use Traversable;
 
+use function array_values;
 use function in_array;
 use function is_array;
 
 /**
  * @psalm-type Options = array{
  *     strict?: bool,
- *     list?: array,
- *     ...
+ *     list?: iterable<array-key, mixed>,
  * }
- * @extends AbstractFilter<Options>
  */
-final class AllowList extends AbstractFilter
+final class AllowList implements FilterInterface
 {
-    /** @var bool */
-    protected $strict = false;
-
-    /** @var array */
-    protected $list = [];
+    private bool $strict = false;
+    /** @var list<mixed> */
+    private array $list = [];
 
     /**
-     * @param null|array|Traversable $options
+     * @param Options $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        if (null !== $options) {
-            $this->setOptions($options);
-        }
+        $this->setOptions($options);
+    }
+
+    /**
+     * @param Options $options
+     * @return $this
+     */
+    public function setOptions(array $options = []): self
+    {
+        $strict = $options['strict'] ?? false;
+        $list   = $options['list'] ?? [];
+
+        $this->setStrict($strict);
+        $this->setList($list);
+
+        return $this;
     }
 
     /**
      * Determine whether the in_array() call should be "strict" or not. See in_array docs.
-     *
-     * @param bool $strict
      */
-    public function setStrict($strict = true): void
+    public function setStrict(bool $strict): void
     {
-        $this->strict = (bool) $strict;
+        $this->strict = $strict;
     }
 
     /**
      * Returns whether the in_array() call should be "strict" or not. See in_array docs.
-     *
-     * @return bool
      */
-    public function getStrict()
+    public function getStrict(): bool
     {
         return $this->strict;
     }
@@ -59,23 +64,23 @@ final class AllowList extends AbstractFilter
     /**
      * Set the list of items to allow
      *
-     * @param array|Traversable $list
+     * @param iterable<array-key, mixed> $list
      */
-    public function setList($list = []): void
+    public function setList(iterable $list = []): void
     {
         if (! is_array($list)) {
             $list = ArrayUtils::iteratorToArray($list);
         }
 
-        $this->list = $list;
+        $this->list = array_values($list);
     }
 
     /**
      * Get the list of items to allow
      *
-     * @return array
+     * @return list<mixed>
      */
-    public function getList()
+    public function getList(): array
     {
         return $this->list;
     }
@@ -91,6 +96,18 @@ final class AllowList extends AbstractFilter
      */
     public function filter(mixed $value): mixed
     {
-        return in_array($value, $this->getList(), $this->getStrict()) ? $value : null;
+        return in_array($value, $this->list, $this->strict) ? $value : null;
+    }
+
+    /**
+     * Will return $value if its present in the allow-list. If $value is rejected then it will return null.
+     *
+     * @template T
+     * @param T $value
+     * @return T|null
+     */
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

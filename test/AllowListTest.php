@@ -6,11 +6,13 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\AllowList as AllowListFilter;
 use Laminas\Stdlib\ArrayObject;
-use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
+use function assert;
 use function gettype;
+use function is_array;
 use function sprintf;
 use function var_export;
 
@@ -43,14 +45,6 @@ class AllowListTest extends TestCase
         self::assertInstanceOf(AllowListFilter::class, $filter);
     }
 
-    public function testNullListShouldThrowException(): void
-    {
-        $this->expectException(Exception\InvalidArgumentException::class);
-        new AllowListFilter([
-            'list' => null,
-        ]);
-    }
-
     public function testTraversableConvertsToArray(): void
     {
         $array  = ['test', 1];
@@ -61,12 +55,13 @@ class AllowListTest extends TestCase
         self::assertSame($array, $filter->getList());
     }
 
-    public function testSetStrictShouldCastToBoolean(): void
+    public function testSetStrictShouldBeBoolean(): void
     {
-        $filter = new AllowListFilter([
+        $this->expectException(TypeError::class);
+        /** @psalm-suppress InvalidArgument */
+        new AllowListFilter([
             'strict' => 1,
         ]);
-        self::assertSame(true, $filter->getStrict());
     }
 
     #[DataProvider('defaultTestProvider')]
@@ -76,6 +71,10 @@ class AllowListTest extends TestCase
         self::assertNull($filter->filter($value));
     }
 
+    /**
+     * @param list<mixed> $list
+     * @param array{0: mixed, 1: mixed} $testData
+     */
     #[DataProvider('listTestProvider')]
     public function testList(bool $strict, array $list, array $testData): void
     {
@@ -84,13 +83,14 @@ class AllowListTest extends TestCase
             'list'   => $list,
         ]);
         foreach ($testData as $data) {
+            assert(is_array($data));
             [$value, $expected] = $data;
             $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s',
                 var_export($value, true),
                 gettype($value),
                 var_export($expected, true),
-                $strict
+                $strict ? 'strict' : 'non-strict',
             );
             self::assertSame($expected, $filter->filter($value), $message);
         }
@@ -108,7 +108,7 @@ class AllowListTest extends TestCase
         ];
     }
 
-    /** @return list<array{0: bool, 1: array, 2: array}> */
+    /** @return list<array{0: bool, 1: list<mixed>, 2: list<array{0: mixed, 1: mixed}>}> */
     public static function listTestProvider(): array
     {
         return [
@@ -138,5 +138,26 @@ class AllowListTest extends TestCase
                 ],
             ],
         ];
+    }
+
+    public function testStrictModeCanBeSetAtRuntime(): void
+    {
+        $filter = new AllowListFilter();
+
+        $filter->setStrict(true);
+        self::assertTrue($filter->getStrict());
+    }
+
+    public function testListCanBeSetAtRuntime(): void
+    {
+        $filter = new AllowListFilter();
+        $filter->setList(['foo', 'bar']);
+        self::assertSame(['foo', 'bar'], $filter->getList());
+    }
+
+    public function testFilterCanBeInvoked(): void
+    {
+        $filter = new AllowListFilter(['list' => ['foo']]);
+        self::assertSame('foo', $filter->__invoke('foo'));
     }
 }
