@@ -8,7 +8,6 @@ use Laminas\Stdlib\ArrayUtils;
 
 use function array_values;
 use function in_array;
-use function is_array;
 
 /**
  * @psalm-type Options = array{
@@ -18,71 +17,16 @@ use function is_array;
  */
 final class AllowList implements FilterInterface
 {
-    private bool $strict = false;
+    private readonly bool $strict;
     /** @var list<mixed> */
-    private array $list = [];
+    private readonly array $list;
 
-    /**
-     * @param Options $options
-     */
+    /** @param Options $options */
     public function __construct(array $options = [])
     {
-        $this->setOptions($options);
-    }
-
-    /**
-     * @param Options $options
-     * @return $this
-     */
-    public function setOptions(array $options = []): self
-    {
-        $strict = $options['strict'] ?? false;
-        $list   = $options['list'] ?? [];
-
-        $this->setStrict($strict);
-        $this->setList($list);
-
-        return $this;
-    }
-
-    /**
-     * Determine whether the in_array() call should be "strict" or not. See in_array docs.
-     */
-    public function setStrict(bool $strict): void
-    {
-        $this->strict = $strict;
-    }
-
-    /**
-     * Returns whether the in_array() call should be "strict" or not. See in_array docs.
-     */
-    public function getStrict(): bool
-    {
-        return $this->strict;
-    }
-
-    /**
-     * Set the list of items to allow
-     *
-     * @param iterable<array-key, mixed> $list
-     */
-    public function setList(iterable $list = []): void
-    {
-        if (! is_array($list)) {
-            $list = ArrayUtils::iteratorToArray($list);
-        }
-
-        $this->list = array_values($list);
-    }
-
-    /**
-     * Get the list of items to allow
-     *
-     * @return list<mixed>
-     */
-    public function getList(): array
-    {
-        return $this->list;
+        $this->strict = $options['strict'] ?? false;
+        $list         = ArrayUtils::iteratorToArray($options['list'] ?? []);
+        $this->list   = array_values($list);
     }
 
     /**
