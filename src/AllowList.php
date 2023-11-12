@@ -14,6 +14,7 @@ use function in_array;
  *     strict?: bool,
  *     list?: iterable<array-key, mixed>,
  * }
+ * @implements FilterInterface<null>
  */
 final class AllowList implements FilterInterface
 {
@@ -33,10 +34,6 @@ final class AllowList implements FilterInterface
      * {@inheritDoc}
      *
      * Will return $value if its present in the allow-list. If $value is rejected then it will return null.
-     *
-     * @template T
-     * @param T $value
-     * @return T|null
      */
     public function filter(mixed $value): mixed
     {
@@ -44,11 +41,9 @@ final class AllowList implements FilterInterface
     }
 
     /**
-     * Will return $value if its present in the allow-list. If $value is rejected then it will return null.
+     * {@inheritDoc}
      *
-     * @template T
-     * @param T $value
-     * @return T|null
+     * Will return $value if its present in the allow-list. If $value is rejected then it will return null.
      */
     public function __invoke(mixed $value): mixed
     {

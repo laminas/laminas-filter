@@ -1313,25 +1313,10 @@
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/TestAsset/Alpha.php">
-    <MixedArgumentTypeCoercion>
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
-  </file>
   <file src="test/TestAsset/CallbackClass.php">
     <PossiblyUnusedMethod>
       <code>objectCallbackWithParams</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/TestAsset/LowerCase.php">
-    <MixedArgument>
-      <code>$value</code>
-    </MixedArgument>
-  </file>
-  <file src="test/TestAsset/StripUpperCase.php">
-    <MixedArgument>
-      <code>$value</code>
-    </MixedArgument>
   </file>
   <file src="test/ToFloatTest.php">
     <PossiblyUnusedMethod>
