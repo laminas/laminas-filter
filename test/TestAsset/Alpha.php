@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\TestAsset;
 
-use Laminas\Filter\AbstractFilter;
+use Laminas\Filter\FilterInterface;
 
-use function is_array;
-use function is_scalar;
+use function is_string;
 use function preg_replace;
 
-/** @template-extends AbstractFilter<array{}> */
-class Alpha extends AbstractFilter
+/** @implements FilterInterface<string> */
+class Alpha implements FilterInterface
 {
+    /** @inheritDoc */
     public function filter(mixed $value): mixed
     {
-        if (! is_scalar($value) && ! is_array($value)) {
+        if (! is_string($value)) {
             return $value;
         }
 
         return preg_replace('/[^a-zA-Z\s]/', '', $value);
+    }
+
+    /** @inheritDoc */
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

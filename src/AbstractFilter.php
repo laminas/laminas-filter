@@ -21,6 +21,7 @@ use function ucwords;
 
 /**
  * @template TOptions of array
+ * @implements FilterInterface<mixed>
  */
 abstract class AbstractFilter implements FilterInterface
 {
