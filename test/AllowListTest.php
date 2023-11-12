@@ -8,6 +8,7 @@ use Laminas\Filter\AllowList as AllowListFilter;
 use Laminas\Stdlib\ArrayObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use TypeError;
 
 use function assert;
@@ -25,16 +26,15 @@ class AllowListTest extends TestCase
             'strict' => true,
         ]);
 
-        self::assertSame(true, $filter->getStrict());
-        self::assertSame(['test', 1], $filter->getList());
+        self::assertNull($filter->filter('1'), 'Strict options infer that string 1 is not in the list');
+        self::assertSame(1, $filter->filter(1));
+        self::assertSame('test', $filter->filter('test'));
     }
 
     public function testConstructorDefaults(): void
     {
         $filter = new AllowListFilter();
-
-        self::assertSame(false, $filter->getStrict());
-        self::assertSame([], $filter->getList());
+        self::assertNull($filter->filter('anything'));
     }
 
     public function testWithPluginManager(): void
@@ -47,12 +47,12 @@ class AllowListTest extends TestCase
 
     public function testTraversableConvertsToArray(): void
     {
-        $array  = ['test', 1];
-        $obj    = new ArrayObject(['test', 1]);
         $filter = new AllowListFilter([
-            'list' => $obj,
+            'list' => new ArrayObject(['test', 1]),
         ]);
-        self::assertSame($array, $filter->getList());
+
+        self::assertSame('1', $filter->filter('1'), 'The filter should be non-strict by default');
+        self::assertSame(1, $filter->filter(1));
     }
 
     public function testSetStrictShouldBeBoolean(): void
@@ -64,8 +64,21 @@ class AllowListTest extends TestCase
         ]);
     }
 
+    public function testListOptionShouldBeIterable(): void
+    {
+        /**
+         * Throwable is expected because the actual exception will come from StdLib. In future, this might/should become
+         * a TypeError
+         */
+        $this->expectException(Throwable::class);
+        /** @psalm-suppress InvalidArgument */
+        new AllowListFilter([
+            'list' => 'foo',
+        ]);
+    }
+
     #[DataProvider('defaultTestProvider')]
-    public function testDefault(mixed $value): void
+    public function testFilterWillReturnNullForAnyValueWhenNoListHasBeenSupplied(mixed $value): void
     {
         $filter = new AllowListFilter();
         self::assertNull($filter->filter($value));
@@ -138,21 +151,6 @@ class AllowListTest extends TestCase
                 ],
             ],
         ];
-    }
-
-    public function testStrictModeCanBeSetAtRuntime(): void
-    {
-        $filter = new AllowListFilter();
-
-        $filter->setStrict(true);
-        self::assertTrue($filter->getStrict());
-    }
-
-    public function testListCanBeSetAtRuntime(): void
-    {
-        $filter = new AllowListFilter();
-        $filter->setList(['foo', 'bar']);
-        self::assertSame(['foo', 'bar'], $filter->getList());
     }
 
     public function testFilterCanBeInvoked(): void
