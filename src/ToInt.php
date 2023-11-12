@@ -9,9 +9,8 @@ use function is_scalar;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
- * @final
  */
-class ToInt extends AbstractFilter
+final class ToInt extends AbstractFilter
 {
     /**
      * Defined by Laminas\Filter\FilterInterface

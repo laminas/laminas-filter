@@ -15,9 +15,8 @@ use function str_replace;
  * }
  * @template TOptions of Options
  * @extends AbstractSeparator<TOptions>
- * @final
  */
-class DashToSeparator extends AbstractSeparator
+final class DashToSeparator extends AbstractSeparator
 {
     public function filter(mixed $value): mixed
     {

@@ -12,9 +12,8 @@ namespace Laminas\Filter\Word;
  * }
  * @template TOptions of Options
  * @template-extends SeparatorToSeparator<TOptions>
- * @final
  */
-class DashToUnderscore extends SeparatorToSeparator
+final class DashToUnderscore extends SeparatorToSeparator
 {
     public function __construct()
     {

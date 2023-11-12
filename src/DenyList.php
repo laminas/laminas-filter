@@ -17,9 +17,8 @@ use function is_array;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class DenyList extends AbstractFilter
+final class DenyList extends AbstractFilter
 {
     /** @var bool */
     protected $strict = false;

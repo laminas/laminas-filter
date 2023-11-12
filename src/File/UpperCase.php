@@ -14,8 +14,7 @@ use function is_array;
 use function is_scalar;
 use function is_writable;
 
-/** @final */
-class UpperCase extends StringToUpper
+final class UpperCase extends StringToUpper
 {
     /**
      * Defined by Laminas\Filter\FilterInterface

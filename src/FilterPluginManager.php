@@ -24,10 +24,9 @@ use function sprintf;
  * FilterInterface. Additionally, it registers a number of default filters
  * available, as well as aliases for them.
  *
- * @final
  * @extends AbstractPluginManager<FilterInterface|callable(mixed): mixed>
  */
-class FilterPluginManager extends AbstractPluginManager
+final class FilterPluginManager extends AbstractPluginManager
 {
     protected $aliases = [
         // @codingStandardsIgnoreStart

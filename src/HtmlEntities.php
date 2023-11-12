@@ -26,9 +26,8 @@ use const ENT_QUOTES;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class HtmlEntities extends AbstractFilter
+final class HtmlEntities extends AbstractFilter
 {
     /**
      * Corresponds to the second htmlentities() argument

@@ -17,9 +17,8 @@ use function is_string;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class DateTimeFormatter extends AbstractFilter
+final class DateTimeFormatter extends AbstractFilter
 {
     /**
      * A valid format string accepted by date()

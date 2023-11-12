@@ -21,9 +21,8 @@ use function sprintf;
  *     type?: int-mask-of<self::TYPE_*>,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class ToNull extends AbstractFilter
+final class ToNull extends AbstractFilter
 {
     public const TYPE_BOOLEAN     = 1;
     public const TYPE_INTEGER     = 2;
