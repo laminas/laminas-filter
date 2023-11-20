@@ -33,7 +33,7 @@ class AllowListTest extends TestCase
 
     public function testConstructorDefaults(): void
     {
-        $filter = new AllowListFilter();
+        $filter = new AllowListFilter(['list' => ['a', 'b', 'c']]);
         self::assertNull($filter->filter('anything'));
     }
 
@@ -80,7 +80,7 @@ class AllowListTest extends TestCase
     #[DataProvider('defaultTestProvider')]
     public function testFilterWillReturnNullForAnyValueWhenNoListHasBeenSupplied(mixed $value): void
     {
-        $filter = new AllowListFilter();
+        $filter = new AllowListFilter(['list' => []]);
         self::assertNull($filter->filter($value));
     }
 
