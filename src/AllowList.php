@@ -12,7 +12,7 @@ use function in_array;
 /**
  * @psalm-type Options = array{
  *     strict?: bool,
- *     list: iterable<array-key, mixed>,
+ *     list?: iterable<array-key, mixed>,
  * }
  * @implements FilterInterface<null>
  */
@@ -23,7 +23,7 @@ final class AllowList implements FilterInterface
     private readonly array $list;
 
     /** @param Options $options */
-    public function __construct(array $options)
+    public function __construct(array $options = [])
     {
         $this->strict = $options['strict'] ?? false;
         $list         = ArrayUtils::iteratorToArray($options['list'] ?? []);
