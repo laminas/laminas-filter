@@ -33,7 +33,7 @@ class AllowListTest extends TestCase
 
     public function testConstructorDefaults(): void
     {
-        $filter = new AllowListFilter(['list' => ['a', 'b', 'c']]);
+        $filter = new AllowListFilter();
         self::assertNull($filter->filter('anything'));
     }
 
