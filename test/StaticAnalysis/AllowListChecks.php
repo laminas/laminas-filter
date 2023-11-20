@@ -11,15 +11,23 @@ final class AllowListChecks
 {
     public function filterReturnTypeIsUnionOfInputAndNull(int $value): int|null
     {
-        $filter = new AllowList();
+        $filter = new AllowList(['list' => [1, 2, 3]]);
 
         return $filter->filter($value);
     }
 
     public function invokeReturnTypeIsUnionOfInputAndNull(int $value): int|null
     {
-        $filter = new AllowList();
+        $filter = new AllowList(['list' => [1, 2, 3]]);
 
         return $filter($value);
+    }
+
+    /** @return 99|null */
+    public function testTypesAreRestrictedToExpectedValues(): int|null
+    {
+        $filter = new AllowList(['list' => [1, 2, 3]]);
+
+        return $filter->filter(99);
     }
 }
