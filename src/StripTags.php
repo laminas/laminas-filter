@@ -46,7 +46,7 @@ class StripTags extends AbstractFilter
      * Tags are stored in the array keys, and the array values are themselves
      * arrays of the attributes allowed for the corresponding tag.
      *
-     * @var array
+     * @var array<string, array<string, null>>
      */
     protected $tagsAllowed = [];
 
@@ -55,7 +55,7 @@ class StripTags extends AbstractFilter
      *
      * Attributes stored here are allowed for all of the allowed tags.
      *
-     * @var array
+     * @var array<string, null>
      */
     protected $attributesAllowed = [];
 
@@ -102,7 +102,7 @@ class StripTags extends AbstractFilter
     /**
      * Returns the tagsAllowed option
      *
-     * @return array
+     * @return array<string, array<string, null>>
      */
     public function getTagsAllowed()
     {
@@ -154,7 +154,7 @@ class StripTags extends AbstractFilter
     /**
      * Returns the attributesAllowed option
      *
-     * @return array
+     * @return array<string, null>
      */
     public function getAttributesAllowed()
     {
@@ -164,7 +164,7 @@ class StripTags extends AbstractFilter
     /**
      * Sets the attributesAllowed option
      *
-     * @param  array|string $attributesAllowed
+     * @param  list<string>|string $attributesAllowed
      * @return self Provides a fluent interface
      */
     public function setAttributesAllowed($attributesAllowed)
@@ -190,8 +190,7 @@ class StripTags extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @todo   improve docblock descriptions
-     * @param  string $value
+     * @param mixed $value
      * @return string|mixed
      */
     public function filter($value)
@@ -220,7 +219,7 @@ class StripTags extends AbstractFilter
         $dataFiltered = '';
         // Parse the input data iteratively as regular pre-tag text followed by a
         // tag; either may be empty strings
-        preg_match_all('/([^<]*)(<?[^>]*>?)/', (string) $value, $matches);
+        preg_match_all('/([^<]*)(<?[^>]*>?)/', $value, $matches);
 
         // Iterate over each set of matches
         foreach ($matches[1] as $index => $preTag) {
@@ -249,8 +248,7 @@ class StripTags extends AbstractFilter
      * @param  string $tag
      * @return string
      */
-    // @codingStandardsIgnoreStart
-    protected function _filterTag($tag)
+    protected function _filterTag($tag) // phpcs:ignore
     {
         // @codingStandardsIgnoreEnd
         // Parse the tag into:

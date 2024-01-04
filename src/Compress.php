@@ -20,46 +20,55 @@ use function ucfirst;
 /**
  * Compresses a given string
  *
+ * @psalm-type AdapterType = 'Bz2'|'Gz'|'Lzf'|'Rar'|'Snappy'|'Tar'|'Zip'
+ * @psalm-type AdapterTypeOrInstance = Compress\CompressionAlgorithmInterface|AdapterType
  * @psalm-type Options = array{
- *     adapter?: Compress\CompressionAlgorithmInterface|'Bz2'|'Gz'|'Lzf'|'Rar'|'Snappy'|'Tar'|'Zip',
- *     adapter_options?: array,
- *     ...
- * }
+ *     adapter?: AdapterTypeOrInstance,
+ *     options?: array<string, mixed>,
+ * }&array<string, mixed>
  * @extends AbstractFilter<Options>
  */
 class Compress extends AbstractFilter
 {
     /**
      * Compression adapter
+     *
+     * @var AdapterTypeOrInstance
      */
     protected $adapter = 'Gz';
 
     /**
      * Compression adapter constructor options
+     *
+     * @var array<string, mixed>
      */
     protected $adapterOptions = [];
 
     /**
-     * @param string|array|Traversable $options (Optional) Options to set
+     * @param Options|Traversable<string, mixed>|null|AdapterTypeOrInstance $options
      */
     public function __construct($options = null)
     {
         if ($options instanceof Traversable) {
+            /** @psalm-var Options $options */
             $options = ArrayUtils::iteratorToArray($options);
         }
-        if (is_string($options)) {
+
+        if (is_string($options) || $options instanceof Compress\CompressionAlgorithmInterface) {
             $this->setAdapter($options);
-        } elseif ($options instanceof Compress\CompressionAlgorithmInterface) {
-            $this->setAdapter($options);
-        } elseif (is_array($options)) {
+
+            return;
+        }
+
+        if (is_array($options)) {
             $this->setOptions($options);
         }
     }
 
     /**
-     * Set filter setate
+     * Set filter state
      *
-     * @param  array $options
+     * @param  Options|Traversable<string, mixed> $options
      * @throws Exception\InvalidArgumentException If options is not an array or Traversable.
      * @return self
      */
@@ -111,13 +120,17 @@ class Compress extends AbstractFilter
             }
         }
 
-        $this->adapter = new $adapter($options);
-        if (! $this->adapter instanceof Compress\CompressionAlgorithmInterface) {
-            throw new Exception\InvalidArgumentException(
-                "Compression adapter '" . $adapter
-                . "' does not implement Laminas\\Filter\\Compress\\CompressionAlgorithmInterface"
-            );
+        $instance = new $adapter($options);
+        if (! $instance instanceof Compress\CompressionAlgorithmInterface) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                "Compression adapter '%s' does not implement %s",
+                $adapter,
+                CompressionAlgorithmInterface::class,
+            ));
         }
+
+        $this->adapter = $instance;
+
         return $this->adapter;
     }
 
@@ -134,7 +147,7 @@ class Compress extends AbstractFilter
     /**
      * Sets compression adapter
      *
-     * @param  string|CompressionAlgorithmInterface $adapter Adapter to use
+     * @param AdapterTypeOrInstance $adapter Adapter to use
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -158,7 +171,7 @@ class Compress extends AbstractFilter
     /**
      * Retrieve adapter options
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getAdapterOptions()
     {
@@ -168,6 +181,7 @@ class Compress extends AbstractFilter
     /**
      * Set adapter options
      *
+     * @param array<string, mixed> $options
      * @return self
      */
     public function setAdapterOptions(array $options)

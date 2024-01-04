@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
+use Laminas\Filter\Compress;
 use Laminas\Filter\Decompress as DecompressFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -19,6 +20,7 @@ use function sys_get_temp_dir;
 use function uniqid;
 use function unlink;
 
+/** @psalm-import-type AdapterType from Compress */
 class DecompressTest extends TestCase
 {
     private string $tmpDir;
@@ -45,19 +47,21 @@ class DecompressTest extends TestCase
         }
     }
 
-    /** @return iterable<array-key, array{0: string}> */
+    /** @return iterable<array-key, array{0: AdapterType}> */
     public static function returnFilterType(): iterable
     {
         if (extension_loaded('bz2')) {
-            yield ['bz2'];
+            yield ['Bz2'];
         }
         if (extension_loaded('zlib')) {
-            yield ['gz'];
+            yield ['Gz'];
         }
     }
 
     /**
      * Basic usage
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testBasicUsage(string $filterType): void
@@ -74,6 +78,8 @@ class DecompressTest extends TestCase
 
     /**
      * Setting Archive
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testCompressToFile(string $filterType): void
@@ -97,6 +103,8 @@ class DecompressTest extends TestCase
 
     /**
      * Basic usage
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testDecompressArchive(string $filterType): void
@@ -113,6 +121,9 @@ class DecompressTest extends TestCase
         self::assertSame('compress me', $content2);
     }
 
+    /**
+     * @param AdapterType $filterType
+     */
     #[DataProvider('returnFilterType')]
     public function testFilterMethodProxiesToDecompress(string $filterType): void
     {
@@ -143,6 +154,9 @@ class DecompressTest extends TestCase
         }
     }
 
+    /**
+     * @param AdapterType $filterType
+     */
     #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(string $filterType, mixed $input): void
     {

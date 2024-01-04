@@ -18,8 +18,8 @@ class Decompress extends Compress
      *
      * Decompresses the content $value with the defined settings
      *
-     * @param  string $value Content to decompress
-     * @return string The decompressed content
+     * @param  mixed $value Content to decompress
+     * @return mixed|string The decompressed content
      */
     public function __invoke($value)
     {
@@ -31,8 +31,8 @@ class Decompress extends Compress
      *
      * Decompresses the content $value with the defined settings
      *
-     * @param  string $value Content to decompress
-     * @return string The decompressed content
+     * @param  mixed $value Content to decompress
+     * @return mixed|string The decompressed content
      */
     public function filter($value)
     {
