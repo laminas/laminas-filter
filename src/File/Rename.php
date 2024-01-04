@@ -177,7 +177,7 @@ final class Rename extends Filter\AbstractFilter
      * Returns the file $value, removing all but digit characters
      *
      * @param mixed $value Full path of file to change or $_FILES data array
-     * @return mixed The new filename which has been set
+     * @return mixed|string|array The new filename which has been set
      * @throws Exception\RuntimeException
      */
     public function filter(mixed $value): mixed
@@ -198,7 +198,7 @@ final class Rename extends Filter\AbstractFilter
             $value        = $value['tmp_name'];
         }
 
-        $file = $this->getNewName($value, true);
+        $file = $this->getNewName((string) $value, true);
         if (is_string($file)) {
             if ($isFileUpload) {
                 return $uploadData;

@@ -45,7 +45,7 @@ final class StripTags extends AbstractFilter
      * Tags are stored in the array keys, and the array values are themselves
      * arrays of the attributes allowed for the corresponding tag.
      *
-     * @var array
+     * @var array<string, array<string, null>>
      */
     protected $tagsAllowed = [];
 
@@ -54,7 +54,7 @@ final class StripTags extends AbstractFilter
      *
      * Attributes stored here are allowed for all of the allowed tags.
      *
-     * @var array
+     * @var array<string, null>
      */
     protected $attributesAllowed = [];
 
@@ -101,7 +101,7 @@ final class StripTags extends AbstractFilter
     /**
      * Returns the tagsAllowed option
      *
-     * @return array
+     * @return array<string, array<string, null>>
      */
     public function getTagsAllowed()
     {
@@ -153,7 +153,7 @@ final class StripTags extends AbstractFilter
     /**
      * Returns the attributesAllowed option
      *
-     * @return array
+     * @return array<string, null>
      */
     public function getAttributesAllowed()
     {
@@ -163,7 +163,7 @@ final class StripTags extends AbstractFilter
     /**
      * Sets the attributesAllowed option
      *
-     * @param  array|string $attributesAllowed
+     * @param  list<string>|string $attributesAllowed
      * @return self Provides a fluent interface
      */
     public function setAttributesAllowed($attributesAllowed)
@@ -246,8 +246,7 @@ final class StripTags extends AbstractFilter
      * @param  string $tag
      * @return string
      */
-    // @codingStandardsIgnoreStart
-    protected function _filterTag($tag)
+    protected function _filterTag($tag) // phpcs:ignore
     {
         // @codingStandardsIgnoreEnd
         // Parse the tag into:

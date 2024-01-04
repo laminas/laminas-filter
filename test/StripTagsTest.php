@@ -85,6 +85,7 @@ class StripTagsTest extends TestCase
             'ok' => 'String',
             null,
         ];
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->filter->setAttributesAllowed($attributesAllowed);
         $attributesAllowedExpected = [
             'class'  => null,

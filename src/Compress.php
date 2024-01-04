@@ -22,12 +22,12 @@ use function ucfirst;
 /**
  * Compresses a given string
  *
- * phpcs:disable Generic.Files.LineLength.TooLong
- * @psalm-type AdapterArg = class-string<CompressionAlgorithmInterface>|CompressionAlgorithmInterface|'Bz2'|'Gz'|'Tar'|'Zip'
+ * @psalm-type AdapterType = 'Bz2'|'Gz'|'Tar'|'Zip'|class-string<CompressionAlgorithmInterface>
+ * @psalm-type AdapterTypeOrInstance = CompressionAlgorithmInterface|AdapterType
  * @psalm-type Options = array{
- *     adapter?: AdapterArg,
- *     adapter_options?: array,
- *     options?: array,
+ *     adapter?: AdapterTypeOrInstance,
+ *     options?: array<string, mixed>,
+ *     adapter_options?: array<string, mixed>,
  * }
  * @extends AbstractFilter<Options>
  */
@@ -38,7 +38,7 @@ class Compress extends AbstractFilter
     /**
      * Compression adapter
      *
-     * @var AdapterArg
+     * @var AdapterTypeOrInstance
      */
     private string|CompressionAlgorithmInterface $adapter = self::DEFAULT_ADAPTER;
 
@@ -52,18 +52,22 @@ class Compress extends AbstractFilter
     /**
      * Given a string or a compression adapter interface, set the adapter. Otherwise, an iterable will set options
      *
-     * @param string|array|Traversable|CompressionAlgorithmInterface $options (Optional) Options to set
+     * @param Options|Traversable<string, mixed>|null|AdapterTypeOrInstance $options
      */
     public function __construct($options = null)
     {
         if ($options instanceof Traversable) {
+            /** @psalm-var Options $options */
             $options = ArrayUtils::iteratorToArray($options);
         }
-        if (is_string($options)) {
+
+        if (is_string($options) || $options instanceof CompressionAlgorithmInterface) {
             $this->setAdapter($options);
-        } elseif ($options instanceof CompressionAlgorithmInterface) {
-            $this->setAdapter($options);
-        } elseif (is_array($options)) {
+
+            return;
+        }
+
+        if (is_array($options)) {
             $this->setOptions($options);
         }
     }
@@ -71,7 +75,7 @@ class Compress extends AbstractFilter
     /**
      * Set filter state
      *
-     * @param Options|iterable $options
+     * @param  Options|iterable $options
      * @throws Exception\InvalidArgumentException If options is not an array or Traversable.
      * @return $this
      */
@@ -145,7 +149,7 @@ class Compress extends AbstractFilter
     /**
      * Sets compression adapter
      *
-     * @param AdapterArg $adapter Adapter to use
+     * @param AdapterTypeOrInstance $adapter Adapter to use
      * @return $this
      * @throws Exception\InvalidArgumentException
      */
