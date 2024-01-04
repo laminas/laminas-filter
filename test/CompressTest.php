@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Boolean;
-use Laminas\Filter\Compress;
 use Laminas\Filter\Compress as CompressFilter;
 use Laminas\Filter\Compress\CompressionAlgorithmInterface;
 use Laminas\Filter\Exception;
@@ -23,7 +22,7 @@ use function sys_get_temp_dir;
 use function uniqid;
 use function unlink;
 
-/** @psalm-import-type AdapterType from Compress */
+/** @psalm-import-type AdapterType from CompressFilter */
 class CompressTest extends TestCase
 {
     private string $tmpDir;
