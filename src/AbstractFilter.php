@@ -95,9 +95,8 @@ abstract class AbstractFilter implements FilterInterface
      * Proxies to {@link filter()}
      *
      * @throws Exception\ExceptionInterface If filtering $value is impossible.
-     * @return mixed
      */
-    public function __invoke(mixed $value)
+    public function __invoke(mixed $value): mixed
     {
         return $this->filter($value);
     }

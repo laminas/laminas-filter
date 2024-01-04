@@ -23,8 +23,7 @@ class AbstractUnicodeTest extends TestCase
         parent::setUp();
 
         $this->filter = new class extends AbstractUnicode {
-            /** @param mixed $value */
-            public function filter($value): string
+            public function filter(mixed $value): mixed
             {
                 assert(is_string($value));
                 return strtolower($value);

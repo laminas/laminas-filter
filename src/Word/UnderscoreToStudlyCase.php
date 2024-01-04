@@ -20,18 +20,15 @@ use function mb_substr;
  * }
  * @template TOptions of Options
  * @template-extends UnderscoreToCamelCase<TOptions>
- * @final
  */
-class UnderscoreToStudlyCase extends UnderscoreToCamelCase
+final class UnderscoreToStudlyCase extends UnderscoreToCamelCase
 {
     /**
      * Defined by Laminas\Filter\Filter
      *
-     * @param  mixed $value
-     * @return string|array
      * @psalm-return ($value is scalar ? string : $value is array ? array : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value) && ! is_array($value)) {
             return $value;

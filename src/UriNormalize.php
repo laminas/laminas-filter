@@ -23,9 +23,8 @@ use function str_contains;
  * }
  * @template TOptions of Options
  * @template-extends AbstractFilter<TOptions>
- * @final
  */
-class UriNormalize extends AbstractFilter
+final class UriNormalize extends AbstractFilter
 {
     /**
      * The default scheme to use when parsing scheme-less URIs
@@ -90,11 +89,8 @@ class UriNormalize extends AbstractFilter
 
     /**
      * Filter the URL by normalizing it and applying a default scheme if set
-     *
-     * @param  mixed $value
-     * @return mixed|string
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

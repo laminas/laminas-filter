@@ -44,10 +44,10 @@ final class UpperCaseWords extends AbstractUnicode
      * If the value provided is not a string, the value will remain unfiltered
      *
      * @param  string|mixed $value
-     * @return string|mixed
+     * @return mixed
      * @psalm-return ($value is string ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_string($value)) {
             return $value;

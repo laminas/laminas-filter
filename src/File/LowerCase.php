@@ -16,20 +16,19 @@ use function is_scalar;
 use function is_string;
 use function is_writable;
 
-/** @final */
-class LowerCase extends StringToLower
+final class LowerCase extends StringToLower
 {
     /**
      * Defined by Laminas\Filter\Filter
      *
      * Does a lowercase on the content of the given file
      *
-     * @param  mixed $value Full path of file to change or $_FILES data array
-     * @return string|mixed The given $value
+     * @param mixed $value Full path of file to change or $_FILES data array
+     * @return mixed The given $value
      * @throws Exception\InvalidArgumentException
      * @throws Exception\RuntimeException
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value) && ! is_array($value)) {
             return $value;

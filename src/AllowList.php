@@ -17,9 +17,8 @@ use function is_array;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class AllowList extends AbstractFilter
+final class AllowList extends AbstractFilter
 {
     /** @var bool */
     protected $strict = false;
@@ -58,7 +57,7 @@ class AllowList extends AbstractFilter
     }
 
     /**
-     * Set the list of items to white-list.
+     * Set the list of items to allow
      *
      * @param array|Traversable $list
      */
@@ -72,7 +71,7 @@ class AllowList extends AbstractFilter
     }
 
     /**
-     * Get the list of items to white-list
+     * Get the list of items to allow
      *
      * @return array
      */
@@ -84,9 +83,13 @@ class AllowList extends AbstractFilter
     /**
      * {@inheritDoc}
      *
-     * Will return $value if its present in the white-list. If $value is rejected then it will return null.
+     * Will return $value if its present in the allow-list. If $value is rejected then it will return null.
+     *
+     * @template T
+     * @param T $value
+     * @return T|null
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return in_array($value, $this->getList(), $this->getStrict()) ? $value : null;
     }

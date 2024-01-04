@@ -39,9 +39,8 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.5.0",
-        "laminas/laminas-crypt": "^3.11",
         "laminas/laminas-i18n": "^2.25.0",
-        "laminas/laminas-uri": "^2.11",
+        "laminas/laminas-uri": "^2.11.0",
         "pear/archive_tar": "^1.4.14",
         "phpunit/phpunit": "^10.5.5",
         "psalm/plugin-phpunit": "^0.18.4",
@@ -53,7 +52,6 @@
         "zendframework/zend-filter": "*"
     },
     "suggest": {
-        "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
         "laminas/laminas-uri": "Laminas\\Uri component, for the UriNormalize filter",
         "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters"
