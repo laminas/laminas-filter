@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\Boolean;
+use Laminas\Filter\Compress;
 use Laminas\Filter\Compress as CompressFilter;
 use Laminas\Filter\Compress\CompressionAlgorithmInterface;
 use Laminas\Filter\Exception;
@@ -22,6 +23,7 @@ use function sys_get_temp_dir;
 use function uniqid;
 use function unlink;
 
+/** @psalm-import-type AdapterType from Compress */
 class CompressTest extends TestCase
 {
     private string $tmpDir;
@@ -48,19 +50,21 @@ class CompressTest extends TestCase
         }
     }
 
-    /** @return iterable<array-key, array{0: string}> */
+    /** @return iterable<array-key, array{0: AdapterType}> */
     public static function returnFilterType(): iterable
     {
         if (extension_loaded('bz2')) {
-            yield ['bz2'];
+            yield ['Bz2'];
         }
         if (extension_loaded('zlib')) {
-            yield ['gz'];
+            yield ['Gz'];
         }
     }
 
     /**
      * Basic usage
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testBasicUsage(string $filterType): void
@@ -77,6 +81,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Options
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testGetSetAdapterOptionsInConstructor(string $filterType): void
@@ -99,6 +105,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Options through constructor
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testGetSetAdapterOptions(string $filterType): void
@@ -124,7 +132,7 @@ class CompressTest extends TestCase
             self::markTestSkipped('Extension bz2 is required for this test');
         }
 
-        $filter = new CompressFilter('bz2');
+        $filter = new CompressFilter('Bz2');
         self::assertSame(4, $filter->getBlocksize());
         $filter->setBlocksize(6);
         self::assertSame(6, $filter->getOptions('blocksize'));
@@ -136,6 +144,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Archive
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testGetSetArchive(string $filterType): void
@@ -149,6 +159,8 @@ class CompressTest extends TestCase
 
     /**
      * Setting Archive
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testCompressToFile(string $filterType): void
@@ -172,6 +184,8 @@ class CompressTest extends TestCase
 
     /**
      * testing toString
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testToString(string $filterType): void
@@ -182,6 +196,8 @@ class CompressTest extends TestCase
 
     /**
      * testing getAdapter
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testGetAdapter(string $filterType): void
@@ -204,15 +220,18 @@ class CompressTest extends TestCase
         $filter = new CompressFilter();
         self::assertSame('Gz', $filter->getAdapterName());
 
+        /** @psalm-suppress InvalidArgument */
         $filter->setAdapter(Boolean::class);
 
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
-        $adapter = $filter->getAdapter();
+        $filter->getAdapter();
     }
 
     /**
-     * Decompress archiv
+     * Decompress archive
+     *
+     * @param AdapterType $filterType
      */
     #[DataProvider('returnFilterType')]
     public function testDecompressArchive(string $filterType): void
@@ -257,6 +276,9 @@ class CompressTest extends TestCase
         }
     }
 
+    /**
+     * @param AdapterType $filterType
+     */
     #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(string $filterType, mixed $input): void
     {

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use function gettype;
-use function is_object;
+use function get_debug_type;
 use function is_scalar;
 use function is_string;
 use function sprintf;
@@ -47,7 +46,7 @@ class StringPrefix extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects "prefix" to be string; received "%s"',
                 __METHOD__,
-                is_object($prefix) ? $prefix::class : gettype($prefix)
+                get_debug_type($prefix),
             ));
         }
 

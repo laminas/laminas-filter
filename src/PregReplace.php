@@ -9,9 +9,7 @@ use Traversable;
 
 use function func_get_args;
 use function get_debug_type;
-use function gettype;
 use function is_array;
-use function is_object;
 use function is_string;
 use function iterator_to_array;
 use function preg_match;
@@ -77,7 +75,7 @@ class PregReplace extends AbstractFilter
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects pattern to be array or string; received "%s"',
                 __METHOD__,
-                is_object($pattern) ? $pattern::class : gettype($pattern)
+                get_debug_type($pattern),
             ));
         }
 

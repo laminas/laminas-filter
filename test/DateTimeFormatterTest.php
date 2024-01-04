@@ -17,6 +17,7 @@ use function date_default_timezone_set;
 
 class DateTimeFormatterTest extends TestCase
 {
+    /** @var non-empty-string */
     private string $defaultTimezone;
 
     public function setUp(): void

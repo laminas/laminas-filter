@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
   <file src="src/AbstractDateDropdown.php">
     <MissingReturnType>
       <code>filterable</code>
@@ -129,36 +129,21 @@
   </file>
   <file src="src/Compress.php">
     <DocblockTypeContradiction>
-      <code>! is_array($options)</code>
+      <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
       <code>is_string($adapter)</code>
     </DocblockTypeContradiction>
     <LessSpecificImplementedReturnType>
       <code>mixed</code>
     </LessSpecificImplementedReturnType>
-    <MissingPropertyType>
-      <code>$adapter</code>
-      <code>$adapterOptions</code>
-    </MissingPropertyType>
-    <MixedArgument>
-      <code>$adapter</code>
-      <code>$adapter</code>
-      <code>$key</code>
-      <code><![CDATA[$this->adapter]]></code>
-    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code>$options</code>
+    </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$adapter</code>
-      <code>$key</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>array</code>
-    </MixedInferredReturnType>
     <MixedMethodCall>
       <code>new $adapter($options)</code>
     </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->adapterOptions]]></code>
-    </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
       <code>$options</code>
     </MoreSpecificImplementedParamType>
@@ -436,17 +421,6 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Decompress.php">
-    <DocblockTypeContradiction>
-      <code>! is_string($value)</code>
-    </DocblockTypeContradiction>
-    <MixedReturnStatement>
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyNullArgument>
       <code>$value</code>
     </PossiblyNullArgument>
@@ -469,11 +443,13 @@
     </MixedMethodCall>
     <MixedReturnStatement>
       <code><![CDATA[$this->adapter->decrypt($value)]]></code>
-      <code>$value</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <NoValue>
+      <code>return $value;</code>
+    </NoValue>
   </file>
   <file src="src/DenyList.php">
     <PossiblyUnusedMethod>
@@ -524,16 +500,21 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->adapter->encrypt($value)]]></code>
       <code><![CDATA[$this->adapter->toString()]]></code>
-      <code>$value</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <NoValue>
+      <code>return $value;</code>
+    </NoValue>
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>getAdapter</code>
       <code>getAdapterInstance</code>
     </PossiblyUnusedMethod>
+    <RedundantCondition>
+      <code><![CDATA[! is_string($value) && ! is_numeric($value)]]></code>
+    </RedundantCondition>
   </file>
   <file src="src/Encrypt/BlockCipher.php">
     <DeprecatedInterface>
@@ -560,6 +541,10 @@
       <code><![CDATA[$this->encryption]]></code>
       <code>$value</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$this->compression]]></code>
+      <code><![CDATA[$this->compression]]></code>
+    </MixedArgumentTypeCoercion>
     <MixedArrayAccess>
       <code><![CDATA[$options['algorithm']]]></code>
       <code><![CDATA[$options['algorithm']]]></code>
@@ -577,6 +562,7 @@
       <code><![CDATA[$this->encryption['vector']]]></code>
     </MixedArrayAssignment>
     <MixedAssignment>
+      <code>$decrypted</code>
       <code>$options</code>
       <code>$value</code>
     </MixedAssignment>
@@ -584,11 +570,14 @@
       <code>array</code>
       <code>string</code>
       <code>string</code>
+      <code>string</code>
     </MixedInferredReturnType>
     <MixedOperand>
       <code><![CDATA[$this->encryption]]></code>
     </MixedOperand>
     <MixedReturnStatement>
+      <code>$decrypted</code>
+      <code>$decrypted</code>
       <code><![CDATA[$this->encryption]]></code>
       <code><![CDATA[$this->encryption['key']]]></code>
       <code><![CDATA[$this->encryption['vector']]]></code>
@@ -621,6 +610,10 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Encrypt/Openssl.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$this->compression]]></code>
+      <code><![CDATA[$this->compression]]></code>
+    </ArgumentTypeCoercion>
     <DeprecatedInterface>
       <code>Openssl</code>
     </DeprecatedInterface>
@@ -652,6 +645,7 @@
     </MixedArrayTypeCoercion>
     <MixedAssignment>
       <code>$count</code>
+      <code>$decrypted</code>
       <code>$envKey</code>
       <code>$i</code>
       <code>$i</code>
@@ -663,6 +657,9 @@
       <code>$option</code>
       <code>$option</code>
     </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>string</code>
+    </MixedInferredReturnType>
     <MixedOperand>
       <code><![CDATA[$header['size']]]></code>
       <code>$i</code>
@@ -670,6 +667,10 @@
     <MixedPropertyTypeCoercion>
       <code><![CDATA[$this->keys]]></code>
     </MixedPropertyTypeCoercion>
+    <MixedReturnStatement>
+      <code>$decrypted</code>
+      <code>$decrypted</code>
+    </MixedReturnStatement>
     <PossiblyUnusedMethod>
       <code>__construct</code>
       <code>getCompression</code>
@@ -722,11 +723,13 @@
       <code><![CDATA[$this->filename]]></code>
       <code><![CDATA[$this->filename]]></code>
       <code>$uploadData</code>
-      <code>$value</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <NoValue>
+      <code>return $value;</code>
+    </NoValue>
     <PossiblyNullPropertyAssignmentValue>
       <code>$filename</code>
     </PossiblyNullPropertyAssignmentValue>
@@ -777,11 +780,13 @@
       <code><![CDATA[$this->filename]]></code>
       <code><![CDATA[$this->filename]]></code>
       <code>$uploadData</code>
-      <code>$value</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <NoValue>
+      <code>return $value;</code>
+    </NoValue>
     <PossiblyNullPropertyAssignmentValue>
       <code>$filename</code>
     </PossiblyNullPropertyAssignmentValue>
@@ -809,7 +814,6 @@
   </file>
   <file src="src/File/Rename.php">
     <DocblockTypeContradiction>
-      <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
       <code>is_array($options)</code>
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
@@ -834,7 +838,6 @@
       <code><![CDATA[$file['target']]]></code>
       <code><![CDATA[$file['target']]]></code>
       <code>$value</code>
-      <code>$value</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$options</code>
@@ -855,18 +858,10 @@
     </MixedAssignment>
     <MixedInferredReturnType>
       <code>string</code>
-      <code>string|array</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code>$uploadData</code>
-      <code>$uploadData</code>
-      <code>$value</code>
     </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$rename['randomize']]]></code>
     </PossiblyUndefinedArrayOffset>
@@ -987,31 +982,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/File/UpperCase.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MixedArgument>
     <MixedAssignment>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>string|array</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code>$uploadData</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyUndefinedVariable>
       <code>$uploadData</code>
     </PossiblyUndefinedVariable>
@@ -1312,37 +1285,23 @@
     </PossiblyUndefinedArrayOffset>
   </file>
   <file src="src/StripTags.php">
-    <DocblockTypeContradiction>
-      <code>is_scalar($value)</code>
-    </DocblockTypeContradiction>
     <MixedArgument>
       <code><![CDATA[$options['allowAttribs']]]></code>
       <code><![CDATA[$options['allowTags']]]></code>
-      <code><![CDATA[$this->tagsAllowed[$tagName]]]></code>
     </MixedArgument>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->tagsAllowed[$tagName][$attributeName]]]></code>
-    </MixedArrayAssignment>
     <MixedAssignment>
-      <code>$attribute</code>
       <code>$attribute</code>
       <code>$element</code>
       <code><![CDATA[$temp['allowAttribs']]]></code>
       <code><![CDATA[$temp['allowComments']]]></code>
       <code><![CDATA[$temp['allowTags']]]></code>
     </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType>
-      <code>(string) $value</code>
-      <code>(string) $value</code>
-    </RedundantCastGivenDocblockType>
     <RedundantConditionGivenDocblockType>
       <code>is_array($options)</code>
+      <code>is_string($attribute)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ToNull.php">
@@ -1404,9 +1363,6 @@
     <DocblockTypeContradiction>
       <code>is_string($separator)</code>
     </DocblockTypeContradiction>
-    <MixedOperand>
-      <code>$separator</code>
-    </MixedOperand>
     <PossiblyInvalidArgument>
       <code>$separator</code>
     </PossiblyInvalidArgument>
@@ -1613,9 +1569,6 @@
       <code>getArchive</code>
       <code>getArchive</code>
     </UndefinedInterfaceMethod>
-    <UnusedVariable>
-      <code>$adapter</code>
-    </UnusedVariable>
   </file>
   <file src="test/DataUnitFormatterTest.php">
     <PossiblyUnusedMethod>
@@ -1639,16 +1592,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DecompressTest.php">
-    <MixedArgument>
-      <code>$compressed</code>
-      <code>$input</code>
-    </MixedArgument>
     <MixedAssignment>
       <code>$compressed</code>
     </MixedAssignment>
-    <NullArgument>
-      <code>null</code>
-    </NullArgument>
     <PossiblyUnusedMethod>
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
@@ -1885,7 +1831,6 @@
   <file src="test/StripTagsTest.php">
     <MixedArgument>
       <code>$filtered</code>
-      <code>$input</code>
     </MixedArgument>
     <MixedAssignment>
       <code>$filtered</code>
