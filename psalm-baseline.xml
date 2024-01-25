@@ -26,15 +26,6 @@
       <code>is_object($options)</code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/AllowList.php">
-    <PossiblyUnusedMethod>
-      <code>setList</code>
-      <code>setStrict</code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code>(bool) $strict</code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/Boolean.php">
     <ArgumentTypeCoercion>
       <code>$typeOrOptions</code>
@@ -934,17 +925,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/AllowListTest.php">
-    <InvalidArgument>
-      <code>$strict</code>
-    </InvalidArgument>
-    <MixedArrayAccess>
-      <code>$expected</code>
-      <code>$value</code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code>$data</code>
-      <code>[$value, $expected]</code>
-    </MixedAssignment>
     <PossiblyUnusedMethod>
       <code>defaultTestProvider</code>
       <code>listTestProvider</code>
@@ -1283,25 +1263,10 @@
       <code>returnUnfilteredDataProvider</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/TestAsset/Alpha.php">
-    <MixedArgumentTypeCoercion>
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
-  </file>
   <file src="test/TestAsset/CallbackClass.php">
     <PossiblyUnusedMethod>
       <code>objectCallbackWithParams</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/TestAsset/LowerCase.php">
-    <MixedArgument>
-      <code>$value</code>
-    </MixedArgument>
-  </file>
-  <file src="test/TestAsset/StripUpperCase.php">
-    <MixedArgument>
-      <code>$value</code>
-    </MixedArgument>
   </file>
   <file src="test/ToFloatTest.php">
     <PossiblyUnusedMethod>
