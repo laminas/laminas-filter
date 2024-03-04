@@ -1,5 +1,6 @@
 {
-  "ignore_php_platform_requirements": {
-    "8.3": true
-  }
+    "ignore_php_platform_requirements": {
+        "8.3": false
+    },
+    "backwardCompatibilityCheck": true
 }
