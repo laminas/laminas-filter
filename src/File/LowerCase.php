@@ -58,14 +58,14 @@ class LowerCase extends StringToLower
         }
 
         $content = file_get_contents($value);
-        if (! $content) {
+        if ($content === false) {
             throw new Exception\RuntimeException("Problem while reading file '$value'");
         }
 
         $content = parent::filter($content);
         $result  = file_put_contents($value, $content);
 
-        if (! $result) {
+        if ($result === false) {
             throw new Exception\RuntimeException("Problem while writing file '$value'");
         }
 

@@ -84,11 +84,13 @@ class StringTrim extends AbstractFilter
         }
         $value = (string) $value;
 
-        if (null === $this->options['charlist']) {
+        $charlist = $this->options['charlist'];
+
+        if ($charlist === null) {
             return $this->unicodeTrim($value);
         }
 
-        return $this->unicodeTrim($value, $this->options['charlist']);
+        return $this->unicodeTrim($value, $charlist);
     }
 
     /**

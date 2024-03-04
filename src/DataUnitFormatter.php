@@ -32,6 +32,7 @@ final class DataUnitFormatter extends AbstractFilter
     public const BASE_BINARY  = 1024;
     public const BASE_DECIMAL = 1000;
 
+    private const DEFAULT_PRECISION = 2;
     /**
      * A list of all possible filter modes:
      *
@@ -64,7 +65,7 @@ final class DataUnitFormatter extends AbstractFilter
     protected $options = [
         'mode'      => self::MODE_DECIMAL,
         'unit'      => '',
-        'precision' => 2,
+        'precision' => self::DEFAULT_PRECISION,
         'prefixes'  => [],
     ];
 
@@ -106,7 +107,7 @@ final class DataUnitFormatter extends AbstractFilter
      */
     protected function getMode()
     {
-        return $this->options['mode'];
+        return $this->options['mode'] ?? self::MODE_DECIMAL;
     }
 
     /**
@@ -146,7 +147,7 @@ final class DataUnitFormatter extends AbstractFilter
      */
     protected function getUnit()
     {
-        return $this->options['unit'];
+        return $this->options['unit'] ?? '';
     }
 
     /**
@@ -166,7 +167,7 @@ final class DataUnitFormatter extends AbstractFilter
      */
     protected function getPrecision()
     {
-        return $this->options['precision'];
+        return $this->options['precision'] ?? self::DEFAULT_PRECISION;
     }
 
     /**
@@ -186,8 +187,8 @@ final class DataUnitFormatter extends AbstractFilter
      */
     protected function getPrefixes()
     {
-        $prefixes = $this->options['prefixes'];
-        if ($prefixes) {
+        $prefixes = $this->options['prefixes'] ?? null;
+        if ($prefixes !== null && $prefixes !== []) {
             return $prefixes;
         }
 
