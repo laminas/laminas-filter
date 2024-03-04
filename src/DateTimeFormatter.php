@@ -35,7 +35,7 @@ class DateTimeFormatter extends AbstractFilter
      */
     public function __construct($options = null)
     {
-        if ($options) {
+        if ($options !== null) {
             $this->setOptions($options);
         }
     }

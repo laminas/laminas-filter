@@ -24,7 +24,7 @@ use const PHP_OS;
 
 /**
  * @psalm-type Options = array{
- *     exists?: bool,
+ *     exists: bool,
  *     ...
  * }
  * @template TOptions of Options
@@ -101,7 +101,7 @@ class RealPath extends AbstractFilter
         ErrorHandler::start();
         $realpath = realpath($path);
         ErrorHandler::stop();
-        if ($realpath) {
+        if ($realpath !== false) {
             return $realpath;
         }
 

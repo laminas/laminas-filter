@@ -18,7 +18,7 @@ use function sprintf;
 
 /**
  * @psalm-type Options = array{
- *     type?: int-mask-of<self::TYPE_*>,
+ *     type: int-mask-of<self::TYPE_*>,
  * }
  * @extends AbstractFilter<Options>
  * @final
