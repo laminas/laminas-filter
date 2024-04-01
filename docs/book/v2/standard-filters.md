@@ -1181,6 +1181,25 @@ $decrypted = $filter->filter('encoded_text_normally_unreadable');
 print $decrypted;
 ```
 
+## ForceUriScheme
+
+This filter will ensure that, given a string that looks like a URI with a host-name and scheme, the scheme will be forced to `https` by default, or any other arbitrary scheme provided as an option.
+
+Any value that cannot be identified as an URI to begin with, will be returned un-filtered. Furthermore, URI parsing is rudimentary so for reliable results, you should ensure that the input is a valid URI prior to filtering.
+
+### Supported Options
+
+The only supported option is `scheme` which defaults to `https`
+
+### Example Usage
+
+```php
+$filter = new Laminas\Filter\ForceUriScheme(['scheme' => 'ftp']);
+
+$filter->filter('https://example.com/path'); // 'ftp://example.com/path'
+$filter->filter('example.com'); // 'example.com' - Unfiltered because it lacks a scheme
+```
+
 ## HtmlEntities
 
 Returns the string `$value`, converting characters to their corresponding HTML
