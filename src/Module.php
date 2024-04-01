@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use Laminas\ModuleManager\ModuleManager;
+use Laminas\ServiceManager\ServiceManager;
 
-class Module
+/**
+ * @psalm-import-type ServiceManagerConfiguration from ServiceManager
+ */
+class Module implements FilterProviderInterface
 {
     /**
      * Return default laminas-filter configuration for laminas-mvc applications.
+     *
+     * @return array{service_manager: ServiceManagerConfiguration}
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         $provider = new ConfigProvider();
 
@@ -24,9 +30,8 @@ class Module
      * Register a specification for the FilterManager with the ServiceListener.
      *
      * @param ModuleManager $moduleManager
-     * @return void
      */
-    public function init($moduleManager)
+    public function init($moduleManager): void
     {
         $event           = $moduleManager->getEvent();
         $container       = $event->getParam('ServiceManager');
@@ -38,5 +43,11 @@ class Module
             FilterProviderInterface::class,
             'getFilterConfig'
         );
+    }
+
+    /** @return ServiceManagerConfiguration */
+    public function getFilterConfig(): array
+    {
+        return (new ConfigProvider())()['filters'];
     }
 }
