@@ -1464,27 +1464,3 @@ print $filter->filter($input);
 The above will return
 `A text with a <img src='picture.com' width='100'>picture</img> click <a href='<http://picture.com/laminas>'>here</a>!`
 as the result.
-
-## UriNormalize
-
-This filter sets the scheme on a URI if the scheme is missing.
-
-### Supported Options
-
-The following options are supported for `Laminas\Filter\UriNormalize`:
-
-- `defaultScheme`: This option can be used to set the default scheme to use when
-  parsing scheme-less URIs.
-- `enforcedScheme`: Set a URI scheme to enforce on schemeless URIs.
-
-### Basic Usage
-
-```php
-$filter = new Laminas\Filter\UriNormalize(array(
-    'enforcedScheme' => 'https'
-));
-
-echo $filter->filter('www.example.com');
-```
-
-The above results in the string `https://www.example.com`.
