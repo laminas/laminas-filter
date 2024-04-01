@@ -33,9 +33,6 @@ class ConfigProvider
         return [
             'aliases'   => [
                 'FilterManager' => FilterPluginManager::class,
-
-                // Legacy Zend Framework aliases
-                'Zend\Filter\FilterPluginManager' => FilterPluginManager::class,
             ],
             'factories' => [
                 FilterPluginManager::class => FilterPluginManagerFactory::class,
