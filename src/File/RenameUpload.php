@@ -31,13 +31,13 @@ use const UPLOAD_ERR_OK;
 
 /**
  * @psalm-type Options = array{
- *     target?: string|null,
- *     use_upload_name?: bool,
- *     use_upload_extension?: bool,
- *     overwrite?: bool,
- *     randomize?: bool,
- *     stream_factory?: StreamFactoryInterface|null,
- *     upload_file_factory?: UploadedFileFactoryInterface|null,
+ *     target: string|null,
+ *     use_upload_name: bool,
+ *     use_upload_extension: bool,
+ *     overwrite: bool,
+ *     randomize: bool,
+ *     stream_factory: StreamFactoryInterface|null,
+ *     upload_file_factory: UploadedFileFactoryInterface|null,
  *     ...
  * }
  * @template TOptions of Options

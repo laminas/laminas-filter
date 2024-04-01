@@ -16,6 +16,7 @@ use function count;
 use function get_debug_type;
 use function is_array;
 use function is_callable;
+use function is_string;
 use function sprintf;
 use function strtolower;
 
@@ -85,7 +86,7 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
                     foreach ($value as $spec) {
                         $callback = $spec['callback'] ?? false;
                         $priority = $spec['priority'] ?? static::DEFAULT_PRIORITY;
-                        if ($callback) {
+                        if (is_callable($callback)) {
                             $this->attach($callback, $priority);
                         }
                     }
@@ -95,7 +96,7 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
                         $name     = $spec['name'] ?? false;
                         $options  = $spec['options'] ?? [];
                         $priority = $spec['priority'] ?? static::DEFAULT_PRIORITY;
-                        if ($name) {
+                        if (is_string($name) && $name !== '') {
                             $this->attachByName($name, $options, $priority);
                         }
                     }

@@ -15,6 +15,7 @@ use function file_get_contents;
 use function file_put_contents;
 use function getenv;
 use function is_dir;
+use function is_string;
 use function mkdir;
 use function rmdir;
 use function str_replace;
@@ -106,7 +107,7 @@ class ZipTest extends TestCase
      */
     public function testBasicUsage(): void
     {
-        if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! $this->zipEnabled()) {
             self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -177,7 +178,7 @@ class ZipTest extends TestCase
      */
     public function testZipCompressFile(): void
     {
-        if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! $this->zipEnabled()) {
             self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -203,7 +204,7 @@ class ZipTest extends TestCase
      */
     public function testCompressNonExistingTargetFile(): void
     {
-        if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! $this->zipEnabled()) {
             self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -228,7 +229,7 @@ class ZipTest extends TestCase
      */
     public function testZipCompressDirectory(): void
     {
-        if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! $this->zipEnabled()) {
             self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -267,7 +268,7 @@ class ZipTest extends TestCase
 
     public function testDecompressWillThrowExceptionWhenDecompressingWithNoTarget(): void
     {
-        if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! $this->zipEnabled()) {
             self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -296,7 +297,7 @@ class ZipTest extends TestCase
     #[Group('6026')]
     public function testDecompressWhenNoArchieveInClass(): void
     {
-        if (! getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED')) {
+        if (! $this->zipEnabled()) {
             self::markTestSkipped('ZIP compression tests are currently disabled');
         }
 
@@ -319,5 +320,15 @@ class ZipTest extends TestCase
         self::assertSame($this->tmp . DIRECTORY_SEPARATOR, $content);
         $content = file_get_contents($this->tmp . '/_compress');
         self::assertSame('compress me', $content);
+    }
+
+    private function zipEnabled(): bool
+    {
+        /**
+         * PHPUnit casts true|false env vars to "1"|""
+         */
+        $value = getenv('TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED');
+
+        return is_string($value) && (int) $value === 1;
     }
 }

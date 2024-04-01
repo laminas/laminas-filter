@@ -47,7 +47,7 @@ final class UriNormalize extends AbstractFilter
      */
     public function __construct($options = null)
     {
-        if ($options) {
+        if ($options !== null) {
             $this->setOptions($options);
         }
     }
@@ -97,16 +97,16 @@ final class UriNormalize extends AbstractFilter
         }
         $value = (string) $value;
 
-        $defaultScheme = $this->defaultScheme ?: $this->enforcedScheme;
+        $defaultScheme = $this->defaultScheme ?? $this->enforcedScheme;
 
         // Reset default scheme if it is not a known scheme
-        if (! UriFactory::getRegisteredSchemeClass($defaultScheme)) {
+        if (UriFactory::getRegisteredSchemeClass($defaultScheme) === null) {
             $defaultScheme = null;
         }
 
         try {
             $uri = UriFactory::factory($value, $defaultScheme);
-            if ($this->enforcedScheme && ! $uri->getScheme()) {
+            if ($this->enforcedScheme !== null && $uri->getScheme() === null) {
                 $this->enforceScheme($uri);
             }
         } catch (UriException) {

@@ -168,7 +168,7 @@ final class Gz extends AbstractCompressionAlgorithm
             $compressed = gzcompress($content, $this->getLevel());
         }
 
-        if (! $compressed) {
+        if ($compressed === false) {
             throw new Exception\RuntimeException('Error during compression');
         }
 

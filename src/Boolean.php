@@ -197,7 +197,7 @@ final class Boolean extends AbstractFilter
      */
     public function getTranslations()
     {
-        return $this->options['translations'];
+        return $this->options['translations'] ?? [];
     }
 
     /**

@@ -211,15 +211,15 @@ final class Zip extends AbstractCompressionAlgorithm
         $res = $zip->open($archive);
 
         $target = $this->getTarget();
-        if (! empty($target) && ! is_dir($target)) {
+        if (is_string($target) && ! is_dir($target)) {
             $target = dirname($target);
         }
 
-        if (! empty($target)) {
+        if (is_string($target)) {
             $target = rtrim($target, '/\\') . DIRECTORY_SEPARATOR;
         }
 
-        if (empty($target) || ! is_dir($target)) {
+        if (! is_string($target) || ! is_dir($target)) {
             throw new Exception\RuntimeException('No target for ZIP decompression set');
         }
 

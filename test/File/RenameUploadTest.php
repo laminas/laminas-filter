@@ -14,6 +14,7 @@ use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 
+use function assert;
 use function basename;
 use function copy;
 use function glob;
@@ -309,6 +310,7 @@ class RenameUploadTest extends TestCase
         ]);
 
         $oldFilePathInfo = pathinfo($this->sourceFile);
+        assert(isset($oldFilePathInfo['extension']));
 
         self::assertMatchesRegularExpression(
             '#' . str_replace('\\', '\\\\', $fileNoExt) . '.' . $oldFilePathInfo['extension'] . '#',
@@ -326,6 +328,7 @@ class RenameUploadTest extends TestCase
         ]);
 
         $oldFilePathInfo = pathinfo($this->sourceFile);
+        assert(isset($oldFilePathInfo['extension']));
 
         self::assertMatchesRegularExpression(
             '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.' . $oldFilePathInfo['extension'] . '#',

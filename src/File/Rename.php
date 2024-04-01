@@ -13,6 +13,7 @@ use function basename;
 use function count;
 use function file_exists;
 use function is_array;
+use function is_bool;
 use function is_dir;
 use function is_scalar;
 use function is_string;
@@ -231,7 +232,7 @@ final class Rename extends Filter\AbstractFilter
      * Supports single and nested arrays
      *
      * @param  array $options
-     * @return array
+     * @return $this
      */
     // @codingStandardsIgnoreStart
     protected function _convertOptions($options)
@@ -266,23 +267,23 @@ final class Rename extends Filter\AbstractFilter
             }
         }
 
-        if (empty($files)) {
+        if ($files === []) {
             return $this;
         }
 
-        if (empty($files['source'])) {
+        if (! is_string($files['source'] ?? null)) {
             $files['source'] = '*';
         }
 
-        if (empty($files['target'])) {
+        if (! is_string($files['target'] ?? null)) {
             $files['target'] = '*';
         }
 
-        if (empty($files['overwrite'])) {
+        if (! is_bool($files['overwrite'] ?? null)) {
             $files['overwrite'] = false;
         }
 
-        if (empty($files['randomize'])) {
+        if (! is_bool($files['randomize'] ?? null)) {
             $files['randomize'] = false;
         }
 

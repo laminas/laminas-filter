@@ -46,12 +46,12 @@ class FilterPluginManagerCompatibilityTest extends TestCase
             self::assertIsString($alias);
             self::assertIsString($target);
             // Skipping as laminas-i18n is not required by this package
-            if (strpos($target, '\\I18n\\')) {
+            if (strpos($target, '\\I18n\\') !== false) {
                 continue;
             }
 
             // Skipping as it has required options
-            if (strpos($target, 'DataUnitFormatter')) {
+            if (strpos($target, 'DataUnitFormatter') !== false) {
                 continue;
             }
 

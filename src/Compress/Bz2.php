@@ -28,6 +28,8 @@ use function str_contains;
  */
 final class Bz2 extends AbstractCompressionAlgorithm
 {
+    private const DEFAULT_BLOCK_SIZE = 4;
+
     /**
      * Compression Options
      * array(
@@ -38,7 +40,7 @@ final class Bz2 extends AbstractCompressionAlgorithm
      * @var Options
      */
     protected $options = [
-        'blocksize' => 4,
+        'blocksize' => self::DEFAULT_BLOCK_SIZE,
         'archive'   => null,
     ];
 
@@ -61,7 +63,7 @@ final class Bz2 extends AbstractCompressionAlgorithm
      */
     public function getBlocksize()
     {
-        return $this->options['blocksize'];
+        return $this->options['blocksize'] ?? self::DEFAULT_BLOCK_SIZE;
     }
 
     /**
@@ -113,7 +115,7 @@ final class Bz2 extends AbstractCompressionAlgorithm
     public function compress($content)
     {
         $archive = $this->getArchive();
-        if (! empty($archive)) {
+        if ($archive !== null) {
             $file = bzopen($archive, 'w');
             if (! $file) {
                 throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
