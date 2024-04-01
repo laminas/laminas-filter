@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
   <file src="src/AbstractDateDropdown.php">
-    <MissingReturnType>
-      <code><![CDATA[filterable]]></code>
-    </MissingReturnType>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -11,15 +8,9 @@
       <code><![CDATA[setNullOnAllEmpty]]></code>
       <code><![CDATA[setNullOnEmpty]]></code>
     </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$expectedInputs]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCondition>
-      <code><![CDATA[array_reduce($value, self::class . '::reduce', true)]]></code>
-    </RedundantCondition>
-    <TypeDoesNotContainType>
-      <code><![CDATA[array_reduce($value, self::class . '::reduce', false)]]></code>
-    </TypeDoesNotContainType>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($value)]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/AbstractFilter.php">
     <DocblockTypeContradiction>
@@ -38,15 +29,6 @@
       <code><![CDATA[is_object($options)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/AbstractUnicode.php">
-    <RedundantCondition>
-      <code><![CDATA[assert(is_string($encoding))]]></code>
-      <code><![CDATA[is_string($encoding)]]></code>
-    </RedundantCondition>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_string($encoding)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/AllowList.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[setList]]></code>
@@ -55,11 +37,6 @@
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(bool) $strict]]></code>
     </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Blacklist.php">
-    <InvalidExtendClass>
-      <code><![CDATA[DenyList]]></code>
-    </InvalidExtendClass>
   </file>
   <file src="src/Boolean.php">
     <ArgumentTypeCoercion>
@@ -135,28 +112,15 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Compress.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
-      <code><![CDATA[is_string($adapter)]]></code>
-    </DocblockTypeContradiction>
     <LessSpecificImplementedReturnType>
-      <code><![CDATA[mixed]]></code>
+      <code><![CDATA[($option is null ? array : mixed)]]></code>
     </LessSpecificImplementedReturnType>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedMethodCall>
-      <code><![CDATA[new $adapter($options)]]></code>
-    </MixedMethodCall>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$options]]></code>
-    </MoreSpecificImplementedParamType>
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[getOptions]]></code>
-    </UndefinedInterfaceMethod>
+    <MixedReturnStatement>
+      <code><![CDATA[$adapter->getOptions($option)]]></code>
+    </MixedReturnStatement>
+    <NullableReturnStatement>
+      <code><![CDATA[is_string($option) ? null : []]]></code>
+    </NullableReturnStatement>
   </file>
   <file src="src/Compress/AbstractCompressionAlgorithm.php">
     <InvalidPropertyAssignmentValue>
@@ -238,74 +202,6 @@
       <code><![CDATA[null !== $content]]></code>
       <code><![CDATA[null !== $content]]></code>
     </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/Compress/Lzf.php">
-    <ParamNameMismatch>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-    </ParamNameMismatch>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$options]]></code>
-    </PossiblyUnusedParam>
-  </file>
-  <file src="src/Compress/Rar.php">
-    <ImplementedReturnTypeMismatch>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[string|null]]></code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidNullableReturnType>
-      <code><![CDATA[string]]></code>
-    </InvalidNullableReturnType>
-    <NullableReturnStatement>
-      <code><![CDATA[$this->options['target']]]></code>
-    </NullableReturnStatement>
-    <ParamNameMismatch>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-    </ParamNameMismatch>
-    <PossiblyUndefinedArrayOffset>
-      <code><![CDATA[$this->options['archive']]]></code>
-      <code><![CDATA[$this->options['callback']]]></code>
-      <code><![CDATA[$this->options['password']]]></code>
-      <code><![CDATA[$this->options['target']]]></code>
-    </PossiblyUndefinedArrayOffset>
-    <RedundantCast>
-      <code><![CDATA[(string) $target]]></code>
-    </RedundantCast>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $archive]]></code>
-      <code><![CDATA[(string) $password]]></code>
-    </RedundantCastGivenDocblockType>
-    <TypeDoesNotContainType>
-      <code><![CDATA[! $archive]]></code>
-      <code><![CDATA[! $filelist]]></code>
-      <code><![CDATA[$archive]]></code>
-      <code><![CDATA[$filelist]]></code>
-    </TypeDoesNotContainType>
-    <UndefinedClass>
-      <code><![CDATA[$filelist]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="src/Compress/Snappy.php">
-    <MixedAssignment>
-      <code><![CDATA[$compressed]]></code>
-      <code><![CDATA[$compressed]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$compressed]]></code>
-      <code><![CDATA[$compressed]]></code>
-    </MixedReturnStatement>
-    <ParamNameMismatch>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-    </ParamNameMismatch>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$options]]></code>
-    </PossiblyUnusedParam>
   </file>
   <file src="src/Compress/Tar.php">
     <InvalidNullableReturnType>
@@ -432,37 +328,14 @@
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
+    <MixedReturnStatement>
+      <code><![CDATA[$value]]></code>
+    </MixedReturnStatement>
   </file>
   <file src="src/Decompress.php">
     <PossiblyNullArgument>
       <code><![CDATA[$value]]></code>
     </PossiblyNullArgument>
-  </file>
-  <file src="src/Decrypt.php">
-    <DeprecatedClass>
-      <code><![CDATA[Encrypt]]></code>
-    </DeprecatedClass>
-    <DeprecatedInterface>
-      <code><![CDATA[Decrypt]]></code>
-    </DeprecatedInterface>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code><![CDATA[decrypt]]></code>
-    </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->adapter->decrypt($value)]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NoValue>
-      <code><![CDATA[return $value;]]></code>
-    </NoValue>
   </file>
   <file src="src/DenyList.php">
     <PossiblyUnusedMethod>
@@ -472,353 +345,6 @@
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(bool) $strict]]></code>
     </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Encrypt.php">
-    <DeprecatedInterface>
-      <code><![CDATA[Encrypt\EncryptionAlgorithmInterface]]></code>
-    </DeprecatedInterface>
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidStringClass>
-      <code><![CDATA[new $adapter($options)]]></code>
-    </InvalidStringClass>
-    <MissingPropertyType>
-      <code><![CDATA[$adapter]]></code>
-    </MissingPropertyType>
-    <MixedArgument>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$this->adapter]]></code>
-      <code><![CDATA[$this->adapter]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$adapter]]></code>
-      <code><![CDATA[$adapter]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code><![CDATA[encrypt]]></code>
-      <code><![CDATA[new $adapter($options)]]></code>
-      <code><![CDATA[new $adapter($options)]]></code>
-      <code><![CDATA[toString]]></code>
-    </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->adapter->encrypt($value)]]></code>
-      <code><![CDATA[$this->adapter->toString()]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NoValue>
-      <code><![CDATA[return $value;]]></code>
-    </NoValue>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__call]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapterInstance]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCondition>
-      <code><![CDATA[! is_string($value) && ! is_numeric($value)]]></code>
-    </RedundantCondition>
-  </file>
-  <file src="src/Encrypt/BlockCipher.php">
-    <DeprecatedInterface>
-      <code><![CDATA[BlockCipher]]></code>
-    </DeprecatedInterface>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_string($this->compression)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[CryptBlockCipher::factory($cipherType, $this->encryption)]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MissingPropertyType>
-      <code><![CDATA[$encryption]]></code>
-      <code><![CDATA[$this->encryption]]></code>
-      <code><![CDATA[$this->encryption]]></code>
-      <code><![CDATA[$this->encryption]]></code>
-    </MissingPropertyType>
-    <MixedArgument>
-      <code><![CDATA[$options['compression']]]></code>
-      <code><![CDATA[$options['key']]]></code>
-      <code><![CDATA[$options['vector']]]></code>
-      <code><![CDATA[$this->encryption]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$this->compression]]></code>
-      <code><![CDATA[$this->compression]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAccess>
-      <code><![CDATA[$options['algorithm']]]></code>
-      <code><![CDATA[$options['algorithm']]]></code>
-      <code><![CDATA[$options['hash']]]></code>
-      <code><![CDATA[$options['hash']]]></code>
-      <code><![CDATA[$options['key']]]></code>
-      <code><![CDATA[$options['key_iteration']]]></code>
-      <code><![CDATA[$options['vector']]]></code>
-      <code><![CDATA[$this->encryption['key']]]></code>
-      <code><![CDATA[$this->encryption['vector']]]></code>
-    </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->encryption['key']]]></code>
-      <code><![CDATA[$this->encryption['key']]]></code>
-      <code><![CDATA[$this->encryption['vector']]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$decrypted]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[string]]></code>
-      <code><![CDATA[string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$this->encryption]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code><![CDATA[$decrypted]]></code>
-      <code><![CDATA[$decrypted]]></code>
-      <code><![CDATA[$this->encryption]]></code>
-      <code><![CDATA[$this->encryption['key']]]></code>
-      <code><![CDATA[$this->encryption['vector']]]></code>
-    </MixedReturnStatement>
-    <PossiblyInvalidPropertyAssignmentValue>
-      <code><![CDATA[$compression]]></code>
-    </PossiblyInvalidPropertyAssignmentValue>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-      <code><![CDATA[getCompression]]></code>
-      <code><![CDATA[getEncryption]]></code>
-      <code><![CDATA[getKey]]></code>
-      <code><![CDATA[getVector]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$compression]]></code>
-    </PropertyNotSetInConstructor>
-    <UndefinedMethod>
-      <code><![CDATA[setCipherAlgorithm]]></code>
-      <code><![CDATA[setHashAlgorithm]]></code>
-      <code><![CDATA[setKeyIteration]]></code>
-      <code><![CDATA[setSalt]]></code>
-    </UndefinedMethod>
-  </file>
-  <file src="src/Encrypt/EncryptionAlgorithmInterface.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[decrypt]]></code>
-      <code><![CDATA[encrypt]]></code>
-      <code><![CDATA[toString]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Encrypt/Openssl.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$this->compression]]></code>
-      <code><![CDATA[$this->compression]]></code>
-    </ArgumentTypeCoercion>
-    <DeprecatedInterface>
-      <code><![CDATA[Openssl]]></code>
-    </DeprecatedInterface>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($keys)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[array_values($keys)]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$details['key']]]></code>
-      <code><![CDATA[$details['key']]]></code>
-      <code><![CDATA[$envKey]]></code>
-      <code><![CDATA[$header['size']]]></code>
-      <code><![CDATA[$length]]></code>
-      <code><![CDATA[$length]]></code>
-      <code><![CDATA[$options['compression']]]></code>
-      <code><![CDATA[$options['package']]]></code>
-      <code><![CDATA[$options['passphrase']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayTypeCoercion>
-      <code><![CDATA[$fingerprints[$key]]]></code>
-    </MixedArrayTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$decrypted]]></code>
-      <code><![CDATA[$envKey]]></code>
-      <code><![CDATA[$i]]></code>
-      <code><![CDATA[$i]]></code>
-      <code><![CDATA[$key['envelope']]]></code>
-      <code><![CDATA[$key['private']]]></code>
-      <code><![CDATA[$key['public']]]></code>
-      <code><![CDATA[$length]]></code>
-      <code><![CDATA[$option]]></code>
-      <code><![CDATA[$option]]></code>
-      <code><![CDATA[$option]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$header['size']]]></code>
-      <code><![CDATA[$i]]></code>
-    </MixedOperand>
-    <MixedPropertyTypeCoercion>
-      <code><![CDATA[$this->keys]]></code>
-    </MixedPropertyTypeCoercion>
-    <MixedReturnStatement>
-      <code><![CDATA[$decrypted]]></code>
-      <code><![CDATA[$decrypted]]></code>
-    </MixedReturnStatement>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-      <code><![CDATA[getCompression]]></code>
-      <code><![CDATA[getPackage]]></code>
-      <code><![CDATA[getPrivateKey]]></code>
-      <code><![CDATA[getPublicKey]]></code>
-      <code><![CDATA[setEnvelopeKey]]></code>
-      <code><![CDATA[setPrivateKey]]></code>
-      <code><![CDATA[setPublicKey]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $package]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_string($key)]]></code>
-    </RedundantConditionGivenDocblockType>
-    <RiskyTruthyFalsyComparison>
-      <code><![CDATA[empty($envelope)]]></code>
-    </RiskyTruthyFalsyComparison>
-  </file>
-  <file src="src/File/Decrypt.php">
-    <DeprecatedClass>
-      <code><![CDATA[Filter\Decrypt]]></code>
-      <code><![CDATA[Filter\Decrypt]]></code>
-      <code><![CDATA[parent::filter($content)]]></code>
-    </DeprecatedClass>
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
-    </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch>
-      <code><![CDATA[string|array]]></code>
-      <code><![CDATA[string|array]]></code>
-    </ImplementedReturnTypeMismatch>
-    <MixedArgument>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArrayAssignment>
-      <code><![CDATA[$uploadData['tmp_name']]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$uploadData['tmp_name']]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string|array]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$uploadData]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NoValue>
-      <code><![CDATA[return $value;]]></code>
-    </NoValue>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[$filename]]></code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$uploadData]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getFilename]]></code>
-      <code><![CDATA[setFilename]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$filename]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantPropertyInitializationCheck>
-      <code><![CDATA[isset($this->filename)]]></code>
-    </RedundantPropertyInitializationCheck>
-  </file>
-  <file src="src/File/Encrypt.php">
-    <DeprecatedClass>
-      <code><![CDATA[Filter\Encrypt]]></code>
-      <code><![CDATA[parent::filter($content)]]></code>
-    </DeprecatedClass>
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_scalar($value) && ! is_array($value)]]></code>
-    </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch>
-      <code><![CDATA[string|array]]></code>
-    </ImplementedReturnTypeMismatch>
-    <MixedArgument>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArrayAssignment>
-      <code><![CDATA[$uploadData['tmp_name']]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$uploadData['tmp_name']]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string|array]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$this->filename]]></code>
-      <code><![CDATA[$uploadData]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NoValue>
-      <code><![CDATA[return $value;]]></code>
-    </NoValue>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[$filename]]></code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$uploadData]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getFilename]]></code>
-      <code><![CDATA[setFilename]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$filename]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantPropertyInitializationCheck>
-      <code><![CDATA[isset($this->filename)]]></code>
-    </RedundantPropertyInitializationCheck>
   </file>
   <file src="src/File/LowerCase.php">
     <MixedAssignment>
@@ -1003,32 +529,6 @@
     </RedundantFunctionCall>
   </file>
   <file src="src/FilterPluginManager.php">
-    <DeprecatedClass>
-      <code><![CDATA[Blacklist::class]]></code>
-      <code><![CDATA[Decrypt::class]]></code>
-      <code><![CDATA[Decrypt::class]]></code>
-      <code><![CDATA[Decrypt::class]]></code>
-      <code><![CDATA[Decrypt::class]]></code>
-      <code><![CDATA[Decrypt::class]]></code>
-      <code><![CDATA[Encrypt::class]]></code>
-      <code><![CDATA[Encrypt::class]]></code>
-      <code><![CDATA[Encrypt::class]]></code>
-      <code><![CDATA[Encrypt::class]]></code>
-      <code><![CDATA[Encrypt::class]]></code>
-      <code><![CDATA[File\Decrypt::class]]></code>
-      <code><![CDATA[File\Decrypt::class]]></code>
-      <code><![CDATA[File\Decrypt::class]]></code>
-      <code><![CDATA[File\Decrypt::class]]></code>
-      <code><![CDATA[File\Decrypt::class]]></code>
-      <code><![CDATA[File\Decrypt::class]]></code>
-      <code><![CDATA[File\Encrypt::class]]></code>
-      <code><![CDATA[File\Encrypt::class]]></code>
-      <code><![CDATA[File\Encrypt::class]]></code>
-      <code><![CDATA[File\Encrypt::class]]></code>
-      <code><![CDATA[File\Encrypt::class]]></code>
-      <code><![CDATA[File\Encrypt::class]]></code>
-      <code><![CDATA[Whitelist::class]]></code>
-    </DeprecatedClass>
     <DuplicateArrayKey>
       <code><![CDATA[ToInt::class                       => InvokableFactory::class]]></code>
       <code><![CDATA[ToNull::class                      => InvokableFactory::class]]></code>
@@ -1113,7 +613,7 @@
       <code><![CDATA[$spec[0]]]></code>
     </InvalidArrayAccess>
     <InvalidArrayOffset>
-      <code><![CDATA[$source[ltrim($sourceName, ':')]]]></code>
+      <code><![CDATA[$value[ltrim($sourceName, ':')]]]></code>
     </InvalidArrayOffset>
     <MixedArgument>
       <code><![CDATA[$options['pluginManager']]]></code>
@@ -1124,8 +624,8 @@
       <code><![CDATA[$processedPart]]></code>
       <code><![CDATA[$rule]]></code>
       <code><![CDATA[$rules[$spec]]]></code>
-      <code><![CDATA[$source[$ruleName]]]></code>
       <code><![CDATA[$spec]]></code>
+      <code><![CDATA[$value[$ruleName]]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$sourceName]]></code>
@@ -1141,11 +641,11 @@
       <code><![CDATA[$ruleFilter]]></code>
       <code><![CDATA[$ruleValue]]></code>
       <code><![CDATA[$sourceValue]]></code>
-      <code><![CDATA[$source[ltrim($sourceName, ':')]]]></code>
       <code><![CDATA[$temp['rules']]]></code>
       <code><![CDATA[$temp['target']]]></code>
       <code><![CDATA[$temp['targetReplacementIdentifier']]]></code>
       <code><![CDATA[$temp['throwTargetExceptionsOn']]]></code>
+      <code><![CDATA[$value[ltrim($sourceName, ':')]]]></code>
     </MixedAssignment>
     <MixedFunctionCall>
       <code><![CDATA[$ruleFilter($processedPart)]]></code>
@@ -1162,14 +662,11 @@
       <code><![CDATA[$this->rules[$spec][$index]]]></code>
     </MixedReturnStatement>
     <MixedStringOffsetAssignment>
-      <code><![CDATA[$source[ltrim($sourceName, ':')]]]></code>
+      <code><![CDATA[$value[ltrim($sourceName, ':')]]]></code>
     </MixedStringOffsetAssignment>
     <MoreSpecificImplementedParamType>
-      <code><![CDATA[$source]]></code>
+      <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
-    <ParamNameMismatch>
-      <code><![CDATA[$source]]></code>
-    </ParamNameMismatch>
     <PossiblyUnusedReturnValue>
       <code><![CDATA[self]]></code>
     </PossiblyUnusedReturnValue>
@@ -1207,9 +704,6 @@
     </UnusedClass>
   </file>
   <file src="src/PregReplace.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$pattern]]></code>
-    </ArgumentTypeCoercion>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($pattern) && ! is_string($pattern)]]></code>
       <code><![CDATA[! is_array($replacement) && ! is_string($replacement)]]></code>
@@ -1299,9 +793,6 @@
       <code><![CDATA[$typeOrOptions === '']]></code>
       <code><![CDATA[$typeOrOptions === '']]></code>
     </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
     <PossiblyNullArgument>
       <code><![CDATA[$type]]></code>
     </PossiblyNullArgument>
@@ -1338,15 +829,7 @@
       <code><![CDATA[setEnforcedScheme]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src/Whitelist.php">
-    <InvalidExtendClass>
-      <code><![CDATA[AllowList]]></code>
-    </InvalidExtendClass>
-  </file>
   <file src="src/Word/AbstractSeparator.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($separator)]]></code>
-    </DocblockTypeContradiction>
     <PossiblyInvalidArgument>
       <code><![CDATA[$separator]]></code>
     </PossiblyInvalidArgument>
@@ -1356,10 +839,6 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[getSeparator]]></code>
     </PossiblyUnusedMethod>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_array($separator) && isset($separator['separator']) && is_string($separator['separator'])]]></code>
-      <code><![CDATA[is_string($separator['separator'])]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Word/SeparatorToCamelCase.php">
     <MissingClosureParamType>
@@ -1457,11 +936,6 @@
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/BlacklistTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[new BlacklistFilter()]]></code>
-    </DeprecatedClass>
-  </file>
   <file src="test/BooleanTest.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$type]]></code>
@@ -1520,27 +994,6 @@
       <code><![CDATA[null]]></code>
       <code><![CDATA[null]]></code>
     </NullArgument>
-  </file>
-  <file src="test/Compress/LzfTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[new Lzf()]]></code>
-      <code><![CDATA[new Lzf()]]></code>
-    </DeprecatedClass>
-  </file>
-  <file src="test/Compress/RarTest.php">
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[bool]]></code>
-    </PossiblyUnusedReturnValue>
-  </file>
-  <file src="test/Compress/SnappyTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[new SnappyCompression()]]></code>
-      <code><![CDATA[new SnappyCompression()]]></code>
-      <code><![CDATA[new SnappyCompression()]]></code>
-      <code><![CDATA[new SnappyCompression()]]></code>
-      <code><![CDATA[new SnappyCompression()]]></code>
-      <code><![CDATA[new SnappyCompression()]]></code>
-    </DeprecatedClass>
   </file>
   <file src="test/CompressTest.php">
     <MixedAssignment>
@@ -1753,19 +1206,6 @@
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/StaticFilterTest.php">
-    <MissingClosureParamType>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MissingClosureParamType>
-    <MixedAssignment>
-      <code><![CDATA[$filteredValue]]></code>
-    </MixedAssignment>
-    <UnusedClosureParam>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </UnusedClosureParam>
-  </file>
   <file src="test/StringPrefixTest.php">
     <MixedArgument>
       <code><![CDATA[$filter('sample')]]></code>
@@ -1858,11 +1298,6 @@
     <InvalidArgument>
       <code><![CDATA[true]]></code>
     </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$expected]]></code>
       <code><![CDATA[$expected]]></code>
