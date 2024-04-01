@@ -1027,6 +1027,12 @@
       <code><![CDATA[File\Encrypt::class]]></code>
       <code><![CDATA[File\Encrypt::class]]></code>
       <code><![CDATA[File\Encrypt::class]]></code>
+      <code><![CDATA[UriNormalize::class]]></code>
+      <code><![CDATA[UriNormalize::class]]></code>
+      <code><![CDATA[UriNormalize::class]]></code>
+      <code><![CDATA[UriNormalize::class]]></code>
+      <code><![CDATA[UriNormalize::class]]></code>
+      <code><![CDATA[UriNormalize::class]]></code>
       <code><![CDATA[Whitelist::class]]></code>
     </DeprecatedClass>
     <DuplicateArrayKey>
@@ -1895,6 +1901,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UriNormalizeTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[new UriNormalize()]]></code>
+      <code><![CDATA[new UriNormalize()]]></code>
+      <code><![CDATA[new UriNormalize(['enforcedScheme' => $scheme])]]></code>
+    </DeprecatedClass>
     <PossiblyUnusedMethod>
       <code><![CDATA[abnormalUriProvider]]></code>
       <code><![CDATA[enforcedSchemeTestcaseProvider]]></code>

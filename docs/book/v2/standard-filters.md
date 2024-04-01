@@ -1931,6 +1931,9 @@ as the result.
 
 ## UriNormalize
 
+CAUTION: **Deprecated**
+This filter is deprecated since version 2.36.0 and will be remove in version 3.0. There will not be a replacement.
+
 This filter sets the scheme on a URI if the scheme is missing.
 
 ### Supported Options

@@ -16,6 +16,8 @@ use function is_scalar;
 use function str_contains;
 
 /**
+ * @deprecated This filter will be removed in version 3.0 without replacement
+ *
  * @psalm-type Options = array{
  *     default_scheme?: string,
  *     enforced_scheme?: string,
