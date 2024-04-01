@@ -21,7 +21,7 @@ use function vsprintf;
  * @psalm-type InputArray = array<string, string>
  * @template TOptions of Options
  * @template-extends AbstractFilter<TOptions>
- * @template TInput of array<array-key, string>
+ * @template TInput of array<array-key, numeric>
  */
 abstract class AbstractDateDropdown extends AbstractFilter
 {
