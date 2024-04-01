@@ -11,9 +11,9 @@ namespace Laminas\Filter;
  *     ...
  * }
  * @psalm-type InputArray = array{
- *      year: numeric,
- *      month: numeric,
- *      day: numeric,
+ *      year: numeric-string,
+ *      month: numeric-string,
+ *      day: numeric-string,
  * }
  * @template TOptions of Options
  * @template-extends AbstractDateDropdown<TOptions, InputArray>

@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
   <file src="src/AbstractDateDropdown.php">
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </MixedArgumentTypeCoercion>
     <PossiblyUnusedMethod>
       <code><![CDATA[setNullOnAllEmpty]]></code>
       <code><![CDATA[setNullOnEmpty]]></code>
     </PossiblyUnusedMethod>
-    <RiskyTruthyFalsyComparison>
-      <code><![CDATA[empty($value)]]></code>
-    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/AbstractFilter.php">
     <DocblockTypeContradiction>
@@ -325,9 +319,6 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/DateTimeSelect.php">
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </MixedArgumentTypeCoercion>
     <MixedReturnStatement>
       <code><![CDATA[$value]]></code>
     </MixedReturnStatement>
@@ -548,32 +539,6 @@
     <PossiblyUnusedProperty>
       <code><![CDATA[$shareByDefault]]></code>
     </PossiblyUnusedProperty>
-  </file>
-  <file src="src/FilterPluginManagerFactory.php">
-    <DeprecatedClass>
-      <code><![CDATA[new Config($config['filters'])]]></code>
-    </DeprecatedClass>
-    <DeprecatedInterface>
-      <code><![CDATA[FilterPluginManagerFactory]]></code>
-    </DeprecatedInterface>
-    <MissingParamType>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$requestedName]]></code>
-    </MissingParamType>
-    <MissingPropertyType>
-      <code><![CDATA[$creationOptions]]></code>
-    </MissingPropertyType>
-    <MixedArgument>
-      <code><![CDATA[$config['filters']]]></code>
-      <code><![CDATA[$this->creationOptions]]></code>
-    </MixedArgument>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$options]]></code>
-    </MoreSpecificImplementedParamType>
-    <ParamNameMismatch>
-      <code><![CDATA[$container]]></code>
-    </ParamNameMismatch>
   </file>
   <file src="src/FilterProviderInterface.php">
     <UnusedClass>
@@ -852,23 +817,10 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Word/Service/SeparatorToSeparatorFactory.php">
-    <DeprecatedInterface>
-      <code><![CDATA[SeparatorToSeparatorFactory]]></code>
-    </DeprecatedInterface>
-    <MissingParamType>
-      <code><![CDATA[$creationOptions]]></code>
-    </MissingParamType>
-    <MissingReturnType>
-      <code><![CDATA[setCreationOptions]]></code>
-    </MissingReturnType>
-    <MixedArgument>
-      <code><![CDATA[$options['replacement_separator'] ?? '-']]></code>
-      <code><![CDATA[$options['search_separator'] ?? ' ']]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-      <code><![CDATA[setCreationOptions]]></code>
-    </PossiblyUnusedMethod>
+    <UnusedParam>
+      <code><![CDATA[$container]]></code>
+      <code><![CDATA[$requestedName]]></code>
+    </UnusedParam>
   </file>
   <file src="src/Word/UnderscoreToStudlyCase.php">
     <MissingClosureParamType>
@@ -1087,26 +1039,6 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[staticUcaseFilter]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/FilterPluginManagerFactoryTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getServiceLocator]]></code>
-    </DeprecatedMethod>
-    <MissingClosureParamType>
-      <code><![CDATA[$container]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MissingClosureParamType>
-    <MissingClosureReturnType>
-      <code><![CDATA[static fn($value) => $value]]></code>
-      <code><![CDATA[static fn($value) => $value]]></code>
-    </MissingClosureReturnType>
-    <MissingReturnType>
-      <code><![CDATA[testFactoryConfiguresPluginManagerUnderServiceManagerV2]]></code>
-    </MissingReturnType>
-    <UnusedClosureParam>
-      <code><![CDATA[$container]]></code>
-    </UnusedClosureParam>
   </file>
   <file src="test/HtmlEntitiesTest.php">
     <PossiblyUnusedMethod>

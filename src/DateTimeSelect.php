@@ -15,12 +15,12 @@ use function vsprintf;
  *     ...
  * }
  * @psalm-type InputArray = array{
- *     year: numeric,
- *     month: numeric,
- *     day: numeric,
- *     hour: numeric,
- *     minute: numeric,
- *     second: numeric
+ *     year: numeric-string,
+ *     month: numeric-string,
+ *     day: numeric-string,
+ *     hour: numeric-string,
+ *     minute: numeric-string,
+ *     second: numeric-string,
  * }
  * @template TOptions of Options
  * @template-extends AbstractDateDropdown<TOptions, InputArray>
