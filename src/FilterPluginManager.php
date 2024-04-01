@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use Laminas\Filter\Exception\RuntimeException;
-use Laminas\I18n\Filter\Alnum;
-use Laminas\I18n\Filter\Alpha;
-use Laminas\I18n\Filter\NumberFormat;
-use Laminas\I18n\Filter\NumberParse;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -35,18 +31,6 @@ final class FilterPluginManager extends AbstractPluginManager
         'Int'  => ToInt::class,
         'null' => ToNull::class,
         'Null' => ToNull::class,
-
-        // I18n filters
-        'alnum'        => Alnum::class,
-        'Alnum'        => Alnum::class,
-        'alpha'        => Alpha::class,
-        'Alpha'        => Alpha::class,
-        'numberformat' => NumberFormat::class,
-        'numberFormat' => NumberFormat::class,
-        'NumberFormat' => NumberFormat::class,
-        'numberparse'  => NumberParse::class,
-        'numberParse'  => NumberParse::class,
-        'NumberParse'  => NumberParse::class,
 
         // Standard filters
         'allowlist'                  => AllowList::class,
@@ -189,10 +173,6 @@ final class FilterPluginManager extends AbstractPluginManager
         'WordUnderscoreToSeparator'  => Word\UnderscoreToSeparator::class,
 
         // Legacy Zend Framework aliases
-        'Zend\I18n\Filter\Alnum'                  => Alnum::class,
-        'Zend\I18n\Filter\Alpha'                  => Alpha::class,
-        'Zend\I18n\Filter\NumberFormat'           => NumberFormat::class,
-        'Zend\I18n\Filter\NumberParse'            => NumberParse::class,
         'Zend\Filter\BaseName'                    => BaseName::class,
         'Zend\Filter\Boolean'                     => Boolean::class,
         'Zend\Filter\Callback'                    => Callback::class,
@@ -242,10 +222,6 @@ final class FilterPluginManager extends AbstractPluginManager
         'zendfiltertoint'                      => ToInt::class,
         'zendfiltertofloat'                    => ToFloat::class,
         'zendfiltertonull'                     => ToNull::class,
-        'zendi18nfilteralnum'                  => Alnum::class,
-        'zendi18nfilteralpha'                  => Alpha::class,
-        'zendi18nfilternumberformat'           => NumberFormat::class,
-        'zendi18nfilternumberparse'            => NumberParse::class,
         'zendfilterbasename'                   => BaseName::class,
         'zendfilterboolean'                    => Boolean::class,
         'zendfiltercallback'                   => Callback::class,
@@ -296,12 +272,6 @@ final class FilterPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $factories = [
-        // I18n filters
-        Alnum::class        => InvokableFactory::class,
-        Alpha::class        => InvokableFactory::class,
-        NumberFormat::class => InvokableFactory::class,
-        NumberParse::class  => InvokableFactory::class,
-
         // Standard filters
         AllowList::class                   => InvokableFactory::class,
         BaseName::class                    => InvokableFactory::class,
@@ -356,10 +326,6 @@ final class FilterPluginManager extends AbstractPluginManager
         'laminasfiltertoint'                      => InvokableFactory::class,
         'laminasfiltertofloat'                    => InvokableFactory::class,
         'laminasfiltertonull'                     => InvokableFactory::class,
-        'laminasi18nfilteralnum'                  => InvokableFactory::class,
-        'laminasi18nfilteralpha'                  => InvokableFactory::class,
-        'laminasi18nfilternumberformat'           => InvokableFactory::class,
-        'laminasi18nfilternumberparse'            => InvokableFactory::class,
         'laminasfilterbasename'                   => InvokableFactory::class,
         'laminasfilterboolean'                    => InvokableFactory::class,
         'laminasfiltercallback'                   => InvokableFactory::class,
