@@ -809,26 +809,6 @@
       <code><![CDATA[$encodingOrOptions]]></code>
     </PossiblyInvalidArgument>
   </file>
-  <file src="src/UriNormalize.php">
-    <InvalidCatch>
-      <code><![CDATA[try {
-            $uri = UriFactory::factory($value, $defaultScheme);
-            if ($this->enforcedScheme !== null && $uri->getScheme() === null) {
-                $this->enforceScheme($uri);
-            }
-        } catch (UriException) {
-            // We are unable to parse / enforce scheme with the given config and input
-            return $value;
-        }]]></code>
-    </InvalidCatch>
-    <PossiblyNullArgument>
-      <code><![CDATA[$defaultScheme]]></code>
-    </PossiblyNullArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setDefaultScheme]]></code>
-      <code><![CDATA[setEnforcedScheme]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="src/Word/AbstractSeparator.php">
     <PossiblyInvalidArgument>
       <code><![CDATA[$separator]]></code>
@@ -1320,13 +1300,6 @@
   </file>
   <file src="test/UpperCaseWordsTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[returnUnfilteredDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/UriNormalizeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[abnormalUriProvider]]></code>
-      <code><![CDATA[enforcedSchemeTestcaseProvider]]></code>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
