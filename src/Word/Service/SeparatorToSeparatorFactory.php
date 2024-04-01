@@ -16,8 +16,7 @@ use function is_array;
 use function iterator_to_array;
 use function sprintf;
 
-/** @final */
-class SeparatorToSeparatorFactory implements FactoryInterface
+final class SeparatorToSeparatorFactory implements FactoryInterface
 {
     /**
      * Options to pass to the constructor (when used in v2), if any.

@@ -17,9 +17,8 @@ use function is_array;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class DenyList extends AbstractFilter
+final class DenyList extends AbstractFilter
 {
     /** @var bool */
     protected $strict = false;
@@ -86,7 +85,7 @@ class DenyList extends AbstractFilter
      *
      * Will return null if $value is present in the black-list. If $value is NOT present then it will return $value.
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return in_array($value, $this->getList(), $this->getStrict()) ? null : $value;
     }

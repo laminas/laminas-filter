@@ -86,11 +86,9 @@ class SeparatorToSeparator extends AbstractFilter
      *
      * Returns the string $value, replacing the searched separators with the defined ones
      *
-     * @param  string|mixed $value
-     * @return mixed
      * @psalm-return ($value is string ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,

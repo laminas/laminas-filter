@@ -11,19 +11,15 @@ use function str_replace;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
- * @final
  */
-class StripNewlines extends AbstractFilter
+final class StripNewlines extends AbstractFilter
 {
     /**
      * Defined by Laminas\Filter\FilterInterface
      *
      * Returns $value without newline control characters
-     *
-     * @param  mixed $value
-     * @return mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,

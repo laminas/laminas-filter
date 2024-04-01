@@ -15,15 +15,10 @@ use function str_replace;
  * }
  * @template TOptions of Options
  * @extends AbstractSeparator<TOptions>
- * @final
  */
-class DashToSeparator extends AbstractSeparator
+final class DashToSeparator extends AbstractSeparator
 {
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,

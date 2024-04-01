@@ -13,38 +13,11 @@ use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
-use function in_array;
 use function strpos;
 
 class FilterPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
-
-    /**
-     * The following aliases are skipped because they are deprecated crypto related filters.
-     *
-     * These deprecated filters rely on `laminas-crypt` which is not fully compatible with PHP 8.2 and OpenSSL 3+
-     */
-    private const SKIPPED_ALIASES = [
-        'decrypt',
-        'encrypt',
-        'Decrypt',
-        'Encrypt',
-        'filedecrypt',
-        'fileencrypt',
-        'fileDecrypt',
-        'fileEncrypt',
-        'FileDecrypt',
-        'FileEncrypt',
-        'Zend\Filter\Decrypt',
-        'Zend\Filter\Encrypt',
-        'Zend\Filter\File\Decrypt',
-        'Zend\Filter\File\Encrypt',
-        'zendfilterdecrypt',
-        'zendfilterencrypt',
-        'zendfilterfiledecrypt',
-        'zendfilterfileencrypt',
-    ];
 
     protected static function getPluginManager(): FilterPluginManager
     {
@@ -79,10 +52,6 @@ class FilterPluginManagerCompatibilityTest extends TestCase
 
             // Skipping as it has required options
             if (strpos($target, 'DataUnitFormatter') !== false) {
-                continue;
-            }
-
-            if (in_array($alias, self::SKIPPED_ALIASES, true)) {
                 continue;
             }
 
