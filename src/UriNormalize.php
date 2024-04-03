@@ -16,7 +16,8 @@ use function is_scalar;
 use function str_contains;
 
 /**
- * @deprecated This filter will be removed in version 3.0 without replacement
+ * @deprecated This filter will be removed in version 3.0
+ *             The {@link ForceUriScheme} filter partially replicates functionality here.
  *
  * @psalm-type Options = array{
  *     default_scheme?: string,
