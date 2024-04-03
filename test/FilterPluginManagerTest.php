@@ -9,7 +9,6 @@ use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\ToInt;
 use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
-use Laminas\ServiceManager\ServiceManager;
 use LaminasTest\Filter\TestAsset\NotAValidFilter;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;

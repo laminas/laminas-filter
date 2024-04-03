@@ -143,7 +143,6 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
      * Retrieve a filter plugin by name
      *
      * @template T of FilterInterface
-     *
      * @param class-string<T>|string $name
      * @return ($name is class-string<T> ? T : InstanceType)
      */

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\AllowList as AllowListFilter;
-use Laminas\Filter\FilterPluginManager;
-use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
