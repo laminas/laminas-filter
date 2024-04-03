@@ -29,7 +29,7 @@ final class Decompress extends Compress
      *
      * Decompresses the content $value with the defined settings
      *
-     * @param  mixed $value Content to decompress
+     * @param mixed $value Content to decompress
      * @return mixed|string The decompressed content
      */
     public function filter(mixed $value): mixed

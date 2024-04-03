@@ -20,7 +20,7 @@ use function vsprintf;
  *     day: numeric,
  *     hour: numeric,
  *     minute: numeric,
- *     second: numeric
+ *     second: numeric,
  * }
  * @template TOptions of Options
  * @template-extends AbstractDateDropdown<TOptions, InputArray>

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use function array_reduce;
-use function assert;
 use function count;
 use function is_array;
 use function is_iterable;
@@ -22,7 +21,7 @@ use function vsprintf;
  * @psalm-type InputArray = array<string, string>
  * @template TOptions of Options
  * @template-extends AbstractFilter<TOptions>
- * @template TInput of array
+ * @template TInput of array<array-key, numeric>
  */
 abstract class AbstractDateDropdown extends AbstractFilter
 {
@@ -99,22 +98,23 @@ abstract class AbstractDateDropdown extends AbstractFilter
         // Convert the date to a specific format
         if (
             $this->isNullOnEmpty()
-            && array_reduce($value, [self::class, 'reduce'], false)
+            && array_reduce($value, self::reduce(...), false)
         ) {
             return null;
         }
 
         if (
             $this->isNullOnAllEmpty()
-            && array_reduce($value, [self::class, 'reduce'], true)
+            && array_reduce($value, self::reduce(...), true)
         ) {
             return null;
         }
 
-        $this->filterable($value);
-        assert(is_array($value));
-
         ksort($value);
+        $this->filterable($value);
+
+        /** @psalm-var array<array-key, string> $value Forcing the type here because it has already been asserted */
+
         return vsprintf($this->format, $value);
     }
 
@@ -123,6 +123,7 @@ abstract class AbstractDateDropdown extends AbstractFilter
      *
      * @param array $value
      * @throws Exception\RuntimeException
+     * @psalm-assert TInput $value
      */
     protected function filterable(array $value): void
     {
@@ -140,8 +141,8 @@ abstract class AbstractDateDropdown extends AbstractFilter
     /**
      * Reduce to a single value
      */
-    private static function reduce(string $soFar, string|null $value): bool
+    private static function reduce(bool $soFar, string|null $value): bool
     {
-        return $soFar || empty($value);
+        return $soFar || ($value === null || $value === '');
     }
 }
