@@ -1932,7 +1932,7 @@ as the result.
 ## UriNormalize
 
 CAUTION: **Deprecated**
-This filter is deprecated since version 2.36.0 and will be remove in version 3.0. There will not be a replacement.
+This filter is deprecated since version 2.36.0 and will be removed in version 3.0. The ability to force the scheme has been moved to the [ForceUriScheme filter](#forceurischeme).
 
 This filter sets the scheme on a URI if the scheme is missing.
 
