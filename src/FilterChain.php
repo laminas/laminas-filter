@@ -121,16 +121,12 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
         return count($this->filters);
     }
 
-    /**
-     * Get plugin manager instance
-     *
-     * @return FilterPluginManager
-     */
-    public function getPluginManager()
+    /** Get plugin manager instance */
+    public function getPluginManager(): FilterPluginManager
     {
         $plugins = $this->plugins;
         if (! $plugins instanceof FilterPluginManager) {
-            $plugins = new FilterPluginManager(new ServiceManager());
+            $plugins = new FilterPluginManager(new ServiceManager(), (new ConfigProvider())()['filters']);
             $this->setPluginManager($plugins);
         }
 
