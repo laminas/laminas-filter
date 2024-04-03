@@ -23,7 +23,7 @@ class FilterPluginManagerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->filters = new FilterPluginManager(new ServiceManager());
+        $this->filters = CreatePluginManager::withDefaults();
     }
 
     public function testFilterSuccessfullyRetrieved(): void
@@ -57,7 +57,7 @@ class FilterPluginManagerTest extends TestCase
             'replacement_separator' => $replacementSeparator,
         ];
 
-        $filter = $this->filters->get('wordseparatortoseparator', $options);
+        $filter = $this->filters->build('wordseparatortoseparator', $options);
 
         self::assertInstanceOf(SeparatorToSeparator::class, $filter);
         self::assertSame($searchSeparator, $filter->getSearchSeparator());
@@ -67,7 +67,7 @@ class FilterPluginManagerTest extends TestCase
     #[Group('7169')]
     public function testFiltersConstructedAreDifferent(): void
     {
-        $filterOne = $this->filters->get(
+        $filterOne = $this->filters->build(
             'wordseparatortoseparator',
             [
                 'search_separator'      => ';',
@@ -75,7 +75,7 @@ class FilterPluginManagerTest extends TestCase
             ]
         );
 
-        $filterTwo = $this->filters->get(
+        $filterTwo = $this->filters->build(
             'wordseparatortoseparator',
             [
                 'search_separator'      => '.',

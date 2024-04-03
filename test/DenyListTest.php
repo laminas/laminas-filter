@@ -39,7 +39,7 @@ class DenyListTest extends TestCase
 
     public function testWithPluginManager(): void
     {
-        $pluginManager = new FilterPluginManager(new ServiceManager());
+        $pluginManager = CreatePluginManager::withDefaults();
         $filter        = $pluginManager->get('DenyList');
 
         self::assertInstanceOf(DenyListFilter::class, $filter);

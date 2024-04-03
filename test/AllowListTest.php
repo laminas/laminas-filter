@@ -39,7 +39,7 @@ class AllowListTest extends TestCase
 
     public function testWithPluginManager(): void
     {
-        $pluginManager = new FilterPluginManager(new ServiceManager());
+        $pluginManager = CreatePluginManager::withDefaults();
         $filter        = $pluginManager->get('AllowList');
 
         self::assertInstanceOf(AllowListFilter::class, $filter);

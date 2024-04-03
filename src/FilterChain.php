@@ -156,8 +156,7 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
      */
     public function plugin($name, array $options = [])
     {
-        $plugins = $this->getPluginManager();
-        return $plugins->get($name, $options);
+        return $this->getPluginManager()->build($name, $options);
     }
 
     /**
@@ -200,7 +199,7 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
         } elseif (empty($options)) {
             $options = null;
         }
-        $filter = $this->getPluginManager()->get($name, $options);
+        $filter = $this->getPluginManager()->build($name, $options);
         return $this->attach($filter, $priority);
     }
 
