@@ -1675,6 +1675,12 @@
       <code><![CDATA[$container]]></code>
     </UnusedClosureParam>
   </file>
+  <file src="test/ForceUriSchemeTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[badSchemeProvider]]></code>
+      <code><![CDATA[filterDataProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/HtmlEntitiesTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
