@@ -12,6 +12,8 @@ nav:
         - 'String Inflection': v2/inflector.md
         - 'Static Filter': v2/static-filter.md
         - 'Writing Filters': v2/writing-filters.md
+      - Migration:
+        - 'Preparing for v3': v2/migration/preparing-for-v3.md
 site_name: laminas-filter
 site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'

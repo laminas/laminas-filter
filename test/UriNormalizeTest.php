@@ -9,6 +9,11 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+/**
+ * @deprecated
+ *
+ * @todo Remove this test in v3.0
+ */
 class UriNormalizeTest extends TestCase
 {
     #[DataProvider('abnormalUriProvider')]
