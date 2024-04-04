@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/filter-chains/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/installation/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Filter Chains - laminas-filter - Laminas Docs</title>
+    <title>Installation - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -142,8 +142,8 @@
 
                     
                         
-    <li class="subnavigation__list-item ">
-        <a href="../installation/" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -171,8 +171,8 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Filter Chains</a>
+    <li class="subnavigation__list-item ">
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
@@ -265,21 +265,6 @@
 
     
     
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#setting-filter-chain-order" class="toc__link nav-link">Setting Filter Chain Order</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#using-the-plugin-manager" class="toc__link nav-link">Using the Plugin Manager</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
 
                 
 
@@ -299,15 +284,8 @@
                         
                     
                 
-                    
-                        
-                        
-                            <li class="breadcrumb-item">Reference</li>
-                        
-                    
-                
 
-                <li class="breadcrumb-item active" aria-current="page">Filter Chains</li>
+                <li class="breadcrumb-item active" aria-current="page">Installation</li>
             
         
     </ol>
@@ -317,70 +295,144 @@
 
 
 
+    <h1>Installation</h1>
+<div class="toc">
+    <h6 class="toc__headline">On this page</h6>
+    <ul class="toc__list">
+        <li class="toc__entry">
+            <a href="#standard-installation" class="toc__link nav-link">Standard Installation</a>
+        </li>
 
+        
+        <li class="toc__entry">
+            <a href="#installation-for-mezzio-and-laminas-mvc-application" class="toc__link nav-link">
+                Installation for a
+                Mezzio
+                or
+                laminas-mvc
+                Application
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+<h2 id="standard-installation">Standard Installation</h2>
+<p>To install the library use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require laminas/laminas-filter</code></pre>
+
+
+
+<h2 id="installation-for-mezzio-and-laminas-mvc-application">
+    Installation for a
+    Mezzio
+    or
+    laminas-mvc
+    Application
+</h2>
+
+<h3>Installation and Automated Configuration</h3>
+<p>
+    The <a href="https://docs.laminas.dev/laminas-component-installer/">laminas-component-installer</a>
+    is the recommended installation method when using in
+    a Mezzio-based
+    or
+    a laminas-mvc-based application.
+    It will automatically inject
+    the config-provider
+    or
+    the module
+    in the configuration during the installation process.
+</p>
+
+<blockquote>
+    <h3>Installation Requirements</h3>
+    <p>
+        The following descriptions depends on the laminas-component-installer component,
+         so be sure to have it installed before getting started.
+    </p>
+
+    <h4>Global Installation</h4>
+    <p>
+        With a <a href="https://docs.laminas.dev/laminas-component-installer/#global-installation">global installation</a>
+        of laminas-component-installer it can be used for all projects without a
+        reinstallation.
+    </p>
+    <pre><code class="language-bash">$ composer global require laminas/laminas-component-installer</code></pre>
+    <h4>As Development Dependency</h4>
+    <pre><code class="language-bash">$ composer require --dev laminas/laminas-component-installer</code></pre>
+</blockquote>
+
+<h4>Install laminas-filter and Inject Configuration</h4>
+<p>To install the library use Composer:</p>
+<pre><code class="language-bash">$ composer require laminas/laminas-filter</code></pre>
+<p>
+    This will install an initial set of dependencies and it will also prompt to
+    inject the component configuration.
+</p>
+<ul>
+    
+    <li>For a Mezzio application, choose <code>config/config.php</code>.</li>
     
     
-        <h2 class="chapter__headline">Reference</h2>
+    <li>For a laminas-mvc application, choose either <code>modules.config.php</code> or <code>application.config.php</code>.</li>
     
+</ul>
+<p>
+    If additional dependencies are to be installed, the option for other packages
+    can be remembered.
+</p>
 
-    <h1 id="filter-chains">Filter Chains</h1>
-<p>Often, multiple filters should be applied to some value in a particular order.
-For example, a login form accepts a username that should be lowercase and
-contain only alphabetic characters.</p>
-<p><code>Laminas\Filter\FilterChain</code> provides a simple method by which filters may be
-chained together. The following code illustrates how to chain together two
-filters for the submitted username and fulfill the above requirements:</p>
-<pre class="highlight"><code class="language-php">// Create a filter chain and add filters to the chain
-$filterChain = new Laminas\Filter\FilterChain();
-$filterChain
-    -&gt;attach(new Laminas\I18n\Filter\Alpha())
-    -&gt;attach(new Laminas\Filter\StringToLower());
+<details><summary>Installation and Manual Configuration</summary>
+<p>
+    If the installer is not used, the manual configuration is needed to add the
+    component to the application.
+</p>
 
-// Filter the username
-$username = $filterChain-&gt;filter($_POST['username']);</code></pre>
-<p>Filters are run in the order they are added to the filter chain. In the above
-example, the username is first removed of any non-alphabetic characters, and
-then any uppercase characters are converted to lowercase.</p>
-<p>Any object that implements <code>Laminas\Filter\FilterInterface</code> may be used in a
-filter chain.</p>
-<h2 id="setting-filter-chain-order">Setting Filter Chain Order</h2>
-<p>For each filter added to the <code>FilterChain</code>, you can set a priority to define
-the chain order. Higher values indicate higher priority (execute first), while
-lower and/or negative values indicate lower priority (execute last). The default value is <code>1000</code>.</p>
-<p>In the following example, any uppercase characters are converted to lowercase
-before any non-alphabetic characters are removed.</p>
-<pre class="highlight"><code class="language-php">// Create a filter chain and add filters to the chain
-$filterChain = new Laminas\Filter\FilterChain();
-$filterChain
-    -&gt;attach(new Laminas\I18n\Filter\Alpha())
-    -&gt;attach(new Laminas\Filter\StringToLower(), 500);</code></pre>
-<h2 id="using-the-plugin-manager">Using the Plugin Manager</h2>
-<p>A <code>FilterPluginManager</code> is attached to every <code>FilterChain</code> instance. Every filter
-that is used in a <code>FilterChain</code> must be known to the <code>FilterPluginManager</code>.</p>
-<p>To add a filter to the <code>FilterChain</code>, use the <code>attachByName()</code> method. The
-first parameter is the name of the filter within the <code>FilterPluginManager</code>. The
-second parameter takes any options for creating the filter instance. The third
-parameter is the priority.</p>
-<pre class="highlight"><code class="language-php">// Create a filter chain and add filters to the chain
-$filterChain = new Laminas\Filter\FilterChain();
-$filterChain
-    -&gt;attachByName('alpha')
-    -&gt;attachByName('stringtolower', ['encoding' =&gt; 'utf-8'], 500);</code></pre>
-<p>The following example shows how to add a custom filter to the <code>FilterPluginManager</code> and the
-<code>FilterChain</code>:</p>
-<pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain();
-$filterChain
-    -&gt;getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
-$filterChain
-    -&gt;attachByName('alpha')
-    -&gt;attachByName('myNewFilter');</code></pre>
-<p>You can also add your own <code>FilterPluginManager</code> implementation:</p>
-<pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain();
-$filterChain-&gt;setPluginManager(new MyFilterPluginManager());
-$filterChain
-    -&gt;attach(new Laminas\I18n\Filter\Alpha())
-    -&gt;attach(new MyCustom\Filter\MyNewFilter());</code></pre>
+<h4>Install laminas-filter</h4>
+<p>To install the library use Composer:</p>
+<pre><code class="language-bash">$ composer require laminas/laminas-filter</code></pre>
+
+
+    <h4>Manual Configuration for a Mezzio-based Application</h4>
+    <p>
+        Add the configuration provider of laminas-filter to the configuration file,
+        e.g. <code>config/config.php</code>:
+    </p>
+
+<pre data-line="5"><code class="language-php">
+$aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
+    // …
+    Mezzio\ConfigProvider::class,
+    Mezzio\Router\ConfigProvider::class,
+    Laminas\Filter\ConfigProvider, // Add this line
+    // …
+]);
+</code></pre>
+
+
+
+    <h4>Manual Configuration for a laminas-mvc-based Application</h4>
+    <p>
+        Add laminas-filter as component at the top of the configuration file for
+        modules, e.g. <code>config/modules.config.php</code>:
+    </p>
+
+<pre data-line="2"><code class="language-php">
+return [
+    'Laminas\Filter\Module', // Add this line
+    'Laminas\Router',
+    'Laminas\Session',
+    'Laminas\Validator',
+    'Application',
+];
+</code></pre>
+
+</details>
+
+
+    
 
 
 
@@ -391,10 +443,10 @@ $filterChain
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../file/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../intro/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    File Filters
+                    Introduction
                 </a>
             
         </li>
@@ -402,9 +454,9 @@ $filterChain
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../inflector/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../standard-filters/">
                     <small class="page-nav__label">Next</small>
-                    String Inflection
+                    Standard Filters
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -455,8 +507,8 @@ $filterChain
 
                     
                         
-    <li class="subnavigation__list-item ">
-        <a href="../installation/" class="subnavigation__link">Installation</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -484,8 +536,8 @@ $filterChain
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Filter Chains</a>
+    <li class="subnavigation__list-item ">
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
