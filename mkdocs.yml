@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - v2:
       - Introduction: v2/intro.md
+      - Installation: v2/installation.md
       - Reference:
         - 'Standard Filters': v2/standard-filters.md
         - 'Word Filters': v2/word.md
@@ -19,6 +20,9 @@ site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
 extra:
     project: Components
+    installation:
+      config_provider_class: 'Laminas\Filter\ConfigProvider'
+      module_class: 'Laminas\Filter\Module'
     current_version: v2
     versions:
       - v2
