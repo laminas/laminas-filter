@@ -16,9 +16,8 @@ use function strlen;
  *     charlist?: string|null,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StringTrim extends AbstractFilter
+final class StringTrim extends AbstractFilter
 {
     /** @var Options */
     protected $options = [
@@ -73,11 +72,9 @@ class StringTrim extends AbstractFilter
      *
      * Returns the string $value with characters stripped from the beginning and end
      *
-     * @param  mixed $value
-     * @return string|mixed
      * @psalm-return ($value is string ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_string($value)) {
             return $value;

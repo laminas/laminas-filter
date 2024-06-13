@@ -25,9 +25,8 @@ use function strtolower;
  *     translations?: array,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class Boolean extends AbstractFilter
+final class Boolean extends AbstractFilter
 {
     public const TYPE_BOOLEAN      = 1;
     public const TYPE_INTEGER      = 2;
@@ -207,9 +206,8 @@ class Boolean extends AbstractFilter
      * Returns a boolean representation of $value
      *
      * @param  null|array|bool|float|int|string $value
-     * @return bool|mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         $type    = $this->getType();
         $casting = $this->getCasting();

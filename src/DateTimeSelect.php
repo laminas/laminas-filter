@@ -14,28 +14,27 @@ use function vsprintf;
  *     null_on_all_empty?: bool,
  *     ...
  * }
+ * @psalm-type InputArray = array{
+ *     year: numeric,
+ *     month: numeric,
+ *     day: numeric,
+ *     hour: numeric,
+ *     minute: numeric,
+ *     second: numeric,
+ * }
  * @template TOptions of Options
- * @template-extends AbstractDateDropdown<TOptions>
- * @final
+ * @template-extends AbstractDateDropdown<TOptions, InputArray>
  */
-class DateTimeSelect extends AbstractDateDropdown
+final class DateTimeSelect extends AbstractDateDropdown
 {
     /**
      * Year-Month-Day Hour:Min:Sec
-     *
-     * @var string
      */
-    protected $format = '%6$s-%4$s-%1$s %2$s:%3$s:%5$s';
+    protected string $format      = '%6$s-%4$s-%1$s %2$s:%3$s:%5$s';
+    protected int $expectedInputs = 6;
 
-    /** @var int */
-    protected $expectedInputs = 6;
-
-    /**
-     * @param mixed $value
-     * @return array|mixed|null|string
-     * @throws Exception\RuntimeException
-     */
-    public function filter($value)
+    /** @inheritDoc */
+    public function filter(mixed $value): mixed
     {
         if (! is_array($value)) {
             // nothing to do
@@ -53,7 +52,7 @@ class DateTimeSelect extends AbstractDateDropdown
                 || (isset($value['second']) && empty($value['second']))
             )
         ) {
-            return;
+            return null;
         }
 
         if (
@@ -64,11 +63,11 @@ class DateTimeSelect extends AbstractDateDropdown
                 && empty($value['day'])
                 && empty($value['hour'])
                 && empty($value['minute'])
-                && (! isset($value['second']) || empty($value['second']))
+                && empty($value['second'])
             )
         ) {
             // Cannot handle this value
-            return;
+            return null;
         }
 
         if (! isset($value['second'])) {
@@ -79,8 +78,6 @@ class DateTimeSelect extends AbstractDateDropdown
 
         ksort($value);
 
-        $value = vsprintf($this->format, $value);
-
-        return $value;
+        return vsprintf($this->format, $value);
     }
 }

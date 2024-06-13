@@ -25,9 +25,8 @@ use function str_contains;
  *     archive?: string|null,
  * }
  * @extends AbstractCompressionAlgorithm<Options>
- * @final
  */
-class Bz2 extends AbstractCompressionAlgorithm
+final class Bz2 extends AbstractCompressionAlgorithm
 {
     private const DEFAULT_BLOCK_SIZE = 4;
 

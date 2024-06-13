@@ -26,9 +26,8 @@ use const ENT_QUOTES;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class HtmlEntities extends AbstractFilter
+final class HtmlEntities extends AbstractFilter
 {
     /**
      * Corresponds to the second htmlentities() argument
@@ -190,12 +189,10 @@ class HtmlEntities extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param  mixed $value
-     * @return string|mixed
      * @throws Exception\DomainException On encoding mismatches.
      * @psalm-return ($value is scalar ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

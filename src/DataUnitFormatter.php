@@ -22,7 +22,6 @@ use function strtolower;
  *     prefixes?: list<string>,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
 final class DataUnitFormatter extends AbstractFilter
 {
@@ -213,11 +212,9 @@ final class DataUnitFormatter extends AbstractFilter
      *
      * If the value provided is not numeric, the value will remain unfiltered
      *
-     * @param  mixed $value
-     * @return string|mixed
      * @psalm-return ($value is numeric ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_numeric($value)) {
             return $value;

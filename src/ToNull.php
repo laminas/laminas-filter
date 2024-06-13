@@ -21,9 +21,8 @@ use function sprintf;
  *     type: int-mask-of<self::TYPE_*>,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class ToNull extends AbstractFilter
+final class ToNull extends AbstractFilter
 {
     public const TYPE_BOOLEAN     = 1;
     public const TYPE_INTEGER     = 2;
@@ -129,11 +128,8 @@ class ToNull extends AbstractFilter
      *
      * Returns null representation of $value, if value is empty and matches
      * types that should be considered null.
-     *
-     * @param  null|array|bool|float|int|string $value
-     * @return null|mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         $type = $this->getType();
 

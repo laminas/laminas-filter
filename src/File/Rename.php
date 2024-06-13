@@ -34,9 +34,8 @@ use const DIRECTORY_SEPARATOR;
  * }
  * @template TOptions of Options
  * @template-extends Filter\AbstractFilter<TOptions>
- * @final
  */
-class Rename extends Filter\AbstractFilter
+final class Rename extends Filter\AbstractFilter
 {
     /**
      * Internal array of array(source, target, overwrite)
@@ -178,11 +177,11 @@ class Rename extends Filter\AbstractFilter
      * Renames the file $value to the new name set before
      * Returns the file $value, removing all but digit characters
      *
-     * @param  mixed $value Full path of file to change or $_FILES data array
-     * @throws Exception\RuntimeException
+     * @param mixed $value Full path of file to change or $_FILES data array
      * @return mixed|string|array The new filename which has been set
+     * @throws Exception\RuntimeException
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value) && ! is_array($value)) {
             return $value;
