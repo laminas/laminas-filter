@@ -10,7 +10,7 @@ use Laminas\ServiceManager\ServiceManager;
 /**
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  */
-class Module implements FilterProviderInterface
+class Module
 {
     /**
      * Return default laminas-filter configuration for laminas-mvc applications.
@@ -43,11 +43,5 @@ class Module implements FilterProviderInterface
             FilterProviderInterface::class,
             'getFilterConfig'
         );
-    }
-
-    /** @return ServiceManagerConfiguration */
-    public function getFilterConfig(): array
-    {
-        return (new ConfigProvider())()['filters'];
     }
 }

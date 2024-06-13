@@ -517,9 +517,9 @@
     </RedundantFunctionCall>
   </file>
   <file src="src/FilterProviderInterface.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getFilterConfig]]></code>
-    </PossiblyUnusedMethod>
+    <UnusedClass>
+      <code><![CDATA[FilterProviderInterface]]></code>
+    </UnusedClass>
   </file>
   <file src="src/HtmlEntities.php">
     <DocblockTypeContradiction>

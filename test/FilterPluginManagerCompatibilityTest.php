@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Generator;
-use Laminas\Filter\ConfigProvider;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use stdClass;
 use Throwable;
 
 use function assert;
 use function class_exists;
+use function is_string;
 use function strpos;
 
 class FilterPluginManagerCompatibilityTest extends TestCase
@@ -26,9 +27,15 @@ class FilterPluginManagerCompatibilityTest extends TestCase
     /** @return Generator<string, array{0: string, 1: class-string}> */
     public static function aliasProvider(): Generator
     {
-        $aliases = (new ConfigProvider())()['filters']['aliases'] ?? [];
+        $class  = new ReflectionClass(FilterPluginManager::class);
+        $config = $class->getConstant('CONFIGURATION');
+        self::assertIsArray($config);
+        self::assertArrayHasKey('aliases', $config);
+        self::assertIsArray($config['aliases']);
 
-        foreach ($aliases as $alias => $target) {
+        foreach ($config['aliases'] as $alias => $target) {
+            assert(is_string($alias) && is_string($target));
+
             // Skipping as it has required options
             if (strpos($target, 'DataUnitFormatter') !== false) {
                 continue;
