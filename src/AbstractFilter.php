@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Laminas\Stdlib\StringUtils;
 use Traversable;
 
 use function array_key_exists;
@@ -31,16 +30,6 @@ abstract class AbstractFilter implements FilterInterface
      * @var TOptions
      */
     protected $options = [];
-
-    /**
-     * @deprecated Since 2.1.0
-     *
-     * @return bool
-     */
-    public static function hasPcreUnicodeSupport()
-    {
-        return StringUtils::hasPcreUnicodeSupport();
-    }
 
     /**
      * @param  TOptions|iterable $options
