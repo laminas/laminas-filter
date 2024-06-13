@@ -32,48 +32,6 @@
       <code><![CDATA[(bool) $strict]]></code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/Boolean.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$typeOrOptions]]></code>
-    </ArgumentTypeCoercion>
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_array($translations) && ! $translations instanceof Traversable]]></code>
-    </DocblockTypeContradiction>
-    <InvalidNullableReturnType>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[int-mask-of<self::TYPE_*>]]></code>
-    </InvalidNullableReturnType>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->options['translations'][$message]]]></code>
-    </MixedArrayOffset>
-    <MixedAssignment>
-      <code><![CDATA[$flag]]></code>
-      <code><![CDATA[$message]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NullableReturnStatement>
-      <code><![CDATA[$this->options['casting']]]></code>
-      <code><![CDATA[$this->options['type']]]></code>
-    </NullableReturnStatement>
-    <PossiblyNullArgument>
-      <code><![CDATA[$type]]></code>
-    </PossiblyNullArgument>
-    <PossiblyUndefinedArrayOffset>
-      <code><![CDATA[$this->options['casting']]]></code>
-      <code><![CDATA[$this->options['type']]]></code>
-    </PossiblyUndefinedArrayOffset>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getTranslations]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $flag]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_int($value)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/Callback.php">
     <MixedFunctionCall>
       <code><![CDATA[call_user_func_array($this->options['callback'], $params)]]></code>
@@ -836,37 +794,6 @@
   <file src="test/BaseNameTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/BooleanTest.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$type]]></code>
-    </ArgumentTypeCoercion>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$expected]]></code>
-      <code><![CDATA[$expected]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[[$value, $expected]]]></code>
-      <code><![CDATA[[$value, $expected]]]></code>
-    </MixedAssignment>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[combinedTypeTestProvider]]></code>
-      <code><![CDATA[defaultTestProvider]]></code>
-      <code><![CDATA[duplicateProvider]]></code>
-      <code><![CDATA[noCastingTestProvider]]></code>
-      <code><![CDATA[typeTestProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
