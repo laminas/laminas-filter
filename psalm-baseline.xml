@@ -512,33 +512,9 @@
     <MoreSpecificImplementedParamType>
       <code><![CDATA[$options]]></code>
     </MoreSpecificImplementedParamType>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[plugin]]></code>
-    </PossiblyUnusedMethod>
     <RedundantFunctionCall>
       <code><![CDATA[strtolower]]></code>
     </RedundantFunctionCall>
-  </file>
-  <file src="src/FilterPluginManager.php">
-    <DuplicateArrayKey>
-      <code><![CDATA[ToInt::class                       => InvokableFactory::class]]></code>
-      <code><![CDATA[ToNull::class                      => InvokableFactory::class]]></code>
-    </DuplicateArrayKey>
-    <MixedInferredReturnType>
-      <code><![CDATA[($name is class-string ? InstanceType : callable(mixed): mixed)]]></code>
-    </MixedInferredReturnType>
-    <NonInvariantDocblockPropertyType>
-      <code><![CDATA[$factories]]></code>
-    </NonInvariantDocblockPropertyType>
-    <ParamNameMismatch>
-      <code><![CDATA[$name]]></code>
-    </ParamNameMismatch>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[validatePlugin]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$shareByDefault]]></code>
-    </PossiblyUnusedProperty>
   </file>
   <file src="src/FilterProviderInterface.php">
     <UnusedClass>
@@ -616,6 +592,7 @@
       <code><![CDATA[$ruleFilter($processedPart)]]></code>
     </MixedFunctionCall>
     <MixedInferredReturnType>
+      <code><![CDATA[FilterInterface|callable(mixed): mixed]]></code>
       <code><![CDATA[FilterInterface|false]]></code>
       <code><![CDATA[array|false]]></code>
     </MixedInferredReturnType>
@@ -623,6 +600,8 @@
       <code><![CDATA[new $options['pluginManager']()]]></code>
     </MixedMethodCall>
     <MixedReturnStatement>
+      <code><![CDATA[$this->getPluginManager()->get($rule)]]></code>
+      <code><![CDATA[$this->getPluginManager()->get($rule)]]></code>
       <code><![CDATA[$this->rules[$spec]]]></code>
       <code><![CDATA[$this->rules[$spec][$index]]]></code>
     </MixedReturnStatement>
@@ -655,9 +634,6 @@
     </UnusedParam>
   </file>
   <file src="src/Module.php">
-    <MissingReturnType>
-      <code><![CDATA[getConfig]]></code>
-    </MissingReturnType>
     <PossiblyUnusedParam>
       <code><![CDATA[$moduleManager]]></code>
     </PossiblyUnusedParam>
@@ -1039,6 +1015,17 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[staticUcaseFilter]]></code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="test/FilterPluginManagerCompatibilityTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setService]]></code>
+    </DeprecatedMethod>
+  </file>
+  <file src="test/FilterPluginManagerTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setInvokableClass]]></code>
+      <code><![CDATA[setService]]></code>
+    </DeprecatedMethod>
   </file>
   <file src="test/HtmlEntitiesTest.php">
     <PossiblyUnusedMethod>

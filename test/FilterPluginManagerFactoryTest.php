@@ -8,10 +8,10 @@ use Laminas\Filter\Boolean;
 use Laminas\Filter\FilterInterface;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\FilterPluginManagerFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use ReflectionObject;
 
 class FilterPluginManagerFactoryTest extends TestCase
 {
@@ -21,10 +21,6 @@ class FilterPluginManagerFactoryTest extends TestCase
         $factory   = new FilterPluginManagerFactory();
         $filters   = $factory($container);
         self::assertInstanceOf(FilterPluginManager::class, $filters);
-
-        $r = new ReflectionObject($filters);
-        $p = $r->getProperty('creationContext');
-        self::assertSame($container, $p->getValue($filters));
     }
 
     public function testConfiguresFilterServicesWhenFound(): void
@@ -36,7 +32,8 @@ class FilterPluginManagerFactoryTest extends TestCase
                     'test' => Boolean::class,
                 ],
                 'factories' => [
-                    'test-too' => static fn(): MockObject&FilterInterface => $filter,
+                    Boolean::class => InvokableFactory::class,
+                    'test-too'     => static fn(): MockObject&FilterInterface => $filter,
                 ],
             ],
         ];

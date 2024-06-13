@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Laminas\Filter\DenyList as DenyListFilter;
-use Laminas\Filter\FilterPluginManager;
-use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -39,7 +37,7 @@ class DenyListTest extends TestCase
 
     public function testWithPluginManager(): void
     {
-        $pluginManager = new FilterPluginManager(new ServiceManager());
+        $pluginManager = CreatePluginManager::withDefaults();
         $filter        = $pluginManager->get('DenyList');
 
         self::assertInstanceOf(DenyListFilter::class, $filter);
