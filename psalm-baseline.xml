@@ -67,9 +67,6 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[getTranslations]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$constants]]></code>
-    </PossiblyUnusedProperty>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(bool) $flag]]></code>
     </RedundantCastGivenDocblockType>
@@ -737,9 +734,6 @@
     <PossiblyNullArgument>
       <code><![CDATA[$type]]></code>
     </PossiblyNullArgument>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$constants]]></code>
-    </PossiblyUnusedProperty>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[is_int($value)]]></code>
     </RedundantConditionGivenDocblockType>
