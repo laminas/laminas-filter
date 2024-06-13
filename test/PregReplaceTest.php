@@ -10,8 +10,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function preg_match;
-
 class PregReplaceTest extends TestCase
 {
     private PregReplaceFilter $filter;
@@ -19,12 +17,6 @@ class PregReplaceTest extends TestCase
     public function setUp(): void
     {
         $this->filter = new PregReplaceFilter();
-    }
-
-    public function testDetectsPcreUnicodeSupport(): void
-    {
-        $enabled = (bool) @preg_match('/\pL/u', 'a');
-        self::assertSame($enabled, PregReplaceFilter::hasPcreUnicodeSupport());
     }
 
     public function testPassingPatternToConstructorSetsPattern(): void

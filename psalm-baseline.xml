@@ -1095,9 +1095,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/PregReplaceTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[PregReplaceFilter::hasPcreUnicodeSupport()]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[returnNonStringScalarValues]]></code>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
