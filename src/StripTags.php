@@ -286,7 +286,7 @@ final class StripTags extends AbstractFilter
             // Iterate over each matched attribute
             foreach ($matches[1] as $index => $attributeName) {
                 $attributeName      = strtolower($attributeName);
-                $attributeDelimiter = empty($matches[2][$index]) ? $matches[4][$index] : $matches[2][$index];
+                $attributeDelimiter = $matches[2][$index] === '' ? $matches[4][$index] : $matches[2][$index];
                 $attributeValue     = $matches[3][$index] === '' ? $matches[5][$index] : $matches[3][$index];
 
                 // If the attribute is not allowed, then remove it entirely

@@ -45,6 +45,7 @@ final class FilterPluginManager extends AbstractPluginManager
             File\Rename::class                 => InvokableFactory::class,
             File\RenameUpload::class           => InvokableFactory::class,
             File\UpperCase::class              => InvokableFactory::class,
+            ForceUriScheme::class              => InvokableFactory::class,
             HtmlEntities::class                => InvokableFactory::class,
             Inflector::class                   => InvokableFactory::class,
             ToFloat::class                     => InvokableFactory::class,

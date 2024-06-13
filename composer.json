@@ -39,11 +39,11 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.5.0",
-        "pear/archive_tar": "^1.4.14",
-        "phpunit/phpunit": "^10.5.11",
+        "pear/archive_tar": "^1.5.0",
+        "phpunit/phpunit": "^10.5.20",
         "psalm/plugin-phpunit": "^0.19.0",
-        "psr/http-factory": "^1.0.2",
-        "vimeo/psalm": "^5.22.2"
+        "psr/http-factory": "^1.1.0",
+        "vimeo/psalm": "^5.24.0"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",

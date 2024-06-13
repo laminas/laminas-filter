@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - v2:
       - Introduction: v2/intro.md
+      - Installation: v2/installation.md
       - Reference:
         - 'Standard Filters': v2/standard-filters.md
         - 'Word Filters': v2/word.md
@@ -12,6 +13,8 @@ nav:
         - 'String Inflection': v2/inflector.md
         - 'Static Filter': v2/static-filter.md
         - 'Writing Filters': v2/writing-filters.md
+      - Migration:
+        - 'Preparing for v3': v2/migration/preparing-for-v3.md
     - v3:
       - Introduction: v3/intro.md
       - Reference:
@@ -28,6 +31,9 @@ site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
 extra:
     project: Components
+    installation:
+      config_provider_class: 'Laminas\Filter\ConfigProvider'
+      module_class: 'Laminas\Filter\Module'
     current_version: v3
     versions:
       - v2

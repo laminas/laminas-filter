@@ -10,6 +10,7 @@ use Laminas\Filter\PregReplace;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
+use LaminasTest\Filter\TestAsset\StrRepeatFilterInterface;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -77,7 +78,7 @@ class FilterChainTest extends TestCase
         $chain  = new FilterChain();
         $chain->setOptions($config);
         $value         = '<a name="foo"> abc </a><img id="bar" />';
-        $valueExpected = 'ABC <IMG ID="BAR" />';
+        $valueExpected = 'ABC <IMG ID="BAR" />ABC <IMG ID="BAR" />';
         self::assertSame($valueExpected, $chain->filter($value));
     }
 
@@ -86,7 +87,7 @@ class FilterChainTest extends TestCase
         $config        = $this->getChainConfig();
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
-        $valueExpected = 'ABC';
+        $valueExpected = 'ABCABC';
         self::assertSame($valueExpected, $chain->filter($value));
     }
 
@@ -96,7 +97,7 @@ class FilterChainTest extends TestCase
         $config        = new ArrayIterator($config);
         $chain         = new FilterChain($config);
         $value         = '<a name="foo"> abc </a>';
-        $valueExpected = 'ABC';
+        $valueExpected = 'ABCABC';
         self::assertSame($valueExpected, $chain->filter($value));
     }
 
@@ -117,6 +118,7 @@ class FilterChainTest extends TestCase
         return [
             'callbacks' => [
                 ['callback' => [self::class, 'staticUcaseFilter']],
+                ['callback' => new StrRepeatFilterInterface()],
                 [
                     'priority' => 10000,
                     'callback' => static fn(string $value): string => trim($value),

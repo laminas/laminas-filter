@@ -55,6 +55,9 @@ $laminaslove = $strtolower('I LOVE Laminas!');
 
 ## Using the StaticFilter
 
+CAUTION: **Deprecated**
+This filter is deprecated since version 2.15.0 and [will be removed](migration/preparing-for-v3.md#static-filter-removal) in version 3.0.
+
 If it is inconvenient to load a given filter class and create an instance of the
 filter, you can use `StaticFilter` with its `execute()` method as an alternative
 invocation style. The first argument of this method is a data input value, that

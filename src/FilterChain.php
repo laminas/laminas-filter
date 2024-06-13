@@ -28,7 +28,7 @@ use function strtolower;
  *        priority?: int,
  *    }>,
  *    callbacks?: list<array{
- *        callback: callable(mixed): mixed,
+ *        callback: FilterInterface|callable(mixed): mixed,
  *        priority?: int,
  *    }>
  * }
@@ -86,7 +86,7 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
                     foreach ($value as $spec) {
                         $callback = $spec['callback'] ?? false;
                         $priority = $spec['priority'] ?? static::DEFAULT_PRIORITY;
-                        if (is_callable($callback)) {
+                        if (is_callable($callback) || $callback instanceof FilterInterface) {
                             $this->attach($callback, $priority);
                         }
                     }
