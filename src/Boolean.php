@@ -40,13 +40,6 @@ final class Boolean extends AbstractFilter
     public const TYPE_LOCALIZED    = 256;
     public const TYPE_ALL          = 511;
 
-    /**
-     * @deprecated since 2.26 - superseded by self::CONSTANTS
-     *
-     * @var array<self::TYPE_*, string>
-     */
-    protected $constants = self::CONSTANTS;
-
     private const CONSTANTS = [
         self::TYPE_BOOLEAN      => 'boolean',
         self::TYPE_INTEGER      => 'integer',
