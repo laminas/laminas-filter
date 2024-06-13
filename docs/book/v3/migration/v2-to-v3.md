@@ -5,6 +5,10 @@ This document details those changes, and provides suggestions on how to update y
 
 ## Signature and Behaviour Changes
 
+### AbstractFilter
+
+The deprecated method `hasPcreUnicodeSupport()` has been removed. This method had been irrelevant for a long time since reliable Unicode support in `preg_*` functions is available in all supported versions of PHP.
+
 ### FilterInterface
 
 `Laminas\Filter\FilterInterface` now specifies `__invoke()` as well as `filter()` forcing all filters to also be invokable classes.
