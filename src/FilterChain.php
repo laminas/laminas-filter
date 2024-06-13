@@ -180,7 +180,7 @@ final class FilterChain extends AbstractFilter implements Countable, IteratorAgg
      * Retrieves the filter from the attached plugin manager, and then calls attach()
      * with the retrieved instance.
      *
-     * @param class-string|string $name
+     * @param class-string<FilterInterface>|string $name
      * @param  int $priority Priority at which to enqueue filter; defaults to 1000 (higher executes earlier)
      * @return self
      */
