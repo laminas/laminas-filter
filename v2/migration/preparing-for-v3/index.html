@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/static-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/migration/preparing-for-v3/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Static Filter - laminas-filter - Laminas Docs</title>
+    <title>Preparing for v3 - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -124,7 +124,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../../..">laminas-filter</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -137,13 +137,13 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="../intro/" class="subnavigation__link">Introduction</a>
+        <a href="../../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="../installation/" class="subnavigation__link">Installation</a>
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -154,43 +154,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../standard-filters/" class="subnavigation__link">Standard Filters</a>
+        <a href="../../standard-filters/" class="subnavigation__link">Standard Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../word/" class="subnavigation__link">Word Filters</a>
+        <a href="../../word/" class="subnavigation__link">Word Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../file/" class="subnavigation__link">File Filters</a>
+        <a href="../../file/" class="subnavigation__link">File Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+        <a href="../../filter-chains/" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+        <a href="../../inflector/" class="subnavigation__link">String Inflection</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../../static-filter/" class="subnavigation__link">Static Filter</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-filters/" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
@@ -204,8 +204,8 @@
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Preparing for v3</a>
     </li>
 
             
@@ -285,7 +285,7 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#using-custom-filters" class="toc__link nav-link">Using custom Filters</a>
+                        <a href="#removed-features" class="toc__link nav-link">Removed Features</a>
                     </li>
                 
             </ul>
@@ -302,7 +302,7 @@
             <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
 
             
-                <li class="breadcrumb-item"><a href="../..">laminas-filter</a></li>
+                <li class="breadcrumb-item"><a href="../../..">laminas-filter</a></li>
 
                 
                     
@@ -313,12 +313,12 @@
                     
                         
                         
-                            <li class="breadcrumb-item">Reference</li>
+                            <li class="breadcrumb-item">Migration</li>
                         
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Static Filter</li>
+                <li class="breadcrumb-item active" aria-current="page">Preparing for v3</li>
             
         
     </ol>
@@ -331,43 +331,43 @@
 
     
     
-        <h2 class="chapter__headline">Reference</h2>
+        <h2 class="chapter__headline">Migration</h2>
     
 
-    <h1 id="static-filter">Static Filter</h1>
-<div class="admonition caution">
-<p class="admonition-title">Deprecated</p>
-<p>
-This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
-</div>
-<p>If it is inconvenient to load a given filter class and create an instance of
-the filter, you can use <code>StaticFilter</code> with it's method <code>execute()</code> as an
-alternative invocation style. The first argument of this method is a data input
-value that you would pass to the <code>filter()</code> method. The second argument is a
-string, which corresponds to the basename of the filter class, relative to the
-<code>Laminas\Filter</code> namespace. The <code>execute()</code> method automatically loads the class,
-creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
-    '"',
-    'HtmlEntities',
-    ['quotestyle' =&gt; ENT_QUOTES]
-);</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you
-have the need to run a filter for multiple inputs, it's more efficient to
-create an instance of the filter and invoke it.  instance of the filter object
-and calling its <code>filter()</code> method.</p>
-<p>Additionally, <a href="../filter-chains/">filter chains</a> allow you to instantiate and run multiple filters
-on demand to process sets of input data.</p>
-<h2 id="using-custom-filters">Using custom Filters</h2>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to
-amend the standard filter classes:</p>
-<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
-
-StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-<p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
+    <h1 id="preparing-for-version-3">Preparing for Version 3</h1>
+<p>Version 3 will introduce a number of backwards incompatible changes. This document is intended to help you prepare for these changes.</p>
+<h2 id="removed-features">Removed Features</h2>
+<h3 id="inheritance-changes">Inheritance Changes</h3>
+<p>Most filters will be closed to inheritance in v3 by employing the <code>final</code> keyword.
+To prepare for this change, search for classes in your codebase that extend from any of the concrete filters and either re-implement them completely, or consider refactoring them to use composition instead of inheritance.</p>
+<p>If you have extended an existing filter for a use-case that is not handled by this library, also consider sending a patch if you think that the library could benefit from your changes.</p>
+<h3 id="compression-filter-adapter-removal">Compression Filter Adapter Removal</h3>
+<p>The Lzf, Snappy and Rar compression adapters will be removed in version 3.0.
+If you are currently using any of these compression formats with laminas-filter, you will need to either use an alternative format such as Zip, Tar, Gz or Bz2, or, write a custom adapter to support your desired compression format.</p>
+<h3 id="encryption-decryption-filter-removal">Encryption &amp; Decryption Filter Removal</h3>
+<p>These filters have become outdated and will be removed in version 3.0 of this library. We recommend that you make use of a maintained encryption library and <a href="../../writing-filters/">write your own filters</a> if you need to encrypt or decrypt content using the <code>FilterInterface</code> contract.</p>
+<ul>
+<li><code>Laminas\Filter\File\Decrypt</code></li>
+<li><code>Laminas\Filter\File\Encrypt</code></li>
+<li><code>Laminas\Filter\Decrypt</code></li>
+<li><code>Laminas\Filter\Encrypt</code></li>
+</ul>
+<h3 id="static-filter-removal">Static Filter Removal</h3>
+<p><code>Laminas\Filter\StaticFilter</code> will be removed without replacement in v3. Most filters are "new-able" so similar behaviour can be accomplished with:</p>
+<pre class="highlight"><code class="language-php">$filtered = (new \Laminas\Filter\HtmlEntities())('Nuts &amp; Bolts');</code></pre>
+<p>For filters requiring more complex construction, we encourage you to make use of dependency injection and compose the filter itself, or via the <code>FilterPluginManager</code>, for example:</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(\Laminas\Filter\FilterPluginManager::class);
+$filter = $pluginManager-&gt;get(\Laminas\Filter\HtmlEntities::class);
+$filtered = $filter-&gt;filter('A String');</code></pre>
+<h3 id="whitelist-blacklist-filter-removal">Whitelist &amp; Blacklist Filter Removal</h3>
+<p>The deprecated filters <code>Whitelist</code> &amp; <code>Blacklist</code> will be removed in v3 for their more favourably named counterparts <code>AllowList</code> and <code>DenyList</code></p>
+<ul>
+<li><code>Laminas\Filter\Whitelist</code> has been replaced by <a href="../../standard-filters/#allowlist"><code>Laminas\Filter\AllowList</code></a></li>
+<li><code>Laminas\Filter\Blacklist</code> has been replaced by <a href="../../standard-filters/#denylist"><code>Laminas\Filter\DenyList</code></a></li>
+</ul>
+<h3 id="urinormalize-filter-removal">UriNormalize Filter Removal</h3>
+<p>The <a href="../../standard-filters/#urinormalize">UriNormalize</a> filter will be removed in version 3, primarily because its functionality is provided by <code>laminas-uri</code> which is no longer maintained.</p>
+<p>There is not a direct replacement, but, if you were using the filter to normalize URL schemes, this functionality has been preserved in a new filter <a href="../../standard-filters/#forceurischeme">ForceUriScheme</a>.</p>
 
 
 
@@ -378,22 +378,16 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../inflector/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../writing-filters/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    String Inflection
+                    Writing Filters
                 </a>
             
         </li>
 
         
         <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../writing-filters/">
-                    <small class="page-nav__label">Next</small>
-                    Writing Filters
-                    <i class="fa fa-chevron-right"></i>
-                </a>
             
         </li>
     </ul>
@@ -424,7 +418,7 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../../..">laminas-filter</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -437,13 +431,13 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="../intro/" class="subnavigation__link">Introduction</a>
+        <a href="../../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="../installation/" class="subnavigation__link">Installation</a>
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -454,43 +448,43 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../standard-filters/" class="subnavigation__link">Standard Filters</a>
+        <a href="../../standard-filters/" class="subnavigation__link">Standard Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../word/" class="subnavigation__link">Word Filters</a>
+        <a href="../../word/" class="subnavigation__link">Word Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../file/" class="subnavigation__link">File Filters</a>
+        <a href="../../file/" class="subnavigation__link">File Filters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+        <a href="../../filter-chains/" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+        <a href="../../inflector/" class="subnavigation__link">String Inflection</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../../static-filter/" class="subnavigation__link">Static Filter</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-filters/" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
@@ -504,8 +498,8 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Preparing for v3</a>
     </li>
 
             
@@ -601,13 +595,13 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 </footer>
 
     <script>
-        let base_url = '../..',
+        let base_url = '../../..',
             project  = "components",
             siteName = 'laminas-filter';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="../../search/main.js"></script>
+        <script src="../../../search/main.js"></script>
     
 
     

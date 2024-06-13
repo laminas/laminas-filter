@@ -198,6 +198,21 @@
     </li>
 
                     
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
                 
             
         </ul>
@@ -315,6 +330,10 @@
                 
                     <li class="toc__entry">
                         <a href="#encrypt-and-decrypt" class="toc__link nav-link">Encrypt and Decrypt</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#forceurischeme" class="toc__link nav-link">ForceUriScheme</a>
                     </li>
                 
                     <li class="toc__entry">
@@ -1395,10 +1414,20 @@ $filter-&gt;setEnvelopeKey('/key/from/encoder/envelope_key.pem');
 
 $decrypted = $filter-&gt;filter('encoded_text_normally_unreadable');
 print $decrypted;</code></pre>
+<h2 id="forceurischeme">ForceUriScheme</h2>
+<p>This filter will ensure that, given a string that looks like a URI with a host-name and scheme, the scheme will be forced to <code>https</code> by default, or any other arbitrary scheme provided as an option.</p>
+<p>Any value that cannot be identified as an URI to begin with, will be returned un-filtered. Furthermore, URI parsing is rudimentary so for reliable results, you should ensure that the input is a valid URI prior to filtering.</p>
+<h3 id="supported-options_11">Supported Options</h3>
+<p>The only supported option is <code>scheme</code> which defaults to <code>https</code></p>
+<h3 id="example-usage">Example Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ForceUriScheme(['scheme' =&gt; 'ftp']);
+
+$filter-&gt;filter('https://example.com/path'); // 'ftp://example.com/path'
+$filter-&gt;filter('example.com'); // 'example.com' - Unfiltered because it lacks a scheme</code></pre>
 <h2 id="htmlentities">HtmlEntities</h2>
 <p>Returns the string <code>$value</code>, converting characters to their corresponding HTML
 entity equivalents when possible.</p>
-<h3 id="supported-options_11">Supported Options</h3>
+<h3 id="supported-options_12">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\HtmlEntities</code>:</p>
 <ul>
 <li><code>quotestyle</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter
@@ -1472,7 +1501,7 @@ print $filter-&gt;getQuoteStyle(ENT_QUOTES);</code></pre>
 <li>Since 2.9.0</li>
 </ul>
 <p><code>Laminas\Filter\ToFloat</code> allows you to transform a scalar value into a float.</p>
-<h3 id="supported-options_12">Supported Options</h3>
+<h3 id="supported-options_13">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\ToFloat</code>.</p>
 <h3 id="basic-usage_9">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToFloat();
@@ -1481,7 +1510,7 @@ print $filter-&gt;filter('-4.4');</code></pre>
 <p>This will return <code>-4.4</code> (as a float).</p>
 <h2 id="toint">ToInt</h2>
 <p><code>Laminas\Filter\ToInt</code> allows you to transform a scalar value into an integer.</p>
-<h3 id="supported-options_13">Supported Options</h3>
+<h3 id="supported-options_14">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\ToInt</code>.</p>
 <h3 id="basic-usage_10">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToInt();
@@ -1499,7 +1528,7 @@ instead starting in 2.4.0.</p>
 <p>This filter will change the given input to be <code>NULL</code> if it meets specific
 criteria. This is often necessary when you work with databases and want to have
 a <code>NULL</code> value instead of a boolean or any other type.</p>
-<h3 id="supported-options_14">Supported Options</h3>
+<h3 id="supported-options_15">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\ToNull</code>:</p>
 <ul>
 <li><code>type</code>: The variable type which should be supported.</li>
@@ -1565,7 +1594,7 @@ extends the <code>NumberParse</code> filter, which acts as wrapper for the <code
 Internationalization extension (Intl).</p>
 <p>This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.</p>
-<h3 id="supported-options_15">Supported Options</h3>
+<h3 id="supported-options_16">Supported Options</h3>
 <p>The following options are supported for <code>NumberFormat</code>:</p>
 <pre class="highlight"><code class="language-php">NumberFormat([ string $locale [, int $style [, int $type ]]])</code></pre>
 <ul>
@@ -1607,7 +1636,7 @@ a wrapper for the <code>NumberFormatter</code> class within the Internationaliza
 extension (Intl).</p>
 <p>This filter is part of the laminas-i18n package; you will need to include that
 package in your application to use it.</p>
-<h3 id="supported-options_16">Supported Options</h3>
+<h3 id="supported-options_17">Supported Options</h3>
 <p>The following options are supported for <code>NumberParse</code>:</p>
 <pre class="highlight"><code class="language-php">NumberParse([ string $locale [, int $style [, int $type ]]])</code></pre>
 <ul>
@@ -1646,7 +1675,7 @@ echo $filter-&gt;filter('1,23456789E-3');
 <h2 id="pregreplace">PregReplace</h2>
 <p><code>Laminas\Filter\PregReplace</code> performs a search using regular expressions and replaces all found
 elements.</p>
-<h3 id="supported-options_17">Supported Options</h3>
+<h3 id="supported-options_18">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\PregReplace</code>:</p>
 <ul>
 <li><code>pattern</code>: The pattern to search for.</li>
@@ -1683,7 +1712,7 @@ $filter-&gt;filter($input);
 <h2 id="realpath">RealPath</h2>
 <p>This filter will resolve given links and pathnames, and returns the canonicalized
 absolute pathnames.</p>
-<h3 id="supported-options_18">Supported Options</h3>
+<h3 id="supported-options_19">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\RealPath</code>:</p>
 <ul>
 <li><code>exists</code>: This option defaults to <code>TRUE</code>, which validates that the given path
@@ -1716,7 +1745,7 @@ $filtered = $filter-&gt;filter($path);
 <li>Since 2.9.0</li>
 </ul>
 <p>This filter will add the provided prefix to scalar values.</p>
-<h3 id="supported-options_19">Supported Options</h3>
+<h3 id="supported-options_20">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringPrefix</code>:</p>
 <ul>
 <li><code>prefix</code>: The string prefix to add to values.</li>
@@ -1733,7 +1762,7 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 <li>Since 2.9.0</li>
 </ul>
 <p>This filter will add the provided suffix to scalar values.</p>
-<h3 id="supported-options_20">Supported Options</h3>
+<h3 id="supported-options_21">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringSuffix</code>:</p>
 <ul>
 <li><code>suffix</code>: The string suffix to append to values.</li>
@@ -1747,7 +1776,7 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 <p>The above results in the string <code>MidCentral-PHP</code>.</p>
 <h2 id="stringtolower">StringToLower</h2>
 <p>This filter converts any input to lowercase.</p>
-<h3 id="supported-options_21">Supported Options</h3>
+<h3 id="supported-options_22">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringToLower</code>:</p>
 <ul>
 <li><code>encoding</code>: This option can be used to set an encoding to use.</li>
@@ -1781,7 +1810,7 @@ $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 </blockquote>
 <h2 id="stringtoupper">StringToUpper</h2>
 <p>This filter converts any input to UPPERCASE.</p>
-<h3 id="supported-options_22">Supported Options</h3>
+<h3 id="supported-options_23">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringToUpper</code>:</p>
 <ul>
 <li><code>encoding</code>: This option can be used to set the encoding to use.</li>
@@ -1802,7 +1831,7 @@ $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 <h2 id="stringtrim">StringTrim</h2>
 <p>This filter modifies a given string such that certain characters are removed
 from the beginning and end.</p>
-<h3 id="supported-options_23">Supported Options</h3>
+<h3 id="supported-options_24">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringTrim</code>:</p>
 <ul>
 <li><code>charlist</code>: List of characters to remove from the beginning and end of the
@@ -1828,7 +1857,7 @@ current character list.</p>
 <h2 id="stripnewlines">StripNewlines</h2>
 <p>This filter modifies a given string and removes all new line characters within
 that string.</p>
-<h3 id="supported-options_24">Supported Options</h3>
+<h3 id="supported-options_25">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\StripNewlines</code>:</p>
 <h3 id="basic-usage_20">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripNewlines();
@@ -1847,7 +1876,7 @@ including potential XSS vectors.</p>
 <p>For a fully secure solution that allows selected filtering of HTML tags, use
 either Tidy or HtmlPurifier.</p>
 </blockquote>
-<h3 id="supported-options_25">Supported Options</h3>
+<h3 id="supported-options_26">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StripTags</code>:</p>
 <ul>
 <li><code>allowAttribs</code>: This option sets the attributes which are accepted. All other
@@ -1915,8 +1944,13 @@ print $filter-&gt;filter($input);</code></pre>
 <code>A text with a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt; click &lt;a href='&lt;http://picture.com/laminas&gt;'&gt;here&lt;/a&gt;!</code>
 as the result.</p>
 <h2 id="urinormalize">UriNormalize</h2>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+This filter is deprecated since version 2.36.0 and will be removed in version 3.0. The ability to force the scheme has been moved to the <a href="#forceurischeme">ForceUriScheme filter</a>.</p>
+</div>
 <p>This filter sets the scheme on a URI if the scheme is missing.</p>
-<h3 id="supported-options_26">Supported Options</h3>
+<h3 id="supported-options_27">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\UriNormalize</code>:</p>
 <ul>
 <li><code>defaultScheme</code>: This option can be used to set the default scheme to use when
@@ -2060,6 +2094,21 @@ Use the <a href="#allowlist">AllowList filter</a> instead.</p>
                 
     <li class="subnavigation__list-item ">
         <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
     </li>
 
             
