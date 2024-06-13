@@ -3,6 +3,43 @@
 laminas-filter version 3 makes a number of changes that may affect your application.
 This document details those changes, and provides suggestions on how to update your application to work with version 3.
 
+## Signature and Behaviour Changes
+
+### FilterInterface
+
+`Laminas\Filter\FilterInterface` now specifies `__invoke()` as well as `filter()` forcing all filters to also be invokable classes.
+
+In practice this is unlikely to cause problems because `AbstractFilter`, from which most filters extend already implements this method. You will however, encounter issues if you have a custom filter implementing `FilterInterface` that lacks an `__invoke()` method.
+
+Implementation is straight forward, and in most cases, adding the following method should suffice:
+
+```php
+final class MyFilter implements Laminas\Filter\FilterInterface {
+    public function filter(mixed $value): mixed
+    {
+        // Filter things…
+    }
+    
+    public function __invoke(mixed $value) : mixed
+    {
+        return $this->filter($value); 
+    }
+}
+```
+
+Also note that the signature of both `filter()` and `__invoke()` has changed to include `mixed` as both parameter and return type, therefore, it will be necessary to add any missing parameter and return types to your custom filters.
+
+### Filter Plugin Manager
+
+As the library now requires `laminas/laminas-servicemanager` version 4, the inheritance hierarchy has changed for the plugin manager, however it is also now `final`.
+
+In addition to this, the default filter aliases have changed:
+
+- All legacy `Zend\Filter\FilterName` have been removed including the lowercased v2 FQCNs such as `zendfilterstringtolower`
+- All lowercase FQCN aliases _(That were added for Service Manager v2)_ have been removed such as `laminasfilterstringtolower`
+
+The impact of the removal of these aliases will not affect you if you use a FQCN to retrieve filters from the plugin manager. If you experience `ServiceNotFoundException` errors, audit your usage of filters and the strings you use to retrieve them from the plugin manager and replace any outdated values with either the FQCN of the filter or a known, configured alias.
+
 ## Removed Filters
 
 The following filters were deprecated in the 2.0.x series of releases and have now been removed:
@@ -31,6 +68,9 @@ $pluginManager = $container->get(\Laminas\Filter\FilterPluginManager::class);
 $filter = $pluginManager->get(\Laminas\Filter\HtmlEntities::class);
 $filtered = $filter->filter('A String');
 ```
+### Uri Normalize
+
+`Laminas\Filter\UriNormalize` has been removed. As noted in the [v2 preparation guide](../../v2/migration/preparing-for-v3.md#urinormalize-filter-removal), `Laminas\Filter\ForceUriScheme` might be a sufficient replacement depending on your use-case. 
 
 ### Whitelist & Blacklist Filters
 
