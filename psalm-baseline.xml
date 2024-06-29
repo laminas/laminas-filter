@@ -23,15 +23,6 @@
       <code><![CDATA[is_object($options)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/AllowList.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setList]]></code>
-      <code><![CDATA[setStrict]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $strict]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/Callback.php">
     <MixedFunctionCall>
       <code><![CDATA[call_user_func_array($this->options['callback'], $params)]]></code>
@@ -775,17 +766,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/AllowListTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$strict]]></code>
-    </InvalidArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$expected]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[[$value, $expected]]]></code>
-    </MixedAssignment>
     <PossiblyUnusedMethod>
       <code><![CDATA[defaultTestProvider]]></code>
       <code><![CDATA[listTestProvider]]></code>
@@ -1083,25 +1063,10 @@
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/TestAsset/Alpha.php">
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </MixedArgumentTypeCoercion>
-  </file>
   <file src="test/TestAsset/CallbackClass.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[objectCallbackWithParams]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/TestAsset/LowerCase.php">
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-  </file>
-  <file src="test/TestAsset/StripUpperCase.php">
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
   </file>
   <file src="test/ToFloatTest.php">
     <PossiblyUnusedMethod>

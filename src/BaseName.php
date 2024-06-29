@@ -7,15 +7,16 @@ namespace Laminas\Filter;
 use function basename;
 use function is_string;
 
-/** @psalm-immutable */
+/**
+ * @psalm-immutable
+ * @implements FilterInterface<string>
+ */
 final class BaseName implements FilterInterface
 {
     /**
      * Returns basename($value).
      *
      * If the value provided is non-string, the value will remain unfiltered
-     *
-     * @psalm-return ($value is string ? string : mixed)
      */
     public function filter(mixed $value): mixed
     {
