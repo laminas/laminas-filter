@@ -30,6 +30,7 @@ use function strtolower;
  *     casting: bool,
  *     translations: array<string, bool>,
  * }
+ * @implements FilterInterface<bool>
  */
 final class Boolean implements FilterInterface
 {
