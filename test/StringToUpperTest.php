@@ -7,11 +7,8 @@ namespace LaminasTest\Filter;
 use Laminas\Filter\Exception;
 use Laminas\Filter\StringToUpper as StringToUpperFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-
-use function mb_internal_encoding;
 
 class StringToUpperTest extends TestCase
 {
@@ -45,14 +42,13 @@ class StringToUpperTest extends TestCase
      */
     public function testWithEncoding(): void
     {
-        $filter         = $this->filter;
+        $filter         = new StringToUpperFilter(['encoding' => 'utf-8']);
         $valuesExpected = [
             'ü'     => 'Ü',
             'ñ'     => 'Ñ',
             'üñ123' => 'ÜÑ123',
         ];
 
-        $filter->setEncoding('UTF-8');
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
@@ -62,13 +58,13 @@ class StringToUpperTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('is not supported');
-        $this->filter->setEncoding('aaaaa');
+        new StringToUpperFilter(['encoding' => 'aaaaa']);
     }
 
     /**
-     * @Laminas-8989
+     *  @Laminas-9058
      */
-    public function testInitiationWithEncoding(): void
+    public function testCaseInsensitiveEncoding(): void
     {
         $valuesExpected = [
             'ü'     => 'Ü',
@@ -80,40 +76,16 @@ class StringToUpperTest extends TestCase
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
-    }
 
-    /**
-     *  @Laminas-9058
-     */
-    public function testCaseInsensitiveEncoding(): void
-    {
-        $filter         = $this->filter;
-        $valuesExpected = [
-            'ü'     => 'Ü',
-            'ñ'     => 'Ñ',
-            'üñ123' => 'ÜÑ123',
-        ];
-
-        $filter->setEncoding('UTF-8');
+        $filter = new StringToUpperFilter(['encoding' => 'utf-8']);
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
 
-        $this->filter->setEncoding('utf-8');
+        new StringToUpperFilter(['encoding' => 'UtF-8']);
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
-
-        $this->filter->setEncoding('UtF-8');
-        foreach ($valuesExpected as $input => $output) {
-            self::assertSame($output, $filter($input));
-        }
-    }
-
-    #[Group('Laminas-9854')]
-    public function testDetectMbInternalEncoding(): void
-    {
-        self::assertSame(mb_internal_encoding(), $this->filter->getEncoding());
     }
 
     /** @return list<array{0: mixed}> */
