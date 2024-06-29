@@ -118,6 +118,10 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Callback.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setCallback]]></code>
+      <code><![CDATA[setCallbackParams]]></code>
+    </DeprecatedMethod>
     <MixedFunctionCall>
       <code><![CDATA[call_user_func_array($this->options['callback'], $params)]]></code>
     </MixedFunctionCall>
@@ -1528,6 +1532,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCallbackParams]]></code>
+      <code><![CDATA[getCallbackParams]]></code>
+      <code><![CDATA[setCallbackParams]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['param']]></code>
       <code><![CDATA['param']]></code>
