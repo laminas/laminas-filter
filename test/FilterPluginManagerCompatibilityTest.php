@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use Generator;
+use Laminas\Filter\Callback;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use PHPUnit\Framework\TestCase;
@@ -14,11 +15,16 @@ use Throwable;
 
 use function assert;
 use function class_exists;
+use function in_array;
 use function is_string;
 use function strpos;
 
 class FilterPluginManagerCompatibilityTest extends TestCase
 {
+    private const FILTERS_WITH_REQUIRED_OPTIONS = [
+        Callback::class,
+    ];
+
     protected static function getPluginManager(): FilterPluginManager
     {
         return CreatePluginManager::withDefaults();
@@ -38,6 +44,10 @@ class FilterPluginManagerCompatibilityTest extends TestCase
 
             // Skipping as it has required options
             if (strpos($target, 'DataUnitFormatter') !== false) {
+                continue;
+            }
+
+            if (in_array($target, self::FILTERS_WITH_REQUIRED_OPTIONS, true)) {
                 continue;
             }
 

@@ -23,34 +23,6 @@
       <code><![CDATA[is_object($options)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/Callback.php">
-    <MixedFunctionCall>
-      <code><![CDATA[call_user_func_array($this->options['callback'], $params)]]></code>
-    </MixedFunctionCall>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[callable]]></code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code><![CDATA[new $callback()]]></code>
-    </MixedMethodCall>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['callback']]]></code>
-      <code><![CDATA[$this->options['callback_params']]]></code>
-    </MixedReturnStatement>
-    <NonInvariantDocblockPropertyType>
-      <code><![CDATA[$options]]></code>
-    </NonInvariantDocblockPropertyType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$callbackOrOptions]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getCallback]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(array) $params]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/Compress.php">
     <LessSpecificImplementedReturnType>
       <code><![CDATA[($option is null ? array : mixed)]]></code>
@@ -777,10 +749,12 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
-    <InvalidArgument>
-      <code><![CDATA['param']]></code>
-      <code><![CDATA['param']]></code>
-    </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[callbackProvider]]></code>
+      <code><![CDATA[callbackWithArgumentsProvider]]></code>
+      <code><![CDATA[staticMethodTest]]></code>
+      <code><![CDATA[staticMethodWithArgumentsTest]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Compress/Bz2Test.php">
     <DocblockTypeContradiction>
@@ -1061,11 +1035,6 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[badCommentProvider]]></code>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/TestAsset/CallbackClass.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[objectCallbackWithParams]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ToFloatTest.php">
