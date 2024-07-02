@@ -1114,22 +1114,23 @@
         },
         {
             "name": "laminas/laminas-i18n",
-            "version": "2.26.0",
+            "version": "2.27.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-i18n.git",
-                "reference": "01738410cb263994d1d192861f642387e7e12ace"
+                "reference": "419894b3a63c9b6d86edc03947fa32762108d472"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/01738410cb263994d1d192861f642387e7e12ace",
-                "reference": "01738410cb263994d1d192861f642387e7e12ace",
+                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/419894b3a63c9b6d86edc03947fa32762108d472",
+                "reference": "419894b3a63c9b6d86edc03947fa32762108d472",
                 "shasum": ""
             },
             "require": {
                 "ext-intl": "*",
                 "laminas/laminas-servicemanager": "^3.21.0",
                 "laminas/laminas-stdlib": "^3.0",
+                "laminas/laminas-translator": "^1.0",
                 "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
@@ -1137,18 +1138,18 @@
                 "zendframework/zend-i18n": "*"
             },
             "require-dev": {
-                "laminas/laminas-cache": "^3.12.0",
+                "laminas/laminas-cache": "^3.12.1",
                 "laminas/laminas-cache-storage-adapter-memory": "^2.3.0",
                 "laminas/laminas-cache-storage-deprecated-factory": "^1.2",
                 "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-config": "^3.9.0",
                 "laminas/laminas-eventmanager": "^3.13",
                 "laminas/laminas-filter": "^2.34",
-                "laminas/laminas-validator": "^2.46",
-                "laminas/laminas-view": "^2.33",
-                "phpunit/phpunit": "^10.5.5",
-                "psalm/plugin-phpunit": "^0.18.4",
-                "vimeo/psalm": "^5.18.0"
+                "laminas/laminas-validator": "^2.49",
+                "laminas/laminas-view": "^2.34",
+                "phpunit/phpunit": "^10.5.11",
+                "psalm/plugin-phpunit": "^0.19.0",
+                "vimeo/psalm": "^5.22.2"
             },
             "suggest": {
                 "laminas/laminas-cache": "You should install this package to cache the translations",
@@ -1195,7 +1196,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-01-04T13:49:00+00:00"
+            "time": "2024-07-02T12:40:13+00:00"
         },
         {
             "name": "laminas/laminas-math",
@@ -1263,6 +1264,59 @@
                 }
             ],
             "time": "2023-10-18T09:53:37+00:00"
+        },
+        {
+            "name": "laminas/laminas-translator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-translator.git",
+                "reference": "86d176c01a96b0ef205192b776cb69e8d4ca06b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-translator/zipball/86d176c01a96b0ef205192b776cb69e8d4ca06b1",
+                "reference": "86d176c01a96b0ef205192b776cb69e8d4ca06b1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "vimeo/psalm": "^5.24.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Translator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Interfaces for the Translator component of laminas-i18n",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "i18n",
+                "laminas"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-i18n/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-translator/issues",
+                "rss": "https://github.com/laminas/laminas-translator/releases.atom",
+                "source": "https://github.com/laminas/laminas-translator"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2024-06-18T15:09:24+00:00"
         },
         {
             "name": "laminas/laminas-uri",
