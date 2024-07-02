@@ -104,9 +104,11 @@ class Boolean extends AbstractFilter
     /**
      * Set boolean types
      *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @param  self::TYPE_*|int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
-     * @throws Exception\InvalidArgumentException
      * @return self
+     * @throws Exception\InvalidArgumentException
      */
     public function setType($type = null)
     {
@@ -140,6 +142,8 @@ class Boolean extends AbstractFilter
     /**
      * Returns defined boolean types
      *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @return int-mask-of<self::TYPE_*>
      */
     public function getType()
@@ -149,6 +153,8 @@ class Boolean extends AbstractFilter
 
     /**
      * Set the working mode
+     *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
      *
      * @param  bool $flag When true this filter works like cast
      *                       When false it recognises only true and false
@@ -164,6 +170,8 @@ class Boolean extends AbstractFilter
     /**
      * Returns the casting option
      *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @return bool
      */
     public function getCasting()
@@ -172,9 +180,11 @@ class Boolean extends AbstractFilter
     }
 
     /**
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @param  array|Traversable $translations
-     * @throws Exception\InvalidArgumentException
      * @return self
+     * @throws Exception\InvalidArgumentException
      */
     public function setTranslations($translations)
     {
@@ -194,6 +204,8 @@ class Boolean extends AbstractFilter
     }
 
     /**
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @return array
      */
     public function getTranslations()

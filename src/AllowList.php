@@ -40,6 +40,8 @@ class AllowList extends AbstractFilter
     /**
      * Determine whether the in_array() call should be "strict" or not. See in_array docs.
      *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @param bool $strict
      */
     public function setStrict($strict = true): void
@@ -50,6 +52,8 @@ class AllowList extends AbstractFilter
     /**
      * Returns whether the in_array() call should be "strict" or not. See in_array docs.
      *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
+     *
      * @return bool
      */
     public function getStrict()
@@ -59,6 +63,8 @@ class AllowList extends AbstractFilter
 
     /**
      * Set the list of items to white-list.
+     *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
      *
      * @param array|Traversable $list
      */
@@ -73,6 +79,8 @@ class AllowList extends AbstractFilter
 
     /**
      * Get the list of items to white-list
+     *
+     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
      *
      * @return array
      */

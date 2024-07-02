@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/AbstractDateDropdown.php">
     <MissingReturnType>
       <code><![CDATA[filterable]]></code>
@@ -48,6 +48,10 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AllowList.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getStrict]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[setList]]></code>
       <code><![CDATA[setStrict]]></code>
@@ -65,6 +69,13 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$typeOrOptions]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[getCasting]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setCasting]]></code>
+      <code><![CDATA[setTranslations]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($translations) && ! $translations instanceof Traversable]]></code>
     </DocblockTypeContradiction>
@@ -107,6 +118,10 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Callback.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setCallback]]></code>
+      <code><![CDATA[setCallbackParams]]></code>
+    </DeprecatedMethod>
     <MixedFunctionCall>
       <code><![CDATA[call_user_func_array($this->options['callback'], $params)]]></code>
     </MixedFunctionCall>
@@ -1442,6 +1457,14 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/AllowListTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$strict]]></code>
     </InvalidArgument>
@@ -1472,6 +1495,15 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$type]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[getCasting]]></code>
+      <code><![CDATA[getCasting]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
@@ -1500,6 +1532,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCallbackParams]]></code>
+      <code><![CDATA[getCallbackParams]]></code>
+      <code><![CDATA[setCallbackParams]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['param']]></code>
       <code><![CDATA['param']]></code>
@@ -1839,7 +1876,9 @@
   </file>
   <file src="test/TestAsset/CallbackClass.php">
     <PossiblyUnusedMethod>
+      <code><![CDATA[objectCallback]]></code>
       <code><![CDATA[objectCallbackWithParams]]></code>
+      <code><![CDATA[staticCallback]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/LowerCase.php">
