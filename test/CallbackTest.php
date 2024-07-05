@@ -4,66 +4,172 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
+use Generator;
 use Laminas\Filter\Callback as CallbackFilter;
-use LaminasTest\Filter\TestAsset\CallbackClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+
+use function PHPUnit\Framework\assertSame;
 
 class CallbackTest extends TestCase
 {
-    public function testObjectCallback(): void
+    /** @return Generator<string, array{0: callable(mixed): mixed}> */
+    public static function callbackProvider(): Generator
     {
-        $filter = new CallbackFilter([new CallbackClass(), 'objectCallback']);
-        self::assertSame('objectCallback-test', $filter('test'));
+        yield 'Invokable Class' => [
+            new class ()
+            {
+                public function __invoke(mixed $input): string
+                {
+                    assertSame('INPUT', $input);
+                    return $input;
+                }
+            },
+        ];
+
+        yield 'Closure' => [
+            function (mixed $input): string {
+                assertSame('INPUT', $input);
+                return $input;
+            },
+        ];
+
+        yield 'Static method' => [
+            [self::class, 'staticMethodTest'],
+        ];
+
+        $instance = new class
+        {
+            public function doStuff(mixed $input): string
+            {
+                assertSame('INPUT', $input);
+                return $input;
+            }
+        };
+
+        yield 'Instance method' => [
+            [$instance, 'doStuff'],
+        ];
     }
 
-    public function testConstructorWithOptions(): void
+    /** @param callable(mixed): mixed $callback */
+    #[DataProvider('callbackProvider')]
+    public function testBasicBehaviour(callable $callback): void
+    {
+        $filter = new CallbackFilter($callback);
+        self::assertSame('INPUT', $filter->filter('INPUT'));
+    }
+
+    public function testCallbackWithPHPBuiltIn(): void
+    {
+        $filter = new CallbackFilter('strrev');
+        self::assertSame('!olleH', $filter('Hello!'));
+    }
+
+    /** @see self::callbackProvider() */
+    public static function staticMethodTest(mixed $input): string
+    {
+        assertSame('INPUT', $input);
+        return $input;
+    }
+
+    /** @return Generator<string, array{0: callable(mixed...): mixed}> */
+    public static function callbackWithArgumentsProvider(): Generator
+    {
+        yield 'Invokable Class' => [
+            new class ()
+            {
+                public function __invoke(mixed $input, int $a, int $b): int
+                {
+                    assertSame('INPUT', $input);
+
+                    return $a + $b;
+                }
+            },
+        ];
+
+        yield 'Closure' => [
+            function (mixed $input, int $a, int $b): int {
+                assertSame('INPUT', $input);
+
+                return $a + $b;
+            },
+        ];
+
+        yield 'Static method' => [
+            [self::class, 'staticMethodWithArgumentsTest'],
+        ];
+
+        $instance = new class
+        {
+            public function doStuff(mixed $input, int $a, int $b): int
+            {
+                assertSame('INPUT', $input);
+
+                return $a + $b;
+            }
+        };
+
+        yield 'Instance method' => [
+            [$instance, 'doStuff'],
+        ];
+    }
+
+    /** @see self::callbackWithArgumentsProvider() */
+    public static function staticMethodWithArgumentsTest(mixed $input, int $a, int $b): int
+    {
+        assertSame('INPUT', $input);
+
+        return $a + $b;
+    }
+
+    /** @param callable(mixed): mixed $callback */
+    #[DataProvider('callbackWithArgumentsProvider')]
+    public function testCallbackWithArguments(callable $callback): void
     {
         $filter = new CallbackFilter([
-            'callback'        => [new CallbackClass(), 'objectCallbackWithParams'],
-            'callback_params' => 0,
+            'callback'        => $callback,
+            'callback_params' => [
+                'a' => 2,
+                'b' => 2,
+            ],
+        ]);
+        self::assertSame(4, $filter('INPUT'));
+    }
+
+    public function testAssocArrayTreatedAsNamedArguments(): void
+    {
+        /** @psalm-suppress InvalidArgument Psalm cannot declare optional variadics */
+        $filter = new CallbackFilter([
+            'callback'        => function (mixed $input, string $foo, string $bar): string {
+                assertSame('INPUT', $input);
+
+                return $foo . $bar;
+            },
+            'callback_params' => [
+                'bar' => 'Baz',
+                'foo' => 'Bing',
+            ],
         ]);
 
-        self::assertSame('objectCallbackWithParams-test-0', $filter('test'));
+        self::assertSame('BingBaz', $filter->filter('INPUT'));
     }
 
-    public function testStaticCallback(): void
+    public function testListArgumentsAreOrdered(): void
     {
-        $filter = new CallbackFilter(
-            [CallbackClass::class, 'staticCallback']
-        );
-        self::assertSame('staticCallback-test', $filter('test'));
-    }
+        /** @psalm-suppress InvalidArgument Psalm cannot declare optional variadics */
+        $filter = new CallbackFilter([
+            'callback'        => function (mixed $input, string $foo, string $bar): string {
+                assertSame('INPUT', $input);
 
-    public function testStringClassCallback(): void
-    {
-        $filter = new CallbackFilter(CallbackClass::class);
-        self::assertSame('stringClassCallback-test', $filter('test'));
-    }
+                return $foo . $bar;
+            },
+            'callback_params' => [
+                'Baz',
+                'Bing',
+            ],
+        ]);
 
-    public function testSettingDefaultOptions(): void
-    {
-        $filter = new CallbackFilter([new CallbackClass(), 'objectCallback'], 'param');
-        self::assertSame(['param'], $filter->getCallbackParams());
-        self::assertSame('objectCallback-test', $filter('test'));
-    }
-
-    public function testSettingDefaultOptionsAfterwards(): void
-    {
-        $filter = new CallbackFilter([new CallbackClass(), 'objectCallback']);
-        $filter->setCallbackParams('param');
-        self::assertSame(['param'], $filter->getCallbackParams());
-        self::assertSame('objectCallback-test', $filter('test'));
-    }
-
-    public function testCallbackWithStringParameter(): void
-    {
-        $filter = new CallbackFilter('strrev');
-        self::assertSame('!olleH', $filter('Hello!'));
-    }
-
-    public function testCallbackWithArrayParameters(): void
-    {
-        $filter = new CallbackFilter('strrev');
-        self::assertSame('!olleH', $filter('Hello!'));
+        self::assertSame('BazBing', $filter->filter('INPUT'));
     }
 }

@@ -304,22 +304,18 @@ $result = $filter->filter(2);
 
 ## Callback
 
-This filter allows you to use own methods in conjunction with `Laminas\Filter`. You
-don't have to create a new filter when you already have a method which does the
-job.
+This filter wraps any callable so that it can be invoked using the filter contract.
 
 ### Supported Options
 
 The following options are supported for `Laminas\Filter\Callback`:
 
 - `callback`: This sets the callback which should be used.
-- `callback_params`: This property sets the options which are used when the
-  callback is processed.
+- `callback_params`: Optional. When provided this should be an array where each element of the array is an additional argument to your callback.
 
 ### Basic Usage
 
-The usage of this filter is quite simple. In this example, we want to create a
-filter which reverses a string:
+The following example uses PHP's built-in function `strrev` as the callback:
 
 ```php
 $filter = new Laminas\Filter\Callback('strrev');
@@ -328,60 +324,46 @@ print $filter->filter('Hello!');
 // returns "!olleH"
 ```
 
-As you can see it's really simple to use a callback to define custom filters. It
-is also possible to use a method, which is defined within a class, by giving an
-array as the callback:
-
-```php
-class MyClass
-{
-    public static function reverse($param);
-}
-
-// The filter definition
-$filter = new Laminas\Filter\Callback(array('MyClass', 'reverse'));
-print $filter->filter('Hello!');
-```
-
-As of PHP 5.5 you can use ::class resolution for given callback class:
-
-```php
-class MyClass
-{
-    public function __invoke($param);
-}
-
-// The filter definition
-$filter = new Laminas\Filter\Callback(MyClass::class);
-print $filter->filter('Hello!');
-```
-
-To get the actual set callback use `getCallback()` and to set another callback
-use `setCallback()`.
-
-> ### Possible Exceptions
->
-> You should note that defining a callback method which can not be called will
-> raise an exception.
-
-### Default Parameters within a Callback
-
-It is also possible to define default parameters, which are given to the called
-method as an array when the filter is executed. This array will be concatenated
-with the value which will be filtered.
+As previously mentioned, any type of callable can be used as a callback, for example a closure:
 
 ```php
 $filter = new Laminas\Filter\Callback([
-    'callback' => 'MyMethod',
-    'options'  => ['key' => 'param1', 'key2' => 'param2']
+    'callback' => function (mixed $input): mixed {
+        if (is_string($input)) {
+            return $input . ' there!';
+        }
+        
+        return $input;
+    },
 ]);
-$filter->filter(['value' => 'Hello']);
+
+$filter->filter('Hey'); // Returns 'Hey there!'
 ```
 
-Calling the above method definition manually would look like this:
+### Additional Callback Parameters
+
+If your callback requires additional arguments, these can be passed as a list, or an associative array to the `callback_params` option. The first argument will be the value to be filtered.
 
 ```php
-$value = MyMethod('Hello', 'param1', 'param2');
+class MyClass {
+    public function __invoke(mixed $input, string $a, string $b): string
+    {
+        if (is_string($input)) {
+            return implode(', ', [$input, $a, $b]);
+        }
+        
+        return 'Foo';
+    }
+}
+
+$filter = new Laminas\Filter\Callback([
+    'callback' => new MyClass(),
+    'callback_params' => [
+        'a' => 'baz',
+        'b' => 'bat',
+    ],
+]);
+$filter->filter('bing'); // returns 'bing,baz,bat'
 ```
 
 ## Compress and Decompress
