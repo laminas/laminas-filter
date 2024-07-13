@@ -16,7 +16,6 @@ class DataUnitFormatterTest extends TestCase
     {
         $filter = new DataUnitFormatterFilter([
             'mode' => DataUnitFormatterFilter::MODE_DECIMAL,
-            'unit' => 'B',
         ]);
         self::assertSame($expected, $filter->filter($value));
     }
@@ -26,7 +25,6 @@ class DataUnitFormatterTest extends TestCase
     {
         $filter = new DataUnitFormatterFilter([
             'mode' => DataUnitFormatterFilter::MODE_BINARY,
-            'unit' => 'B',
         ]);
         self::assertSame($expected, $filter->filter($value));
     }
@@ -34,30 +32,10 @@ class DataUnitFormatterTest extends TestCase
     public function testPrecision(): void
     {
         $filter = new DataUnitFormatterFilter([
-            'unit'      => 'B',
             'precision' => 3,
         ]);
 
         self::assertSame('1.500 kB', $filter->filter(1500));
-    }
-
-    public function testCustomPrefixes(): void
-    {
-        $filter = new DataUnitFormatterFilter([
-            'unit'     => 'B',
-            'prefixes' => ['', 'kilos'],
-        ]);
-
-        self::assertSame('1.50 kilosB', $filter->filter(1500));
-    }
-
-    public function testWhenUnitIsNotSetThereWillBeNoSuffix(): void
-    {
-        $filter = new DataUnitFormatterFilter([
-            'prefixes' => ['', 'apples'],
-        ]);
-
-        self::assertSame('1.00 apples', $filter->filter(1000));
     }
 
     public function testSettingFalseMode(): void
@@ -65,7 +43,6 @@ class DataUnitFormatterTest extends TestCase
         $this->expectException(Exception\InvalidArgumentException::class);
         /** @psalm-suppress InvalidArgument */
         new DataUnitFormatterFilter([
-            'unit' => 'B',
             'mode' => 'invalid',
         ]);
     }

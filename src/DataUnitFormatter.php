@@ -15,9 +15,7 @@ use function sprintf;
 /**
  * @psalm-type Options = array{
  *     mode?: DataUnitFormatter::MODE_BINARY|DataUnitFormatter::MODE_DECIMAL,
- *     unit?: string,
  *     precision?: positive-int,
- *     prefixes?: list<string>,
  * }
  * @implements FilterInterface<string>
  */
@@ -26,9 +24,8 @@ final class DataUnitFormatter implements FilterInterface
     public const MODE_BINARY  = 'binary';
     public const MODE_DECIMAL = 'decimal';
 
-    public const BASE_BINARY  = 1024;
-    public const BASE_DECIMAL = 1000;
-
+    private const BASE_BINARY       = 1024;
+    private const BASE_DECIMAL      = 1000;
     private const DEFAULT_PRECISION = 2;
 
     /**
@@ -49,9 +46,6 @@ final class DataUnitFormatter implements FilterInterface
     private readonly string $mode;
     /** @var positive-int */
     private readonly int $precision;
-    private readonly string $unit;
-    /** @var list<string> */
-    private readonly array $prefixes;
 
     /**
      * @param Options $options
@@ -66,8 +60,6 @@ final class DataUnitFormatter implements FilterInterface
 
         $this->mode      = $mode;
         $this->precision = $options['precision'] ?? self::DEFAULT_PRECISION;
-        $this->unit      = $options['unit'] ?? '';
-        $this->prefixes  = $options['prefixes'] ?? self::STANDARD_PREFIXES[$this->mode];
     }
 
     /**
@@ -92,7 +84,7 @@ final class DataUnitFormatter implements FilterInterface
         // Calculate the correct size and prefix:
         $base   = $this->mode === self::MODE_BINARY ? self::BASE_BINARY : self::BASE_DECIMAL;
         $power  = floor(log($amount, $base));
-        $prefix = $this->prefixes[(int) $power] ?? null;
+        $prefix = self::STANDARD_PREFIXES[$this->mode][(int) $power] ?? null;
 
         // When the amount is too big, no prefix can be found:
         if ($prefix === null) {
@@ -106,9 +98,9 @@ final class DataUnitFormatter implements FilterInterface
         return $this->formatAmount($formatted, $prefix);
     }
 
-    protected function formatAmount(string|float $amount, ?string $prefix = null): string
+    private function formatAmount(string|float $amount, ?string $prefix = null): string
     {
-        return sprintf('%s %s%s', (string) $amount, (string) $prefix, $this->unit);
+        return sprintf('%s %sB', (string) $amount, (string) $prefix);
     }
 
     /** @inheritDoc */
