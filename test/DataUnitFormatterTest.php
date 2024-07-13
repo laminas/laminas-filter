@@ -51,21 +51,19 @@ class DataUnitFormatterTest extends TestCase
         self::assertSame('1.50 kilosB', $filter->filter(1500));
     }
 
-    public function testSettingNoOptions(): void
+    public function testWhenUnitIsNotSetThereWillBeNoSuffix(): void
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
-        new DataUnitFormatterFilter();
-    }
+        $filter = new DataUnitFormatterFilter([
+            'prefixes' => ['', 'apples'],
+        ]);
 
-    public function testSettingNoUnit(): void
-    {
-        $this->expectException(Exception\InvalidArgumentException::class);
-        new DataUnitFormatterFilter([]);
+        self::assertSame('1.00 apples', $filter->filter(1000));
     }
 
     public function testSettingFalseMode(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
+        /** @psalm-suppress InvalidArgument */
         new DataUnitFormatterFilter([
             'unit' => 'B',
             'mode' => 'invalid',

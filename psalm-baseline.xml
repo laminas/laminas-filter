@@ -206,28 +206,6 @@
       <code><![CDATA[$res !== true]]></code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/DataUnitFormatter.php">
-    <MissingReturnType>
-      <code><![CDATA[setMode]]></code>
-      <code><![CDATA[setPrecision]]></code>
-      <code><![CDATA[setPrefixes]]></code>
-      <code><![CDATA[setUnit]]></code>
-    </MissingReturnType>
-    <MixedArrayOffset>
-      <code><![CDATA[$prefixes[$index]]]></code>
-    </MixedArrayOffset>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[isDecimalMode]]></code>
-      <code><![CDATA[setMode]]></code>
-      <code><![CDATA[setPrecision]]></code>
-      <code><![CDATA[setPrefixes]]></code>
-      <code><![CDATA[setUnit]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $precision]]></code>
-      <code><![CDATA[(string) $unit]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/DateTimeFormatter.php">
     <MixedAssignment>
       <code><![CDATA[$result]]></code>
