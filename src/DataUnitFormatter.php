@@ -88,6 +88,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Define the mode of the filter. Possible values can be fount at self::$modes.
      *
+     * @deprecated Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *             Provide options to the constructor instead
+     *
      * @param string $mode
      * @throws InvalidArgumentException
      */
@@ -103,6 +106,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Get current filter mode
      *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
+     *
      * @return string
      */
     protected function getMode()
@@ -112,6 +118,9 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * Find out if the filter is in decimal mode.
+     *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
      *
      * @return bool
      */
@@ -123,6 +132,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Find out if the filter is in binary mode.
      *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
+     *
      * @return bool
      */
     protected function isBinaryMode()
@@ -132,6 +144,9 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * Define the unit of the filter. Possible values can be fount at self::$types.
+     *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
      *
      * @param string $unit
      */
@@ -143,6 +158,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Get current filter type
      *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
+     *
      * @return string
      */
     protected function getUnit()
@@ -152,6 +170,9 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * Set the precision of the filtered result.
+     *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
      *
      * @param int $precision
      */
@@ -163,6 +184,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Get the precision of the filtered result.
      *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
+     *
      * @return int
      */
     protected function getPrecision()
@@ -173,6 +197,9 @@ final class DataUnitFormatter extends AbstractFilter
     /**
      * Set the precision of the result.
      *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
+     *
      * @param list<string> $prefixes
      */
     protected function setPrefixes(array $prefixes)
@@ -182,6 +209,9 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * Get the predefined prefixes or use the build-in standardized lists of prefixes.
+     *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
      *
      * @return list<string>
      */
@@ -197,6 +227,9 @@ final class DataUnitFormatter extends AbstractFilter
 
     /**
      * Find the prefix at a specific location in the prefixes array.
+     *
+     * @deprecated  Since 2.37.0 - Option getters and setters will be removed in 3.0.
+     *              Provide options to the constructor instead
      *
      * @return string|null
      */
