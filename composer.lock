@@ -988,22 +988,21 @@
         },
         {
             "name": "laminas/laminas-crypt",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-crypt.git",
-                "reference": "098fc61a895d1ff5d1c2b861525b4428bf6c3240"
+                "reference": "ceab630494fc7a0d82ec39ad63947ef889a21be7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-crypt/zipball/098fc61a895d1ff5d1c2b861525b4428bf6c3240",
-                "reference": "098fc61a895d1ff5d1c2b861525b4428bf6c3240",
+                "url": "https://api.github.com/repos/laminas/laminas-crypt/zipball/ceab630494fc7a0d82ec39ad63947ef889a21be7",
+                "reference": "ceab630494fc7a0d82ec39ad63947ef889a21be7",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "laminas/laminas-math": "^3.4",
-                "laminas/laminas-servicemanager": "^3.11.2",
                 "laminas/laminas-stdlib": "^3.8",
                 "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0",
                 "psr/container": "^1.1"
@@ -1048,7 +1047,8 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-11-06T23:02:42+00:00"
+            "abandoned": true,
+            "time": "2024-07-15T09:11:42+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -1114,16 +1114,16 @@
         },
         {
             "name": "laminas/laminas-i18n",
-            "version": "2.27.1",
+            "version": "2.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-i18n.git",
-                "reference": "419894b3a63c9b6d86edc03947fa32762108d472"
+                "reference": "e1e312650232e5ef26c28ea08f3c4c18633f48c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/419894b3a63c9b6d86edc03947fa32762108d472",
-                "reference": "419894b3a63c9b6d86edc03947fa32762108d472",
+                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/e1e312650232e5ef26c28ea08f3c4c18633f48c3",
+                "reference": "e1e312650232e5ef26c28ea08f3c4c18633f48c3",
                 "shasum": ""
             },
             "require": {
@@ -1196,7 +1196,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-07-02T12:40:13+00:00"
+            "time": "2024-07-15T12:54:14+00:00"
         },
         {
             "name": "laminas/laminas-math",
@@ -1378,16 +1378,16 @@
         },
         {
             "name": "laminas/laminas-validator",
-            "version": "2.61.0",
+            "version": "2.62.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-validator.git",
-                "reference": "df77732fbfab331647a5e718d171507269e73b6c"
+                "reference": "83fbcf4a7986796261beb541bed09c06826446e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-validator/zipball/df77732fbfab331647a5e718d171507269e73b6c",
-                "reference": "df77732fbfab331647a5e718d171507269e73b6c",
+                "url": "https://api.github.com/repos/laminas/laminas-validator/zipball/83fbcf4a7986796261beb541bed09c06826446e9",
+                "reference": "83fbcf4a7986796261beb541bed09c06826446e9",
                 "shasum": ""
             },
             "require": {
@@ -1458,7 +1458,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-07-11T21:26:44+00:00"
+            "time": "2024-07-16T08:58:25+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2506,16 +2506,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.27",
+            "version": "10.5.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2425f713b2a5350568ccb1a2d3984841a23e83c5"
+                "reference": "ff7fb85cdf88131b83e721fb2a327b664dbed275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2425f713b2a5350568ccb1a2d3984841a23e83c5",
-                "reference": "2425f713b2a5350568ccb1a2d3984841a23e83c5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ff7fb85cdf88131b83e721fb2a327b664dbed275",
+                "reference": "ff7fb85cdf88131b83e721fb2a327b664dbed275",
                 "shasum": ""
             },
             "require": {
@@ -2587,7 +2587,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.27"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.28"
             },
             "funding": [
                 {
@@ -2603,7 +2603,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-10T11:48:06+00:00"
+            "time": "2024-07-18T14:54:16+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
@@ -3870,16 +3870,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.10.1",
+            "version": "3.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "8f90f7a53ce271935282967f53d0894f8f1ff877"
+                "reference": "86e5f5dd9a840c46810ebe5ff1885581c42a3017"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/8f90f7a53ce271935282967f53d0894f8f1ff877",
-                "reference": "8f90f7a53ce271935282967f53d0894f8f1ff877",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/86e5f5dd9a840c46810ebe5ff1885581c42a3017",
+                "reference": "86e5f5dd9a840c46810ebe5ff1885581c42a3017",
                 "shasum": ""
             },
             "require": {
@@ -3946,7 +3946,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-05-22T21:24:41+00:00"
+            "time": "2024-07-21T23:26:44+00:00"
         },
         {
             "name": "symfony/console",
