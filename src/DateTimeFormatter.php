@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use DateTime;
+use DateTimeInterface;
 use Throwable;
 use Traversable;
 
@@ -87,14 +88,14 @@ class DateTimeFormatter extends AbstractFilter
             return $value;
         }
 
-        if (! is_string($value) && ! is_int($value) && ! $value instanceof DateTime) {
+        if (! is_string($value) && ! is_int($value) && ! $value instanceof DateTimeInterface) {
             return $value;
         }
 
         if (is_int($value)) {
             //timestamp
             $value = new DateTime('@' . $value);
-        } elseif (! $value instanceof DateTime) {
+        } elseif (! $value instanceof DateTimeInterface) {
             $value = new DateTime($value);
         }
 
