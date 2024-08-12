@@ -16,6 +16,7 @@ use function sprintf;
 
 /**
  * @psalm-type Options = array{scheme: non-empty-string}
+ * @implements FilterInterface<string>
  */
 final class ForceUriScheme implements FilterInterface
 {

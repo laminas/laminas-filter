@@ -18,9 +18,8 @@ use function is_string;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class DateTimeFormatter extends AbstractFilter
+final class DateTimeFormatter extends AbstractFilter
 {
     /**
      * A valid format string accepted by date()
@@ -59,9 +58,8 @@ class DateTimeFormatter extends AbstractFilter
      *
      * @param  DateTime|string|int|mixed $value
      * @throws Exception\InvalidArgumentException
-     * @return string|mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         try {
             $result = $this->normalizeDateTime($value);

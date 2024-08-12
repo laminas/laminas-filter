@@ -19,11 +19,7 @@ use function preg_replace;
  */
 class CamelCaseToSeparator extends AbstractSeparator
 {
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
             $value,
@@ -35,7 +31,7 @@ class CamelCaseToSeparator extends AbstractSeparator
      * @param  string|string[] $value
      * @return string|string[]
      */
-    private function filterNormalizedValue($value)
+    private function filterNormalizedValue(string|array $value): string|array
     {
         if (StringUtils::hasPcreUnicodeSupport()) {
             $pattern     = ['#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'];

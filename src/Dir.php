@@ -10,20 +10,17 @@ use function is_scalar;
 /**
  * @psalm-type Options = array{}
  * @extends AbstractFilter<Options>
- * @final
  */
-class Dir extends AbstractFilter
+final class Dir extends AbstractFilter
 {
     /**
      * Defined by Laminas\Filter\FilterInterface
      *
      * Returns dirname($value)
      *
-     * @param  mixed $value
-     * @return string|mixed
      * @psalm-return ($value is scalar ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

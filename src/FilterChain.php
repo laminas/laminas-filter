@@ -8,7 +8,6 @@ use Countable;
 use IteratorAggregate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
-use ReturnTypeWillChange;
 use Traversable;
 
 use function call_user_func;
@@ -21,7 +20,7 @@ use function sprintf;
 use function strtolower;
 
 /**
- * @final
+ * @psalm-type InstanceType = FilterInterface|callable(mixed): mixed
  * @psalm-type FilterChainConfiguration = array{
  *    filters?: list<array{
  *        name: string|class-string<FilterInterface>,
@@ -34,9 +33,9 @@ use function strtolower;
  *    }>
  * }
  * @extends AbstractFilter<FilterChainConfiguration>
- * @implements IteratorAggregate<array-key, FilterInterface|callable(mixed): mixed>
+ * @implements IteratorAggregate<array-key, InstanceType>
  */
-class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
+final class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
 {
     /**
      * Default priority at which filters are added
@@ -49,7 +48,7 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Filter chain
      *
-     * @var PriorityQueue<FilterInterface|callable(mixed): mixed, int>
+     * @var PriorityQueue<InstanceType, int>
      */
     protected $filters;
 
@@ -111,23 +110,14 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
         return $this;
     }
 
-    /**
-     * Return the count of attached filters
-     *
-     * @return int
-     */
-    #[ReturnTypeWillChange]
-    public function count()
+    /** Return the count of attached filters */
+    public function count(): int
     {
         return count($this->filters);
     }
 
-    /**
-     * Get plugin manager instance
-     *
-     * @return FilterPluginManager
-     */
-    public function getPluginManager()
+    /** Get plugin manager instance */
+    public function getPluginManager(): FilterPluginManager
     {
         $plugins = $this->plugins;
         if (! $plugins instanceof FilterPluginManager) {
@@ -152,24 +142,24 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Retrieve a filter plugin by name
      *
-     * @param string $name
-     * @return FilterInterface|callable(mixed): mixed
+     * @template T of FilterInterface
+     * @param class-string<T>|string $name
+     * @return ($name is class-string<T> ? T : InstanceType)
      */
-    public function plugin($name, array $options = [])
+    public function plugin(string $name, array $options = [])
     {
-        $plugins = $this->getPluginManager();
-        return $plugins->get($name, $options);
+        return $this->getPluginManager()->build($name, $options);
     }
 
     /**
      * Attach a filter to the chain
      *
-     * @param  callable(mixed): mixed|FilterInterface $callback A Filter implementation or valid PHP callback
+     * @param  InstanceType $callback A Filter implementation or valid PHP callback
      * @param  int $priority Priority at which to enqueue filter; defaults to 1000 (higher executes earlier)
      * @throws Exception\InvalidArgumentException
      * @return self
      */
-    public function attach($callback, $priority = self::DEFAULT_PRIORITY)
+    public function attach(FilterInterface|callable $callback, int $priority = self::DEFAULT_PRIORITY)
     {
         if (! is_callable($callback)) {
             if (! $callback instanceof FilterInterface) {
@@ -190,19 +180,13 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
      * Retrieves the filter from the attached plugin manager, and then calls attach()
      * with the retrieved instance.
      *
-     * @param  string $name
+     * @param class-string<FilterInterface>|string $name
      * @param  int $priority Priority at which to enqueue filter; defaults to 1000 (higher executes earlier)
      * @return self
      */
-    public function attachByName($name, mixed $options = [], $priority = self::DEFAULT_PRIORITY)
+    public function attachByName(string $name, array $options = [], int $priority = self::DEFAULT_PRIORITY)
     {
-        if (! is_array($options)) {
-            $options = (array) $options;
-        } elseif (empty($options)) {
-            $options = null;
-        }
-        $filter = $this->getPluginManager()->get($name, $options);
-        return $this->attach($filter, $priority);
+        return $this->attach($this->plugin($name, $options), $priority);
     }
 
     /**
@@ -234,11 +218,9 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
      *
      * Filters are run in the order in which they were added to the chain (FIFO)
      *
-     * @param  mixed $value
-     * @return mixed
      * @psalm-suppress MixedAssignment values are always mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         $valueFiltered = $value;
         foreach ($this as $filter) {

@@ -5,66 +5,29 @@ declare(strict_types=1);
 namespace Laminas\Filter\Word\Service;
 
 use Laminas\Filter\Word\SeparatorToSeparator;
-use Laminas\ServiceManager\Exception\InvalidServiceException;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Psr\Container\ContainerInterface;
-use Traversable;
 
-use function get_debug_type;
-use function is_array;
-use function iterator_to_array;
-use function sprintf;
+use function assert;
+use function is_string;
 
-/** @final */
-class SeparatorToSeparatorFactory implements FactoryInterface
+final class SeparatorToSeparatorFactory
 {
-    /**
-     * Options to pass to the constructor (when used in v2), if any.
-     *
-     * @param null|array
-     */
-    private array $creationOptions = [];
+    public function __invoke(
+        ContainerInterface $container,
+        string $requestedName,
+        ?array $options = null,
+    ): SeparatorToSeparator {
+        $options = $options ?? [];
 
-    public function __construct($creationOptions = null)
-    {
-        if (null === $creationOptions) {
-            return;
-        }
+        $searchSeparator      = $options['search_separator'] ?? ' ';
+        $replacementSeparator = $options['replacement_separator'] ?? '-';
 
-        if ($creationOptions instanceof Traversable) {
-            $creationOptions = iterator_to_array($creationOptions);
-        }
+        assert(is_string($searchSeparator));
+        assert(is_string($replacementSeparator));
 
-        if (! is_array($creationOptions)) {
-            throw new InvalidServiceException(sprintf(
-                '%s cannot use non-array, non-traversable creation options; received %s',
-                self::class,
-                get_debug_type($creationOptions)
-            ));
-        }
-
-        $this->creationOptions = $creationOptions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
-    {
         return new SeparatorToSeparator(
-            $options['search_separator'] ?? ' ',
-            $options['replacement_separator'] ?? '-'
+            $searchSeparator,
+            $replacementSeparator
         );
-    }
-
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, self::class, $this->creationOptions);
-    }
-
-    public function setCreationOptions(array $options)
-    {
-        $this->creationOptions = $options;
     }
 }

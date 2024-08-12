@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use function array_map;
-use function assert;
 use function in_array;
-use function is_string;
 use function mb_internal_encoding;
 use function mb_list_encodings;
 use function sprintf;
@@ -25,12 +23,11 @@ abstract class AbstractUnicode extends AbstractFilter
     /**
      * Set the input encoding for the given string
      *
-     * @param  string|null $encoding
-     * @return self
      * @throws Exception\InvalidArgumentException
      * @throws Exception\ExtensionNotLoadedException
+     * @return $this
      */
-    public function setEncoding($encoding = null)
+    public function setEncoding(?string $encoding = null): self
     {
         if ($encoding !== null) {
             $encoding    = strtolower($encoding);
@@ -49,16 +46,12 @@ abstract class AbstractUnicode extends AbstractFilter
 
     /**
      * Returns the set encoding
-     *
-     * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         $encoding = $this->options['encoding'] ?? null;
-        assert($encoding === null || is_string($encoding));
         if ($encoding === null) {
-            $encoding = mb_internal_encoding();
-            assert(is_string($encoding));
+            $encoding                  = mb_internal_encoding();
             $this->options['encoding'] = $encoding;
         }
 

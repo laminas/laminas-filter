@@ -11,9 +11,8 @@ namespace Laminas\Filter\Word;
  * }
  * @template TOptions of Options
  * @extends CamelCaseToSeparator<TOptions>
- * @final
  */
-class CamelCaseToDash extends CamelCaseToSeparator
+final class CamelCaseToDash extends CamelCaseToSeparator
 {
     public function __construct()
     {

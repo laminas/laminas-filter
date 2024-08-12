@@ -14,9 +14,8 @@ use function sprintf;
  *     prefix?: null|string,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StringPrefix extends AbstractFilter
+final class StringPrefix extends AbstractFilter
 {
     /** @var Options */
     protected $options = [
@@ -75,7 +74,7 @@ class StringPrefix extends AbstractFilter
     /**
      * {@inheritdoc}
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

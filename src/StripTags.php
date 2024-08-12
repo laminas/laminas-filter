@@ -31,9 +31,8 @@ use function trim;
  *     ...
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class StripTags extends AbstractFilter
+final class StripTags extends AbstractFilter
 {
     /**
      * Unique ID prefix used for allowing comments
@@ -190,10 +189,9 @@ class StripTags extends AbstractFilter
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param mixed $value
-     * @return string|mixed
+     * @psalm-return ($value is scalar ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

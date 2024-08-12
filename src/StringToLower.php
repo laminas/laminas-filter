@@ -34,11 +34,9 @@ class StringToLower extends AbstractUnicode
      *
      * If the value provided is non-scalar, the value will remain unfiltered
      *
-     * @param mixed $value
-     * @return string|mixed
      * @psalm-return ($value is string ? string : $value)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;

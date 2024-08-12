@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Laminas\Stdlib\StringUtils;
 use Traversable;
 
 use function array_key_exists;
@@ -22,6 +21,7 @@ use function ucwords;
 
 /**
  * @template TOptions of array
+ * @implements FilterInterface<mixed>
  */
 abstract class AbstractFilter implements FilterInterface
 {
@@ -31,16 +31,6 @@ abstract class AbstractFilter implements FilterInterface
      * @var TOptions
      */
     protected $options = [];
-
-    /**
-     * @deprecated Since 2.1.0
-     *
-     * @return bool
-     */
-    public static function hasPcreUnicodeSupport()
-    {
-        return StringUtils::hasPcreUnicodeSupport();
-    }
 
     /**
      * @param  TOptions|iterable $options
@@ -95,9 +85,8 @@ abstract class AbstractFilter implements FilterInterface
      * Proxies to {@link filter()}
      *
      * @throws Exception\ExceptionInterface If filtering $value is impossible.
-     * @return mixed
      */
-    public function __invoke(mixed $value)
+    public function __invoke(mixed $value): mixed
     {
         return $this->filter($value);
     }
