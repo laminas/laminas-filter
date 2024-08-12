@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Filter;
 
 use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Laminas\Filter\DateTimeFormatter;
 use Laminas\Filter\Exception;
@@ -123,5 +124,20 @@ class DateTimeFormatterTest extends TestCase
         $filter = new DateTimeFormatter();
         $this->expectException(Exception\InvalidArgumentException::class);
         $filter->filter('2013-31-31');
+    }
+
+    public function testAcceptDateTimeInterface(): void
+    {
+        $filter = new DateTimeFormatter();
+
+        self::assertSame(
+            '2024-08-09T00:00:00+0000',
+            $filter->filter(new DateTimeImmutable('2024-08-09'))
+        );
+
+        self::assertSame(
+            '2024-08-09T00:00:00+0000',
+            $filter->filter(new DateTime('2024-08-09'))
+        );
     }
 }
