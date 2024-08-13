@@ -11,8 +11,7 @@ performing file operations such as renaming.
 
 ## Lowercase
 
-`Laminas\Filter\File\Lowercase` can be used to convert all file contents to
-lowercase.
+`Laminas\Filter\File\Lowercase` can be used to convert file contents to lowercase.
 
 ### Supported Options
 
@@ -314,8 +313,7 @@ foreach ($request->getUploadedFiles() as $uploadedFile) {
 
 ## Uppercase
 
-`Laminas\Filter\File\Uppercase` can be used to convert all file contents to
-uppercase.
+`Laminas\Filter\File\Uppercase` can be used to convert file contents to uppercase.
 
 ### Supported Options
 
@@ -337,5 +335,4 @@ $filter = new UpperCase();
 $filter->filter($files['my-upload']);
 ```
 
-See the documentation on the [`LowerCase`](#lowercase) filter, above, for more
-information.
+See the documentation on the [`LowerCase`](#lowercase) filter, above, for more information.

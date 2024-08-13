@@ -1203,13 +1203,13 @@ The above results in the string `MidCentral-PHP`.
 
 ## StringToLower
 
-This filter converts any input to lowercase.
+This filter converts string input to lowercase.
 
 ### Supported Options
 
 The following options are supported for `Laminas\Filter\StringToLower`:
 
-- `encoding`: This option can be used to set an encoding to use.
+- `encoding`: This option can be used to set the expected character encoding of the input.
 
 ### Basic Usage
 
@@ -1220,41 +1220,31 @@ print $filter->filter('SAMPLE');
 // returns "sample"
 ```
 
-### Handling alternate Encoding
+### Handling Alternate Encodings
 
-By default, `StringToLower` will only handle characters from the locale of your
-server; characters from other charsets will be ignored. If you have the mbstring
-extension, however, you can use the filter with other encodings.  Pass the
-desired encoding when initiating the `StringToLower` filter, or use the
-`setEncoding()` method to change it.
+By default, `StringToLower` will only handle characters from the locale of your server; characters from other charsets will be ignored.
+To correctly filter input in encodings other than the default detected encoding for your environment, pass the
+desired encoding when initiating the `StringToLower` filter.
 
 ```php
-// using UTF-8
-$filter = new Laminas\Filter\StringToLower('UTF-8');
-
-// or give an array which can be useful when using a configuration
-$filter = new Laminas\Filter\StringToLower(['encoding' => 'UTF-8']);
-
-// or do this afterwards
-$filter->setEncoding('ISO-8859-1');
+$filter = new Laminas\Filter\StringToLower([
+    'encoding' => 'UTF-8',
+]);
 ```
 
 > ### Setting invalid Encodings
 >
-> Be aware that you will get an exception when:
->
-> - you attempt to set an encoding and the mbstring extension is unavailable; or
-> - you attempt to set an encoding unsupported by the mbstring extension.
+> Be aware that you will get an exception when you provide an encoding that is not supported by the `mbstring` extension.
 
 ## StringToUpper
 
-This filter converts any input to UPPERCASE.
+This filter converts string input to UPPERCASE.
 
 ### Supported Options
 
 The following options are supported for `Laminas\Filter\StringToUpper`:
 
-- `encoding`: This option can be used to set the encoding to use.
+- `encoding`: This option can be used to set the expected character encoding of the input.
 
 ### Basic Usage
 
@@ -1265,17 +1255,16 @@ print $filter->filter('Sample');
 // returns "SAMPLE"
 ```
 
-### Different encoded Strings
+### Handling Alternate Encodings
 
-Like the `StringToLower` filter, this filter will only handle characters
-supported by your server locale, unless you have the mbstring extension enabled.
-Using different character sets works the same as with `StringToLower`.
+By default, `StringToUpper` will only handle characters from the locale of your server; characters from other charsets will be ignored.
+To correctly filter input in encodings other than the default detected encoding for your environment, pass the
+desired encoding when initiating the `StringToUpper` filter.
 
 ```php
-$filter = new Laminas\Filter\StringToUpper(['encoding' => 'UTF-8']);
-
-// or do this afterwards
-$filter->setEncoding('ISO-8859-1');
+$filter = new Laminas\Filter\StringToUpper([
+    'encoding' => 'UTF-8',
+]);
 ```
 
 ## StringTrim

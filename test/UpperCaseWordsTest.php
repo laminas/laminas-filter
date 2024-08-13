@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\UpperCaseWords as UpperCaseWordsFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-
-use function mb_internal_encoding;
 
 class UpperCaseWordsTest extends TestCase
 {
@@ -45,14 +42,13 @@ class UpperCaseWordsTest extends TestCase
      */
     public function testWithEncoding(): void
     {
-        $filter         = $this->filter;
         $valuesExpected = [
             '√º'      => '√º',
             '√±'      => '√±',
             '√º√±123' => '√º√±123',
         ];
 
-        $filter->setEncoding('UTF-8');
+        $filter = new UpperCaseWordsFilter(['encoding' => 'utf-8']);
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
@@ -60,28 +56,9 @@ class UpperCaseWordsTest extends TestCase
 
     public function testFalseEncoding(): void
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('is not supported');
-        $this->filter->setEncoding('aaaaa');
-    }
-
-    /**
-     * @Laminas-8989
-     */
-    public function testInitiationWithEncoding(): void
-    {
-        $valuesExpected = [
-            '√º'      => '√º',
-            '√±'      => '√±',
-            '√º√±123' => '√º√±123',
-        ];
-
-        $filter = new UpperCaseWordsFilter([
-            'encoding' => 'UTF-8',
-        ]);
-        foreach ($valuesExpected as $input => $output) {
-            self::assertSame($output, $filter($input));
-        }
+        new UpperCaseWordsFilter(['encoding' => 'aaaaa']);
     }
 
     /**
@@ -89,33 +66,26 @@ class UpperCaseWordsTest extends TestCase
      */
     public function testCaseInsensitiveEncoding(): void
     {
-        $filter         = $this->filter;
         $valuesExpected = [
             '√º'      => '√º',
             '√±'      => '√±',
             '√º√±123' => '√º√±123',
         ];
 
-        $filter->setEncoding('UTF-8');
+        $filter = new UpperCaseWordsFilter(['encoding' => 'UTF-8']);
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
 
-        $this->filter->setEncoding('utf-8');
+        $filter = new UpperCaseWordsFilter(['encoding' => 'utf-8']);
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
 
-        $this->filter->setEncoding('UtF-8');
+        $filter = new UpperCaseWordsFilter(['encoding' => 'UtF-8']);
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
-    }
-
-    #[Group('Laminas-9854')]
-    public function testDetectMbInternalEncoding(): void
-    {
-        self::assertSame(mb_internal_encoding(), $this->filter->getEncoding());
     }
 
     /** @return list<array{0: mixed}> */
