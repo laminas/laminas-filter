@@ -14,6 +14,9 @@ use function sprintf;
 use function strtolower;
 
 /**
+ * @deprecated Since 2.38.0 This class will be removed in version 3.0 without replacement. All inheritors of this
+ *             class will re-implement the encoding option as a constructor argument without setters and getters.
+ *
  * @psalm-type UnicodeOptions = array{
  *     encoding?: string|null,
  * }

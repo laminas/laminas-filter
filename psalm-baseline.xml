@@ -1285,12 +1285,18 @@
     </DocblockTypeContradiction>
   </file>
   <file src="src/StringToLower.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractUnicode]]></code>
+    </DeprecatedClass>
     <PossiblyInvalidArgument>
       <code><![CDATA[$encodingOrOptions]]></code>
       <code><![CDATA[$encodingOrOptions]]></code>
     </PossiblyInvalidArgument>
   </file>
   <file src="src/StringToUpper.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractUnicode]]></code>
+    </DeprecatedClass>
     <PossiblyInvalidArgument>
       <code><![CDATA[$encodingOrOptions]]></code>
       <code><![CDATA[$encodingOrOptions]]></code>
@@ -1344,6 +1350,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/UpperCaseWords.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractUnicode]]></code>
+    </DeprecatedClass>
     <PossiblyInvalidArgument>
       <code><![CDATA[$encodingOrOptions]]></code>
       <code><![CDATA[$encodingOrOptions]]></code>
@@ -1459,6 +1468,10 @@
     </MixedReturnStatement>
   </file>
   <file src="test/AbstractUnicodeTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractUnicode]]></code>
+      <code><![CDATA[AbstractUnicode]]></code>
+    </DeprecatedClass>
     <MissingTemplateParam>
       <code><![CDATA[class extends AbstractUnicode {]]></code>
     </MissingTemplateParam>
