@@ -97,3 +97,10 @@ Support for these formats has been removed so the following classes are no longe
 - `Laminas\Filter\Compress\Snappy`
 
 The following compression formats are still available: `Bz2`, `Gz`, `Tar` and `Zip`
+
+### Removal of the `AbstractUnicode` class
+
+Various filters such as `StringToLower` and `StringToUpper` inherited from the abstract class `AbstractUnicode` whose purpose was to implement an `encoding` option.
+This class has been removed and the affected filters no longer inherit from anything.
+In order to provide consistent handling of the `encoding` option that has been re-implemented in these filters, a new class `EncodingOption` has been introduced which provides static methods to validate a given encoding option.
+This change is unlikely to affect you, unless you have inherited from this class. In which case, you will need to implement the provision of an encoding option for your custom filter and remove `AbstractUnicode` from your inheritance tree.
