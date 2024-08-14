@@ -31,6 +31,8 @@ final class MyFilter implements Laminas\Filter\FilterInterface {
 }
 ```
 
+#### Change of Parameter and Return Type
+
 Also note that the signature of both `filter()` and `__invoke()` has changed to include `mixed` as both parameter and return type, therefore, it will be necessary to add any missing parameter and return types to your custom filters.
 
 ### Filter Plugin Manager
