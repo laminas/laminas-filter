@@ -91,7 +91,7 @@ class DateTimeFormatterTest extends TestCase
         self::assertSame('2012-01-01T00:00:00-05:00', $resultNewYork);
     }
 
-    public function testSetRFCFormat(): void
+    public function testSetFormat(): void
     {
         date_default_timezone_set('UTC');
 
