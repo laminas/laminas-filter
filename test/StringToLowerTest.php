@@ -7,11 +7,8 @@ namespace LaminasTest\Filter;
 use Laminas\Filter\Exception;
 use Laminas\Filter\StringToLower as StringToLowerFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-
-use function mb_internal_encoding;
 
 class StringToLowerTest extends TestCase
 {
@@ -45,14 +42,13 @@ class StringToLowerTest extends TestCase
      */
     public function testWithEncoding(): void
     {
-        $filter         = $this->filter;
+        $filter         = new StringToLowerFilter(['encoding' => 'utf-8']);
         $valuesExpected = [
             'Ü'     => 'ü',
             'Ñ'     => 'ñ',
             'ÜÑ123' => 'üñ123',
         ];
 
-        $filter->setEncoding('UTF-8');
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
@@ -62,13 +58,13 @@ class StringToLowerTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('is not supported');
-        $this->filter->setEncoding('aaaaa');
+        new StringToLowerFilter(['encoding' => 'aaaaa']);
     }
 
     /**
-     * @Laminas-8989
+     * @Laminas-9058
      */
-    public function testInitiationWithEncoding(): void
+    public function testCaseInsensitiveEncoding(): void
     {
         $valuesExpected = [
             'Ü'     => 'ü',
@@ -80,44 +76,16 @@ class StringToLowerTest extends TestCase
         foreach ($valuesExpected as $input => $output) {
             self::assertSame($output, $filter($input));
         }
-    }
 
-    /**
-     * @Laminas-9058
-     */
-    public function testCaseInsensitiveEncoding(): void
-    {
-        $filter         = $this->filter;
-        $valuesExpected = [
-            'Ü'     => 'ü',
-            'Ñ'     => 'ñ',
-            'ÜÑ123' => 'üñ123',
-        ];
-
-        try {
-            $filter->setEncoding('UTF-8');
-            foreach ($valuesExpected as $input => $output) {
-                self::assertSame($output, $filter($input));
-            }
-
-            $this->filter->setEncoding('utf-8');
-            foreach ($valuesExpected as $input => $output) {
-                self::assertSame($output, $filter($input));
-            }
-
-            $this->filter->setEncoding('UtF-8');
-            foreach ($valuesExpected as $input => $output) {
-                self::assertSame($output, $filter($input));
-            }
-        } catch (Exception\ExtensionNotLoadedException $e) {
-            self::assertContains('mbstring is required', $e->getMessage());
+        $filter = new StringToLowerFilter(['encoding' => 'utf-8']);
+        foreach ($valuesExpected as $input => $output) {
+            self::assertSame($output, $filter($input));
         }
-    }
 
-    #[Group('Laminas-9854')]
-    public function testDetectMbInternalEncoding(): void
-    {
-        self::assertSame(mb_internal_encoding(), $this->filter->getEncoding());
+        $filter = new StringToLowerFilter(['encoding' => 'UtF-8']);
+        foreach ($valuesExpected as $input => $output) {
+            self::assertSame($output, $filter($input));
+        }
     }
 
     /** @return list<array{0: mixed}> */

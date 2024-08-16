@@ -8,33 +8,25 @@ use function is_scalar;
 use function mb_strtoupper;
 
 /**
- * @psalm-import-type UnicodeOptions from AbstractUnicode
- * @extends AbstractUnicode<UnicodeOptions>
+ * @psalm-type Options = array{encoding?: string}
+ * @implements FilterInterface<string>
  */
-class StringToUpper extends AbstractUnicode
+final class StringToUpper implements FilterInterface
 {
+    private readonly string $encoding;
+
     /**
-     * @param string|UnicodeOptions|iterable|null $encodingOrOptions
+     * @param Options $options
      */
-    public function __construct($encodingOrOptions = null)
+    public function __construct(array $options = [])
     {
-        if ($encodingOrOptions !== null) {
-            if (! static::isOptions($encodingOrOptions)) {
-                $this->setEncoding($encodingOrOptions);
-            } else {
-                $this->setOptions($encodingOrOptions);
-            }
-        }
+        $this->encoding = EncodingOption::assertWithDefault($options['encoding'] ?? null);
     }
 
     /**
-     * Defined by Laminas\Filter\FilterInterface
-     *
      * Returns the string $value, converting characters to uppercase as necessary
      *
      * If the value provided is non-scalar, the value will remain unfiltered
-     *
-     * @psalm-return ($value is scalar ? string : mixed)
      */
     public function filter(mixed $value): mixed
     {
@@ -42,6 +34,11 @@ class StringToUpper extends AbstractUnicode
             return $value;
         }
 
-        return mb_strtoupper((string) $value, $this->getEncoding());
+        return mb_strtoupper((string) $value, $this->encoding);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

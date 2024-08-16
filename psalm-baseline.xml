@@ -233,14 +233,6 @@
       <code><![CDATA[(bool) $strict]]></code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/File/LowerCase.php">
-    <MixedAssignment>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$uploadData]]></code>
-    </PossiblyUndefinedVariable>
-  </file>
   <file src="src/File/Rename.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
@@ -392,14 +384,6 @@
       <code><![CDATA[(bool) $flag]]></code>
       <code><![CDATA[(bool) $flag]]></code>
     </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/File/UpperCase.php">
-    <MixedAssignment>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$uploadData]]></code>
-    </PossiblyUndefinedVariable>
   </file>
   <file src="src/FilterChain.php">
     <MixedPropertyTypeCoercion>
@@ -584,18 +568,6 @@
       <code><![CDATA[is_string($suffix)]]></code>
     </DocblockTypeContradiction>
   </file>
-  <file src="src/StringToLower.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$encodingOrOptions]]></code>
-      <code><![CDATA[$encodingOrOptions]]></code>
-    </PossiblyInvalidArgument>
-  </file>
-  <file src="src/StringToUpper.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$encodingOrOptions]]></code>
-      <code><![CDATA[$encodingOrOptions]]></code>
-    </PossiblyInvalidArgument>
-  </file>
   <file src="src/StringTrim.php">
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$this->options['charlist']]]></code>
@@ -636,12 +608,6 @@
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[is_int($value)]]></code>
     </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/UpperCaseWords.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$encodingOrOptions]]></code>
-      <code><![CDATA[$encodingOrOptions]]></code>
-    </PossiblyInvalidArgument>
   </file>
   <file src="src/Word/AbstractSeparator.php">
     <PossiblyInvalidArgument>
@@ -706,14 +672,6 @@
     <MixedReturnStatement>
       <code><![CDATA[is_array($value) ? array_map($lowerCaseFirst, $value) : $lowerCaseFirst($value)]]></code>
     </MixedReturnStatement>
-  </file>
-  <file src="test/AbstractUnicodeTest.php">
-    <MissingTemplateParam>
-      <code><![CDATA[class extends AbstractUnicode {]]></code>
-    </MissingTemplateParam>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[encodingProvider]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/AllowListTest.php">
     <PossiblyUnusedMethod>
@@ -822,9 +780,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/LowerCaseTest.php">
-    <MissingParamType>
-      <code><![CDATA[$input]]></code>
-    </MissingParamType>
     <PossiblyUnusedMethod>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
@@ -857,9 +812,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/UpperCaseTest.php">
-    <MissingParamType>
-      <code><![CDATA[$input]]></code>
-    </MissingParamType>
     <PossiblyUnusedMethod>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
@@ -980,9 +932,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringToLowerTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$e->getMessage()]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
