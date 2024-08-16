@@ -14,7 +14,7 @@ use function is_int;
 use function is_string;
 
 /**
- * @implements  FilterInterface<mixed>
+ * @implements FilterInterface<mixed>
  */
 final class DateTimeFormatter implements FilterInterface
 {
@@ -36,8 +36,7 @@ final class DateTimeFormatter implements FilterInterface
     /**
      * Filter a datetime string by normalizing it to the filters specified format
      *
-     * @param  DateTimeInterface|string|int|mixed $value
-     * @throws InvalidArgumentException
+     * @inheritDoc
      */
     public function filter(mixed $value): mixed
     {
