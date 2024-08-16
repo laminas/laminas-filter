@@ -6,47 +6,27 @@ namespace Laminas\Filter;
 
 use DateTime;
 use DateTimeInterface;
+use Exception;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use Throwable;
-use Traversable;
 
 use function is_int;
 use function is_string;
 
 /**
- * @psalm-type Options = array{
- *     format?: string,
- *     ...
- * }
- * @extends AbstractFilter<Options>
+ * @implements  FilterInterface<mixed>
  */
-final class DateTimeFormatter extends AbstractFilter
+final class DateTimeFormatter implements FilterInterface
 {
     /**
      * A valid format string accepted by date()
-     *
-     * @var string
      */
-    protected $format = DateTime::ISO8601;
-
-    /**
-     * Sets filter options
-     *
-     * @param array|Traversable $options
-     */
-    public function __construct($options = null)
-    {
-        if ($options !== null) {
-            $this->setOptions($options);
-        }
-    }
+    protected string $format = DateTimeInterface::ATOM;
 
     /**
      * Set the format string accepted by date() to use when formatting a string
-     *
-     * @param  string $format
-     * @return self
      */
-    public function setFormat($format)
+    public function setFormat(string $format): DateTimeFormatter
     {
         $this->format = $format;
 
@@ -56,8 +36,8 @@ final class DateTimeFormatter extends AbstractFilter
     /**
      * Filter a datetime string by normalizing it to the filters specified format
      *
-     * @param  DateTime|string|int|mixed $value
-     * @throws Exception\InvalidArgumentException
+     * @param  DateTimeInterface|string|int|mixed $value
+     * @throws InvalidArgumentException
      */
     public function filter(mixed $value): mixed
     {
@@ -65,7 +45,7 @@ final class DateTimeFormatter extends AbstractFilter
             $result = $this->normalizeDateTime($value);
         } catch (Throwable $e) {
             // DateTime threw an exception, an invalid date string was provided
-            throw new Exception\InvalidArgumentException('Invalid date string provided', $e->getCode(), $e);
+            throw new InvalidArgumentException('Invalid date string provided', $e->getCode(), $e);
         }
 
         if ($result === false) {
@@ -78,9 +58,9 @@ final class DateTimeFormatter extends AbstractFilter
     /**
      * Normalize the provided value to a formatted string
      *
-     * @return string|mixed
+     * @throws Exception
      */
-    protected function normalizeDateTime(mixed $value)
+    protected function normalizeDateTime(mixed $value): mixed
     {
         if ($value === '' || $value === null) {
             return $value;
@@ -98,5 +78,10 @@ final class DateTimeFormatter extends AbstractFilter
         }
 
         return $value->format($this->format);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

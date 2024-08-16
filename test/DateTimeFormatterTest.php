@@ -64,7 +64,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(0);
-        self::assertSame('1970-01-01T00:00:00+0000', $result);
+        self::assertSame('1970-01-01T00:00:00+00:00', $result);
     }
 
     public function testDateTimeFormatted(): void
@@ -73,7 +73,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter('2012-01-01');
-        self::assertSame('2012-01-01T00:00:00+0000', $result);
+        self::assertSame('2012-01-01T00:00:00+00:00', $result);
     }
 
     public function testDateTimeFormattedWithAlternateTimezones(): void
@@ -83,22 +83,27 @@ class DateTimeFormatterTest extends TestCase
         date_default_timezone_set('Europe/Paris');
 
         $resultParis = $filter->filter('2012-01-01');
-        self::assertSame('2012-01-01T00:00:00+0100', $resultParis);
+        self::assertSame('2012-01-01T00:00:00+01:00', $resultParis);
 
         date_default_timezone_set('America/New_York');
 
         $resultNewYork = $filter->filter('2012-01-01');
-        self::assertSame('2012-01-01T00:00:00-0500', $resultNewYork);
+        self::assertSame('2012-01-01T00:00:00-05:00', $resultNewYork);
     }
 
-    public function testSetFormat(): void
+    public function testSetRFCFormat(): void
     {
         date_default_timezone_set('UTC');
 
         $filter = new DateTimeFormatter();
+
         $filter->setFormat(DateTimeInterface::RFC1036);
-        $result = $filter->filter('2012-01-01');
-        self::assertSame('Sun, 01 Jan 12 00:00:00 +0000', $result);
+        $resultRfc = $filter->filter('2012-01-01');
+        self::assertSame('Sun, 01 Jan 12 00:00:00 +0000', $resultRfc);
+
+        $filter->setFormat('d-m-Y');
+        $resultCustom = $filter->filter('2024-08-16 00:00:00');
+        self::assertSame('16-08-2024', $resultCustom);
     }
 
     public function testFormatDateTimeFromTimestamp(): void
@@ -107,7 +112,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(1_359_739_801);
-        self::assertSame('2013-02-01T17:30:01+0000', $result);
+        self::assertSame('2013-02-01T17:30:01+00:00', $result);
     }
 
     public function testAcceptDateTimeValue(): void
@@ -116,7 +121,7 @@ class DateTimeFormatterTest extends TestCase
 
         $filter = new DateTimeFormatter();
         $result = $filter->filter(new DateTime('2012-01-01'));
-        self::assertSame('2012-01-01T00:00:00+0000', $result);
+        self::assertSame('2012-01-01T00:00:00+00:00', $result);
     }
 
     public function testInvalidArgumentExceptionThrownOnInvalidInput(): void
@@ -131,12 +136,12 @@ class DateTimeFormatterTest extends TestCase
         $filter = new DateTimeFormatter();
 
         self::assertSame(
-            '2024-08-09T00:00:00+0000',
+            '2024-08-09T00:00:00+00:00',
             $filter->filter(new DateTimeImmutable('2024-08-09'))
         );
 
         self::assertSame(
-            '2024-08-09T00:00:00+0000',
+            '2024-08-09T00:00:00+00:00',
             $filter->filter(new DateTime('2024-08-09'))
         );
     }
