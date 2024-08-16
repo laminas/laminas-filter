@@ -642,6 +642,28 @@ All options can be set at instantiation or by using a related method. For exampl
 methods for `target` are `getTarget()` and `setTarget()`. You can also use the `setOptions()` method
 which accepts an array of all options.
 
+## DateTimeFormatter
+
+The filter normalize a datetime string to match the filter specified format
+
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Digits`
+
+### Basic Usage
+
+```php
+$filter = new \Laminas\Filter\DateTimeFormatter();
+
+echo $filter->filter('2024-01-01'); // => 2024-01-01T00:00:00+00:00
+echo $filter->filter(1_359_739_801); // => 2013-02-01T17:30:01+00:00
+echo $filter->filter(new DateTimeImmutable('2024-01-01')) // => 2024-01-01T00:00:00+00:00 
+
+$filter->setFormat('d-m-Y');
+echo $filter->filter('2024-08-16 00:00:00'); // => 16-08-2024
+
+```
+
 ## DenyList
 
 This filter will return `null` if the value being filtered is present in the filter's list of
