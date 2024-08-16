@@ -661,7 +661,6 @@ echo $filter->filter(new DateTimeImmutable('2024-01-01')) // => 2024-01-01T00:00
 
 $filter->setFormat('d-m-Y');
 echo $filter->filter('2024-08-16 00:00:00'); // => 16-08-2024
-
 ```
 
 ## DenyList
