@@ -207,12 +207,12 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/DateTimeFormatter.php">
-    <MixedAssignment>
-      <code><![CDATA[$result]]></code>
-    </MixedAssignment>
     <PossiblyInvalidArgument>
       <code><![CDATA[$e->getCode()]]></code>
     </PossiblyInvalidArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$value]]></code>
+    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/DateTimeSelect.php">
     <MixedReturnStatement>
@@ -739,7 +739,7 @@
   </file>
   <file src="test/DateTimeFormatterTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[returnUnfilteredDataProvider]]></code>
+      <code><![CDATA[returnExceptionDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DateTimeSelectTest.php">

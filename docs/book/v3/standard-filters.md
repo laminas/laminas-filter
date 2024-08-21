@@ -648,7 +648,10 @@ The filter normalize a datetime string to match the filter specified format
 
 ### Supported Options
 
-There are no additional options for `Laminas\Filter\Digits`
+The following options are supported for `Laminas\Filter\DateTimeFormatter`
+
+- `format`: a valid date format to use when formatting a string
+- `timezone` : a valid timezone to be used when handling the date
 
 ### Basic Usage
 
@@ -659,8 +662,15 @@ echo $filter->filter('2024-01-01'); // => 2024-01-01T00:00:00+00:00
 echo $filter->filter(1_359_739_801); // => 2013-02-01T17:30:01+00:00
 echo $filter->filter(new DateTimeImmutable('2024-01-01')) // => 2024-01-01T00:00:00+00:00 
 
-$filter->setFormat('d-m-Y');
+$filter = new \Laminas\Filter\DateTimeFormatter([
+    'format' => 'd-m-Y'
+]);
 echo $filter->filter('2024-08-16 00:00:00'); // => 16-08-2024
+
+$filter = new \Laminas\Filter\DateTimeFormatter([
+    'timezone' => 'Europe/Paris'
+]);
+echo $filter->filter('2024-01-01'); // => 2024-01-01T00:00:00+01:00
 ```
 
 ## DenyList

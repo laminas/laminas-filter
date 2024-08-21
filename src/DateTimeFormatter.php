@@ -4,33 +4,43 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use Exception;
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Throwable;
 
+use function date_default_timezone_get;
 use function is_int;
-use function is_string;
 
 /**
- * @implements FilterInterface<mixed>
+ * @psalm-type Options = array{
+ *      format?: non-empty-string,
+ *      timezone?: non-empty-string,
+ * }
+ * @implements FilterInterface<string>
  */
 final class DateTimeFormatter implements FilterInterface
 {
     /**
      * A valid format string accepted by date()
      */
-    protected string $format = DateTimeInterface::ATOM;
+    private readonly string $format;
 
     /**
-     * Set the format string accepted by date() to use when formatting a string
+     * A valid timezone string
      */
-    public function setFormat(string $format): DateTimeFormatter
-    {
-        $this->format = $format;
+    private readonly DateTimeZone $timezone;
 
-        return $this;
+    /**
+     * @param Options $options
+     * @throws Exception
+     */
+    public function __construct(array $options = [])
+    {
+        $this->format   = $options['format'] ?? DateTimeInterface::ATOM;
+        $this->timezone = new DateTimeZone($options['timezone'] ?? date_default_timezone_get());
     }
 
     /**
@@ -41,39 +51,14 @@ final class DateTimeFormatter implements FilterInterface
     public function filter(mixed $value): mixed
     {
         try {
-            $result = $this->normalizeDateTime($value);
+            if (! $value instanceof DateTimeInterface) {
+                $value = is_int($value) ? '@' . (string)$value : $value;
+                $value = new DateTimeImmutable($value, $this->timezone);
+            } else {
+                $value = new DateTimeImmutable($value->format($this->format), $this->timezone);
+            }
         } catch (Throwable $e) {
-            // DateTime threw an exception, an invalid date string was provided
             throw new InvalidArgumentException('Invalid date string provided', $e->getCode(), $e);
-        }
-
-        if ($result === false) {
-            return $value;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Normalize the provided value to a formatted string
-     *
-     * @throws Exception
-     */
-    protected function normalizeDateTime(mixed $value): mixed
-    {
-        if ($value === '' || $value === null) {
-            return $value;
-        }
-
-        if (! is_string($value) && ! is_int($value) && ! $value instanceof DateTimeInterface) {
-            return $value;
-        }
-
-        if (is_int($value)) {
-            //timestamp
-            $value = new DateTime('@' . $value);
-        } elseif (! $value instanceof DateTimeInterface) {
-            $value = new DateTime($value);
         }
 
         return $value->format($this->format);
