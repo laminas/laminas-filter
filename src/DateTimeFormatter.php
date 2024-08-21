@@ -52,7 +52,7 @@ final class DateTimeFormatter implements FilterInterface
     {
         try {
             if (! $value instanceof DateTimeInterface) {
-                $value = is_int($value) ? '@' . (string)$value : $value;
+                $value = is_int($value) ? '@' . (string) $value : $value;
                 $value = new DateTimeImmutable($value, $this->timezone);
             } else {
                 $value = new DateTimeImmutable($value->format($this->format), $this->timezone);

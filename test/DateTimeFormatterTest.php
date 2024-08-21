@@ -41,7 +41,6 @@ class DateTimeFormatterTest extends TestCase
         $this->expectException(Exception\InvalidArgumentException::class);
 
         $filter->filter($input);
-
     }
 
     public function testFormatterFormatsZero(): void
