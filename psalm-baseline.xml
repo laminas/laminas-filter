@@ -207,12 +207,9 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/DateTimeFormatter.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$e->getCode()]]></code>
-    </PossiblyInvalidArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </MixedArgumentTypeCoercion>
+    <PossiblyInvalidMethodCall>
+      <code><![CDATA[format]]></code>
+    </PossiblyInvalidMethodCall>
   </file>
   <file src="src/DateTimeSelect.php">
     <MixedReturnStatement>
@@ -739,7 +736,7 @@
   </file>
   <file src="test/DateTimeFormatterTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[returnExceptionDataProvider]]></code>
+      <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DateTimeSelectTest.php">
