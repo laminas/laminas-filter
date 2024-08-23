@@ -50,7 +50,7 @@ final class DateTimeFormatter implements FilterInterface
     }
 
     /**
-     *  Filter a datetime string by normalizing it to the filters specified format
+     * Filter a datetime string by normalizing it to the filters specified format
      *
      * @inheritDoc
      */

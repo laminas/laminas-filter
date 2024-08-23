@@ -149,10 +149,10 @@ class DateTimeFormatterTest extends TestCase
         self::assertSame('16-08-2024', $filter->filter('2024-08-16 00:00:00'));
 
         $filter = new DateTimeFormatter([
-            'format' => 'asd xyz Y W',
+            'format' => 'asd Y W',
         ]);
 
-        self::assertSame('am0016 202424228 2024 33', $filter->filter('2024-08-16 00:00:00'));
+        self::assertSame('am0016 2024 33', $filter->filter('2024-08-16 00:00:00'));
     }
 
     public function testFormatDateTimeFromTimestamp(): void
