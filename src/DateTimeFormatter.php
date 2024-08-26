@@ -57,19 +57,23 @@ final class DateTimeFormatter implements FilterInterface
     public function filter(mixed $value): mixed
     {
         if (
-            ! (is_string($value) && $value !== '') && ! is_int($value)
+            ! (is_string($value) && $value !== '')
+            && ! is_int($value)
             && ! $value instanceof DateTimeInterface
         ) {
             return $value;
         }
 
         try {
-            if (! $value instanceof DateTimeInterface) {
-                $value = is_int($value) ? '@' . (string) $value : $value;
+            if (is_int($value)) {
+                $value = '@' . (string) $value;
+            }
+
+            if (is_string($value)) {
                 $value = new DateTimeImmutable($value, $this->timezone);
             }
         } catch (Throwable $e) {
-            throw new InvalidArgumentException('Invalid date string provided');
+            throw new InvalidArgumentException('Invalid date/time string provided');
         }
 
         return $value->format($this->format);

@@ -656,7 +656,7 @@ The following options are supported for `Laminas\Filter\DateTimeFormatter`
 
 ### Basic Usage
 
-#### Without any options
+#### Without Any Options
 
 ```php
 $filter = new \Laminas\Filter\DateTimeFormatter();
@@ -666,7 +666,7 @@ echo $filter->filter(1_359_739_801); // => 2013-02-01T17:30:01+00:00
 echo $filter->filter(new DateTimeImmutable('2024-01-01')) // => 2024-01-01T00:00:00+00:00 
 ```
 
-#### With format option
+#### With `format` Option
 
 ```php
 $filter = new \Laminas\Filter\DateTimeFormatter([
@@ -675,7 +675,7 @@ $filter = new \Laminas\Filter\DateTimeFormatter([
 echo $filter->filter('2024-08-16 00:00:00'); // => 16-08-2024
 ```
 
-#### With timezone option
+#### With `timezone` Option
 
 ```php
 $filter = new \Laminas\Filter\DateTimeFormatter([

@@ -16,7 +16,6 @@ use stdClass;
 
 use function date_default_timezone_get;
 use function date_default_timezone_set;
-use function PHPUnit\Framework\assertSame;
 
 class DateTimeFormatterTest extends TestCase
 {
@@ -77,9 +76,6 @@ class DateTimeFormatterTest extends TestCase
         self::assertSame('2012-01-01T00:00:00+00:00', $result);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testReturnExceptionOnInvalidTimezone(): void
     {
         date_default_timezone_set('UTC');
@@ -91,9 +87,6 @@ class DateTimeFormatterTest extends TestCase
         ]);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testDateTimeFormattedWithAlternateTimezones(): void
     {
         date_default_timezone_set('UTC');
@@ -128,12 +121,9 @@ class DateTimeFormatterTest extends TestCase
 
         $result = $filter->filter($datetime);
 
-        assertSame('2024-01-01T00:00:00-05:00', $result);
+        self::assertSame('2024-01-01T00:00:00-05:00', $result);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testSetFormat(): void
     {
         date_default_timezone_set('UTC');
@@ -173,7 +163,7 @@ class DateTimeFormatterTest extends TestCase
         self::assertSame('2012-01-01T00:00:00+00:00', $result);
     }
 
-    public function testTrowInvalidArgumentOnInvalidInput(): void
+    public function testThrowInvalidArgumentOnInvalidInput(): void
     {
         $filter = new DateTimeFormatter();
         self::expectException(Exception\InvalidArgumentException::class);
