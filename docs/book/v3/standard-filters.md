@@ -1336,17 +1336,13 @@ characters have been removed.
 ### Specifying alternate Characters
 
 ```php
-$filter = new Laminas\Filter\StringTrim(':');
-// or new Laminas\Filter\StringTrim(array('charlist' => ':'));
+$filter = new Laminas\Filter\StringTrim(['charlist' => ':']);
 
 print $filter->filter(' This is (my) content:');
 ```
 
-The above example returns `This is (my) content`. Notice that the whitespace
-characters and colon are removed. You can also provide a `Traversable` or an
-array with a `charlist` key. To set the desired character list after
-instantiation, use the `setCharList()` method. `getCharList()` returns the
-current character list.
+<!-- markdownlint-disable-next-line no-space-in-code -->
+The above example returns ` This is (my) content`. Notice that only the colon is removed.
 
 ## StripNewlines
 
