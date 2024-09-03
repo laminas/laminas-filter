@@ -763,7 +763,7 @@
   </file>
   <file src="test/DigitsTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[returnUnfilteredDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DirTest.php">
