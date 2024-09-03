@@ -1303,6 +1303,9 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/StringTrim.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setCharList]]></code>
+    </DeprecatedMethod>
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$this->options['charlist']]]></code>
       <code><![CDATA[$this->options['charlist']]]></code>
@@ -1870,6 +1873,14 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringTrimTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCharList]]></code>
+      <code><![CDATA[getCharList]]></code>
+      <code><![CDATA[setCharList]]></code>
+      <code><![CDATA[setCharList]]></code>
+      <code><![CDATA[setCharList]]></code>
+      <code><![CDATA[setCharList]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[getNonStringValues]]></code>
     </PossiblyUnusedMethod>
