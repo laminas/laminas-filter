@@ -206,14 +206,6 @@
       <code><![CDATA[$res !== true]]></code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/DateTimeFormatter.php">
-    <MixedAssignment>
-      <code><![CDATA[$result]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$e->getCode()]]></code>
-    </PossiblyInvalidArgument>
-  </file>
   <file src="src/DateTimeSelect.php">
     <MixedReturnStatement>
       <code><![CDATA[$value]]></code>

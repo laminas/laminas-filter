@@ -642,6 +642,48 @@ All options can be set at instantiation or by using a related method. For exampl
 methods for `target` are `getTarget()` and `setTarget()`. You can also use the `setOptions()` method
 which accepts an array of all options.
 
+## DateTimeFormatter
+
+This filter formats either a `DateTimeInterface` object, a string, or integer that `DateTime` will understand to a date
+and/or time string in the configured format.
+
+### Supported Options
+
+The following options are supported for `Laminas\Filter\DateTimeFormatter`
+
+- `format`: a valid [date format](https://www.php.net/manual/datetime.format.php) to use when formatting a string, for example `l jS F Y`. This option defaults to `DateTimeInterface::ATOM` when unspecified
+- `timezone` : The default timezone to apply when converting a string or integer argument to a `DateTime` instance. This option falls back to the system timezone when unspecified
+
+### Basic Usage
+
+#### Without Any Options
+
+```php
+$filter = new \Laminas\Filter\DateTimeFormatter();
+
+echo $filter->filter('2024-01-01'); // => 2024-01-01T00:00:00+00:00
+echo $filter->filter(1_359_739_801); // => 2013-02-01T17:30:01+00:00
+echo $filter->filter(new DateTimeImmutable('2024-01-01')) // => 2024-01-01T00:00:00+00:00 
+```
+
+#### With `format` Option
+
+```php
+$filter = new \Laminas\Filter\DateTimeFormatter([
+    'format' => 'd-m-Y'
+]);
+echo $filter->filter('2024-08-16 00:00:00'); // => 16-08-2024
+```
+
+#### With `timezone` Option
+
+```php
+$filter = new \Laminas\Filter\DateTimeFormatter([
+    'timezone' => 'Europe/Paris'
+]);
+echo $filter->filter('2024-01-01'); // => 2024-01-01T00:00:00+01:00
+```
+
 ## DenyList
 
 This filter will return `null` if the value being filtered is present in the filter's list of
