@@ -68,12 +68,10 @@ echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content 123'
 ```
 
-> ### Supported Languages
->
-> `Alnum` works on almost all languages, except: Chinese, Japanese and Korean.
-> Within these languages, the english alphabet is used instead of the characters
-> from these languages. The language itself is detected using the `Locale`
-> class.
+NOTE: **Supported Languages**
+`Alnum` works on almost all languages, except: Chinese, Japanese and Korean.
+Within these languages, the english alphabet is used instead of the characters from these languages.
+The language itself is detected using the `Locale` class.
 
 ## Alpha
 
@@ -115,12 +113,10 @@ echo $filter->filter('This is (my) content: 123');
 // Returns 'This is my content '
 ```
 
-> ### Supported Languages
->
-> `Alpha` works on almost all languages, except: Chinese, Japanese and Korean.
-> Within these languages, the english alphabet is used instead of the characters
-> from these languages. The language itself is detected using the `Locale`
-> class.
+NOTE: **Supported Languages**
+`Alpha` works on almost all languages, except: Chinese, Japanese and Korean.
+Within these languages, the english alphabet is used instead of the characters from these languages.
+The language itself is detected using the `Locale` class.
 
 ## BaseName
 
@@ -425,9 +421,8 @@ $filter = new Laminas\Filter\Compress([
 ]);
 ```
 
-> ### Default compression Adapter
->
-> When no compression adapter is given, then the **Gz** adapter will be used.
+NOTE: **Default compression Adapter**
+When no compression adapter is given, then the **Gz** adapter will be used.
 
 Decompression is essentially the same usage; we simply use the `Decompress`
 filter instead:
@@ -473,10 +468,8 @@ $compressed = $filter->filter('Uncompressed string');
 In the above example, the uncompressed string is compressed, and is then written
 into the given archive file.
 
-> ### Existing Archives will be overwritten
->
-> The content of any existing file will be overwritten when the given filename
-> of the archive already exists.
+WARNING: **Existing Archives will be overwritten**
+The content of any existing file will be overwritten when the given filename of the archive already exists.
 
 When you want to compress a file, then you must give the name of the file with its path:
 
@@ -506,12 +499,9 @@ $compressed = $filter->filter('C:\temp\somedir');
 // Returns true on success and creates the archive file
 ```
 
-> ### Do not compress large or base Directories
->
-> You should never compress large or base directories like a complete partition.
-> Compressing a complete partition is a very time consuming task which can lead
-> to massive problems on your server when there is not enough space or your
-> script takes too much time.
+NOTE: **Do not compress large or base Directories**
+You should never compress large or base directories like a complete partition.
+Compressing a complete partition is a very time consuming task which can lead to massive problems on your server when there is not enough space or your script takes too much time.
 
 ### Decompressing an Archive
 
@@ -539,10 +529,8 @@ $decompressed = $filter->filter('filename.zip');
 // into the given target directory
 ```
 
-> ### Directories to extract to must exist
->
-> When you want to decompress an archive into a directory, then the target
-> directory must exist.
+NOTE: **Directories to extract to must exist**
+When you want to decompress an archive into a directory, then the target directory must exist.
 
 ### Bz2 Adapter
 
@@ -593,9 +581,8 @@ The Tar Adapter can compress and decompress:
 - Files
 - Directories
 
-> ### Tar does not support Strings
->
-> The Tar Adapter can not handle strings.
+NOTE: **Tar does not support Strings**
+The Tar Adapter can not handle strings.
 
 This adapter makes use of PEAR's `Archive_Tar` component.
 
@@ -612,11 +599,9 @@ example, the related methods for `target` are `getTarget()` and `setTarget()`.
 You can also use the `setOptions()` method which accepts an array of all
 options.
 
-> ### Directory Usage
->
-> When compressing directories with Tar, the complete file path is used. This
-> means that created Tar files will not only have the subdirectory, but the
-> complete path for the compressed file.
+NOTE: **Directory Usage**
+When compressing directories with Tar, the complete file path is used.
+This means that created Tar files will not only have the subdirectory, but the complete path for the compressed file.
 
 ### Zip Adapter
 
@@ -626,10 +611,8 @@ The Zip Adapter can compress and decompress:
 - Files
 - Directories
 
-> ### Zip does not support String Decompression
->
-> The Zip Adapter can not handle decompression to a string; decompression will
-> always be written to a file.
+NOTE: **Zip does not support String Decompression**
+The Zip Adapter can not handle decompression to a string; decompression will always be written to a file.
 
 This adapter makes use of PHP's `Zip` extension.
 
@@ -1274,9 +1257,8 @@ $filter = new Laminas\Filter\StringToLower([
 ]);
 ```
 
-> ### Setting invalid Encodings
->
-> Be aware that you will get an exception when you provide an encoding that is not supported by the `mbstring` extension.
+NOTE: **Setting invalid Encodings**
+Be aware that you will get an exception when you provide an encoding that is not supported by the `mbstring` extension.
 
 ## StringToUpper
 
@@ -1368,15 +1350,12 @@ characters have been removed.
 
 This filter can strip XML and HTML tags from given content.
 
-> ### Laminas\\Filter\\StripTags is potentially insecure
+> WARNING: **This filter is potentially insecure**
 >
-> Be warned that `Laminas\\Filter\\StripTags` should only be used to strip *all*
-> available tags.  Using `Laminas\\Filter\\StripTags` to make your site secure by
-> stripping *some* unwanted tags will lead to unsecure and dangerous code,
-> including potential XSS vectors.
+> Be warned that `Laminas\Filter\StripTags` should only be used to strip *all* available tags.
+> Using `Laminas\Filter\StripTags` to make your site secure by stripping *some* unwanted tags will lead to unsecure and dangerous code, including potential XSS vectors.
 >
-> For a fully secure solution that allows selected filtering of HTML tags, use
-> either Tidy or HtmlPurifier.
+> For a fully secure solution that allows selected filtering of HTML tags, use either Tidy or HtmlPurifier.
 
 ### Supported Options
 
@@ -1424,10 +1403,9 @@ The above will return `A text with a <a href='link.com'>link</a>`;
 it strips all tags but the link. By providing an array, you can specify multiple
 tags at once.
 
-> ### Warning
->
-> Do not use this feature to secure content. This component does not replace the
-> use of a properly configured html filter.
+WARNING: **Warning**
+Do not use this feature to secure content.
+This component does not replace the use of a properly configured html filter.
 
 ### Allowing defined Attributes
 
