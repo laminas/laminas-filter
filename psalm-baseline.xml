@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/AbstractDateDropdown.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MissingReturnType>
       <code><![CDATA[filterable]]></code>
     </MissingReturnType>
@@ -39,6 +42,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AbstractUnicode.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <RedundantCondition>
       <code><![CDATA[assert(is_string($encoding))]]></code>
       <code><![CDATA[is_string($encoding)]]></code>
@@ -48,6 +54,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/AllowList.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getList]]></code>
       <code><![CDATA[getStrict]]></code>
@@ -60,6 +69,11 @@
       <code><![CDATA[(bool) $strict]]></code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="src/BaseName.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
   <file src="src/Blacklist.php">
     <InvalidExtendClass>
       <code><![CDATA[DenyList]]></code>
@@ -69,6 +83,9 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$typeOrOptions]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getCasting]]></code>
       <code><![CDATA[getType]]></code>
@@ -118,6 +135,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Callback.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[setCallback]]></code>
       <code><![CDATA[setCallbackParams]]></code>
@@ -150,6 +170,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Compress.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
       <code><![CDATA[is_string($adapter)]]></code>
@@ -414,6 +437,9 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/DataUnitFormatter.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getMode]]></code>
       <code><![CDATA[getMode]]></code>
@@ -446,6 +472,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/DateTimeFormatter.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedAssignment>
       <code><![CDATA[$result]]></code>
     </MixedAssignment>
@@ -490,6 +519,9 @@
     </NoValue>
   </file>
   <file src="src/DenyList.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <PossiblyUnusedMethod>
       <code><![CDATA[setList]]></code>
       <code><![CDATA[setStrict]]></code>
@@ -498,7 +530,20 @@
       <code><![CDATA[(bool) $strict]]></code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="src/Digits.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
+  <file src="src/Dir.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
   <file src="src/Encrypt.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DeprecatedInterface>
       <code><![CDATA[Encrypt\EncryptionAlgorithmInterface]]></code>
     </DeprecatedInterface>
@@ -854,6 +899,9 @@
     </PossiblyUndefinedVariable>
   </file>
   <file src="src/File/Rename.php">
+    <DeprecatedClass>
+      <code><![CDATA[Filter\AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
       <code><![CDATA[is_array($options)]]></code>
@@ -910,6 +958,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/RenameUpload.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[$target === null]]></code>
       <code><![CDATA[is_string($target)]]></code>
@@ -1014,6 +1065,9 @@
     </PossiblyUndefinedVariable>
   </file>
   <file src="src/FilterChain.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
     </MixedPropertyTypeCoercion>
@@ -1112,6 +1166,9 @@
     </UnusedClass>
   </file>
   <file src="src/HtmlEntities.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
     </DocblockTypeContradiction>
@@ -1137,6 +1194,9 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$options['pluginManager']]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[array_values($processedParts)]]></code>
     </InvalidArgument>
@@ -1241,6 +1301,9 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$pattern]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($pattern) && ! is_string($pattern)]]></code>
       <code><![CDATA[! is_array($replacement) && ! is_string($replacement)]]></code>
@@ -1257,6 +1320,9 @@
     </PossiblyUnusedReturnValue>
   </file>
   <file src="src/RealPath.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[[
@@ -1275,11 +1341,17 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/StringPrefix.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($prefix)]]></code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/StringSuffix.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($suffix)]]></code>
     </DocblockTypeContradiction>
@@ -1303,6 +1375,9 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/StringTrim.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[setCharList]]></code>
     </DeprecatedMethod>
@@ -1311,7 +1386,15 @@
       <code><![CDATA[$this->options['charlist']]]></code>
     </PossiblyUndefinedArrayOffset>
   </file>
+  <file src="src/StripNewlines.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
   <file src="src/StripTags.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$options['allowAttribs']]]></code>
       <code><![CDATA[$options['allowTags']]]></code>
@@ -1331,10 +1414,23 @@
       <code><![CDATA[is_string($attribute)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
+  <file src="src/ToFloat.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
+  <file src="src/ToInt.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
   <file src="src/ToNull.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$typeOrOptions]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[$typeOrOptions === '']]></code>
       <code><![CDATA[$typeOrOptions === '']]></code>
@@ -1362,6 +1458,9 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/UriNormalize.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <InvalidCatch>
       <code><![CDATA[try {
             $uri = UriFactory::factory($value, $defaultScheme);
@@ -1387,6 +1486,9 @@
     </InvalidExtendClass>
   </file>
   <file src="src/Word/AbstractSeparator.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($separator)]]></code>
     </DocblockTypeContradiction>
@@ -1425,6 +1527,9 @@
     </MixedArrayAccess>
   </file>
   <file src="src/Word/SeparatorToSeparator.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[$this->searchSeparator === null]]></code>
     </DocblockTypeContradiction>
@@ -1904,6 +2009,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/Alpha.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -1916,11 +2024,17 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TestAsset/LowerCase.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
   <file src="test/TestAsset/StripUpperCase.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
