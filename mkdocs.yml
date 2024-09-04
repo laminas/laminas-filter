@@ -17,6 +17,7 @@ nav:
         - 'Preparing for v3': v2/migration/preparing-for-v3.md
     - v3:
       - Introduction: v3/intro.md
+      - Installation: v3/installation.md
       - Reference:
         - 'Standard Filters': v3/standard-filters.md
         - 'Word Filters': v3/word.md
