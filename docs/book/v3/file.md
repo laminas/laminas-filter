@@ -3,11 +3,9 @@
 laminas-filter also comes with a set of classes for filtering file contents, and
 performing file operations such as renaming.
 
-> ## $_FILES
->
-> All file filter `filter()` implementations support either a file path string
-> *or* a `$_FILES` array as the supplied argument. When a `$_FILES` array is
-> passed in, the `tmp_name` is used for the file path.
+NOTE: **`$_FILES`**
+All file filter `filter()` implementations support either a file path string *or* a `$_FILES` array as the supplied argument.
+When a `$_FILES` array is passed in, the `tmp_name` is used for the file path.
 
 ## Lowercase
 
@@ -201,7 +199,7 @@ The following set of options are supported:
   to the filter; used to create a new uploaded file representation of the
   renamed file.  (Since 2.9.0)
 
-> ### Using the upload Name is unsafe
+> WARNING: **Using the upload Name is unsafe**
 >
 > Be **very** careful when using the `use_upload_name` option. For instance,
 > extremely bad things could happen if you were to allow uploaded `.php` files
@@ -296,20 +294,11 @@ foreach ($request->getUploadedFiles() as $uploadedFile) {
 }
 ```
 
-> ### PSR-7 Support
+> NOTE: **PSR-7 Support**
 >
-> PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
-> [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
-> in your application, as it relies on the stream and uploaded file factories in
-> order to produce the final `UploadedFileInterface` artifact representing the
-> filtered file.
+> PSR-7/PSR-17 support requires a valid [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation) in your application, as it relies on the stream and uploaded file factories in order to produce the final `UploadedFileInterface` artifact representing the filtered file.
 >
-> PSR-17 itself requires PHP 7, so your application will need to be running on
-> PHP 7 in order to use this feature.
->
-> [laminas/laminas-diactoros 2.0](https://docs.laminas.dev/laminas-diactoros/)
-> provides a PSR-17 implementation, but requires PHP 7.1. If you are still on
-> PHP 7.0, either upgrade, or find a compatible psr/http-factory-implementation.
+> [laminas/laminas-diactoros](https://docs.laminas.dev/laminas-diactoros/) provides a PSR-17 implementation.
 
 ## Uppercase
 
