@@ -46,6 +46,17 @@ In addition to this, the default filter aliases have changed:
 
 The impact of the removal of these aliases will not affect you if you use a FQCN to retrieve filters from the plugin manager. If you experience `ServiceNotFoundException` errors, audit your usage of filters and the strings you use to retrieve them from the plugin manager and replace any outdated values with either the FQCN of the filter or a known, configured alias.
 
+### Changes to Individual Filters
+
+#### `StringTrim`
+
+The following methods have been removed:
+
+- `setCharList`
+- `getCharList`
+
+The constructor now only accepts an associative array of [documented options](../standard-filters.md#stringtrim).
+
 ## Removed Filters
 
 The following filters were deprecated in the 2.0.x series of releases and have now been removed:

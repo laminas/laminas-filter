@@ -560,12 +560,6 @@
       <code><![CDATA[is_string($suffix)]]></code>
     </DocblockTypeContradiction>
   </file>
-  <file src="src/StringTrim.php">
-    <PossiblyUndefinedArrayOffset>
-      <code><![CDATA[$this->options['charlist']]]></code>
-      <code><![CDATA[$this->options['charlist']]]></code>
-    </PossiblyUndefinedArrayOffset>
-  </file>
   <file src="src/StripTags.php">
     <MixedArgument>
       <code><![CDATA[$options['allowAttribs']]]></code>
@@ -935,7 +929,7 @@
   </file>
   <file src="test/StringTrimTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[getNonStringValues]]></code>
+      <code><![CDATA[defaultBehaviourDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StripNewlinesTest.php">
