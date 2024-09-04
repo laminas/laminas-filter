@@ -4,7 +4,7 @@ laminas-filter provides a set of commonly needed data filters. It also provides 
 simple filter chaining mechanism by which multiple filters may be applied to a
 single datum in a user-defined order.
 
-## What is a filter?
+## What is a Filter?
 
 In the physical world, a filter is typically used for removing unwanted portions
 of input, and the desired portion of the input passes through as filter output
@@ -27,80 +27,6 @@ transformed to `&amp;`). Supporting such use cases for web developers is
 important, and “to filter”, in the context of using laminas-filter, means to
 perform some transformations upon input data.
 
-## Basic usage of filters
-
 Having this filter definition established provides the foundation for
 `Laminas\Filter\FilterInterface`, which requires a single method named `filter()`
 to be implemented by a filter class.
-
-Following is a basic example of using a filter upon two input data, the
-ampersand (`&`) and double quote (`"`) characters:
-
-```php
-$htmlEntities = new Laminas\Filter\HtmlEntities();
-
-echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;
-```
-
-Also, if a filter inherits from `Laminas\Filter\AbstractFilter` (as do all of the
-out-of-the-box filters), you can also use them as invokables:
-
-```php
-$strtolower = new Laminas\Filter\StringToLower;
-
-echo $strtolower('I LOVE Laminas!'); // i love laminas!
-$laminaslove = $strtolower('I LOVE Laminas!');
-```
-
-## Double filtering
-
-When using two filters in succession, you have to keep in mind that it is
-often not possible to get the original output by using the opposite filter. Take
-the following example:
-
-```php
-$original = 'my_original_content';
-
-// Attach a filter
-$filter   = new Laminas\Filter\Word\UnderscoreToCamelCase();
-$filtered = $filter->filter($original);
-
-// Use it's opposite
-$filter2  = new Laminas\Filter\Word\CamelCaseToUnderscore();
-$filtered = $filter2->filter($filtered)
-```
-
-The above code example could lead to the impression that you will get the
-original output after the second filter has been applied. But thinking logically
-this is not the case. After applying the first filter, `my_original_content` will
-be changed to `MyOriginalContent`. But after applying the second filter, the result
-is `My_Original_Content`.
-
-As you can see it is not always possible to get the original output by using a
-filter which seems to be the opposite. It depends on the filter and also on the
-given input.
-
-## Providing filters via modules
-
-If you wish to indicate that your laminas-mvc module provides filters, have your
-`Module` class implement `Laminas\Filter\FilterProviderInterface`, which defines
-the method:
-
-```php
-/**
- * @return array
- */
-public function getFilterConfig();
-```
-
-The method should return an array of configuration following the
-[laminas-servicemanager configuration format](https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/).
-
-If you are not using laminas-mvc, but are using a dependency injection container
-(e.g., if you are using Mezzio), you can also provide filters using the
-top-level `filters` configuration key; the value of that key should be
-laminas-servicemanager configuration, as linked above.
-
-(laminas-mvc users may also provide configuration in the same way, and omit
-implementation of the `FilterProviderInterface`.)

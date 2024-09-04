@@ -18,6 +18,7 @@ nav:
     - v3:
       - Introduction: v3/intro.md
       - Installation: v3/installation.md
+      - "Basic Usage": v3/basic-usage.md
       - Reference:
         - 'Standard Filters': v3/standard-filters.md
         - 'Word Filters': v3/word.md
@@ -25,6 +26,8 @@ nav:
         - 'Filter Chains': v3/filter-chains.md
         - 'String Inflection': v3/inflector.md
         - 'Writing Filters': v3/writing-filters.md
+      - "Application Integration":
+          - "Providing Filters via Modules": v3/application-integration/providing-filters-via-modules.md
       - Migration:
         - "Migration from Version 2 to 3": v3/migration/v2-to-v3.md
 site_name: laminas-filter
