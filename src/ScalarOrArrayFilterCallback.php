@@ -12,6 +12,8 @@ use function is_array;
 use function is_scalar;
 
 /**
+ * This class is internal and as such is not subject to any backwards compatibility guarantees.
+ *
  * @internal
  *
  * @psalm-internal \Laminas
