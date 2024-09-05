@@ -48,6 +48,34 @@ The impact of the removal of these aliases will not affect you if you use a FQCN
 
 ### Changes to Individual Filters
 
+#### `StringPrefix`
+
+The following methods have been removed:
+
+- `setPrefix`
+- `getPrefix`
+
+The constructor now only accepts an associative array of [documented options](../standard-filters.md#stringprefix).
+
+An exception is no longer thrown for a missing prefix option, instead an empty string is used by default.
+This means that the filter will have the effect of simply casting scalar values to string when a prefix option is not provided.
+
+The filter will now recursively process scalar array members. Previously, arrays would be returned unfiltered.
+
+#### `StringSuffix`
+
+The following methods have been removed:
+
+- `setSuffix`
+- `getSuffix`
+
+The constructor now only accepts an associative array of [documented options](../standard-filters.md#stringsuffix).
+
+An exception is no longer thrown for a missing suffix option, instead an empty string is used by default.
+This means that the filter will have the effect of simply casting scalar values to string when a suffix option is not provided.
+
+The filter will now recursively process scalar array members. Previously, arrays would be returned unfiltered.
+
 #### `StringTrim`
 
 The following methods have been removed:

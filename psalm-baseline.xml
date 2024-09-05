@@ -550,16 +550,6 @@
       <code><![CDATA[$existsOrOptions !== null]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/StringPrefix.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($prefix)]]></code>
-    </DocblockTypeContradiction>
-  </file>
-  <file src="src/StringSuffix.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($suffix)]]></code>
-    </DocblockTypeContradiction>
-  </file>
   <file src="src/StripTags.php">
     <MixedArgument>
       <code><![CDATA[$options['allowAttribs']]]></code>
@@ -905,21 +895,13 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringPrefixTest.php">
-    <MixedArgument>
-      <code><![CDATA[$filter('sample')]]></code>
-      <code><![CDATA[$prefix]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
-      <code><![CDATA[invalidPrefixesDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringSuffixTest.php">
-    <MixedArgument>
-      <code><![CDATA[$filter('sample')]]></code>
-      <code><![CDATA[$suffix]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
-      <code><![CDATA[invalidSuffixesDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringToLowerTest.php">

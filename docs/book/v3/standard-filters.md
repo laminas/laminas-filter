@@ -1180,9 +1180,7 @@ $filtered = $filter->filter($path);
 
 ## StringPrefix
 
-- Since 2.9.0
-
-This filter will add the provided prefix to scalar values.
+This filter will add the provided prefix to scalar values or scalar array members.
 
 ### Supported Options
 
@@ -1197,16 +1195,14 @@ $filter = new Laminas\Filter\StringPrefix([
     'prefix' => 'PHP-',
 ]);
 
-echo $filter->filter('MidCentral');
-```
+echo $filter->filter('MidCentral'); // "PHP-MidCentral"
 
-The above results in the string `PHP-MidCentral`.
+$array = $filter->filter(['East', 'West']); // ['PHP-East', 'PHP-West']
+```
 
 ## StringSuffix
 
-- Since 2.9.0
-
-This filter will add the provided suffix to scalar values.
+This filter will add the provided suffix to scalar values or scalar array members.
 
 ### Supported Options
 
@@ -1221,10 +1217,10 @@ $filter = new Laminas\Filter\StringSuffix([
     'suffix' => '-PHP',
 ]);
 
-echo $filter->filter('MidCentral');
-```
+echo $filter->filter('MidCentral'); // "MidCentral-PHP"
 
-The above results in the string `MidCentral-PHP`.
+$array = $filter->filter(['East', 'West']); // ['East-PHP', 'West-PHP']
+```
 
 ## StringToLower
 
