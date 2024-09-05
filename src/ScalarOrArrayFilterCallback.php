@@ -29,7 +29,7 @@ final class ScalarOrArrayFilterCallback
      * @param Closure(string): string $callback
      * @return T|string|array<array-key, string|mixed>
      */
-    public static function apply(mixed $value, Closure $callback): mixed
+    public static function applyRecursively(mixed $value, Closure $callback): mixed
     {
         if (is_scalar($value) || $value instanceof Stringable) {
             return $callback((string) $value);
@@ -37,7 +37,7 @@ final class ScalarOrArrayFilterCallback
 
         if (is_array($value)) {
             return array_map(
-                static fn (mixed $value): mixed => self::apply($value, $callback),
+                static fn (mixed $value): mixed => self::applyRecursively($value, $callback),
                 $value,
             );
         }

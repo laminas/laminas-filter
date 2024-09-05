@@ -16,7 +16,7 @@ final class StripNewlines implements FilterInterface
      */
     public function filter(mixed $value): mixed
     {
-        return ScalarOrArrayFilterCallback::apply(
+        return ScalarOrArrayFilterCallback::applyRecursively(
             $value,
             static fn(string $value): string => str_replace(["\n", "\r"], '', $value),
         );

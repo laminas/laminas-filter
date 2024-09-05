@@ -39,7 +39,7 @@ class ScalarOrArrayFilterCallbackTest extends TestCase
     #[DataProvider('scalarProvider')]
     public function testScalarValuesWillBeFilteredInPlace(mixed $input, mixed $expect): void
     {
-        self::assertSame($expect, ScalarOrArrayFilterCallback::apply($input, $this->filter));
+        self::assertSame($expect, ScalarOrArrayFilterCallback::applyRecursively($input, $this->filter));
     }
 
     public function testAssociativeArrayArgument(): void
@@ -62,7 +62,7 @@ class ScalarOrArrayFilterCallbackTest extends TestCase
             'stringable' => 'foo',
         ];
 
-        self::assertSame($expect, ScalarOrArrayFilterCallback::apply($input, $this->filter));
+        self::assertSame($expect, ScalarOrArrayFilterCallback::applyRecursively($input, $this->filter));
     }
 
     public function testListArgument(): void
@@ -85,7 +85,7 @@ class ScalarOrArrayFilterCallbackTest extends TestCase
             'foo',
         ];
 
-        self::assertSame($expect, ScalarOrArrayFilterCallback::apply($input, $this->filter));
+        self::assertSame($expect, ScalarOrArrayFilterCallback::applyRecursively($input, $this->filter));
     }
 
     public function testArraysAreRecursivelyProcessed(): void
@@ -110,6 +110,6 @@ class ScalarOrArrayFilterCallbackTest extends TestCase
             ],
         ];
 
-        self::assertSame($expect, ScalarOrArrayFilterCallback::apply($input, $this->filter));
+        self::assertSame($expect, ScalarOrArrayFilterCallback::applyRecursively($input, $this->filter));
     }
 }
