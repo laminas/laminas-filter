@@ -81,9 +81,11 @@ class ToNull extends AbstractFilter
     /**
      * Set boolean types
      *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
+     *
      * @param int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
-     * @throws Exception\InvalidArgumentException
      * @return self
+     * @throws Exception\InvalidArgumentException
      */
     public function setType($type = null)
     {
@@ -116,6 +118,8 @@ class ToNull extends AbstractFilter
 
     /**
      * Returns defined boolean types
+     *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
      *
      * @return int-mask-of<self::TYPE_*>
      */

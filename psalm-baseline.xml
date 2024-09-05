@@ -1431,6 +1431,10 @@
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[$typeOrOptions === '']]></code>
       <code><![CDATA[$typeOrOptions === '']]></code>
@@ -2054,6 +2058,13 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$type]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[true]]></code>
     </InvalidArgument>
