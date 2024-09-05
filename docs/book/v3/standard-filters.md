@@ -1328,8 +1328,10 @@ The above example returns ` This is (my) content`. Notice that only the colon is
 
 ## StripNewlines
 
-This filter modifies a given string and removes all new line characters within
-that string.
+This filter modifies a given string and removes all new line characters within that string.
+
+When provided with an array, all *scalar* elements of the array will be cast to string and have new line characters removed.
+The operation is also recursive, so nested arrays will be processed in the same way.
 
 ### Supported Options
 
