@@ -853,8 +853,6 @@ print $filter->getQuoteStyle(ENT_QUOTES);
 
 ## ToFloat
 
-- Since 2.9.0
-
 `Laminas\Filter\ToFloat` allows you to transform a scalar value into a float.
 
 ### Supported Options
@@ -888,16 +886,6 @@ print $filter->filter('-4 is less than 0');
 ```
 
 This will return '-4'.
-
-### Migration from 2.0-2.3 to 2.4+
-
-Version 2.4 adds support for PHP 7. In PHP 7, `int` is a reserved keyword, which required renaming
-the `Int` filter. If you were using the `Int` filter directly previously, you will now receive an
-`E_USER_DEPRECATED` notice on instantiation. Please update your code to refer to the `ToInt` class
-instead.
-
-Users pulling their `Int` filter instance from the filter plugin manager receive a `ToInt` instance
-instead starting in 2.4.0.
 
 ## ToNull
 

@@ -939,12 +939,11 @@
   <file src="test/ToFloatTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[filterableValuesProvider]]></code>
-      <code><![CDATA[unfilterableValuesProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ToIntTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[returnUnfilteredDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ToNullTest.php">
