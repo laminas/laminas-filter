@@ -570,21 +570,6 @@
       <code><![CDATA[is_string($attribute)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/ToNull.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$typeOrOptions]]></code>
-    </ArgumentTypeCoercion>
-    <DocblockTypeContradiction>
-      <code><![CDATA[$typeOrOptions === '']]></code>
-      <code><![CDATA[$typeOrOptions === '']]></code>
-    </DocblockTypeContradiction>
-    <PossiblyNullArgument>
-      <code><![CDATA[$type]]></code>
-    </PossiblyNullArgument>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_int($value)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/Word/AbstractSeparator.php">
     <PossiblyInvalidArgument>
       <code><![CDATA[$separator]]></code>
@@ -948,29 +933,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ToNullTest.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$type]]></code>
-    </ArgumentTypeCoercion>
-    <InvalidArgument>
-      <code><![CDATA[true]]></code>
-    </InvalidArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$expected]]></code>
-      <code><![CDATA[$expected]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[[$value, $expected]]]></code>
-      <code><![CDATA[[$value, $expected]]]></code>
-    </MixedAssignment>
     <PossiblyUnusedMethod>
       <code><![CDATA[combinedTypeTestProvider]]></code>
       <code><![CDATA[defaultTestProvider]]></code>
       <code><![CDATA[duplicateTypeProvider]]></code>
+      <code><![CDATA[invalidTypeProvider]]></code>
       <code><![CDATA[typeTestProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
