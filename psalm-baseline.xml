@@ -899,6 +899,11 @@
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="test/ScalarOrArrayFilterCallbackTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[scalarProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/StringPrefixTest.php">
     <MixedArgument>
       <code><![CDATA[$filter('sample')]]></code>
@@ -934,8 +939,7 @@
   </file>
   <file src="test/StripNewlinesTest.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[returnNonStringScalarValues]]></code>
-      <code><![CDATA[returnUnfilteredDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StripTagsTest.php">
