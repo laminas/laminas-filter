@@ -4,84 +4,45 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\Exception\InvalidArgumentException;
-use Laminas\Filter\StringSuffix as StringSuffixFilter;
+use Laminas\Filter\StringSuffix;
+use LaminasTest\Filter\TestAsset\StringableObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
-use function fopen;
-
-class StringSuffixTest extends TestCase
+final class StringSuffixTest extends TestCase
 {
-    private StringSuffixFilter $filter;
-
-    public function setUp(): void
+    /** @return array<string, array{0: non-empty-string|null, 1: mixed, 2: mixed}> */
+    public static function basicDataProvider(): array
     {
-        $this->filter = new StringSuffixFilter();
-    }
+        $object = (object) ['foo' => 'bar'];
 
-    /**
-     * Ensures that the filter follows expected behavior
-     */
-    public function testBasic(): void
-    {
-        $filter = $this->filter;
-
-        $suffix = 'ABC123';
-        $filter->setSuffix($suffix);
-
-        self::assertStringEndsWith($suffix, $filter('sample'));
-    }
-
-    public function testWithoutSuffix(): void
-    {
-        $filter = $this->filter;
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('expects a "suffix" option; none given');
-        $filter('sample');
-    }
-
-    /**
-     * @return array<string, array{0: mixed}>
-     */
-    public static function invalidSuffixesDataProvider(): array
-    {
         return [
-            'int'                 => [1],
-            'float'               => [1.00],
-            'true'                => [true],
-            'null'                => [null],
-            'empty array'         => [[]],
-            'resource'            => [fopen('php://memory', 'rb+')],
-            'array with callable' => [
-                static function (): void {
-                },
+            'Regular String' => ['SUFFIX', 'value', 'valueSUFFIX'],
+            'Integer'        => ['SUFFIX', 1, '1SUFFIX'],
+            'Float'          => ['SUFFIX', 1.23, '1.23SUFFIX'],
+            'True'           => ['SUFFIX', true, '1SUFFIX'],
+            'False'          => ['SUFFIX', false, 'SUFFIX'],
+            'Null'           => ['SUFFIX', null, null],
+            'Empty String'   => ['SUFFIX', '', 'SUFFIX'],
+            'Array'          => ['SUFFIX', ['foo', 'bar'], ['fooSUFFIX', 'barSUFFIX']],
+            'Nested Array'   => [
+                'SUFFIX',
+                ['foo', 'bar' => ['baz' => 'bat']],
+                ['fooSUFFIX', 'bar' => ['baz' => 'batSUFFIX']],
             ],
-            'object'              => [new stdClass()],
+            'Stringable'     => ['SUFFIX', new StringableObject('Foo'), 'FooSUFFIX'],
+            'Object'         => ['SUFFIX', $object, $object],
+            'Empty Suffix'   => [null, 'String', 'String'],
         ];
     }
 
-    #[DataProvider('invalidSuffixesDataProvider')]
-    public function testInvalidSuffixes(mixed $suffix): void
+    /** @param non-empty-string|null $suffix */
+    #[DataProvider('basicDataProvider')]
+    public function testBasicBehaviour(?string $suffix, mixed $input, mixed $expect): void
     {
-        $filter = $this->filter;
+        $filter = new StringSuffix(['suffix' => $suffix]);
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('expects "suffix" to be string');
-
-        $filter->setSuffix($suffix);
-        $filter('sample');
-    }
-
-    public function testNonScalarInput(): void
-    {
-        $filter = $this->filter;
-
-        $suffix = 'ABC123';
-        $filter->setSuffix($suffix);
-
-        self::assertInstanceOf(stdClass::class, $filter(new stdClass()));
+        self::assertSame($expect, $filter->filter($input));
+        self::assertSame($expect, $filter->__invoke($input));
     }
 }
