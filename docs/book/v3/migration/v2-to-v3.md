@@ -85,6 +85,15 @@ The following methods have been removed:
 
 The constructor now only accepts an associative array of [documented options](../standard-filters.md#stringtrim).
 
+#### `ToNull`
+
+The following methods have been removed:
+
+- `setType`
+- `getType`
+
+The constructor now only accepts an associative array of [documented options](../standard-filters.md#tonull).
+
 ## Removed Filters
 
 The following filters were deprecated in the 2.0.x series of releases and have now been removed:
