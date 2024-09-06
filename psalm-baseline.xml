@@ -1344,6 +1344,9 @@
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getPrefix]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($prefix)]]></code>
     </DocblockTypeContradiction>
@@ -1352,6 +1355,9 @@
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getSuffix]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($suffix)]]></code>
     </DocblockTypeContradiction>
@@ -1951,6 +1957,11 @@
     </UnusedClosureParam>
   </file>
   <file src="test/StringPrefixTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setPrefix]]></code>
+      <code><![CDATA[setPrefix]]></code>
+      <code><![CDATA[setPrefix]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$filter('sample')]]></code>
       <code><![CDATA[$prefix]]></code>
@@ -1960,6 +1971,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringSuffixTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setSuffix]]></code>
+      <code><![CDATA[setSuffix]]></code>
+      <code><![CDATA[setSuffix]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$filter('sample')]]></code>
       <code><![CDATA[$suffix]]></code>

@@ -36,6 +36,8 @@ class StringSuffix extends AbstractFilter
     /**
      * Set the suffix string
      *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
+     *
      * @param string $suffix
      * @return self
      * @throws Exception\InvalidArgumentException
@@ -57,6 +59,8 @@ class StringSuffix extends AbstractFilter
 
     /**
      * Returns the suffix string, which is appended at the end of the input value
+     *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
      *
      * @return string
      * @throws Exception\InvalidArgumentException

@@ -36,6 +36,8 @@ class StringPrefix extends AbstractFilter
     /**
      * Set the prefix string
      *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
+     *
      * @param  string $prefix
      * @return self
      * @throws Exception\InvalidArgumentException
@@ -57,6 +59,8 @@ class StringPrefix extends AbstractFilter
 
     /**
      * Returns the prefix string, which is appended at the beginning of the input value
+     *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
      *
      * @return string
      */
