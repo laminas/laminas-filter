@@ -6,20 +6,13 @@ namespace Laminas\Filter;
 
 use function is_scalar;
 
-/**
- * @psalm-type Options = array{}
- * @extends AbstractFilter<Options>
- */
-final class ToFloat extends AbstractFilter
+/** @implements FilterInterface<float> */
+final class ToFloat implements FilterInterface
 {
     /**
-     * Defined by Laminas\Filter\FilterInterface
-     *
-     * Returns (float) $value
+     * Casts scalar values to float
      *
      * If the value provided is non-scalar, the value will remain unfiltered
-     *
-     * @psalm-return ($value is scalar ? float : mixed)
      */
     public function filter(mixed $value): mixed
     {
@@ -28,5 +21,10 @@ final class ToFloat extends AbstractFilter
         }
 
         return (float) $value;
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }
