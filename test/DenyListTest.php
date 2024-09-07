@@ -6,9 +6,10 @@ namespace LaminasTest\Filter;
 
 use Laminas\Filter\DenyList as DenyListFilter;
 use Laminas\Stdlib\ArrayObject;
-use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use TypeError;
 
 use function gettype;
 use function sprintf;
@@ -23,16 +24,16 @@ class DenyListTest extends TestCase
             'strict' => true,
         ]);
 
-        self::assertSame(true, $filter->getStrict());
-        self::assertSame(['test', 1], $filter->getList());
+        self::assertSame('1', $filter->filter('1'), 'Strict options infer that string 1 is not in the list');
+        self::assertNull($filter->filter('test'));
+        self::assertNull($filter->filter(1));
     }
 
     public function testConstructorDefaults(): void
     {
         $filter = new DenyListFilter();
 
-        self::assertSame(false, $filter->getStrict());
-        self::assertSame([], $filter->getList());
+        self::assertSame('test', $filter->filter('test'));
     }
 
     public function testWithPluginManager(): void
@@ -43,30 +44,38 @@ class DenyListTest extends TestCase
         self::assertInstanceOf(DenyListFilter::class, $filter);
     }
 
-    public function testNullListShouldThrowException(): void
+    public function testListOptionShouldBeIterable(): void
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(Throwable::class);
+        /** @psalm-suppress InvalidArgument */
         new DenyListFilter([
-            'list' => null,
+            'list' => 'foo',
         ]);
     }
 
     public function testTraversableConvertsToArray(): void
     {
-        $array  = ['test', 1];
-        $obj    = new ArrayObject(['test', 1]);
         $filter = new DenyListFilter([
-            'list' => $obj,
+            'list' => new ArrayObject([1, 2, 'test']),
         ]);
-        self::assertSame($array, $filter->getList());
+        self::assertSame(null, $filter->filter('1'));
+        self::assertSame(null, $filter->filter('test'));
     }
 
-    public function testSetStrictShouldCastToBoolean(): void
+    public function testStrictOptionShouldBeBoolean(): void
     {
-        $filter = new DenyListFilter([
+        $this->expectException(TypeError::class);
+        /** @psalm-suppress InvalidArgument */
+        new DenyListFilter([
             'strict' => 1,
         ]);
-        self::assertSame(true, $filter->getStrict());
+    }
+
+    #[DataProvider('defaultTestProvider')]
+    public function testWillReturnValueWhenNoListHasBeenProvided(mixed $value): void
+    {
+        $filter = new DenyListFilter();
+        self::assertSame($value, $filter->filter($value));
     }
 
     #[DataProvider('defaultTestProvider')]

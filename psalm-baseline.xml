@@ -216,15 +216,6 @@
       <code><![CDATA[$value]]></code>
     </PossiblyNullArgument>
   </file>
-  <file src="src/DenyList.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setList]]></code>
-      <code><![CDATA[setStrict]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $strict]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/File/Rename.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
