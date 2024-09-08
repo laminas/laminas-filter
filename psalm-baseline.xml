@@ -522,6 +522,10 @@
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getStrict]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[setList]]></code>
       <code><![CDATA[setStrict]]></code>
@@ -1768,6 +1772,14 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DenyListTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getList]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+    </DeprecatedMethod>
     <MixedArrayAccess>
       <code><![CDATA[$expected]]></code>
       <code><![CDATA[$value]]></code>

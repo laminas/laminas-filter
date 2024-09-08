@@ -40,6 +40,8 @@ class DenyList extends AbstractFilter
     /**
      * Determine whether the in_array() call should be "strict" or not. See in_array docs.
      *
+     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
+     *
      * @param  bool $strict
      */
     public function setStrict($strict = true): void
@@ -49,6 +51,8 @@ class DenyList extends AbstractFilter
 
     /**
      * Returns whether the in_array() call should be "strict" or not. See in_array docs.
+     *
+     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
      *
      * @return bool
      */
@@ -60,7 +64,9 @@ class DenyList extends AbstractFilter
     /**
      * Set the list of items to black-list.
      *
-     * @param  array|Traversable $list
+     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param array|Traversable $list
      */
     public function setList($list = []): void
     {
@@ -73,6 +79,8 @@ class DenyList extends AbstractFilter
 
     /**
      * Get the list of items to black-list
+     *
+     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
      *
      * @return array
      */
