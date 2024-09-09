@@ -59,6 +59,21 @@ The following methods have been removed:
 
 The constructor now only accepts an associative array of [documented options](../standard-filters.md#denylist).
 
+#### `PregReplace`
+
+The following methods have been removed:
+
+- `setPattern`
+- `getPattern`
+- `setReplacement`
+- `getReplacement`
+
+The constructor now only accepts an associative array of [documented options](../standard-filters.md#pregreplace).
+
+Additionally, `$options['pattern']` *must* be provided at construction time or an exception is thrown.
+
+Exceptions for invalid or empty patterns are now thrown during construct rather than when the filter is invoked.
+
 #### `StringPrefix`
 
 The following methods have been removed:

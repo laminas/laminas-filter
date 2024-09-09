@@ -1069,27 +1069,24 @@ echo $filter->filter('1,23456789E-3');
 
 ## PregReplace
 
-`Laminas\Filter\PregReplace` performs a search using regular expressions and replaces all found
-elements.
+`Laminas\Filter\PregReplace` performs a search using regular expressions and replaces all found elements.
 
 ### Supported Options
 
 The following options are supported for `Laminas\Filter\PregReplace`:
 
 - `pattern`: The pattern to search for.
-- `replacement`: The string which to use as a replacement for the matches; this
-  can optionally contain placeholders for matched groups in the search pattern.
+- `replacement`: The string which to use as a replacement for the matches; this can optionally contain placeholders for matched groups in the search pattern.
 
 ### Basic Usage
 
 To use this filter properly, you must give both options listed above.
 
-The `pattern` option has to be given to set the pattern to search for. It can be
-a string for a single pattern, or an array of strings for multiple patterns.
+The `pattern` option has to be given to set the pattern to search for.
+It can be a string for a single pattern, or an array of strings for multiple patterns.
 
-The `replacement` option indicates the string to replace matches with, and can
-contain placeholders for matched groups from the search `pattern`. The value may
-be a string replacement, or an array of string replacements.
+The `replacement` option indicates the string to replace matches with, and can contain placeholders for matched groups from the search `pattern`.
+The value may be a string replacement, or an array of string replacements.
 
 ```php
 $filter = new Laminas\Filter\PregReplace([
@@ -1102,22 +1099,8 @@ $filter->filter($input);
 // returns 'Hi john!'
 ```
 
-You can also use `setPattern()` to set the pattern(s), and `setReplacement()` set
-the replacement(s).
-
-```php
-$filter = new Laminas\Filter\PregReplace();
-$filter
-    ->setPattern(array('bob', 'Hi'))
-    ->setReplacement(array('john', 'Bye'));
-$input = 'Hi bob!';
-
-$filter->filter($input);
-// returns 'Bye john!'
-```
-
 For more complex usage, read the
-[PCRE Pattern chapter of the PHP manual](http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php).
+[PCRE Pattern chapter of the PHP manual](http://www.php.net/manual/reference.pcre.pattern.modifiers.php).
 
 ## RealPath
 

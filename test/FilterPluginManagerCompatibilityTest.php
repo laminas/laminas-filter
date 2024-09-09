@@ -7,6 +7,7 @@ namespace LaminasTest\Filter;
 use Generator;
 use Laminas\Filter\Callback;
 use Laminas\Filter\FilterPluginManager;
+use Laminas\Filter\PregReplace;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -23,6 +24,7 @@ class FilterPluginManagerCompatibilityTest extends TestCase
 {
     private const FILTERS_WITH_REQUIRED_OPTIONS = [
         Callback::class,
+        PregReplace::class,
     ];
 
     protected static function getPluginManager(): FilterPluginManager
