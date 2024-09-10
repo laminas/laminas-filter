@@ -63,9 +63,11 @@ class PregReplace extends AbstractFilter
     /**
      * Set the regex pattern to search for
      *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
+     *
      * @see preg_replace()
      *
-     * @param  string|list<string> $pattern - same as the first argument of preg_replace
+     * @param string|list<string> $pattern - same as the first argument of preg_replace
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -96,6 +98,8 @@ class PregReplace extends AbstractFilter
     /**
      * Get currently set match pattern
      *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
+     *
      * @return string|list<string>|null
      */
     public function getPattern()
@@ -106,9 +110,11 @@ class PregReplace extends AbstractFilter
     /**
      * Set the replacement array/string
      *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
+     *
      * @see preg_replace()
      *
-     * @param  string|list<string> $replacement - same as the second argument of preg_replace
+     * @param string|list<string> $replacement - same as the second argument of preg_replace
      * @return self
      * @throws Exception\InvalidArgumentException
      */
@@ -127,6 +133,8 @@ class PregReplace extends AbstractFilter
 
     /**
      * Get currently set replacement value
+     *
+     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
      *
      * @return string|list<string>
      */
