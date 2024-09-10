@@ -507,22 +507,6 @@
       <code><![CDATA[Module]]></code>
     </UnusedClass>
   </file>
-  <file src="src/PregReplace.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_array($pattern) && ! is_string($pattern)]]></code>
-      <code><![CDATA[! is_array($replacement) && ! is_string($replacement)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidNullableReturnType>
-      <code><![CDATA[bool]]></code>
-    </InvalidNullableReturnType>
-    <MixedArgument>
-      <code><![CDATA[$args[0]]]></code>
-      <code><![CDATA[$args[1]]]></code>
-    </MixedArgument>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[bool]]></code>
-    </PossiblyUnusedReturnValue>
-  </file>
   <file src="src/RealPath.php">
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->options]]></code>
@@ -853,6 +837,7 @@
   </file>
   <file src="test/PregReplaceTest.php">
     <PossiblyUnusedMethod>
+      <code><![CDATA[invalidPatternOptions]]></code>
       <code><![CDATA[returnNonStringScalarValues]]></code>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>

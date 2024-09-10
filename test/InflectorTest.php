@@ -9,7 +9,6 @@ use Laminas\Filter\Exception;
 use Laminas\Filter\FilterInterface;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\Inflector as InflectorFilter;
-use Laminas\Filter\PregReplace;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\StringToUpper;
 use Laminas\Filter\Word\CamelCaseToDash;
@@ -80,7 +79,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules();
         self::assertIsArray($rules);
         self::assertSame(0, count($rules));
-        $this->inflector->setFilterRule('controller', PregReplace::class);
+        $this->inflector->setFilterRule('controller', StringToLower::class);
         $rules = $this->inflector->getRules('controller');
         self::assertIsArray($rules);
         self::assertSame(1, count($rules));
@@ -93,7 +92,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules();
         self::assertIsArray($rules);
         self::assertSame(0, count($rules));
-        $filter = new PregReplace();
+        $filter = new StringToLower();
         $this->inflector->setFilterRule('controller', $filter);
         $rules = $this->inflector->getRules('controller');
         self::assertIsArray($rules);
@@ -108,7 +107,7 @@ class InflectorTest extends TestCase
         $rules = $this->inflector->getRules();
         self::assertIsArray($rules);
         self::assertSame(0, count($rules));
-        $this->inflector->setFilterRule('controller', [PregReplace::class, TestAsset\Alpha::class]);
+        $this->inflector->setFilterRule('controller', [StringToLower::class, TestAsset\Alpha::class]);
         $rules = $this->inflector->getRules('controller');
         self::assertIsArray($rules);
         self::assertSame(2, count($rules));
@@ -164,7 +163,7 @@ class InflectorTest extends TestCase
         self::assertIsArray($rules);
         self::assertSame(0, count($rules));
         $this->inflector->addRules([
-            ':controller' => [PregReplace::class, TestAsset\Alpha::class],
+            ':controller' => [StringToLower::class, TestAsset\Alpha::class],
             'suffix'      => 'phtml',
         ]);
         $rules = $this->inflector->getRules();
@@ -181,7 +180,7 @@ class InflectorTest extends TestCase
         self::assertIsArray($rules);
         self::assertSame(1, count($rules));
         $this->inflector->setRules([
-            ':controller' => [PregReplace::class, TestAsset\Alpha::class],
+            ':controller' => [StringToLower::class, TestAsset\Alpha::class],
             'suffix'      => 'phtml',
         ]);
         $rules = $this->inflector->getRules();
@@ -426,7 +425,7 @@ class InflectorTest extends TestCase
     {
         $rules = $this->inflector->getRules();
         self::assertSame(0, count($rules));
-        $this->inflector->setFilterRule('controller', PregReplace::class);
+        $this->inflector->setFilterRule('controller', StringToLower::class);
         $rules = $this->inflector->getRules('controller');
         self::assertSame(1, count($rules));
         $this->inflector->addFilterRule('controller', [TestAsset\Alpha::class, StringToLower::class]);
