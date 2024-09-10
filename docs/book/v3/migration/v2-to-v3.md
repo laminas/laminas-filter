@@ -48,6 +48,17 @@ The impact of the removal of these aliases will not affect you if you use a FQCN
 
 ### Changes to Individual Filters
 
+#### `DenyList`
+
+The following methods have been removed:
+
+- `setStrict`
+- `getStrict`
+- `setList`
+- `getList`
+
+The constructor now only accepts an associative array of [documented options](../standard-filters.md#denylist).
+
 #### `StringPrefix`
 
 The following methods have been removed:
