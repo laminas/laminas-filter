@@ -70,7 +70,7 @@ class Boolean extends AbstractFilter
     ];
 
     /**
-     * phpcs:ignore Generic.Files.LineLength.TooLong
+     * phpcs:ignore Generic.Files.LineLength,SlevomatCodingStandard.Commenting.DocCommentSpacing
      * @param self::TYPE_*|value-of<self::CONSTANTS>|list<self::TYPE_*>|int-mask-of<self::TYPE_*>|Options|iterable|null $typeOrOptions
      * @param bool  $casting
      * @param array $translations
