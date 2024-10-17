@@ -330,6 +330,33 @@
 <p>Most filters will be closed to inheritance in v3 by employing the <code>final</code> keyword.
 To prepare for this change, search for classes in your codebase that extend from any of the concrete filters and either re-implement them completely, or consider refactoring them to use composition instead of inheritance.</p>
 <p>If you have extended an existing filter for a use-case that is not handled by this library, also consider sending a patch if you think that the library could benefit from your changes.</p>
+<h3 id="abstractfilter-removal"><code>AbstractFilter</code> Removal</h3>
+<p><code>Laminas\Filter\AbstractFilter</code> is now deprecated for removal in 3.0.
+If you have created custom filters that inherit from <code>AbstractFilter</code>, remove the class from your inheritance tree and implement <code>FilterInterface</code>.
+You should re-define the <code>__invoke</code> method previously inherited from <code>AbstractFilter</code> with:</p>
+<pre class="highlight"><code class="language-php">/** @inheritDoc */
+public function __invoke(mixed $value): mixed
+{
+    return $this-&gt;filter($value);
+}</code></pre>
+<p>You may also need to consider how options are handled, if your custom filter needs them.
+This is because <code>AbstractFilter</code> provides various methods for setting and getting options at runtime rather than once during construction.
+Typically, your constructor should accept an associative array where options should be validated and set once:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\FilterInterface;
+
+final class MyFilter implements FilterInterface
+{
+    private readonly string $fooOption;
+
+    public function __construct(array $options = [])
+    {
+        $this-&gt;fooOption = $options['foo'] ?? 'Some Default';
+    }
+
+    // ...
+}</code></pre>
+<p>All the filters provided in <code>laminas-filter</code> either have been, or will be refactored to remove <code>AbstractFilter</code> from the inheritance hierarchy.
+It may be useful to look at <a href="https://github.com/laminas/laminas-filter/issues?q=is%3Aclosed+milestone%3A3.0.0">merged PRs</a> for examples for refactoring your own filters if necessary.</p>
 <h3 id="compression-filter-adapter-removal">Compression Filter Adapter Removal</h3>
 <p>The Lzf, Snappy and Rar compression adapters will be removed in version 3.0.
 If you are currently using any of these compression formats with laminas-filter, you will need to either use an alternative format such as Zip, Tar, Gz or Bz2, or, write a custom adapter to support your desired compression format.</p>
