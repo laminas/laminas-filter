@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/AbstractDateDropdown.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <PossiblyUnusedMethod>
       <code><![CDATA[setNullOnAllEmpty]]></code>
       <code><![CDATA[setNullOnEmpty]]></code>
@@ -24,6 +27,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Compress.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <LessSpecificImplementedReturnType>
       <code><![CDATA[($option is null ? array : mixed)]]></code>
     </LessSpecificImplementedReturnType>
@@ -216,7 +222,15 @@
       <code><![CDATA[$value]]></code>
     </PossiblyNullArgument>
   </file>
+  <file src="src/Dir.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
+  </file>
   <file src="src/File/Rename.php">
+    <DeprecatedClass>
+      <code><![CDATA[Filter\AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
       <code><![CDATA[is_array($options)]]></code>
@@ -273,6 +287,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/RenameUpload.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[$target === null]]></code>
       <code><![CDATA[is_string($target)]]></code>
@@ -369,6 +386,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/FilterChain.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
     </MixedPropertyTypeCoercion>
@@ -385,6 +405,9 @@
     </UnusedClass>
   </file>
   <file src="src/HtmlEntities.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
     </DocblockTypeContradiction>
@@ -410,6 +433,9 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$options['pluginManager']]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[array_values($processedParts)]]></code>
     </InvalidArgument>
@@ -508,6 +534,9 @@
     </UnusedClass>
   </file>
   <file src="src/RealPath.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[[
@@ -526,6 +555,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/StripTags.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$options['allowAttribs']]]></code>
       <code><![CDATA[$options['allowTags']]]></code>
@@ -546,6 +578,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Word/AbstractSeparator.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <PossiblyInvalidArgument>
       <code><![CDATA[$separator]]></code>
     </PossiblyInvalidArgument>
@@ -577,6 +612,9 @@
     </MixedArrayAccess>
   </file>
   <file src="src/Word/SeparatorToSeparator.php">
+    <DeprecatedClass>
+      <code><![CDATA[AbstractFilter]]></code>
+    </DeprecatedClass>
     <DocblockTypeContradiction>
       <code><![CDATA[$this->searchSeparator === null]]></code>
     </DocblockTypeContradiction>

@@ -20,6 +20,9 @@ use function str_replace;
 use function ucwords;
 
 /**
+ * @deprecated Since 2.38.0 - This class will be removed in version 3.0 without replacement. Custom filters should
+ *             implement FilterInterface without unnecessary inheritance.
+ *
  * @template TOptions of array
  * @implements FilterInterface<mixed>
  */

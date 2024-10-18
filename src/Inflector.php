@@ -260,7 +260,6 @@ final class Inflector extends AbstractFilter
      *     'suffix'      => 'phtml'
      *     );
      *
-     * @param  array $rules
      * @return self
      */
     public function addRules(array $rules)

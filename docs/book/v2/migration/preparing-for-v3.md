@@ -11,6 +11,43 @@ To prepare for this change, search for classes in your codebase that extend from
 
 If you have extended an existing filter for a use-case that is not handled by this library, also consider sending a patch if you think that the library could benefit from your changes.
 
+### `AbstractFilter` Removal
+
+`Laminas\Filter\AbstractFilter` is now deprecated for removal in 3.0.
+If you have created custom filters that inherit from `AbstractFilter`, remove the class from your inheritance tree and implement `FilterInterface`.
+You should re-define the `__invoke` method previously inherited from `AbstractFilter` with:
+
+```php
+/** @inheritDoc */
+public function __invoke(mixed $value): mixed
+{
+    return $this->filter($value);
+}
+```
+
+You may also need to consider how options are handled, if your custom filter needs them.
+This is because `AbstractFilter` provides various methods for setting and getting options at runtime rather than once during construction.
+Typically, your constructor should accept an associative array where options should be validated and set once:
+
+```php
+use Laminas\Filter\FilterInterface;
+
+final class MyFilter implements FilterInterface
+{
+    private readonly string $fooOption;
+    
+    public function __construct(array $options = [])
+    {
+        $this->fooOption = $options['foo'] ?? 'Some Default';
+    }
+    
+    // ...
+}
+```
+
+All the filters provided in `laminas-filter` either have been, or will be refactored to remove `AbstractFilter` from the inheritance hierarchy.
+It may be useful to look at [merged PRs](https://github.com/laminas/laminas-filter/issues?q=is%3Aclosed+milestone%3A3.0.0) for examples for refactoring your own filters if necessary.
+
 ### Compression Filter Adapter Removal
 
 The Lzf, Snappy and Rar compression adapters will be removed in version 3.0.
