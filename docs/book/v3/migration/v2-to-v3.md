@@ -70,7 +70,7 @@ The following methods have been removed:
 
 The constructor now only accepts an associative array of [documented options](../standard-filters.md#pregreplace).
 
-Additionally, `$options['pattern']` *must* be provided at construction time or an exception is thrown.
+Additionally, `$options['pattern']` _must_ be provided at construction time or an exception is thrown.
 
 Exceptions for invalid or empty patterns are now thrown during construct rather than when the filter is invoked.
 
@@ -148,9 +148,10 @@ $pluginManager = $container->get(\Laminas\Filter\FilterPluginManager::class);
 $filter = $pluginManager->get(\Laminas\Filter\HtmlEntities::class);
 $filtered = $filter->filter('A String');
 ```
+
 ### Uri Normalize
 
-`Laminas\Filter\UriNormalize` has been removed. As noted in the [v2 preparation guide](../../v2/migration/preparing-for-v3.md#urinormalize-filter-removal), `Laminas\Filter\ForceUriScheme` might be a sufficient replacement depending on your use-case. 
+`Laminas\Filter\UriNormalize` has been removed. As noted in the [v2 preparation guide](../../v2/migration/preparing-for-v3.md#urinormalize-filter-removal), `Laminas\Filter\ForceUriScheme` might be a sufficient replacement depending on your use-case.
 
 ### Whitelist & Blacklist Filters
 
@@ -161,7 +162,7 @@ $filtered = $filter->filter('A String');
 
 ### Final by default
 
-Nearly all the shipped filters now have the final keyword applied to the class. Individual filters were not designed for inheritance, so if you have filters that do extend from any of the shipped filters, you will likely have to re-consider your design. 
+Nearly all the shipped filters now have the final keyword applied to the class. Individual filters were not designed for inheritance, so if you have filters that do extend from any of the shipped filters, you will likely have to re-consider your design.
 
 ### Removal of supported compression formats
 
