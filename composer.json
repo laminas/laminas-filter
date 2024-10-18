@@ -34,14 +34,11 @@
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-mbstring": "*",
-        "laminas/laminas-servicemanager": "^3.21.0",
+        "laminas/laminas-servicemanager": "^4.1.0",
         "laminas/laminas-stdlib": "^3.19.0"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~3.0",
-        "laminas/laminas-crypt": "^3.12",
-        "laminas/laminas-i18n": "^2.28.1",
-        "laminas/laminas-uri": "^2.12",
         "pear/archive_tar": "^1.5.0",
         "phpunit/phpunit": "^10.5.36",
         "psalm/plugin-phpunit": "^0.19.0",
@@ -53,9 +50,7 @@
         "zendframework/zend-filter": "*"
     },
     "suggest": {
-        "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
-        "laminas/laminas-uri": "Laminas\\Uri component, for the UriNormalize filter",
         "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters"
     },
     "autoload": {

@@ -4,26 +4,22 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Traversable;
+use Laminas\Filter\Exception\InvalidArgumentException;
 
 use function array_search;
-use function gettype;
-use function is_array;
-use function is_bool;
-use function is_float;
 use function is_int;
 use function is_string;
-use function iterator_to_array;
 use function sprintf;
 
 /**
+ * @psalm-type TypeArgument =
+ *             int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<value-of<self::CONSTANTS>>|list<self::TYPE_*>
  * @psalm-type Options = array{
- *     type: int-mask-of<self::TYPE_*>,
+ *     type?: TypeArgument,
  * }
- * @extends AbstractFilter<Options>
- * @final
+ * @implements FilterInterface<null>
  */
-class ToNull extends AbstractFilter
+final class ToNull implements FilterInterface
 {
     public const TYPE_BOOLEAN     = 1;
     public const TYPE_INTEGER     = 2;
@@ -32,13 +28,6 @@ class ToNull extends AbstractFilter
     public const TYPE_ZERO_STRING = 16;
     public const TYPE_FLOAT       = 32;
     public const TYPE_ALL         = 63;
-
-    /**
-     * @deprecated since 2.26 - superseded by self::CONSTANTS
-     *
-     * @var array<self::TYPE_*, string>
-     */
-    protected $constants = self::CONSTANTS;
 
     private const CONSTANTS = [
         self::TYPE_BOOLEAN     => 'boolean',
@@ -50,139 +39,105 @@ class ToNull extends AbstractFilter
         self::TYPE_ALL         => 'all',
     ];
 
-    /** @var Options */
-    protected $options = [
-        'type' => self::TYPE_ALL,
-    ];
+    /** @var int-mask-of<self::TYPE_*> */
+    private readonly int $type;
 
-    /**
-     * @phpcs:disable Generic.Files.LineLength.TooLong
-     * @param int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|Options|iterable|null $typeOrOptions
-     */
-    public function __construct($typeOrOptions = null)
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        if ($typeOrOptions === null || $typeOrOptions === '') {
-            return;
-        }
-
-        if ($typeOrOptions instanceof Traversable) {
-            $typeOrOptions = iterator_to_array($typeOrOptions);
-        }
-
-        if (is_array($typeOrOptions) && isset($typeOrOptions['type'])) {
-            $this->setOptions($typeOrOptions);
-
-            return;
-        }
-
-        $this->setType($typeOrOptions);
+        $this->type = $this->resolveType($options['type'] ?? self::TYPE_ALL);
     }
 
     /**
-     * Set boolean types
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @param int-mask-of<self::TYPE_*>|value-of<self::CONSTANTS>|list<self::TYPE_*>|null $type
-     * @return self
-     * @throws Exception\InvalidArgumentException
+     * @param TypeArgument $type
+     * @return int-mask-of<self::TYPE_*>
      */
-    public function setType($type = null)
+    private function resolveType(int|array|string $type): int
     {
-        if (is_array($type)) {
-            $detected = 0;
-            foreach ($type as $value) {
-                if (is_int($value)) {
-                    $detected |= $value;
-                } elseif (($found = array_search($value, self::CONSTANTS, true)) !== false) {
-                    $detected |= $found;
-                }
-            }
-
-            $type = $detected;
-        } elseif (is_string($type) && ($found = array_search($type, self::CONSTANTS, true)) !== false) {
-            $type = $found;
+        if (is_int($type) || is_string($type)) {
+            $type = [$type];
         }
 
-        if (! is_int($type) || ($type < 0) || ($type > self::TYPE_ALL)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Unknown type value "%s" (%s)',
-                $type,
-                gettype($type)
+        $resolved = 0;
+
+        foreach ($type as $value) {
+            $resolved |= is_int($value)
+                ? $this->assertValidInteger($value)
+                : $this->assertValidTypeString($value);
+        }
+
+        /** @psalm-var int-mask-of<self::TYPE_*> - Psalm cannot verify the value here */
+        return $resolved;
+    }
+
+    /** @return self::TYPE_* */
+    private function assertValidTypeString(string $value): int
+    {
+        $key = array_search($value, self::CONSTANTS, true);
+        if ($key === false) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid type identifier: "%s"',
+                $value,
             ));
         }
 
-        $this->options['type'] = $type;
-        return $this;
+        return $key;
+    }
+
+    /** @return self::TYPE_* */
+    private function assertValidInteger(int $value): int
+    {
+        if (($value & self::TYPE_ALL) !== $value) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid type integer: "%d"',
+                $value,
+            ));
+        }
+
+        /** @psalm-var self::TYPE_* Psalm cannot verify this */
+        return $value;
     }
 
     /**
-     * Returns defined boolean types
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @return int-mask-of<self::TYPE_*>
+     * Returns null representation of $value, if value is empty and matches types that should be considered null.
      */
-    public function getType()
+    public function filter(mixed $value): mixed
     {
-        return $this->options['type'];
-    }
-
-    /**
-     * Defined by Laminas\Filter\FilterInterface
-     *
-     * Returns null representation of $value, if value is empty and matches
-     * types that should be considered null.
-     *
-     * @param  null|array|bool|float|int|string $value
-     * @return null|mixed
-     */
-    public function filter($value)
-    {
-        $type = $this->getType();
-
         // FLOAT (0.0)
-        if ($type & self::TYPE_FLOAT) {
-            if (is_float($value) && $value === 0.0) {
-                return null;
-            }
+        if (($this->type & self::TYPE_FLOAT) !== 0 && $value === 0.0) {
+            return null;
         }
 
         // STRING ZERO ('0')
-        if ($type & self::TYPE_ZERO_STRING) {
-            if (is_string($value) && $value === '0') {
-                return null;
-            }
+        if (($this->type & self::TYPE_ZERO_STRING) !== 0 && $value === '0') {
+            return null;
         }
 
         // STRING ('')
-        if ($type & self::TYPE_STRING) {
-            if (is_string($value) && $value === '') {
-                return null;
-            }
+        if (($this->type & self::TYPE_STRING) !== 0 && $value === '') {
+            return null;
         }
 
         // EMPTY_ARRAY (array())
-        if ($type & self::TYPE_EMPTY_ARRAY) {
-            if (is_array($value) && $value === []) {
-                return null;
-            }
+        if (($this->type & self::TYPE_EMPTY_ARRAY) !== 0 && $value === []) {
+            return null;
         }
 
         // INTEGER (0)
-        if ($type & self::TYPE_INTEGER) {
-            if (is_int($value) && $value === 0) {
-                return null;
-            }
+        if (($this->type & self::TYPE_INTEGER) !== 0 && $value === 0) {
+            return null;
         }
 
         // BOOLEAN (false)
-        if ($type & self::TYPE_BOOLEAN) {
-            if (is_bool($value) && $value === false) {
-                return null;
-            }
+        if (($this->type & self::TYPE_BOOLEAN) !== 0 && $value === false) {
+            return null;
         }
 
         return $value;
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

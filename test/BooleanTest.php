@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\Boolean as BooleanFilter;
+use Laminas\Filter\Boolean;
 use Laminas\Filter\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -13,78 +13,247 @@ use function gettype;
 use function sprintf;
 use function var_export;
 
+/**
+ * @psalm-import-type TypeOption from Boolean
+ * @psalm-import-type OptionsArgument from Boolean
+ */
 class BooleanTest extends TestCase
 {
-    public function testConstructorOptions(): void
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function integerProvider(): array
     {
-        $filter = new BooleanFilter([
-            'type'    => BooleanFilter::TYPE_INTEGER,
-            'casting' => false,
-        ]);
-
-        self::assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
-        self::assertFalse($filter->getCasting());
+        return [
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => false], 1, true],
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => false], 0, false],
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => true], 1, true],
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => true], 0, false],
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => true], 99, true],
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => false], 99, 99],
+            [['type' => Boolean::TYPE_INTEGER, 'casting' => false], null, null],
+            [['type' => [Boolean::TYPE_INTEGER], 'casting' => false], 1, true],
+            [['type' => 'integer', 'casting' => false], 1, true],
+            [['type' => ['integer'], 'casting' => false], 1, true],
+        ];
     }
 
-    public function testConstructorParams(): void
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function floatProvider(): array
     {
-        $filter = new BooleanFilter(BooleanFilter::TYPE_INTEGER, false);
+        return [
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => false], 1.0, true],
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => false], 0.0, false],
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => true], 1.0, true],
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => true], 0.0, false],
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => true], 99.9, true],
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => false], 99.9, 99.9],
+            [['type' => Boolean::TYPE_FLOAT, 'casting' => false], null, null],
+            [['type' => [Boolean::TYPE_FLOAT], 'casting' => false], 1.0, true],
+            [['type' => 'float', 'casting' => false], 1.0, true],
+            [['type' => ['float'], 'casting' => false], 1.0, true],
+        ];
+    }
 
-        self::assertSame(BooleanFilter::TYPE_INTEGER, $filter->getType());
-        self::assertFalse($filter->getCasting());
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function booleanProvider(): array
+    {
+        return [
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], true, true],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], false, false],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], 'foo', 'foo'],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], 'true', 'true'],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], 1, 1],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], 0, 0],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => false], [], []],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], true, true],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], false, false],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], 'foo', true],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], 'true', true],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], 1, true],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], 0, true],
+            [['type' => Boolean::TYPE_BOOLEAN, 'casting' => true], [], true],
+            [['type' => [Boolean::TYPE_BOOLEAN], 'casting' => false], true, true],
+            [['type' => ['boolean'], 'casting' => false], true, true],
+            [['type' => 'boolean', 'casting' => false], true, true],
+        ];
+    }
+
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function stringProvider(): array
+    {
+        return [
+            [['type' => Boolean::TYPE_STRING, 'casting' => false], 'foo', 'foo'],
+            [['type' => Boolean::TYPE_STRING, 'casting' => false], '', false],
+            [['type' => Boolean::TYPE_STRING, 'casting' => true], 'foo', true],
+            [['type' => Boolean::TYPE_STRING, 'casting' => true], '', false],
+            [['type' => Boolean::TYPE_STRING, 'casting' => true], ' ', true],
+            [['type' => Boolean::TYPE_STRING, 'casting' => true], "\t", true],
+            [['type' => Boolean::TYPE_STRING, 'casting' => true], "\n", true],
+            [['type' => [Boolean::TYPE_STRING], 'casting' => false], 'foo', 'foo'],
+            [['type' => ['string'], 'casting' => false], 'foo', 'foo'],
+            [['type' => 'string', 'casting' => false], 'foo', 'foo'],
+        ];
+    }
+
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function falseStringProvider(): array
+    {
+        return [
+            [['type' => Boolean::TYPE_FALSE_STRING, 'casting' => false], 'true', true],
+            [['type' => Boolean::TYPE_FALSE_STRING, 'casting' => false], 'false', false],
+            [['type' => Boolean::TYPE_FALSE_STRING, 'casting' => true], 'true', true],
+            [['type' => Boolean::TYPE_FALSE_STRING, 'casting' => true], 'false', false],
+            [['type' => [Boolean::TYPE_FALSE_STRING], 'casting' => false], 'false', false],
+            [['type' => ['false'], 'casting' => false], 'false', false],
+            [['type' => 'false', 'casting' => false], 'false', false],
+        ];
+    }
+
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function nullProvider(): array
+    {
+        return [
+            [['type' => Boolean::TYPE_NULL, 'casting' => false], null, false],
+            [['type' => Boolean::TYPE_NULL, 'casting' => true], null, false],
+            [['type' => Boolean::TYPE_NULL, 'casting' => true], 'false', true],
+            [['type' => [Boolean::TYPE_NULL], 'casting' => false], 'false', 'false'],
+            [['type' => ['null'], 'casting' => false], null, false],
+            [['type' => 'null', 'casting' => false], null, false],
+        ];
+    }
+
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function zeroStringProvider(): array
+    {
+        return [
+            [['type' => Boolean::TYPE_ZERO_STRING, 'casting' => false], '0', false],
+            [['type' => Boolean::TYPE_ZERO_STRING, 'casting' => false], '1', true],
+            [['type' => Boolean::TYPE_ZERO_STRING, 'casting' => true], '0', false],
+            [['type' => Boolean::TYPE_ZERO_STRING, 'casting' => true], '1', true],
+            [['type' => [Boolean::TYPE_ZERO_STRING], 'casting' => false], '0', false],
+            [['type' => ['zero'], 'casting' => false], '0', false],
+            [['type' => 'zero', 'casting' => false], '0', false],
+        ];
+    }
+
+    /**
+     * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function emptyArrayProvider(): array
+    {
+        return [
+            [['type' => Boolean::TYPE_EMPTY_ARRAY, 'casting' => false], [], false],
+            [['type' => Boolean::TYPE_EMPTY_ARRAY, 'casting' => false], ['foo'], ['foo']],
+            [['type' => Boolean::TYPE_EMPTY_ARRAY, 'casting' => true], [], false],
+            [['type' => Boolean::TYPE_EMPTY_ARRAY, 'casting' => true], ['foo'], true],
+            [['type' => [Boolean::TYPE_EMPTY_ARRAY], 'casting' => false], [], false],
+            [['type' => ['array'], 'casting' => false], [], false],
+            [['type' => 'array', 'casting' => false], [], false],
+        ];
+    }
+
+    /** @param OptionsArgument $options */
+    #[DataProvider('integerProvider')]
+    #[DataProvider('floatProvider')]
+    #[DataProvider('booleanProvider')]
+    #[DataProvider('stringProvider')]
+    #[DataProvider('falseStringProvider')]
+    #[DataProvider('nullProvider')]
+    #[DataProvider('zeroStringProvider')]
+    #[DataProvider('emptyArrayProvider')]
+    public function testIndividualTypes(array $options, mixed $input, mixed $expect): void
+    {
+        $filter = new Boolean($options);
+
+        /** @psalm-var mixed $result */
+        $result = $filter->filter($input);
+
+        $message = sprintf(
+            'Expected (%s) %s to be filtered to (%s) %s',
+            gettype($input),
+            var_export($input, true),
+            gettype($expect),
+            var_export($expect, true),
+        );
+
+        self::assertSame($expect, $result, $message);
+        self::assertSame($expect, $filter->__invoke($input));
     }
 
     #[DataProvider('defaultTestProvider')]
     public function testDefault(mixed $value, bool $expected): void
     {
-        $filter = new BooleanFilter();
-        self::assertSame($expected, $filter->filter($value));
-    }
-
-    #[DataProvider('noCastingTestProvider')]
-    public function testNoCasting(mixed $value, mixed $expected): void
-    {
-        $filter = new BooleanFilter('all', false);
+        $filter = new Boolean();
         self::assertSame($expected, $filter->filter($value));
     }
 
     /**
-     * @param array{0: mixed, 1: mixed} $testData
+     * @param int-mask-of<Boolean::TYPE_*> $type
+     * @param list<array{0: mixed, 1: mixed}> $testData
      */
     #[DataProvider('typeTestProvider')]
     public function testTypes(int $type, array $testData): void
     {
-        $filter = new BooleanFilter($type);
+        $filter = new Boolean(['type' => $type]);
         foreach ($testData as $data) {
+            /**
+             * @var mixed $value
+             * @var mixed $expected
+             */
             [$value, $expected] = $data;
             $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s',
                 var_export($value, true),
                 gettype($value),
                 var_export($expected, true),
-                $type
+                $type,
             );
             self::assertSame($expected, $filter->filter($value), $message);
         }
     }
 
     /**
-     * @param array $typeData
-     * @param array $testData
+     * @param list<TypeOption> $typeData
+     * @param list<array{0:mixed, 1:mixed}> $testData
      */
     #[DataProvider('combinedTypeTestProvider')]
-    public function testCombinedTypes($typeData, $testData): void
+    public function testCombinedTypes(array $typeData, array $testData): void
     {
         foreach ($typeData as $type) {
-            $filter = new BooleanFilter(['type' => $type]);
+            $filter = new Boolean(['type' => $type]);
             foreach ($testData as $data) {
+                /**
+                 * @psalm-var mixed $value
+                 * @psalm-var mixed $expected
+                 */
                 [$value, $expected] = $data;
                 $message            = sprintf(
                     '%s (%s) is not filtered as %s; type = %s',
                     var_export($value, true),
                     gettype($value),
                     var_export($expected, true),
-                    var_export($type, true)
+                    var_export($type, true),
                 );
                 self::assertSame($expected, $filter->filter($value), $message);
             }
@@ -93,8 +262,8 @@ class BooleanTest extends TestCase
 
     public function testLocalized(): void
     {
-        $filter = new BooleanFilter([
-            'type'         => BooleanFilter::TYPE_LOCALIZED,
+        $filter = new Boolean([
+            'type'         => Boolean::TYPE_LOCALIZED,
             'translations' => [
                 'yes' => true,
                 'y'   => true,
@@ -111,35 +280,19 @@ class BooleanTest extends TestCase
         self::assertFalse($filter->filter('nay'));
     }
 
-    public function testSettingFalseType(): void
+    public function testInvalidType(): void
     {
-        $filter = new BooleanFilter();
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown type value');
-        /** @psalm-suppress InvalidArgument */
-        $filter->setType(true);
-    }
 
-    public function testGettingDefaultType(): void
-    {
-        $filter = new BooleanFilter();
-        self::assertSame(127, $filter->getType());
+        /** @psalm-suppress InvalidArgument */
+        new Boolean(['type' => 'foo']);
     }
 
     /**
-     * Ensures that if a type is specified more than once, we get the expected type, not something else.
-     * https://github.com/zendframework/zend-filter/issues/48
-     *
-     * @param mixed $type Type to double initialize
+     * @return list<array{0: mixed, 1: bool}>
+     * @psalm-suppress PossiblyUnusedMethod
      */
-    #[DataProvider('duplicateProvider')]
-    public function testDuplicateTypesWorkProperly(int|string $type, int $expected): void
-    {
-        $filter = new BooleanFilter([$type, $type]);
-        self::assertSame($expected, $filter->getType());
-    }
-
-    /** @return list<array{0: mixed, 1: bool}> */
     public static function defaultTestProvider(): array
     {
         return [
@@ -163,37 +316,15 @@ class BooleanTest extends TestCase
         ];
     }
 
-    /** @return list<array{0: mixed, 1: mixed}> */
-    public static function noCastingTestProvider(): array
-    {
-        return [
-            [false, false],
-            [true, true],
-            [0, false],
-            [1, true],
-            [2, 2],
-            [0.0, false],
-            [1.0, true],
-            [0.5, 0.5],
-            ['', false],
-            ['abc', 'abc'],
-            ['0', false],
-            ['1', true],
-            ['2', '2'],
-            [[], false],
-            [[0], [0]],
-            [null, false],
-            ['false', false],
-            ['true', true],
-        ];
-    }
-
-    /** @return list<array{0: int, 1: mixed[]}> */
+    /**
+     * @return list<array{0: int-mask-of<Boolean::TYPE_*>, 1: list<array{0: mixed, 1: mixed}>}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public static function typeTestProvider(): array
     {
         return [
             [
-                BooleanFilter::TYPE_BOOLEAN,
+                Boolean::TYPE_BOOLEAN,
                 [
                     [false, false],
                     [true, true],
@@ -215,7 +346,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_INTEGER,
+                Boolean::TYPE_INTEGER,
                 [
                     [false, true],
                     [true, true],
@@ -237,7 +368,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_FLOAT,
+                Boolean::TYPE_FLOAT,
                 [
                     [false, true],
                     [true, true],
@@ -259,7 +390,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_STRING,
+                Boolean::TYPE_STRING,
                 [
                     [false, true],
                     [true, true],
@@ -281,7 +412,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_ZERO_STRING,
+                Boolean::TYPE_ZERO_STRING,
                 [
                     [false, true],
                     [true, true],
@@ -303,7 +434,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_EMPTY_ARRAY,
+                Boolean::TYPE_EMPTY_ARRAY,
                 [
                     [false, true],
                     [true, true],
@@ -325,7 +456,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_NULL,
+                Boolean::TYPE_NULL,
                 [
                     [false, true],
                     [true, true],
@@ -347,7 +478,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_PHP,
+                Boolean::TYPE_PHP,
                 [
                     [false, false],
                     [true, true],
@@ -369,7 +500,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_FALSE_STRING,
+                Boolean::TYPE_FALSE_STRING,
                 [
                     [false, true],
                     [true, true],
@@ -393,7 +524,7 @@ class BooleanTest extends TestCase
             // default behaviour with no translations provided
             // all values filtered as true
             [
-                BooleanFilter::TYPE_LOCALIZED,
+                Boolean::TYPE_LOCALIZED,
                 [
                     [false, true],
                     [true, true],
@@ -415,7 +546,7 @@ class BooleanTest extends TestCase
                 ],
             ],
             [
-                BooleanFilter::TYPE_ALL,
+                Boolean::TYPE_ALL,
                 [
                     [false, false],
                     [true, true],
@@ -439,23 +570,27 @@ class BooleanTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<array{0: list<TypeOption>, 1: list<array{0:mixed, 1:mixed}>}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public static function combinedTypeTestProvider(): array
     {
         return [
             [
                 [
                     [
-                        BooleanFilter::TYPE_ZERO_STRING,
-                        BooleanFilter::TYPE_STRING,
-                        BooleanFilter::TYPE_BOOLEAN,
+                        Boolean::TYPE_ZERO_STRING,
+                        Boolean::TYPE_STRING,
+                        Boolean::TYPE_BOOLEAN,
                     ],
                     [
                         'zero',
                         'string',
                         'boolean',
                     ],
-                    BooleanFilter::TYPE_ZERO_STRING | BooleanFilter::TYPE_STRING | BooleanFilter::TYPE_BOOLEAN,
-                    BooleanFilter::TYPE_ZERO_STRING + BooleanFilter::TYPE_STRING + BooleanFilter::TYPE_BOOLEAN,
+                    Boolean::TYPE_ZERO_STRING | Boolean::TYPE_STRING | Boolean::TYPE_BOOLEAN,
+                    Boolean::TYPE_ZERO_STRING + Boolean::TYPE_STRING + Boolean::TYPE_BOOLEAN,
                 ],
                 [
                     [false, false],
@@ -480,32 +615,30 @@ class BooleanTest extends TestCase
         ];
     }
 
-    /** @return list<array{0: int|string, 1: int}> */
+    /**
+     * @return list<array{0: OptionsArgument}>
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public static function duplicateProvider(): array
     {
         return [
-            [BooleanFilter::TYPE_BOOLEAN, BooleanFilter::TYPE_BOOLEAN],
-            [BooleanFilter::TYPE_INTEGER, BooleanFilter::TYPE_INTEGER],
-            [BooleanFilter::TYPE_FLOAT, BooleanFilter::TYPE_FLOAT],
-            [BooleanFilter::TYPE_STRING, BooleanFilter::TYPE_STRING],
-            [BooleanFilter::TYPE_ZERO_STRING, BooleanFilter::TYPE_ZERO_STRING],
-            [BooleanFilter::TYPE_EMPTY_ARRAY, BooleanFilter::TYPE_EMPTY_ARRAY],
-            [BooleanFilter::TYPE_NULL, BooleanFilter::TYPE_NULL],
-            [BooleanFilter::TYPE_PHP, BooleanFilter::TYPE_PHP],
-            [BooleanFilter::TYPE_FALSE_STRING, BooleanFilter::TYPE_FALSE_STRING],
-            [BooleanFilter::TYPE_LOCALIZED, BooleanFilter::TYPE_LOCALIZED],
-            [BooleanFilter::TYPE_ALL, BooleanFilter::TYPE_ALL],
-            ['boolean', BooleanFilter::TYPE_BOOLEAN],
-            ['integer', BooleanFilter::TYPE_INTEGER],
-            ['float', BooleanFilter::TYPE_FLOAT],
-            ['string', BooleanFilter::TYPE_STRING],
-            ['zero', BooleanFilter::TYPE_ZERO_STRING],
-            ['array', BooleanFilter::TYPE_EMPTY_ARRAY],
-            ['null', BooleanFilter::TYPE_NULL],
-            ['php', BooleanFilter::TYPE_PHP],
-            ['false', BooleanFilter::TYPE_FALSE_STRING],
-            ['localized', BooleanFilter::TYPE_LOCALIZED],
-            ['all', BooleanFilter::TYPE_ALL],
+            [['type' => [Boolean::TYPE_BOOLEAN, Boolean::TYPE_BOOLEAN], 'casting' => false]],
+            [['type' => ['boolean', Boolean::TYPE_BOOLEAN], 'casting' => false]],
+            [['type' => ['boolean', 'boolean'], 'casting' => false]],
         ];
+    }
+
+    /**
+     * Ensures that if a type is specified more than once, we get the expected type, not something else.
+     * https://github.com/zendframework/zend-filter/issues/48
+     *
+     * @param OptionsArgument $options
+     */
+    #[DataProvider('duplicateProvider')]
+    public function testDuplicateTypesWorkProperly(array $options): void
+    {
+        $filter = new Boolean($options);
+        self::assertFalse($filter->filter(false));
+        self::assertTrue($filter->filter(true));
     }
 }

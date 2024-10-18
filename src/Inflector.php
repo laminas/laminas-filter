@@ -35,9 +35,8 @@ use function str_replace;
  *     pluginManager?: FilterPluginManager,
  * }
  * @extends AbstractFilter<Options>
- * @final
  */
-class Inflector extends AbstractFilter
+final class Inflector extends AbstractFilter
 {
     /** @var FilterPluginManager */
     protected $pluginManager;
@@ -406,31 +405,30 @@ class Inflector extends AbstractFilter
     /**
      * Inflect
      *
-     * @param  string|array $source
+     * @param  string|array $value
      * @throws Exception\RuntimeException
-     * @return string
      */
-    public function filter($source)
+    public function filter(mixed $value): mixed
     {
         // clean source
-        foreach ((array) $source as $sourceName => $sourceValue) {
-            $source[ltrim($sourceName, ':')] = $sourceValue;
+        foreach ((array) $value as $sourceName => $sourceValue) {
+            $value[ltrim($sourceName, ':')] = $sourceValue;
         }
 
         $pregQuotedTargetReplacementIdentifier = preg_quote($this->targetReplacementIdentifier, '#');
         $processedParts                        = [];
 
         foreach ($this->rules as $ruleName => $ruleValue) {
-            if (isset($source[$ruleName])) {
+            if (isset($value[$ruleName])) {
                 if (is_string($ruleValue)) {
                     // overriding the set rule
                     $processedParts['#' . $pregQuotedTargetReplacementIdentifier . $ruleName . '#'] = str_replace(
                         '\\',
                         '\\\\',
-                        $source[$ruleName]
+                        $value[$ruleName]
                     );
                 } elseif (is_array($ruleValue)) {
-                    $processedPart = $source[$ruleName];
+                    $processedPart = $value[$ruleName];
                     foreach ($ruleValue as $ruleFilter) {
                         $processedPart = $ruleFilter($processedPart);
                     }

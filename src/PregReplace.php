@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Closure;
-use Traversable;
+use Laminas\Filter\Exception\InvalidArgumentException;
 
-use function func_get_args;
-use function get_debug_type;
+use function array_filter;
+use function array_values;
 use function is_array;
 use function is_string;
-use function iterator_to_array;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
@@ -19,184 +17,77 @@ use function str_contains;
 
 /**
  * @psalm-type Options = array{
- *     pattern: string|list<string>|null,
- *     replacement: string|list<string>,
+ *     pattern: non-empty-string|list<non-empty-string>,
+ *     replacement?: string|list<string>,
  * }
- * @extends AbstractFilter<Options>
- * @final
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-class PregReplace extends AbstractFilter
+final class PregReplace implements FilterInterface
 {
-    /** @var Options */
-    protected $options = [
-        'pattern'     => null,
-        'replacement' => '',
-    ];
+    /** @var list<non-empty-string>|non-empty-string */
+    private readonly array|string $pattern;
+    /** @var list<string>|string */
+    private readonly array|string $replacement;
 
     /**
-     * Constructor
      * Supported options are
      *     'pattern'     => matching pattern
      *     'replacement' => replace with this
      *
-     * @param  iterable|Options|string|null $options
+     * @param Options $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options)
     {
-        if ($options instanceof Traversable) {
-            $options = iterator_to_array($options);
-        }
-
-        if (! is_array($options) || (! isset($options['pattern']) && ! isset($options['replacement']))) {
-            $args = func_get_args();
-            if (isset($args[0])) {
-                $this->setPattern($args[0]);
-            }
-            if (isset($args[1])) {
-                $this->setReplacement($args[1]);
-            }
-        } else {
-            $this->setOptions($options);
-        }
+        $this->pattern     = $this->validatePattern($options['pattern']);
+        $this->replacement = $options['replacement'] ?? '';
     }
 
-    /**
-     * Set the regex pattern to search for
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @see preg_replace()
-     *
-     * @param string|list<string> $pattern - same as the first argument of preg_replace
-     * @return self
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setPattern($pattern)
+    public function filter(mixed $value): mixed
     {
-        if (! is_array($pattern) && ! is_string($pattern)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects pattern to be array or string; received "%s"',
-                __METHOD__,
-                get_debug_type($pattern),
-            ));
-        }
-
-        if (is_array($pattern)) {
-            foreach ($pattern as $p) {
-                $this->validatePattern($p);
-            }
-        }
-
-        if (is_string($pattern)) {
-            $this->validatePattern($pattern);
-        }
-
-        $this->options['pattern'] = $pattern;
-        return $this;
-    }
-
-    /**
-     * Get currently set match pattern
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @return string|list<string>|null
-     */
-    public function getPattern()
-    {
-        return $this->options['pattern'];
-    }
-
-    /**
-     * Set the replacement array/string
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @see preg_replace()
-     *
-     * @param string|list<string> $replacement - same as the second argument of preg_replace
-     * @return self
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setReplacement($replacement)
-    {
-        if (! is_array($replacement) && ! is_string($replacement)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects replacement to be array or string; received "%s"',
-                __METHOD__,
-                get_debug_type($replacement)
-            ));
-        }
-        $this->options['replacement'] = $replacement;
-        return $this;
-    }
-
-    /**
-     * Get currently set replacement value
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @return string|list<string>
-     */
-    public function getReplacement()
-    {
-        return $this->options['replacement'];
-    }
-
-    /**
-     * Perform regexp replacement as filter
-     *
-     * @param  mixed $value
-     * @return mixed
-     * @throws Exception\RuntimeException
-     */
-    public function filter($value)
-    {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+        return ScalarOrArrayFilterCallback::applyRecursively(
             $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
+            fn (string $value): string => preg_replace($this->pattern, $this->replacement, $value),
         );
     }
 
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue($value)
+    public function __invoke(mixed $value): mixed
     {
-        if ($this->options['pattern'] === null) {
-            throw new Exception\RuntimeException(sprintf(
-                'Filter %s does not have a valid pattern set',
-                static::class
-            ));
-        }
-
-        /** @var string|string[] $pattern */
-        $pattern = $this->options['pattern'];
-        /** @var string|string[] $replacement */
-        $replacement = $this->options['replacement'];
-
-        return preg_replace($pattern, $replacement, $value);
+        return $this->filter($value);
     }
 
     /**
-     * Validate a pattern and ensure it does not contain the "e" modifier
+     * Validate pattern(s) and ensure they do not contain the "e" modifier
      *
-     * @param  string $pattern
-     * @return bool
-     * @throws Exception\InvalidArgumentException
+     * @param string|list<string>|null $pattern
+     * @return list<non-empty-string>|non-empty-string
+     * @throws InvalidArgumentException
      */
-    protected function validatePattern($pattern)
+    private function validatePattern(string|array|null $pattern): array|string
     {
-        if (! preg_match('/(?<modifier>[imsxeADSUXJu]+)$/', $pattern, $matches)) {
-            return true;
+        $test = array_values(array_filter(
+            is_array($pattern) ? $pattern : [$pattern],
+            static fn (mixed $value): bool => is_string($value) && $value !== '',
+        ));
+
+        if ($test === []) {
+            throw new InvalidArgumentException(
+                'The pattern option must be a non-empty string, or a list of non-empty strings',
+            );
         }
 
-        if (str_contains($matches['modifier'], 'e')) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Pattern for a PregReplace filter may not contain the "e" pattern modifier; received "%s"',
-                $pattern
-            ));
+        foreach ($test as $item) {
+            if (! preg_match('/(?<modifier>[imsxeADSUXJu]+)$/', $item, $matches)) {
+                continue;
+            }
+
+            if (str_contains($matches['modifier'], 'e')) {
+                throw new InvalidArgumentException(sprintf(
+                    'Pattern for a PregReplace filter may not contain the "e" pattern modifier; received "%s"',
+                    $item,
+                ));
+            }
         }
+
+        return $test;
     }
 }

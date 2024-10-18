@@ -229,7 +229,7 @@ class RenameUpload extends AbstractFilter
      *     - UploadedFileInterface for UploadedFileInterface $value
      * @throws Exception\RuntimeException
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         // PSR-7 uploaded file
         if ($value instanceof UploadedFileInterface) {

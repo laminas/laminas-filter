@@ -18,34 +18,29 @@ use function vsprintf;
  *     null_on_all_empty?: bool,
  *     ...
  * }
+ * @psalm-type InputArray = array<string, string>
  * @template TOptions of Options
  * @template-extends AbstractFilter<TOptions>
+ * @template TInput of array<array-key, numeric>
  */
 abstract class AbstractDateDropdown extends AbstractFilter
 {
     /**
      * If true, the filter will return null if any date field is empty
-     *
-     * @var bool
      */
-    protected $nullOnEmpty = false;
+    protected bool $nullOnEmpty = false;
 
     /**
      * If true, the filter will return null if all date fields are empty
-     *
-     * @var bool
      */
-    protected $nullOnAllEmpty = false;
+    protected bool $nullOnAllEmpty = false;
 
     /**
      * Sprintf format string to use for formatting the date, fields will be used in alphabetical order.
-     *
-     * @var string
      */
-    protected $format = '';
+    protected string $format = '';
 
-    /** @var int */
-    protected $expectedInputs;
+    protected int $expectedInputs = 0;
 
     /**
      * @param mixed $options If array or Traversable, passes value to
@@ -59,37 +54,29 @@ abstract class AbstractDateDropdown extends AbstractFilter
     }
 
     /**
-     * @param bool $nullOnAllEmpty
-     * @return self
+     * @return $this
      */
-    public function setNullOnAllEmpty($nullOnAllEmpty)
+    public function setNullOnAllEmpty(bool $nullOnAllEmpty): self
     {
         $this->nullOnAllEmpty = $nullOnAllEmpty;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNullOnAllEmpty()
+    public function isNullOnAllEmpty(): bool
     {
         return $this->nullOnAllEmpty;
     }
 
     /**
-     * @param bool $nullOnEmpty
-     * @return self
+     * @return $this
      */
-    public function setNullOnEmpty($nullOnEmpty)
+    public function setNullOnEmpty(bool $nullOnEmpty): self
     {
         $this->nullOnEmpty = $nullOnEmpty;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNullOnEmpty()
+    public function isNullOnEmpty(): bool
     {
         return $this->nullOnEmpty;
     }
@@ -98,12 +85,10 @@ abstract class AbstractDateDropdown extends AbstractFilter
      * Attempts to filter an array of date/time information to a formatted
      * string.
      *
-     * @param  mixed $value input to the filter
-     * @return mixed|string|null
      * @throws Exception\RuntimeException If filtering $value is impossible.
-     * @psalm-return ($value is array ? string|null : mixed)
+     * @psalm-return ($value is InputArray ? string : mixed|null)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_array($value)) {
             // nothing to do
@@ -113,24 +98,24 @@ abstract class AbstractDateDropdown extends AbstractFilter
         // Convert the date to a specific format
         if (
             $this->isNullOnEmpty()
-            && array_reduce($value, self::class . '::reduce', false)
+            && array_reduce($value, self::reduce(...), false)
         ) {
             return null;
         }
 
         if (
             $this->isNullOnAllEmpty()
-            && array_reduce($value, self::class . '::reduce', true)
+            && array_reduce($value, self::reduce(...), true)
         ) {
             return null;
         }
 
+        ksort($value);
         $this->filterable($value);
 
-        ksort($value);
-        $value = vsprintf($this->format, $value);
+        /** @psalm-var array<array-key, string> $value Forcing the type here because it has already been asserted */
 
-        return $value;
+        return vsprintf($this->format, $value);
     }
 
     /**
@@ -138,8 +123,9 @@ abstract class AbstractDateDropdown extends AbstractFilter
      *
      * @param array $value
      * @throws Exception\RuntimeException
+     * @psalm-assert TInput $value
      */
-    protected function filterable($value)
+    protected function filterable(array $value): void
     {
         if (count($value) !== $this->expectedInputs) {
             throw new Exception\RuntimeException(
@@ -154,13 +140,9 @@ abstract class AbstractDateDropdown extends AbstractFilter
 
     /**
      * Reduce to a single value
-     *
-     * @param string $soFar
-     * @param string $value
-     * @return bool
      */
-    public static function reduce($soFar, $value)
+    private static function reduce(bool $soFar, string|null $value): bool
     {
-        return $soFar || empty($value);
+        return $soFar || ($value === null || $value === '');
     }
 }

@@ -10,19 +10,19 @@ namespace Laminas\Filter;
  *     null_on_all_empty?: bool,
  *     ...
  * }
+ * @psalm-type InputArray = array{
+ *      year: numeric,
+ *      month: numeric,
+ *      day: numeric,
+ * }
  * @template TOptions of Options
- * @template-extends AbstractDateDropdown<TOptions>
- * @final
+ * @template-extends AbstractDateDropdown<TOptions, InputArray>
  */
-class DateSelect extends AbstractDateDropdown
+final class DateSelect extends AbstractDateDropdown
 {
     /**
      * Year-Month-Day
-     *
-     * @var string
      */
-    protected $format = '%3$s-%2$s-%1$s';
-
-    /** @var int */
-    protected $expectedInputs = 3;
+    protected string $format      = '%3$s-%2$s-%1$s';
+    protected int $expectedInputs = 3;
 }

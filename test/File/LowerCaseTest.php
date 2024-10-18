@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\File;
 
-use Laminas\Filter\Exception;
-use Laminas\Filter\Exception\ExtensionNotLoadedException;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\File\LowerCase as FileLowerCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -62,35 +61,18 @@ class LowerCaseTest extends TestCase
 
     public function testFileNotFoundException(): void
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
         $filter = new FileLowerCase();
         $filter($this->testFile . 'unknown');
     }
 
-    public function testCheckSettingOfEncodingInIstance(): void
+    public function testCheckSettingOfEncodingInInstance(): void
     {
         self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
-        try {
-            $filter = new FileLowerCase('ISO-8859-1');
-            $filter($this->testFile);
-            self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
-        } catch (ExtensionNotLoadedException $e) {
-            self::assertStringContainsString('mbstring is required', $e->getMessage());
-        }
-    }
-
-    public function testCheckSettingOfEncodingWithMethod(): void
-    {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
-        try {
-            $filter = new FileLowerCase();
-            $filter->setEncoding('ISO-8859-1');
-            $filter($this->testFile);
-            self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
-        } catch (ExtensionNotLoadedException $e) {
-            self::assertStringContainsString('mbstring is required', $e->getMessage());
-        }
+        $filter = new FileLowerCase(['encoding' => 'ISO-8859-1']);
+        $filter($this->testFile);
+        self::assertStringContainsString('this is a file', file_get_contents($this->testFile));
     }
 
     public static function returnUnfilteredDataProvider(): array
@@ -108,7 +90,7 @@ class LowerCaseTest extends TestCase
     }
 
     #[DataProvider('returnUnfilteredDataProvider')]
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
         $filter = new FileLowerCase();
 

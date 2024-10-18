@@ -63,7 +63,7 @@ class FilterChainTest extends TestCase
     public function testAllowsConnectingViaClassShortName(): void
     {
         $chain = new FilterChain();
-        $chain->attachByName(StringTrim::class, null, 100)
+        $chain->attachByName(StringTrim::class, [], 100)
             ->attachByName(StripTags::class)
             ->attachByName(StringToLower::class, ['encoding' => 'utf-8'], 900);
 

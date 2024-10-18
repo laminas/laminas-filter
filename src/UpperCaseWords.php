@@ -10,49 +10,37 @@ use function mb_convert_case;
 use const MB_CASE_TITLE;
 
 /**
- * @psalm-import-type UnicodeOptions from AbstractUnicode
- * @extends AbstractUnicode<UnicodeOptions>
+ * @psalm-type Options = array{encoding?: string}
+ * @implements FilterInterface<string>
  */
-final class UpperCaseWords extends AbstractUnicode
+final class UpperCaseWords implements FilterInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected $options = [
-        'encoding' => null,
-    ];
+    private readonly string $encoding;
 
     /**
-     * @param string|UnicodeOptions|iterable|null $encodingOrOptions OPTIONAL
+     * @param Options $options
      */
-    public function __construct($encodingOrOptions = null)
+    public function __construct(array $options = [])
     {
-        if ($encodingOrOptions !== null) {
-            if (self::isOptions($encodingOrOptions)) {
-                $this->setOptions($encodingOrOptions);
-            } else {
-                $this->setEncoding($encodingOrOptions);
-            }
-        }
+        $this->encoding = EncodingOption::assertWithDefault($options['encoding'] ?? null);
     }
 
     /**
-     * {@inheritDoc}
-     *
      * Returns the string $value, converting words to have an uppercase first character as necessary
      *
      * If the value provided is not a string, the value will remain unfiltered
-     *
-     * @param  string|mixed $value
-     * @return string|mixed
-     * @psalm-return ($value is string ? string : mixed)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_string($value)) {
             return $value;
         }
 
-        return mb_convert_case((string) $value, MB_CASE_TITLE, $this->getEncoding());
+        return mb_convert_case($value, MB_CASE_TITLE, $this->encoding);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

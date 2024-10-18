@@ -31,6 +31,9 @@ class BaseNameTest extends TestCase
     {
         return [
             [null],
+            [1],
+            [2.5],
+            [true],
             [new stdClass()],
             [
                 [

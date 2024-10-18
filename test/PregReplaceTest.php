@@ -4,72 +4,32 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\PregReplace as PregReplaceFilter;
+use LaminasTest\Filter\TestAsset\StringableObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function preg_match;
-
 class PregReplaceTest extends TestCase
 {
-    private PregReplaceFilter $filter;
-
-    public function setUp(): void
-    {
-        $this->filter = new PregReplaceFilter();
-    }
-
-    public function testDetectsPcreUnicodeSupport(): void
-    {
-        $enabled = (bool) @preg_match('/\pL/u', 'a');
-        self::assertSame($enabled, PregReplaceFilter::hasPcreUnicodeSupport());
-    }
-
     public function testPassingPatternToConstructorSetsPattern(): void
     {
         $pattern = '#^controller/(?P<action>[a-z_-]+)#';
-        $filter  = new PregReplaceFilter($pattern);
-        self::assertSame($pattern, $filter->getPattern());
-    }
+        $filter  = new PregReplaceFilter([
+            'pattern'     => $pattern,
+            'replacement' => 'foo/bar',
+        ]);
 
-    public function testPassingReplacementToConstructorSetsReplacement(): void
-    {
-        $replace = 'foo/bar';
-        $filter  = new PregReplaceFilter(null, $replace);
-        self::assertSame($replace, $filter->getReplacement());
-    }
-
-    public function testPatternIsNullByDefault(): void
-    {
-        self::assertNull($this->filter->getPattern());
-    }
-
-    public function testPatternAccessorsWork(): void
-    {
-        $pattern = '#^controller/(?P<action>[a-z_-]+)#';
-        $this->filter->setPattern($pattern);
-        self::assertSame($pattern, $this->filter->getPattern());
-    }
-
-    public function testReplacementIsEmptyByDefault(): void
-    {
-        $replacement = $this->filter->getReplacement();
-        self::assertEmpty($replacement);
-    }
-
-    public function testReplacementAccessorsWork(): void
-    {
-        $replacement = 'foo/bar';
-        $this->filter->setReplacement($replacement);
-        self::assertSame($replacement, $this->filter->getReplacement());
+        self::assertSame('foo/bar', $filter->filter('controller/whatever'));
     }
 
     public function testFilterPerformsRegexReplacement(): void
     {
-        $filter = $this->filter;
-        $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
+        $filter = new PregReplaceFilter([
+            'pattern'     => '#^controller/(?P<action>[a-z_-]+)#',
+            'replacement' => 'foo/bar',
+        ]);
 
         $string   = 'controller/action';
         $filtered = $filter($string);
@@ -79,8 +39,10 @@ class PregReplaceTest extends TestCase
 
     public function testFilterPerformsRegexReplacementWithArray(): void
     {
-        $filter = $this->filter;
-        $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
+        $filter = new PregReplaceFilter([
+            'pattern'     => '#^controller/(?P<action>[a-z_-]+)#',
+            'replacement' => 'foo/bar',
+        ]);
 
         $input = [
             'controller/action',
@@ -95,22 +57,47 @@ class PregReplaceTest extends TestCase
         ], $filtered);
     }
 
-    public function testFilterThrowsExceptionWhenNoMatchPatternPresent(): void
+    /** @return list<array{0: mixed}> */
+    public static function invalidPatternOptions(): array
     {
-        $filter = $this->filter;
-        $string = 'controller/action';
-        $filter->setReplacement('foo/bar');
-        $this->expectException(Exception\RuntimeException::class);
-        $this->expectExceptionMessage('does not have a valid pattern set');
-        $filter($string);
+        return [
+            [''],
+            [null],
+            [[]],
+        ];
+    }
+
+    #[DataProvider('invalidPatternOptions')]
+    public function testFilterThrowsExceptionWhenNoMatchPatternPresent(mixed $pattern): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        /** @psalm-suppress MixedArgumentTypeCoercion */
+        new PregReplaceFilter([
+            'pattern' => $pattern,
+        ]);
     }
 
     public function testPassingPatternWithExecModifierRaisesException(): void
     {
-        $filter = new PregReplaceFilter();
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"e" pattern modifier');
-        $filter->setPattern('/foo/e');
+
+        new PregReplaceFilter([
+            'pattern' => '/foo/e',
+        ]);
+    }
+
+    public function testAllPatternsAreCheckedForTheEModifier(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('"e" pattern modifier');
+
+        new PregReplaceFilter([
+            'pattern' => [
+                '/^foo',
+                '/foo/e',
+            ],
+        ]);
     }
 
     /** @return list<array{0: mixed}> */
@@ -125,8 +112,10 @@ class PregReplaceTest extends TestCase
     #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
-        $filter = $this->filter;
-        $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
+        $filter = new PregReplaceFilter([
+            'pattern'     => '#^controller/(?P<action>[a-z_-]+)#',
+            'replacement' => 'foo/bar',
+        ]);
 
         self::assertSame($input, $filter->filter($input));
     }
@@ -147,9 +136,49 @@ class PregReplaceTest extends TestCase
     #[DataProvider('returnNonStringScalarValues')]
     public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
-        $filter = $this->filter;
-        $filter->setPattern('#^controller/(?P<action>[a-z_-]+)#')->setReplacement('foo/bar');
+        $filter = new PregReplaceFilter([
+            'pattern'     => '#^controller/(?P<action>[a-z_-]+)#',
+            'replacement' => 'foo/bar',
+        ]);
 
         self::assertSame((string) $input, $filter($input));
+    }
+
+    public function testReplacementsAreProcessedForAllArrayMembers(): void
+    {
+        $filter = new PregReplaceFilter([
+            'pattern'     => '/foo/',
+            'replacement' => 'bar',
+        ]);
+
+        $input = [
+            'a' => 'food',
+            'b' => [
+                'c' => 'moof',
+                'd' => 'foobar',
+            ],
+            'c' => new StringableObject('oofoo'),
+        ];
+
+        $expect = [
+            'a' => 'bard',
+            'b' => [
+                'c' => 'moof',
+                'd' => 'barbar',
+            ],
+            'c' => 'oobar',
+        ];
+
+        self::assertSame($expect, $filter->filter($input));
+    }
+
+    public function testReplacementWithBackreferences(): void
+    {
+        $filter = new PregReplaceFilter([
+            'pattern'     => '/(foo)([a-z]+)([0-9]+)/',
+            'replacement' => '$3$1',
+        ]);
+
+        self::assertSame('1234567foo', $filter->filter('foobing1234567'));
     }
 }

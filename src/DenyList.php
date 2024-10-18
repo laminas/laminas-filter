@@ -5,97 +5,47 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use Laminas\Stdlib\ArrayUtils;
-use Traversable;
 
+use function array_values;
 use function in_array;
-use function is_array;
 
 /**
  * @psalm-type Options = array{
  *     strict?: bool,
- *     list?: array,
- *     ...
+ *     list?: iterable<array-key, mixed>,
  * }
- * @extends AbstractFilter<Options>
- * @final
+ * @implements FilterInterface<null>
  */
-class DenyList extends AbstractFilter
+final class DenyList implements FilterInterface
 {
-    /** @var bool */
-    protected $strict = false;
+    private readonly array $list;
+    private readonly bool $strict;
 
-    /** @var array */
-    protected $list = [];
-
-    /**
-     * @param null|array|Traversable $options
-     */
-    public function __construct($options = null)
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        if (null !== $options) {
-            $this->setOptions($options);
-        }
-    }
-
-    /**
-     * Determine whether the in_array() call should be "strict" or not. See in_array docs.
-     *
-     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param  bool $strict
-     */
-    public function setStrict($strict = true): void
-    {
-        $this->strict = (bool) $strict;
-    }
-
-    /**
-     * Returns whether the in_array() call should be "strict" or not. See in_array docs.
-     *
-     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function getStrict()
-    {
-        return $this->strict;
-    }
-
-    /**
-     * Set the list of items to black-list.
-     *
-     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param array|Traversable $list
-     */
-    public function setList($list = []): void
-    {
-        if (! is_array($list)) {
-            $list = ArrayUtils::iteratorToArray($list);
-        }
-
-        $this->list = $list;
-    }
-
-    /**
-     * Get the list of items to black-list
-     *
-     * @deprecated since 2.38.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getList()
-    {
-        return $this->list;
+        $this->strict = $options['strict'] ?? false;
+        $list         = ArrayUtils::iteratorToArray($options['list'] ?? []);
+        $this->list   = array_values($list);
     }
 
     /**
      * {@inheritDoc}
      *
-     * Will return null if $value is present in the black-list. If $value is NOT present then it will return $value.
+     * Will return null if $value is present in the deny-list. If $value is NOT present then it will return $value.
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
-        return in_array($value, $this->getList(), $this->getStrict()) ? null : $value;
+        return in_array($value, $this->list, $this->strict) ? null : $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Will return null if $value is present in the deny-list. If $value is NOT present then it will return $value.
+     */
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

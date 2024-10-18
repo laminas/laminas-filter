@@ -8,10 +8,8 @@ use function is_string;
 
 /**
  * Decompresses a given string
- *
- * @final
  */
-class Decompress extends Compress
+final class Decompress extends Compress
 {
     /**
      * Use filter as functor
@@ -21,7 +19,7 @@ class Decompress extends Compress
      * @param  mixed $value Content to decompress
      * @return mixed|string The decompressed content
      */
-    public function __invoke($value)
+    public function __invoke(mixed $value): mixed
     {
         return $this->filter($value);
     }
@@ -31,10 +29,10 @@ class Decompress extends Compress
      *
      * Decompresses the content $value with the defined settings
      *
-     * @param  mixed $value Content to decompress
+     * @param mixed $value Content to decompress
      * @return mixed|string The decompressed content
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_string($value) && $value !== null) {
             return $value;
