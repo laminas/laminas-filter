@@ -121,7 +121,6 @@ abstract class AbstractDateDropdown extends AbstractFilter
     /**
      * Ensures there are enough inputs in the array to properly format the date.
      *
-     * @param array $value
      * @throws Exception\RuntimeException
      * @psalm-assert TInput $value
      */
