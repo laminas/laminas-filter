@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
-use Closure;
+use Laminas\Filter\FilterInterface;
+use Laminas\Filter\ScalarOrArrayFilterCallback;
 
 use function str_replace;
 
@@ -14,24 +15,28 @@ use function str_replace;
  *     ...
  * }
  * @template TOptions of Options
- * @extends AbstractSeparator<TOptions>
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-final class DashToSeparator extends AbstractSeparator
+final class DashToSeparator implements FilterInterface
 {
-    public function filter(mixed $value): mixed
+    private readonly string $separator;
+
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
-            $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
-        );
+        $this->separator = $options['separator'] ?? ' ';
     }
 
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue($value)
+    public function __invoke(mixed $value): mixed
     {
-        return str_replace('-', $this->separator, $value);
+        return $this->filter($value);
+    }
+
+    public function filter(mixed $value): mixed
+    {
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            fn (string $input): string => str_replace('-', $this->separator, $input)
+        );
     }
 }

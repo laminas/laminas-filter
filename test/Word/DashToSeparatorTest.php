@@ -24,7 +24,7 @@ class DashToSeparatorTest extends TestCase
     public function testFilterSeparatesDashedWordsWithSomeString(): void
     {
         $string   = 'dash-separated-words';
-        $filter   = new DashToSeparatorFilter(':-:');
+        $filter   = new DashToSeparatorFilter(['separator' => ':-:']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);

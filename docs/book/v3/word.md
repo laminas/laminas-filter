@@ -106,8 +106,7 @@ The following options are supported for `Laminas\Filter\Word\DashToSeparator`:
 ### Basic Usage
 
 ```php
-$filter = new Laminas\Filter\Word\DashToSeparator('+');
-// or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' => '+'));
+$filter = new Laminas\Filter\Word\DashToSeparator(['separator' => '+']);
 
 print $filter->filter('this-is-my-content');
 ```
