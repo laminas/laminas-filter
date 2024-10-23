@@ -48,6 +48,18 @@ The impact of the removal of these aliases will not affect you if you use a FQCN
 
 ### Changes to Individual Filters
 
+#### `DashToSeparator`
+
+The following methods have been removed:
+
+- `setOptions`
+- `getOptions`
+- `isOptions`
+- `setSeparator`
+- `getSeparator`
+
+The constructor now only accepts an associative array of [documented options](../word.md#dashToSeparator).
+
 #### `DenyList`
 
 The following methods have been removed:

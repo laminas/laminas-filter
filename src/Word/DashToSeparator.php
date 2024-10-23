@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Laminas\Filter\Word;
 
 use Laminas\Filter\FilterInterface;
+use Laminas\Filter\ScalarOrArrayFilterCallback;
 
-use function array_map;
-use function is_array;
-use function is_scalar;
 use function str_replace;
 
 /**
@@ -17,24 +15,16 @@ use function str_replace;
  *     ...
  * }
  * @template TOptions of Options
- * @implements FilterInterface<mixed>
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
 final class DashToSeparator implements FilterInterface
 {
-    protected string $separator = ' ';
+    private readonly string $separator;
 
-    /**
-     * @param Options|string $separator Space by default
-     */
-    public function __construct(string|array $separator = ' ')
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        if (is_array($separator) && isset($separator['separator'])) {
-            $this->setSeparator($separator['separator']);
-
-            return;
-        }
-
-        $this->setSeparator($separator);
+        $this->separator = $options['separator'] ?? ' ';
     }
 
     public function __invoke(mixed $value): mixed
@@ -44,36 +34,9 @@ final class DashToSeparator implements FilterInterface
 
     public function filter(mixed $value): mixed
     {
-        if (! is_array($value)) {
-            if (! is_scalar($value)) {
-                return $value;
-            }
-            return $this->filterNormalizedValue((string) $value);
-        }
-
-        return $this->filterNormalizedValue(
-            array_map(static fn($item) => is_scalar($item) ? (string) $item : $item, $value)
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            fn (string $input): string => str_replace('-', $this->separator, $input)
         );
-    }
-
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue($value)
-    {
-        return str_replace('-', $this->separator, $value);
-    }
-
-    /** @return $this */
-    public function setSeparator(string $separator): self
-    {
-        $this->separator = $separator;
-        return $this;
-    }
-
-    public function getSeparator(): string
-    {
-        return $this->separator;
     }
 }
