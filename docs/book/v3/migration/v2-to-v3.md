@@ -48,6 +48,36 @@ The impact of the removal of these aliases will not affect you if you use a FQCN
 
 ### Changes to Individual Filters
 
+#### `CamelCaseToDash`
+
+The following methods have been removed:
+
+- `setOptions`
+- `getOptions`
+- `isOptions`
+- `setSeparator`
+- `getSeparator`
+
+#### `CamelCaseToSeparator`
+
+The following methods have been removed:
+
+- `setOptions`
+- `getOptions`
+- `isOptions`
+- `setSeparator`
+- `getSeparator`
+
+#### `CamelCaseToUnderscore`
+
+The following methods have been removed:
+
+- `setOptions`
+- `getOptions`
+- `isOptions`
+- `setSeparator`
+- `getSeparator`
+
 #### `DashToSeparator`
 
 The following methods have been removed:

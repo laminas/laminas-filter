@@ -24,7 +24,7 @@ class CamelCaseToSeparatorTest extends TestCase
     public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(): void
     {
         $string   = 'CamelCasedWords';
-        $filter   = new CamelCaseToSeparatorFilter(':-#');
+        $filter   = new CamelCaseToSeparatorFilter(['separator' => ':-#']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);
@@ -34,7 +34,7 @@ class CamelCaseToSeparatorTest extends TestCase
     public function testFilterSeperatesMultipleUppercasedLettersAndUnderscores(): void
     {
         $string   = 'TheseAre_SOME_CamelCASEDWords';
-        $filter   = new CamelCaseToSeparatorFilter('_');
+        $filter   = new CamelCaseToSeparatorFilter(['separator' => '_']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);

@@ -35,8 +35,7 @@ The following options are supported for `Laminas\Filter\Word\CamelCaseToSeparato
 ### Basic Usage
 
 ```php
-$filter = new Laminas\Filter\Word\CamelCaseToSeparator(':');
-// or new Laminas\Filter\Word\CamelCaseToSeparator(array('separator' => ':'));
+$filter = new Laminas\Filter\Word\CamelCaseToSeparator(['separator' => ':']);
 
 print $filter->filter('ThisIsMyContent');
 ```

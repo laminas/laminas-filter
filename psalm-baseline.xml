@@ -965,12 +965,6 @@
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/Word/CamelCaseToUnderscoreTest.php">
-    <MixedAssignment>
-      <code><![CDATA[$filtered]]></code>
-      <code><![CDATA[$filtered]]></code>
-    </MixedAssignment>
-  </file>
   <file src="test/Word/DashToSeparatorTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[returnNonStringScalarValues]]></code>

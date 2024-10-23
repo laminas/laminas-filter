@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
+use Laminas\Filter\FilterInterface;
+
 /**
  * @psalm-type Options = array{
  *     separator?: string,
- *     ...
  * }
  * @template TOptions of Options
- * @extends CamelCaseToSeparator<TOptions>
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-final class CamelCaseToUnderscore extends CamelCaseToSeparator
+final class CamelCaseToUnderscore implements FilterInterface
 {
-    public function __construct()
+    public function filter(mixed $value): mixed
     {
-        parent::__construct('_');
+        $filter = new CamelCaseToSeparator(['separator' => '_']);
+
+        return $filter->filter($value);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

@@ -4,43 +4,42 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
-use Closure;
-use Laminas\Stdlib\StringUtils;
+use Laminas\Filter\FilterInterface;
+use Laminas\Filter\ScalarOrArrayFilterCallback;
 
 use function preg_replace;
 
 /**
  * @psalm-type Options = array{
  *     separator?: string,
- *     ...
  * }
  * @template TOptions of Options
- * @extends AbstractSeparator<TOptions>
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-class CamelCaseToSeparator extends AbstractSeparator
+final class CamelCaseToSeparator implements FilterInterface
 {
-    public function filter(mixed $value): mixed
+    private readonly string $separator;
+
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
-            $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
-        );
+        $this->separator = $options['separator'] ?? ' ';
     }
 
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue(string|array $value): string|array
+    public function __invoke(mixed $value): mixed
     {
-        if (StringUtils::hasPcreUnicodeSupport()) {
-            $pattern     = ['#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'];
-            $replacement = [$this->separator . '\1', $this->separator . '\1'];
-        } else {
-            $pattern     = ['#(?<=(?:[A-Z]))([A-Z]+)([A-Z][a-z])#', '#(?<=(?:[a-z0-9]))([A-Z])#'];
-            $replacement = ['\1' . $this->separator . '\2', $this->separator . '\1'];
-        }
+        return $this->filter($value);
+    }
 
-        return preg_replace($pattern, $replacement, $value);
+    public function filter(mixed $value): mixed
+    {
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            fn (string $input): string => preg_replace(
+                ['#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'],
+                [$this->separator . '\1', $this->separator . '\1'],
+                $input
+            )
+        );
     }
 }
