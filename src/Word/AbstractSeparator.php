@@ -40,6 +40,8 @@ abstract class AbstractSeparator extends AbstractFilter
     /**
      * Sets a new separator
      *
+     * @deprecated Since 2.39.0 All option setters and getters will be removed in version 3.0
+     *
      * @param  string $separator Separator
      * @return self
      * @throws Exception\InvalidArgumentException
@@ -55,6 +57,8 @@ abstract class AbstractSeparator extends AbstractFilter
 
     /**
      * Returns the actual set separator
+     *
+     * @deprecated Since 2.39.0 All option setters and getters will be removed in version 3.0
      *
      * @return string
      */
