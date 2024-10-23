@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
-use Closure;
+use Laminas\Filter\FilterInterface;
 
+use function array_map;
+use function is_array;
+use function is_scalar;
 use function str_replace;
 
 /**
@@ -14,15 +17,42 @@ use function str_replace;
  *     ...
  * }
  * @template TOptions of Options
- * @extends AbstractSeparator<TOptions>
+ * @implements FilterInterface<mixed>
  */
-final class DashToSeparator extends AbstractSeparator
+final class DashToSeparator implements FilterInterface
 {
+    protected string $separator = ' ';
+
+    /**
+     * @param Options|string $separator Space by default
+     */
+    public function __construct(string|array $separator = ' ')
+    {
+        if (is_array($separator) && isset($separator['separator'])) {
+            $this->setSeparator($separator['separator']);
+
+            return;
+        }
+
+        $this->setSeparator($separator);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
+    }
+
     public function filter(mixed $value): mixed
     {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
-            $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
+        if (! is_array($value)) {
+            if (! is_scalar($value)) {
+                return $value;
+            }
+            return $this->filterNormalizedValue((string) $value);
+        }
+
+        return $this->filterNormalizedValue(
+            array_map(static fn($item) => is_scalar($item) ? (string) $item : $item, $value)
         );
     }
 
@@ -33,5 +63,17 @@ final class DashToSeparator extends AbstractSeparator
     private function filterNormalizedValue($value)
     {
         return str_replace('-', $this->separator, $value);
+    }
+
+    /** @return $this */
+    public function setSeparator(string $separator): self
+    {
+        $this->separator = $separator;
+        return $this;
+    }
+
+    public function getSeparator(): string
+    {
+        return $this->separator;
     }
 }
