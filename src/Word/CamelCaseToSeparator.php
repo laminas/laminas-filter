@@ -4,43 +4,63 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
-use Closure;
-use Laminas\Stdlib\StringUtils;
+use Laminas\Filter\FilterInterface;
+use Laminas\Filter\ScalarOrArrayFilterCallback;
 
-use function preg_replace;
+use function implode;
+use function preg_split;
+use function str_replace;
+
+use const PREG_SPLIT_DELIM_CAPTURE;
+use const PREG_SPLIT_NO_EMPTY;
 
 /**
  * @psalm-type Options = array{
  *     separator?: string,
- *     ...
  * }
  * @template TOptions of Options
- * @extends AbstractSeparator<TOptions>
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-class CamelCaseToSeparator extends AbstractSeparator
+final class CamelCaseToSeparator implements FilterInterface
 {
-    public function filter(mixed $value): mixed
+    private readonly string $separator;
+
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
-            $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
-        );
+        $this->separator = $options['separator'] ?? ' ';
     }
 
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue(string|array $value): string|array
+    public function __invoke(mixed $value): mixed
     {
-        if (StringUtils::hasPcreUnicodeSupport()) {
-            $pattern     = ['#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'];
-            $replacement = [$this->separator . '\1', $this->separator . '\1'];
-        } else {
-            $pattern     = ['#(?<=(?:[A-Z]))([A-Z]+)([A-Z][a-z])#', '#(?<=(?:[a-z0-9]))([A-Z])#'];
-            $replacement = ['\1' . $this->separator . '\2', $this->separator . '\1'];
-        }
+        return $this->filter($value);
+    }
 
-        return preg_replace($pattern, $replacement, $value);
+    public function filter(mixed $value): mixed
+    {
+        $pattern = <<<REGEXP
+        /
+        (
+            (?:\p{Lu}\p{Ll}+) # Upper followed by lower
+            |
+            (?:\p{Lu}+(?!\p{Ll})) # Upper not followed by lower
+            |
+            (?:\p{N}+) # Runs of numbers
+        )
+        /ux
+        REGEXP;
+
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            fn (string $input): string => implode(
+                $this->separator,
+                preg_split(
+                    $pattern,
+                    str_replace($this->separator, '', $input),
+                    -1,
+                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
+                ),
+            )
+        );
     }
 }

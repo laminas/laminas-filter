@@ -5,41 +5,28 @@ declare(strict_types=1);
 namespace LaminasTest\Filter\Word;
 
 use Laminas\Filter\Word\CamelCaseToUnderscore as CamelCaseToUnderscoreFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CamelCaseToUnderscoreTest extends TestCase
 {
-    public function testFilterSeparatesCamelCasedWordsWithUnderscores(): void
+    /** @return list<array{string, string}> */
+    public static function camelCasedWordsProvider(): array
     {
-        $string   = 'CamelCasedWords';
-        $filter   = new CamelCaseToUnderscoreFilter();
-        $filtered = $filter($string);
-
-        self::assertNotEquals($string, $filtered);
-        self::assertSame('Camel_Cased_Words', $filtered);
+        return [
+            ['CamelCasedWords', 'Camel_Cased_Words'],
+            ['PaTitle', 'Pa_Title'],
+            ['Pa2Title', 'Pa_2_Title'],
+            ['Pa2aTitle', 'Pa_2_a_Title'],
+        ];
     }
 
-    public function testFilterSeparatingNumbersToUnderscore(): void
+    #[DataProvider('camelCasedWordsProvider')]
+    public function testFilterSeparatesCamelCasedWordsWithUnderscores(string $input, string $expected): void
     {
-        $string   = 'PaTitle';
         $filter   = new CamelCaseToUnderscoreFilter();
-        $filtered = $filter($string);
+        $filtered = $filter($input);
 
-        self::assertNotEquals($string, $filtered);
-        self::assertSame('Pa_Title', $filtered);
-
-        $string   = 'Pa2Title';
-        $filter   = new CamelCaseToUnderscoreFilter();
-        $filtered = $filter($string);
-
-        self::assertNotEquals($string, $filtered);
-        self::assertSame('Pa2_Title', $filtered);
-
-        $string   = 'Pa2aTitle';
-        $filter   = new CamelCaseToUnderscoreFilter();
-        $filtered = $filter($string);
-
-        self::assertNotEquals($string, $filtered);
-        self::assertSame('Pa2a_Title', $filtered);
+        self::assertSame($expected, $filtered);
     }
 }
