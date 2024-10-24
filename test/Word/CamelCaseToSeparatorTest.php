@@ -21,14 +21,29 @@ class CamelCaseToSeparatorTest extends TestCase
         self::assertSame('Camel Cased Words', $filtered);
     }
 
-    public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(): void
+    public static function camelCasedWordsProvider(): array
     {
-        $string   = 'CamelCasedWords';
-        $filter   = new CamelCaseToSeparatorFilter(['separator' => ':-#']);
-        $filtered = $filter($string);
+        return [
+            ['CamelCasedWords', 'Camel-Cased-Words'],
+            ['123LeadingNumber', '123-Leading-Number'],
+            ['Number12InTheMiddle', 'Number-12-In-The-Middle'],
+            ['ANumberAtTheEnd42', 'A-Number-At-The-End-42'],
+            ['SomePDFFile', 'Some-PDF-File'],
+            ['Has-ExistingSeparator', 'Has-Existing-Separator'],
+            ['What_Happens_Here', 'What_Happens_Here'],
+            ['leadingLowerCase', 'leading-Lower-Case'],
+            ['¿MïsÜsingUnicödeSŷmbols?', '¿Mïs-Üsing-Unicöde-Sŷmbols?'],
+        ];
+    }
 
-        self::assertNotEquals($string, $filtered);
-        self::assertSame('Camel:-#Cased:-#Words', $filtered);
+    #[DataProvider('camelCasedWordsProvider')]
+    public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(string $input, string $expected): void
+    {
+        $filter   = new CamelCaseToSeparatorFilter(['separator' => '-']);
+        $filtered = $filter($input);
+
+        self::assertNotEquals($input, $filtered);
+        self::assertSame($expected, $filtered);
     }
 
     public function testFilterSeperatesMultipleUppercasedLettersAndUnderscores(): void
