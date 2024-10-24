@@ -6,13 +6,7 @@ namespace Laminas\Filter\Word;
 
 use Laminas\Filter\FilterInterface;
 
-/**
- * @psalm-type Options = array{
- *     separator?: string,
- * }
- * @template TOptions of Options
- * @implements FilterInterface<string|array<array-key, string|mixed>>
- */
+/** @implements FilterInterface<string|array<array-key, string|mixed>> */
 final class CamelCaseToUnderscore implements FilterInterface
 {
     public function filter(mixed $value): mixed

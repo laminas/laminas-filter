@@ -961,8 +961,14 @@
   </file>
   <file src="test/Word/CamelCaseToSeparatorTest.php">
     <PossiblyUnusedMethod>
+      <code><![CDATA[camelCasedWordsProvider]]></code>
       <code><![CDATA[returnNonStringScalarValues]]></code>
       <code><![CDATA[returnUnfilteredDataProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Word/CamelCaseToUnderscoreTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[camelCasedWordsProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/Word/DashToSeparatorTest.php">

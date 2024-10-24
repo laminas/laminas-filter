@@ -7,7 +7,12 @@ namespace Laminas\Filter\Word;
 use Laminas\Filter\FilterInterface;
 use Laminas\Filter\ScalarOrArrayFilterCallback;
 
-use function preg_replace;
+use function implode;
+use function preg_split;
+use function str_replace;
+
+use const PREG_SPLIT_DELIM_CAPTURE;
+use const PREG_SPLIT_NO_EMPTY;
 
 /**
  * @psalm-type Options = array{
@@ -33,12 +38,28 @@ final class CamelCaseToSeparator implements FilterInterface
 
     public function filter(mixed $value): mixed
     {
+        $pattern = <<<REGEXP
+        /
+        (
+            (?:\p{Lu}\p{Ll}+) # Upper followed by lower
+            |
+            (?:\p{Lu}+(?!\p{Ll})) # Upper not followed by lower
+            |
+            (?:\p{N}+) # Runs of numbers
+        )
+        /ux
+        REGEXP;
+
         return ScalarOrArrayFilterCallback::applyRecursively(
             $value,
-            fn (string $input): string => preg_replace(
-                ['#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'],
-                [$this->separator . '\1', $this->separator . '\1'],
-                $input
+            fn (string $input): string => implode(
+                $this->separator,
+                preg_split(
+                    $pattern,
+                    str_replace($this->separator, '', $input),
+                    -1,
+                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
+                ),
             )
         );
     }

@@ -21,14 +21,43 @@ class CamelCaseToSeparatorTest extends TestCase
         self::assertSame('Camel Cased Words', $filtered);
     }
 
-    public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(): void
+    /** @return list<array{string, string}> */
+    public static function camelCasedWordsProvider(): array
     {
-        $string   = 'CamelCasedWords';
-        $filter   = new CamelCaseToSeparatorFilter(['separator' => ':-#']);
-        $filtered = $filter($string);
+        return [
+            ['SomeCamelCase', 'Some-Camel-Case'],
+            ['Some12With5Numbers', 'Some-12-With-5-Numbers'],
+            ['SomePDFInText', 'Some-PDF-In-Text'],
+            ['123LeadingNumbers', '123-Leading-Numbers'],
+            ['ItIs2016', 'It-Is-2016'],
+            ['What-If', 'What-If'],
+            ['ASingleLetterB', 'A-Single-Letter-B'],
+            ['some_snake_case', 'some_snake_case'],
+            ['Title_Snake_Case', 'Title-_-Snake-_-Case'],
+            ['lower-with-dash', 'lowerwithdash'],
+            ['FFS!', 'FFS-!'],
+            ['WithA😃', 'With-A-😃'],
+            ['PDF123', 'PDF-123'],
+            ['EmojiInThe🤞Middle', 'Emoji-In-The-🤞-Middle'],
+            ['12345', '12345'],
+            ['123A', '123-A'],
+            ['A123', 'A-123'],
+            ['War&Peace', 'War-&-Peace'],
+            ['lowerThenTitleCase', 'lower-Then-Title-Case'],
+            ['123lower', '123-lower'],
+            ['lower123', 'lower-123'],
+            ['ItIsÜber', 'It-Is-Über'],
+            ['SømeThing', 'Søme-Thing'],
+        ];
+    }
 
-        self::assertNotEquals($string, $filtered);
-        self::assertSame('Camel:-#Cased:-#Words', $filtered);
+    #[DataProvider('camelCasedWordsProvider')]
+    public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(string $input, string $expected): void
+    {
+        $filter   = new CamelCaseToSeparatorFilter(['separator' => '-']);
+        $filtered = $filter($input);
+
+        self::assertSame($expected, $filtered);
     }
 
     public function testFilterSeperatesMultipleUppercasedLettersAndUnderscores(): void
