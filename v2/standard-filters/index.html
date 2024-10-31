@@ -342,6 +342,10 @@
                     </li>
                 
                     <li class="toc__entry">
+                        <a href="#tostring" class="toc__link nav-link">ToString</a>
+                    </li>
+                
+                    <li class="toc__entry">
                         <a href="#numberformat" class="toc__link nav-link">NumberFormat</a>
                     </li>
                 
@@ -1577,6 +1581,17 @@ the <code>Null</code> filter. If you were using the <code>Null</code> filter dir
 instead.</p>
 <p>Users pulling their <code>Null</code> filter instance from the filter plugin manager receive a <code>ToNull</code>
 instance instead starting in 2.4.0.</p>
+<h2 id="tostring">ToString</h2>
+<p>The <code>ToString</code> filter casts <code>Stringable</code> objects or scalar values to <code>string</code>.
+This filter has no runtime options.</p>
+<h3 id="basic-usage_11">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\ToString();
+
+$filter-&gt;filter(123); // "123"</code></pre>
+<p>Non-scalar input will be returned un-filtered:</p>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\ToString();
+
+$filter-&gt;filter(['muppet' =&gt; 'Kermit']); // ['muppet' =&gt; 'Kermit']</code></pre>
 <h2 id="numberformat">NumberFormat</h2>
 <p>The <code>NumberFormat</code> filter can be used to return locale-specific number and percentage strings. It
 extends the <code>NumberParse</code> filter, which acts as wrapper for the <code>NumberFormatter</code> class within the
@@ -1607,7 +1622,7 @@ package in your application to use it.</p>
   <code>getType()</code> and <code>setType()</code>.</p>
 </li>
 </ul>
-<h3 id="basic-usage_11">Basic Usage</h3>
+<h3 id="basic-usage_12">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new \Laminas\I18n\Filter\NumberFormat('de_DE');
 echo $filter-&gt;filter(1234567.8912346);
 // Returns '1.234.567,891'
@@ -1649,7 +1664,7 @@ package in your application to use it.</p>
   <code>getType()</code> and <code>setType()</code>.</p>
 </li>
 </ul>
-<h3 id="basic-usage_12">Basic Usage</h3>
+<h3 id="basic-usage_13">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new \Laminas\I18n\Filter\NumberParse('de_DE');
 echo $filter-&gt;filter('1.234.567,891');
 // Returns 1234567.8912346
@@ -1671,7 +1686,7 @@ elements.</p>
 <li><code>replacement</code>: The string which to use as a replacement for the matches; this
   can optionally contain placeholders for matched groups in the search pattern.</li>
 </ul>
-<h3 id="basic-usage_13">Basic Usage</h3>
+<h3 id="basic-usage_14">Basic Usage</h3>
 <p>To use this filter properly, you must give both options listed above.</p>
 <p>The <code>pattern</code> option has to be given to set the pattern to search for. It can be
 a string for a single pattern, or an array of strings for multiple patterns.</p>
@@ -1707,7 +1722,7 @@ absolute pathnames.</p>
 <li><code>exists</code>: This option defaults to <code>TRUE</code>, which validates that the given path
   really exists.</li>
 </ul>
-<h3 id="basic-usage_14">Basic Usage</h3>
+<h3 id="basic-usage_15">Basic Usage</h3>
 <p>For any given link or pathname, its absolute path will be returned. References
 to <code>/./</code>, <code>/../</code> and extra <code>/</code> sequences in the input path will be stripped. The
 resulting path will not have any symbolic links, <code>/./</code>, or <code>/../</code> sequences.</p>
@@ -1739,7 +1754,7 @@ $filtered = $filter-&gt;filter($path);
 <ul>
 <li><code>prefix</code>: The string prefix to add to values.</li>
 </ul>
-<h3 id="basic-usage_15">Basic Usage</h3>
+<h3 id="basic-usage_16">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringPrefix([
     'prefix' =&gt; 'PHP-',
 ]);
@@ -1756,7 +1771,7 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 <ul>
 <li><code>suffix</code>: The string suffix to append to values.</li>
 </ul>
-<h3 id="basic-usage_16">Basic Usage</h3>
+<h3 id="basic-usage_17">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringSuffix([
     'suffix' =&gt; '-PHP',
 ]);
@@ -1770,7 +1785,7 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 <ul>
 <li><code>encoding</code>: This option can be used to set an encoding to use.</li>
 </ul>
-<h3 id="basic-usage_17">Basic Usage</h3>
+<h3 id="basic-usage_18">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToLower();
 
 print $filter-&gt;filter('SAMPLE');
@@ -1804,7 +1819,7 @@ $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 <ul>
 <li><code>encoding</code>: This option can be used to set the encoding to use.</li>
 </ul>
-<h3 id="basic-usage_18">Basic Usage</h3>
+<h3 id="basic-usage_19">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToUpper();
 
 print $filter-&gt;filter('Sample');
@@ -1827,7 +1842,7 @@ from the beginning and end.</p>
   string. If this is not set or is null, the default behavior will be invoked,
   which is to remove only whitespace from the beginning and end of the string.</li>
 </ul>
-<h3 id="basic-usage_19">Basic Usage</h3>
+<h3 id="basic-usage_20">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringTrim();
 
 print $filter-&gt;filter(' This is (my) content: ');</code></pre>
@@ -1848,7 +1863,7 @@ current character list.</p>
 that string.</p>
 <h3 id="supported-options_25">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\StripNewlines</code>:</p>
-<h3 id="basic-usage_20">Basic Usage</h3>
+<h3 id="basic-usage_21">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripNewlines();
 
 print $filter-&gt;filter(' This is (my)``\n\r``content: ');</code></pre>
@@ -1873,7 +1888,7 @@ either Tidy or HtmlPurifier.</p>
 <li><code>allowTags</code>: This option sets the tags which are accepted. All other tags will
   be stripped from; the given content.</li>
 </ul>
-<h3 id="basic-usage_21">Basic Usage</h3>
+<h3 id="basic-usage_22">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags();
 
 print $filter-&gt;filter('&lt;B&gt;My content&lt;/B&gt;');</code></pre>
@@ -1946,7 +1961,7 @@ This filter is deprecated since version 2.36.0 and will be removed in version 3.
   parsing scheme-less URIs.</li>
 <li><code>enforcedScheme</code>: Set a URI scheme to enforce on schemeless URIs.</li>
 </ul>
-<h3 id="basic-usage_22">Basic Usage</h3>
+<h3 id="basic-usage_23">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\UriNormalize(array(
     'enforcedScheme' =&gt; 'https'
 ));
