@@ -16,11 +16,6 @@
       <code><![CDATA[isOptions]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src/Dir.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractFilter]]></code>
-    </DeprecatedClass>
-  </file>
   <file src="src/File/Rename.php">
     <DeprecatedClass>
       <code><![CDATA[Filter\AbstractFilter]]></code>

@@ -152,6 +152,11 @@ The following methods have been removed:
 
 The constructor now only accepts an associative array of [documented options](../standard-filters.md#denylist).
 
+#### `Dir`
+
+This filter will not cast a given integer or float value to a string anymore.
+The return value changed from `.` to return the given integer or float value.
+
 #### `HtmlEntities`
 
 The following methods have been removed:
