@@ -113,7 +113,12 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -236,7 +241,12 @@
                     Components
 
                     
-                        <small class="header__subtitle">laminas-filter</small>
+                        <small class="header__subtitle">
+                            
+                            
+    laminas-filter
+
+                        </small>
                     
                 </h1>
             </div>
@@ -411,7 +421,13 @@
             <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
 
             
-                <li class="breadcrumb-item"><a href="../..">laminas-filter</a></li>
+                <li class="breadcrumb-item">
+                    <a href="../..">
+                        
+    laminas-filter
+
+                    </a>
+                </li>
 
                 
                     
@@ -452,9 +468,8 @@
 Available since version 2.12.0</p>
 </div>
 <p>Previously known as <code>Whitelist</code>.
-This filter will return <code>null</code> if the value being filtered is not present the
-filter's allowed list of values. If the value is present, it will return that
-value.</p>
+This filter will return <code>null</code> if the value being filtered is not present the filter's allowed list of values.
+If the value is present, it will return that value.</p>
 <p>For the opposite functionality see the <a href="#denylist">DenyList</a> filter.</p>
 <h3 id="supported-options">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\AllowList</code>:</p>
@@ -469,26 +484,23 @@ value.</p>
 echo $allowList-&gt;filter('allowed-2');   // =&gt; 'allowed-2'
 echo $allowList-&gt;filter('not-allowed'); // =&gt; null</code></pre>
 <h2 id="alnum">Alnum</h2>
-<p>The <code>Alnum</code> filter can be used to return only alphabetic characters and digits
-in the unicode "letter" and "number" categories, respectively. All other
-characters are suppressed.</p>
-<p>This filter is part of the laminas-i18n package; you will need to include that
-package in your application to use it.</p>
+<p>The <code>Alnum</code> filter can be used to return only alphabetic characters and digits in the unicode "letter" and "number" categories, respectively.
+All other characters are suppressed.</p>
+<p>This filter is part of the laminas-i18n package; you will need to include that package in your application to use it.</p>
 <h3 id="supported-options_1">Supported Options</h3>
 <p>The following options are supported for <code>Alnum</code>:</p>
 <pre class="highlight"><code class="language-php">Alnum([ boolean $allowWhiteSpace [, string $locale ]])</code></pre>
 <ul>
 <li>
 <p><code>$allowWhiteSpace</code>: If set to true, then whitespace characters are allowed.
-  Otherwise they are suppressed. Default is <code>false</code> (whitespace is not allowed).
-  Methods for getting/setting the <code>allowWhiteSpace</code> option are also available:
-  <code>getAllowWhiteSpace()</code> and <code>setAllowWhiteSpace()</code>.</p>
+Otherwise they are suppressed.
+Default is <code>false</code> (whitespace is not allowed).
+Methods for getting/setting the <code>allowWhiteSpace</code> option are also available: <code>getAllowWhiteSpace()</code> and <code>setAllowWhiteSpace()</code>.</p>
 </li>
 <li>
-<p><code>$locale</code>: The locale string used in identifying the characters to filter
-  (locale name, e.g. <code>en_US</code>). If unset, it will use the default locale
-  (<code>Locale::getDefault()</code>). Methods for getting/setting the locale are also
-  available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
+<p><code>$locale</code>: The locale string used in identifying the characters to filter (locale name, e.g.<code>en_US</code>).
+If unset, it will use the default locale (<code>Locale::getDefault()</code>).
+Methods for getting/setting the locale are also available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
 </li>
 </ul>
 <h3 id="basic-usage_1">Basic Usage</h3>
@@ -504,30 +516,27 @@ echo $filter-&gt;filter('This is (my) content: 123');
 <blockquote>
 <h3 id="supported-languages">Supported Languages</h3>
 <p><code>Alnum</code> works on almost all languages, except: Chinese, Japanese and Korean.
-Within these languages, the english alphabet is used instead of the characters
-from these languages. The language itself is detected using the <code>Locale</code>
-class.</p>
+Within these languages, the english alphabet is used instead of the characters from these languages.
+The language itself is detected using the <code>Locale</code> class.</p>
 </blockquote>
 <h2 id="alpha">Alpha</h2>
-<p>The <code>Alpha</code> filter can be used to return only alphabetic characters in the unicode "letter"
-category. All other characters are suppressed.</p>
-<p>This filter is part of the laminas-i18n package; you will need to include that
-package in your application to use it.</p>
+<p>The <code>Alpha</code> filter can be used to return only alphabetic characters in the unicode "letter" category.
+All other characters are suppressed.</p>
+<p>This filter is part of the laminas-i18n package; you will need to include that package in your application to use it.</p>
 <h3 id="supported-options_2">Supported Options</h3>
 <p>The following options are supported for <code>Alpha</code>:</p>
 <pre class="highlight"><code class="language-php">Alpha([ boolean $allowWhiteSpace [, string $locale ]])</code></pre>
 <ul>
 <li>
 <p><code>$allowWhiteSpace</code>: If set to true then whitespace characters are allowed.
-  Otherwise they are suppressed. Default is <code>false</code> (whitespace is not allowed).
-  Methods for getting/setting the allowWhiteSpace option are also available:
-  <code>getAllowWhiteSpace()</code> and <code>setAllowWhiteSpace()</code>.</p>
+Otherwise they are suppressed.
+Default is <code>false</code> (whitespace is not allowed).
+Methods for getting/setting the allowWhiteSpace option are also available: <code>getAllowWhiteSpace()</code> and <code>setAllowWhiteSpace()</code>.</p>
 </li>
 <li>
-<p><code>$locale</code>: The locale string used in identifying the characters to filter
-  (locale name, e.g. <code>en_US</code>). If unset, it will use the default locale
-  (<code>Locale::getDefault()</code>).  Methods for getting/setting the locale are also
-  available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
+<p><code>$locale</code>: The locale string used in identifying the characters to filter (locale name, e.g. <code>en_US</code>).
+If unset, it will use the default locale (<code>Locale::getDefault()</code>).
+Methods for getting/setting the locale are also available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
 </li>
 </ul>
 <h3 id="basic-usage_2">Basic Usage</h3>
@@ -543,13 +552,11 @@ echo $filter-&gt;filter('This is (my) content: 123');
 <blockquote>
 <h3 id="supported-languages_1">Supported Languages</h3>
 <p><code>Alpha</code> works on almost all languages, except: Chinese, Japanese and Korean.
-Within these languages, the english alphabet is used instead of the characters
-from these languages. The language itself is detected using the <code>Locale</code>
-class.</p>
+Within these languages, the english alphabet is used instead of the characters from these languages.
+The language itself is detected using the <code>Locale</code> class.</p>
 </blockquote>
 <h2 id="basename">BaseName</h2>
-<p><code>Laminas\Filter\BaseName</code> allows you to filter a string which contains the path to
-a file, and it will return the base name of this file.</p>
+<p><code>Laminas\Filter\BaseName</code> allows you to filter a string which contains the path to a file, and it will return the base name of this file.</p>
 <h3 id="supported-options_3">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\BaseName</code>.</p>
 <h3 id="basic-usage_3">Basic Usage</h3>
@@ -569,29 +576,27 @@ This filter is deprecated since version 2.12.0.
 Use the <a href="#denylist">DenyList filter</a> instead.</p>
 </div>
 <h2 id="boolean">Boolean</h2>
-<p>This filter changes a given input to be a <code>BOOLEAN</code> value. This is often useful when working with
-databases or when processing form values.</p>
+<p>This filter changes a given input to be a <code>BOOLEAN</code> value.
+This is often useful when working with databases or when processing form values.</p>
 <h3 id="supported-options_4">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\Boolean</code>:</p>
 <ul>
-<li><code>casting</code>: When this option is set to <code>TRUE</code>, then any given input will be
-  cast to boolean.  This option defaults to <code>TRUE</code>.</li>
+<li><code>casting</code>: When this option is set to <code>TRUE</code>, then any given input will be cast to boolean.
+This option defaults to <code>TRUE</code>.</li>
 <li><code>translations</code>: This option sets the translations which will be used to detect localized input.</li>
-<li><code>type</code>: The <code>type</code> option sets the boolean type which should be used. Read
-  the following for details.</li>
+<li><code>type</code>: The <code>type</code> option sets the boolean type which should be used.
+Read the following for details.</li>
 </ul>
 <h3 id="default-behavior">Default Behavior</h3>
-<p>By default, this filter works by casting the input to a <code>BOOLEAN</code> value; in other words, it operates
-in a similar fashion to calling <code>(boolean) $value</code>.</p>
+<p>By default, this filter works by casting the input to a <code>BOOLEAN</code> value; in other words, it operates in a similar fashion to calling <code>(boolean) $value</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Boolean();
 $value  = '';
 $result = $filter-&gt;filter($value);
 // returns false</code></pre>
-<p>This means that without providing any configuration, <code>Laminas\Filter\Boolean</code> accepts all input types
-and returns a <code>BOOLEAN</code> just as you would get by type casting to <code>BOOLEAN</code>.</p>
+<p>This means that without providing any configuration, <code>Laminas\Filter\Boolean</code> accepts all input types and returns a <code>BOOLEAN</code> just as you would get by type casting to <code>BOOLEAN</code>.</p>
 <h3 id="changing-the-default-behavior">Changing the Default Behavior</h3>
-<p>Sometimes, casting with <code>(boolean)</code> will not suffice. <code>Laminas\Filter\Boolean</code>
-allows you to configure specific types to convert, as well as which to omit.</p>
+<p>Sometimes, casting with <code>(boolean)</code> will not suffice.
+<code>Laminas\Filter\Boolean</code> allows you to configure specific types to convert, as well as which to omit.</p>
 <p>The following types can be handled (in this precedence order):</p>
 <ul>
 <li><code>localized</code>: Converts any string as mapped (case sensitive) in the <code>translations</code> option.</li>
@@ -606,13 +611,15 @@ allows you to configure specific types to convert, as well as which to omit.</p>
 </ul>
 <p>There are 2 additional special types:</p>
 <ul>
-<li><code>all</code>: Converts all above types to <code>BOOLEAN</code>. The same as setting all above types.</li>
-<li><code>php</code>: Converts all above types to <code>BOOLEAN</code> except <code>localized</code> or <code>false</code>. The same as setting all above types except <code>localized</code> or <code>false</code>.</li>
+<li><code>all</code>: Converts all above types to <code>BOOLEAN</code>.
+The same as setting all above types.</li>
+<li><code>php</code>: Converts all above types to <code>BOOLEAN</code> except <code>localized</code> or <code>false</code>.
+The same as setting all above types except <code>localized</code> or <code>false</code>.</li>
 </ul>
 <p>All other given values will return <code>TRUE</code> by default.</p>
-<p>There are several ways to select which of the above types are filtered. You can
-give one or multiple types and add them, you can give an array, you can use
-constants, or you can give a textual string.  See the following examples:</p>
+<p>There are several ways to select which of the above types are filtered.
+You can give one or multiple types and add them, you can give an array, you can use constants, or you can give a textual string.
+See the following examples:</p>
 <pre class="highlight"><code class="language-php">// converts 0 to false
 $filter = new Laminas\Filter\Boolean(Laminas\Filter\Boolean::TYPE_INTEGER);
 
@@ -642,8 +649,8 @@ To set types after instantiation, use the <code>setType()</code> method.</p>
 <p>As mentioned previously, <code>Laminas\Filter\Boolean</code> can also recognise localized "yes" and "no" strings.
 This means that you can ask your customer in a form for "yes" or "no" within his native language and
 <code>Laminas\Filter\Boolean</code> will convert the response to the appropriate boolean value.</p>
-<p>To set the translation and the corresponding value, you can use the <code>translations</code> option or the
-method <code>setTranslations</code>. The translations must be set for any values you wish to map to boolean values.</p>
+<p>To set the translation and the corresponding value, you can use the <code>translations</code> option or the method <code>setTranslations</code>.
+The translations must be set for any values you wish to map to boolean values.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Boolean([
     'type'         =&gt; Laminas\Filter\Boolean::TYPE_LOCALIZED,
     'translations' =&gt; [
@@ -660,12 +667,10 @@ $result = $filter-&gt;filter('nein');
 // returns true
 $result = $filter-&gt;filter('yes');</code></pre>
 <h3 id="disable-casting">Disable Casting</h3>
-<p>Sometimes it is necessary to recognise only <code>TRUE</code> or <code>FALSE</code> and return all
-other values without changes. <code>Laminas\Filter\Boolean</code> allows you to do this by
-setting the <code>casting</code> option to <code>FALSE</code>.</p>
-<p>In this case <code>Laminas\Filter\Boolean</code> will work as described in the following
-table, which shows which values return <code>TRUE</code> or <code>FALSE</code>. All other given values
-are returned without change when <code>casting</code> is set to <code>FALSE</code></p>
+<p>Sometimes it is necessary to recognise only <code>TRUE</code> or <code>FALSE</code> and return all other values without changes.
+<code>Laminas\Filter\Boolean</code> allows you to do this by setting the <code>casting</code> option to <code>FALSE</code>.</p>
+<p>In this case <code>Laminas\Filter\Boolean</code> will work as described in the following table, which shows which values return <code>TRUE</code> or <code>FALSE</code>.
+All other given values are returned without change when <code>casting</code> is set to <code>FALSE</code></p>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -741,9 +746,8 @@ $result = $filter-&gt;filter(1);
 // returns the value
 $result = $filter-&gt;filter(2);</code></pre>
 <h2 id="callback">Callback</h2>
-<p>This filter allows you to use own methods in conjunction with <code>Laminas\Filter</code>. You
-don't have to create a new filter when you already have a method which does the
-job.</p>
+<p>This filter allows you to use own methods in conjunction with <code>Laminas\Filter</code>.
+You don't have to create a new filter when you already have a method which does the job.</p>
 <h3 id="supported-options_5">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\Callback</code>:</p>
 <ul>
@@ -752,15 +756,14 @@ job.</p>
   callback is processed.</li>
 </ul>
 <h3 id="basic-usage_4">Basic Usage</h3>
-<p>The usage of this filter is quite simple. In this example, we want to create a
-filter which reverses a string:</p>
+<p>The usage of this filter is quite simple.
+In this example, we want to create a filter which reverses a string:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Callback('strrev');
 
 print $filter-&gt;filter('Hello!');
 // returns "!olleH"</code></pre>
-<p>As you can see it's really simple to use a callback to define custom filters. It
-is also possible to use a method, which is defined within a class, by giving an
-array as the callback:</p>
+<p>As you can see it's really simple to use a callback to define custom filters.
+It is also possible to use a method, which is defined within a class, by giving an array as the callback:</p>
 <pre class="highlight"><code class="language-php">class MyClass
 {
     public static function reverse($param);
@@ -778,17 +781,14 @@ print $filter-&gt;filter('Hello!');</code></pre>
 // The filter definition
 $filter = new Laminas\Filter\Callback(MyClass::class);
 print $filter-&gt;filter('Hello!');</code></pre>
-<p>To get the actual set callback use <code>getCallback()</code> and to set another callback
-use <code>setCallback()</code>.</p>
+<p>To get the actual set callback use <code>getCallback()</code> and to set another callback use <code>setCallback()</code>.</p>
 <blockquote>
 <h3 id="possible-exceptions">Possible Exceptions</h3>
-<p>You should note that defining a callback method which can not be called will
-raise an exception.</p>
+<p>You should note that defining a callback method which can not be called will raise an exception.</p>
 </blockquote>
 <h3 id="default-parameters-within-a-callback">Default Parameters within a Callback</h3>
-<p>It is also possible to define default parameters, which are given to the called
-method as an array when the filter is executed. This array will be concatenated
-with the value which will be filtered.</p>
+<p>It is also possible to define default parameters, which are given to the called method as an array when the filter is executed.
+This array will be concatenated with the value which will be filtered.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Callback([
     'callback' =&gt; 'MyMethod',
     'options'  =&gt; ['key' =&gt; 'param1', 'key2' =&gt; 'param2']
@@ -801,9 +801,10 @@ $filter-&gt;filter(['value' =&gt; 'Hello']);</code></pre>
 <h3 id="supported-options_6">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\Compress</code> and <code>Laminas\Filter\Decompress</code>:</p>
 <ul>
-<li><code>adapter</code>: The compression adapter which should be used. It defaults to <code>Gz</code>.</li>
+<li><code>adapter</code>: The compression adapter which should be used.
+It defaults to <code>Gz</code>.</li>
 <li><code>options</code>: Additional options which are given to the adapter at initiation.
-  Each adapter supports its own options.</li>
+Each adapter supports its own options.</li>
 </ul>
 <h3 id="supported-compression-adapters">Supported Compression Adapters</h3>
 <p>The following compression formats are supported by their own adapter:</p>
@@ -815,25 +816,20 @@ $filter-&gt;filter(['value' =&gt; 'Hello']);</code></pre>
 <li><strong>Lzf</strong></li>
 <li><strong>Rar</strong></li>
 </ul>
-<p>Each compression format has different capabilities as described below. All
-compression filters may be used in approximately the same ways, and differ
-primarily in the options available and the type of compression they offer (both
-algorithmically as well as string vs. file vs. directory)</p>
+<p>Each compression format has different capabilities as described below.
+All compression filters may be used in approximately the same ways, and differ primarily in the options available and the type of compression they offer (both algorithmically as well as string vs. file vs. directory)</p>
 <h3 id="generic-handling">Generic Handling</h3>
-<p>To create a compression filter, you need to select the compression format you want to use. The
-following example takes the <strong>Bz2</strong> adapter. Details for all other adapters are described after
-this section.</p>
+<p>To create a compression filter, you need to select the compression format you want to use.
+The following example takes the <strong>Bz2</strong> adapter.
+Details for all other adapters are described after this section.</p>
 <p>The two filters are basically identical, in that they utilize the same backends.
 <code>Laminas\Filter\Compress</code> should be used when you wish to compress items, and <code>Laminas\Filter\Decompress</code>
 should be used when you wish to decompress items.</p>
-<p>For instance, if we want to compress a string, we have to initialize <code>Laminas\Filter\Compress</code> and
-indicate the desired adapter:</p>
+<p>For instance, if we want to compress a string, we have to initialize <code>Laminas\Filter\Compress</code> and indicate the desired adapter:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Compress('Bz2');</code></pre>
 <p>To use a different adapter, you simply specify it to the constructor.</p>
-<p>You may also provide an array of options or a <code>Traversable</code> object. If you do,
-provide minimally the key "adapter", and then either the key "options" or
-"adapterOptions", both of which should be an array of options to provide to the
-adapter on instantiation.</p>
+<p>You may also provide an array of options or a <code>Traversable</code> object.
+If you do, provide minimally the key "adapter", and then either the key "options" or "adapterOptions", both of which should be an array of options to provide to the adapter on instantiation.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Compress([
     'adapter' =&gt; 'Bz2',
     'options' =&gt; [
@@ -847,25 +843,24 @@ adapter on instantiation.</p>
 <p>Decompression is essentially the same usage; we simply use the <code>Decompress</code>
 filter instead:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Decompress('Bz2');</code></pre>
-<p>To get the compressed string, we have to give the original string. The filtered value is the
-compressed version of the original string.</p>
+<p>To get the compressed string, we have to give the original string.
+The filtered value is the compressed version of the original string.</p>
 <pre class="highlight"><code class="language-php">$filter     = new Laminas\Filter\Compress('Bz2');
 $compressed = $filter-&gt;filter('Uncompressed string');
 // Returns the compressed string</code></pre>
-<p>Decompression works in reverse, accepting the compressed string, and returning
-the original:</p>
+<p>Decompression works in reverse, accepting the compressed string, and returning the original:</p>
 <pre class="highlight"><code class="language-php">$filter     = new Laminas\Filter\Decompress('Bz2');
 $compressed = $filter-&gt;filter('Compressed string');
 // Returns the original, uncompressed string</code></pre>
 <blockquote>
 <h3 id="note-on-string-compression">Note on String Compression</h3>
-<p>Not all adapters support string compression. Compression formats like <strong>Rar</strong>
-can only handle files and directories. For details, consult the section for
-the adapter you wish to use.</p>
+<p>Not all adapters support string compression.
+Compression formats like <strong>Rar</strong> can only handle files and directories.
+For details, consult the section for the adapter you wish to use.</p>
 </blockquote>
 <h3 id="creating-an-archive">Creating an Archive</h3>
-<p>Creating an archive file works almost the same as compressing a string. However, in this case we
-need an additional parameter which holds the name of the archive we want to create.</p>
+<p>Creating an archive file works almost the same as compressing a string.
+However, in this case we need an additional parameter which holds the name of the archive we want to create.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Compress([
     'adapter' =&gt; 'Bz2',
     'options' =&gt; [
@@ -874,8 +869,7 @@ need an additional parameter which holds the name of the archive we want to crea
 ]);
 $compressed = $filter-&gt;filter('Uncompressed string');
 // Returns true on success, and creates the archive file</code></pre>
-<p>In the above example, the uncompressed string is compressed, and is then written
-into the given archive file.</p>
+<p>In the above example, the uncompressed string is compressed, and is then written into the given archive file.</p>
 <blockquote>
 <h3 id="existing-archives-will-be-overwritten">Existing Archives will be overwritten</h3>
 <p>The content of any existing file will be overwritten when the given filename
@@ -890,9 +884,8 @@ of the archive already exists.</p>
 ]);
 $compressed = $filter-&gt;filter('C:\temp\compressme.txt');
 // Returns true on success and creates the archive file</code></pre>
-<p>You may also specify a directory instead of a filename. In this case the whole
-directory with all its files and subdirectories will be compressed into the
-archive:</p>
+<p>You may also specify a directory instead of a filename.
+In this case the whole directory with all its files and subdirectories will be compressed into the archive:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Compress([
     'adapter' =&gt; 'Bz2',
     'options' =&gt; [
@@ -909,13 +902,13 @@ to massive problems on your server when there is not enough space or your
 script takes too much time.</p>
 </blockquote>
 <h3 id="decompressing-an-archive">Decompressing an Archive</h3>
-<p>Decompressing an archive file works almost like compressing it. You must specify either the
-<code>archive</code> parameter, or give the filename of the archive when you decompress the file.</p>
+<p>Decompressing an archive file works almost like compressing it.
+You must specify either the <code>archive</code> parameter, or give the filename of the archive when you decompress the file.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Decompress('Bz2');
 $decompressed = $filter-&gt;filter('filename.bz2');
 // Returns true on success and decompresses the archive file</code></pre>
-<p>Some adapters support decompressing the archive into another subdirectory. In
-this case you can set the <code>target</code> parameter:</p>
+<p>Some adapters support decompressing the archive into another subdirectory.
+In this case you can set the <code>target</code> parameter:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Decompress([
     'adapter' =&gt; 'Zip',
     'options' =&gt; [
@@ -941,12 +934,12 @@ directory must exist.</p>
 <p>To customize compression, this adapter supports the following options:</p>
 <ul>
 <li><code>archive</code>: This parameter sets the archive file which should be used or created.</li>
-<li><code>blocksize</code>: This parameter sets the blocksize to use. It can be from '0' to
-  '9'. The default value is '4'.</li>
+<li><code>blocksize</code>: This parameter sets the blocksize to use.
+It can be from '0' to '9'.
+The default value is '4'.</li>
 </ul>
-<p>All options can be set at instantiation or by using a related method; for example, the related
-methods for 'blocksize' are <code>getBlocksize()</code> and <code>setBlocksize()</code>. You can also use the
-<code>setOptions()</code> method, which accepts an array of all options.</p>
+<p>All options can be set at instantiation or by using a related method; for example, the related methods for 'blocksize' are <code>getBlocksize()</code> and <code>setBlocksize()</code>.
+You can also use the <code>setOptions()</code> method, which accepts an array of all options.</p>
 <h3 id="gz-adapter">Gz Adapter</h3>
 <p>The Gz Adapter can compress and decompress:</p>
 <ul>
@@ -958,14 +951,16 @@ methods for 'blocksize' are <code>getBlocksize()</code> and <code>setBlocksize()
 <p>To customize the compression this adapter supports the following options:</p>
 <ul>
 <li><code>archive</code>: This parameter sets the archive file which should be used or created.</li>
-<li><code>level</code>: This compression level to use. It can be from '0' to '9'. The default
-  value is '9'.</li>
-<li><code>mode</code>: There are two supported modes. <code>compress</code> and <code>deflate</code>. The default
-  value is <code>compress</code>.</li>
+<li><code>level</code>: This compression level to use.
+It can be from '0' to '9'.
+The default value is '9'.</li>
+<li><code>mode</code>: There are two supported modes.
+<code>compress</code> and <code>deflate</code>.
+The default value is <code>compress</code>.</li>
 </ul>
-<p>All options can be set at initiation or by using a related method. For example, the related methods
-for <code>level</code> are <code>getLevel()</code> and <code>setLevel()</code>. You can also use the <code>setOptions()</code> method which
-accepts an array of all options.</p>
+<p>All options can be set at initiation or by using a related method.
+For example, the related methods for <code>level</code> are <code>getLevel()</code> and <code>setLevel()</code>.
+You can also use the <code>setOptions()</code> method which accepts an array of all options.</p>
 <h3 id="lzf-adapter">Lzf Adapter</h3>
 <div class="admonition caution">
 <p class="admonition-title">Deprecated</p>
@@ -1002,10 +997,8 @@ Consider an alternative compression format such as <code>gz</code> or <code>bz2<
 <p>This adapter makes use of PHP's Rar extension.</p>
 <blockquote>
 <h3 id="rar-compression-not-supported">Rar Compression not supported</h3>
-<p>Due to restrictions with the Rar compression format, there is no compression
-available for free. When you want to compress files into a new Rar archive,
-you must provide a callback to the adapter that can invoke a Rar compression
-program.</p>
+<p>Due to restrictions with the Rar compression format, there is no compression available for free.
+When you want to compress files into a new Rar archive, you must provide a callback to the adapter that can invoke a Rar compression program.</p>
 </blockquote>
 <p>To customize compression, this adapter supports the following options:</p>
 <ul>
@@ -1014,9 +1007,9 @@ program.</p>
 <li><code>password</code>: The password which has to be used for decompression.</li>
 <li><code>target</code>: The target where the decompressed files will be written to.</li>
 </ul>
-<p>All options can be set at instantiation or by using a related method. For example, the related
-methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>. You can also use the <code>setOptions()</code> method
-which accepts an array of all options.</p>
+<p>All options can be set at instantiation or by using a related method.
+For example, the related methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>.
+You can also use the <code>setOptions()</code> method which accepts an array of all options.</p>
 <h3 id="tar-adapter">Tar Adapter</h3>
 <p>The Tar Adapter can compress and decompress:</p>
 <ul>
@@ -1031,20 +1024,18 @@ which accepts an array of all options.</p>
 <p>To customize compression, this adapter supports the following options:</p>
 <ul>
 <li><code>archive</code>: This parameter sets the archive file which should be used or created.</li>
-<li><code>mode</code>: A mode to use for compression. Supported are either <code>NULL</code>, which
-  means no compression at all; <code>Gz</code>, which makes use of PHP's Zlib extension;
-  and <code>Bz2</code>, which makes use of PHP's Bz2 extension. The default value is <code>NULL</code>.</li>
+<li><code>mode</code>: A mode to use for compression.
+Supported are either <code>NULL</code>, which means no compression at all; <code>Gz</code>, which makes use of PHP's Zlib extension; and <code>Bz2</code>, which makes use of PHP's Bz2 extension.
+The default value is <code>NULL</code>.</li>
 <li><code>target</code>: The target where the decompressed files will be written to.</li>
 </ul>
-<p>All options can be set at instantiation or by using a related method. For
-example, the related methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>.
-You can also use the <code>setOptions()</code> method which accepts an array of all
-options.</p>
+<p>All options can be set at instantiation or by using a related method.
+For example, the related methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>.
+You can also use the <code>setOptions()</code> method which accepts an array of all options.</p>
 <blockquote>
 <h3 id="directory-usage">Directory Usage</h3>
-<p>When compressing directories with Tar, the complete file path is used. This
-means that created Tar files will not only have the subdirectory, but the
-complete path for the compressed file.</p>
+<p>When compressing directories with Tar, the complete file path is used.
+This means that created Tar files will not only have the subdirectory, but the complete path for the compressed file.</p>
 </blockquote>
 <h3 id="zip-adapter">Zip Adapter</h3>
 <p>The Zip Adapter can compress and decompress:</p>
@@ -1064,9 +1055,9 @@ always be written to a file.</p>
 <li><code>archive</code>: This parameter sets the archive file which should be used or created.</li>
 <li><code>target</code>: The target where the decompressed files will be written to.</li>
 </ul>
-<p>All options can be set at instantiation or by using a related method. For example, the related
-methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>. You can also use the <code>setOptions()</code> method
-which accepts an array of all options.</p>
+<p>All options can be set at instantiation or by using a related method.
+For example, the related methods for <code>target</code> are <code>getTarget()</code> and <code>setTarget()</code>.
+You can also use the <code>setOptions()</code> method which accepts an array of all options.</p>
 <h2 id="denylist">DenyList</h2>
 <div class="admonition tip">
 <p class="admonition-title">New Feature</p>
@@ -1074,8 +1065,8 @@ which accepts an array of all options.</p>
 Available since version 2.12.0</p>
 </div>
 <p>Previously known as <code>Blacklist</code>.
-This filter will return <code>null</code> if the value being filtered is present in the filter's list of
-values. If the value is not present, it will return that value.</p>
+This filter will return <code>null</code> if the value being filtered is present in the filter's list of values.
+If the value is not present, it will return that value.</p>
 <p>For the opposite functionality, see the <a href="#allowlist"><code>AllowList</code> filter</a>.</p>
 <h3 id="supported-options_7">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\DenyList</code>:</p>
@@ -1123,61 +1114,52 @@ These filters were deprecated in version 2.24.0 and will be removed in version 3
 You are encouraged to implement your own encryption or decryption filters by implementing <code>FilterInterface</code> around a dedicated crypto library.
 See <a href="../writing-filters/">Writing Filters</a></p>
 </div>
-<p>These filters allow encrypting and decrypting any given string; they do so via
-the use of adapters. Included adapters support <code>Laminas\Crypt\BlockCipher</code> and
-PHP's OpenSSL extension.</p>
+<p>These filters allow encrypting and decrypting any given string; they do so via the use of adapters.
+Included adapters support <code>Laminas\Crypt\BlockCipher</code> and PHP's OpenSSL extension.</p>
 <h3 id="supported-options_10">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\Encrypt</code> and
 <code>Laminas\Filter\Decrypt</code>, and segregated by adapter.</p>
 <h4 id="general-options">General Options</h4>
 <ul>
 <li><code>adapter</code>: This sets the encryption adapter to use.</li>
-<li><code>compression</code>: If the encrypted value should be compressed. Default is no
-  compression.</li>
+<li><code>compression</code>: If the encrypted value should be compressed.
+Default is no compression.</li>
 </ul>
 <h4 id="blockcipher-options">BlockCipher Options</h4>
 <ul>
-<li><code>algorithm</code>: The algorithm to use with <code>Laminas\Crypt\Symmetric\Mcrypt</code> (use the
-  the <code>getSupportedAlgorithms()</code> method of that class to determine what is
-  supported). If not set, it defaults to <code>aes</code>, the Advanced Encryption Standard
-  (see the <a href="https://docs.laminas.dev/laminas-crypt/block-cipher/">laminas-crypt BlockCipher documentation</a>
-  for details).</li>
-<li><code>key</code>: The encryption key with which the input will be encrypted. You need the
-  same key for decryption.</li>
-<li><code>mode</code>: The encryption mode to use. It should be a
-  <a href="http://php.net/manual/en/mcrypt.constants.php">valid PHP mcrypt modes</a>.
-  If not set, it defaults to 'cbc'.</li>
-<li><code>mode_directory</code>: The directory where the mode can be found. If not set, it
-  defaults to the path set within the <code>Mcrypt</code> extension.</li>
-<li><code>vector</code>: The initialization vector which shall be used. If not set, it will
-  be a random vector.</li>
+<li><code>algorithm</code>: The algorithm to use with <code>Laminas\Crypt\Symmetric\Mcrypt</code> (use the the <code>getSupportedAlgorithms()</code> method of that class to determine what is supported).
+If not set, it defaults to <code>aes</code>, the Advanced Encryption Standard (see the <a href="https://docs.laminas.dev/laminas-crypt/block-cipher/">laminas-crypt BlockCipher documentation</a> for details).</li>
+<li><code>key</code>: The encryption key with which the input will be encrypted.
+You need the same key for decryption.</li>
+<li><code>mode</code>: The encryption mode to use.
+It should be a <a href="http://php.net/manual/en/mcrypt.constants.php">valid PHP mcrypt modes</a>.
+If not set, it defaults to 'cbc'.</li>
+<li><code>mode_directory</code>: The directory where the mode can be found.
+If not set, it defaults to the path set within the <code>Mcrypt</code> extension.</li>
+<li><code>vector</code>: The initialization vector which shall be used.
+If not set, it will be a random vector.</li>
 </ul>
 <h4 id="openssl-options">OpenSSL Options</h4>
 <ul>
-<li><code>envelope</code>: The encrypted envelope key from the user who encrypted the
-  content. You can either provide the path and filename of the key file, or just
-  the content of the key file itself. When the <code>package</code> option has been set,
-  then you can omit this parameter.</li>
+<li><code>envelope</code>: The encrypted envelope key from the user who encrypted the content.
+You can either provide the path and filename of the key file, or just the content of the key file itself.
+When the <code>package</code> option has been set, then you can omit this parameter.</li>
 <li><code>package</code>: If the envelope key should be packed with the encrypted value.
-  Default is <code>FALSE</code>.</li>
-<li><code>private</code>: The private key to use for encrypting the content. You can either
-  provide the path and filename of the key file, or just the content of the key
-  file itself.</li>
-<li><code>public</code>: The public key of the user for whom you want to provide the
-  encrypted content. You can either provide the path and filename of the key
-  file, or just the content of the key file itself.</li>
+Default is <code>FALSE</code>.</li>
+<li><code>private</code>: The private key to use for encrypting the content.
+You can either provide the path and filename of the key file, or just the content of the key file itself.</li>
+<li><code>public</code>: The public key of the user for whom you want to provide the encrypted content.
+You can either provide the path and filename of the key file, or just the content of the key file itself.</li>
 </ul>
 <h3 id="adapter-usage">Adapter Usage</h3>
-<p>As these two encryption methodologies work completely different, the usage
-of the adapters differ. You have to select the adapter you want to use when
-initiating the filter.</p>
+<p>As these two encryption methodologies work completely different, the usage of the adapters differ.
+You have to select the adapter you want to use when initiating the filter.</p>
 <pre class="highlight"><code class="language-php">// Use the BlockCipher adapter
 $filter1 = new Laminas\Filter\Encrypt(['adapter' =&gt; 'BlockCipher']);
 
 // Use the OpenSSL adapter
 $filter2 = new Laminas\Filter\Encrypt(['adapter' =&gt; 'openssl']);</code></pre>
-<p>To set another adapter, you can use <code>setAdapter()</code>; <code>getAdapter()</code> will return
-the currently composed adapter.</p>
+<p>To set another adapter, you can use <code>setAdapter()</code>; <code>getAdapter()</code> will return the currently composed adapter.</p>
 <pre class="highlight"><code class="language-php">// Use the OpenSSL adapter
 $filter = new Laminas\Filter\Encrypt();
 $filter-&gt;setAdapter('openssl');</code></pre>
@@ -1187,9 +1169,7 @@ $filter-&gt;setAdapter('openssl');</code></pre>
 <code>BlockCipher</code> adapter will be used per default.</p>
 </blockquote>
 <h3 id="encryption-with-blockcipher">Encryption with BlockCipher</h3>
-<p>To encrypt a string using the <code>BlockCipher</code> adapter, you have to specify the
-encryption key by either calling the <code>setKey()</code> method or passing it to the
-constructor.</p>
+<p>To encrypt a string using the <code>BlockCipher</code> adapter, you have to specify the encryption key by either calling the <code>setKey()</code> method or passing it to the constructor.</p>
 <pre class="highlight"><code class="language-php">// Use the default AES encryption algorithm
 $filter = new Laminas\Filter\Encrypt(['adapter' =&gt; 'BlockCipher']);
 $filter-&gt;setKey('encryption key');
@@ -1222,14 +1202,11 @@ var_dump($filter-&gt;getEncryption());
 //}</code></pre>
 <blockquote>
 <h3 id="default-blockcipher-algorithm">Default BlockCipher Algorithm</h3>
-<p>The <code>BlockCipher</code> adapter uses the <a href="http://php.net/mcrypt">Mcrypt</a> extension
-by default. That means you will need to install the Mcrypt module in your PHP
-environment.</p>
+<p>The <code>BlockCipher</code> adapter uses the <a href="http://php.net/mcrypt">Mcrypt</a> extension by default.
+That means you will need to install the Mcrypt module in your PHP environment.</p>
 </blockquote>
-<p>If you don't specify an initialization Vector (salt or iv), the <code>BlockCipher</code> will
-generate a random value during each encryption. If you try to execute the
-following code, the output will always be different (note that even if the output
-is always different, you can still decrypt it using the same key).</p>
+<p>If you don't specify an initialization Vector (salt or iv), the <code>BlockCipher</code> will generate a random value during each encryption.
+If you try to execute the following code, the output will always be different (note that even if the output is always different, you can still decrypt it using the same key).</p>
 <pre class="highlight"><code class="language-php">$key  = 'encryption key';
 $text = 'message to encrypt';
 
@@ -1239,9 +1216,8 @@ $filter-&gt;setKey('encryption key');
 for ($i = 0; $i &lt; 10; $i++) {
    printf("%d) %s\n", $i, $filter-&gt;filter($text));
 }</code></pre>
-<p>If you want to obtain the same output, you need to specify a fixed vector, using
-the <code>setVector()</code> method. This following example always produces the same
-encryption output:</p>
+<p>If you want to obtain the same output, you need to specify a fixed vector, using the <code>setVector()</code> method.
+This following example always produces the same encryption output:</p>
 <pre class="highlight"><code class="language-php">// use the default adapter that is BlockCipher
 $filter = new \Laminas\Filter\Encrypt();
 $filter-&gt;setKey('encryption key');
@@ -1253,15 +1229,13 @@ printf("%s\n", $filter-&gt;filter('message'));
 04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=</code></pre>
 <blockquote>
 <h3 id="use-different-vectors">Use different Vectors</h3>
-<p>For security purposes, it's always better to use a different vector on each
-encryption. We suggest using <code>setVector()</code> only in exceptional circumstances.</p>
+<p>For security purposes, it's always better to use a different vector on each encryption.
+We suggest using <code>setVector()</code> only in exceptional circumstances.</p>
 </blockquote>
 <h3 id="decryption-with-blockcipher">Decryption with BlockCipher</h3>
-<p>For decrypting content previously encrypted with <code>BlockCipher</code>, you need to use
-the same options used for encryption.</p>
+<p>For decrypting content previously encrypted with <code>BlockCipher</code>, you need to use the same options used for encryption.</p>
 <p>If you used only the encryption key, you can just use it to decrypt the content.
-As soon as you have provided all options, decryption works the same as
-encryption.</p>
+As soon as you have provided all options, decryption works the same as encryption.</p>
 <pre class="highlight"><code class="language-php">$content = '04636a6cb8276fad0787a2e187803b6557f77825d5ca6ed4392be702b9754bb3MTIzNDU2Nzg5MDEyMzQ1NgZ+zPwTGpV6gQqPKECinig=';
 // use the default adapter (BlockCipher):
 $filter = new Laminas\Filter\Decrypt();
@@ -1270,15 +1244,11 @@ printf("Decrypt: %s\n", $filter-&gt;filter($content));
 
 // output:
 // Decrypt: message</code></pre>
-<p>Note that even if we did not specify the same vector, the <code>BlockCipher</code> is able
-to decrypt the message because the vector is stored in the encryption string
-itself (note that the vector can be stored in plaintext; it is not a secret, and
-only used to improve the randomness of the encryption algorithm).</p>
+<p>Note that even if we did not specify the same vector, the <code>BlockCipher</code> is able to decrypt the message because the vector is stored in the encryption string itself (note that the vector can be stored in plaintext; it is not a secret, and only used to improve the randomness of the encryption algorithm).</p>
 <h3 id="encryption-with-openssl">Encryption with OpenSSL</h3>
-<p>If you have installed the <code>OpenSSL</code> extension, you can also use the <code>OpenSSL</code>
-adapter. You can get or set the public key either during instantiation, or later
-via the <code>setPublicKey()</code> method. The private key can also be set after-the-fact
-via the <code>setPrivateKey()</code> method.</p>
+<p>If you have installed the <code>OpenSSL</code> extension, you can also use the <code>OpenSSL</code> adapter.
+You can get or set the public key either during instantiation, or later via the <code>setPublicKey()</code> method.
+The private key can also be set after-the-fact via the <code>setPrivateKey()</code> method.</p>
 <pre class="highlight"><code class="language-php">// Use openssl and provide a private key
 $filter = new Laminas\Filter\Encrypt([
    'adapter' =&gt; 'openssl',
@@ -1291,8 +1261,7 @@ $filter-&gt;setPublicKey('/public/key/path/public.pem');</code></pre>
 <h3 id="valid-keys-are-required">Valid Keys are required</h3>
 <p>The <code>OpenSSL</code> adapter will not work with invalid or missing keys.</p>
 </blockquote>
-<p>When you want to decode content encoded with a passphrase, you will not only
-need the public key, but also the passphrase:</p>
+<p>When you want to decode content encoded with a passphrase, you will not only need the public key, but also the passphrase:</p>
 <pre class="highlight"><code class="language-php">// Use openssl and provide a private key
 $filter = new Laminas\Filter\Encrypt([
    'adapter' =&gt; 'openssl',
@@ -1300,11 +1269,9 @@ $filter = new Laminas\Filter\Encrypt([
    'private' =&gt; '/path/to/mykey/private.pem',
    'public' =&gt; '/public/key/path/public.pem'
 ]);</code></pre>
-<p>When providing the encrypted content to the recipient, you will also need to
-ensure they have the passphrase and the envelope keys so they may decrypt the
-message. You can get the envelope keys using the <code>getEnvelopeKey()</code> method:</p>
-<p>A complete example for encrypting content with <code>OpenSSL</code> looks like the
-following:</p>
+<p>When providing the encrypted content to the recipient, you will also need to ensure they have the passphrase and the envelope keys so they may decrypt the message.
+You can get the envelope keys using the <code>getEnvelopeKey()</code> method:</p>
+<p>A complete example for encrypting content with <code>OpenSSL</code> looks like the following:</p>
 <pre class="highlight"><code class="language-php">// Use openssl and provide a private key
 $filter = new Laminas\Filter\Encrypt([
    'adapter' =&gt; 'openssl',
@@ -1319,12 +1286,10 @@ print $encrypted;
 
 // For decryption look at the Decrypt filter</code></pre>
 <h3 id="simplified-usage-with-openssl">Simplified usage with OpenSSL</h3>
-<p>As noted in the previous section, you need to provide the envelope key to the
-recipient in order for them to decrypt the message. This adds complexity,
-particularly if you are encrypting multiple values.</p>
-<p>To simplify usage, you can set the <code>package</code> option to <code>TRUE</code> when creating your
-<code>Encrypt</code> instance (the default value is <code>FALSE</code>). This will return a value
-containing both the encrypted message <em>and</em> the envelope key:</p>
+<p>As noted in the previous section, you need to provide the envelope key to the recipient in order for them to decrypt the message.
+This adds complexity, particularly if you are encrypting multiple values.</p>
+<p>To simplify usage, you can set the <code>package</code> option to <code>TRUE</code> when creating your <code>Encrypt</code> instance (the default value is <code>FALSE</code>).
+This will return a value containing both the encrypted message <em>and</em> the envelope key:</p>
 <pre class="highlight"><code class="language-php">// Use openssl and provide a private key
 $filter = new Laminas\Filter\Encrypt([
    'adapter' =&gt; 'openssl',
@@ -1337,13 +1302,12 @@ $encrypted = $filter-&gt;filter('text_to_be_encoded');
 print $encrypted;
 
 // For decryption look at the Decrypt filter</code></pre>
-<p>Now the returned value contains the encrypted value and the envelope. You don't
-need to fetch the envelope key separately.</p>
-<p>However, there is one negative aspect to this: the encrypted value can now only
-be decrypted by using <code>Laminas\Filter\Encrypt</code>.</p>
+<p>Now the returned value contains the encrypted value and the envelope.
+You don't need to fetch the envelope key separately.</p>
+<p>However, there is one negative aspect to this: the encrypted value can now only be decrypted by using <code>Laminas\Filter\Encrypt</code>.</p>
 <h3 id="compressing-content">Compressing Content</h3>
-<p>Based on the original value, the encrypted value can be a very large string. To
-reduce the value, <code>Laminas\Filter\Encrypt</code> allows the usage of compression.</p>
+<p>Based on the original value, the encrypted value can be a very large string.
+To reduce the value, <code>Laminas\Filter\Encrypt</code> allows the usage of compression.</p>
 <p>The <code>compression</code> option can either be set to the name of a compression adapter,
 or to an array which sets all required options for the compression adapter.</p>
 <pre class="highlight"><code class="language-php">// Use basic compression adapter
@@ -1370,9 +1334,7 @@ need to set the same compression settings for decryption as for encryption;
 otherwise decryption will fail.</p>
 </blockquote>
 <h3 id="decryption-with-openssl">Decryption with OpenSSL</h3>
-<p>Decryption with <code>OpenSSL</code> follows the same patterns as for encryption, with one
-difference: you must have all data, including the envelope key, from the person
-who encrypted the content.</p>
+<p>Decryption with <code>OpenSSL</code> follows the same patterns as for encryption, with one difference: you must have all data, including the envelope key, from the person who encrypted the content.</p>
 <p>As an example:</p>
 <pre class="highlight"><code class="language-php">// Use openssl and provide a private key
 $filter = new Laminas\Filter\Decrypt([
@@ -1393,8 +1355,7 @@ $filter = new Laminas\Filter\Decrypt([
 // Add the envelope key; you can also add this during instantiation.
 $filter-&gt;setEnvelopeKey('/key/from/encoder/envelope_key.pem');</code></pre>
 <p>Finally, you can decode the content.</p>
-<p>Our complete example for decrypting the previously encrypted content looks like
-this:</p>
+<p>Our complete example for decrypting the previously encrypted content looks like this:</p>
 <pre class="highlight"><code class="language-php">// Use openssl and provide a private key
 $filter = new Laminas\Filter\Decrypt([
    'adapter' =&gt; 'openssl',
@@ -1409,7 +1370,8 @@ $decrypted = $filter-&gt;filter('encoded_text_normally_unreadable');
 print $decrypted;</code></pre>
 <h2 id="forceurischeme">ForceUriScheme</h2>
 <p>This filter will ensure that, given a string that looks like a URI with a host-name and scheme, the scheme will be forced to <code>https</code> by default, or any other arbitrary scheme provided as an option.</p>
-<p>Any value that cannot be identified as an URI to begin with, will be returned un-filtered. Furthermore, URI parsing is rudimentary so for reliable results, you should ensure that the input is a valid URI prior to filtering.</p>
+<p>Any value that cannot be identified as an URI to begin with, will be returned un-filtered.
+Furthermore, URI parsing is rudimentary so for reliable results, you should ensure that the input is a valid URI prior to filtering.</p>
 <h3 id="supported-options_11">Supported Options</h3>
 <p>The only supported option is <code>scheme</code> which defaults to <code>https</code></p>
 <h3 id="example-usage">Example Usage</h3>
@@ -1423,68 +1385,62 @@ entity equivalents when possible.</p>
 <h3 id="supported-options_12">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\HtmlEntities</code>:</p>
 <ul>
-<li><code>quotestyle</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter
-  <code>quote_style</code>.  This allows you to define what will be done with 'single' and
-  "double" quotes. The following constants are accepted: <code>ENT_COMPAT</code>,
-  <code>ENT_QUOTES</code>, and <code>ENT_NOQUOTES</code>, with the default being <code>ENT_COMPAT</code>.</li>
-<li><code>charset</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter
-  <code>charset</code>. This defines the character set to be used in filtering. Unlike the
-  PHP native function, the default is 'UTF-8'. See the <a href="http://php.net/htmlentities">PHP htmlentities
-  manual</a> for a list of supported character sets.</li>
+<li><code>quotestyle</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter <code>quote_style</code>.
+This allows you to define what will be done with 'single' and "double" quotes.
+The following constants are accepted: <code>ENT_COMPAT</code>, <code>ENT_QUOTES</code>, and <code>ENT_NOQUOTES</code>, with the default being <code>ENT_COMPAT</code>.</li>
+<li><code>charset</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter <code>charset</code>.
+This defines the character set to be used in filtering.
+Unlike the PHP native function, the default is 'UTF-8'.
+See the <a href="http://php.net/htmlentities">PHP htmlentities manual</a> for a list of supported character sets.</li>
 </ul>
-<p>This option can also be set via the <code>$options</code> parameter as a Traversable
-  object or array. The option key will be accepted as either <code>charset</code> or
-  <code>encoding</code>.
-- <code>doublequote</code>: Equivalent to the PHP <code>htmlentities()</code> native function
-  parameter <code>double_encode</code>. If set to <code>false</code>, existing HTML entities will not
-  be encoded. The default is to convert everything (<code>true</code>).</p>
-<p>This option must be set via the <code>$options</code> parameter or the
-  <code>setDoubleEncode()</code> method.</p>
+<p>This option can also be set via the <code>$options</code> parameter as a Traversable object or array.
+The option key will be accepted as either <code>charset</code> or <code>encoding</code>.
+<code>doublequote</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter <code>double_encode</code>.
+If set to <code>false</code>, existing HTML entities will not be encoded.
+The default is to convert everything (<code>true</code>).</p>
+<p>This option must be set via the <code>$options</code> parameter or the <code>setDoubleEncode()</code> method.</p>
 <h3 id="basic-usage_8">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities();
 
 print $filter-&gt;filter('&lt;');</code></pre>
 <h3 id="quote-style">Quote Style</h3>
-<p><code>Laminas\Filter\HtmlEntities</code> allows changing the quote style used. This can be useful when you want to
-leave double, single, or both types of quotes un-filtered.</p>
+<p><code>Laminas\Filter\HtmlEntities</code> allows changing the quote style used.
+This can be useful when you want to leave double, single, or both types of quotes un-filtered.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities(['quotestyle' =&gt; ENT_QUOTES]);
 
 $input = "A 'single' and " . '"double"';
 print $filter-&gt;filter($input);</code></pre>
-<p>The above example returns <code>A &amp;#039;single&amp;#039; and &amp;quot;double&amp;quot;</code>. Notice
-that 'single' as well as "double" quotes are filtered.</p>
+<p>The above example returns <code>A &amp;#039;single&amp;#039; and &amp;quot;double&amp;quot;</code>.
+Notice that 'single' as well as "double" quotes are filtered.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities(['quotestyle' =&gt; ENT_COMPAT]);
 
 $input = "A 'single' and " . '"double"';
 print $filter-&gt;filter($input);</code></pre>
-<p>The above example returns <code>A 'single' and &amp;quot;double&amp;quot;</code>. Notice that
-"double" quotes are filtered while 'single' quotes are not altered.</p>
+<p>The above example returns <code>A 'single' and &amp;quot;double&amp;quot;</code>.
+Notice that "double" quotes are filtered while 'single' quotes are not altered.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities(['quotestyle' =&gt; ENT_NOQUOTES]);
 
 $input = "A 'single' and " . '"double"';
 print $filter-&gt;filter($input);</code></pre>
-<p>The above example returns <code>A 'single' and "double"</code>. Notice that neither
-"double" or 'single' quotes are altered.</p>
+<p>The above example returns <code>A 'single' and "double"</code>.
+Notice that neither "double" or 'single' quotes are altered.</p>
 <h3 id="helper-methods">Helper Methods</h3>
-<p>To change or retrieve the <code>quotestyle</code> after instantiation, the two methods
-<code>setQuoteStyle()</code> and <code>getQuoteStyle()</code> may be used respectively.
-<code>setQuoteStyle()</code> accepts one parameter, <code>$quoteStyle</code>, which accepts one of the
-constants <code>ENT_COMPAT</code>, <code>ENT_QUOTES</code>, or <code>ENT_NOQUOTES</code>.</p>
+<p>To change or retrieve the <code>quotestyle</code> after instantiation, the two methods <code>setQuoteStyle()</code> and <code>getQuoteStyle()</code> may be used respectively.
+<code>setQuoteStyle()</code> accepts one parameter, <code>$quoteStyle</code>, which accepts one of the constants <code>ENT_COMPAT</code>, <code>ENT_QUOTES</code>, or <code>ENT_NOQUOTES</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities();
 
 $filter-&gt;setQuoteStyle(ENT_QUOTES);
 print $filter-&gt;getQuoteStyle(ENT_QUOTES);</code></pre>
 <p>To change or retrieve the <code>charset</code> after instantiation, the two methods
-<code>setCharSet()</code> and <code>getCharSet()</code> may be used respectively. <code>setCharSet()</code>
-accepts one parameter, <code>$charSet</code>. See the <a href="http://php.net/htmlentities">PHP htmlentities manual
-page</a> for a list of supported character sets.</p>
+<code>setCharSet()</code> and <code>getCharSet()</code> may be used respectively.
+<code>setCharSet()</code> accepts one parameter, <code>$charSet</code>.
+See the <a href="http://php.net/htmlentities">PHP htmlentities manual page</a> for a list of supported character sets.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities();
 
 $filter-&gt;setQuoteStyle(ENT_QUOTES);
 print $filter-&gt;getQuoteStyle(ENT_QUOTES);</code></pre>
-<p>To change or retrieve the <code>doublequote</code> option after instantiation, the two methods
-<code>setDoubleQuote()</code> and <code>getDoubleQuote()</code> may be used respectively. <code>setDoubleQuote()</code> accepts one
-boolean parameter, <code>$doubleQuote</code>.</p>
+<p>To change or retrieve the <code>doublequote</code> option after instantiation, the two methods <code>setDoubleQuote()</code> and <code>getDoubleQuote()</code> may be used respectively.
+<code>setDoubleQuote()</code> accepts one boolean parameter, <code>$doubleQuote</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities();
 
 $filter-&gt;setQuoteStyle(ENT_QUOTES);
@@ -1511,16 +1467,14 @@ print $filter-&gt;filter('-4.4');</code></pre>
 print $filter-&gt;filter('-4 is less than 0');</code></pre>
 <p>This will return '-4'.</p>
 <h3 id="migration-from-20-23-to-24">Migration from 2.0-2.3 to 2.4+</h3>
-<p>Version 2.4 adds support for PHP 7. In PHP 7, <code>int</code> is a reserved keyword, which required renaming
-the <code>Int</code> filter. If you were using the <code>Int</code> filter directly previously, you will now receive an
-<code>E_USER_DEPRECATED</code> notice on instantiation. Please update your code to refer to the <code>ToInt</code> class
-instead.</p>
-<p>Users pulling their <code>Int</code> filter instance from the filter plugin manager receive a <code>ToInt</code> instance
-instead starting in 2.4.0.</p>
+<p>Version 2.4 adds support for PHP 7.
+In PHP 7, <code>int</code> is a reserved keyword, which required renaming the <code>Int</code> filter.
+If you were using the <code>Int</code> filter directly previously, you will now receive an <code>E_USER_DEPRECATED</code> notice on instantiation.
+Please update your code to refer to the <code>ToInt</code> class instead.</p>
+<p>Users pulling their <code>Int</code> filter instance from the filter plugin manager receive a <code>ToInt</code> instance instead starting in 2.4.0.</p>
 <h2 id="tonull">ToNull</h2>
-<p>This filter will change the given input to be <code>NULL</code> if it meets specific
-criteria. This is often necessary when you work with databases and want to have
-a <code>NULL</code> value instead of a boolean or any other type.</p>
+<p>This filter will change the given input to be <code>NULL</code> if it meets specific criteria.
+This is often necessary when you work with databases and want to have a <code>NULL</code> value instead of a boolean or any other type.</p>
 <h3 id="supported-options_15">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\ToNull</code>:</p>
 <ul>
@@ -1533,13 +1487,11 @@ a <code>NULL</code> value instead of a boolean or any other type.</p>
 $value  = '';
 $result = $filter-&gt;filter($value);
 // returns null instead of the empty string</code></pre>
-<p>This means that without providing any configuration, <code>Laminas\Filter\ToNull</code> will
-accept all input types and return <code>NULL</code> in the same cases as <code>empty()</code>.</p>
+<p>This means that without providing any configuration, <code>Laminas\Filter\ToNull</code> will accept all input types and return <code>NULL</code> in the same cases as <code>empty()</code>.</p>
 <p>Any other value will be returned as is, without any changes.</p>
 <h3 id="changing-the-default-behavior_1">Changing the Default Behavior</h3>
-<p>Sometimes it's not enough to filter based on <code>empty()</code>. Therefore
-<code>Laminas\Filter\ToNull</code> allows you to configure which types will be converted, and
-which not.</p>
+<p>Sometimes it's not enough to filter based on <code>empty()</code>.
+Therefore <code>Laminas\Filter\ToNull</code> allows you to configure which types will be converted, and which not.</p>
 <p>The following types can be handled:</p>
 <ul>
 <li><code>boolean</code>: Converts a boolean <code>FALSE</code> value to <code>NULL</code>.</li>
@@ -1548,11 +1500,12 @@ which not.</p>
 <li><code>float</code>: Converts an float <code>0.0</code> value to <code>NULL</code>.</li>
 <li><code>string</code>: Converts an empty string <code>''</code> to <code>NULL</code>.</li>
 <li><code>zero</code>: Converts a string containing the single character zero (<code>'0'</code>) to <code>NULL</code>.</li>
-<li><code>all</code>: Converts all above types to <code>NULL</code>. (This is the default behavior.)</li>
+<li><code>all</code>: Converts all above types to <code>NULL</code>.
+(This is the default behavior.)</li>
 </ul>
-<p>There are several ways to select which of the above types are filtered. You can
-give one or multiple types and add them, you can give an array, you can use
-constants, or you can give a textual string.  See the following examples:</p>
+<p>There are several ways to select which of the above types are filtered.
+You can give one or multiple types and add them, you can give an array, you can use constants, or you can give a textual string.
+See the following examples:</p>
 <pre class="highlight"><code class="language-php">// converts false to null
 $filter = new Laminas\Filter\ToNull(Laminas\Filter\ToNull::BOOLEAN);
 
@@ -1572,13 +1525,13 @@ $filter = new Laminas\Filter\ToNull([
     'boolean',
     'integer',
 ]);</code></pre>
-<p>You can also give a <code>Traversable</code> or an array to set the wished types. To set
-types afterwards use <code>setType()</code>.</p>
+<p>You can also give a <code>Traversable</code> or an array to set the wished types.
+To set types afterwards use <code>setType()</code>.</p>
 <h3 id="migration-from-20-23-to-24_1">Migration from 2.0-2.3 to 2.4+</h3>
-<p>Version 2.4 adds support for PHP 7. In PHP 7, <code>null</code> is a reserved keyword, which required renaming
-the <code>Null</code> filter. If you were using the <code>Null</code> filter directly previously, you will now receive an
-<code>E_USER_DEPRECATED</code> notice on instantiation. Please update your code to refer to the <code>ToNull</code> class
-instead.</p>
+<p>Version 2.4 adds support for PHP 7.
+In PHP 7, <code>null</code> is a reserved keyword, which required renaming the <code>Null</code> filter.
+If you were using the <code>Null</code> filter directly previously, you will now receive an <code>E_USER_DEPRECATED</code> notice on instantiation.
+Please update your code to refer to the <code>ToNull</code> class instead.</p>
 <p>Users pulling their <code>Null</code> filter instance from the filter plugin manager receive a <code>ToNull</code>
 instance instead starting in 2.4.0.</p>
 <h2 id="tostring">ToString</h2>
@@ -1593,33 +1546,27 @@ $filter-&gt;filter(123); // "123"</code></pre>
 
 $filter-&gt;filter(['muppet' =&gt; 'Kermit']); // ['muppet' =&gt; 'Kermit']</code></pre>
 <h2 id="numberformat">NumberFormat</h2>
-<p>The <code>NumberFormat</code> filter can be used to return locale-specific number and percentage strings. It
-extends the <code>NumberParse</code> filter, which acts as wrapper for the <code>NumberFormatter</code> class within the
-Internationalization extension (Intl).</p>
-<p>This filter is part of the laminas-i18n package; you will need to include that
-package in your application to use it.</p>
+<p>The <code>NumberFormat</code> filter can be used to return locale-specific number and percentage strings.
+It extends the <code>NumberParse</code> filter, which acts as wrapper for the <code>NumberFormatter</code> class within the Internationalization extension (Intl).</p>
+<p>This filter is part of the laminas-i18n package; you will need to include that package in your application to use it.</p>
 <h3 id="supported-options_16">Supported Options</h3>
 <p>The following options are supported for <code>NumberFormat</code>:</p>
 <pre class="highlight"><code class="language-php">NumberFormat([ string $locale [, int $style [, int $type ]]])</code></pre>
 <ul>
 <li>
-<p><code>$locale</code>: (Optional) Locale in which the number would be formatted (locale
-  name, e.g. <code>en_US</code>). If unset, it will use the default locale
-  (<code>Locale::getDefault()</code>). Methods for getting/setting the locale are also
-  available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
+<p><code>$locale</code>: (Optional) Locale in which the number would be formatted (locale name, e.g. <code>en_US</code>).
+If unset, it will use the default locale (<code>Locale::getDefault()</code>).
+Methods for getting/setting the locale are also available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
 </li>
 <li>
-<p><code>$style</code>: (Optional) Style of the formatting, one of the
-  <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.unumberformatstyle">format style constants</a>.
-  If unset, it will use <code>NumberFormatter::DEFAULT_STYLE</code> as the default style.
-  Methods for getting/setting the format style are also available: <code>getStyle()</code>
-  and <code>setStyle()</code>.</p>
+<p><code>$style</code>: (Optional) Style of the formatting, one of the <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.unumberformatstyle">format style constants</a>.
+If unset, it will use <code>NumberFormatter::DEFAULT_STYLE</code> as the default style.
+Methods for getting/setting the format style are also available: <code>getStyle()</code> and <code>setStyle()</code>.</p>
 </li>
 <li>
-<p><code>$type</code>: (Optional) The <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.types">formatting type</a>
-  to use. If unset, it will use <code>NumberFormatter::TYPE_DOUBLE</code> as the default
-  type. Methods for getting/setting the format type are also available:
-  <code>getType()</code> and <code>setType()</code>.</p>
+<p><code>$type</code>: (Optional) The <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.types">formatting type</a> to use.
+If unset, it will use <code>NumberFormatter::TYPE_DOUBLE</code> as the default type.
+Methods for getting/setting the format type are also available: <code>getType()</code> and <code>setType()</code>.</p>
 </li>
 </ul>
 <h3 id="basic-usage_12">Basic Usage</h3>
@@ -1635,33 +1582,27 @@ $filter = new \Laminas\I18n\Filter\NumberFormat('fr_FR', NumberFormatter::SCIENT
 echo $filter-&gt;filter(0.00123456789);
 // Returns '1,23456789E-3'</code></pre>
 <h2 id="numberparse">NumberParse</h2>
-<p>The <code>NumberParse</code> filter can be used to parse a number from a string. It acts as
-a wrapper for the <code>NumberFormatter</code> class within the Internationalization
-extension (Intl).</p>
-<p>This filter is part of the laminas-i18n package; you will need to include that
-package in your application to use it.</p>
+<p>The <code>NumberParse</code> filter can be used to parse a number from a string.
+It acts as a wrapper for the <code>NumberFormatter</code> class within the Internationalization extension (Intl).</p>
+<p>This filter is part of the laminas-i18n package; you will need to include that package in your application to use it.</p>
 <h3 id="supported-options_17">Supported Options</h3>
 <p>The following options are supported for <code>NumberParse</code>:</p>
 <pre class="highlight"><code class="language-php">NumberParse([ string $locale [, int $style [, int $type ]]])</code></pre>
 <ul>
 <li>
-<p><code>$locale</code>: (Optional) Locale in which the number would be parsed (locale name,
-  e.g. <code>en_US</code>). If unset, it will use the default locale
-  (<code>Locale::getDefault()</code>). Methods for getting/setting the locale are also
-  available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
+<p><code>$locale</code>: (Optional) Locale in which the number would be parsed (locale name, e.g. <code>en_US</code>).
+If unset, it will use the default locale (<code>Locale::getDefault()</code>).
+Methods for getting/setting the locale are also available: <code>getLocale()</code> and <code>setLocale()</code>.</p>
 </li>
 <li>
-<p><code>$style</code>: (Optional) Style of the parsing, one of the
-  <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.unumberformatstyle">format style constants</a>.
-  If unset, it will use <code>NumberFormatter::DEFAULT_STYLE</code> as the default style.
-  Methods for getting/setting the parse style are also available: <code>getStyle()</code>
-  and <code>setStyle()</code>.</p>
+<p><code>$style</code>: (Optional) Style of the parsing, one of the <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.unumberformatstyle">format style constants</a>.
+If unset, it will use <code>NumberFormatter::DEFAULT_STYLE</code> as the default style.
+Methods for getting/setting the parse style are also available: <code>getStyle()</code> and <code>setStyle()</code>.</p>
 </li>
 <li>
-<p><code>$type</code>: (Optional) The <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.types">parsing type</a>
-  to use. If unset, it will use <code>NumberFormatter::TYPE_DOUBLE</code> as the default
-  type. Methods for getting/setting the parse type are also available:
-  <code>getType()</code> and <code>setType()</code>.</p>
+<p><code>$type</code>: (Optional) The <a href="http://www.php.net/manual/class.numberformatter.php#intl.numberformatter-constants.types">parsing type</a> to use.
+If unset, it will use <code>NumberFormatter::TYPE_DOUBLE</code> as the default type.
+Methods for getting/setting the parse type are also available: <code>getType()</code> and <code>setType()</code>.</p>
 </li>
 </ul>
 <h3 id="basic-usage_13">Basic Usage</h3>
@@ -1677,8 +1618,7 @@ $filter = new \Laminas\I18n\Filter\NumberParse('fr_FR', NumberFormatter::SCIENTI
 echo $filter-&gt;filter('1,23456789E-3');
 // Returns 0.00123456789</code></pre>
 <h2 id="pregreplace">PregReplace</h2>
-<p><code>Laminas\Filter\PregReplace</code> performs a search using regular expressions and replaces all found
-elements.</p>
+<p><code>Laminas\Filter\PregReplace</code> performs a search using regular expressions and replaces all found elements.</p>
 <h3 id="supported-options_18">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\PregReplace</code>:</p>
 <ul>
@@ -1688,11 +1628,10 @@ elements.</p>
 </ul>
 <h3 id="basic-usage_14">Basic Usage</h3>
 <p>To use this filter properly, you must give both options listed above.</p>
-<p>The <code>pattern</code> option has to be given to set the pattern to search for. It can be
-a string for a single pattern, or an array of strings for multiple patterns.</p>
-<p>The <code>replacement</code> option indicates the string to replace matches with, and can
-contain placeholders for matched groups from the search <code>pattern</code>. The value may
-be a string replacement, or an array of string replacements.</p>
+<p>The <code>pattern</code> option has to be given to set the pattern to search for.
+It can be a string for a single pattern, or an array of strings for multiple patterns.</p>
+<p>The <code>replacement</code> option indicates the string to replace matches with, and can contain placeholders for matched groups from the search <code>pattern</code>.
+The value may be a string replacement, or an array of string replacements.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\PregReplace([
     'pattern'     =&gt; '/bob/',
     'replacement' =&gt; 'john',
@@ -1701,8 +1640,7 @@ $input  = 'Hi bob!';
 
 $filter-&gt;filter($input);
 // returns 'Hi john!'</code></pre>
-<p>You can also use <code>setPattern()</code> to set the pattern(s), and <code>setReplacement()</code> set
-the replacement(s).</p>
+<p>You can also use <code>setPattern()</code> to set the pattern(s), and <code>setReplacement()</code> set the replacement(s).</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\PregReplace();
 $filter
     -&gt;setPattern(array('bob', 'Hi'))
@@ -1714,8 +1652,7 @@ $filter-&gt;filter($input);
 <p>For more complex usage, read the
 <a href="http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php">PCRE Pattern chapter of the PHP manual</a>.</p>
 <h2 id="realpath">RealPath</h2>
-<p>This filter will resolve given links and pathnames, and returns the canonicalized
-absolute pathnames.</p>
+<p>This filter will resolve given links and pathnames, and returns the canonicalized absolute pathnames.</p>
 <h3 id="supported-options_19">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\RealPath</code>:</p>
 <ul>
@@ -1723,21 +1660,19 @@ absolute pathnames.</p>
   really exists.</li>
 </ul>
 <h3 id="basic-usage_15">Basic Usage</h3>
-<p>For any given link or pathname, its absolute path will be returned. References
-to <code>/./</code>, <code>/../</code> and extra <code>/</code> sequences in the input path will be stripped. The
-resulting path will not have any symbolic links, <code>/./</code>, or <code>/../</code> sequences.</p>
-<p><code>Laminas\Filter\RealPath</code> will return <code>FALSE</code> on failure, e.g. if the file does not exist. On BSD
-systems <code>Laminas\Filter\RealPath</code> doesn't fail if only the last path component doesn't exist, while
-other systems will return <code>FALSE</code>.</p>
+<p>For any given link or pathname, its absolute path will be returned.
+References to <code>/./</code>, <code>/../</code> and extra <code>/</code> sequences in the input path will be stripped.
+The resulting path will not have any symbolic links, <code>/./</code>, or <code>/../</code> sequences.</p>
+<p><code>Laminas\Filter\RealPath</code> will return <code>FALSE</code> on failure, e.g. if the file does not exist.
+On BSD systems <code>Laminas\Filter\RealPath</code> doesn't fail if only the last path component doesn't exist, while other systems will return <code>FALSE</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\RealPath();
 $path = '/www/var/path/../../mypath';
 $filtered = $filter-&gt;filter($path);
 
 // returns '/www/mypath'</code></pre>
 <h3 id="non-existing-paths">Non-Existing Paths</h3>
-<p>Sometimes it is useful to get paths to files that do n0t exist; e.g., when you
-want to get the real path for a path you want to create. You can then either
-provide a <code>FALSE</code> <code>exists</code> value at initiation, or use <code>setExists()</code> to set it.</p>
+<p>Sometimes it is useful to get paths to files that do not exist; e.g., when you want to get the real path for a path you want to create.
+You can then either provide a <code>FALSE</code> <code>exists</code> value at initiation, or use <code>setExists()</code> to set it.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\RealPath(false);
 $path = '/www/var/path/../../non/existing/path';
 $filtered = $filter-&gt;filter($path);
@@ -1791,11 +1726,9 @@ echo $filter-&gt;filter('MidCentral');</code></pre>
 print $filter-&gt;filter('SAMPLE');
 // returns "sample"</code></pre>
 <h3 id="handling-alternate-encoding">Handling alternate Encoding</h3>
-<p>By default, <code>StringToLower</code> will only handle characters from the locale of your
-server; characters from other charsets will be ignored. If you have the mbstring
-extension, however, you can use the filter with other encodings.  Pass the
-desired encoding when initiating the <code>StringToLower</code> filter, or use the
-<code>setEncoding()</code> method to change it.</p>
+<p>By default, <code>StringToLower</code> will only handle characters from the locale of your server; characters from other charsets will be ignored.
+If you have the mbstring extension, however, you can use the filter with other encodings.
+Pass the desired encoding when initiating the <code>StringToLower</code> filter, or use the <code>setEncoding()</code> method to change it.</p>
 <pre class="highlight"><code class="language-php">// using UTF-8
 $filter = new Laminas\Filter\StringToLower('UTF-8');
 
@@ -1825,94 +1758,85 @@ $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 print $filter-&gt;filter('Sample');
 // returns "SAMPLE"</code></pre>
 <h3 id="different-encoded-strings">Different encoded Strings</h3>
-<p>Like the <code>StringToLower</code> filter, this filter will only handle characters
-supported by your server locale, unless you have the mbstring extension enabled.
+<p>Like the <code>StringToLower</code> filter, this filter will only handle characters supported by your server locale, unless you have the mbstring extension enabled.
 Using different character sets works the same as with <code>StringToLower</code>.</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToUpper(['encoding' =&gt; 'UTF-8']);
 
 // or do this afterwards
 $filter-&gt;setEncoding('ISO-8859-1');</code></pre>
 <h2 id="stringtrim">StringTrim</h2>
-<p>This filter modifies a given string such that certain characters are removed
-from the beginning and end.</p>
+<p>This filter modifies a given string such that certain characters are removed from the beginning and end.</p>
 <h3 id="supported-options_24">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StringTrim</code>:</p>
 <ul>
-<li><code>charlist</code>: List of characters to remove from the beginning and end of the
-  string. If this is not set or is null, the default behavior will be invoked,
-  which is to remove only whitespace from the beginning and end of the string.</li>
+<li><code>charlist</code>: List of characters to remove from the beginning and end of the string.
+If this is not set or is null, the default behavior will be invoked, which is to remove only whitespace from the beginning and end of the string.</li>
 </ul>
 <h3 id="basic-usage_20">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringTrim();
 
 print $filter-&gt;filter(' This is (my) content: ');</code></pre>
-<p>The above example returns <code>This is (my) content:</code>. Notice that the whitespace
-characters have been removed.</p>
+<p>The above example returns <code>This is (my) content:</code>.
+Notice that the whitespace characters have been removed.</p>
 <h3 id="specifying-alternate-characters">Specifying alternate Characters</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringTrim(':');
 // or new Laminas\Filter\StringTrim(array('charlist' =&gt; ':'));
 
 print $filter-&gt;filter(' This is (my) content:');</code></pre>
-<p>The above example returns <code>This is (my) content</code>. Notice that the whitespace
-characters and colon are removed. You can also provide a <code>Traversable</code> or an
-array with a <code>charlist</code> key. To set the desired character list after
-instantiation, use the <code>setCharList()</code> method. <code>getCharList()</code> returns the
-current character list.</p>
+<p>The above example returns <code>This is (my) content</code>.
+Notice that the whitespace characters and colon are removed.
+You can also provide a <code>Traversable</code> or an array with a <code>charlist</code> key.
+To set the desired character list after instantiation, use the <code>setCharList()</code> method.
+<code>getCharList()</code> returns the current character list.</p>
 <h2 id="stripnewlines">StripNewlines</h2>
-<p>This filter modifies a given string and removes all new line characters within
-that string.</p>
+<p>This filter modifies a given string and removes all new line characters within that string.</p>
 <h3 id="supported-options_25">Supported Options</h3>
 <p>There are no additional options for <code>Laminas\Filter\StripNewlines</code>:</p>
 <h3 id="basic-usage_21">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripNewlines();
 
 print $filter-&gt;filter(' This is (my)``\n\r``content: ');</code></pre>
-<p>The above example returns <code>This is (my) content:</code>. Notice that all newline
-characters have been removed.</p>
+<p>The above example returns <code>This is (my) content:</code>.
+Notice that all newline characters have been removed.</p>
 <h2 id="striptags">StripTags</h2>
 <p>This filter can strip XML and HTML tags from given content.</p>
 <blockquote>
 <h3 id="laminasfilterstriptags-is-potentially-insecure">Laminas\Filter\StripTags is potentially insecure</h3>
-<p>Be warned that <code>Laminas\\Filter\\StripTags</code> should only be used to strip <em>all</em>
-available tags.  Using <code>Laminas\\Filter\\StripTags</code> to make your site secure by
-stripping <em>some</em> unwanted tags will lead to unsecure and dangerous code,
-including potential XSS vectors.</p>
-<p>For a fully secure solution that allows selected filtering of HTML tags, use
-either Tidy or HtmlPurifier.</p>
+<p>Be warned that <code>Laminas\\Filter\\StripTags</code> should only be used to strip <em>all</em> available tags.
+Using <code>Laminas\\Filter\\StripTags</code> to make your site secure by stripping <em>some</em> unwanted tags will lead to unsecure and dangerous code, including potential XSS vectors.</p>
+<p>For a fully secure solution that allows selected filtering of HTML tags, use either Tidy or HtmlPurifier.</p>
 </blockquote>
 <h3 id="supported-options_26">Supported Options</h3>
 <p>The following options are supported for <code>Laminas\Filter\StripTags</code>:</p>
 <ul>
-<li><code>allowAttribs</code>: This option sets the attributes which are accepted. All other
-  attributes are stripped from the given content.</li>
-<li><code>allowTags</code>: This option sets the tags which are accepted. All other tags will
-  be stripped from; the given content.</li>
+<li><code>allowAttribs</code>: This option sets the attributes which are accepted.
+All other attributes are stripped from the given content.</li>
+<li><code>allowTags</code>: This option sets the tags which are accepted.
+All other tags will be stripped from; the given content.</li>
 </ul>
 <h3 id="basic-usage_22">Basic Usage</h3>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags();
 
 print $filter-&gt;filter('&lt;B&gt;My content&lt;/B&gt;');</code></pre>
 <p>The result will be the stripped content <code>My content</code>.</p>
-<p>When the content contains broken or partial tags, any content following the
-opening tag will be completely removed:</p>
+<p>When the content contains broken or partial tags, any content following the opening tag will be completely removed:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags();
 
 print $filter-&gt;filter('This contains &lt;a href="http://example.com"&gt;no ending tag');</code></pre>
 <p>The above will return <code>This contains</code>, with the rest being stripped.</p>
 <h3 id="allowing-defined-tags">Allowing defined Tags</h3>
-<p><code>Laminas\Filter\StripTags</code> allows stripping all but an allowed set of tags. As an
-example, this can be used to strip all markup except for links:</p>
+<p><code>Laminas\Filter\StripTags</code> allows stripping all but an allowed set of tags.
+As an example, this can be used to strip all markup except for links:</p>
 <pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags(['allowTags' =&gt; 'a']);
 
 $input  = "A text with &lt;br/&gt; a &lt;a href='link.com'&gt;link&lt;/a&gt;";
 print $filter-&gt;filter($input);</code></pre>
-<p>The above will return <code>A text with a &lt;a href='link.com'&gt;link&lt;/a&gt;</code>;
-it strips all tags but the link. By providing an array, you can specify multiple
-tags at once.</p>
+<p>The above will return <code>A text with a &lt;a href='link.com'&gt;link&lt;/a&gt;</code>; it strips all tags but the link.
+By providing an array, you can specify multiple tags at once.</p>
 <blockquote>
 <h3 id="warning">Warning</h3>
-<p>Do not use this feature to secure content. This component does not replace the
-use of a properly configured html filter.</p>
+<p>Do not use this feature to secure content.
+This component does not replace the use of a properly configured html filter.</p>
 </blockquote>
 <h3 id="allowing-defined-attributes">Allowing defined Attributes</h3>
 <p>You can also strip all but an allowed set of attributes from a tag:</p>
@@ -1923,13 +1847,10 @@ use of a properly configured html filter.</p>
 
 $input  = "A text with &lt;br/&gt; a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt;";
 print $filter-&gt;filter($input);</code></pre>
-<p>The above will return <code>A text with a &lt;img src='picture.com'&gt;picture&lt;/img&gt;</code>; it
-strips all tags but <code>&lt;img&gt;</code>, and all attributes but <code>src</code> from those tags.By
-providing an array you can set multiple attributes at once.</p>
+<p>The above will return <code>A text with a &lt;img src='picture.com'&gt;picture&lt;/img&gt;</code>; it strips all tags but <code>&lt;img&gt;</code>, and all attributes but <code>src</code> from those tags.By providing an array you can set multiple attributes at once.</p>
 <h3 id="allow-specific-tags-with-specific-attributes">Allow specific Tags with specific Attributes</h3>
-<p>You can also pass the tag allow list as a set of tag/attribute values. Each key
-will be an allowed tag, pointing to a list of allowed attributes for that
-tag.</p>
+<p>You can also pass the tag allow list as a set of tag/attribute values.
+Each key will be an allowed tag, pointing to a list of allowed attributes for that tag.</p>
 <pre class="highlight"><code class="language-php">$allowedElements = [
     'img' =&gt; [
         'src',
@@ -1951,7 +1872,8 @@ as the result.</p>
 <div class="admonition caution">
 <p class="admonition-title">Deprecated</p>
 <p>
-This filter is deprecated since version 2.36.0 and will be removed in version 3.0. The ability to force the scheme has been moved to the <a href="#forceurischeme">ForceUriScheme filter</a>.</p>
+This filter is deprecated since version 2.36.0 and will be removed in version 3.0.
+The ability to force the scheme has been moved to the <a href="#forceurischeme">ForceUriScheme filter</a>.</p>
 </div>
 <p>This filter sets the scheme on a URI if the scheme is missing.</p>
 <h3 id="supported-options_27">Supported Options</h3>
@@ -2031,7 +1953,12 @@ Use the <a href="#allowlist">AllowList filter</a> instead.</p>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -2198,7 +2125,7 @@ Use the <a href="#allowlist">AllowList filter</a> instead.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2025 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

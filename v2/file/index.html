@@ -113,7 +113,12 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -236,7 +241,12 @@
                     Components
 
                     
-                        <small class="header__subtitle">laminas-filter</small>
+                        <small class="header__subtitle">
+                            
+                            
+    laminas-filter
+
+                        </small>
                     
                 </h1>
             </div>
@@ -311,7 +321,13 @@
             <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
 
             
-                <li class="breadcrumb-item"><a href="../..">laminas-filter</a></li>
+                <li class="breadcrumb-item">
+                    <a href="../..">
+                        
+    laminas-filter
+
+                    </a>
+                </li>
 
                 
                     
@@ -344,19 +360,15 @@
     
 
     <h1 id="file-filters">File Filters</h1>
-<p>laminas-filter also comes with a set of classes for filtering file contents, and
-performing file operations such as renaming.</p>
+<p>laminas-filter also comes with a set of classes for filtering file contents, and performing file operations such as renaming.</p>
 <blockquote>
 <h2 id="_files">$_FILES</h2>
-<p>All file filter <code>filter()</code> implementations support either a file path string
-<em>or</em> a <code>$_FILES</code> array as the supplied argument. When a <code>$_FILES</code> array is
-passed in, the <code>tmp_name</code> is used for the file path.</p>
+<p>All file filter <code>filter()</code> implementations support either a file path string <em>or</em> a <code>$_FILES</code> array as the supplied argument.
+When a <code>$_FILES</code> array is passed in, the <code>tmp_name</code> is used for the file path.</p>
 </blockquote>
 <h2 id="encrypt-and-decrypt">Encrypt and Decrypt</h2>
-<p>These filters allow encrypting and decrypting file contents, and are derived
-from the <code>Laminas\Filter\Encrypt</code> and <code>Laminas\Filter\Decrypt</code> filters. Only file reading and
-writing operations are performed by the filer; encryption and decryption operations
-are performed by the parent classes.</p>
+<p>These filters allow encrypting and decrypting file contents, and are derived from the <code>Laminas\Filter\Encrypt</code> and <code>Laminas\Filter\Decrypt</code> filters.
+Only file reading and writing operations are performed by the filer; encryption and decryption operations are performed by the parent classes.</p>
 <p>Usage:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Filter\File\Encrypt as EncryptFileFilter;
 use Laminas\Http\PhpEnvironment\Request;
@@ -370,8 +382,8 @@ $filter = new EncryptFileFilter([
     'key' =&gt; '--our-super-secret-key--',
 ]);
 $filter-&gt;filter($files['my-upload']);</code></pre>
-<p>In the above example, we pass options to our constructor in order to configure
-the filter. We could instead use use setter methods to inject these options:</p>
+<p>In the above example, we pass options to our constructor in order to configure the filter.
+We could instead use use setter methods to inject these options:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Filter\File\Encrypt as EncryptFileFilter;
 use Laminas\Http\PhpEnvironment\Request;
 
@@ -386,8 +398,7 @@ $filter-&gt;filter($files['my-upload']);</code></pre>
 <p>Check the <a href="/laminas-filter/standard-filters/#encrypt-and-decrypt">Encrypt and Decrypt filter documentation</a>
 for more information about options and adapters.</p>
 <h2 id="lowercase">Lowercase</h2>
-<p><code>Laminas\Filter\File\Lowercase</code> can be used to convert all file contents to
-lowercase.</p>
+<p><code>Laminas\Filter\File\Lowercase</code> can be used to convert all file contents to lowercase.</p>
 <h3 id="supported-options">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
@@ -403,13 +414,10 @@ $files   = $request-&gt;getFiles();
 
 $filter = new LowerCase();
 $filter-&gt;filter($files['my-upload']);</code></pre>
-<p>This example converts the contents of an uploaded file to lowercase.  After this
-process, you can use the <a href="#rename">Rename</a> or <a href="#renameupload">RenameUpload</a>
-filter to replace this file with your original file, or read directly from file.
-But, don't forget, if you upload a file and send your <code>$_FILES</code> array to a
-filter method, the <code>LowerCase</code> filter will only change the temporary file
-(<code>tmp_name</code> index of array), not the original file. Let's check following
-example:</p>
+<p>This example converts the contents of an uploaded file to lowercase.
+After this process, you can use the <a href="#rename">Rename</a> or <a href="#renameupload">RenameUpload</a> filter to replace this file with your original file, or read directly from file.
+But, don't forget, if you upload a file and send your <code>$_FILES</code> array to a filter method, the <code>LowerCase</code> filter will only change the temporary file (<code>tmp_name</code> index of array), not the original file.
+Let's check following example:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
 use Laminas\Filter\File\Rename;
 use Laminas\Http\PhpEnvironment\Request;
@@ -425,11 +433,8 @@ $renameFilter = new Rename([
     'randomize' =&gt; true,
 ]);
 $filename = $renameFilter-&gt;filter($file['tmp_name']);</code></pre>
-<p>With this example, the final, stored file on the server will have the lowercased
-content.</p>
-<p>If you want to use a specific encoding when converting file content, you should
-specify the encoding when instantiating the <code>LowerCase</code> filter, or use the
-<code>setEncoding</code> method to change it.</p>
+<p>With this example, the final, stored file on the server will have the lowercased content.</p>
+<p>If you want to use a specific encoding when converting file content, you should specify the encoding when instantiating the <code>LowerCase</code> filter, or use the <code>setEncoding</code> method to change it.</p>
 <pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
 use Laminas\Http\PhpEnvironment\Request;
 
@@ -448,21 +453,16 @@ for more information about encoding and its exceptions.</p>
 <h3 id="supported-options_1">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
-<li><code>target</code> (string; default: <code>*</code>): Target filename or directory; the new name
-  of the source file.</li>
-<li><code>source</code> (string; default: <code>*</code>): Source filename or directory which will be
-  renamed. Used to match the filtered file with an options set.</li>
-<li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?
-  If the file is unable to be moved into the target path, a
-  <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
-<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random
-  postfix attached? The random postfix will generated with <code>uniqid('_')</code> after
-  the file name and before the extension. For example, <code>file.txt</code> might be
-  randomized to <code>file_4b3403665fea6.txt</code>.</li>
+<li><code>target</code> (string; default: <code>*</code>): Target filename or directory; the new name of the source file.</li>
+<li><code>source</code> (string; default: <code>*</code>): Source filename or directory which will be renamed.
+Used to match the filtered file with an options set.</li>
+<li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?</li>
+<li>If the file is unable to be moved into the target path, a <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
+<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random postfix attached? The random postfix will generated with <code>uniqid('_')</code> after the file name and before the extension.
+For example, <code>file.txt</code> might be randomized to <code>file_4b3403665fea6.txt</code>.</li>
 </ul>
-<p>An array of option sets is also supported, where a single <code>Rename</code> filter
-instance can filter several files using different options. The options used for
-the filtered file will be matched from the <code>source</code> option in the options set.</p>
+<p>An array of option sets is also supported, where a single <code>Rename</code> filter instance can filter several files using different options.
+The options used for the filtered file will be matched from the <code>source</code> option in the options set.</p>
 <h3 id="usage-examples">Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
 <pre class="highlight"><code class="language-php">// 'target' option is assumed if param is a string
@@ -514,39 +514,27 @@ follows:</p>
 <ul>
 <li><code>target</code> (string; default: <code>*</code>): Target directory or full filename path.</li>
 <li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?
-  If the file is unable to be moved into the target path, a
-  <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
-<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random
-  postfix attached? The random postfix will generated with <code>uniqid('_')</code> after
-  the file name and before the extension. For example, <code>file.txt</code> might be
-  randomized to <code>file_4b3403665fea6.txt</code>.</li>
-<li><code>use_upload_name</code> (boolean; default: <code>false</code>): When true, this filter will
-  use <code>$_FILES['name']</code> as the target filename. Otherwise, the default <code>target</code>
-  rules and the <code>$_FILES['tmp_name']</code> will be used.</li>
-<li><code>use_upload_extension</code> (boolean; default: <code>false</code>): When true, the uploaded
-  file will maintains its original extension if not specified.  For example, if
-  the uploaded file is <code>file.txt</code> and the target is <code>mynewfile</code>, the upload
-  will be renamed to <code>mynewfile.txt</code>.</li>
+If the file is unable to be moved into the target path, a <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
+<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random postfix attached? The random postfix will generated with <code>uniqid('_')</code> after the file name and before the extension.
+For example, <code>file.txt</code> might be randomized to <code>file_4b3403665fea6.txt</code>.</li>
+<li><code>use_upload_name</code> (boolean; default: <code>false</code>): When true, this filter will use <code>$_FILES['name']</code> as the target filename.
+Otherwise, the default <code>target</code> rules and the <code>$_FILES['tmp_name']</code> will be used.</li>
+<li><code>use_upload_extension</code> (boolean; default: <code>false</code>): When true, the uploaded file will maintains its original extension if not specified.
+For example, if the uploaded file is <code>file.txt</code> and the target is <code>mynewfile</code>, the upload will be renamed to <code>mynewfile.txt</code>.</li>
 <li><code>stream_factory</code> (<code>Psr\Http\Message\StreamFactoryInterface</code>; default: <code>null</code>):
-  Required when passing a <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR-7 UploadedFileInterface</a>
-  to the filter; used to create a new stream representing the renamed file.
-  (Since 2.9.0)</li>
-<li><code>upload_file_factory</code> (<code>Psr\Http\Message\UploadedFileFactoryInterface</code>; default:
-  <code>null</code>): Required when passing a <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR-7 UploadedFileInterface</a>
-  to the filter; used to create a new uploaded file representation of the
-  renamed file.  (Since 2.9.0)</li>
+Required when passing a <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR-7 UploadedFileInterface</a> to the filter; used to create a new stream representing the renamed file.
+(Since 2.9.0)</li>
+<li><code>upload_file_factory</code> (<code>Psr\Http\Message\UploadedFileFactoryInterface</code>; default: <code>null</code>): Required when passing a <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR-7 UploadedFileInterface</a> to the filter; used to create a new uploaded file representation of the renamed file.
+(Since 2.9.0)</li>
 </ul>
 <blockquote>
 <h3 id="using-the-upload-name-is-unsafe">Using the upload Name is unsafe</h3>
-<p>Be <strong>very</strong> careful when using the <code>use_upload_name</code> option. For instance,
-extremely bad things could happen if you were to allow uploaded <code>.php</code> files
-(or other CGI files) to be moved into the <code>DocumentRoot</code>.</p>
-<p>It is generally a better idea to supply an internal filename to avoid
-security risks.</p>
+<p>Be <strong>very</strong> careful when using the <code>use_upload_name</code> option.
+For instance, extremely bad things could happen if you were to allow uploaded <code>.php</code> files (or other CGI files) to be moved into the <code>DocumentRoot</code>.</p>
+<p>It is generally a better idea to supply an internal filename to avoid security risks.</p>
 </blockquote>
 <p><code>RenameUpload</code> does not support an array of options like the<code>Rename</code> filter.
-When filtering HTML5 file uploads with the <code>multiple</code> attribute set, all files
-will be filtered with the same option settings.</p>
+When filtering HTML5 file uploads with the <code>multiple</code> attribute set, all files will be filtered with the same option settings.</p>
 <h3 id="usage-examples_1">Usage Examples</h3>
 <p>Move all filtered files to a different directory:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
@@ -614,20 +602,13 @@ foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {
 }</code></pre>
 <blockquote>
 <h3 id="psr-7-support">PSR-7 Support</h3>
-<p>PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid
-<a href="https://packagist.org/providers/psr/http-factory-implementation">psr/http-factory-implementation</a>
-in your application, as it relies on the stream and uploaded file factories in
-order to produce the final <code>UploadedFileInterface</code> artifact representing the
-filtered file.</p>
-<p>PSR-17 itself requires PHP 7, so your application will need to be running on
-PHP 7 in order to use this feature.</p>
-<p><a href="https://docs.laminas.dev/laminas-diactoros/">laminas/laminas-diactoros 2.0</a>
-provides a PSR-17 implementation, but requires PHP 7.1. If you are still on
-PHP 7.0, either upgrade, or find a compatible psr/http-factory-implementation.</p>
+<p>PSR-7/PSR-17 support has only been available since 2.9.0, and requires a valid <a href="https://packagist.org/providers/psr/http-factory-implementation">psr/http-factory-implementation</a> in your application, as it relies on the stream and uploaded file factories in order to produce the final <code>UploadedFileInterface</code> artifact representing the filtered file.</p>
+<p>PSR-17 itself requires PHP 7, so your application will need to be running on PHP 7 in order to use this feature.</p>
+<p><a href="https://docs.laminas.dev/laminas-diactoros/">laminas/laminas-diactoros 2.0</a> provides a PSR-17 implementation, but requires PHP 7.1.
+If you are still on PHP 7.0, either upgrade, or find a compatible psr/http-factory-implementation.</p>
 </blockquote>
 <h2 id="uppercase">Uppercase</h2>
-<p><code>Laminas\Filter\File\Uppercase</code> can be used to convert all file contents to
-uppercase.</p>
+<p><code>Laminas\Filter\File\Uppercase</code> can be used to convert all file contents to uppercase.</p>
 <h3 id="supported-options_3">Supported Options</h3>
 <p>The following set of options are supported:</p>
 <ul>
@@ -643,8 +624,7 @@ $files   = $request-&gt;getFiles();
 
 $filter = new UpperCase();
 $filter-&gt;filter($files['my-upload']);</code></pre>
-<p>See the documentation on the <a href="#lowercase"><code>LowerCase</code></a> filter, above, for more
-information.</p>
+<p>See the documentation on the <a href="#lowercase"><code>LowerCase</code></a> filter, above, for more information.</p>
 
 
 
@@ -701,7 +681,12 @@ information.</p>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -868,7 +853,7 @@ information.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2025 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

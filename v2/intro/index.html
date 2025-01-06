@@ -113,7 +113,12 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -236,7 +241,12 @@
                     Components
 
                     
-                        <small class="header__subtitle">laminas-filter</small>
+                        <small class="header__subtitle">
+                            
+                            
+    laminas-filter
+
+                        </small>
                     
                 </h1>
             </div>
@@ -307,7 +317,13 @@
             <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
 
             
-                <li class="breadcrumb-item"><a href="../..">laminas-filter</a></li>
+                <li class="breadcrumb-item">
+                    <a href="../..">
+                        
+    laminas-filter
+
+                    </a>
+                </li>
 
                 
                     
@@ -331,41 +347,30 @@
     
 
     <h1 id="introduction">Introduction</h1>
-<p>laminas-filter provides a set of commonly needed data filters. It also provides a
-simple filter chaining mechanism by which multiple filters may be applied to a
-single datum in a user-defined order.</p>
+<p>laminas-filter provides a set of commonly needed data filters.
+It also provides a simple filter chaining mechanism by which multiple filters may be applied to a single datum in a user-defined order.</p>
 <h2 id="what-is-a-filter">What is a filter?</h2>
-<p>In the physical world, a filter is typically used for removing unwanted portions
-of input, and the desired portion of the input passes through as filter output
-(e.g., coffee). In such scenarios, a filter is an operator that produces a
-subset of the input. This type of filtering is useful for web applications:
-removing illegal input, trimming unnecessary white space, etc.</p>
-<p>This basic definition of a filter may be extended to include generalized
-transformations upon input. A common transformation applied in web applications
-is the escaping of HTML entities. For example, if a form field is automatically
-populated with untrusted input (e.g., from a web browser), this value should
-either be free of HTML entities or contain only escaped HTML entities, in order
-to prevent undesired behavior and security vulnerabilities. To meet this
-requirement, HTML entities that appear in the input must either be removed or
-escaped. Of course, which approach is more appropriate depends on the situation.
-A filter that removes the HTML entities operates within the scope of the first
-definition of filter - an operator that produces a subset of the input. A filter
-that escapes the HTML entities, however, transforms the input (e.g., <code>&amp;</code> is
-transformed to <code>&amp;amp;</code>). Supporting such use cases for web developers is
-important, and “to filter”, in the context of using laminas-filter, means to
-perform some transformations upon input data.</p>
+<p>In the physical world, a filter is typically used for removing unwanted portions of input, and the desired portion of the input passes through as filter output (e.g., coffee).
+In such scenarios, a filter is an operator that produces a subset of the input.
+This type of filtering is useful for web applications: removing illegal input, trimming unnecessary white space, etc.</p>
+<p>This basic definition of a filter may be extended to include generalized transformations upon input.
+A common transformation applied in web applications is the escaping of HTML entities.
+For example, if a form field is automatically populated with untrusted input (e.g., from a web browser), this value should either be free of HTML entities or contain only escaped HTML entities, in order to prevent undesired behavior and security vulnerabilities.
+To meet this requirement, HTML entities that appear in the input must either be removed or escaped.
+Of course, which approach is more appropriate depends on the situation.
+A filter that removes the HTML entities operates within the scope of the first definition of filter - an operator that produces a subset of the input.
+A filter that escapes the HTML entities, however, transforms the input (e.g., <code>&amp;</code> is transformed to <code>&amp;amp;</code>).
+Supporting such use cases for web developers is important, and “to filter”, in the context of using laminas-filter, means to perform some transformations upon input data.</p>
 <h2 id="basic-usage-of-filters">Basic usage of filters</h2>
 <p>Having this filter definition established provides the foundation for
 <code>Laminas\Filter\FilterInterface</code>, which requires a single method named <code>filter()</code>
 to be implemented by a filter class.</p>
-<p>Following is a basic example of using a filter upon two input data, the
-ampersand (<code>&amp;</code>) and double quote (<code>"</code>) characters:</p>
+<p>Following is a basic example of using a filter upon two input data, the ampersand (<code>&amp;</code>) and double quote (<code>"</code>) characters:</p>
 <pre class="highlight"><code class="language-php">$htmlEntities = new Laminas\Filter\HtmlEntities();
 
 echo $htmlEntities-&gt;filter('&amp;'); // &amp;amp;
 echo $htmlEntities-&gt;filter('"'); // &amp;quot;</code></pre>
-<p>Also, if a filter inherits from <code>Laminas\Filter\AbstractFilter</code> (as do all of the
-out-of-the-box filters), you can also use them as invokables:</p>
+<p>Also, if a filter inherits from <code>Laminas\Filter\AbstractFilter</code> (as do all of the out-of-the-box filters), you can also use them as invokables:</p>
 <pre class="highlight"><code class="language-php">$strtolower = new Laminas\Filter\StringToLower;
 
 echo $strtolower('I LOVE Laminas!'); // i love laminas!
@@ -376,30 +381,21 @@ $laminaslove = $strtolower('I LOVE Laminas!');</code></pre>
 <p>
 This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
 </div>
-<p>If it is inconvenient to load a given filter class and create an instance of the
-filter, you can use <code>StaticFilter</code> with its <code>execute()</code> method as an alternative
-invocation style. The first argument of this method is a data input value, that
-you would pass to the <code>filter()</code> method. The second argument is a string, which
-corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code>
-namespace. The <code>execute()</code> method automatically loads the class, creates an
-instance, and applies the <code>filter()</code> method to the data input.</p>
+<p>If it is inconvenient to load a given filter class and create an instance of the filter, you can use <code>StaticFilter</code> with its <code>execute()</code> method as an alternative invocation style.
+The first argument of this method is a data input value, that you would pass to the <code>filter()</code> method.
+The second argument is a string, which corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code> namespace.
+The <code>execute()</code> method automatically loads the class, creates an instance, and applies the <code>filter()</code> method to the data input.</p>
 <pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the
-filter class:</p>
+<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
 <pre class="highlight"><code class="language-php">echo StaticFilter::execute(
     '"',
     'HtmlEntities',
     ['quotestyle' =&gt; ENT_QUOTES]
 );</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you have
-the need to run a filter for multiple inputs, it’s more efficient to follow the
-first example above, creating an instance of the filter object and calling its
-<code>filter()</code> method.</p>
-<p>Also, the <code>FilterChain</code> class allows you to instantiate and run multiple filter
-and validator classes on demand to process sets of input data. See the
-<a href="../filter-chains/">FilterChain</a> chapter for more details.</p>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to
-amend the standard filter classes.</p>
+<p>The static usage can be convenient for invoking a filter ad hoc, but if you have the need to run a filter for multiple inputs, it’s more efficient to follow the first example above, creating an instance of the filter object and calling its <code>filter()</code> method.</p>
+<p>Also, the <code>FilterChain</code> class allows you to instantiate and run multiple filter and validator classes on demand to process sets of input data.
+See the <a href="../filter-chains/">FilterChain</a> chapter for more details.</p>
+<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to amend the standard filter classes.</p>
 <pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()-&gt;setInvokableClass(
     'myNewFilter',
     'MyCustom\Filter\MyNewFilter'
@@ -408,9 +404,8 @@ amend the standard filter classes.</p>
 StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 <p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
 <h2 id="double-filtering">Double filtering</h2>
-<p>When using two filters in succession, you have to keep in mind that it is
-often not possible to get the original output by using the opposite filter. Take
-the following example:</p>
+<p>When using two filters in succession, you have to keep in mind that it is often not possible to get the original output by using the opposite filter.
+Take the following example:</p>
 <pre class="highlight"><code class="language-php">$original = 'my_original_content';
 
 // Attach a filter
@@ -420,30 +415,23 @@ $filtered = $filter-&gt;filter($original);
 // Use it's opposite
 $filter2  = new Laminas\Filter\Word\CamelCaseToUnderscore();
 $filtered = $filter2-&gt;filter($filtered)</code></pre>
-<p>The above code example could lead to the impression that you will get the
-original output after the second filter has been applied. But thinking logically
-this is not the case. After applying the first filter, <code>my_original_content</code> will
-be changed to <code>MyOriginalContent</code>. But after applying the second filter, the result
-is <code>My_Original_Content</code>.</p>
-<p>As you can see it is not always possible to get the original output by using a
-filter which seems to be the opposite. It depends on the filter and also on the
-given input.</p>
+<p>The above code example could lead to the impression that you will get the original output after the second filter has been applied.
+But thinking logically this is not the case.
+After applying the first filter, <code>my_original_content</code> will be changed to <code>MyOriginalContent</code>.
+But after applying the second filter, the result is <code>My_Original_Content</code>.</p>
+<p>As you can see it is not always possible to get the original output by using a filter which seems to be the opposite.
+It depends on the filter and also on the given input.</p>
 <h2 id="providing-filters-via-modules">Providing filters via modules</h2>
 <p>If you wish to indicate that your laminas-mvc module provides filters, have your
-<code>Module</code> class implement <code>Laminas\Filter\FilterProviderInterface</code>, which defines
-the method:</p>
+<code>Module</code> class implement <code>Laminas\Filter\FilterProviderInterface</code>, which defines the method:</p>
 <pre class="highlight"><code class="language-php">/**
  * @return array
  */
 public function getFilterConfig();</code></pre>
 <p>The method should return an array of configuration following the
 <a href="https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/">laminas-servicemanager configuration format</a>.</p>
-<p>If you are not using laminas-mvc, but are using a dependency injection container
-(e.g., if you are using Mezzio), you can also provide filters using the
-top-level <code>filters</code> configuration key; the value of that key should be
-laminas-servicemanager configuration, as linked above.</p>
-<p>(laminas-mvc users may also provide configuration in the same way, and omit
-implementation of the <code>FilterProviderInterface</code>.)</p>
+<p>If you are not using laminas-mvc, but are using a dependency injection container (e.g., if you are using Mezzio), you can also provide filters using the top-level <code>filters</code> configuration key; the value of that key should be laminas-servicemanager configuration, as linked above.</p>
+<p>(laminas-mvc users may also provide configuration in the same way, and omit implementation of the <code>FilterProviderInterface</code>.)</p>
 
 
 
@@ -500,7 +488,12 @@ implementation of the <code>FilterProviderInterface</code>.)</p>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../..">laminas-filter</a>
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -667,7 +660,7 @@ implementation of the <code>FilterProviderInterface</code>.)</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2025 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

@@ -113,7 +113,12 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../../..">laminas-filter</a>
+            <a href="../../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -236,7 +241,12 @@
                     Components
 
                     
-                        <small class="header__subtitle">laminas-filter</small>
+                        <small class="header__subtitle">
+                            
+                            
+    laminas-filter
+
+                        </small>
                     
                 </h1>
             </div>
@@ -291,7 +301,13 @@
             <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
 
             
-                <li class="breadcrumb-item"><a href="../../..">laminas-filter</a></li>
+                <li class="breadcrumb-item">
+                    <a href="../../..">
+                        
+    laminas-filter
+
+                    </a>
+                </li>
 
                 
                     
@@ -324,7 +340,8 @@
     
 
     <h1 id="preparing-for-version-3">Preparing for Version 3</h1>
-<p>Version 3 will introduce a number of backwards incompatible changes. This document is intended to help you prepare for these changes.</p>
+<p>Version 3 will introduce a number of backwards incompatible changes.
+This document is intended to help you prepare for these changes.</p>
 <h2 id="removed-features">Removed Features</h2>
 <h3 id="inheritance-changes">Inheritance Changes</h3>
 <p>Most filters will be closed to inheritance in v3 by employing the <code>final</code> keyword.
@@ -361,7 +378,8 @@ It may be useful to look at <a href="https://github.com/laminas/laminas-filter/i
 <p>The Lzf, Snappy and Rar compression adapters will be removed in version 3.0.
 If you are currently using any of these compression formats with laminas-filter, you will need to either use an alternative format such as Zip, Tar, Gz or Bz2, or, write a custom adapter to support your desired compression format.</p>
 <h3 id="encryption-decryption-filter-removal">Encryption &amp; Decryption Filter Removal</h3>
-<p>These filters have become outdated and will be removed in version 3.0 of this library. We recommend that you make use of a maintained encryption library and <a href="../../writing-filters/">write your own filters</a> if you need to encrypt or decrypt content using the <code>FilterInterface</code> contract.</p>
+<p>These filters have become outdated and will be removed in version 3.0 of this library.
+We recommend that you make use of a maintained encryption library and <a href="../../writing-filters/">write your own filters</a> if you need to encrypt or decrypt content using the <code>FilterInterface</code> contract.</p>
 <ul>
 <li><code>Laminas\Filter\File\Decrypt</code></li>
 <li><code>Laminas\Filter\File\Encrypt</code></li>
@@ -369,7 +387,8 @@ If you are currently using any of these compression formats with laminas-filter,
 <li><code>Laminas\Filter\Encrypt</code></li>
 </ul>
 <h3 id="static-filter-removal">Static Filter Removal</h3>
-<p><code>Laminas\Filter\StaticFilter</code> will be removed without replacement in v3. Most filters are "new-able" so similar behaviour can be accomplished with:</p>
+<p><code>Laminas\Filter\StaticFilter</code> will be removed without replacement in v3.
+Most filters are "new-able" so similar behaviour can be accomplished with:</p>
 <pre class="highlight"><code class="language-php">$filtered = (new \Laminas\Filter\HtmlEntities())('Nuts &amp; Bolts');</code></pre>
 <p>For filters requiring more complex construction, we encourage you to make use of dependency injection and compose the filter itself, or via the <code>FilterPluginManager</code>, for example:</p>
 <pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(\Laminas\Filter\FilterPluginManager::class);
@@ -434,7 +453,12 @@ $filtered = $filter-&gt;filter('A String');</code></pre>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../../..">laminas-filter</a>
+            <a href="../../..">
+                
+                
+    laminas-filter
+
+            </a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -601,7 +625,7 @@ $filtered = $filter-&gt;filter('A String');</code></pre>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2025 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
