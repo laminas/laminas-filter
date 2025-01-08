@@ -1291,6 +1291,21 @@
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[addFilterRule]]></code>
+      <code><![CDATA[addFilterRule]]></code>
+      <code><![CDATA[addRules]]></code>
+      <code><![CDATA[addRules]]></code>
+      <code><![CDATA[clearRules]]></code>
+      <code><![CDATA[getPluginManager]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setPluginManager]]></code>
+      <code><![CDATA[setPluginManager]]></code>
+      <code><![CDATA[setStaticRule]]></code>
+      <code><![CDATA[setTarget]]></code>
+      <code><![CDATA[setTargetReplacementIdentifier]]></code>
+      <code><![CDATA[setThrowTargetExceptionsOn]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[array_values($processedParts)]]></code>
     </InvalidArgument>
@@ -2172,6 +2187,76 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/InflectorTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addFilterRule]]></code>
+      <code><![CDATA[addFilterRule]]></code>
+      <code><![CDATA[addRules]]></code>
+      <code><![CDATA[addRules]]></code>
+      <code><![CDATA[addRules]]></code>
+      <code><![CDATA[getPluginManager]]></code>
+      <code><![CDATA[getPluginManager]]></code>
+      <code><![CDATA[getPluginManager]]></code>
+      <code><![CDATA[getRule]]></code>
+      <code><![CDATA[getRule]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getRules]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTargetReplacementIdentifier]]></code>
+      <code><![CDATA[getTargetReplacementIdentifier]]></code>
+      <code><![CDATA[getTargetReplacementIdentifier]]></code>
+      <code><![CDATA[getTargetReplacementIdentifier]]></code>
+      <code><![CDATA[getTargetReplacementIdentifier]]></code>
+      <code><![CDATA[isThrowTargetExceptionsOn]]></code>
+      <code><![CDATA[isThrowTargetExceptionsOn]]></code>
+      <code><![CDATA[isThrowTargetExceptionsOn]]></code>
+      <code><![CDATA[setFilterRule]]></code>
+      <code><![CDATA[setFilterRule]]></code>
+      <code><![CDATA[setFilterRule]]></code>
+      <code><![CDATA[setFilterRule]]></code>
+      <code><![CDATA[setFilterRule]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setPluginManager]]></code>
+      <code><![CDATA[setRules]]></code>
+      <code><![CDATA[setStaticRule]]></code>
+      <code><![CDATA[setStaticRule]]></code>
+      <code><![CDATA[setStaticRule]]></code>
+      <code><![CDATA[setStaticRule]]></code>
+      <code><![CDATA[setStaticRule]]></code>
+      <code><![CDATA[setStaticRuleReference]]></code>
+      <code><![CDATA[setStaticRuleReference]]></code>
+      <code><![CDATA[setTarget]]></code>
+      <code><![CDATA[setTarget]]></code>
+      <code><![CDATA[setTargetReference]]></code>
+      <code><![CDATA[setTargetReplacementIdentifier]]></code>
+      <code><![CDATA[setTargetReplacementIdentifier]]></code>
+      <code><![CDATA[setThrowTargetExceptionsOn]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[assertNull]]></code>
       <code><![CDATA[assertSame]]></code>
