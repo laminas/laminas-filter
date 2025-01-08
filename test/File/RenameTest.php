@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\File;
 
-use Laminas\Filter\Exception;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\File\Rename as FileRename;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,6 @@ use stdClass;
 
 use function copy;
 use function file_exists;
-use function is_array;
 use function mkdir;
 use function preg_quote;
 use function rmdir;
@@ -23,6 +22,9 @@ use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
+/**
+ * @psalm-import-type Options from FileRename
+ */
 final class RenameTest extends TestCase
 {
     private const TEST_FILE_NAME = 'test_file.txt';
@@ -81,419 +83,236 @@ final class RenameTest extends TestCase
 
     public static function returnValidFilterInputProvider(): array
     {
-        $oldFile    = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile    = self::getTempPath() . '/new_file.xml';
-        $newDir     = self::getTempSubDirectory();
-        $newDirFile = self::getTempSubDirectory() . '/test_file.txt';
+        $oldFilePath  = self::getTempPath() . '/' . self::TEST_FILE_NAME;
+        $newFileName  = 'new_file.xml';
+        $newDirectory = self::getTempSubDirectory();
 
         return [
-            'Configured with target file path and filtering file path'       => [
-                'options'               => $newFile,
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => '*',
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => $newFile,
+            'Rename in place'                           => [
+                'options'              => ['match' => $oldFilePath, 'rename_to' => $newFileName],
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
             ],
-            'Configured with target file path and filtering file path array' => [
-                'options'               => $newFile,
-                'input'                 => ['tmp_name' => $oldFile],
-                'expectedGetFileResult' => [
-                    'source'    => '*',
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => ['tmp_name' => $newFile],
+            'Move to new directory'                     => [
+                'options'              => ['match' => $oldFilePath, 'target_directory' => $newDirectory],
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => $newDirectory . '/' . self::TEST_FILE_NAME,
             ],
-            'Configured with array'                                          => [
-                'options'               => ['source' => $oldFile, 'target' => $newFile],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
+            'Move to new directory and rename'          => [
+                'options'              => [
+                    'match'            => $oldFilePath,
+                    'target_directory' => $newDirectory,
+                    'rename_to'        => $newFileName,
                 ],
-                'expectedFilterResult'  => $newFile,
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => $newDirectory . '/' . $newFileName,
             ],
-            'Configured with all options set'                                => [
-                'options'               => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => true,
-                    'randomize' => false,
-                    'unknown'   => false,
-                ],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => true,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => $newFile,
+            'No replacement or move configured'         => [
+                'options'              => [],
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => $oldFilePath,
             ],
-            'Configured with array wrapped in array'                         => [
-                'options'               => [0 => ['source' => $oldFile, 'target' => $newFile]],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => $newFile,
+            'Rename in place with wildcard match'       => [
+                'options'              => ['rename_to' => $newFileName],
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
             ],
-            'Only target configured'                                         => [
-                'options'               => ['target' => $newFile],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => '*',
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => $newFile,
+            'Move to new directory with wildcard match' => [
+                'options'              => ['target_directory' => $newDirectory],
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => $newDirectory . '/' . self::TEST_FILE_NAME,
             ],
-            'Configured with target directory and filtering file path'       => [
-                'options'               => $newDir,
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => '*',
-                    'target'    => $newDir,
-                    'overwrite' => false,
-                    'randomize' => false,
+            'Match with single character wild'          => [
+                'options'              => [
+                    'match'     => self::getTempPath() . '/test_fil?.txt',
+                    'rename_to' => $newFileName,
                 ],
-                'expectedFilterResult'  => $newDirFile,
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
             ],
-            'Configured with array and filtering file path'                  => [
-                'options'               => ['source' => $oldFile, 'target' => $newDir],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => $oldFile,
-                    'target'    => $newDir,
-                    'overwrite' => false,
-                    'randomize' => false,
+            'Array of options'                          => [
+                'options'              => [
+                    [
+                        'match'            => $oldFilePath,
+                        'target_directory' => $newDirectory,
+                        'rename_to'        => $newFileName,
+                    ],
                 ],
-                'expectedFilterResult'  => $newDirFile,
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => $newDirectory . '/' . $newFileName,
             ],
-            'Configured with array wrapped in array and filtering file path' => [
-                'options'               => [0 => ['source' => $oldFile, 'target' => $newDir]],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => $oldFile,
-                    'target'    => $newDir,
-                    'overwrite' => false,
-                    'randomize' => false,
+            'Array of multiple options with one match'  => [
+                'options'              => [
+                    [
+                        'match'     => self::getTempPath() . '/no_match.txt',
+                        'rename_to' => 'failed_if_this.txt',
+                    ],
+                    [
+                        'match'            => $oldFilePath,
+                        'target_directory' => $newDirectory,
+                        'rename_to'        => $newFileName,
+                    ],
                 ],
-                'expectedFilterResult'  => $newDirFile,
-            ],
-            'Configured with only target and filtering file path'            => [
-                'options'               => ['target' => $newDir],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => '*',
-                    'target'    => $newDir,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => $newDirFile,
+                'input'                => $oldFilePath,
+                'expectedFilterResult' => $newDirectory . '/' . $newFileName,
             ],
         ];
     }
 
-    public static function returnInvalidFilterInputProvider(): array
-    {
-        $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile = self::getTempPath() . '/new_file.xml';
-
-        return [
-            'Source file non-existent' => [
-                'options'               => $newFile,
-                'input'                 => 'non-existent-file.txt',
-                'expectedGetFileResult' => [
-                    'source'    => '*',
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => 'non-existent-file.txt',
-            ],
-            'Only source configured'   => [
-                'options'               => ['source' => $oldFile],
-                'input'                 => $oldFile,
-                'expectedGetFileResult' => [
-                    'source'    => $oldFile,
-                    'target'    => '*',
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-                'expectedFilterResult'  => $oldFile,
-            ],
-        ];
-    }
-
+    /**
+     * @param Options $options
+     */
     #[DataProvider('returnValidFilterInputProvider')]
-    #[DataProvider('returnInvalidFilterInputProvider')]
     public function testFilterValidPaths(
-        string|array $options,
-        string|array $input,
-        array $expectedGetFileResult,
-        string|array $expectedFilterResult
+        array $options,
+        string $input,
+        string $expectedFilterResult
     ): void {
         self::createSourceFile();
 
         $filter = new FileRename($options);
 
-        self::assertEquals([$expectedGetFileResult], $filter->getFile());
-
         try {
             self::assertSame($expectedFilterResult, $filter->filter($input));
+            self::assertFileExists($expectedFilterResult);
         } finally {
-            /** @var string $fileToRemove */
-            $fileToRemove = is_array($expectedFilterResult) ? $expectedFilterResult['tmp_name'] : $expectedFilterResult;
-
-            if (file_exists($fileToRemove)) {
-                unlink($fileToRemove);
+            if (file_exists($expectedFilterResult)) {
+                unlink($expectedFilterResult);
             }
         }
     }
 
-    public function testAddSameFileAgainAndOverwriteExistingTarget(): void
+    public static function returnInvalidFilterInputProvider(): array
+    {
+        $oldFilePath = self::getTempPath() . '/' . self::TEST_FILE_NAME;
+
+        return [
+            'Source file non-existent' => [
+                'options' => ['rename_to' => 'new_file.xml'],
+                'input'   => 'non-existent-file.txt',
+            ],
+            'Only match configured'    => [
+                'options' => ['match' => $oldFilePath],
+                'input'   => $oldFilePath,
+            ],
+        ];
+    }
+
+    /**
+     * @param Options $options
+     */
+    #[DataProvider('returnInvalidFilterInputProvider')]
+    public function testFilterInvalidPaths(
+        array $options,
+        string $input,
+    ): void {
+        self::createSourceFile();
+
+        $filter = new FileRename($options);
+
+        self::assertSame($input, $filter->filter($input));
+    }
+
+    public function testOverwriteTrue(): void
     {
         self::createSourceFile();
 
-        $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile = self::getTempPath() . '/new_file.xml';
+        $oldFile         = self::getTempPath() . '/' . self::TEST_FILE_NAME;
+        $newFile         = 'new_file.xml';
+        $expectedNewPath = self::getTempPath() . '/' . $newFile;
 
-        $filter = new FileRename([
-            'source' => $oldFile,
-            'target' => '/to-be-overwritten.xml',
-        ]);
-
-        $filter->addFile([
-            'source' => $oldFile,
-            'target' => $newFile,
-        ]);
-
-        self::assertSame(
-            [
-                0 => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
+        $filter = new FileRename(['rename_to' => $newFile, 'overwrite' => true]);
 
         try {
-            self::assertSame($newFile, $filter($oldFile));
+            self::assertSame($expectedNewPath, $filter->filter($oldFile));
+            self::assertFileExists($expectedNewPath);
+
+            self::createSourceFile();
+            self::assertSame($expectedNewPath, $filter->filter($oldFile));
+            self::assertFileExists($expectedNewPath);
         } finally {
-            if (file_exists($newFile)) {
-                unlink($newFile);
+            if (file_exists($expectedNewPath)) {
+                unlink($expectedNewPath);
             }
         }
     }
 
-    public function testGetNewName(): void
+    public function testOverwriteFalseThrowsExceptionWithPreExistingTarget(): void
     {
         self::createSourceFile();
 
-        $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newDir  = self::getTempSubDirectory();
+        $oldFile         = self::getTempPath() . '/' . self::TEST_FILE_NAME;
+        $newFile         = 'new_file.xml';
+        $expectedNewPath = self::getTempPath() . '/' . $newFile;
 
-        $filter = new FileRename([
-            'source' => $oldFile,
-            'target' => $newDir,
-        ]);
-
-        self::assertSame(
-            [
-                0 => [
-                    'source'    => $oldFile,
-                    'target'    => $newDir,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
-
-        self::assertSame($newDir . '/' . self::TEST_FILE_NAME, $filter->getNewName($oldFile));
-    }
-
-    public function testGetNewNameExceptionWithExistingFile(): void
-    {
-        self::createSourceFile();
-        $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile = self::getTempPath() . '/new_file.xml';
-
-        $filter = new FileRename([
-            'source' => $oldFile,
-            'target' => $newFile,
-        ]);
-
-        copy($oldFile, $newFile);
-
-        self::assertSame(
-            [
-                0 => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('could not be renamed');
+        $filter = new FileRename(['rename_to' => $newFile]);
 
         try {
-            self::assertSame($newFile, $filter->getNewName($oldFile));
+            self::assertSame($expectedNewPath, $filter->filter($oldFile));
+            self::assertFileExists($expectedNewPath);
+
+            self::createSourceFile();
+
+            $this->expectException(InvalidArgumentException::class);
+            $this->expectExceptionMessage(
+                sprintf(
+                    '"File "%s" could not be renamed to "%s"; target file already exists',
+                    $oldFile,
+                    $expectedNewPath
+                )
+            );
+
+            $filter->filter($oldFile);
         } finally {
-            if (file_exists($newFile)) {
-                unlink($newFile);
+            if (file_exists($expectedNewPath)) {
+                unlink($expectedNewPath);
             }
         }
-    }
-
-    public function testGetNewNameOverwriteWithExistingFile(): void
-    {
-        self::createSourceFile();
-        $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile = self::getTempPath() . '/new_file.xml';
-
-        $filter = new FileRename([
-            'source'    => $oldFile,
-            'target'    => $newFile,
-            'overwrite' => true,
-        ]);
-
-        copy($oldFile, $newFile);
-
-        self::assertSame(
-            [
-                0 => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'overwrite' => true,
-                    'randomize' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
-        self::assertSame($newFile, $filter->getNewName($oldFile));
     }
 
     public function testGetRandomizedFile(): void
     {
         self::createSourceFile();
         $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile = self::getTempPath() . '/new_file.xml';
 
-        $filter = new FileRename([
-            'source'    => $oldFile,
-            'target'    => $newFile,
-            'randomize' => true,
-        ]);
+        $filter = new FileRename(['rename_to' => 'new_file.xml', 'randomize' => true]);
 
-        self::assertSame(
-            [
-                0 => [
-                    'source'    => $oldFile,
-                    'target'    => $newFile,
-                    'randomize' => true,
-                    'overwrite' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
         $fileNoExt = self::getTempPath() . '/new_file';
-        self::assertMatchesRegularExpression(
-            '#' . preg_quote($fileNoExt) . '_.{13}\.xml#',
-            $filter->getNewName($oldFile)
-        );
+
+        try {
+            $result = $filter->filter($oldFile);
+
+            self::assertMatchesRegularExpression(
+                '#' . preg_quote($fileNoExt) . '_.{13}\.xml#',
+                $result
+            );
+        } finally {
+            if (isset($result) && file_exists($result)) {
+                unlink($result);
+            }
+        }
     }
 
     public function testGetRandomizedFileWithoutExtension(): void
     {
         self::createSourceFile();
-
         $oldFile   = self::getTempPath() . '/' . self::TEST_FILE_NAME;
         $fileNoExt = self::getTempPath() . '/new_file';
-        $filter    = new FileRename([
-            'source'    => $oldFile,
-            'target'    => $fileNoExt,
-            'randomize' => true,
-        ]);
 
-        self::assertSame(
-            [
-                0 => [
-                    'source'    => $oldFile,
-                    'target'    => $fileNoExt,
-                    'randomize' => true,
-                    'overwrite' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
-        self::assertMatchesRegularExpression(
-            '#' . preg_quote($fileNoExt) . '_.{13}#',
-            $filter->getNewName($oldFile)
-        );
-    }
+        $filter = new FileRename(['rename_to' => 'new_file', 'randomize' => true]);
 
-    public function testAddFileWithString(): void
-    {
-        self::createSourceFile();
-
-        $oldFile = self::getTempPath() . '/' . self::TEST_FILE_NAME;
-        $newFile = self::getTempPath() . '/new_file.xml';
-
-        $filter = new FileRename($oldFile);
-        $filter->addFile($newFile);
-
-        self::assertSame(
-            [
-                0 => [
-                    'target'    => $newFile,
-                    'source'    => '*',
-                    'overwrite' => false,
-                    'randomize' => false,
-                ],
-            ],
-            $filter->getFile()
-        );
         try {
-            self::assertSame($newFile, $filter($oldFile));
+            $result = $filter->filter($oldFile);
+
+            self::assertMatchesRegularExpression(
+                '#' . preg_quote($fileNoExt) . '_.{13}#',
+                $result
+            );
         } finally {
-            if (file_exists($newFile)) {
-                unlink($newFile);
+            if (isset($result) && file_exists($result)) {
+                unlink($result);
             }
         }
-    }
-
-    public function testAddFileWithInvalidOption(): void
-    {
-        $filter = new FileRename('invalid');
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid options');
-        $filter->addFile(1234);
-    }
-
-    public function testInvalidConstruction(): void
-    {
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid options');
-        new FileRename(1234);
     }
 
     /** @return list<array{0: mixed}> */
@@ -515,12 +334,34 @@ final class RenameTest extends TestCase
     }
 
     #[DataProvider('returnUnfilteredDataProvider')]
-    public function testReturnUnfiltered(mixed $input): void
+    public function testInvalidFilterInputIsReturnedUnprocessed(mixed $input): void
     {
         self::createSourceFile();
 
-        $filter = new FileRename(self::getTempPath() . '/new_file.xml');
+        $filter = new FileRename(['rename_to' => 'new_file.xml']);
 
         self::assertSame($input, $filter($input));
+    }
+
+    public function testTargetIsNotADirectory(): void
+    {
+        $targetDirectory = self::getTempPath() . '/not-a-directory';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('The target directory "%s" does not exist', $targetDirectory));
+
+        new FileRename(['target_directory' => $targetDirectory]);
+    }
+
+    public function testTargetDirectoryIsNotWritable(): void
+    {
+        $targetDirectory = self::getTempPath() . '/not-writable';
+
+        mkdir($targetDirectory, 0555);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('The target directory "%s" is not writable', $targetDirectory));
+
+        new FileRename(['target_directory' => $targetDirectory]);
     }
 }

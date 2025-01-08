@@ -16,65 +16,6 @@
       <code><![CDATA[isOptions]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src/File/Rename.php">
-    <DeprecatedClass>
-      <code><![CDATA[Filter\AbstractFilter]]></code>
-    </DeprecatedClass>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_array($options)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidReturnStatement>
-      <code><![CDATA[$file]]></code>
-    </InvalidReturnStatement>
-    <MixedArgument>
-      <code><![CDATA[$file['source']]]></code>
-      <code><![CDATA[$file['source']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAccess>
-      <code><![CDATA[$file['source']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-      <code><![CDATA[$file['target']]]></code>
-    </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code><![CDATA[$uploadData['tmp_name']]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$uploadData['tmp_name']]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedReturnStatement>
-      <code><![CDATA[$file['target']]]></code>
-    </MixedReturnStatement>
-    <PossiblyFalseArgument>
-      <code><![CDATA[realpath($file['target'])]]></code>
-    </PossiblyFalseArgument>
-    <PossiblyUndefinedArrayOffset>
-      <code><![CDATA[$files['source']]]></code>
-      <code><![CDATA[$rename['randomize']]]></code>
-    </PossiblyUndefinedArrayOffset>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$uploadData]]></code>
-      <code><![CDATA[$uploadData]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyTypeCoercion>
-      <code><![CDATA[$this->files]]></code>
-    </PropertyTypeCoercion>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_string($file)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/File/RenameUpload.php">
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
@@ -173,12 +114,6 @@
     <UnusedClass>
       <code><![CDATA[Module]]></code>
     </UnusedClass>
-  </file>
-  <file src="test/File/RenameTest.php">
-    <InvalidArgument>
-      <code><![CDATA[1234]]></code>
-      <code><![CDATA[1234]]></code>
-    </InvalidArgument>
   </file>
   <file src="test/File/RenameUploadTest.php">
     <InvalidArgument>
