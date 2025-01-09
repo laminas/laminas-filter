@@ -266,6 +266,29 @@ The constructor now only accepts an associative array of [documented options](..
 The option for `source` has been renamed to `match`.
 The option for `target` has been split into `target_directory` and `rename_to`, to enable expressing intent between moving and renaming files.
 
+#### `RenameUpload`
+
+The following methods have been removed:
+
+- `setStreamFactory`
+- `getStreamFactory`
+- `setTarget`
+- `getTarget`
+- `setUploadFileFactory`
+- `getUploadFileFactory`
+- `setUseUploadName`
+- `getUseUploadName`
+- `setUseUploadExtension`
+- `getUseUploadExtension`
+- `setOverwrite`
+- `getOverwrite`
+- `setRandomize`
+- `getRandomize`
+
+The constructor now only accepts an associative array of [documented options](../file.md#renameupload).
+
+The option for `target` has been renamed to `target_directory`
+
 #### `SeparatorToCamelCase`
 
 The constructor now only accepts an associative array of [documented options](../word.md#separatortocamelcase).

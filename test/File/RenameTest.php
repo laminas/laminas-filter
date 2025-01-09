@@ -11,11 +11,13 @@ use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Throwable;
 
 use function copy;
 use function file_exists;
 use function mkdir;
 use function preg_quote;
+use function rmdir;
 use function sprintf;
 use function sys_get_temp_dir;
 use function uniqid;
@@ -384,6 +386,11 @@ final class RenameTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('The target directory "%s" is not writable', $targetDirectory));
 
-        new FileRename(['target_directory' => $targetDirectory]);
+        try {
+            new FileRename(['target_directory' => $targetDirectory]);
+        } catch (Throwable $e) {
+            rmdir($targetDirectory);
+            throw $e;
+        }
     }
 }
