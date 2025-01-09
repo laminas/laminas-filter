@@ -14,121 +14,13 @@
       <code><![CDATA[applyFilterOnlyToStringableValuesAndStringableArrayValues]]></code>
       <code><![CDATA[getOptions]]></code>
       <code><![CDATA[isOptions]]></code>
+      <code><![CDATA[setOptions]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="src/File/RenameUpload.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractFilter]]></code>
-    </DeprecatedClass>
-    <DocblockTypeContradiction>
-      <code><![CDATA[$target === null]]></code>
-      <code><![CDATA[is_string($target)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidNullableReturnType>
-      <code><![CDATA[string]]></code>
-    </InvalidNullableReturnType>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[[
-        'target'               => null,
-        'use_upload_name'      => false,
-        'use_upload_extension' => false,
-        'overwrite'            => false,
-        'randomize'            => false,
-        'stream_factory'       => null,
-        'upload_file_factory'  => null,
-    ]]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$clientFilename]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->alreadyFiltered[$sourceFile]]]></code>
-      <code><![CDATA[$this->alreadyFiltered[$sourceFile]]]></code>
-      <code><![CDATA[$this->alreadyFiltered[$sourceFile]]]></code>
-    </MixedArrayOffset>
-    <MixedAssignment>
-      <code><![CDATA[$clientFilename]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-    </MixedAssignment>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->alreadyFiltered[$alreadyFilteredKey]]]></code>
-      <code><![CDATA[$this->alreadyFiltered[$fileName]]]></code>
-      <code><![CDATA[$this->alreadyFiltered[$sourceFile]]]></code>
-    </MixedReturnStatement>
-    <MixedReturnTypeCoercion>
-      <code><![CDATA[$fileData]]></code>
-      <code><![CDATA[$this->alreadyFiltered[$sourceFile]]]></code>
-    </MixedReturnTypeCoercion>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NullableReturnStatement>
-      <code><![CDATA[$this->options['target']]]></code>
-    </NullableReturnStatement>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$sourceFile]]></code>
-      <code><![CDATA[$sourceFile]]></code>
-    </PossiblyInvalidCast>
-    <PossiblyNullArgument>
-      <code><![CDATA[$clientFileName]]></code>
-      <code><![CDATA[$clientFileName]]></code>
-      <code><![CDATA[$clientFileName]]></code>
-    </PossiblyNullArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setOverwrite]]></code>
-      <code><![CDATA[setRandomize]]></code>
-      <code><![CDATA[setUseUploadExtension]]></code>
-      <code><![CDATA[setUseUploadName]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[bool]]></code>
-    </PossiblyUnusedReturnValue>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $flag]]></code>
-      <code><![CDATA[(bool) $flag]]></code>
-      <code><![CDATA[(bool) $flag]]></code>
-      <code><![CDATA[(bool) $flag]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Module.php">
     <UnusedClass>
       <code><![CDATA[Module]]></code>
     </UnusedClass>
-  </file>
-  <file src="test/File/RenameUploadTest.php">
-    <InvalidArgument>
-      <code><![CDATA[1234]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$filter($this->sourceFile)]]></code>
-      <code><![CDATA[$filter($this->sourceFile)]]></code>
-      <code><![CDATA[$filter($this->sourceFile)]]></code>
-      <code><![CDATA[$filter($this->sourceFile)]]></code>
-      <code><![CDATA[$firstResult]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$firstResult]]></code>
-    </MixedAssignment>
   </file>
   <file src="test/FilterPluginManagerCompatibilityTest.php">
     <DeprecatedMethod>

@@ -203,7 +203,7 @@ The following set of options are supported:
 > It is generally a better idea to supply an internal filename to avoid
 > security risks.
 
-`RenameUpload` does not support an array of options like the`Rename` filter.
+`RenameUpload` does not support an array of options like the `Rename` filter.
 When filtering HTML5 file uploads with the `multiple` attribute set, all files
 will be filtered with the same option settings.
 
@@ -219,13 +219,15 @@ $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 // i.e. $files['my-upload']['name'] === 'myfile.txt'
 
-// 'target' option is assumed if param is a string
-$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/');
+$filter = new \Laminas\Filter\File\RenameUpload(['target' => './data/uploads/']);
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/php5Wx0aJ'
 
 // ... or retain the uploaded file name
-$filter->setUseUploadName(true);
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' => './data/uploads/',
+    'use_upload_name' => true,
+]);
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/myfile.txt'
 ```
@@ -239,7 +241,7 @@ $request = new Request();
 $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/newfile.txt');
+$filter = new \Laminas\Filter\File\RenameUpload(['target' => './data/uploads/newfile.txt']);
 echo $filter->filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'
 ```

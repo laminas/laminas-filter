@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\File;
 
-use Laminas\Filter\AbstractFilter;
 use Laminas\Filter\Exception;
+use Laminas\Filter\FilterInterface;
 use Laminas\Stdlib\ErrorHandler;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
+use function array_key_exists;
 use function assert;
 use function basename;
 use function file_exists;
@@ -19,7 +20,6 @@ use function is_array;
 use function is_dir;
 use function is_int;
 use function is_string;
-use function move_uploaded_file;
 use function pathinfo;
 use function spl_object_hash;
 use function sprintf;
@@ -29,207 +29,79 @@ use function uniqid;
 use function unlink;
 
 use const DIRECTORY_SEPARATOR;
+use const PATHINFO_DIRNAME;
+use const PATHINFO_EXTENSION;
+use const PATHINFO_FILENAME;
 use const UPLOAD_ERR_OK;
 
 /**
- * @psalm-type Options = array{
- *     target: string|null,
- *     use_upload_name: bool,
- *     use_upload_extension: bool,
- *     overwrite: bool,
- *     randomize: bool,
- *     stream_factory: StreamFactoryInterface|null,
- *     upload_file_factory: UploadedFileFactoryInterface|null,
- *     ...
+ * @psalm-type UploadedFile = array{
+ *     name:string,
+ *     tmp_name: string
  * }
- * @template TOptions of Options
- * @extends AbstractFilter<TOptions>
+ * @psalm-type Options = array{
+ *     target_directory?: string,
+ *     use_upload_name?: bool,
+ *     use_upload_extension?: bool,
+ *     overwrite?: bool,
+ *     randomize?: bool,
+ *     stream_factory?: StreamFactoryInterface,
+ *     upload_file_factory?: UploadedFileFactoryInterface,
+ *     upload_file_mover?: UploadedFileMoverInterface,
+ * }
+ * @implements FilterInterface<mixed>
  */
-class RenameUpload extends AbstractFilter
+final class RenameUpload implements FilterInterface
 {
-    /** @var TOptions */
-    protected $options = [
-        'target'               => null,
-        'use_upload_name'      => false,
-        'use_upload_extension' => false,
-        'overwrite'            => false,
-        'randomize'            => false,
-        'stream_factory'       => null,
-        'upload_file_factory'  => null,
-    ];
+    private readonly string $targetDirectory;
+    private readonly bool $useUploadName;
+    private readonly bool $useUploadExtension;
+    private readonly bool $overwrite;
+    private readonly bool $randomize;
+    private readonly StreamFactoryInterface|null $streamFactory;
+    private readonly UploadedFileFactoryInterface|null $uploadedFileFactory;
 
     /**
      * Store already filtered values, so we can filter multiple
      * times the same file without being block by move_uploaded_file
      * internal checks
      *
-     * @var array
+     * @var array{
+     *     psr7: array<string, UploadedFileInterface>,
+     *     upload: array<string, UploadedFile>,
+     *     string: array<string, string>
+     * }
      */
-    protected $alreadyFiltered = [];
+    private array $alreadyFilteredByType = [
+        'psr7'   => [],
+        'upload' => [],
+        'string' => [],
+    ];
+
+    private UploadedFileMoverInterface $uploadedFileMover;
 
     /**
-     * Constructor
-     *
-     * @param array|string $targetOrOptions The target file path or an options array
+     * @param Options $options
      */
-    public function __construct($targetOrOptions = [])
+    public function __construct(array $options = [])
     {
-        if (is_array($targetOrOptions)) {
-            $this->setOptions($targetOrOptions);
-        } else {
-            $this->setTarget($targetOrOptions);
-        }
+        $this->targetDirectory     = $options['target_directory'] ?? '*';
+        $this->useUploadName       = $options['use_upload_name'] ?? false;
+        $this->useUploadExtension  = $options['use_upload_extension'] ?? false;
+        $this->overwrite           = $options['overwrite'] ?? false;
+        $this->randomize           = $options['randomize'] ?? false;
+        $this->streamFactory       = $options['stream_factory'] ?? null;
+        $this->uploadedFileFactory = $options['upload_file_factory'] ?? null;
+        $this->uploadedFileMover   = $options['upload_file_mover'] ?? new MoveUploadedFileMover();
     }
 
     /**
-     * @param  StreamFactoryInterface $factory Factory to use to produce a PSR-7
-     *     stream with which to seed a PSR-7 UploadedFileInterface.
-     * @return self
-     */
-    public function setStreamFactory(StreamFactoryInterface $factory)
-    {
-        $this->options['stream_factory'] = $factory;
-        return $this;
-    }
-
-    /**
-     * @return null|StreamFactoryInterface
-     */
-    public function getStreamFactory()
-    {
-        return $this->options['stream_factory'];
-    }
-
-    /**
-     * @param  string $target Target file path or directory
-     * @return self
-     */
-    public function setTarget($target)
-    {
-        if (! is_string($target)) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid target, must be a string'
-            );
-        }
-        $this->options['target'] = $target;
-        return $this;
-    }
-
-    /**
-     * @return string Target file path or directory
-     */
-    public function getTarget()
-    {
-        return $this->options['target'];
-    }
-
-    /**
-     * @param  UploadedFileFactoryInterface $factory Factory to use to produce
-     *     filtered PSR-7 UploadedFileInterface instances.
-     * @return self
-     */
-    public function setUploadFileFactory(UploadedFileFactoryInterface $factory)
-    {
-        $this->options['upload_file_factory'] = $factory;
-        return $this;
-    }
-
-    /**
-     * @return null|UploadedFileFactoryInterface
-     */
-    public function getUploadFileFactory()
-    {
-        return $this->options['upload_file_factory'];
-    }
-
-    /**
-     * @param  bool $flag When true, this filter will use the $_FILES['name']
-     *                       as the target filename.
-     *                       Otherwise, it uses the default 'target' rules.
-     * @return self
-     */
-    public function setUseUploadName($flag = true)
-    {
-        $this->options['use_upload_name'] = (bool) $flag;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getUseUploadName()
-    {
-        return $this->options['use_upload_name'];
-    }
-
-    /**
-     * @param  bool $flag When true, this filter will use the original file
-     *                    extension for the target filename
-     * @return self
-     */
-    public function setUseUploadExtension($flag = true)
-    {
-        $this->options['use_upload_extension'] = (bool) $flag;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getUseUploadExtension()
-    {
-        return $this->options['use_upload_extension'];
-    }
-
-    /**
-     * @param  bool $flag Shall existing files be overwritten?
-     * @return self
-     */
-    public function setOverwrite($flag = true)
-    {
-        $this->options['overwrite'] = (bool) $flag;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getOverwrite()
-    {
-        return $this->options['overwrite'];
-    }
-
-    /**
-     * @param  bool $flag Shall target files have a random postfix attached?
-     * @return self
-     */
-    public function setRandomize($flag = true)
-    {
-        $this->options['randomize'] = (bool) $flag;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getRandomize()
-    {
-        return $this->options['randomize'];
-    }
-
-    /**
-     * Defined by Laminas\Filter\Filter
-     *
-     * Renames the file $value to the new name set before
-     * Returns the file $value, removing all but digit characters
-     *
-     * @param  string|array|UploadedFileInterface $value Full path of file to
-     *     change; $_FILES data array; or UploadedFileInterface instance.
-     * @return string|array|UploadedFileInterface Returns one of the following:
-     *     - New filename, for string $value
-     *     - Array with tmp_name and name keys for array $value
-     *     - UploadedFileInterface for UploadedFileInterface $value
-     * @throws Exception\RuntimeException
+     * @template T
+     * @param T $value
+     * @return (T is UploadedFileInterface
+     *  ? UploadedFileInterface
+     *  : (T is array ? array : (T is string ? string : mixed))
+     * )
      */
     public function filter(mixed $value): mixed
     {
@@ -239,8 +111,14 @@ class RenameUpload extends AbstractFilter
         }
 
         // File upload via traditional SAPI
-        if (is_array($value) && isset($value['tmp_name'])) {
-            return $this->filterSapiUploadedFile($value);
+        if (
+            is_array($value)
+            && array_key_exists('tmp_name', $value)
+            && array_key_exists('name', $value)
+        ) {
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $value;
+            return $this->filterSapiUploadedFile($uploadedFile);
         }
 
         // String filename
@@ -248,20 +126,30 @@ class RenameUpload extends AbstractFilter
             return $this->filterStringFilename($value);
         }
 
-        // Unrecognized; return verbatim
         return $value;
     }
 
     /**
-     * @param  string $sourceFile Source file path
-     * @param  string $targetFile Target file path
-     * @throws Exception\RuntimeException
-     * @return bool
+     * @psalm-suppress MixedReturnStatement
+     * @template T
+     * @param T $value
+     * @return (T is UploadedFileInterface
+     *  ? UploadedFileInterface
+     *  : (T is array ? array : (T is string ? string : mixed))
+     * )
      */
-    protected function moveUploadedFile($sourceFile, $targetFile)
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
+    }
+
+    /**
+     * @throws Exception\RuntimeException
+     */
+    private function moveUploadedFile(string $sourceFile, string $targetFile): void
     {
         ErrorHandler::start();
-        $result           = move_uploaded_file($sourceFile, $targetFile);
+        $result           = $this->uploadedFileMover->moveUploadedFile($sourceFile, $targetFile);
         $warningException = ErrorHandler::stop();
         if (! $result || null !== $warningException) {
             throw new Exception\RuntimeException(
@@ -270,22 +158,18 @@ class RenameUpload extends AbstractFilter
                 $warningException
             );
         }
-
-        return $result;
     }
 
     /**
-     * @param  string $targetFile Target file path
-     * @return void
      * @throws Exception\InvalidArgumentException
      */
-    protected function checkFileExists($targetFile)
+    private function checkFileExists(string $targetFile): void
     {
         if (! file_exists($targetFile)) {
             return;
         }
 
-        if (! $this->getOverwrite()) {
+        if (! $this->overwrite) {
             throw new Exception\InvalidArgumentException(
                 sprintf("File '%s' could not be renamed. It already exists.", $targetFile)
             );
@@ -294,15 +178,10 @@ class RenameUpload extends AbstractFilter
         unlink($targetFile);
     }
 
-    /**
-     * @param string $source
-     * @param string|null $clientFileName
-     * @return string
-     */
-    protected function getFinalTarget($source, $clientFileName)
+    private function getFinalTarget(string $source, string|null $clientFileName): string
     {
-        $target = $this->getTarget();
-        if ($target === null || $target === '*') {
+        $target = $this->targetDirectory;
+        if ($target === '*') {
             $target = $source;
         }
 
@@ -314,47 +193,41 @@ class RenameUpload extends AbstractFilter
                 $targetDir .= DIRECTORY_SEPARATOR;
             }
         } else {
-            $info      = pathinfo($target);
-            $targetDir = $info['dirname'] . DIRECTORY_SEPARATOR;
+            $targetDir = pathinfo($target, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR;
         }
 
         // Get the target filename
-        if ($this->getUseUploadName()) {
+        if ($this->useUploadName && $clientFileName !== null) {
             $targetFile = basename($clientFileName);
         } elseif (! is_dir($target)) {
             $targetFile = basename($target);
-            if ($this->getUseUploadExtension() && ! $this->getRandomize()) {
-                $targetInfo = pathinfo($targetFile);
-                $sourceinfo = pathinfo($clientFileName);
-                if (isset($sourceinfo['extension'])) {
-                    $targetFile = $targetInfo['filename'] . '.' . $sourceinfo['extension'];
+            if ($this->useUploadExtension && ! $this->randomize && $clientFileName !== null) {
+                $targetFilename  = pathinfo($targetFile, PATHINFO_FILENAME);
+                $sourceExtension = pathinfo($clientFileName, PATHINFO_EXTENSION);
+                if ($sourceExtension !== '') {
+                    $targetFile = $targetFilename . '.' . $sourceExtension;
                 }
             }
         } else {
             $targetFile = basename($source);
         }
 
-        if ($this->getRandomize()) {
+        if ($this->randomize) {
             $targetFile = $this->applyRandomToFilename($clientFileName, $targetFile);
         }
 
         return $targetDir . $targetFile;
     }
 
-    /**
-     * @param  string $source
-     * @param  string $filename
-     * @return string
-     */
-    protected function applyRandomToFilename($source, $filename)
+    private function applyRandomToFilename(string|null $source, string $filename): string
     {
         $info     = pathinfo($filename);
         $filename = $info['filename'] . str_replace('.', '_', uniqid('_', true));
 
-        $sourceinfo = pathinfo($source);
+        $sourceinfo = $source === null ? [] : pathinfo($source);
 
         $extension = '';
-        if ($this->getUseUploadExtension() === true && isset($sourceinfo['extension'])) {
+        if ($this->useUploadExtension && isset($sourceinfo['extension'])) {
             $extension .= '.' . $sourceinfo['extension'];
         } elseif (isset($info['extension'])) {
             $extension .= '.' . $info['extension'];
@@ -363,14 +236,10 @@ class RenameUpload extends AbstractFilter
         return $filename . $extension;
     }
 
-    /**
-     * @param  string $fileName
-     * @return string
-     */
-    private function filterStringFilename($fileName)
+    private function filterStringFilename(string $fileName): string
     {
-        if (isset($this->alreadyFiltered[$fileName])) {
-            return $this->alreadyFiltered[$fileName];
+        if (isset($this->alreadyFilteredByType['string'][$fileName])) {
+            return $this->alreadyFilteredByType['string'][$fileName];
         }
 
         $targetFile = $this->getFinalTarget($fileName, $fileName);
@@ -380,21 +249,21 @@ class RenameUpload extends AbstractFilter
 
         $this->checkFileExists($targetFile);
         $this->moveUploadedFile($fileName, $targetFile);
-        $this->alreadyFiltered[$fileName] = $targetFile;
+        $this->alreadyFilteredByType['string'][$fileName] = $targetFile;
 
-        return $this->alreadyFiltered[$fileName];
+        return $this->alreadyFilteredByType['string'][$fileName];
     }
 
     /**
-     * @param  array<string, mixed> $fileData
-     * @return array<string, string>
+     * @param UploadedFile $fileData
+     * @return UploadedFile
      */
-    private function filterSapiUploadedFile(array $fileData)
+    private function filterSapiUploadedFile(array $fileData): array
     {
         $sourceFile = $fileData['tmp_name'];
 
-        if (isset($this->alreadyFiltered[$sourceFile])) {
-            return $this->alreadyFiltered[$sourceFile];
+        if (isset($this->alreadyFilteredByType['upload'][$sourceFile])) {
+            return $this->alreadyFilteredByType['upload'][$sourceFile];
         }
 
         $clientFilename = $fileData['name'];
@@ -407,26 +276,29 @@ class RenameUpload extends AbstractFilter
         $this->checkFileExists($targetFile);
         $this->moveUploadedFile($sourceFile, $targetFile);
 
-        $this->alreadyFiltered[$sourceFile]             = $fileData;
-        $this->alreadyFiltered[$sourceFile]['tmp_name'] = $targetFile;
+        $this->alreadyFilteredByType['upload'][$sourceFile]             = $fileData;
+        $this->alreadyFilteredByType['upload'][$sourceFile]['tmp_name'] = $targetFile;
 
-        return $this->alreadyFiltered[$sourceFile];
+        return $this->alreadyFilteredByType['upload'][$sourceFile];
     }
 
     /**
-     * @return UploadedFileInterface
      * @throws Exception\RuntimeException If no stream factory is composed in the filter.
      * @throws Exception\RuntimeException If no uploaded file factory is composed in the filter.
      */
-    private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile)
+    private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile): UploadedFileInterface
     {
         $alreadyFilteredKey = spl_object_hash($uploadedFile);
 
-        if (isset($this->alreadyFiltered[$alreadyFilteredKey])) {
-            return $this->alreadyFiltered[$alreadyFilteredKey];
+        if (isset($this->alreadyFilteredByType['psr7'][$alreadyFilteredKey])) {
+            return $this->alreadyFilteredByType['psr7'][$alreadyFilteredKey];
         }
 
-        $sourceFile     = $uploadedFile->getStream()->getMetadata('uri');
+        $sourceFile = $uploadedFile->getStream()->getMetadata('uri');
+        if (! is_string($sourceFile)) {
+            throw new Exception\RuntimeException('UploadedFile doesn\'t contains the uri metadata');
+        }
+
         $clientFilename = $uploadedFile->getClientFilename();
         $targetFile     = $this->getFinalTarget($sourceFile, $clientFilename);
 
@@ -437,7 +309,7 @@ class RenameUpload extends AbstractFilter
         $this->checkFileExists($targetFile);
         $uploadedFile->moveTo($targetFile);
 
-        $streamFactory = $this->getStreamFactory();
+        $streamFactory = $this->streamFactory;
         if (! $streamFactory) {
             throw new Exception\RuntimeException(sprintf(
                 'No PSR-17 %s present; cannot filter file. Please pass the stream_factory'
@@ -449,7 +321,7 @@ class RenameUpload extends AbstractFilter
 
         $stream = $streamFactory->createStreamFromFile($targetFile);
 
-        $uploadedFileFactory = $this->getUploadFileFactory();
+        $uploadedFileFactory = $this->uploadedFileFactory;
         if (! $uploadedFileFactory) {
             throw new Exception\RuntimeException(sprintf(
                 'No PSR-17 %s present; cannot filter file. Please pass the upload_file_factory'
@@ -462,7 +334,7 @@ class RenameUpload extends AbstractFilter
         $size = filesize($targetFile);
         assert(is_int($size));
 
-        $this->alreadyFiltered[$alreadyFilteredKey] = $uploadedFileFactory->createUploadedFile(
+        $this->alreadyFilteredByType['psr7'][$alreadyFilteredKey] = $uploadedFileFactory->createUploadedFile(
             $stream,
             $size,
             UPLOAD_ERR_OK,
@@ -470,6 +342,6 @@ class RenameUpload extends AbstractFilter
             $uploadedFile->getClientMediaType()
         );
 
-        return $this->alreadyFiltered[$alreadyFilteredKey];
+        return $this->alreadyFilteredByType['psr7'][$alreadyFilteredKey];
     }
 }
