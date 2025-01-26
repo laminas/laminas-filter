@@ -16,11 +16,11 @@ use function in_array;
  * }
  * @implements FilterInterface<null>
  */
-final class AllowList implements FilterInterface
+final readonly class AllowList implements FilterInterface
 {
-    private readonly bool $strict;
+    private bool $strict;
     /** @var list<mixed> */
-    private readonly array $list;
+    private array $list;
 
     /** @param Options $options */
     public function __construct(array $options = [])

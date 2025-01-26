@@ -91,7 +91,10 @@ class RenameUploadTest extends TestCase
             return;
         }
 
-        foreach (glob($dir . DIRECTORY_SEPARATOR . '*') as $file) {
+        $files = glob($dir . DIRECTORY_SEPARATOR . '*');
+        self::assertIsIterable($files);
+
+        foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
                 continue;

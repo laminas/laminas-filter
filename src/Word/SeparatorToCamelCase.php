@@ -7,6 +7,7 @@ namespace Laminas\Filter\Word;
 use Laminas\Filter\FilterInterface;
 use Laminas\Filter\ScalarOrArrayFilterCallback;
 
+use function assert;
 use function mb_strtoupper;
 use function preg_quote;
 use function preg_replace_callback;
@@ -17,9 +18,9 @@ use function preg_replace_callback;
  * }
  * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-final class SeparatorToCamelCase implements FilterInterface
+final readonly class SeparatorToCamelCase implements FilterInterface
 {
-    private readonly string $separator;
+    private string $separator;
 
     /** @param Options $options */
     public function __construct(array $options = [])
@@ -37,8 +38,8 @@ final class SeparatorToCamelCase implements FilterInterface
             '#(^\P{Z}{1})#u',
         ];
         $replacements = [
-            static fn($matches): string => mb_strtoupper($matches[2], 'UTF-8'),
-            static fn($matches): string => mb_strtoupper($matches[1], 'UTF-8'),
+            static fn(array $matches): string => mb_strtoupper((string) $matches[2], 'UTF-8'),
+            static fn(array $matches): string => mb_strtoupper((string) $matches[1], 'UTF-8'),
         ];
 
         return ScalarOrArrayFilterCallback::applyRecursively(
@@ -46,7 +47,10 @@ final class SeparatorToCamelCase implements FilterInterface
             function (string $input) use ($patterns, $replacements): string {
                 $filtered = $input;
                 foreach ($patterns as $index => $pattern) {
-                    $filtered = preg_replace_callback($pattern, $replacements[$index], $filtered);
+                    $value = preg_replace_callback($pattern, $replacements[$index], $filtered);
+                    assert($value !== null);
+
+                    $filtered = $value;
                 }
                 return $filtered;
             }

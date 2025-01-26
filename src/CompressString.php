@@ -18,9 +18,9 @@ use function strtolower;
  * }
  * @implements FilterInterface<string>
  */
-final class CompressString implements FilterInterface
+final readonly class CompressString implements FilterInterface
 {
-    private readonly StringCompressionAdapterInterface $adapter;
+    private StringCompressionAdapterInterface $adapter;
 
     /** @param Options $options */
     public function __construct(array $options = [])

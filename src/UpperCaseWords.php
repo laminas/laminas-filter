@@ -13,9 +13,9 @@ use const MB_CASE_TITLE;
  * @psalm-type Options = array{encoding?: string}
  * @implements FilterInterface<string>
  */
-final class UpperCaseWords implements FilterInterface
+final readonly class UpperCaseWords implements FilterInterface
 {
-    private readonly string $encoding;
+    private string $encoding;
 
     /**
      * @param Options $options

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Filter;
 
 use function array_pop;
+use function assert;
 use function explode;
 use function file_exists;
 use function getcwd;
@@ -21,9 +22,9 @@ use const DIRECTORY_SEPARATOR;
  * }
  * @implements FilterInterface<string>
  */
-final class RealPath implements FilterInterface
+final readonly class RealPath implements FilterInterface
 {
-    private readonly bool $pathMustExist;
+    private bool $pathMustExist;
 
     /** @param Options $options */
     public function __construct(array $options = [])
@@ -50,7 +51,10 @@ final class RealPath implements FilterInterface
         $path = $value;
 
         if (! str_starts_with($path, DIRECTORY_SEPARATOR)) {
-            $path = getcwd() . DIRECTORY_SEPARATOR . $path;
+            $cwd = getcwd();
+            assert(is_string($cwd));
+
+            $path = $cwd . DIRECTORY_SEPARATOR . $path;
         }
 
         $stack = [];

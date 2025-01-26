@@ -12,9 +12,9 @@ use function sprintf;
  * }
  * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-final class StringSuffix implements FilterInterface
+final readonly class StringSuffix implements FilterInterface
 {
-    private readonly string $suffix;
+    private string $suffix;
 
     /** @param Options $options */
     public function __construct(array $options = [])

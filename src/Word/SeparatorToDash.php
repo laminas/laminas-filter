@@ -13,9 +13,9 @@ use Laminas\Filter\FilterInterface;
  * @template TOptions of Options
  * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-final class SeparatorToDash implements FilterInterface
+final readonly class SeparatorToDash implements FilterInterface
 {
-    private readonly string $separator;
+    private string $separator;
 
     /** @param Options $options */
     public function __construct(array $options = [])

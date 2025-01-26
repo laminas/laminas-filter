@@ -16,10 +16,10 @@ use function in_array;
  * }
  * @implements FilterInterface<null>
  */
-final class DenyList implements FilterInterface
+final readonly class DenyList implements FilterInterface
 {
-    private readonly array $list;
-    private readonly bool $strict;
+    private array $list;
+    private bool $strict;
 
     /** @param Options $options */
     public function __construct(array $options = [])

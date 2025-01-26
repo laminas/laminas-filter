@@ -32,7 +32,7 @@ use function strtolower;
  * }
  * @implements FilterInterface<bool>
  */
-final class Boolean implements FilterInterface
+final readonly class Boolean implements FilterInterface
 {
     public const TYPE_BOOLEAN      = 1;
     public const TYPE_INTEGER      = 2;
@@ -61,7 +61,7 @@ final class Boolean implements FilterInterface
     ];
 
     /** @var Options */
-    private readonly array $options;
+    private array $options;
 
     /**
      * @param OptionsArgument $options

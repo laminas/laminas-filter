@@ -92,10 +92,12 @@ class DecompressArchiveTest extends TestCase
     public function testThatPsr7UploadsWillBeDecompressed(string $value, string $expectFile): void
     {
         $filter = new DecompressArchive(['target' => $this->target]);
+        $size   = filesize($value);
+        self::assertIsInt($size);
 
         $upload = new UploadedFile(
             $value,
-            filesize($value),
+            $size,
             UPLOAD_ERR_OK,
             'Foo.txt',
             'text/plain',

@@ -17,9 +17,9 @@ use function str_replace;
  * @template TOptions of Options
  * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-final class DashToSeparator implements FilterInterface
+final readonly class DashToSeparator implements FilterInterface
 {
-    private readonly string $separator;
+    private string $separator;
 
     /** @param Options $options */
     public function __construct(array $options = [])

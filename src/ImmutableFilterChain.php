@@ -22,14 +22,14 @@ use Psr\Container\ContainerExceptionInterface;
  * }
  * @implements FilterChainInterface<mixed>
  */
-final class ImmutableFilterChain implements FilterChainInterface
+final readonly class ImmutableFilterChain implements FilterChainInterface
 {
     /** @var PriorityQueue<InstanceType, int> */
-    private readonly PriorityQueue $filters;
+    private PriorityQueue $filters;
 
     /** @param PriorityQueue<InstanceType, int>|null $filters */
     private function __construct(
-        private readonly FilterPluginManager $pluginManager,
+        private FilterPluginManager $pluginManager,
         PriorityQueue|null $filters,
     ) {
         /** @var PriorityQueue<InstanceType, int> $default */

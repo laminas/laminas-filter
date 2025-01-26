@@ -16,11 +16,11 @@ use function is_callable;
  * }
  * @implements FilterInterface<mixed>
  */
-final class Callback implements FilterInterface
+final readonly class Callback implements FilterInterface
 {
     /** @var Closure(mixed): mixed */
-    private readonly Closure $callback;
-    private readonly array $arguments;
+    private Closure $callback;
+    private array $arguments;
 
     /**
      * @param (callable(mixed): mixed)|Options $options

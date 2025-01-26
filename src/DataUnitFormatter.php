@@ -19,7 +19,7 @@ use function sprintf;
  * }
  * @implements FilterInterface<string>
  */
-final class DataUnitFormatter implements FilterInterface
+final readonly class DataUnitFormatter implements FilterInterface
 {
     public const MODE_BINARY  = 'binary';
     public const MODE_DECIMAL = 'decimal';
@@ -43,9 +43,9 @@ final class DataUnitFormatter implements FilterInterface
     ];
 
     /** @var self::MODE_DECIMAL|self::MODE_BINARY */
-    private readonly string $mode;
+    private string $mode;
     /** @var positive-int */
-    private readonly int $precision;
+    private int $precision;
 
     /**
      * @param Options $options

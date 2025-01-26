@@ -12,7 +12,7 @@ use function is_array;
 /**
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  */
-final class FilterPluginManagerFactory
+final readonly class FilterPluginManagerFactory
 {
     public function __invoke(ContainerInterface $container): FilterPluginManager
     {

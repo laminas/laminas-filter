@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+<files psalm-version="6.0.0@b8e96bb617bf59382113b1b56cef751f648a7dc9">
   <file src="src/AbstractFilter.php">
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[[]]]></code>
@@ -54,12 +54,12 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$file['target']]]></code>
     </MixedReturnStatement>
+    <PossiblyFalseArgument>
+      <code><![CDATA[realpath($file['target'])]]></code>
+    </PossiblyFalseArgument>
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$files['source']]]></code>
       <code><![CDATA[$rename['randomize']]]></code>
@@ -125,11 +125,6 @@
       <code><![CDATA[$sourceFile]]></code>
       <code><![CDATA[$sourceFile]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[UploadedFileInterface]]></code>
-      <code><![CDATA[array<string, string>]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->alreadyFiltered[$alreadyFilteredKey]]]></code>
       <code><![CDATA[$this->alreadyFiltered[$fileName]]]></code>
@@ -178,20 +173,6 @@
     <UnusedClass>
       <code><![CDATA[Module]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/Word/SeparatorToCamelCase.php">
-    <MissingClosureParamType>
-      <code><![CDATA[$matches]]></code>
-      <code><![CDATA[$matches]]></code>
-    </MissingClosureParamType>
-    <MixedArgument>
-      <code><![CDATA[$matches[1]]]></code>
-      <code><![CDATA[$matches[2]]]></code>
-    </MixedArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$matches[1]]]></code>
-      <code><![CDATA[$matches[2]]]></code>
-    </MixedArrayAccess>
   </file>
   <file src="test/DenyListTest.php">
     <MixedArrayAccess>

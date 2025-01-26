@@ -7,7 +7,7 @@ namespace Laminas\Filter;
 use function is_scalar;
 
 /** @implements FilterInterface<int> */
-final class ToInt implements FilterInterface
+final readonly class ToInt implements FilterInterface
 {
     /**
      * Casts scalar values to integer

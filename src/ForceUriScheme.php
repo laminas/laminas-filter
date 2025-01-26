@@ -18,12 +18,12 @@ use function sprintf;
  * @psalm-type Options = array{scheme: non-empty-string}
  * @implements FilterInterface<string>
  */
-final class ForceUriScheme implements FilterInterface
+final readonly class ForceUriScheme implements FilterInterface
 {
     private const DEFAULT_SCHEME = 'https';
 
     /** @var non-empty-string */
-    private readonly string $scheme;
+    private string $scheme;
 
     /** @param Options $options */
     public function __construct(array $options = ['scheme' => self::DEFAULT_SCHEME])

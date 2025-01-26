@@ -118,7 +118,10 @@ class TarAdapterTest extends TestCase
         $expectFile = $this->dir . '/File1.txt';
 
         self::assertFileExists($expectFile);
-        self::assertSame('File 1', trim(file_get_contents($expectFile)));
+        $contents = file_get_contents($expectFile);
+        self::assertIsString($contents);
+
+        self::assertSame('File 1', trim($contents));
     }
 
     public function testCompressFileThatDoesNotExist(): void

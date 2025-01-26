@@ -11,7 +11,7 @@ use function is_string;
  * @psalm-immutable
  * @implements FilterInterface<string>
  */
-final class BaseName implements FilterInterface
+final readonly class BaseName implements FilterInterface
 {
     /**
      * Returns basename($value).

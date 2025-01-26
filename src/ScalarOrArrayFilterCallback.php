@@ -19,7 +19,7 @@ use function is_scalar;
  * @psalm-internal \Laminas
  * @psalm-internal \LaminasTest
  */
-final class ScalarOrArrayFilterCallback
+final readonly class ScalarOrArrayFilterCallback
 {
     /**
      * Recursively applies a callback to an array of scalars or scalar input. Non-scalar values are skipped.

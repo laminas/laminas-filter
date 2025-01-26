@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 use function assert;
 
 /** @psalm-import-type FilterChainConfiguration from FilterChain */
-final class FilterChainFactory implements FactoryInterface
+final readonly class FilterChainFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, string $requestedName, ?array $options = null): FilterChain
     {

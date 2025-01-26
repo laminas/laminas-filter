@@ -22,10 +22,10 @@ use function is_writable;
  * }
  * @implements FilterInterface<non-empty-string>
  */
-final class DecompressArchive implements FilterInterface
+final readonly class DecompressArchive implements FilterInterface
 {
     /** @var non-empty-string */
-    private readonly string $target;
+    private string $target;
     private ArchiveAdapterResolverInterface $matcher;
 
     /** @param Options $options */

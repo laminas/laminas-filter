@@ -22,7 +22,7 @@
             "composer/package-versions-deprecated": true
         },
         "platform": {
-            "php": "8.1.99"
+            "php": "8.2.99"
         }
     },
     "extra": {
@@ -32,7 +32,7 @@
         }
     },
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-mbstring": "*",
         "laminas/laminas-servicemanager": "^4.1.0",
         "laminas/laminas-stdlib": "^3.19.0",
@@ -43,10 +43,10 @@
         "laminas/laminas-diactoros": "^3.5",
         "pear/archive_tar": "^1.5.0",
         "pear/pear": "^1.10.16",
-        "phpunit/phpunit": "^10.5.40",
-        "psalm/plugin-phpunit": "^0.19.0",
+        "phpunit/phpunit": "^11.5.3",
+        "psalm/plugin-phpunit": "^0.19.2",
         "psr/http-factory": "^1.1.0",
-        "vimeo/psalm": "^5.26.1"
+        "vimeo/psalm": "^6.0.0"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",

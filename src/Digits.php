@@ -10,7 +10,7 @@ use function is_string;
 use function preg_replace;
 
 /** @implements FilterInterface<numeric-string|''> */
-final class Digits implements FilterInterface
+final readonly class Digits implements FilterInterface
 {
     /**
      * Returns the string $value, removing all but digit characters

@@ -17,9 +17,9 @@ use function strtolower;
  * }
  * @implements FilterInterface<string>
  */
-final class DecompressString implements FilterInterface
+final readonly class DecompressString implements FilterInterface
 {
-    private readonly StringCompressionAdapterInterface $adapter;
+    private StringCompressionAdapterInterface $adapter;
 
     /** @param Options $options */
     public function __construct(array $options = [])

@@ -58,18 +58,26 @@ class UpperCaseTest extends TestCase
 
     public function testInstanceCreationAndNormalWorkflow(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        $contents = file_get_contents($this->testFile);
+        self::assertIsString($contents);
+        self::assertStringContainsString('This is a File', $contents);
         $filter = new FileUpperCase();
         $filter($this->testFile);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        $contents = file_get_contents($this->testFile);
+        self::assertIsString($contents);
+        self::assertStringContainsString('THIS IS A FILE', $contents);
     }
 
     public function testNormalWorkflowWithFilesArray(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        $contents = file_get_contents($this->testFile);
+        self::assertIsString($contents);
+        self::assertStringContainsString('This is a File', $contents);
         $filter = new FileUpperCase();
         $filter(['tmp_name' => $this->testFile]);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        $contents = file_get_contents($this->testFile);
+        self::assertIsString($contents);
+        self::assertStringContainsString('THIS IS A FILE', $contents);
     }
 
     public function testFileNotFoundException(): void
@@ -82,10 +90,14 @@ class UpperCaseTest extends TestCase
 
     public function testCheckSettingOfEncodingInInstance(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        $content = file_get_contents($this->testFile);
+        self::assertIsString($content);
+        self::assertStringContainsString('This is a File', $content);
         $filter = new FileUpperCase(['encoding' => 'ISO-8859-1']);
         $filter($this->testFile);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        $content = file_get_contents($this->testFile);
+        self::assertIsString($content);
+        self::assertStringContainsString('THIS IS A FILE', $content);
     }
 
     public static function returnUnfilteredDataProvider(): array

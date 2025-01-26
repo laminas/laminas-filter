@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 use function assert;
 
 /** @psalm-import-type Options from Inflector */
-final class InflectorFactory implements FactoryInterface
+final readonly class InflectorFactory implements FactoryInterface
 {
     /** @param array<array-key, mixed> $options */
     public function __invoke(

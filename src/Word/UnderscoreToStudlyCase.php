@@ -14,7 +14,7 @@ use function mb_strtolower;
 use function mb_substr;
 
 /** @implements FilterInterface<string|array<array-key, string|mixed>> */
-final class UnderscoreToStudlyCase implements FilterInterface
+final readonly class UnderscoreToStudlyCase implements FilterInterface
 {
     public function filter(mixed $value): mixed
     {

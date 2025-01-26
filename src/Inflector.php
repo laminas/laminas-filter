@@ -35,19 +35,19 @@ use function str_starts_with;
  * }
  * @implements FilterInterface<string>
  */
-final class Inflector implements FilterInterface
+final readonly class Inflector implements FilterInterface
 {
     /** @var non-empty-string */
-    private readonly string $target;
-    private readonly bool $throwTargetExceptionsOn;
+    private string $target;
+    private bool $throwTargetExceptionsOn;
     /** @var non-empty-string */
-    private readonly string $targetReplacementIdentifier;
+    private string $targetReplacementIdentifier;
     /** @var array<string, string|list<InstanceType>> */
-    private readonly array $rules;
+    private array $rules;
 
     /** @param Options $options */
     public function __construct(
-        private readonly FilterPluginManager $pluginManager,
+        private FilterPluginManager $pluginManager,
         array $options,
     ) {
         $target = $options['target'] ?? null;
@@ -153,6 +153,7 @@ final class Inflector implements FilterInterface
         // all of the values of processedParts would have been str_replace('\\', '\\\\', ..)'d
         // to disable preg_replace backreferences
         $inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->target);
+        assert($inflectedTarget !== null);
 
         if (
             $this->throwTargetExceptionsOn

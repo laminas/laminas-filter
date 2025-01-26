@@ -11,9 +11,9 @@ use function mb_strtoupper;
  * @psalm-type Options = array{encoding?: string}
  * @implements FilterInterface<string>
  */
-final class StringToUpper implements FilterInterface
+final readonly class StringToUpper implements FilterInterface
 {
-    private readonly string $encoding;
+    private string $encoding;
 
     /**
      * @param Options $options

@@ -9,7 +9,7 @@ use Stringable;
 use function is_scalar;
 
 /** @implements FilterInterface<string> */
-final class ToString implements FilterInterface
+final readonly class ToString implements FilterInterface
 {
     /**
      * Returns (string) $value

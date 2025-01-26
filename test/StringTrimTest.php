@@ -9,6 +9,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
+use function is_string;
 use function mb_chr;
 use function str_repeat;
 
@@ -17,14 +19,21 @@ class StringTrimTest extends TestCase
     /** @return array<string, array{0: mixed, 1: mixed}> */
     public static function defaultBehaviourDataProvider(): array
     {
+        $mbChr = static function (int $code): string {
+            $value = mb_chr($code);
+            assert(is_string($value));
+
+            return $value;
+        };
+
         return [
             'Ascii, no whitespace'    => ['string', 'string'],
             'Empty String'            => ['', ''],
             'Only Ascii whitespace'   => ["   \n\t   ", ''],
-            'Only Unicode whitespace' => [str_repeat(mb_chr(0x2029), 10), ''],
-            'Narrow Spaces'           => [mb_chr(0x202F) . 'Foo' . mb_chr(0x202F), 'Foo'],
-            'Em Spaces'               => [mb_chr(0x2003) . 'Foo' . mb_chr(0x2003), 'Foo'],
-            'Thin Spaces'             => [mb_chr(0x2009) . 'Foo' . mb_chr(0x2009), 'Foo'],
+            'Only Unicode whitespace' => [str_repeat($mbChr(0x2029), 10), ''],
+            'Narrow Spaces'           => [$mbChr(0x202F) . 'Foo' . $mbChr(0x202F), 'Foo'],
+            'Em Spaces'               => [$mbChr(0x2003) . 'Foo' . $mbChr(0x2003), 'Foo'],
+            'Thin Spaces'             => [$mbChr(0x2009) . 'Foo' . $mbChr(0x2009), 'Foo'],
             'ZF-7183'                 => ['Зенд', 'Зенд'],
             'ZF-170'                  => ['Расчет', 'Расчет'],
             'ZF-7902'                 => ['/', '/'],

@@ -10,7 +10,7 @@ use function is_string;
 /**
  * @implements FilterInterface<string>
  */
-final class Dir implements FilterInterface
+final readonly class Dir implements FilterInterface
 {
     /**
      * Defined by Laminas\Filter\FilterInterface

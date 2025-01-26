@@ -7,7 +7,7 @@ namespace Laminas\Filter\Word;
 use Laminas\Filter\FilterInterface;
 
 /** @implements FilterInterface<string|array<array-key, string|mixed>> */
-final class UnderscoreToDash implements FilterInterface
+final readonly class UnderscoreToDash implements FilterInterface
 {
     public function filter(mixed $value): mixed
     {

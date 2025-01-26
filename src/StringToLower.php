@@ -11,9 +11,9 @@ use function mb_strtolower;
  * @psalm-type Options = array{encoding?: string}
  * @implements FilterInterface<string>
  */
-final class StringToLower implements FilterInterface
+final readonly class StringToLower implements FilterInterface
 {
-    private readonly string $encoding;
+    private string $encoding;
 
     /**
      * @param Options $options

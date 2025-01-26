@@ -21,13 +21,13 @@ use function is_string;
  * }
  * @implements FilterInterface<non-empty-string>
  */
-final class CompressToArchive implements FilterInterface
+final readonly class CompressToArchive implements FilterInterface
 {
-    private readonly ArchiveAdapterInterface $adapter;
+    private ArchiveAdapterInterface $adapter;
     /** @var non-empty-string */
-    private readonly string $archive;
+    private string $archive;
     /** @var non-empty-string|null */
-    private readonly string|null $fileName;
+    private string|null $fileName;
 
     /** @param Options $options */
     public function __construct(array $options)

@@ -19,7 +19,7 @@ use function sprintf;
  * }
  * @implements FilterInterface<null>
  */
-final class ToNull implements FilterInterface
+final readonly class ToNull implements FilterInterface
 {
     public const TYPE_BOOLEAN     = 1;
     public const TYPE_INTEGER     = 2;
@@ -40,7 +40,7 @@ final class ToNull implements FilterInterface
     ];
 
     /** @var int-mask-of<self::TYPE_*> */
-    private readonly int $type;
+    private int $type;
 
     /** @param Options $options */
     public function __construct(array $options = [])

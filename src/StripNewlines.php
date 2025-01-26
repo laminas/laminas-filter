@@ -7,7 +7,7 @@ namespace Laminas\Filter;
 use function str_replace;
 
 /** @implements FilterInterface<string|array<array-key, string|mixed>> */
-final class StripNewlines implements FilterInterface
+final readonly class StripNewlines implements FilterInterface
 {
     /**
      * Returns $value without newline control characters

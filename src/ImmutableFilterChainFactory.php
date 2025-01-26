@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 use function assert;
 
 /** @psalm-import-type ChainSpec from ImmutableFilterChain */
-final class ImmutableFilterChainFactory implements FactoryInterface
+final readonly class ImmutableFilterChainFactory implements FactoryInterface
 {
     public function __invoke(
         ContainerInterface $container,

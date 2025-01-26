@@ -21,17 +21,17 @@ use function is_string;
  * }
  * @implements FilterInterface<string>
  */
-final class DateTimeFormatter implements FilterInterface
+final readonly class DateTimeFormatter implements FilterInterface
 {
     /**
      * A valid format string accepted by date()
      */
-    private readonly string $format;
+    private string $format;
 
     /**
      * A valid timezone string
      */
-    private readonly DateTimeZone $timezone;
+    private DateTimeZone $timezone;
 
     /**
      * @param Options $options
