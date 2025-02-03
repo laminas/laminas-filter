@@ -63,7 +63,9 @@ class RealPathTest extends TestCase
         $path = './nonexistent';
 
         if (str_contains(PHP_OS, 'BSD')) {
-            self::assertSame(getcwd() . '/nonexistent', $filter($path));
+            $cwd = getcwd();
+            self::assertIsString($cwd);
+            self::assertSame($cwd . '/nonexistent', $filter($path));
         } else {
             self::assertSame($path, $filter($path));
         }
@@ -71,12 +73,15 @@ class RealPathTest extends TestCase
 
     public static function returnNonExistentPathDataProvider(): array
     {
+        $cwd = getcwd();
+        self::assertIsString($cwd);
+
         return [
             ['/nonexistent/absolute/path', '/nonexistent/absolute/path'],
             ['/nonexistent/absolute/extra///slashes', '/nonexistent/absolute/extra/slashes'],
-            ['./nonexistent/relative/path', getcwd() . '/nonexistent/relative/path'],
-            ['./dropped/parts/../../path', getcwd() . '/path'],
-            ['../relative/from/parent', dirname(getcwd()) . '/relative/from/parent'],
+            ['./nonexistent/relative/path', $cwd . '/nonexistent/relative/path'],
+            ['./dropped/parts/../../path', $cwd . '/path'],
+            ['../relative/from/parent', dirname($cwd) . '/relative/from/parent'],
         ];
     }
 

@@ -153,6 +153,7 @@ final class Inflector implements FilterInterface
         // all of the values of processedParts would have been str_replace('\\', '\\\\', ..)'d
         // to disable preg_replace backreferences
         $inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->target);
+        assert($inflectedTarget !== null);
 
         if (
             $this->throwTargetExceptionsOn

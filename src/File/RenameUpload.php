@@ -11,11 +11,13 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
+use function assert;
 use function basename;
 use function file_exists;
 use function filesize;
 use function is_array;
 use function is_dir;
+use function is_int;
 use function is_string;
 use function move_uploaded_file;
 use function pathinfo;
@@ -457,9 +459,12 @@ class RenameUpload extends AbstractFilter
             ));
         }
 
+        $size = filesize($targetFile);
+        assert(is_int($size));
+
         $this->alreadyFiltered[$alreadyFilteredKey] = $uploadedFileFactory->createUploadedFile(
             $stream,
-            filesize($targetFile),
+            $size,
             UPLOAD_ERR_OK,
             $uploadedFile->getClientFilename(),
             $uploadedFile->getClientMediaType()

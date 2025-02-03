@@ -7,7 +7,9 @@ namespace Laminas\Filter\Word;
 use Laminas\Filter\FilterInterface;
 use Laminas\Filter\ScalarOrArrayFilterCallback;
 
+use function assert;
 use function implode;
+use function is_array;
 use function preg_split;
 
 use const PREG_SPLIT_DELIM_CAPTURE;
@@ -37,24 +39,29 @@ final class CamelCaseToSeparator implements FilterInterface
 
     public function filter(mixed $value): mixed
     {
-        $pattern = <<<REGEXP
-        /
-        (
-            (?:\p{Lu}\p{Ll}+) # Upper followed by lower
-            |
-            (?:\p{Lu}+(?!\p{Ll})) # Upper not followed by lower
-            |
-            (?:\p{N}+) # Runs of numbers
-        )
-        /ux
-        REGEXP;
-
         return ScalarOrArrayFilterCallback::applyRecursively(
             $value,
-            fn (string $input): string => implode(
-                $this->separator,
-                preg_split($pattern, $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY),
-            )
+            function (string $input): string {
+                $pattern = <<<REGEXP
+                /
+                (
+                    (?:\p{Lu}\p{Ll}+) # Upper followed by lower
+                    |
+                    (?:\p{Lu}+(?!\p{Ll})) # Upper not followed by lower
+                    |
+                    (?:\p{N}+) # Runs of numbers
+                )
+                /ux
+                REGEXP;
+
+                $parts = preg_split($pattern, $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                assert(is_array($parts));
+
+                return implode(
+                    $this->separator,
+                    $parts,
+                );
+            },
         );
     }
 }

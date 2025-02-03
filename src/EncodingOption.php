@@ -22,7 +22,7 @@ final class EncodingOption
     public static function assert(string $encoding): string
     {
         $encoding  = strtolower($encoding);
-        $available = array_map('strtolower', mb_list_encodings());
+        $available = array_map(strtolower(...), mb_list_encodings());
         if (! in_array($encoding, $available, true)) {
             throw new InvalidArgumentException(sprintf(
                 "Encoding '%s' is not supported by the mbstring extension",

@@ -58,8 +58,8 @@ final class Bz2Adapter implements StringCompressionAdapterInterface
     {
         $decompressed = bzdecompress($value);
 
-        if (is_int($decompressed)) {
-            throw new RuntimeException(sprintf('Error during decompression: Bz Error code %d', $decompressed));
+        if (is_int($decompressed) || $decompressed === false) {
+            throw new RuntimeException(sprintf('Error during decompression: Bz Error code %d', (string) $decompressed));
         }
 
         assert($decompressed !== '');

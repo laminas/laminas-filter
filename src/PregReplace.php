@@ -8,6 +8,7 @@ use Laminas\Filter\Exception\InvalidArgumentException;
 
 use function array_filter;
 use function array_values;
+use function assert;
 use function is_array;
 use function is_string;
 use function preg_match;
@@ -46,7 +47,12 @@ final class PregReplace implements FilterInterface
     {
         return ScalarOrArrayFilterCallback::applyRecursively(
             $value,
-            fn (string $value): string => preg_replace($this->pattern, $this->replacement, $value),
+            function (string $value): string {
+                $result = preg_replace($this->pattern, $this->replacement, $value);
+                assert(is_string($result));
+
+                return $result;
+            },
         );
     }
 

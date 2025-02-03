@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
+use function assert;
 use function is_string;
 use function preg_replace;
 
@@ -48,10 +49,14 @@ final class StringTrim implements FilterInterface
             ['\\\\\\0', '\\', '\/'],
             $this->charlist,
         );
+        assert(is_string($chars));
 
         $pattern = '/^[' . $chars . ']+|[' . $chars . ']+$/usSD';
 
-        return preg_replace($pattern, '', $value);
+        $value = preg_replace($pattern, '', $value);
+        assert(is_string($value));
+
+        return $value;
     }
 
     public function __invoke(mixed $value): mixed

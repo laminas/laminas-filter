@@ -58,18 +58,18 @@ class UpperCaseTest extends TestCase
 
     public function testInstanceCreationAndNormalWorkflow(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', $this->fileGetContents($this->testFile));
         $filter = new FileUpperCase();
         $filter($this->testFile);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        self::assertStringContainsString('THIS IS A FILE', $this->fileGetContents($this->testFile));
     }
 
     public function testNormalWorkflowWithFilesArray(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', $this->fileGetContents($this->testFile));
         $filter = new FileUpperCase();
         $filter(['tmp_name' => $this->testFile]);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        self::assertStringContainsString('THIS IS A FILE', $this->fileGetContents($this->testFile));
     }
 
     public function testFileNotFoundException(): void
@@ -82,10 +82,18 @@ class UpperCaseTest extends TestCase
 
     public function testCheckSettingOfEncodingInInstance(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', $this->fileGetContents($this->testFile));
         $filter = new FileUpperCase(['encoding' => 'ISO-8859-1']);
         $filter($this->testFile);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        self::assertStringContainsString('THIS IS A FILE', $this->fileGetContents($this->testFile));
+    }
+
+    private function fileGetContents(string $path): string
+    {
+        $content = file_get_contents($path);
+        self::assertIsString($content);
+
+        return $content;
     }
 
     public static function returnUnfilteredDataProvider(): array
