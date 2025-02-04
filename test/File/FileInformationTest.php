@@ -54,10 +54,12 @@ class FileInformationTest extends TestCase
     public function testExpectedValuesForUploadedFile(): void
     {
         $path = __DIR__ . '/fixtures/File1.txt';
+        $size = filesize($path);
+        self::assertIsInt($size);
 
         $upload = new UploadedFile(
             $path,
-            filesize($path),
+            $size,
             UPLOAD_ERR_OK,
             'Foo.txt',
             'text/plain',

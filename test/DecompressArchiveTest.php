@@ -93,9 +93,12 @@ class DecompressArchiveTest extends TestCase
     {
         $filter = new DecompressArchive(['target' => $this->target]);
 
+        $size = filesize($value);
+        self::assertIsInt($size);
+
         $upload = new UploadedFile(
             $value,
-            filesize($value),
+            $size,
             UPLOAD_ERR_OK,
             'Foo.txt',
             'text/plain',

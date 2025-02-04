@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\File;
 
+use finfo;
 use Laminas\Filter\Exception\RuntimeException;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -38,6 +39,7 @@ final class FileInformation
     {
         if ($this->mediaType === null) {
             $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+            assert($fileInfo instanceof finfo);
 
             $mime = $fileInfo->file($this->path);
             assert(is_string($mime));

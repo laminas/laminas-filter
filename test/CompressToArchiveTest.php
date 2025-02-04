@@ -128,9 +128,11 @@ class CompressToArchiveTest extends TestCase
     {
         $filter = new CompressToArchive($options);
         $path   = __DIR__ . '/Compress/fixtures/directory-to-compress/File1.txt';
+        $size   = filesize($path);
+        self::assertIsInt($size);
         $upload = new UploadedFile(
             $path,
-            filesize($path),
+            $size,
             UPLOAD_ERR_OK,
             'Foo.txt',
             'text/plain',
