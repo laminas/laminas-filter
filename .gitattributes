@@ -12,3 +12,5 @@
 /test/ export-ignore
 /.laminas-ci.json export-ignore
 /.laminas-ci/
+/tools/ export-ignore
+/Makefile export-ignore

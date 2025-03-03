@@ -1,0 +1,12 @@
+{
+    "symbol-whitelist" : [
+        "Archive_Tar",
+        "bzcompress",
+        "bzdecompress",
+        "gzcompress",
+        "gzdeflate",
+        "gzinflate",
+        "gzuncompress",
+        "ZipArchive"
+    ]
+}
