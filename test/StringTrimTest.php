@@ -14,7 +14,7 @@ use function is_string;
 use function mb_chr;
 use function str_repeat;
 
-class StringTrimTest extends TestCase
+final class StringTrimTest extends TestCase
 {
     /** @return array<string, array{0: mixed, 1: mixed}> */
     public static function defaultBehaviourDataProvider(): array

@@ -10,7 +10,7 @@ use function is_string;
 use function strtolower;
 
 /** @implements FilterInterface<string> */
-class LowerCase implements FilterInterface
+final class LowerCase implements FilterInterface
 {
     /** @inheritDoc */
     public function filter(mixed $value): mixed

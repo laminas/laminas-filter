@@ -8,7 +8,7 @@ use Laminas\Filter\Word\CamelCaseToUnderscore as CamelCaseToUnderscoreFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class CamelCaseToUnderscoreTest extends TestCase
+final class CamelCaseToUnderscoreTest extends TestCase
 {
     /** @return list<array{string, string}> */
     public static function camelCasedWordsProvider(): array

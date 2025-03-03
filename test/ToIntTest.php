@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 use const PHP_INT_MAX;
 
-class ToIntTest extends TestCase
+final class ToIntTest extends TestCase
 {
     /** @return array<string, array{0: mixed, 1: mixed}> */
     public static function basicDataProvider(): array

@@ -9,7 +9,7 @@ use Laminas\Filter\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class DataUnitFormatterTest extends TestCase
+final class DataUnitFormatterTest extends TestCase
 {
     #[DataProvider('decimalBytesTestProvider')]
     public function testDecimalBytes(float $value, string $expected): void

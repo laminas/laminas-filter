@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class SeparatorToSeparatorTest extends TestCase
+final class SeparatorToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesWordsByDefault(): void
     {

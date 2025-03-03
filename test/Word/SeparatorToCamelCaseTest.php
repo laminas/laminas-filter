@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class SeparatorToCamelCaseTest extends TestCase
+final class SeparatorToCamelCaseTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault(): void
     {

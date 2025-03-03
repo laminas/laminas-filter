@@ -7,7 +7,7 @@ namespace LaminasTest\Filter\Word;
 use Laminas\Filter\Word\UnderscoreToStudlyCase;
 use PHPUnit\Framework\TestCase;
 
-class UnderscoreToStudlyCaseTest extends TestCase
+final class UnderscoreToStudlyCaseTest extends TestCase
 {
     public function testFilterSeparatesStudlyCasedWordsWithDashes(): void
     {

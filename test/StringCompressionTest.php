@@ -17,7 +17,7 @@ use function sprintf;
 
 #[CoversClass(CompressString::class)]
 #[CoversClass(DecompressString::class)]
-class StringCompressionTest extends TestCase
+final class StringCompressionTest extends TestCase
 {
     /** @return array<string, array{0: 'bz2'|'gz', 1: int<1, 9>}> */
     public static function settingsProvider(): array

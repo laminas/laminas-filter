@@ -9,7 +9,7 @@ use Laminas\ServiceManager\ServiceManager;
 /**
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  */
-class Module
+final class Module
 {
     /**
      * Return default laminas-filter configuration for laminas-mvc applications.

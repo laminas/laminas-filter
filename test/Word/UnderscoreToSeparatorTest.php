@@ -7,7 +7,7 @@ namespace LaminasTest\Filter\Word;
 use Laminas\Filter\Word\UnderscoreToSeparator as UnderscoreToSeparatorFilter;
 use PHPUnit\Framework\TestCase;
 
-class UnderscoreToSeparatorTest extends TestCase
+final class UnderscoreToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsDefaultSeparator(): void
     {

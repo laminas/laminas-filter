@@ -17,7 +17,7 @@ use function var_export;
  * @psalm-import-type TypeOption from Boolean
  * @psalm-import-type OptionsArgument from Boolean
  */
-class BooleanTest extends TestCase
+final class BooleanTest extends TestCase
 {
     /**
      * @return list<array{0: OptionsArgument, 1: mixed, 2: mixed}>

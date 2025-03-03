@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class StringToUpperTest extends TestCase
+final class StringToUpperTest extends TestCase
 {
     private StringToUpperFilter $filter;
 

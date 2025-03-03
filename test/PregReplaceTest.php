@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class PregReplaceTest extends TestCase
+final class PregReplaceTest extends TestCase
 {
     public function testPassingPatternToConstructorSetsPattern(): void
     {

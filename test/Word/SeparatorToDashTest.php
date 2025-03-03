@@ -7,7 +7,7 @@ namespace LaminasTest\Filter\Word;
 use Laminas\Filter\Word\SeparatorToDash as SeparatorToDashFilter;
 use PHPUnit\Framework\TestCase;
 
-class SeparatorToDashTest extends TestCase
+final class SeparatorToDashTest extends TestCase
 {
     public function testFilterSeparatesDashedWordsWithDefaultSpaces(): void
     {

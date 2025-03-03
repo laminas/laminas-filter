@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class DirTest extends TestCase
+final class DirTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior

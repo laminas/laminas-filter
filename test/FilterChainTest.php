@@ -24,7 +24,7 @@ use function trim;
 /**
  * @psalm-import-type FilterChainConfiguration from FilterChain
  */
-class FilterChainTest extends TestCase
+final class FilterChainTest extends TestCase
 {
     private FilterPluginManager $plugins;
 

@@ -6,7 +6,7 @@ namespace LaminasTest\Filter\TestAsset;
 
 use Stringable;
 
-class StringClass implements Stringable
+final class StringClass implements Stringable
 {
     public function __construct(
         private readonly string $string,

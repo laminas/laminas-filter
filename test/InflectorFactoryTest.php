@@ -14,7 +14,7 @@ use Laminas\ServiceManager\ServiceManager;
 use LaminasTest\Filter\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\TestCase;
 
-class InflectorFactoryTest extends TestCase
+final class InflectorFactoryTest extends TestCase
 {
     public function testTheFactoryWillProduceAFilterWithExpectedBehaviourBasedOnOptions(): void
     {

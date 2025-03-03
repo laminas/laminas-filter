@@ -21,7 +21,7 @@ use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
-class UpperCaseTest extends TestCase
+final class UpperCaseTest extends TestCase
 {
     private string $testFile;
 

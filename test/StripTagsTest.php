@@ -12,7 +12,7 @@ use stdClass;
 
 use function iconv;
 
-class StripTagsTest extends TestCase
+final class StripTagsTest extends TestCase
 {
     /**
      * Ensures that a single unclosed tag is stripped in its entirety

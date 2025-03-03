@@ -18,7 +18,7 @@ use function sprintf;
 
 use const E_WARNING;
 
-class GzAdapterTest extends TestCase
+final class GzAdapterTest extends TestCase
 {
     public function setUp(): void
     {

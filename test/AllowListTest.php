@@ -17,7 +17,7 @@ use function is_array;
 use function sprintf;
 use function var_export;
 
-class AllowListTest extends TestCase
+final class AllowListTest extends TestCase
 {
     public function testConstructorOptions(): void
     {

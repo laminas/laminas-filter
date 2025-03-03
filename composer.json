@@ -43,10 +43,10 @@
         "laminas/laminas-diactoros": "^3.5",
         "pear/archive_tar": "^1.5.0",
         "pear/pear": "^1.10.16",
-        "phpunit/phpunit": "^10.5.44",
+        "phpunit/phpunit": "^10.5.45",
         "psalm/plugin-phpunit": "^0.19.2",
         "psr/http-factory": "^1.1.0",
-        "vimeo/psalm": "^6.2.0"
+        "vimeo/psalm": "^6.8.8"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",

@@ -16,7 +16,7 @@ use function str_replace;
 use function str_split;
 
 /** @psalm-import-type InstanceType from ImmutableFilterChain */
-class ImmutableFilterChainTest extends TestCase
+final class ImmutableFilterChainTest extends TestCase
 {
     private FilterPluginManager $plugins;
 

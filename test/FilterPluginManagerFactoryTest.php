@@ -13,7 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-class FilterPluginManagerFactoryTest extends TestCase
+final class FilterPluginManagerFactoryTest extends TestCase
 {
     public function testFactoryReturnsPluginManager(): void
     {

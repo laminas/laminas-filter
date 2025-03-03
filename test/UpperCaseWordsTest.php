@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class UpperCaseWordsTest extends TestCase
+final class UpperCaseWordsTest extends TestCase
 {
     private UpperCaseWordsFilter $filter;
 

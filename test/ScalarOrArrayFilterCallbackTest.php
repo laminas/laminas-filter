@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 use function strtolower;
 
-class ScalarOrArrayFilterCallbackTest extends TestCase
+final class ScalarOrArrayFilterCallbackTest extends TestCase
 {
     /** @var Closure(string): string */
     private Closure $filter;

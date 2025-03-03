@@ -14,7 +14,7 @@ use function sprintf;
 use function var_export;
 
 /** @psalm-import-type TypeArgument from ToNull */
-class ToNullTest extends TestCase
+final class ToNullTest extends TestCase
 {
     public function testConstructorOptions(): void
     {

@@ -22,7 +22,7 @@ use function sys_get_temp_dir;
 use const UPLOAD_ERR_OK;
 
 /** @psalm-import-type Options from CompressToArchive */
-class CompressToArchiveTest extends TestCase
+final class CompressToArchiveTest extends TestCase
 {
     /** @var non-empty-string */
     private string $tmp;
