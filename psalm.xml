@@ -9,6 +9,7 @@
     findUnusedPsalmSuppress="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="true"
+    strictBinaryOperands="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -29,5 +30,14 @@
                 <directory name="test" />
             </errorLevel>
         </PossiblyUnusedMethod>
+
+        <!-- Ignore missing #[Override] -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="test" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+
     </issueHandlers>
 </psalm>
