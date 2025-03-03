@@ -85,6 +85,10 @@ final class DenyListTest extends TestCase
         self::assertSame($expected, $filter->filter($value));
     }
 
+    /**
+     * @param array<array-key, mixed> $list
+     * @param list<array{0: mixed, 1: mixed}> $testData
+     */
     #[DataProvider('listTestProvider')]
     public function testList(bool $strict, array $list, array $testData): void
     {
@@ -93,8 +97,12 @@ final class DenyListTest extends TestCase
             'list'   => $list,
         ]);
         foreach ($testData as $data) {
-            [$value, $expected] = $data;
-            $message            = sprintf(
+            /**
+             * @var mixed $value
+             * @var mixed $expected
+             */
+            [0 => $value, 1 => $expected] = $data;
+            $message                      = sprintf(
                 '%s (%s) is not filtered as %s; type = %s, strict = %b',
                 var_export($value, true),
                 gettype($value),
@@ -118,7 +126,7 @@ final class DenyListTest extends TestCase
         ];
     }
 
-    /** @return list<array{0: bool, 1: array, 2: array}> */
+    /** @return list<array{0: bool, 1: array<array-key, mixed>, 2: list<array{0:mixed, 1: mixed}>}> */
     public static function listTestProvider(): array
     {
         return [
