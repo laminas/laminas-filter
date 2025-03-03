@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /** @psalm-import-type Options from DateTimeSelectFilter */
-class DateTimeSelectTest extends TestCase
+final class DateTimeSelectTest extends TestCase
 {
     /** @param Options $options */
     #[DataProvider('provideFilter')]

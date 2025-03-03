@@ -19,7 +19,7 @@ use function sys_get_temp_dir;
 use function uniqid;
 use function unlink;
 
-class LowerCaseTest extends TestCase
+final class LowerCaseTest extends TestCase
 {
     private string $testFile;
 

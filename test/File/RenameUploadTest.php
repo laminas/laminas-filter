@@ -33,7 +33,7 @@ use function unlink;
 use const DIRECTORY_SEPARATOR;
 use const UPLOAD_ERR_OK;
 
-class RenameUploadTest extends TestCase
+final class RenameUploadTest extends TestCase
 {
     /**
      * Path to test files

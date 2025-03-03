@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class StringToLowerTest extends TestCase
+final class StringToLowerTest extends TestCase
 {
     private StringToLowerFilter $filter;
 

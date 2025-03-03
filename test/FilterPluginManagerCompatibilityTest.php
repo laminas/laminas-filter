@@ -21,7 +21,7 @@ use function assert;
 use function class_exists;
 use function in_array;
 
-class FilterPluginManagerCompatibilityTest extends TestCase
+final class FilterPluginManagerCompatibilityTest extends TestCase
 {
     private const FILTERS_WITH_REQUIRED_OPTIONS = [
         Callback::class,

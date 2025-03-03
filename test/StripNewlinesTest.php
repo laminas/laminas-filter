@@ -9,7 +9,7 @@ use LaminasTest\Filter\TestAsset\StringableObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class StripNewlinesTest extends TestCase
+final class StripNewlinesTest extends TestCase
 {
     /** @return array<string, array{0: mixed, 1: mixed}> */
     public static function basicDataProvider(): array

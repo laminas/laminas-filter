@@ -19,7 +19,7 @@ use function uniqid;
 use const DIRECTORY_SEPARATOR;
 use const UPLOAD_ERR_OK;
 
-class DecompressArchiveTest extends TestCase
+final class DecompressArchiveTest extends TestCase
 {
     /** @var non-empty-string */
     private string $target;

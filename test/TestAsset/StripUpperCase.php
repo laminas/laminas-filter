@@ -10,7 +10,7 @@ use function is_string;
 use function preg_replace;
 
 /** @implements FilterInterface<string> */
-class StripUpperCase implements FilterInterface
+final class StripUpperCase implements FilterInterface
 {
     /** @inheritDoc */
     public function filter(mixed $value): mixed

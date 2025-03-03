@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class ToStringTest extends TestCase
+final class ToStringTest extends TestCase
 {
     /** @return list<array{0: mixed, 1: string}> */
     public static function returnBasicDataProvider(): array

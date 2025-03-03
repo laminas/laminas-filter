@@ -23,7 +23,7 @@ use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
-class RenameTest extends TestCase
+final class RenameTest extends TestCase
 {
     private const TEST_FILE_NAME = 'test_file.txt';
 

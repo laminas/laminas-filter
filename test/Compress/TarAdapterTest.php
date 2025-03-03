@@ -19,7 +19,7 @@ use function mkdir;
 use function sprintf;
 use function trim;
 
-class TarAdapterTest extends TestCase
+final class TarAdapterTest extends TestCase
 {
     /** @var non-empty-string */
     private string $dir;

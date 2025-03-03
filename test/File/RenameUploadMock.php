@@ -27,7 +27,7 @@ use function rename;
  * @template TOptions of Options
  * @extends RenameUpload<TOptions>
  */
-class RenameUploadMock extends RenameUpload
+final class RenameUploadMock extends RenameUpload
 {
     /**
      * @param  string $sourceFile Source file path

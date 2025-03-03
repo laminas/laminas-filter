@@ -21,7 +21,7 @@ use function strtoupper;
 use const DIRECTORY_SEPARATOR;
 
 /** @psalm-import-type Options from Inflector */
-class InflectorTest extends TestCase
+final class InflectorTest extends TestCase
 {
     /** @param Options $options */
     private static function withOptions(array $options): Inflector

@@ -18,7 +18,7 @@ use const UPLOAD_ERR_OK;
 
 /** @psalm-suppress InternalClass, InternalMethod, InternalProperty */
 #[CoversClass(FileInformation::class)]
-class FileInformationTest extends TestCase
+final class FileInformationTest extends TestCase
 {
     public function testThatANonExistentFileCannotBeCreatedFromAString(): void
     {

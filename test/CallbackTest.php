@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 use function PHPUnit\Framework\assertSame;
 
-class CallbackTest extends TestCase
+final class CallbackTest extends TestCase
 {
     /** @return Generator<string, array{0: callable(mixed): mixed}> */
     public static function callbackProvider(): Generator

@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class DashToSeparatorTest extends TestCase
+final class DashToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesDashedWordsWithDefaultSpaces(): void
     {

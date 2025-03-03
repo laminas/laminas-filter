@@ -15,7 +15,7 @@ use function gettype;
 use function sprintf;
 use function var_export;
 
-class DenyListTest extends TestCase
+final class DenyListTest extends TestCase
 {
     public function testConstructorOptions(): void
     {

@@ -17,7 +17,7 @@ use stdClass;
 use function date_default_timezone_get;
 use function date_default_timezone_set;
 
-class DateTimeFormatterTest extends TestCase
+final class DateTimeFormatterTest extends TestCase
 {
     /** @var non-empty-string */
     private string $defaultTimezone;

@@ -13,7 +13,7 @@ use function array_map;
 use function extension_loaded;
 use function range;
 
-class Bz2AdapterTest extends TestCase
+final class Bz2AdapterTest extends TestCase
 {
     public function setUp(): void
     {

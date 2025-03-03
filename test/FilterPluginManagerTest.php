@@ -16,7 +16,7 @@ use Throwable;
 
 use function method_exists;
 
-class FilterPluginManagerTest extends TestCase
+final class FilterPluginManagerTest extends TestCase
 {
     private FilterPluginManager $filters;
 

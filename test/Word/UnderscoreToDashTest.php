@@ -7,7 +7,7 @@ namespace LaminasTest\Filter\Word;
 use Laminas\Filter\Word\UnderscoreToDash as UnderscoreToDashFilter;
 use PHPUnit\Framework\TestCase;
 
-class UnderscoreToDashTest extends TestCase
+final class UnderscoreToDashTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithDashes(): void
     {

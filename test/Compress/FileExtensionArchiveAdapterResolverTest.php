@@ -12,7 +12,7 @@ use Laminas\Filter\File\FileInformation;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class FileExtensionArchiveAdapterResolverTest extends TestCase
+final class FileExtensionArchiveAdapterResolverTest extends TestCase
 {
     /** @return list<array{0: non-empty-string, 1: class-string}> */
     public static function matchingDataProvider(): array

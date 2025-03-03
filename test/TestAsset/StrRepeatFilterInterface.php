@@ -9,7 +9,7 @@ use Laminas\Filter\FilterInterface;
 use function str_repeat;
 
 /** @implements FilterInterface<string> */
-class StrRepeatFilterInterface implements FilterInterface
+final class StrRepeatFilterInterface implements FilterInterface
 {
     public function filter(mixed $value): mixed
     {

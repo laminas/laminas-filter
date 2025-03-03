@@ -11,7 +11,7 @@ use Laminas\Filter\StringToLower;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
-class FilterChainFactoryTest extends TestCase
+final class FilterChainFactoryTest extends TestCase
 {
     private FilterPluginManager $pluginManager;
 

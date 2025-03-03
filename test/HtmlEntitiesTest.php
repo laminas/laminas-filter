@@ -18,7 +18,7 @@ use const ENT_COMPAT;
 use const ENT_NOQUOTES;
 use const ENT_QUOTES;
 
-class HtmlEntitiesTest extends TestCase
+final class HtmlEntitiesTest extends TestCase
 {
     #[DataProvider('defaultSettingsDataProvider')]
     public function testBasic(string $input, string $expected): void

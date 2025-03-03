@@ -23,7 +23,7 @@ use function uniqid;
 use const DIRECTORY_SEPARATOR;
 use const E_WARNING;
 
-class ZipAdapterTest extends TestCase
+final class ZipAdapterTest extends TestCase
 {
     /** @var non-empty-string */
     private string $tmp;

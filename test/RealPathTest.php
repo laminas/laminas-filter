@@ -15,7 +15,7 @@ use function str_contains;
 
 use const PHP_OS;
 
-class RealPathTest extends TestCase
+final class RealPathTest extends TestCase
 {
     public static function returnExistingFilePathDataProvider(): array
     {
