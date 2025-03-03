@@ -174,16 +174,6 @@
       <code><![CDATA[Module]]></code>
     </UnusedClass>
   </file>
-  <file src="test/DenyListTest.php">
-    <MixedArrayAccess>
-      <code><![CDATA[$expected]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[[$value, $expected]]]></code>
-    </MixedAssignment>
-  </file>
   <file src="test/File/RenameTest.php">
     <InvalidArgument>
       <code><![CDATA[1234]]></code>
