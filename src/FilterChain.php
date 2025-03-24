@@ -70,7 +70,8 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     }
 
     /**
-     * @deprecated This method will be removed in 3.0.0 without replacement
+     * @deprecated This method will be removed in 3.0.0 without replacement. Future versions of FilterChain will require
+     *             that all options are provided at construction time.
      *
      * @param  FilterChainConfiguration|Traversable $options
      * @return $this
@@ -129,7 +130,8 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Get plugin manager instance
      *
-     * @deprecated This method will be removed in 3.0.0 without replacement
+     * @deprecated This method will be removed in 3.0.0 without replacement. You should retrieve the plugin manager
+     *             instance from the dependency injection container in use.
      *
      * @return FilterPluginManager
      */
@@ -147,7 +149,8 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Set plugin manager instance
      *
-     * @deprecated This method will be removed in 3.0.0 without replacement
+     * @deprecated In version 3.0.0 FilterChain will require the plugin manager in its constructor. As such, this
+     *             method will be removed in 3.0.0 without replacement.
      *
      * @return self
      */
@@ -160,7 +163,8 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Retrieve a filter plugin by name
      *
-     * @deprecated This method will be removed in 3.0.0 without replacement
+     * @deprecated This method will be removed in 3.0.0 without replacement. To fetch instances of filters, you should
+     *             use the plugin manager directly.
      *
      * @param string $name
      * @return FilterInterface|callable(mixed): mixed
@@ -232,7 +236,9 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
     /**
      * Get all the filters
      *
-     * @deprecated This method will be removed in 3.0.0 without replacement
+     * @deprecated This method will be removed in 3.0.0 without replacement. It is superfluous considering that the
+     *             chain itself can be iterated to yield all composed filters, and the removal prevents unintended
+     *             external mutation of the composed chain.
      *
      * @return PriorityQueue<FilterInterface|callable(mixed): mixed, int>
      */
