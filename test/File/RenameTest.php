@@ -6,6 +6,7 @@ namespace LaminasTest\Filter\File;
 
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\File\Rename as FileRename;
+use LaminasTest\Filter\Compress\TmpDirectory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -14,7 +15,6 @@ use function copy;
 use function file_exists;
 use function mkdir;
 use function preg_quote;
-use function rmdir;
 use function sprintf;
 use function sys_get_temp_dir;
 use function uniqid;
@@ -55,11 +55,11 @@ final class RenameTest extends TestCase
     public static function tearDownAfterClass(): void
     {
         if (self::$tmpSubDirectoryPath !== null) {
-            rmdir(self::$tmpSubDirectoryPath);
+            TmpDirectory::cleanUp(self::$tmpSubDirectoryPath);
         }
 
         if (self::$tmpPath !== null) {
-            rmdir(self::$tmpPath);
+            TmpDirectory::cleanUp(self::$tmpPath);
         }
     }
 
