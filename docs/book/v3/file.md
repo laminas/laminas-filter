@@ -89,21 +89,25 @@ for more information about encoding and its exceptions.
 
 The following set of options are supported:
 
-- `target` (string; default: `*`): Target filename or directory; the new name
-  of the source file.
-- `source` (string; default: `*`): Source filename or directory which will be
-  renamed. Used to match the filtered file with an options set.
+- `match` (string; default: `*`): File name pattern to check if this filter should be applied to the input.
+Read the [`fnmatch` documentation](https://www.php.net/manual/function.fnmatch.php) for more detail
+- `target_directory` (string; default: `*`): Directory to move the file(s) to, if specified. The target directory must exist and be writable by the server process.
+- `rename_to` (string: default: `*`): Change the filename to the specified value. A value of `*` *(The default)* preserves the existing file name.
 - `overwrite` (boolean; default: `false`): Shall existing files be overwritten?
-  If the file is unable to be moved into the target path, a
-  `Laminas\Filter\Exception\RuntimeException` will be thrown.
-- `randomize` (boolean; default: `false`): Shall target files have a random
-  postfix attached? The random postfix will generated with `uniqid('_')` after
-  the file name and before the extension. For example, `file.txt` might be
-  randomized to `file_4b3403665fea6.txt`.
+If the file is unable to be moved into the target path, a `Laminas\Filter\Exception\RuntimeException` will be thrown.
+- `randomize` (boolean; default: `false`): Shall target files have a random postfix attached?
+The random postfix will generated with `uniqid('_')` after the file name and before the extension.
+For example, `file.txt` might be randomized to `file_4b3403665fea6.txt`.
 
-An array of option sets is also supported, where a single `Rename` filter
-instance can filter several files using different options. The options used for
-the filtered file will be matched from the `source` option in the options set.
+A list of "option sets" is also supported, where a single `Rename` filter instance can be configured to match and rename files using different options based on the received filename.
+for example, a list such as
+
+```php
+[
+  ['match' => '*.txt', 'target_directory' => '/tmp/text-files'],
+  ['match' => '*.pdf', 'target_directory' => '/tmp/pdf-files'],
+];
+```
 
 ### Usage Examples
 
@@ -111,7 +115,7 @@ Move all filtered files to a different directory:
 
 ```php
 // 'target' option is assumed if param is a string
-$filter = new \Laminas\Filter\File\Rename('/tmp/');
+$filter = new \Laminas\Filter\File\Rename(['target_directory' => '/tmp/']);
 echo $filter->filter('./myfile.txt');
 // File has been moved to '/tmp/myfile.txt'
 ```
@@ -119,16 +123,16 @@ echo $filter->filter('./myfile.txt');
 Rename all filtered files to a new name:
 
 ```php
-$filter = new \Laminas\Filter\File\Rename('/tmp/newfile.txt');
+$filter = new \Laminas\Filter\File\Rename(['rename_to' => 'newfile.txt');
 echo $filter->filter('./myfile.txt');
-// File has been renamed to '/tmp/newfile.txt'
+// File has been renamed to 'newfile.txt'
 ```
 
 Move to a new path, and randomize file names:
 
 ```php
 $filter = new \Laminas\Filter\File\Rename([
-    'target'    => '/tmp/newfile.txt',
+    'match'    => '/tmp/*.txt',
     'randomize' => true,
 ]);
 echo $filter->filter('./myfile.txt');
@@ -140,13 +144,15 @@ Configure different options for several possible source files:
 ```php
 $filter = new \Laminas\Filter\File\Rename([
     [
-        'source'    => 'fileA.txt'
-        'target'    => '/dest1/newfileA.txt',
+        'match'    => '*.pdf'
+        'target_directory' => '/pdf-files/',
+        'rename_to'    => 'newfileA.pdf',
         'overwrite' => true,
     ],
     [
-        'source'    => 'fileB.txt'
-        'target'    => '/dest2/newfileB.txt',
+        'match'    => '*.txt'
+        'target_directory' => '/text-files/',
+        'rename_to'    => 'newfileB.txt',
         'randomize' => true,
     ],
 ]);
@@ -155,17 +161,6 @@ echo $filter->filter('fileA.txt');
 echo $filter->filter('fileB.txt');
 // File has been renamed to '/dest2/newfileB_4b3403665fea6.txt'
 ```
-
-### Public Methods
-
-The `Rename` filter defines the following public methods in addition to `filter()`:
-follows:
-
-- `getFile() : array`: Returns the files to rename along with their new name and location.
-- `setFile(string|array $options) : void`: Sets the file options for renaming.
-  Removes any previously set file options.
-- `addFile(string|array $options) : void`: Adds file options for renaming to
-  the current list of file options.
 
 ## RenameUpload
 

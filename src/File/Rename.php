@@ -39,7 +39,7 @@ use function unlink;
  */
 final class Rename implements FilterInterface
 {
-    /** @var DefaultedOptionsSet[] */
+    /** @var list<DefaultedOptionsSet> */
     private readonly array $options;
 
     /** @param Options $options */

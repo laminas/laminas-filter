@@ -252,6 +252,20 @@ So, to check if the path exists, ensure a validator (such as `Laminas\Validator\
 Windows support has been dropped.
 Which in some cases may now need a custom filter to handle Windows specific issues.
 
+#### `Rename`
+
+The following methods have been removed:
+
+- `addFile`
+- `getFile`
+- `setFile`
+- `getNewName`
+
+The constructor now only accepts an associative array of [documented options](../file.md#rename).
+
+The option for `source` has been renamed to `match`.
+The option for `target` has been split into `target_directory` and `rename_to`, to enable expressing intent between moving and renaming files.
+
 #### `SeparatorToCamelCase`
 
 The constructor now only accepts an associative array of [documented options](../word.md#separatortocamelcase).
