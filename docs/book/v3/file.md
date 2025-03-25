@@ -90,17 +90,24 @@ for more information about encoding and its exceptions.
 The following set of options are supported:
 
 - `match` (string; default: `*`): File name pattern to check if this filter should be applied to the input.
-Read the [`fnmatch` documentation](https://www.php.net/manual/en/function.fnmatch.php) for more detail
-- `target_directory` (string; default: `*`): Directory to move the file(s) to, if specified.
-- `rename_to` (string: default: `*`): Rename the file to this, if specified.
+Read the [`fnmatch` documentation](https://www.php.net/manual/function.fnmatch.php) for more detail
+- `target_directory` (string; default: `*`): Directory to move the file(s) to, if specified. The target directory must exist and be writable by the server process.
+- `rename_to` (string: default: `*`): Change the filename to the specified value. A value of `*` *(The default)* preserves the existing file name.
 - `overwrite` (boolean; default: `false`): Shall existing files be overwritten?
 If the file is unable to be moved into the target path, a `Laminas\Filter\Exception\RuntimeException` will be thrown.
 - `randomize` (boolean; default: `false`): Shall target files have a random postfix attached?
 The random postfix will generated with `uniqid('_')` after the file name and before the extension.
 For example, `file.txt` might be randomized to `file_4b3403665fea6.txt`.
 
-An array of option sets is also supported, where a single `Rename` filter instance can filter several files using different options.
-The options used for the filtered file will be matched from the `match` option in the options set.
+A list of "option sets" is also supported, where a single `Rename` filter instance can be configured to match and rename files using different options based on the received filename.
+for example, a list such as
+
+```php
+[
+  ['match' => '*.txt', 'target_directory' => '/tmp/text-files'],
+  ['match' => '*.pdf', 'target_directory' => '/tmp/pdf-files'],
+];
+```
 
 ### Usage Examples
 
@@ -125,7 +132,7 @@ Move to a new path, and randomize file names:
 
 ```php
 $filter = new \Laminas\Filter\File\Rename([
-    'match'    => '/tmp/newfile.txt',
+    'match'    => '/tmp/*.txt',
     'randomize' => true,
 ]);
 echo $filter->filter('./myfile.txt');
@@ -137,14 +144,14 @@ Configure different options for several possible source files:
 ```php
 $filter = new \Laminas\Filter\File\Rename([
     [
-        'match'    => 'fileA.txt'
-        'target_directory' => '/dest1/',
-        'rename_to'    => 'newfileA.txt',
+        'match'    => '*.pdf'
+        'target_directory' => '/pdf-files/',
+        'rename_to'    => 'newfileA.pdf',
         'overwrite' => true,
     ],
     [
-        'match'    => 'fileB.txt'
-        'target_directory' => '/dest2/',
+        'match'    => '*.txt'
+        'target_directory' => '/text-files/',
         'rename_to'    => 'newfileB.txt',
         'randomize' => true,
     ],
