@@ -1017,6 +1017,27 @@
     <DeprecatedClass>
       <code><![CDATA[AbstractFilter]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[applyRandomToFilename]]></code>
+      <code><![CDATA[checkFileExists]]></code>
+      <code><![CDATA[checkFileExists]]></code>
+      <code><![CDATA[checkFileExists]]></code>
+      <code><![CDATA[getFinalTarget]]></code>
+      <code><![CDATA[getFinalTarget]]></code>
+      <code><![CDATA[getFinalTarget]]></code>
+      <code><![CDATA[getOverwrite]]></code>
+      <code><![CDATA[getRandomize]]></code>
+      <code><![CDATA[getRandomize]]></code>
+      <code><![CDATA[getStreamFactory]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getUploadFileFactory]]></code>
+      <code><![CDATA[getUseUploadExtension]]></code>
+      <code><![CDATA[getUseUploadExtension]]></code>
+      <code><![CDATA[getUseUploadName]]></code>
+      <code><![CDATA[moveUploadedFile]]></code>
+      <code><![CDATA[moveUploadedFile]]></code>
+      <code><![CDATA[setTarget]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[$target === null]]></code>
       <code><![CDATA[is_string($target)]]></code>
@@ -2095,6 +2116,28 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/RenameUploadTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getOverwrite]]></code>
+      <code><![CDATA[getOverwrite]]></code>
+      <code><![CDATA[getOverwrite]]></code>
+      <code><![CDATA[getRandomize]]></code>
+      <code><![CDATA[getRandomize]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getTarget]]></code>
+      <code><![CDATA[getUseUploadName]]></code>
+      <code><![CDATA[getUseUploadName]]></code>
+      <code><![CDATA[setStreamFactory]]></code>
+      <code><![CDATA[setUploadFileFactory]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[1234]]></code>
     </InvalidArgument>
