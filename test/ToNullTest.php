@@ -128,7 +128,7 @@ final class ToNullTest extends TestCase
         self::assertSame($notNull, $filter->filter($notNull));
     }
 
-    /** @return list<array{0: int|string, 1: mixed, 2: mixed}> */
+    /** @return list<array{0: ToNull::TYPE_*|value-of<ToNull::CONSTANTS>, 1: mixed, 2: mixed}> */
     public static function duplicateTypeProvider(): array
     {
         return [

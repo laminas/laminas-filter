@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\File;
 
+use ComposerRequireChecker\Cli\Options;
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\File\Rename as FileRename;
 use LaminasTest\Filter\Compress\TmpDirectory;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -24,14 +26,18 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * @psalm-import-type Options from FileRename
+ * @psalm-import-type OptionsSet from FileRename
  */
 final class RenameTest extends TestCase
 {
     private const TEST_FILE_NAME = 'test_file.txt';
 
-    private static ?string $tmpPath             = null;
+    /** @var non-empty-string|null */
+    private static ?string $tmpPath = null;
+    /** @var non-empty-string|null */
     private static ?string $tmpSubDirectoryPath = null;
 
+    /** @return non-empty-string */
     private static function getTempPath(): string
     {
         if (self::$tmpPath === null) {
@@ -42,6 +48,7 @@ final class RenameTest extends TestCase
         return self::$tmpPath;
     }
 
+    /** @return non-empty-string */
     private static function getTempSubDirectory(): string
     {
         if (self::$tmpSubDirectoryPath === null) {
@@ -52,6 +59,7 @@ final class RenameTest extends TestCase
         return self::$tmpSubDirectoryPath;
     }
 
+    #[Override]
     public static function tearDownAfterClass(): void
     {
         if (self::$tmpSubDirectoryPath !== null) {
@@ -76,91 +84,105 @@ final class RenameTest extends TestCase
         }
     }
 
+    #[Override]
     public function tearDown(): void
     {
         self::cleanupSourceFile();
     }
 
-    public static function returnValidFilterInputProvider(): array
+    /**
+     * @return iterable<string, array{
+     *     options: OptionsSet|list<OptionsSet>,
+     *     input: string,
+     *     expectedFilterResult: string,
+     * }>
+     */
+    public static function returnValidFilterInputProvider(): iterable
     {
         $oldFilePath  = self::getTempPath() . '/' . self::TEST_FILE_NAME;
         $newFileName  = 'new_file.xml';
         $newDirectory = self::getTempSubDirectory();
 
-        return [
-            'Rename in place'                           => [
-                'options'              => ['match' => $oldFilePath, 'rename_to' => $newFileName],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
+        yield 'Rename in place'                           => [
+            'options'              => ['match' => $oldFilePath, 'rename_to' => $newFileName],
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
+        ];
+
+        yield 'Move to new directory'                     => [
+            'options'              => ['match' => $oldFilePath, 'target_directory' => $newDirectory],
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => $newDirectory . '/' . self::TEST_FILE_NAME,
+        ];
+
+        yield 'Move to new directory and rename'          => [
+            'options'              => [
+                'match'            => $oldFilePath,
+                'target_directory' => $newDirectory,
+                'rename_to'        => $newFileName,
             ],
-            'Move to new directory'                     => [
-                'options'              => ['match' => $oldFilePath, 'target_directory' => $newDirectory],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => $newDirectory . '/' . self::TEST_FILE_NAME,
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => $newDirectory . '/' . $newFileName,
+        ];
+
+        yield 'No replacement or move configured'         => [
+            'options'              => [],
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => $oldFilePath,
+        ];
+
+        yield 'Rename in place with wildcard match'       => [
+            'options'              => ['rename_to' => $newFileName],
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
+        ];
+
+        yield 'Move to new directory with wildcard match' => [
+            'options'              => ['target_directory' => $newDirectory],
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => $newDirectory . '/' . self::TEST_FILE_NAME,
+        ];
+
+        yield 'Match with single character wild'          => [
+            'options'              => [
+                'match'     => self::getTempPath() . '/test_fil?.txt',
+                'rename_to' => $newFileName,
             ],
-            'Move to new directory and rename'          => [
-                'options'              => [
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
+        ];
+
+        yield 'Array of options'                          => [
+            'options'              => [
+                [
                     'match'            => $oldFilePath,
                     'target_directory' => $newDirectory,
                     'rename_to'        => $newFileName,
                 ],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => $newDirectory . '/' . $newFileName,
             ],
-            'No replacement or move configured'         => [
-                'options'              => [],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => $oldFilePath,
-            ],
-            'Rename in place with wildcard match'       => [
-                'options'              => ['rename_to' => $newFileName],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
-            ],
-            'Move to new directory with wildcard match' => [
-                'options'              => ['target_directory' => $newDirectory],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => $newDirectory . '/' . self::TEST_FILE_NAME,
-            ],
-            'Match with single character wild'          => [
-                'options'              => [
-                    'match'     => self::getTempPath() . '/test_fil?.txt',
-                    'rename_to' => $newFileName,
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => $newDirectory . '/' . $newFileName,
+        ];
+
+        yield 'Array of multiple options with one match'  => [
+            'options'              => [
+                [
+                    'match'     => self::getTempPath() . '/no_match.txt',
+                    'rename_to' => 'failed_if_this.txt',
                 ],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => self::getTempPath() . '/' . $newFileName,
-            ],
-            'Array of options'                          => [
-                'options'              => [
-                    [
-                        'match'            => $oldFilePath,
-                        'target_directory' => $newDirectory,
-                        'rename_to'        => $newFileName,
-                    ],
+                [
+                    'match'            => $oldFilePath,
+                    'target_directory' => $newDirectory,
+                    'rename_to'        => $newFileName,
                 ],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => $newDirectory . '/' . $newFileName,
             ],
-            'Array of multiple options with one match'  => [
-                'options'              => [
-                    [
-                        'match'     => self::getTempPath() . '/no_match.txt',
-                        'rename_to' => 'failed_if_this.txt',
-                    ],
-                    [
-                        'match'            => $oldFilePath,
-                        'target_directory' => $newDirectory,
-                        'rename_to'        => $newFileName,
-                    ],
-                ],
-                'input'                => $oldFilePath,
-                'expectedFilterResult' => $newDirectory . '/' . $newFileName,
-            ],
+            'input'                => $oldFilePath,
+            'expectedFilterResult' => $newDirectory . '/' . $newFileName,
         ];
     }
 
     /**
-     * @param Options $options
+     * @param OptionsSet|list<OptionsSet> $options
      */
     #[DataProvider('returnValidFilterInputProvider')]
     public function testFilterValidPaths(
@@ -182,6 +204,7 @@ final class RenameTest extends TestCase
         }
     }
 
+    /** @return array<string, array{options: Options, input: string}> */
     public static function returnInvalidFilterInputProvider(): array
     {
         $oldFilePath = self::getTempPath() . '/' . self::TEST_FILE_NAME;

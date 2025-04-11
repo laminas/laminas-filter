@@ -11,9 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Throwable;
 use TypeError;
 
-use function assert;
 use function gettype;
-use function is_array;
 use function sprintf;
 use function var_export;
 
@@ -86,7 +84,7 @@ final class AllowListTest extends TestCase
 
     /**
      * @param list<mixed> $list
-     * @param array{0: mixed, 1: mixed} $testData
+     * @param list<array{0: mixed, 1: mixed}> $testData
      */
     #[DataProvider('listTestProvider')]
     public function testList(bool $strict, array $list, array $testData): void
@@ -96,7 +94,10 @@ final class AllowListTest extends TestCase
             'list'   => $list,
         ]);
         foreach ($testData as $data) {
-            assert(is_array($data));
+            /**
+             * @var mixed $value
+             * @var mixed $expected
+             */
             [$value, $expected] = $data;
             $message            = sprintf(
                 '%s (%s) is not filtered as %s; type = %s',

@@ -19,7 +19,7 @@ final class DateTimeSelectTest extends TestCase
         self::assertSame($expected, $sut->filter($input));
     }
 
-    /** @return list<array{0: array, 1: array, 2: null|string}> */
+    /** @return list<array{0: Options, 1: array, 2: null|string}> */
     public static function provideFilter(): array
     {
         return [

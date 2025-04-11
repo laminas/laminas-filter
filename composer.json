@@ -52,8 +52,8 @@
         "pear/archive_tar": "^1.5.0",
         "pear/pear": "^1.10.16",
         "phpunit/phpunit": "^10.5.45",
-        "psalm/plugin-phpunit": "^0.19.3",
-        "vimeo/psalm": "^6.9.4"
+        "psalm/plugin-phpunit": "^0.19.5",
+        "vimeo/psalm": "^6.10.0"
     },
     "conflict": {
         "laminas/laminas-validator": "<2.10.1",

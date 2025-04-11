@@ -35,6 +35,7 @@ final class DecompressArchiveTest extends TestCase
         TmpDirectory::cleanUp($this->target);
     }
 
+    /** @return list<array{0: string, 1: string}> */
     public static function archiveProvider(): array
     {
         return [

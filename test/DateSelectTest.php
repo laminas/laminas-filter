@@ -20,7 +20,7 @@ final class DateSelectTest extends TestCase
         self::assertSame($expected, $sut->filter($input));
     }
 
-    /** @return list<array{0: array, 1: array, 2: string|null}> */
+    /** @return list<array{0: Options, 1: array, 2: string|null}> */
     public static function provideFilter(): array
     {
         return [

@@ -30,6 +30,7 @@ final class HtmlEntitiesTest extends TestCase
         self::assertSame($expected, $filter->filter($input));
     }
 
+    /** @return list<array{0: string, 1: string}> */
     public static function defaultSettingsDataProvider(): array
     {
         return [

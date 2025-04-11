@@ -17,6 +17,7 @@ use const PHP_OS;
 
 final class RealPathTest extends TestCase
 {
+    /** @return list<array{0: non-empty-string}> */
     public static function returnExistingFilePathDataProvider(): array
     {
         return [
@@ -71,6 +72,7 @@ final class RealPathTest extends TestCase
         }
     }
 
+    /** @return list<array{0: string, 1: string}> */
     public static function returnNonExistentPathDataProvider(): array
     {
         $cwd = getcwd();
