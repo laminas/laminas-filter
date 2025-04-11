@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\File;
 
-use ComposerRequireChecker\Cli\Options;
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\File\Rename as FileRename;
 use LaminasTest\Filter\Compress\TmpDirectory;
