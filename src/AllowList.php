@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Laminas\Stdlib\ArrayUtils;
+use Traversable;
 
 use function array_values;
 use function in_array;
+use function iterator_to_array;
 
 /**
  * @psalm-type Options = array{
@@ -26,8 +27,10 @@ final class AllowList implements FilterInterface
     public function __construct(array $options = [])
     {
         $this->strict = $options['strict'] ?? false;
-        $list         = ArrayUtils::iteratorToArray($options['list'] ?? []);
-        $this->list   = array_values($list);
+        $list         = $options['list'] ?? [];
+        $this->list   = $list instanceof Traversable
+            ? iterator_to_array($list, false)
+            : array_values($list);
     }
 
     /**
