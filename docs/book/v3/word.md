@@ -11,10 +11,6 @@ For example `ThisHas4Words` will filter to `This-Has-4-Words`.
 
 This filter modifies a given string such that `CamelCaseWords` are converted to `Camel-Case-Words`.
 
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\CamelCaseToDash`:
-
 ### Basic Usage
 
 ```php
@@ -25,6 +21,10 @@ print $filter->filter('ThisIsMyContent');
 
 The above example returns `This-Is-My-Content`.
 
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\CamelCaseToDash`.
+
 ## CamelCaseToSeparator
 
 TIP: **New Behaviour since Version 3**
@@ -33,24 +33,7 @@ For example `ThisHas4Words` with the default separator will filter to `This Has 
 
 This filter modifies a given string such that `CamelCaseWords` are converted to `Camel Case Words`.
 
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Word\CamelCaseToSeparator`:
-
-- `separator`: A separator character. If this is not set, the default separator
-  is a space.
-
 ### Basic Usage
-
-```php
-$filter = new Laminas\Filter\Word\CamelCaseToSeparator(['separator' => ':']);
-
-print $filter->filter('ThisIsMyContent');
-```
-
-The above example returns `This:Is:My:Content`.
-
-### Default Behavior
 
 ```php
 $filter = new Laminas\Filter\Word\CamelCaseToSeparator();
@@ -60,6 +43,24 @@ print $filter->filter('ThisIsMyContent');
 
 The above example returns `This Is My Content`.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Word\CamelCaseToSeparator`:
+
+| Option      | Description           | Type     | Default     |
+|-------------|-----------------------|----------|-------------|
+| `separator` | A separator character | `string` | ' ' (space) |
+
+#### Example
+
+```php
+$filter = new Laminas\Filter\Word\CamelCaseToSeparator(['separator' => ':']);
+
+print $filter->filter('ThisIsMyContent');
+```
+
+The above example returns `This:Is:My:Content`.
+
 ## CamelCaseToUnderscore
 
 TIP: **New Behaviour since Version 3**
@@ -68,10 +69,6 @@ For example `ThisHas4Words` will filter to `This_Has_4_Words`
 
 This filter modifies a given string such that `CamelCaseWords` are converted to
 `Camel_Case_Words`.
-
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\CamelCaseToUnderscore`:
 
 ### Basic Usage
 
@@ -83,14 +80,14 @@ print $filter->filter('ThisIsMyContent');
 
 The above example returns `This_Is_My_Content`.
 
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\CamelCaseToUnderscore`.
+
 ## DashToCamelCase
 
 This filter modifies a given string such that `words-with-dashes` are converted
 to `WordsWithDashes`.
-
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\DashToCamelCase`:
 
 ### Basic Usage
 
@@ -102,29 +99,16 @@ print $filter->filter('this-is-my-content');
 
 The above example returns `ThisIsMyContent`.
 
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\DashToCamelCase`:
+
 ## DashToSeparator
 
 This filter modifies a given string such that `words-with-dashes` are converted
 to `words with dashes`.
 
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Word\DashToSeparator`:
-
-- `separator`: A separator character. If this is not set, the default separator
-  is a space.
-
 ### Basic Usage
-
-```php
-$filter = new Laminas\Filter\Word\DashToSeparator(['separator' => '+']);
-
-print $filter->filter('this-is-my-content');
-```
-
-The above example returns `this+is+my+content`.
-
-### Default Behavior
 
 ```php
 $filter = new Laminas\Filter\Word\DashToSeparator();
@@ -134,14 +118,28 @@ print $filter->filter('this-is-my-content');
 
 The above example returns `this is my content`.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Word\DashToSeparator`:
+
+| Option      | Description           | Type     | Default     |
+|-------------|-----------------------|----------|-------------|
+| `separator` | A separator character | `string` | ' ' (space) |
+
+#### Example
+
+```php
+$filter = new Laminas\Filter\Word\DashToSeparator(['separator' => '+']);
+
+print $filter->filter('this-is-my-content');
+```
+
+The above example returns `this+is+my+content`.
+
 ## DashToUnderscore
 
 This filter modifies a given string such that `words-with-dashes` are converted
 to `words_with_dashes`.
-
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\DashToUnderscore`:
 
 ### Basic Usage
 
@@ -153,29 +151,16 @@ print $filter->filter('this-is-my-content');
 
 The above example returns `this_is_my_content`.
 
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\DashToUnderscore`.
+
 ## SeparatorToCamelCase
 
 This filter modifies a given string such that `words with separators` are
 converted to `WordsWithSeparators`.
 
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Word\SeparatorToCamelCase`:
-
-- `separator`: A separator character. If this is not set, the default separator
-  is a space.
-
 ### Basic Usage
-
-```php
-$filter = new Laminas\Filter\Word\SeparatorToCamelCase(['separator' => ':']);
-
-print $filter->filter('this:is:my:content');
-```
-
-The above example returns `ThisIsMyContent`.
-
-### Default Behavior
 
 ```php
 $filter = new Laminas\Filter\Word\SeparatorToCamelCase();
@@ -185,29 +170,30 @@ print $filter->filter('this is my content');
 
 The above example returns `ThisIsMyContent`.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Word\SeparatorToCamelCase`:
+
+| Option      | Description           | Type     | Default     |
+|-------------|-----------------------|----------|-------------|
+| `separator` | A separator character | `string` | ' ' (space) |
+
+#### Example
+
+```php
+$filter = new Laminas\Filter\Word\SeparatorToCamelCase(['separator' => ':']);
+
+print $filter->filter('this:is:my:content');
+```
+
+The above example returns `ThisIsMyContent`.
+
 ## SeparatorToDash
 
 This filter modifies a given string such that `words with separators` are
 converted to `words-with-separators`.
 
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Word\SeparatorToDash`:
-
-- `separator`: A separator character. If this is not set, the default separator
-  is a space.
-
 ### Basic Usage
-
-```php
-$filter = new Laminas\Filter\Word\SeparatorToDash(['separator' => ':']);
-
-print $filter->filter('this:is:my:content');
-```
-
-The above example returns `this-is-my-content`.
-
-### Default Behavior
 
 ```php
 $filter = new Laminas\Filter\Word\SeparatorToDash();
@@ -217,31 +203,30 @@ print $filter->filter('this is my content');
 
 The above example returns `this-is-my-content`.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Word\SeparatorToDash`:
+
+| Option      | Description            | Type     | Default     |
+|-------------|------------------------|----------|-------------|
+| `separator` | A separator character. | `string` | ' ' (space) |
+
+#### Example
+
+```php
+$filter = new Laminas\Filter\Word\SeparatorToDash(['separator' => ':']);
+
+print $filter->filter('this:is:my:content');
+```
+
+The above example returns `this-is-my-content`.
+
 ## SeparatorToSeparator
 
 This filter modifies a given string such that `words with separators` are
 converted to `words-with-separators`.
 
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Word\SeparatorToSeparator`:
-
-- `searchSeparator`: The search separator character. If this is not set, the
-  default separator is a space.
-- `replaceSeparator`: The replacement separator character. If this is not set, the
-  default separator is a dash (`-`).
-
 ### Basic Usage
-
-```php
-$filter = new Laminas\Filter\Word\SeparatorToSeparator(['search_separator' => ':', 'replacement_separator' => '+']);
-
-print $filter->filter('this:is:my:content');
-```
-
-The above example returns `this+is+my+content`.
-
-### Default Behaviour
 
 ```php
 $filter = new Laminas\Filter\Word\SeparatorToSeparator();
@@ -251,14 +236,32 @@ print $filter->filter('this is my content');
 
 The above example returns `this-is-my-content`.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Word\SeparatorToSeparator`:
+
+| Option             | Description                         | Type     | Default     |
+|--------------------|-------------------------------------|----------|-------------|
+| `searchSeparator`  | The search separator character      | `string` | ' ' (space) |
+| `replaceSeparator` | The replacement separator character | `string` | `-`         |
+
+#### Example
+
+```php
+$filter = new Laminas\Filter\Word\SeparatorToSeparator([
+    'search_separator'      => ':',
+    'replacement_separator' => '+',
+]);
+
+print $filter->filter('this:is:my:content');
+```
+
+The above example returns `this+is+my+content`.
+
 ## UnderscoreToCamelCase
 
 This filter modifies a given string such that `words_with_underscores` are
 converted to `WordsWithUnderscores`.
-
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\UnderscoreToCamelCase`:
 
 ### Basic Usage
 
@@ -270,29 +273,16 @@ print $filter->filter('this_is_my_content');
 
 The above example returns `ThisIsMyContent`.
 
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\UnderscoreToCamelCase`.
+
 ## UnderscoreToSeparator
 
 This filter modifies a given string such that `words_with_underscores` are
 converted to `words with underscores`.
 
-### Supported Options
-
-The following options are supported for `Laminas\Filter\Word\UnderscoreToSeparator`:
-
-- `separator`: A separator character. If this is not set, the default separator
-  is a space.
-
 ### Basic Usage
-
-```php
-$filter = new Laminas\Filter\Word\UnderscoreToSeparator(['separator' => '+']));
-
-print $filter->filter('this_is_my_content');
-```
-
-The above example returns `this+is+my+content`.
-
-### Default Behavior
 
 ```php
 $filter = new Laminas\Filter\Word\UnderscoreToSeparator();
@@ -302,14 +292,28 @@ print $filter->filter('this_is_my_content');
 
 The above example returns `this is my content`.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\Word\UnderscoreToSeparator`:
+
+| Option      | Description           | Type     | Default     |
+|-------------|-----------------------|----------|-------------|
+| `separator` | A separator character | `string` | ' ' (space) |
+
+#### Example
+
+```php
+$filter = new Laminas\Filter\Word\UnderscoreToSeparator(['separator' => '+']));
+
+print $filter->filter('this_is_my_content');
+```
+
+The above example returns `this+is+my+content`.
+
 ## UnderscoreToDash
 
 This filter modifies a given string such that `words_with_underscores` are
 converted to `words-with-underscores`.
-
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\UnderscoreToDash`:
 
 ### Basic Usage
 
@@ -321,14 +325,14 @@ print $filter->filter('this_is_my_content');
 
 The above example returns `this-is-my-content`.
 
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\UnderscoreToDash`.
+
 ## UnderscoreToStudlyCase
 
 This filter modifies a given string such that `words_with_underscores` are
 converted to `wordsWithUnderscores`.
-
-### Supported Options
-
-There are no additional options for `Laminas\Filter\Word\UnderscoreToStudlyCase`:
 
 ### Basic Usage
 
@@ -339,3 +343,7 @@ print $filter->filter('this_is_my_content');
 ```
 
 The above example returns `thisIsMyContent`.
+
+### Supported Options
+
+There are no additional options for `Laminas\Filter\Word\UnderscoreToStudlyCase`.
