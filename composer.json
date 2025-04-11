@@ -18,8 +18,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "composer/package-versions-deprecated": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "platform": {
             "php": "8.1.99"
@@ -52,12 +51,8 @@
         "pear/archive_tar": "^1.5.0",
         "pear/pear": "^1.10.16",
         "phpunit/phpunit": "^10.5.45",
-        "psalm/plugin-phpunit": "^0.19.3",
-        "vimeo/psalm": "^6.9.4"
-    },
-    "conflict": {
-        "laminas/laminas-validator": "<2.10.1",
-        "zendframework/zend-filter": "*"
+        "psalm/plugin-phpunit": "^0.19.5",
+        "vimeo/psalm": "^6.10.0"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",

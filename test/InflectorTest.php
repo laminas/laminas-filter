@@ -292,6 +292,7 @@ final class InflectorTest extends TestCase
         self::assertSame($inflector(['any' => 'thing']), 'abc');
     }
 
+    /** @return list<array{0: mixed}> */
     public static function unFilterableInput(): array
     {
         return [

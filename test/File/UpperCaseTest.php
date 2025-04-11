@@ -96,6 +96,7 @@ final class UpperCaseTest extends TestCase
         return $content;
     }
 
+    /** @return list<array{0: mixed}> */
     public static function returnUnfilteredDataProvider(): array
     {
         return [

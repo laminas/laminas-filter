@@ -7,6 +7,7 @@ namespace LaminasTest\Filter;
 use Closure;
 use Laminas\Filter\ScalarOrArrayFilterCallback;
 use LaminasTest\Filter\TestAsset\StringableObject;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -17,11 +18,13 @@ final class ScalarOrArrayFilterCallbackTest extends TestCase
     /** @var Closure(string): string */
     private Closure $filter;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->filter = static fn (string $value): string => strtolower($value);
     }
 
+    /** @return array<string, array{0: mixed, 1: scalar|null}> */
     public static function scalarProvider(): array
     {
         return [

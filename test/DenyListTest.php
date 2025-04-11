@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
+use ArrayObject;
 use Laminas\Filter\DenyList as DenyListFilter;
-use Laminas\Stdlib\ArrayObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Throwable;

@@ -28,7 +28,7 @@ final class ConfigProvider
      *
      * @return ServiceManagerConfiguration
      */
-    public function getDependencyConfig()
+    public function getDependencyConfig(): array
     {
         return [
             'aliases'   => [
