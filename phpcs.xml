@@ -17,4 +17,9 @@
 
     <!-- Include all rules from Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard" />
+
+    <!-- It is not possible to use PHP4 style constructors any more -->
+    <rule ref="Generic.NamingConventions.ConstructorName.OldStyle">
+        <severity>0</severity>
+    </rule>
 </ruleset>
