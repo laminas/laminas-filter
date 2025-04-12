@@ -8,11 +8,9 @@ use Laminas\Diactoros\UploadedFile;
 use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\Exception\RuntimeException;
 use Laminas\Filter\File\FileInformation;
-use Laminas\Filter\File\MoveUploadedFile;
+use Laminas\Filter\File\MoveUploadedFile as DefaultMoveUploadedFile;
 use Laminas\Filter\File\RenameUpload;
-use Laminas\Filter\FilterPluginManager;
 use LaminasTest\Filter\Compress\TmpDirectory;
-use LaminasTest\Filter\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -367,7 +365,7 @@ final class RenameUploadTest extends TestCase
     }
 
     #[DataProvider('fileProvider')]
-    public function testOptionsAreCorrectlyPassedViaThePluginManager(mixed $input): void
+    public function testExceptionThrownWithDefaultImplementationWhenFileIsNotAnUpload(mixed $input): void
     {
         $target = self::workDirectory() . '/target';
         if (! is_dir($target)) {
@@ -377,22 +375,13 @@ final class RenameUploadTest extends TestCase
         $file = FileInformation::factory($input);
         self::assertFileExists($file->path);
 
-        $expectFile = $target . '/' . $file->baseName;
+        $filter = new RenameUpload([
+            'target'    => $target,
+            'randomize' => true,
+        ], new DefaultMoveUploadedFile());
 
-        $pluginManager = new FilterPluginManager(new InMemoryContainer());
-
-        $filter = $pluginManager->build(
-            RenameUpload::class,
-            ['target' => $target],
-        );
-
-        $result = $filter->__invoke($input);
-        self::assertIsString($result);
-        self::assertSame($expectFile, $result);
-
-        self::assertFileExists($expectFile);
-        self::assertFileDoesNotExist($file->path);
-
-        unlink($result);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('could not be renamed. An error occurred while processing the file');
+        $filter->__invoke($input);
     }
 }
