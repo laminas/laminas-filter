@@ -287,7 +287,7 @@ The following methods have been removed:
 
 The constructor now only accepts an associative array of [documented options](../file.md#renameupload).
 
-The option for `target` has been renamed to `target_directory`
+This filter no longer returns values depending on input. Unfilterable values will be returned unchanged, but valid values will now be filtered to a string that represents the path that the uploaded file was moved to.
 
 #### `SeparatorToCamelCase`
 
