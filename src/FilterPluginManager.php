@@ -64,6 +64,7 @@ final class FilterPluginManager extends AbstractPluginManager
             StringTrim::class                  => InvokableFactory::class,
             StripNewlines::class               => InvokableFactory::class,
             StripTags::class                   => InvokableFactory::class,
+            ToEnum::class                      => InvokableFactory::class,
             ToInt::class                       => InvokableFactory::class,
             ToNull::class                      => InvokableFactory::class,
             ToString::class                    => InvokableFactory::class,
