@@ -166,7 +166,11 @@ echo $filter->filter('fileB.txt');
 
 `Laminas\Filter\File\RenameUpload` can be used to rename or move an uploaded file to a new path.
 
-It will accept an array representing a single [PHP file upload](https://www.php.net/manual/features.file-upload.post-method.php), a PSR7 [`UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface), or a string representing the file path of an uploaded file.
+The filter will only attempt to operate on uploaded files, and will typically succeed given the following inputs:
+
+- An array representing a single [PHP file upload](https://www.php.net/manual/features.file-upload.post-method.php)
+- A [PSR7 `UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
+- A string representing the file path of an uploaded file
 
 ### Supported Options
 
@@ -201,7 +205,7 @@ The following set of options are supported:
 
 ### Usage Examples
 
-Move all filtered files to a different directory in a Laminas MVC application:
+Move all filtered files to a different directory.
 
 ```php
 use Laminas\Http\PhpEnvironment\Request;
@@ -211,10 +215,9 @@ $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 // i.e. $files['my-upload']['name'] === 'myfile.txt'
 
-$filter = new \Laminas\Filter\File\RenameUpload(
-    ['target' => './data/uploads/'],
-    new \Laminas\Filter\File\MoveUploadedFile(),
-);
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' => './data/uploads/',
+]);
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/php5Wx0aJ'
 
@@ -222,7 +225,7 @@ echo $filter->filter($files['my-upload']);
 $filter = new \Laminas\Filter\File\RenameUpload([
     'target' => './data/uploads/',
     'use_upload_name' => true,
-], new \Laminas\Filter\File\MoveUploadedFile());
+]);
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/myfile.txt'
 ```
@@ -230,17 +233,12 @@ echo $filter->filter($files['my-upload']);
 Rename all filtered files to a new name:
 
 ```php
-use Laminas\Http\PhpEnvironment\Request;
+// Assuming: $_FILES['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$request = new Request();
-$files   = $request->getFiles();
-// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
-
-$filter = new \Laminas\Filter\File\RenameUpload(
-    ['target' => './data/uploads/newfile.txt'],
-    new \Laminas\Filter\File\MoveUploadedFile(),
-);
-echo $filter->filter($files['my-upload']);
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' => './data/uploads/newfile.txt',
+]);
+echo $filter->filter($_FILES['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'
 ```
 
@@ -256,7 +254,7 @@ $files   = $request->getFiles();
 $filter = new \Laminas\Filter\File\RenameUpload([
     'target'    => './data/uploads/newfile.txt',
     'randomize' => true,
-], new \Laminas\Filter\File\MoveUploadedFile());
+]);
 echo $filter->filter($files['my-upload']);
 // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
 ```
@@ -264,7 +262,6 @@ echo $filter->filter($files['my-upload']);
 Handle a PSR-7 uploaded file:
 
 ```php
-use Laminas\Filter\File\MoveUploadedFile;
 use Laminas\Filter\File\RenameUpload;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -272,7 +269,7 @@ use Psr\Http\Message\UploadedFileInterface;
 $filter = new \Laminas\Filter\File\RenameUpload([
     'target'    => './data/uploads/',
     'randomize' => true,
-], new MoveUploadedFile());
+]);
 
 // @var ServerRequestInterface $request
 foreach ($request->getUploadedFiles() as $uploadedFile) {
