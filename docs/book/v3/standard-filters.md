@@ -730,6 +730,35 @@ print $filter->filter(['month' => '2', 'year' => '2012']);
 
 This will return '2012-02'.
 
+## ToEnum
+
+`Laminas\Filter\ToEnum` transforms strings and integers to unit or backed enum instances.
+
+### Supported Options
+
+This filter requires a single option `enum` which must be a class-string representing a PHP enum.
+
+### Basic Usage
+
+```php
+enum Muppets: string {
+    case Kermit = 'Kermit';
+    case MissPiggy = 'Miss Piggy';
+}
+
+$filter = new Laminas\Filter\ToEnum([
+    'enum' => Muppets::class,
+]);
+
+$enum = $filter->filter('Kermit'); // Enum Instance
+$enum = $filter->filter('Miss Piggy'); // Enum Instance
+$enum = $filter->filter('MissPiggy'); // Enum Instance
+$failed = $filter->filter('Not There'); // "Not There"
+```
+
+To successfully filter to a Unit enum, the case name is expected.
+The case name can also be used for both int and string backed enums, as well as a matching value.
+
 ## ToInt
 
 `Laminas\Filter\ToInt` allows you to transform a scalar value into an integer.
