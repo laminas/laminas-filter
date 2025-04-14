@@ -12,20 +12,25 @@ use stdClass;
 
 final class ToStringTest extends TestCase
 {
-    /** @return list<array{0: mixed, 1: string}> */
+    /** @return list<array{0: mixed, 1: mixed}> */
     public static function returnBasicDataProvider(): array
     {
         return [
             [0, '0'],
             ['string', 'string'],
             [false, ''],
+            [true, '1'],
             [-1.1, '-1.1'],
             [new StringClass('test'), 'test'],
+            [
+                [0, 'string', false, -1.1, new StringClass('test'), [true, null]],
+                ['0', 'string', '', '-1.1', 'test', ['1', null]],
+            ],
         ];
     }
 
     #[DataProvider('returnBasicDataProvider')]
-    public function testBasic(mixed $input, string $output): void
+    public function testBasic(mixed $input, mixed $output): void
     {
         $filter = new ToString();
 
@@ -33,7 +38,7 @@ final class ToStringTest extends TestCase
     }
 
     #[DataProvider('returnBasicDataProvider')]
-    public function testInvoke(mixed $input, string $output): void
+    public function testInvoke(mixed $input, mixed $output): void
     {
         $filter = new ToString();
 
@@ -46,12 +51,6 @@ final class ToStringTest extends TestCase
         return [
             [null],
             [new stdClass()],
-            [
-                [
-                    'foo',
-                    false,
-                ],
-            ],
         ];
     }
 

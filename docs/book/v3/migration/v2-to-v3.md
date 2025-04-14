@@ -365,6 +365,12 @@ The following methods have been removed:
 
 The constructor now only accepts an associative array of [documented options](../standard-filters.md#tonull).
 
+#### `ToString`
+
+This filter now also casts array values to strings recursively.
+
+[Basic Usage](../standard-filters.md#tostring)
+
 #### `UnderscoreToSeparator`
 
 The constructor now only accepts an associative array of [documented options](../word.md#underscoretoseparator).

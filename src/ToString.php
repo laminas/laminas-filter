@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Stringable;
-
-use function is_scalar;
-
-/** @implements FilterInterface<string> */
+/** @implements FilterInterface<mixed> */
 final class ToString implements FilterInterface
 {
     /**
@@ -18,14 +14,10 @@ final class ToString implements FilterInterface
      */
     public function filter(mixed $value): mixed
     {
-        if (
-            ! is_scalar($value)
-            && ! $value instanceof Stringable
-        ) {
-            return $value;
-        }
-
-        return (string) $value;
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            fn (string $value): string => $value,
+        );
     }
 
     public function __invoke(mixed $value): mixed
