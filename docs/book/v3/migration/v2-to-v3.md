@@ -417,7 +417,13 @@ $filtered = $filter->filter('A String');
 
 ### Final by default
 
-Nearly all the shipped filters now have the final keyword applied to the class. Individual filters were not designed for inheritance, so if you have filters that do extend from any of the shipped filters, you will likely have to re-consider your design.
+All the shipped filters now have the final keyword applied to the class.
+Individual filters were not designed for inheritance, so if you have filters that do extend from any of the shipped filters, you will likely have to re-consider your design.
+
+Filters are, generally speaking, trivial to implement and for simple use-cases can be reduced to closures.
+Marking our filters as final prevents misuse of inheritance and reduces the backwards compatibility surface area that we need to maintain.
+
+If you need to expand the capabilities of the shipped filters, consider using a [filter chain](../filter-chains.md) to compose multiple filters, or implement a [custom filter](../writing-filters.md).
 
 ### Removal of supported compression formats
 
