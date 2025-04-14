@@ -441,3 +441,11 @@ This change is unlikely to affect you, unless you have inherited from this class
 
 This legacy interface is related to Laminas MVC Module Manager integration and was superseded by `Laminas\ModuleManager\Feature\FilterProviderInterface`.
 If your code still references `Laminas\Filter\FilterProviderInterface`, replace its usage with the interface [shipped by Module Manager](https://docs.laminas.dev/laminas-modulemanager/module-manager/#servicelistener).
+
+### Removal of `AbstractSeparator`
+
+A number of filters had an inheritance chain starting with `Laminas\Filter\Word\AbstractSeparator` which in turn extended from the now removed `AbstractFilter`.
+All filters that used this inheritance chain have been refactored to `final` standalone classes and `AbstractSeparator` has been removed.
+
+If you have custom filters extending from `AbstractSeparator`, you will need to refactor your classes in a similar way.
+Typically, this will follow a similar pattern for classes extending from `AbstractFilter`, but you will also need to ensure that your custom filter accepts the separator value in its constructor, and, ensure that no code is attempting to mutate or access the options at runtime with the now unavailable `setSeparator` and `getSeparator` methods.
