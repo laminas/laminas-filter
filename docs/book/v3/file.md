@@ -166,6 +166,12 @@ echo $filter->filter('fileB.txt');
 
 `Laminas\Filter\File\RenameUpload` can be used to rename or move an uploaded file to a new path.
 
+The filter will only attempt to operate on uploaded files, and will typically succeed given the following inputs:
+
+- An array representing a single [PHP file upload](https://www.php.net/manual/features.file-upload.post-method.php)
+- A [PSR7 `UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
+- A string representing the file path of an uploaded file
+
 ### Supported Options
 
 The following set of options are supported:
@@ -175,24 +181,16 @@ The following set of options are supported:
   If the file is unable to be moved into the target path, a
   `Laminas\Filter\Exception\RuntimeException` will be thrown.
 - `randomize` (boolean; default: `false`): Shall target files have a random
-  postfix attached? The random postfix will generated with `uniqid('_')` after
+  postfix attached? The random postfix will be generated with `uniqid('_')` after
   the file name and before the extension. For example, `file.txt` might be
   randomized to `file_4b3403665fea6.txt`.
 - `use_upload_name` (boolean; default: `false`): When true, this filter will
   use `$_FILES['name']` as the target filename. Otherwise, the default `target`
   rules and the `$_FILES['tmp_name']` will be used.
 - `use_upload_extension` (boolean; default: `false`): When true, the uploaded
-  file will maintains its original extension if not specified.  For example, if
+  file will maintain its original extension if not specified.  For example, if
   the uploaded file is `file.txt` and the target is `mynewfile`, the upload
   will be renamed to `mynewfile.txt`.
-- `stream_factory` (`Psr\Http\Message\StreamFactoryInterface`; default: `null`):
-  Required when passing a [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
-  to the filter; used to create a new stream representing the renamed file.
-  (Since 2.9.0)
-- `upload_file_factory` (`Psr\Http\Message\UploadedFileFactoryInterface`; default:
-  `null`): Required when passing a [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
-  to the filter; used to create a new uploaded file representation of the
-  renamed file.  (Since 2.9.0)
 
 > WARNING: **Using the upload Name is unsafe**
 >
@@ -203,13 +201,11 @@ The following set of options are supported:
 > It is generally a better idea to supply an internal filename to avoid
 > security risks.
 
-`RenameUpload` does not support an array of options like the`Rename` filter.
-When filtering HTML5 file uploads with the `multiple` attribute set, all files
-will be filtered with the same option settings.
+`RenameUpload` can only operate on one file at a time.
 
 ### Usage Examples
 
-Move all filtered files to a different directory:
+Move all filtered files to a different directory.
 
 ```php
 use Laminas\Http\PhpEnvironment\Request;
@@ -219,13 +215,17 @@ $files   = $request->getFiles();
 // i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 // i.e. $files['my-upload']['name'] === 'myfile.txt'
 
-// 'target' option is assumed if param is a string
-$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/');
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' => './data/uploads/',
+]);
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/php5Wx0aJ'
 
 // ... or retain the uploaded file name
-$filter->setUseUploadName(true);
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' => './data/uploads/',
+    'use_upload_name' => true,
+]);
 echo $filter->filter($files['my-upload']);
 // File has been moved to './data/uploads/myfile.txt'
 ```
@@ -233,14 +233,12 @@ echo $filter->filter($files['my-upload']);
 Rename all filtered files to a new name:
 
 ```php
-use Laminas\Http\PhpEnvironment\Request;
+// Assuming: $_FILES['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
 
-$request = new Request();
-$files   = $request->getFiles();
-// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
-
-$filter = new \Laminas\Filter\File\RenameUpload('./data/uploads/newfile.txt');
-echo $filter->filter($files['my-upload']);
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' => './data/uploads/newfile.txt',
+]);
+echo $filter->filter($_FILES['my-upload']);
 // File has been renamed to './data/uploads/newfile.txt'
 ```
 
@@ -264,36 +262,23 @@ echo $filter->filter($files['my-upload']);
 Handle a PSR-7 uploaded file:
 
 ```php
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\UploadedFileFactoryInterface;
-use Psr\Http\Message\UploadedFileInterface;
 use Laminas\Filter\File\RenameUpload;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 
 $filter = new \Laminas\Filter\File\RenameUpload([
-    'target'              => './data/uploads/',
-    'randomize'           => true,
-    // @var StreamFactoryInterface $streamFactory
-    'stream_factory'      => $streamFactory,
-    // @var UploadedFileFactoryInterface $uploadedFileFactory
-    'upload_file_factory' => $uploadedFileFactory,
+    'target'    => './data/uploads/',
+    'randomize' => true,
 ]);
 
 // @var ServerRequestInterface $request
 foreach ($request->getUploadedFiles() as $uploadedFile) {
     // @var UploadedFileInterface $uploadedFile
-    // @var UploadedFileInterface $movedFile
-    $movedFile = $filter->filter($uploadedFile);
-    echo $movedFile->getClientFilename();
+    $newFilePath = $filter->filter($uploadedFile);
+    echo $newFilePath;
     // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
 }
 ```
-
-> NOTE: **PSR-7 Support**
->
-> PSR-7/PSR-17 support requires a valid [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation) in your application, as it relies on the stream and uploaded file factories in order to produce the final `UploadedFileInterface` artifact representing the filtered file.
->
-> [laminas/laminas-diactoros](https://docs.laminas.dev/laminas-diactoros/) provides a PSR-17 implementation.
 
 ## Uppercase
 

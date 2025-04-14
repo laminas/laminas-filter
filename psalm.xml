@@ -39,5 +39,11 @@
             </errorLevel>
         </MissingOverrideAttribute>
 
+        <InternalClass>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </InternalClass>
+
     </issueHandlers>
 </psalm>

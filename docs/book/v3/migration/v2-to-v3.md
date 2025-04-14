@@ -266,6 +266,29 @@ The constructor now only accepts an associative array of [documented options](..
 The option for `source` has been renamed to `match`.
 The option for `target` has been split into `target_directory` and `rename_to`, to enable expressing intent between moving and renaming files.
 
+#### `RenameUpload`
+
+The following methods have been removed:
+
+- `setStreamFactory`
+- `getStreamFactory`
+- `setTarget`
+- `getTarget`
+- `setUploadFileFactory`
+- `getUploadFileFactory`
+- `setUseUploadName`
+- `getUseUploadName`
+- `setUseUploadExtension`
+- `getUseUploadExtension`
+- `setOverwrite`
+- `getOverwrite`
+- `setRandomize`
+- `getRandomize`
+
+The constructor now only accepts an associative array of [documented options](../file.md#renameupload).
+
+This filter no longer returns values depending on input. Unfilterable values will be returned unchanged, but valid values will now be filtered to a string that represents the path that the uploaded file was moved to.
+
 #### `SeparatorToCamelCase`
 
 The constructor now only accepts an associative array of [documented options](../word.md#separatortocamelcase).
