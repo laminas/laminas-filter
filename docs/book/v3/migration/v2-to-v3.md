@@ -5,15 +5,9 @@ This document details those changes, and provides suggestions on how to update y
 
 ## Signature and Behaviour Changes
 
-### AbstractFilter
-
-The deprecated method `hasPcreUnicodeSupport()` has been removed. This method had been irrelevant for a long time since reliable Unicode support in `preg_*` functions is available in all supported versions of PHP.
-
 ### FilterInterface
 
 `Laminas\Filter\FilterInterface` now specifies `__invoke()` as well as `filter()` forcing all filters to also be invokable classes.
-
-In practice this is unlikely to cause problems because `AbstractFilter`, from which most filters extend already implements this method. You will however, encounter issues if you have a custom filter implementing `FilterInterface` that lacks an `__invoke()` method.
 
 Implementation is straight forward, and in most cases, adding the following method should suffice:
 
@@ -414,6 +408,14 @@ $filtered = $filter->filter('A String');
 - `Laminas\Filter\Blacklist` has been replaced by [`Laminas\Filter\DenyList`](../standard-filters.md#denylist)
 
 ## Removed Features
+
+### Removal of `AbstractFilter`
+
+`AbstractFilter` has been removed. If you have custom filters that extend from `AbstractFilter`, you will need to instead implement `FilterInterface` along with its `filter` and `__invoke` methods.
+
+If your filter made use of the `setOptions` method, we strongly encourage you to add the options to your constructor, perform any necessary validation of these options in your constructor, and assign those values to class properties in any way that makes sense to your use-case.
+
+We have written a short guide on [refactoring your custom filters so that they no longer depend on `AbstractFilter` here](./refactoring-from-abstract-filter.md).
 
 ### Final by default
 
