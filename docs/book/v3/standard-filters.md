@@ -862,6 +862,8 @@ It is best practice is to use the `TYPE_*` constants rather than the human-reada
 ## ToString
 
 The `ToString` filter casts `Stringable` objects or scalar values to `string`.
+If an array is received, member values are cast to a string recursively.
+
 This filter has no runtime options.
 
 ### Basic Usage
@@ -870,14 +872,16 @@ This filter has no runtime options.
 $filter = new \Laminas\Filter\ToString();
 
 $filter->filter(123); // "123"
+$filter->filter(['id' => 100, 'roles' => null]); // ['id' => "100", 'roles' => null]
 ```
 
-Non-scalar input will be returned un-filtered:
+Non-scalar or null input will be returned un-filtered:
 
 ```php
 $filter = new \Laminas\Filter\ToString();
 
-$filter->filter(['muppet' => 'Kermit']); // ['muppet' => 'Kermit']
+$filter->filter(null); // null
+$filter->filter(new \stdClass()); // \stdClass object
 ```
 
 ## PregReplace
