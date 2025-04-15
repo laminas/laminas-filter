@@ -30,6 +30,7 @@ nav:
           - "Providing Filters via Modules": v3/application-integration/providing-filters-via-modules.md
       - Migration:
         - "Migration from Version 2 to 3": v3/migration/v2-to-v3.md
+        - "Refactoring away from AbstractFilter": v3/migration/refactoring-from-abstract-filter.md
 site_name: laminas-filter
 site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
