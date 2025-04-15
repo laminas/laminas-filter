@@ -11,7 +11,7 @@ namespace Application\Filter;
 
 use Laminas\Filter\FilterInterface;
 
-class MyFilter implements FilterInterface
+final class MyFilter implements FilterInterface
 {
     public function filter(mixed $value): mixed
     {
@@ -32,6 +32,36 @@ To attach an instance of the filter defined above to a filter chain:
 $filterChain = new Laminas\Filter\FilterChain($pluginManager);
 $filterChain->attach(new Application\Filter\MyFilter());
 ```
+
+### Narrowing Return Type Candidates for Static Analysis Tools
+
+`InputFilterInterface` declares a template that you can add to custom filter implementations to improve type inference of filtered values.
+Whilst this is only useful when using filters directly, it can also help reduce unit testing burden if you are a user of Psalm or PHPStan.
+
+Here's a trivial example to illustrate the generic template applied to a custom filter:
+
+```php
+use Laminas\Filter\FilterInterface;
+
+/** @implements FilterInterface<int<0,1>> */
+final class MyFilter implements FilterInterface
+{
+    public function filter(mixed $value): mixed
+    {
+        if (! is_bool($value)) {
+            return $value;
+        }
+        
+        return $value ? 1 : 0;
+    }
+    
+    public function __invoke(mixed $value): mixed {
+        return $this->filter($value);    
+    }
+}
+```
+
+In this example, the return type will be narrowed to `mixed|1|0`
 
 ## Registering Custom Filters with the Plugin Manager
 
