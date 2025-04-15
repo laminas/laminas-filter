@@ -417,7 +417,7 @@ $filtered = $filter->filter('A String');
 
 ### Final by default
 
-All the shipped filters now have the final keyword applied to the class.
+All the shipped filters now have the [final keyword](https://www.php.net/manual/language.oop5.final.php) applied to the class.
 Individual filters were not designed for inheritance, so if you have filters that do extend from any of the shipped filters, you will likely have to re-consider your design.
 
 Filters are, generally speaking, trivial to implement and for simple use-cases can be reduced to closures.
