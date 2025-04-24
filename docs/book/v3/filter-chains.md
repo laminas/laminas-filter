@@ -153,3 +153,30 @@ As with other plugin managers in the laminas ecosystem, you can retrieve filters
 For example, the `Laminas\Filter\StringToLower` filter is aliased to `stringToLower`, therefore, calling `$pluginManager->get('stringToLower')` will yield an instance of this filter.
 
 When using filter chain, you must remember to [register custom filters](writing-filters.md#registering-custom-filters-with-the-plugin-manager) with the plugin manager correctly if you wish to reference your filters by FQCN or alias.
+
+## Immutable Filter Chain
+
+In addition to the standard `FilterChain`, laminas-filter also provides an immutable variant called `ImmutableFilterChain`. This class is useful when you want to ensure that a filter chain's configuration cannot be modified after creation.
+
+Since the `ImmutableFilterChain` implements the same `FilterInterface` as the standard `FilterChain`, they can be used interchangeably in contexts that only rely on the filter method.
+
+### Creating an ImmutableFilterChain
+
+```php
+
+$pluginManager = $container->get(Laminas\Filter\FilterPluginManager::class);
+$chain = new ImmutableFilterChain(
+    $pluginManager,
+    [
+        'filters' => [
+            ['name' => StringTrim::class],
+            ['name' => StringToLower::class],
+        ],
+    ]
+);
+// attach and attachByName will return a new instance
+$chainRev = $chain->attach(static fn (string $value): string => strrev($value));
+
+print $chain->filter(' OOF '); // 'oof'
+print $chainRev->filter(' OOF '); // 'foo'
+```
