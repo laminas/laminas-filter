@@ -373,6 +373,20 @@ The constructor now only accepts an associative array of [documented options](..
 
 The following filters were deprecated in the 2.0.x series of releases and have now been removed:
 
+### `Compress` and `Decompress`
+
+The `Compress` and `Decompress` filters have been removed and replaced with four more specialized filters:
+
+- [`Laminas\Filter\CompressString`](../standard-filters.md#compressstring-and-decompressstring) - For string compression (supports bz2 and gz adapters)
+- [`Laminas\Filter\DecompressString`](../standard-filters.md#compressstring-and-decompressstring) - For string decompression (supports bz2 and gz adapters)
+- [`Laminas\Filter\CompressToArchive`](../standard-filters.md#compresstoarchive) - For creating archive files (supports zip and tar adapters)
+- [`Laminas\Filter\DecompressArchive`](../standard-filters.md#decompressarchive) - For extracting archive files (supports zip and tar adapters)
+
+Other breaking changes:
+
+- Archive adapters now implement `ArchiveAdapterInterface` and only handle archive files.
+- String compression adapters now implement `StringCompressionAdapterInterface` and only handle string content.
+
 ### Encryption and Decryption related filters
 
 These filters had become outdated. We recommend that you make use of a maintained encryption library and [write your own filters](../writing-filters.md) if you need to encrypt or decrypt content using the `FilterInterface` contract.

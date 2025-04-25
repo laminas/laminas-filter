@@ -280,6 +280,13 @@ NOTE: **PHP Extensions Required**
 These filters require either the [`zlib`](https://www.php.net/zlib) or [`bzip2`](https://www.php.net/bzip2) PHP extensions depending on the adapter in use.
 Attempting to use these filters without the relevant extension installed will cause an exception to be thrown.
 
+### Supported Options
+
+The following options are supported for `Laminas\Filter\CompressString` and `Laminas\Filter\DecompressString`:
+
+- `adapter`: The compression adapter which should be used. Defaults to `gz`.
+  Supported values are: `gz` and `bz2`, or an instance of `Laminas\Filter\Compress\StringCompressionAdapterInterface`.
+
 ### Default Behaviour
 
 By default, strings will be compressed using Gzip compression:
@@ -322,29 +329,29 @@ $compressed = $filter->filter('Some Content');
 
 ### Custom Compression Adapters
 
-It is also possible to provide an instance of `Laminas\Compress\StringCompressionAdapterInterface` to the `adapter` option of either filter.
+It is also possible to provide an instance of `Laminas\Filter\Compress\StringCompressionAdapterInterface` to the `adapter` option of either filter.
 This can be leveraged to use compression algorithms other than BZ2 or Gzip.
 
 ## CompressToArchive
 
 This filter compresses files, strings, directories and uploads to a pre-configured archive location using either `zip` or `tar` archive formats.
-The default archive format is `Zip`
+The default archive format is `Zip`.
 
 NOTE: **Additional PHP Extensions or Dependencies Required**
-These filters require either the [`zip`](https://www.php.net/zip) extension or the [`Archive_Tar` pear package](https://www.php.net/bzip2) depending on the adapter in use.
+These filters require either the [`zip`](https://www.php.net/zip) extension or the [`Archive_Tar` pear package](https://pear.php.net/package/Archive_Tar) depending on the adapter in use.
 Attempting to use these filters without the relevant extension or dependency installed will cause an exception to be thrown.
 `Archive_Tar` can be installed via composer with `composer require pear/archive_tar`.
 
-### Available Options
+### Supported Options
 
 - `archive`: This is the destination archive. The option is required and must be a path to the target archive in a directory that exists, and is writable by PHP.
-- `adapter`: Archive adapter - can be either `zip` or `tar` or an instance of `Laminas\Filter\Compress\ArchiveAdapterInterface`
+- `adapter`: Archive adapter - can be either `zip` or `tar` or an instance of `Laminas\Filter\Compress\ArchiveAdapterInterface`.
 - `fileName`: When archiving arbitrary strings, the string will be placed in a file with this name prior to archiving.
 
 ### General Considerations
 
 - If an archive already exists at the configured target archive, it will be overwritten.
-- The filter will return the configured archive for successfully filtered content.
+- The filter will return the configured archive path for successfully filtered content.
 - If the input cannot be filtered, the given value will be returned un-changed.
 
 ### Archiving a File Path
@@ -497,7 +504,7 @@ The following options are supported for `Laminas\Filter\DateTimeSelect`:
 $filter = new Laminas\Filter\DateTimeSelect();
 
 print $filter->filter(['second' => '1', 'month' => '2', 'hour' => '3', 'day' => '4', 'month' => '5', 'year' => '2012']);
-````
+```
 
 This will return '2012-05-04 03:02:01'.
 
@@ -506,9 +513,14 @@ This will return '2012-05-04 03:02:01'.
 This filter accepts an archive in the form of a file path, a PHP uploaded file array or a PSR-7 uploaded file and de-compresses the file to a configured target directory returning the location where the files are expanded.
 
 NOTE: **Additional PHP Extensions or Dependencies Required**
-These filters require either the [`zip`](https://www.php.net/zip) extension or the [`Archive_Tar` pear package](https://www.php.net/bzip2) depending on the adapter in use.
+These filters require either the [`zip`](https://www.php.net/zip) extension or the [`Archive_Tar` pear package](https://pear.php.net/package/Archive_Tar) depending on the adapter in use.
 Attempting to use these filters without the relevant extension or dependency installed will cause an exception to be thrown.
 `Archive_Tar` can be installed via composer with `composer require pear/archive_tar`.
+
+### Supported Options
+
+- `target` *(required)* A path to the directory where files will be expanded
+- `matcher` *(optional)* An instance of `Laminas\Compress\ArchiveAdapterResolverInterface` used to determine the appropriate adapter to use for the detected file type.
 
 ### Basic Behaviour
 
@@ -521,13 +533,7 @@ $result = $filter->filter('/path/to/an-archive.tar.gz');
 assert($result === '/path/to/writable/directory');
 ```
 
-The type of archive will be automatically detected, first by using PHP's built-in mime-type detection *(via mime magic)* and falling back to filename extension, then, the relevant archive adapter will then be used to expand the archive.
-
 NOTE: **The target directory must exist** The directory configured for expanding files must exist, *and* it must be writable. The filter makes no attempt to create intermediate directories.
-
-Zip and Tar archives are supported out of the box.
-
-Other archive formats can be supported by writing custom adapters and configuring or creating custom matchers to map mime-type or filename extensions to the custom adapter.
 
 When the input cannot be recognised as a supported archive type, or the input cannot be filtered for any other reason, the input is returned un-altered:
 
@@ -540,10 +546,20 @@ $directory = $filter->filter('Fozzy Bear');
 assert($result === 'Fozzy Bear');
 ```
 
-### Supported Options
+### Handling Different Archive Types
 
-- `target` *(required)* A path to the directory where files will be expanded
-- `matcher` *(optional)* An instance of `Laminas\Compress\ArchiveAdapterResolverInterface` used to determine the appropriate adapter to use for the detected file type.
+The type of archive will be automatically detected, first by using PHP's built-in mime-type detection *(via mime magic)* and falling back to filename extension, then, the relevant archive adapter will then be used to expand the archive.
+
+Zip and Tar archives are supported out of the box.
+
+Other archive formats can be supported by writing custom adapters and configuring or creating custom matchers to map mime-type or filename extensions to the custom adapter.
+
+```php
+$filter = new Laminas\Filter\DecompressArchive([
+    'target' => '/path/to/extract/to',
+    'matcher' => new MyCustomArchiveAdapterResolver(),
+]);
+```
 
 ### Security Considerations
 
