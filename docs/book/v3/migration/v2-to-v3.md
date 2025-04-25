@@ -3,6 +3,21 @@
 laminas-filter version 3 makes a number of changes that may affect your application.
 This document details those changes, and provides suggestions on how to update your application to work with version 3.
 
+## New Features
+
+### Service Manager v4 Support
+
+Laminas Filter now supports [Service Manager v4](https://docs.laminas.dev/laminas-servicemanager/).
+This will restrict installation of `laminas-filter` in projects that have other dependencies still constrained to version 3 of service manager, such as version 2.x of `laminas-inputfilter`.
+
+### New Filters
+
+- [`ToEnum`](../standard-filters.md#toenum)
+- [`ImmutableFilterChain`](../filter-chains.md)
+- [`CompressString` and `DecompressString`](../standard-filters.md#compressstring-and-decompressstring)
+- [`CompressToArchive`](../standard-filters.md#compresstoarchive)
+- [`DecompressArchive`](../standard-filters.md#decompressarchive)
+
 ## Signature and Behaviour Changes
 
 ### FilterInterface

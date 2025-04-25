@@ -13,7 +13,7 @@ use Traversable;
 use function count;
 
 /**
- * @psalm-type InstanceType = FilterInterface|callable(mixed): mixed
+ * @psalm-type InstanceType = FilterInterface|(callable(mixed): mixed)
  * @psalm-type FilterChainConfiguration = array{
  *    filters?: list<array{
  *        name: string|class-string<FilterInterface>,
@@ -21,7 +21,7 @@ use function count;
  *        priority?: int,
  *    }>,
  *    callbacks?: list<array{
- *        callback: FilterInterface|callable(mixed): mixed,
+ *        callback: FilterInterface|(callable(mixed): mixed),
  *        priority?: int,
  *    }>
  * }

@@ -20,7 +20,7 @@ use function sprintf;
  *
  * Enforces that filters retrieved are either callbacks or instances of FilterInterface.
  *
- * @psalm-type InstanceType = FilterInterface|callable(mixed): mixed
+ * @psalm-type InstanceType = FilterInterface|(callable(mixed): mixed)
  * @extends AbstractPluginManager<InstanceType>
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  */

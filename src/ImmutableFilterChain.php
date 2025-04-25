@@ -8,7 +8,7 @@ use Laminas\Stdlib\PriorityQueue;
 use Psr\Container\ContainerExceptionInterface;
 
 /**
- * @psalm-type InstanceType = FilterInterface|callable(mixed): mixed
+ * @psalm-type InstanceType = FilterInterface|(callable(mixed): mixed)
  * @psalm-type ChainSpec = array{
  *     filters?: list<array{
  *         name: string|class-string<FilterInterface>,
@@ -16,7 +16,7 @@ use Psr\Container\ContainerExceptionInterface;
  *         priority?: int|null,
  *     }>,
  *     callbacks?: list<array{
- *         callback: FilterInterface|callable(mixed): mixed,
+ *         callback: FilterInterface|(callable(mixed): mixed),
  *         priority?: int|null,
  *     }>,
  * }

@@ -9,7 +9,7 @@ use Psr\Container\ContainerExceptionInterface;
 /**
  * @template TFilteredValue
  * @extends FilterInterface<TFilteredValue>
- * @psalm-type InstanceType = FilterInterface|callable(mixed): mixed
+ * @psalm-type InstanceType = FilterInterface|(callable(mixed): mixed)
  */
 interface FilterChainInterface extends FilterInterface
 {
