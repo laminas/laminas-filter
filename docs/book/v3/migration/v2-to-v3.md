@@ -151,6 +151,21 @@ The constructor now only accepts an associative array of [documented options](..
 This filter will not cast a given integer or float value to a string anymore.
 The return value changed from `.` to return the given integer or float value.
 
+#### `FilterChain`
+
+This filter requires a `FilterPluginManager` instance as a constructor dependency.
+
+The following methods and constants have been removed:
+
+- `DEFAULT_PRIORITY` constant (moved to `Laminas\Filter\FilterChainInterface`)
+- `setOptions()`
+- `getPluginManager()`
+- `setPluginManager()`
+- `plugin()`
+- `getFilters()`
+
+A new `ImmutableFilterChain` class has also been introduced, which functions similarly to `FilterChain` but is immutable by design and lacks the `merge()` method.
+
 #### `HtmlEntities`
 
 The following methods have been removed:
