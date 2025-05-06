@@ -47,12 +47,12 @@
         "ext-zlib": "*",
         "ext-zip": "*",
         "laminas/laminas-coding-standard": "^3.0.1",
-        "laminas/laminas-diactoros": "^3.5",
+        "laminas/laminas-diactoros": "^3.6",
         "pear/archive_tar": "^1.5.0",
         "pear/pear": "^1.10.16",
-        "phpunit/phpunit": "^10.5.45",
+        "phpunit/phpunit": "^10.5.46",
         "psalm/plugin-phpunit": "^0.19.5",
-        "vimeo/psalm": "^6.10.0"
+        "vimeo/psalm": "^6.10.3"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
