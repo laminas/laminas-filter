@@ -742,7 +742,7 @@ If set to `true`, the filter will return `null` if both month and year are empty
 $filter = new Laminas\Filter\MonthSelect();
 
 print $filter->filter(['month' => '2', 'year' => '2012']);
-````
+```
 
 This will return '2012-02'.
 
