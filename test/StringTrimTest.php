@@ -8,117 +8,85 @@ use Laminas\Filter\StringTrim;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
-use function mb_convert_encoding;
+use function assert;
+use function is_string;
+use function mb_chr;
+use function str_repeat;
 
-class StringTrimTest extends TestCase
+final class StringTrimTest extends TestCase
 {
-    private StringTrim $filter;
-
-    public function setUp(): void
+    /** @return array<string, array{0: mixed, 1: mixed}> */
+    public static function defaultBehaviourDataProvider(): array
     {
-        $this->filter = new StringTrim();
-    }
+        $mbChr = static function (int $code): string {
+            $value = mb_chr($code);
+            assert(is_string($value));
 
-    /**
-     * Ensures that the filter follows expected behavior
-     */
-    public function testBasic(): void
-    {
-        $valuesExpected = [
-            'string' => 'string',
-            ' str '  => 'str',
-            "\ns\t"  => 's',
+            return $value;
+        };
+
+        return [
+            'Ascii, no whitespace'    => ['string', 'string'],
+            'Empty String'            => ['', ''],
+            'Only Ascii whitespace'   => ["   \n\t   ", ''],
+            'Only Unicode whitespace' => [str_repeat($mbChr(0x2029), 10), ''],
+            'Narrow Spaces'           => [$mbChr(0x202F) . 'Foo' . $mbChr(0x202F), 'Foo'],
+            'Em Spaces'               => [$mbChr(0x2003) . 'Foo' . $mbChr(0x2003), 'Foo'],
+            'Thin Spaces'             => [$mbChr(0x2009) . 'Foo' . $mbChr(0x2009), 'Foo'],
+            'ZF-7183'                 => ['Зенд', 'Зенд'],
+            'ZF-170'                  => ['Расчет', 'Расчет'],
+            'ZF-7902'                 => ['/', '/'],
+            'ZF-10891'                => ['   Зенд   ', 'Зенд'],
+            // Non-String Input
+            'Null'    => [null, null],
+            'Integer' => [123, 123],
+            'Float'   => [1.23, 1.23],
+            'Array'   => [['Foo'], ['Foo']],
+            'Boolean' => [true, true],
         ];
-        foreach ($valuesExpected as $input => $output) {
-            self::assertSame($output, $this->filter->filter($input));
-        }
     }
 
-    /**
-     * Ensures that the filter follows expected behavior
-     */
-    public function testUtf8(): void
+    #[DataProvider('defaultBehaviourDataProvider')]
+    public function testDefaultBehaviour(mixed $input, mixed $expect): void
     {
-        $value = mb_convert_encoding("\xa0a\xa0", 'UTF-8', 'ISO-8859-1');
-        self::assertSame('a', $this->filter->filter($value));
+        $filter = new StringTrim();
+        self::assertSame(
+            $expect,
+            $filter->filter($input),
+        );
     }
 
-    /**
-     * Ensures that getCharList() returns expected default value
-     */
-    public function testGetCharList(): void
+    public function testAsciiCharListOption(): void
     {
-        self::assertSame(null, $this->filter->getCharList());
+        $filter = new StringTrim([
+            'charlist' => '@&*',
+        ]);
+
+        self::assertSame('Foo', $filter->filter('**&&@@Foo@@&&**'));
+        self::assertSame('Foo', $filter->filter('Foo'));
+        self::assertSame('F&o&o', $filter->filter('F&o&o'));
     }
 
-    /**
-     * Ensures that setCharList() follows expected behavior
-     */
-    public function testSetCharList(): void
+    public function testUnicodeCharListOption(): void
     {
-        $this->filter->setCharList('&');
-        self::assertSame('&', $this->filter->getCharList());
-    }
+        $filter = new StringTrim([
+            'charlist' => '👍',
+        ]);
 
-    /**
-     * Ensures expected behavior under custom character list
-     */
-    public function testCharList(): void
-    {
-        $this->filter->setCharList('&');
-        self::assertSame('a&b', $this->filter->__invoke('&&a&b&&'));
-    }
-
-    #[Group('Laminas-7183')]
-    public function testLaminas7183(): void
-    {
-        self::assertSame('Зенд', $this->filter->filter('Зенд'));
-    }
-
-    #[Group('Laminas-170')]
-    public function testLaminas170(): void
-    {
-        self::assertSame('Расчет', $this->filter->filter('Расчет'));
-    }
-
-    #[Group('Laminas-7902')]
-    public function testLaminas7902(): void
-    {
-        self::assertSame('/', $this->filter->filter('/'));
+        self::assertSame('Foo', $filter->filter('Foo👍👍'));
+        self::assertSame('Foo', $filter->filter('👍Foo👍'));
+        self::assertSame('Fo👍o', $filter->filter('Fo👍o👍'));
     }
 
     #[Group('Laminas-10891')]
     public function testLaminas10891(): void
     {
-        self::assertSame('Зенд', $this->filter->filter('   Зенд   '));
-        self::assertSame('Зенд', $this->filter->filter('Зенд   '));
-        self::assertSame('Зенд', $this->filter->filter('   Зенд'));
+        $filter = new StringTrim([
+            'charlist' => " \t\n\r\x0B・。",
+        ]);
 
-        $trimCharList = " \t\n\r\x0B・。";
-        $filter       = new StringTrim($trimCharList);
         self::assertSame('Зенд', $filter->filter('。  Зенд  。'));
-    }
-
-    /** @return list<array{0: mixed}> */
-    public static function getNonStringValues(): array
-    {
-        return [
-            [1],
-            [1.0],
-            [true],
-            [false],
-            [null],
-            [[1, 2, 3]],
-            [new stdClass()],
-        ];
-    }
-
-    #[DataProvider('getNonStringValues')]
-    public function testShouldNotFilterNonStringValues(mixed $value): void
-    {
-        self::assertSame($value, $this->filter->filter($value));
     }
 
     /**
@@ -127,10 +95,23 @@ class StringTrimTest extends TestCase
     #[Group('6261')]
     public function testEmptyCharList(): void
     {
-        $this->filter->setCharList('0');
-        self::assertSame('a0b', $this->filter->filter('00a0b00'));
+        $filter = new StringTrim([
+            'charlist' => '0',
+        ]);
 
-        $this->filter->setCharList('');
-        self::assertSame('str', $this->filter->filter(' str '));
+        self::assertSame('a0b', $filter->filter('00a0b00'));
+
+        $filter = new StringTrim([
+            'charlist' => '',
+        ]);
+
+        self::assertSame('str', $filter->filter(' str '));
+    }
+
+    public function testConfiguredCharListCanIncludeMetaChar(): void
+    {
+        $filter = new StringTrim(['charlist' => '!\\\s']);
+
+        self::assertSame('Foo', $filter->filter('  ! Foo !  '));
     }
 }

@@ -18,8 +18,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "composer/package-versions-deprecated": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "platform": {
             "php": "8.1.99"
@@ -33,29 +32,30 @@
     },
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+        "ext-fileinfo": "*",
+        "ext-filter": "*",
+        "ext-iconv": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-servicemanager": "^3.21.0",
-        "laminas/laminas-stdlib": "^3.19.0"
+        "laminas/laminas-servicemanager": "^4.1.0",
+        "laminas/laminas-stdlib": "^3.19.0",
+        "psr/container": "^1 || ^2",
+        "psr/http-factory": "^1.1",
+        "psr/http-message": "^2.0"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~3.0",
-        "laminas/laminas-crypt": "^3.12",
-        "laminas/laminas-i18n": "^2.28.1",
-        "laminas/laminas-uri": "^2.12",
+        "ext-bz2": "*",
+        "ext-zlib": "*",
+        "ext-zip": "*",
+        "laminas/laminas-coding-standard": "^3.0.1",
+        "laminas/laminas-diactoros": "^3.6",
         "pear/archive_tar": "^1.5.0",
-        "phpunit/phpunit": "^10.5.36",
-        "psalm/plugin-phpunit": "^0.19.0",
-        "psr/http-factory": "^1.1.0",
-        "vimeo/psalm": "^5.26.1"
-    },
-    "conflict": {
-        "laminas/laminas-validator": "<2.10.1",
-        "zendframework/zend-filter": "*"
+        "pear/pear": "^1.10.16",
+        "phpunit/phpunit": "^10.5.46",
+        "psalm/plugin-phpunit": "^0.19.5",
+        "vimeo/psalm": "^6.10.3"
     },
     "suggest": {
-        "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
-        "laminas/laminas-uri": "Laminas\\Uri component, for the UriNormalize filter",
         "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters"
     },
     "autoload": {

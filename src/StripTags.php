@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
-
-use function array_key_exists;
-use function array_shift;
-use function func_get_args;
-use function is_array;
-use function is_int;
+use function array_change_key_case;
+use function array_combine;
+use function array_fill;
+use function array_is_list;
+use function array_map;
+use function array_merge;
+use function count;
+use function in_array;
 use function is_scalar;
-use function is_string;
 use function preg_match;
 use function preg_match_all;
+use function sprintf;
 use function str_contains;
 use function str_replace;
 use function strlen;
@@ -24,186 +24,76 @@ use function strtolower;
 use function substr;
 use function trim;
 
+use const CASE_LOWER;
+
 /**
  * @psalm-type Options = array{
- *     tags_allowed?: array<string>|string,
- *     attributes_allowed?: array<string>|string,
- *     ...
+ *     allowTags?: list<string>|array<string, list<string>>,
+ *     allowAttribs?: list<string>
  * }
- * @extends AbstractFilter<Options>
- * @final
+ * @implements FilterInterface<string>
  */
-class StripTags extends AbstractFilter
+final class StripTags implements FilterInterface
 {
-    /**
-     * Unique ID prefix used for allowing comments
-     *
-     * @deprecated This unused constant will be removed in 3.0
-     */
-    public const UNIQUE_ID_PREFIX = '__Laminas_Filter_StripTags__';
-
     /**
      * Array of allowed tags and allowed attributes for each allowed tag
      *
      * Tags are stored in the array keys, and the array values are themselves
      * arrays of the attributes allowed for the corresponding tag.
      *
-     * @var array<string, array<string, null>>
+     * @var array<string, list<string>>
      */
-    protected $tagsAllowed = [];
+    private readonly array $tagsAllowed;
 
     /**
      * Array of allowed attributes for all allowed tags
      *
      * Attributes stored here are allowed for all of the allowed tags.
      *
-     * @var array<string, null>
+     * @var list<string>
      */
-    protected $attributesAllowed = [];
+    private readonly array $attributesAllowed;
 
     /**
-     * Sets the filter options
-     * Allowed options are
-     *     'allowTags'     => Tags which are allowed
-     *     'allowAttribs'  => Attributes which are allowed
-     *     'allowComments' => Are comments allowed ?
-     *
-     * @param  string|array|Traversable $options
+     * @param Options $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        }
-        if (
-            (! is_array($options)) || (is_array($options) && ! array_key_exists('allowTags', $options) &&
-            ! array_key_exists('allowAttribs', $options) && ! array_key_exists('allowComments', $options))
-        ) {
-            $options           = func_get_args();
-            $temp['allowTags'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['allowAttribs'] = array_shift($options);
-            }
+        $this->attributesAllowed = array_map(
+            static fn (string $attribute): string => strtolower($attribute),
+            $options['allowAttribs'] ?? [],
+        );
 
-            if (! empty($options)) {
-                $temp['allowComments'] = array_shift($options);
-            }
+        $tagsAllowed = $options['allowTags'] ?? [];
 
-            $options = $temp;
-        }
+        if (array_is_list($tagsAllowed)) {
+            /** @psalm-var list<string> $tagsAllowed */
+            $tags = array_map(
+                static fn (string $tag): string => strtolower($tag),
+                $tagsAllowed,
+            );
 
-        if (array_key_exists('allowTags', $options)) {
-            $this->setTagsAllowed($options['allowTags']);
+            $this->tagsAllowed = array_combine($tags, array_fill(0, count($tags), []));
+
+            return;
         }
 
-        if (array_key_exists('allowAttribs', $options)) {
-            $this->setAttributesAllowed($options['allowAttribs']);
-        }
-    }
-
-    /**
-     * Returns the tagsAllowed option
-     *
-     * @deprecated This method will be removed in 3.0
-     *
-     * @return array<string, array<string, null>>
-     */
-    public function getTagsAllowed()
-    {
-        return $this->tagsAllowed;
-    }
-
-    /**
-     * Sets the tagsAllowed option
-     *
-     * @deprecated This method will be removed in 3.0. Only the constructor can be used to set options.
-     *
-     * @param array|string $tagsAllowed
-     * @return self Provides a fluent interface
-     */
-    public function setTagsAllowed($tagsAllowed)
-    {
-        if (! is_array($tagsAllowed)) {
-            $tagsAllowed = [$tagsAllowed];
-        }
-
-        foreach ($tagsAllowed as $index => $element) {
-            // If the tag was provided without attributes
-            if (is_int($index) && is_string($element)) {
-                // Canonicalize the tag name
-                $tagName = strtolower($element);
-                // Store the tag as allowed with no attributes
-                $this->tagsAllowed[$tagName] = [];
-            } elseif (is_string($index) && (is_array($element) || is_string($element))) {
-                // Otherwise, if a tag was provided with attributes
-                // Canonicalize the tag name
-                $tagName = strtolower($index);
-                // Canonicalize the attributes
-                if (is_string($element)) {
-                    $element = [$element];
-                }
-                // Store the tag as allowed with the provided attributes
-                $this->tagsAllowed[$tagName] = [];
-                foreach ($element as $attribute) {
-                    if (is_string($attribute)) {
-                        // Canonicalize the attribute name
-                        $attributeName                               = strtolower($attribute);
-                        $this->tagsAllowed[$tagName][$attributeName] = null;
-                    }
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Returns the attributesAllowed option
-     *
-     * @deprecated This method will be removed in 3.0
-     *
-     * @return array<string, null>
-     */
-    public function getAttributesAllowed()
-    {
-        return $this->attributesAllowed;
-    }
-
-    /**
-     * Sets the attributesAllowed option
-     *
-     * @deprecated This method will be removed in 3.0. Only the constructor can be used to set options.
-     *
-     * @param  list<string>|string $attributesAllowed
-     * @return self Provides a fluent interface
-     */
-    public function setAttributesAllowed($attributesAllowed)
-    {
-        if (! is_array($attributesAllowed)) {
-            $attributesAllowed = [$attributesAllowed];
-        }
-
-        // Store each attribute as allowed
-        foreach ($attributesAllowed as $attribute) {
-            if (is_string($attribute)) {
-                // Canonicalize the attribute name
-                $attributeName                           = strtolower($attribute);
-                $this->attributesAllowed[$attributeName] = null;
-            }
-        }
-
-        return $this;
+        /** @psalm-var array<string, list<string>> $tagsAllowed */
+        $this->tagsAllowed = array_map(
+            static fn (array $attributes) => array_map(
+                static fn (string $attribute): string => strtolower($attribute),
+                $attributes,
+            ),
+            array_change_key_case($tagsAllowed, CASE_LOWER),
+        );
     }
 
     /**
      * Defined by Laminas\Filter\FilterInterface
      *
      * If the value provided is non-scalar, the value will remain unfiltered
-     *
-     * @param mixed $value
-     * @return string|mixed
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;
@@ -240,7 +130,7 @@ class StripTags extends AbstractFilter
             // If a tag exists in this match, then filter the tag
             $tag = $matches[2][$index];
             if (strlen($tag)) {
-                $tagFiltered = $this->_filterTag($tag);
+                $tagFiltered = $this->filterTag($tag);
             } else {
                 $tagFiltered = '';
             }
@@ -252,17 +142,16 @@ class StripTags extends AbstractFilter
         return $dataFiltered;
     }
 
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
+    }
+
     /**
      * Filters a single tag against the current option settings
-     *
-     * @deprecated This method will be inaccessible in 3.0 once this class is marked final
-     *
-     * @param string $tag
-     * @return string
      */
-    protected function _filterTag($tag) // phpcs:ignore
+    private function filterTag(string $tag): string
     {
-        // @codingStandardsIgnoreEnd
         // Parse the tag into:
         // 1. a starting delimiter (mandatory)
         // 2. a tag name (if available)
@@ -286,6 +175,11 @@ class StripTags extends AbstractFilter
             return '';
         }
 
+        $allowedAttributes = array_merge(
+            $this->attributesAllowed,
+            $this->tagsAllowed[$tagName],
+        );
+
         // Trim the attribute string of whitespace at the ends
         $tagAttributes = trim($tagAttributes);
 
@@ -304,15 +198,18 @@ class StripTags extends AbstractFilter
                 $attributeValue     = $matches[3][$index] === '' ? $matches[5][$index] : $matches[3][$index];
 
                 // If the attribute is not allowed, then remove it entirely
-                if (
-                    ! array_key_exists($attributeName, $this->tagsAllowed[$tagName])
-                    && ! array_key_exists($attributeName, $this->attributesAllowed)
-                ) {
+                if (! in_array($attributeName, $allowedAttributes, true)) {
                     continue;
                 }
+
                 // Add the attribute to the accumulator
-                $tagAttributes .= " $attributeName=" . $attributeDelimiter
-                                . $attributeValue . $attributeDelimiter;
+                $tagAttributes .= sprintf(
+                    ' %s=%s%s%s',
+                    $attributeName,
+                    $attributeDelimiter,
+                    $attributeValue,
+                    $attributeDelimiter,
+                );
             }
         }
 

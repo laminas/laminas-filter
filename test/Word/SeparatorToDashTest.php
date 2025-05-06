@@ -7,7 +7,7 @@ namespace LaminasTest\Filter\Word;
 use Laminas\Filter\Word\SeparatorToDash as SeparatorToDashFilter;
 use PHPUnit\Framework\TestCase;
 
-class SeparatorToDashTest extends TestCase
+final class SeparatorToDashTest extends TestCase
 {
     public function testFilterSeparatesDashedWordsWithDefaultSpaces(): void
     {
@@ -22,7 +22,7 @@ class SeparatorToDashTest extends TestCase
     public function testFilterSeparatesDashedWordsWithSomeString(): void
     {
         $string   = 'dash=separated=words';
-        $filter   = new SeparatorToDashFilter('=');
+        $filter   = new SeparatorToDashFilter(['separator' => '=']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);

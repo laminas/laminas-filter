@@ -9,69 +9,90 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function dirname;
+use function getcwd;
 use function str_contains;
 
-use const DIRECTORY_SEPARATOR;
 use const PHP_OS;
 
-class RealPathTest extends TestCase
+final class RealPathTest extends TestCase
 {
-    private RealPathFilter $filter;
-
-    public function setUp(): void
+    /** @return list<array{0: non-empty-string}> */
+    public static function returnExistingFilePathDataProvider(): array
     {
-        $this->filter = new RealPathFilter();
+        return [
+            [__DIR__ . '/_files/file.1'],
+            [__DIR__ . '/_files/../_files/file.1'],
+            [__DIR__ . '/_files/././file.1'],
+            [__DIR__ . '///_files///file.1'],
+        ];
     }
 
-    /**
-     * Ensures expected behavior for existing file
-     */
-    public function testFileExists(): void
+    #[DataProvider('returnExistingFilePathDataProvider')]
+    public function testExistingFileReturnsRealPath(string $filePath): void
     {
-        $filename = __DIR__ . '/_files/file.1';
-        $result   = $this->filter->filter($filename);
-        self::assertStringContainsString($filename, $result);
+        $filter = new RealPathFilter();
+
+        $result = $filter->filter($filePath);
+
+        self::assertSame(__DIR__ . '/_files/file.1', $result);
     }
 
-    /**
-     * Ensures expected behavior for nonexistent file
-     */
-    public function testFileNonexistent(): void
+    public function testPathWithNonExistingPartsButRealResolutionIsNotValid(): void
     {
+        $filter = new RealPathFilter();
+
+        $path = __DIR__ . '/_files/foo/../bar/../file.1';
+
+        $result = $filter->filter($path);
+
+        self::assertSame($path, $result);
+    }
+
+    public function testNonexistentFileReturnsValuePassedToFilter(): void
+    {
+        $filter = new RealPathFilter();
+
         $path = '/path/to/nonexistent';
+        self::assertSame($path, $filter->filter($path));
+    }
+
+    public function testBSDAllowsLastPortionToNotExist(): void
+    {
+        $filter = new RealPathFilter();
+
+        $path = './nonexistent';
+
         if (str_contains(PHP_OS, 'BSD')) {
-            self::assertSame($path, $this->filter->filter($path));
+            $cwd = getcwd();
+            self::assertIsString($cwd);
+            self::assertSame($cwd . '/nonexistent', $filter($path));
         } else {
-            self::assertSame(false, $this->filter->filter($path));
+            self::assertSame($path, $filter($path));
         }
     }
 
-    public function testGetAndSetExistsParameter(): void
+    /** @return list<array{0: string, 1: string}> */
+    public static function returnNonExistentPathDataProvider(): array
     {
-        self::assertTrue($this->filter->getExists());
-        $this->filter->setExists(false);
-        self::assertFalse($this->filter->getExists());
+        $cwd = getcwd();
+        self::assertIsString($cwd);
 
-        $this->filter->setExists(['unknown']);
-        self::assertTrue($this->filter->getExists());
+        return [
+            ['/nonexistent/absolute/path', '/nonexistent/absolute/path'],
+            ['/nonexistent/absolute/extra///slashes', '/nonexistent/absolute/extra/slashes'],
+            ['./nonexistent/relative/path', $cwd . '/nonexistent/relative/path'],
+            ['./dropped/parts/../../path', $cwd . '/path'],
+            ['../relative/from/parent', dirname($cwd) . '/relative/from/parent'],
+        ];
     }
 
-    public function testNonExistentPath(): void
+    #[DataProvider('returnNonExistentPathDataProvider')]
+    public function testNonExistentPathAllowed(string $path, string $expectedPath): void
     {
-        $filter = $this->filter;
-        $filter->setExists(false);
+        $filter = new RealPathFilter(['exists' => false]);
 
-        $path = __DIR__ . DIRECTORY_SEPARATOR . '_files';
-        self::assertSame($path, $filter($path));
-
-        $path2 = __DIR__ . DIRECTORY_SEPARATOR . '_files'
-               . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files';
-        self::assertSame($path, $filter($path2));
-
-        $path3 = __DIR__ . DIRECTORY_SEPARATOR . '_files'
-               . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.'
-               . DIRECTORY_SEPARATOR . '_files';
-        self::assertSame($path, $filter($path3));
+        self::assertSame($expectedPath, $filter($path));
     }
 
     /** @return list<array{0: mixed}> */

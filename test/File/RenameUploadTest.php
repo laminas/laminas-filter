@@ -4,442 +4,384 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\File;
 
-use Laminas\Filter\Exception;
-use Laminas\Filter\File\RenameUpload as FileRenameUpload;
+use Laminas\Diactoros\UploadedFile;
+use Laminas\Filter\Exception\InvalidArgumentException;
+use Laminas\Filter\Exception\RuntimeException;
+use Laminas\Filter\File\FileInformation;
+use Laminas\Filter\File\MoveUploadedFile as DefaultMoveUploadedFile;
+use Laminas\Filter\File\RenameUpload;
+use LaminasTest\Filter\Compress\TmpDirectory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UploadedFileFactoryInterface;
-use Psr\Http\Message\UploadedFileInterface;
-use stdClass;
 
-use function assert;
 use function basename;
-use function copy;
-use function glob;
+use function file_get_contents;
+use function file_put_contents;
 use function is_dir;
-use function is_file;
 use function mkdir;
-use function pathinfo;
-use function rmdir;
 use function sprintf;
-use function str_replace;
 use function sys_get_temp_dir;
 use function touch;
 use function uniqid;
 use function unlink;
 
-use const DIRECTORY_SEPARATOR;
 use const UPLOAD_ERR_OK;
 
-class RenameUploadTest extends TestCase
+final class RenameUploadTest extends TestCase
 {
-    /**
-     * Path to test files
-     */
-    private string $filesPath;
+    private static string|null $workDirectory = null;
 
-    /**
-     * Test file
-     */
-    private string $sourceFile;
-
-    /**
-     * Test file
-     */
-    private string $targetFile;
-
-    /**
-     * Test directory
-     */
-    private string $targetPath;
-
-    /**
-     * Test file in Test directory
-     */
-    private string $targetPathFile;
-
-    /**
-     * Sets the path to test files
-     */
-    public function setUp(): void
+    public static function workDirectory(): string
     {
-        $this->filesPath  = sprintf('%s%s%s', sys_get_temp_dir(), DIRECTORY_SEPARATOR, uniqid('laminasilter'));
-        $this->targetPath = sprintf('%s%s%s', $this->filesPath, DIRECTORY_SEPARATOR, 'targetPath');
+        if (self::$workDirectory === null) {
+            self::$workDirectory = sys_get_temp_dir() . '/' . uniqid('laminas_');
+            mkdir(self::$workDirectory);
+        }
 
-        mkdir($this->targetPath, 0775, true);
-
-        $this->sourceFile     = $this->filesPath . DIRECTORY_SEPARATOR . 'testfile.txt';
-        $this->targetFile     = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile.xml';
-        $this->targetPathFile = $this->targetPath . DIRECTORY_SEPARATOR . 'testfile.txt';
-
-        touch($this->sourceFile);
+        return self::$workDirectory;
     }
 
-    /**
-     * Sets the path to test files
-     */
-    public function tearDown(): void
+    public static function tearDownAfterClass(): void
     {
-        $this->removeDir($this->filesPath);
-    }
-
-    private function removeDir(string $dir): void
-    {
-        if (! is_dir($dir)) {
+        if (self::$workDirectory === null) {
             return;
         }
 
-        foreach (glob($dir . DIRECTORY_SEPARATOR . '*') as $file) {
-            if (is_file($file)) {
-                unlink($file);
-                continue;
-            }
-            if (is_dir($file)) {
-                $this->removeDir($file);
-            }
-        }
-
-        rmdir($dir);
+        TmpDirectory::cleanUp(self::$workDirectory);
     }
 
-    /**
-     * Test single parameter filter
-     */
-    public function testThrowsExceptionWithNonUploadedFile(): void
-    {
-        $filter = new FileRenameUpload($this->targetFile);
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertSame('falsefile', $filter('falsefile'));
-        $this->expectException(Exception\RuntimeException::class);
-        $this->expectExceptionMessage('could not be renamed');
-        self::assertSame($this->targetFile, $filter($this->sourceFile));
-    }
-
-    public function testOptions(): void
-    {
-        $filter = new FileRenameUpload($this->targetFile);
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertFalse($filter->getUseUploadName());
-        self::assertFalse($filter->getOverwrite());
-        self::assertFalse($filter->getRandomize());
-
-        $filter = new FileRenameUpload([
-            'target'          => $this->sourceFile,
-            'use_upload_name' => true,
-            'overwrite'       => true,
-            'randomize'       => true,
-        ]);
-        self::assertSame($this->sourceFile, $filter->getTarget());
-        self::assertTrue($filter->getUseUploadName());
-        self::assertTrue($filter->getOverwrite());
-        self::assertTrue($filter->getRandomize());
-    }
-
-    public function testStringConstructorParam(): void
-    {
-        $filter = new RenameUploadMock($this->targetFile);
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertSame($this->targetFile, $filter($this->sourceFile));
-        self::assertSame('falsefile', $filter('falsefile'));
-    }
-
-    public function testStringConstructorWithFilesArray(): void
-    {
-        $filter = new RenameUploadMock($this->targetFile);
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertSame(
-            [
-                'tmp_name' => $this->targetFile,
-                'name'     => $this->targetFile,
-            ],
-            $filter([
-                'tmp_name' => $this->sourceFile,
-                'name'     => $this->targetFile,
-            ])
-        );
-        self::assertSame('falsefile', $filter('falsefile'));
-    }
-
-    /**
-     * @requires PHP 7
-     */
-    public function testStringConstructorWithPsrFile(): void
-    {
-        $originalStream = $this->createMock(StreamInterface::class);
-        $originalStream->expects(self::once())
-            ->method('getMetadata')
-            ->with('uri')
-            ->willReturn($this->sourceFile);
-
-        $originalFile = $this->createMock(UploadedFileInterface::class);
-        $originalFile->expects(self::once())
-            ->method('getStream')
-            ->willReturn($originalStream);
-
-        $originalFile->expects(self::atLeast(1))
-            ->method('getClientFilename')
-            ->willReturn($this->targetFile);
-
-        $originalFile->expects(self::once())
-            ->method('moveTo')
-            ->with(self::callback(function ($argument): bool {
-                self::assertSame($this->targetFile, $argument);
-                copy($this->sourceFile, $this->targetFile);
-
-                return true;
-            }));
-
-        $originalFile->expects(self::once())
-            ->method('getClientMediaType')
-            ->willReturn(null);
-
-        $renamedStream = $this->createMock(StreamInterface::class);
-        $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $streamFactory->expects(self::once())
-            ->method('createStreamFromFile')
-            ->with($this->targetFile)
-            ->willReturn($renamedStream);
-
-        $renamedFile = $this->createMock(UploadedFileInterface::class);
-
-        $fileFactory = $this->createMock(UploadedFileFactoryInterface::class);
-        $fileFactory->expects(self::once())
-            ->method('createUploadedFile')
-            ->with(
-                $renamedStream,
-                0, // we can hardcode this, as we know the file is empty
-                UPLOAD_ERR_OK,
-                $this->targetFile,
-                null
-            )
-            ->willReturn($renamedFile);
-
-        $filter = new RenameUploadMock($this->targetFile);
-        self::assertSame($this->targetFile, $filter->getTarget());
-
-        $filter->setStreamFactory($streamFactory);
-        $filter->setUploadFileFactory($fileFactory);
-
-        $moved = $filter($originalFile);
-
-        self::assertSame($renamedFile, $moved);
-
-        $secondResult = $filter($originalFile);
-
-        self::assertSame($moved, $secondResult);
-    }
-
-    public function testArrayConstructorParam(): void
-    {
-        $filter = new RenameUploadMock([
-            'target' => $this->targetFile,
-        ]);
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertSame($this->targetFile, $filter($this->sourceFile));
-        self::assertSame('falsefile', $filter('falsefile'));
-    }
-
-    public function testConstructTruncatedTarget(): void
-    {
-        $filter = new FileRenameUpload('*');
-        self::assertSame('*', $filter->getTarget());
-        self::assertSame($this->sourceFile, $filter($this->sourceFile));
-        self::assertSame('falsefile', $filter('falsefile'));
-    }
-
-    public function testTargetDirectory(): void
-    {
-        $filter = new RenameUploadMock($this->targetPath);
-        self::assertSame($this->targetPath, $filter->getTarget());
-        self::assertSame($this->targetPathFile, $filter($this->sourceFile));
-        self::assertSame('falsefile', $filter('falsefile'));
-    }
-
-    public function testOverwriteWithExistingFile(): void
-    {
-        $filter = new RenameUploadMock([
-            'target'    => $this->targetFile,
-            'overwrite' => true,
-        ]);
-
-        copy($this->sourceFile, $this->targetFile);
-
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertSame($this->targetFile, $filter($this->sourceFile));
-    }
-
-    public function testCannotOverwriteExistingFile(): void
-    {
-        $filter = new RenameUploadMock([
-            'target'    => $this->targetFile,
-            'overwrite' => false,
-        ]);
-
-        copy($this->sourceFile, $this->targetFile);
-
-        self::assertSame($this->targetFile, $filter->getTarget());
-        self::assertFalse($filter->getOverwrite());
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('already exists');
-        self::assertSame($this->targetFile, $filter($this->sourceFile));
-    }
-
-    public function testGetRandomizedFile(): void
-    {
-        $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter    = new RenameUploadMock([
-            'target'    => $this->targetFile,
-            'randomize' => true,
-        ]);
-
-        self::assertMatchesRegularExpression(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.xml#',
-            $filter($this->sourceFile)
-        );
-    }
-
-    public function testGetFileWithOriginalExtension(): void
-    {
-        $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter    = new RenameUploadMock([
-            'target'               => $this->targetFile,
-            'use_upload_extension' => true,
-            'randomize'            => false,
-        ]);
-
-        $oldFilePathInfo = pathinfo($this->sourceFile);
-        assert(isset($oldFilePathInfo['extension']));
-
-        self::assertMatchesRegularExpression(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '.' . $oldFilePathInfo['extension'] . '#',
-            $filter($this->sourceFile)
-        );
-    }
-
-    public function testGetRandomizedFileWithOriginalExtension(): void
-    {
-        $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter    = new RenameUploadMock([
-            'target'               => $this->targetFile,
-            'use_upload_extension' => true,
-            'randomize'            => true,
-        ]);
-
-        $oldFilePathInfo = pathinfo($this->sourceFile);
-        assert(isset($oldFilePathInfo['extension']));
-
-        self::assertMatchesRegularExpression(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{23}\.' . $oldFilePathInfo['extension'] . '#',
-            $filter($this->sourceFile)
-        );
-    }
-
-    public function testGetRandomizedFileWithoutExtension(): void
-    {
-        $fileNoExt = $this->filesPath . DIRECTORY_SEPARATOR . 'newfile';
-        $filter    = new RenameUploadMock([
-            'target'    => $fileNoExt,
-            'randomize' => true,
-        ]);
-
-        self::assertMatchesRegularExpression(
-            '#' . str_replace('\\', '\\\\', $fileNoExt) . '_.{13}#',
-            $filter($this->sourceFile)
-        );
-    }
-
-    public function testInvalidConstruction(): void
-    {
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid target');
-        new FileRenameUpload(1234);
-    }
-
-    public function testCanFilterMultipleTimesWithSameResult(): void
-    {
-        $filter = new RenameUploadMock([
-            'target'    => $this->targetFile,
-            'randomize' => true,
-        ]);
-
-        $firstResult = $filter($this->sourceFile);
-
-        self::assertStringContainsString('newfile', $firstResult);
-
-        $secondResult = $filter($this->sourceFile);
-
-        self::assertSame($firstResult, $secondResult);
-    }
-
-    /** @return list<array{0:mixed|null}> */
-    public static function returnUnfilteredDataProvider(): array
+    /** @return array<string, array{0: mixed}> */
+    public static function unfilterableInput(): array
     {
         return [
-            [null],
-            [new stdClass()],
-            [
+            'Non-existent file path' => [__DIR__ . '/not-there'],
+            'Non-existent SAPI path' => [
                 [
-                    '/some-file',
-                    'something invalid',
+                    'tmp_name' => __DIR__ . '/not-there',
+                    'name'     => 'Whatever',
+                    'size'     => 123,
+                    'type'     => 'text/plain',
+                    'error'    => 0,
                 ],
             ],
+            'A regular string'       => ['Fairies'],
+            'Numeric'                => [123],
+            'Array'                  => [['kermit', 'miss piggy']],
         ];
     }
 
-    #[DataProvider('returnUnfilteredDataProvider')]
-    public function testReturnUnfiltered(mixed $input): void
+    #[DataProvider('unfilterableInput')]
+    public function testUnfilterableValuesAreReturnedUnFiltered(mixed $input): void
     {
-        $filter = new RenameUploadMock([
-            'target'    => $this->targetFile,
+        $filter = new RenameUpload([], new MoveUploadedFile());
+
+        self::assertSame($input, $filter->filter($input));
+    }
+
+    /** @return array<string, array{0: mixed}> */
+    public static function fileProvider(): array
+    {
+        $psr    = self::workDirectory() . sprintf('/%s.txt', uniqid('psr_'));
+        $string = self::workDirectory() . sprintf('/%s.txt', uniqid('str_'));
+        $sapi   = self::workDirectory() . sprintf('/%s.txt', uniqid('sapi_'));
+        file_put_contents($psr, '.');
+        file_put_contents($sapi, '.');
+        file_put_contents($string, '.');
+
+        return [
+            'PSR'         => [
+                new UploadedFile(
+                    $psr,
+                    1,
+                    UPLOAD_ERR_OK,
+                    'myfile.txt',
+                    'text/plain',
+                ),
+            ],
+            'SAPI'        => [
+                [
+                    'tmp_name' => $sapi,
+                    'name'     => 'myfile.txt',
+                    'size'     => 1,
+                    'type'     => 'text/plain',
+                    'error'    => UPLOAD_ERR_OK,
+                ],
+            ],
+            'String Path' => [$string],
+        ];
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testBasicOperationMovingUploadedFilesToADirectory(mixed $input): void
+    {
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $target = self::workDirectory() . '/target';
+        if (! is_dir($target)) {
+            mkdir($target);
+        }
+
+        $expectFile = $target . '/' . $file->baseName;
+
+        $filter = new RenameUpload([
+            'target' => $target,
+        ], new MoveUploadedFile());
+
+        $result = $filter->__invoke($input);
+
+        self::assertSame($expectFile, $result);
+
+        self::assertFileExists($result);
+        self::assertFileDoesNotExist($file->path);
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testBasicRenameUsingUploadedFileName(mixed $input): void
+    {
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $target = self::workDirectory() . '/target';
+        if (! is_dir($target)) {
+            mkdir($target);
+        }
+
+        if ($file->clientFileName !== null) {
+            $expectFile = $target . '/' . $file->clientFileName;
+        } else {
+            $expectFile = $target . '/' . $file->baseName;
+        }
+
+        $filter = new RenameUpload([
+            'target'          => $target,
+            'use_upload_name' => true,
+        ], new MoveUploadedFile());
+
+        $result = $filter->__invoke($input);
+
+        self::assertSame($expectFile, $result);
+
+        self::assertFileExists($result);
+        self::assertFileDoesNotExist($file->path);
+
+        unlink($result);
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testRenameWillFailWithDefaultOptions(mixed $input): void
+    {
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([], new MoveUploadedFile());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('could not be renamed. It already exists.');
+        $filter->__invoke($input);
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testRenameInPlaceWillFailWhenOverwriteIsTrue(mixed $input): void
+    {
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([
+            'overwrite' => true,
+        ], new MoveUploadedFile());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('could not be renamed. An error occurred while processing the file.');
+        $filter->__invoke($input);
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testRenameInPlaceWillSucceedWhenRandomizeIsTrue(mixed $input): void
+    {
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([
             'randomize' => true,
-        ]);
+        ], new MoveUploadedFile());
 
-        self::assertSame($input, $filter($input));
+        $result = $filter->__invoke($input);
+        self::assertIsString($result);
+
+        self::assertFileExists($result);
+        self::assertFileDoesNotExist($file->path);
     }
 
-    /**
-     * @see https://github.com/zendframework/zend-filter/issues/77
-     */
-    public function testFilterDoesNotAlterUnknownFileDataAndCachesResultsOfFilteringSAPIUploads(): void
+    #[DataProvider('fileProvider')]
+    public function testRenameWithExactTargetFile(mixed $input): void
     {
-        $filter = new RenameUploadMock($this->targetPath);
+        $directory = self::workDirectory() . '/target';
+        if (! is_dir($directory)) {
+            mkdir($directory);
+        }
 
-        // Emulate the output of \Laminas\Http\Request::getFiles()->toArray()
-        $sapiSource = [
-            'tmp_name' => $this->sourceFile,
-            'name'     => basename($this->targetFile),
-            'type'     => 'text/plain',
-            'error'    => UPLOAD_ERR_OK,
-            'size'     => 123,
-        ];
+        $target = $directory . '/some-file.ext';
 
-        $sapiTarget = [
-            'tmp_name' => $this->targetPathFile,
-            'name'     => basename($this->targetFile),
-            'type'     => 'text/plain',
-            'error'    => UPLOAD_ERR_OK,
-            'size'     => 123,
-        ];
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
 
-        // Check the result twice for the `alreadyFiltered` cache path
-        self::assertSame($sapiTarget, $filter($sapiSource));
-        self::assertSame($sapiTarget, $filter($sapiSource));
+        $filter = new RenameUpload([
+            'target' => $target,
+        ], new MoveUploadedFile());
+
+        $result = $filter->__invoke($input);
+        self::assertIsString($result);
+        self::assertSame($target, $result);
+
+        self::assertFileExists($result);
+        self::assertFileDoesNotExist($file->path);
+
+        unlink($result);
     }
 
-    /**
-     * @see https://github.com/zendframework/zend-filter/issues/76
-     */
-    public function testFilterReturnsFileDataVerbatimUnderSAPIWhenTargetPathIsUnspecified(): void
+    #[DataProvider('fileProvider')]
+    public function testRenameFailsWhenOverwriteIsFalseAndTargetAlreadyExists(mixed $input): void
     {
-        $filter = new RenameUploadMock();
+        $directory = self::workDirectory() . '/target';
+        if (! is_dir($directory)) {
+            mkdir($directory);
+        }
 
-        $source = [
-            'tmp_name' => $this->sourceFile,
-            'name'     => basename($this->targetFile),
+        $target = $directory . '/some-file.ext';
+        touch($target);
+
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([
+            'target'    => $target,
+            'overwrite' => false,
+        ], new MoveUploadedFile());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('could not be renamed. It already exists.');
+        $filter->__invoke($input);
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testRenameSucceedsWhenOverwriteIsTrueAndTargetAlreadyExists(mixed $input): void
+    {
+        $directory = self::workDirectory() . '/target';
+        if (! is_dir($directory)) {
+            mkdir($directory);
+        }
+
+        $target = $directory . '/some-file.ext';
+        touch($target);
+
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+        $contents = file_get_contents($file->path);
+        self::assertSame('.', $contents);
+
+        $filter = new RenameUpload([
+            'target'    => $target,
+            'overwrite' => true,
+        ], new MoveUploadedFile());
+
+        $result = $filter->__invoke($input);
+
+        self::assertIsString($result);
+        self::assertFileExists($result);
+        self::assertStringEqualsFile($result, $contents);
+    }
+
+    /** @return list<array{0: non-empty-string}> */
+    public static function invalidTargetDirectoryValues(): array
+    {
+        return [
+            [__DIR__ . '/not-a-directory'],
+            [__DIR__ . '/not-a-directory/some-file.txt'],
         ];
+    }
 
-        self::assertSame($source, $filter($source));
+    /** @param non-empty-string $option */
+    #[DataProvider('invalidTargetDirectoryValues')]
+    public function testTheTargetDirectoryMustExist(string $option): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new RenameUpload(['target' => $option], new MoveUploadedFile());
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testExtensionFromOptionsIsUsedWhenUseUploadExtensionIsFalse(mixed $input): void
+    {
+        $directory = self::workDirectory() . '/target';
+        if (! is_dir($directory)) {
+            mkdir($directory);
+        }
+        $target = $directory . '/some-file.ext';
+
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([
+            'target'               => $target,
+            'use_upload_extension' => false,
+            'randomize'            => true,
+        ], new MoveUploadedFile());
+
+        $result = $filter->__invoke($input);
+
+        self::assertIsString($result);
+        self::assertFileExists($result);
+
+        self::assertStringEndsWith('.ext', $result);
+        self::assertStringStartsWith('some-file', basename($result));
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testExtensionFromClientFilenameIsUsedWhenUseUploadExtensionIsTrue(mixed $input): void
+    {
+        $directory = self::workDirectory() . '/target';
+        if (! is_dir($directory)) {
+            mkdir($directory);
+        }
+        $target = $directory . '/some-file.ext';
+
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([
+            'target'               => $target,
+            'use_upload_extension' => true,
+            'randomize'            => true,
+        ], new MoveUploadedFile());
+
+        $result = $filter->__invoke($input);
+
+        self::assertIsString($result);
+        self::assertFileExists($result);
+
+        self::assertStringEndsWith('.txt', $result);
+        self::assertStringStartsWith('some-file', basename($result));
+    }
+
+    #[DataProvider('fileProvider')]
+    public function testExceptionThrownWithDefaultImplementationWhenFileIsNotAnUpload(mixed $input): void
+    {
+        $target = self::workDirectory() . '/target';
+        if (! is_dir($target)) {
+            mkdir($target);
+        }
+
+        $file = FileInformation::factory($input);
+        self::assertFileExists($file->path);
+
+        $filter = new RenameUpload([
+            'target'    => $target,
+            'randomize' => true,
+        ], new DefaultMoveUploadedFile());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('could not be renamed. An error occurred while processing the file');
+        $filter->__invoke($input);
     }
 }

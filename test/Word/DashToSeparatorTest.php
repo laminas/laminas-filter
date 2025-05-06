@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class DashToSeparatorTest extends TestCase
+final class DashToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesDashedWordsWithDefaultSpaces(): void
     {
@@ -24,7 +24,7 @@ class DashToSeparatorTest extends TestCase
     public function testFilterSeparatesDashedWordsWithSomeString(): void
     {
         $string   = 'dash-separated-words';
-        $filter   = new DashToSeparatorFilter(':-:');
+        $filter   = new DashToSeparatorFilter(['separator' => ':-:']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);

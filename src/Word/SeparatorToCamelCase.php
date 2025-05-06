@@ -4,69 +4,61 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
-use Closure;
-use Laminas\Stdlib\StringUtils;
+use Laminas\Filter\FilterInterface;
+use Laminas\Filter\ScalarOrArrayFilterCallback;
 
+use function assert;
 use function mb_strtoupper;
 use function preg_quote;
 use function preg_replace_callback;
-use function strtoupper;
 
 /**
  * @psalm-type Options = array{
  *     separator?: string,
- *     ...
  * }
- * @template TOptions of Options
- * @extends AbstractSeparator<TOptions>
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-class SeparatorToCamelCase extends AbstractSeparator
+final class SeparatorToCamelCase implements FilterInterface
 {
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    public function filter($value)
+    private readonly string $separator;
+
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
-            $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
-        );
+        $this->separator = $options['separator'] ?? ' ';
     }
 
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue($value)
+    public function filter(mixed $value): mixed
     {
         // a unicode safe way of converting characters to \x00\x00 notation
         $pregQuotedSeparator = preg_quote($this->separator, '#');
 
-        if (StringUtils::hasPcreUnicodeSupport()) {
-            $patterns     = [
-                '#(' . $pregQuotedSeparator . ')(\P{Z}{1})#u',
-                '#(^\P{Z}{1})#u',
-            ];
-            $replacements = [
-                static fn($matches): string => mb_strtoupper($matches[2], 'UTF-8'),
-                static fn($matches): string => mb_strtoupper($matches[1], 'UTF-8'),
-            ];
-        } else {
-            $patterns     = [
-                '#(' . $pregQuotedSeparator . ')([\S]{1})#',
-                '#(^[\S]{1})#',
-            ];
-            $replacements = [
-                static fn($matches): string => strtoupper($matches[2]),
-                static fn($matches): string => strtoupper($matches[1]),
-            ];
-        }
+        $patterns     = [
+            '#(' . $pregQuotedSeparator . ')(\P{Z}{1})#u',
+            '#(^\P{Z}{1})#u',
+        ];
+        $replacements = [
+            static fn(array $matches): string => mb_strtoupper((string) $matches[2], 'UTF-8'),
+            static fn(array $matches): string => mb_strtoupper((string) $matches[1], 'UTF-8'),
+        ];
 
-        $filtered = $value;
-        foreach ($patterns as $index => $pattern) {
-            $filtered = preg_replace_callback($pattern, $replacements[$index], $filtered);
-        }
-        return $filtered;
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            function (string $input) use ($patterns, $replacements): string {
+                $filtered = $input;
+                foreach ($patterns as $index => $pattern) {
+                    $value = preg_replace_callback($pattern, $replacements[$index], $filtered);
+                    assert($value !== null);
+
+                    $filtered = $value;
+                }
+                return $filtered;
+            }
+        );
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

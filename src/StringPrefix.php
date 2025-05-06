@@ -4,89 +4,34 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use function get_debug_type;
-use function is_scalar;
-use function is_string;
 use function sprintf;
 
 /**
  * @psalm-type Options = array{
- *     prefix?: null|string,
+ *     prefix?: non-empty-string|null,
  * }
- * @extends AbstractFilter<Options>
- * @final
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-class StringPrefix extends AbstractFilter
+final class StringPrefix implements FilterInterface
 {
-    /** @var Options */
-    protected $options = [
-        'prefix' => null,
-    ];
+    private readonly string $prefix;
 
-    /**
-     * @param Options|iterable|null $options
-     */
-    public function __construct($options = null)
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        if ($options !== null) {
-            $this->setOptions($options);
-        }
+        $this->prefix = $options['prefix'] ?? '';
     }
 
-    /**
-     * Set the prefix string
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @param  string $prefix
-     * @return self
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setPrefix($prefix)
+    public function filter(mixed $value): mixed
     {
-        if (! is_string($prefix)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects "prefix" to be string; received "%s"',
-                __METHOD__,
-                get_debug_type($prefix),
-            ));
-        }
-
-        $this->options['prefix'] = $prefix;
-
-        return $this;
+        return ScalarOrArrayFilterCallback::applyRecursively(
+            $value,
+            fn (string $value): string => sprintf('%s%s', $this->prefix, $value),
+        );
     }
 
-    /**
-     * Returns the prefix string, which is appended at the beginning of the input value
-     *
-     * @deprecated Since 2.38.0 All option setters and getters will be removed in version 3.0
-     *
-     * @return string
-     */
-    public function getPrefix()
+    public function __invoke(mixed $value): mixed
     {
-        if (! isset($this->options['prefix'])) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects a "prefix" option; none given',
-                self::class
-            ));
-        }
-
-        return $this->options['prefix'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function filter($value)
-    {
-        if (! is_scalar($value)) {
-            return $value;
-        }
-
-        $value = (string) $value;
-
-        return $this->getPrefix() . $value;
+        return $this->filter($value);
     }
 }

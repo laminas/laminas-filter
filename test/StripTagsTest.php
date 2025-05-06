@@ -12,95 +12,14 @@ use stdClass;
 
 use function iconv;
 
-class StripTagsTest extends TestCase
+final class StripTagsTest extends TestCase
 {
-    private StripTagsFilter $filter;
-
-    public function setUp(): void
-    {
-        $this->filter = new StripTagsFilter();
-    }
-
-    /**
-     * Ensures that getTagsAllowed() returns expected default value
-     */
-    public function testGetTagsAllowed(): void
-    {
-        self::assertSame([], $this->filter->getTagsAllowed());
-    }
-
-    /**
-     * Ensures that setTagsAllowed() follows expected behavior when provided a single tag
-     */
-    public function testSetTagsAllowedString(): void
-    {
-        $this->filter->setTagsAllowed('b');
-        self::assertSame(['b' => []], $this->filter->getTagsAllowed());
-    }
-
-    /**
-     * Ensures that setTagsAllowed() follows expected behavior when provided an array of tags
-     */
-    public function testSetTagsAllowedArray(): void
-    {
-        $tagsAllowed = [
-            'b',
-            'a'   => 'href',
-            'div' => ['id', 'class'],
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
-        $tagsAllowedExpected = [
-            'b'   => [],
-            'a'   => ['href' => null],
-            'div' => ['id' => null, 'class' => null],
-        ];
-        self::assertSame($tagsAllowedExpected, $this->filter->getTagsAllowed());
-    }
-
-    /**
-     * Ensures that getAttributesAllowed() returns expected default value
-     */
-    public function testGetAttributesAllowed(): void
-    {
-        self::assertSame([], $this->filter->getAttributesAllowed());
-    }
-
-    /**
-     * Ensures that setAttributesAllowed() follows expected behavior when provided a single attribute
-     */
-    public function testSetAttributesAllowedString(): void
-    {
-        $this->filter->setAttributesAllowed('class');
-        self::assertSame(['class' => null], $this->filter->getAttributesAllowed());
-    }
-
-    /**
-     * Ensures that setAttributesAllowed() follows expected behavior when provided an array of attributes
-     */
-    public function testSetAttributesAllowedArray(): void
-    {
-        $attributesAllowed = [
-            'clAss',
-            4    => 'inT',
-            'ok' => 'String',
-            null,
-        ];
-        /** @psalm-suppress ArgumentTypeCoercion */
-        $this->filter->setAttributesAllowed($attributesAllowed);
-        $attributesAllowedExpected = [
-            'class'  => null,
-            'int'    => null,
-            'string' => null,
-        ];
-        self::assertSame($attributesAllowedExpected, $this->filter->getAttributesAllowed());
-    }
-
     /**
      * Ensures that a single unclosed tag is stripped in its entirety
      */
     public function testFilterTagUnclosed1(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '<a href="http://example.com" Some Text';
         $expected = '';
         self::assertSame($expected, $filter($input));
@@ -111,7 +30,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTag1(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '<a href="example.com">foo</a>';
         $expected = 'foo';
         self::assertSame($expected, $filter($input));
@@ -122,7 +41,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagNest1(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '<a href="example.com"><b>foo</b></a>';
         $expected = 'foo';
         self::assertSame($expected, $filter($input));
@@ -133,7 +52,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTag2(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '<a href="example.com">foo</a><b>bar</b>';
         $expected = 'foobar';
         self::assertSame($expected, $filter($input));
@@ -144,10 +63,11 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedBackwardCompatible(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['br'],
+        ]);
         $input    = '<BR><Br><bR><br/><br  /><br / ></br></bR>';
         $expected = '<br><br><br><br /><br /><br></br></br>';
-        $this->filter->setTagsAllowed('br');
         self::assertSame($expected, $filter($input));
     }
 
@@ -156,7 +76,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagPrefixGt(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '2 > 1 === true<br/>';
         $expected = '2  1 === true';
         self::assertSame($expected, $filter($input));
@@ -167,7 +87,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterGt(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '2 > 1 === true ==> $object->property';
         $expected = '2  1 === true == $object-property';
         self::assertSame($expected, $filter($input));
@@ -178,7 +98,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagWrappedGt(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '2 > 1 === true <==> $object->property';
         $expected = '2  1 === true  $object-property';
         self::assertSame($expected, $filter($input));
@@ -189,9 +109,9 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedAttribute(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = 'img';
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['img'],
+        ]);
         $input    = '<IMG alt="foo" />';
         $expected = '<img />';
         self::assertSame($expected, $filter($input));
@@ -202,11 +122,9 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedAttributeAllowed(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'img' => 'alt',
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['img' => ['alt']],
+        ]);
         $input    = '<IMG ALT="FOO" />';
         $expected = '<img alt="FOO" />';
         self::assertSame($expected, $filter($input));
@@ -219,11 +137,9 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedAttributeAllowedGt(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'img' => 'alt',
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['img' => ['alt']],
+        ]);
         $input    = '<img alt="$object->property" />';
         $expected = '<img>property" /';
         self::assertSame($expected, $filter($input));
@@ -234,11 +150,9 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedAttributeAllowedGtEscaped(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'img' => 'alt',
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['img' => ['alt']],
+        ]);
         $input    = '<img alt="$object-&gt;property" />';
         $expected = '<img alt="$object-&gt;property" />';
         self::assertSame($expected, $filter($input));
@@ -250,11 +164,9 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedAttributeAllowedValueUnclosed(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'img' => ['alt', 'height', 'src', 'width'],
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['img' => ['alt', 'height', 'src', 'width']],
+        ]);
         $input    = '<img src="image.png" alt="square height="100" width="100" />';
         $expected = '<img src="image.png" alt="square height=" width="100" />';
         self::assertSame($expected, $filter($input));
@@ -265,11 +177,9 @@ class StripTagsTest extends TestCase
      */
     public function testFilterTagAllowedAttributeAllowedValueMissing(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'input' => ['checked', 'name', 'type'],
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => ['input' => ['checked', 'name', 'type']],
+        ]);
         $input    = '<input name="foo" type="checkbox" checked />';
         $expected = '<input name="foo" type="checkbox" />';
         self::assertSame($expected, $filter($input));
@@ -282,21 +192,22 @@ class StripTagsTest extends TestCase
      */
     public function testFilter20070526(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'object' => ['width', 'height'],
-            'param'  => ['name', 'value'],
-            'embed'  => ['src', 'type', 'wmode', 'width', 'height'],
-        ];
-        $this->filter->setTagsAllowed($tagsAllowed);
+        $filter = new StripTagsFilter([
+            'allowTags' => [
+                'object' => ['width', 'height'],
+                'param'  => ['name', 'value'],
+                'embed'  => ['src', 'type', 'wmode', 'width', 'height'],
+            ],
+        ]);
+
         $input    = '<object width="425" height="350"><param name="movie" value="http://www.example.com/path/to/movie">'
-               . '</param><param name="wmode" value="transparent"></param><embed '
-               . 'src="http://www.example.com/path/to/movie" type="application/x-shockwave-flash" '
-               . 'wmode="transparent" width="425" height="350"></embed></object>';
+            . '</param><param name="wmode" value="transparent"></param><embed '
+            . 'src="http://www.example.com/path/to/movie" type="application/x-shockwave-flash" '
+            . 'wmode="transparent" width="425" height="350"></embed></object>';
         $expected = '<object width="425" height="350"><param name="movie" value="http://www.example.com/path/to/movie">'
-               . '</param><param name="wmode" value="transparent"></param><embed '
-               . 'src="http://www.example.com/path/to/movie" type="application/x-shockwave-flash" '
-               . 'wmode="transparent" width="425" height="350"></embed></object>';
+            . '</param><param name="wmode" value="transparent"></param><embed '
+            . 'src="http://www.example.com/path/to/movie" type="application/x-shockwave-flash" '
+            . 'wmode="transparent" width="425" height="350"></embed></object>';
         self::assertSame($expected, $filter($input));
     }
 
@@ -305,7 +216,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterComment(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = '<!-- a comment -->';
         $expected = '';
         self::assertSame($expected, $filter($input));
@@ -316,7 +227,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterCommentWrapped(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = 'foo<!-- a comment -->bar';
         $expected = 'foobar';
         self::assertSame($expected, $filter($input));
@@ -329,11 +240,11 @@ class StripTagsTest extends TestCase
      */
     public function testClosingAngleBracketInAllowedAttributeValue(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'a' => 'href',
-        ];
-        $filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => [
+                'a' => ['href'],
+            ],
+        ]);
         $input    = '<a href="Some &gt; Text">';
         $expected = '<a href="Some &gt; Text">';
         self::assertSame($expected, $filter($input));
@@ -346,21 +257,23 @@ class StripTagsTest extends TestCase
     #[Group('Laminas-5983')]
     public function testAllowedAttributeValueMayEndWithEquals(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = [
-            'element' => 'attribute',
-        ];
-        $filter->setTagsAllowed($tagsAllowed);
-        $input = '<element attribute="a=">contents</element>';
+        $filter = new StripTagsFilter([
+            'allowTags' => [
+                'element' => ['attribute'],
+            ],
+        ]);
+        $input  = '<element attribute="a=">contents</element>';
         self::assertSame($input, $filter($input));
     }
 
     #[Group('Laminas-5983')]
     public function testDisallowedAttributesSplitOverMultipleLinesShouldBeStripped(): void
     {
-        $filter      = $this->filter;
-        $tagsAllowed = ['a' => 'href'];
-        $filter->setTagsAllowed($tagsAllowed);
+        $filter   = new StripTagsFilter([
+            'allowTags' => [
+                'a' => ['href'],
+            ],
+        ]);
         $input    = '<a href="https://getlaminas.org/issues" onclick
 =
     "alert(&quot;Gotcha&quot;); return false;">https://getlaminas.org/issues</a>';
@@ -373,7 +286,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterIsoChars(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = 'äöü<!-- a comment -->äöü';
         $expected = 'äöüäöü';
         self::assertSame($expected, $filter($input));
@@ -389,7 +302,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterIsoCharsInComment(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = 'äöü<!--üßüßüß-->äöü';
         $expected = 'äöüäöü';
         self::assertSame($expected, $filter($input));
@@ -405,7 +318,7 @@ class StripTagsTest extends TestCase
      */
     public function testFilterSplitCommentTags(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = 'äöü<!-->üßüßüß<-->äöü';
         $expected = 'äöüäöü';
         self::assertSame($expected, $filter($input));
@@ -414,7 +327,7 @@ class StripTagsTest extends TestCase
     #[Group('Laminas-9434')]
     public function testCommentWithTagInSameLine(): void
     {
-        $filter   = $this->filter;
+        $filter   = new StripTagsFilter();
         $input    = 'test <!-- testcomment --> test <div>div-content</div>';
         $expected = 'test  test div-content';
         self::assertSame($expected, $filter($input));
@@ -423,7 +336,9 @@ class StripTagsTest extends TestCase
     #[Group('Laminas-9833')]
     public function testMultiParamArray(): void
     {
-        $filter = new StripTagsFilter(["a", "b", "hr"], [], true);
+        $filter = new StripTagsFilter([
+            'allowTags' => ["a", "b", "hr"],
+        ]);
 
         $input    = 'test <a /> test <div>div-content</div>';
         $expected = 'test <a /> test div-content';
@@ -435,7 +350,7 @@ class StripTagsTest extends TestCase
     {
         $filter = new StripTagsFilter(
             [
-                'allowTags'    => 'img',
+                'allowTags'    => ['img'],
                 'allowAttribs' => ['width', 'height', 'src'],
             ]
         );
@@ -466,15 +381,17 @@ class StripTagsTest extends TestCase
     #[DataProvider('badCommentProvider')]
     public function testBadCommentTags(string $input, string $expected): void
     {
-        self::assertSame($expected, $this->filter->filter($input));
+        $filter = new StripTagsFilter();
+        self::assertSame($expected, $filter->filter($input));
     }
 
-     #[Group('Laminas-10256')]
+    #[Group('Laminas-10256')]
     public function testNotClosedHtmlCommentAtEndOfString(): void
     {
+        $filter   = new StripTagsFilter();
         $input    = 'text<!-- not closed comment at the end';
         $expected = 'text';
-        self::assertSame($expected, $this->filter->filter($input));
+        self::assertSame($expected, $filter->filter($input));
     }
 
     #[Group('Laminas-11617')]
@@ -483,10 +400,11 @@ class StripTagsTest extends TestCase
         $input    = '<li data-disallowed="no!" data-name="Test User" data-id="11223"></li>';
         $expected = '<li data-name="Test User" data-id="11223"></li>';
 
-        $this->filter->setTagsAllowed('li');
-        $this->filter->setAttributesAllowed(['data-id', 'data-name']);
-
-        self::assertSame($expected, $this->filter->filter($input));
+        $filter = new StripTagsFilter([
+            'allowTags'    => ['li'],
+            'allowAttribs' => ['data-id', 'data-name'],
+        ]);
+        self::assertSame($expected, $filter->filter($input));
     }
 
     /** @return list<array{0: mixed}> */
@@ -507,7 +425,8 @@ class StripTagsTest extends TestCase
     #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
-        self::assertSame($input, $this->filter->filter($input));
+        $filter = new StripTagsFilter();
+        self::assertSame($input, $filter->filter($input));
     }
 
     /**
@@ -517,8 +436,11 @@ class StripTagsTest extends TestCase
     {
         $input    = '<div id="0" data-custom="0" class="bogus"></div>';
         $expected = '<div id="0" data-custom="0"></div>';
-        $this->filter->setTagsAllowed('div');
-        $this->filter->setAttributesAllowed(['id', 'data-custom']);
-        self::assertSame($expected, $this->filter->filter($input));
+
+        $filter = new StripTagsFilter([
+            'allowTags'    => ['div'],
+            'allowAttribs' => ['id', 'data-custom'],
+        ]);
+        self::assertSame($expected, $filter->filter($input));
     }
 }

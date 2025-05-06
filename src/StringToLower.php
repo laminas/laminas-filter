@@ -8,42 +8,37 @@ use function is_scalar;
 use function mb_strtolower;
 
 /**
- * @psalm-import-type UnicodeOptions from AbstractUnicode
- * @extends AbstractUnicode<UnicodeOptions>
+ * @psalm-type Options = array{encoding?: string}
+ * @implements FilterInterface<string>
  */
-class StringToLower extends AbstractUnicode
+final class StringToLower implements FilterInterface
 {
+    private readonly string $encoding;
+
     /**
-     * @param string|UnicodeOptions|iterable|null $encodingOrOptions
+     * @param Options $options
      */
-    public function __construct($encodingOrOptions = null)
+    public function __construct(array $options = [])
     {
-        if ($encodingOrOptions !== null) {
-            if (! static::isOptions($encodingOrOptions)) {
-                $this->setEncoding($encodingOrOptions);
-            } else {
-                $this->setOptions($encodingOrOptions);
-            }
-        }
+        $this->encoding = EncodingOption::assertWithDefault($options['encoding'] ?? null);
     }
 
     /**
-     * Defined by Laminas\Filter\FilterInterface
-     *
      * Returns the string $value, converting characters to lowercase as necessary
      *
      * If the value provided is non-scalar, the value will remain unfiltered
-     *
-     * @param mixed $value
-     * @return string|mixed
-     * @psalm-return ($value is string ? string : $value)
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
         if (! is_scalar($value)) {
             return $value;
         }
 
-        return mb_strtolower((string) $value, $this->getEncoding());
+        return mb_strtolower((string) $value, $this->encoding);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

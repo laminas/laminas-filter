@@ -4,23 +4,34 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
+use Laminas\Filter\FilterInterface;
+
 /**
  * @psalm-type Options = array{
- *     search_separator?: string,
- *     replacement_separator?: string,
- *     ...
+ *     separator?: string,
  * }
  * @template TOptions of Options
- * @template-extends SeparatorToSeparator<TOptions>
- * @final
+ * @implements FilterInterface<string|array<array-key, string|mixed>>
  */
-class SeparatorToDash extends SeparatorToSeparator
+final class SeparatorToDash implements FilterInterface
 {
-    /**
-     * @param string $searchSeparator Separator to search for change
-     */
-    public function __construct($searchSeparator = ' ')
+    private readonly string $separator;
+
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        parent::__construct($searchSeparator, '-');
+        $this->separator = $options['separator'] ?? ' ';
+    }
+
+    public function filter(mixed $value): mixed
+    {
+        return (new SeparatorToSeparator(
+            ['search_separator' => $this->separator, 'replacement_separator' => '-']
+        ))->filter($value);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

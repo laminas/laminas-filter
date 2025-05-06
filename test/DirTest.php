@@ -9,22 +9,30 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class DirTest extends TestCase
+final class DirTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior
      */
-    public function testBasic(): void
+    #[DataProvider('defaultSettingsDataProvider')]
+    public function testBasic(string $input, string $expected): void
     {
-        $filter         = new DirFilter();
-        $valuesExpected = [
-            'filename'              => '.',
-            '/path/to/filename'     => '/path/to',
-            '/path/to/filename.ext' => '/path/to',
+        $filter = new DirFilter();
+
+        self::assertSame($expected, $filter($input));
+        self::assertSame($expected, $filter->__invoke($input));
+        self::assertSame($expected, $filter->filter($input));
+    }
+
+    /** @return list<array{0: string, 1: string}> */
+    public static function defaultSettingsDataProvider(): array
+    {
+        return [
+            ['12345', '.'],
+            ['filename', '.'],
+            ['/path/to/filename', '/path/to'],
+            ['/path/to/filename.ext', '/path/to'],
         ];
-        foreach ($valuesExpected as $input => $output) {
-            self::assertSame($output, $filter($input));
-        }
     }
 
     /** @return list<array{0: mixed}> */
@@ -33,6 +41,10 @@ class DirTest extends TestCase
         return [
             [null],
             [new stdClass()],
+            [''],
+            [12345],
+            [true],
+            [false],
             [
                 [
                     '/path/to/filename',

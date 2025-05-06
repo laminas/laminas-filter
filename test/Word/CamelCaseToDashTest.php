@@ -7,7 +7,7 @@ namespace LaminasTest\Filter\Word;
 use Laminas\Filter\Word\CamelCaseToDash as CamelCaseToDashFilter;
 use PHPUnit\Framework\TestCase;
 
-class CamelCaseToDashTest extends TestCase
+final class CamelCaseToDashTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithDashes(): void
     {

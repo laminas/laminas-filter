@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 #[CoversClass(ForceUriScheme::class)]
-class ForceUriSchemeTest extends TestCase
+final class ForceUriSchemeTest extends TestCase
 {
     /** @return list<array{0: non-empty-string, 1: mixed, 2: mixed}> */
     public static function filterDataProvider(): array

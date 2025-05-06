@@ -9,6 +9,7 @@
     findUnusedPsalmSuppress="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="true"
+    strictBinaryOperands="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -21,4 +22,28 @@
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>
+
+    <issueHandlers>
+        <!-- Suppress Unused Methods in test. Data Providers always appear as unused -->
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
+
+        <!-- Ignore missing #[Override] -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="test" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+
+        <InternalClass>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </InternalClass>
+
+    </issueHandlers>
 </psalm>

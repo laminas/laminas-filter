@@ -9,7 +9,6 @@ use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\ToInt;
 use Laminas\Filter\Word\SeparatorToSeparator;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
-use Laminas\ServiceManager\ServiceManager;
 use LaminasTest\Filter\TestAsset\NotAValidFilter;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -17,13 +16,13 @@ use Throwable;
 
 use function method_exists;
 
-class FilterPluginManagerTest extends TestCase
+final class FilterPluginManagerTest extends TestCase
 {
     private FilterPluginManager $filters;
 
     public function setUp(): void
     {
-        $this->filters = new FilterPluginManager(new ServiceManager());
+        $this->filters = CreatePluginManager::withDefaults();
     }
 
     public function testFilterSuccessfullyRetrieved(): void
@@ -57,17 +56,16 @@ class FilterPluginManagerTest extends TestCase
             'replacement_separator' => $replacementSeparator,
         ];
 
-        $filter = $this->filters->get('wordseparatortoseparator', $options);
+        $filter = $this->filters->build('wordseparatortoseparator', $options);
 
         self::assertInstanceOf(SeparatorToSeparator::class, $filter);
-        self::assertSame($searchSeparator, $filter->getSearchSeparator());
-        self::assertSame($replacementSeparator, $filter->getReplacementSeparator());
+        self::assertSame('semicolon|seperated|words', $filter->filter('semicolon;seperated;words'));
     }
 
     #[Group('7169')]
     public function testFiltersConstructedAreDifferent(): void
     {
-        $filterOne = $this->filters->get(
+        $filterOne = $this->filters->build(
             'wordseparatortoseparator',
             [
                 'search_separator'      => ';',
@@ -75,7 +73,7 @@ class FilterPluginManagerTest extends TestCase
             ]
         );
 
-        $filterTwo = $this->filters->get(
+        $filterTwo = $this->filters->build(
             'wordseparatortoseparator',
             [
                 'search_separator'      => '.',

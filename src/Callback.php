@@ -4,119 +4,45 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Traversable;
+use Closure;
 
 use function array_unshift;
-use function call_user_func_array;
-use function class_exists;
 use function is_callable;
-use function is_string;
 
 /**
  * @psalm-type Options = array{
- *     callback?: callable,
- *     callback_params?: array,
- *     ...
+ *     callback: callable(mixed): mixed,
+ *     callback_params?: array<array-key, mixed>,
  * }
- * @extends AbstractFilter<Options>
- * @final
+ * @implements FilterInterface<mixed>
  */
-class Callback extends AbstractFilter
+final class Callback implements FilterInterface
 {
-    /** @var array */
-    protected $options = [
-        'callback'        => null,
-        'callback_params' => [],
-    ];
+    /** @var Closure(mixed): mixed */
+    private readonly Closure $callback;
+    private readonly array $arguments;
 
     /**
-     * @param callable|array|string|Traversable $callbackOrOptions
-     * @param array $callbackParams
+     * @param (callable(mixed): mixed)|Options $options
      */
-    public function __construct($callbackOrOptions = [], $callbackParams = [])
+    public function __construct(array|callable $options)
     {
-        if (is_callable($callbackOrOptions) || is_string($callbackOrOptions)) {
-            $this->setCallback($callbackOrOptions);
-            $this->setCallbackParams($callbackParams);
-        } else {
-            $this->setOptions($callbackOrOptions);
-        }
+        $callback        = is_callable($options) ? $options : $options['callback'];
+        $arguments       = ! is_callable($options) ? $options['callback_params'] ?? [] : [];
+        $this->callback  = $callback(...);
+        $this->arguments = $arguments;
     }
 
-    /**
-     * Sets a new callback for this filter
-     *
-     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param  callable $callback
-     * @return self
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setCallback($callback)
+    public function filter(mixed $value): mixed
     {
-        if (is_string($callback) && class_exists($callback)) {
-            $callback = new $callback();
-        }
-
-        if (! is_callable($callback)) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid parameter for callback: must be callable'
-            );
-        }
-
-        $this->options['callback'] = $callback;
-        return $this;
-    }
-
-    /**
-     * Returns the set callback
-     *
-     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return callable
-     */
-    public function getCallback()
-    {
-        return $this->options['callback'];
-    }
-
-    /**
-     * Sets parameters for the callback
-     *
-     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param  array $params
-     * @return self
-     */
-    public function setCallbackParams($params)
-    {
-        $this->options['callback_params'] = (array) $params;
-        return $this;
-    }
-
-    /**
-     * Get parameters for the callback
-     *
-     * @deprecated since 2.37.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getCallbackParams()
-    {
-        return $this->options['callback_params'];
-    }
-
-    /**
-     * Calls the filter per callback
-     *
-     * @param  mixed $value Options for the set callable
-     * @return mixed Result from the filter which was called
-     */
-    public function filter($value)
-    {
-        $params = (array) $this->options['callback_params'];
+        $params = $this->arguments;
         array_unshift($params, $value);
 
-        return call_user_func_array($this->options['callback'], $params);
+        return ($this->callback)(...$params);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

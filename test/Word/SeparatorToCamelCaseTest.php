@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class SeparatorToCamelCaseTest extends TestCase
+final class SeparatorToCamelCaseTest extends TestCase
 {
     public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault(): void
     {
@@ -25,7 +25,7 @@ class SeparatorToCamelCaseTest extends TestCase
     public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator(): void
     {
         $string   = 'camel:-:cased:-:Words';
-        $filter   = new SeparatorToCamelCaseFilter(':-:');
+        $filter   = new SeparatorToCamelCaseFilter(['separator' => ':-:']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);
@@ -36,7 +36,7 @@ class SeparatorToCamelCaseTest extends TestCase
     public function testFilterSeparatesUniCodeCamelCasedWordsWithProvidedSeparator(): void
     {
         $string   = 'camel:-:cased:-:Words';
-        $filter   = new SeparatorToCamelCaseFilter(':-:');
+        $filter   = new SeparatorToCamelCaseFilter(['separator' => ':-:']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);
@@ -47,7 +47,7 @@ class SeparatorToCamelCaseTest extends TestCase
     public function testFilterSeparatesUniCodeCamelCasedUserWordsWithProvidedSeparator(): void
     {
         $string   = 'test šuma';
-        $filter   = new SeparatorToCamelCaseFilter(' ');
+        $filter   = new SeparatorToCamelCaseFilter(['separator' => ' ']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);
@@ -58,7 +58,7 @@ class SeparatorToCamelCaseTest extends TestCase
     public function testFilterSeparatesCamelCasedNonAlphaWordsWithProvidedSeparator(): void
     {
         $string   = 'user_2_user';
-        $filter   = new SeparatorToCamelCaseFilter('_');
+        $filter   = new SeparatorToCamelCaseFilter(['separator' => '_']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);

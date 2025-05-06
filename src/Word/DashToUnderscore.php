@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace Laminas\Filter\Word;
 
-/**
- * @psalm-type Options = array{
- *     search_separator?: string,
- *     replacement_separator?: string,
- *     ...
- * }
- * @template TOptions of Options
- * @template-extends SeparatorToSeparator<TOptions>
- * @final
- */
-class DashToUnderscore extends SeparatorToSeparator
+use Laminas\Filter\FilterInterface;
+
+/** @implements FilterInterface<string|array<array-key, string|mixed>> */
+final class DashToUnderscore implements FilterInterface
 {
-    public function __construct()
+    public function filter(mixed $value): mixed
     {
-        parent::__construct('-', '_');
+        return (new SeparatorToSeparator(['search_separator' => '-', 'replacement_separator' => '_']))->filter($value);
+    }
+
+    public function __invoke(mixed $value): mixed
+    {
+        return $this->filter($value);
     }
 }

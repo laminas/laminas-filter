@@ -1,0 +1,6 @@
+TarArchiveWithNoExtension binary
+ZipArchiveWithNoExtension binary
+*.zip binary
+*.tar binary
+*.tar.gz binary
+*.tar.bz2 binary

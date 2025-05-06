@@ -4,41 +4,24 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Laminas\ModuleManager\ModuleManager;
+use Laminas\ServiceManager\ServiceManager;
 
-class Module
+/**
+ * @psalm-import-type ServiceManagerConfiguration from ServiceManager
+ */
+final class Module
 {
     /**
      * Return default laminas-filter configuration for laminas-mvc applications.
+     *
+     * @return array{service_manager: ServiceManagerConfiguration}
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         $provider = new ConfigProvider();
 
         return [
             'service_manager' => $provider->getDependencyConfig(),
         ];
-    }
-
-    /**
-     * Register a specification for the FilterManager with the ServiceListener.
-     *
-     * @deprecated Since 2.40.0 This method is not necessary for module manager and will be removed in 3.0
-     *
-     * @param ModuleManager $moduleManager
-     * @return void
-     */
-    public function init($moduleManager)
-    {
-        $event           = $moduleManager->getEvent();
-        $container       = $event->getParam('ServiceManager');
-        $serviceListener = $container->get('ServiceListener');
-
-        $serviceListener->addServiceManager(
-            'FilterManager',
-            'filters',
-            FilterProviderInterface::class,
-            'getFilterConfig'
-        );
     }
 }

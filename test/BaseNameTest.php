@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class BaseNameTest extends TestCase
+final class BaseNameTest extends TestCase
 {
     /**
      * Ensures that the filter follows expected behavior
@@ -31,6 +31,9 @@ class BaseNameTest extends TestCase
     {
         return [
             [null],
+            [1],
+            [2.5],
+            [true],
             [new stdClass()],
             [
                 [

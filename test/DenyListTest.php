@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
+use ArrayObject;
 use Laminas\Filter\DenyList as DenyListFilter;
-use Laminas\Filter\FilterPluginManager;
-use Laminas\ServiceManager\ServiceManager;
-use Laminas\Stdlib\ArrayObject;
-use Laminas\Stdlib\Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use TypeError;
 
 use function gettype;
 use function sprintf;
 use function var_export;
 
-class DenyListTest extends TestCase
+final class DenyListTest extends TestCase
 {
     public function testConstructorOptions(): void
     {
@@ -25,50 +24,58 @@ class DenyListTest extends TestCase
             'strict' => true,
         ]);
 
-        self::assertSame(true, $filter->getStrict());
-        self::assertSame(['test', 1], $filter->getList());
+        self::assertSame('1', $filter->filter('1'), 'Strict options infer that string 1 is not in the list');
+        self::assertNull($filter->filter('test'));
+        self::assertNull($filter->filter(1));
     }
 
     public function testConstructorDefaults(): void
     {
         $filter = new DenyListFilter();
 
-        self::assertSame(false, $filter->getStrict());
-        self::assertSame([], $filter->getList());
+        self::assertSame('test', $filter->filter('test'));
     }
 
     public function testWithPluginManager(): void
     {
-        $pluginManager = new FilterPluginManager(new ServiceManager());
+        $pluginManager = CreatePluginManager::withDefaults();
         $filter        = $pluginManager->get('DenyList');
 
         self::assertInstanceOf(DenyListFilter::class, $filter);
     }
 
-    public function testNullListShouldThrowException(): void
+    public function testListOptionShouldBeIterable(): void
     {
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(Throwable::class);
+        /** @psalm-suppress InvalidArgument */
         new DenyListFilter([
-            'list' => null,
+            'list' => 'foo',
         ]);
     }
 
     public function testTraversableConvertsToArray(): void
     {
-        $array  = ['test', 1];
-        $obj    = new ArrayObject(['test', 1]);
         $filter = new DenyListFilter([
-            'list' => $obj,
+            'list' => new ArrayObject([1, 2, 'test']),
         ]);
-        self::assertSame($array, $filter->getList());
+        self::assertSame(null, $filter->filter('1'));
+        self::assertSame(null, $filter->filter('test'));
     }
 
-    public function testSetStrictShouldCastToBoolean(): void
+    public function testStrictOptionShouldBeBoolean(): void
     {
-        $filter = new DenyListFilter([
+        $this->expectException(TypeError::class);
+        /** @psalm-suppress InvalidArgument */
+        new DenyListFilter([
             'strict' => 1,
         ]);
-        self::assertSame(true, $filter->getStrict());
+    }
+
+    #[DataProvider('defaultTestProvider')]
+    public function testWillReturnValueWhenNoListHasBeenProvided(mixed $value): void
+    {
+        $filter = new DenyListFilter();
+        self::assertSame($value, $filter->filter($value));
     }
 
     #[DataProvider('defaultTestProvider')]
@@ -78,6 +85,10 @@ class DenyListTest extends TestCase
         self::assertSame($expected, $filter->filter($value));
     }
 
+    /**
+     * @param array<array-key, mixed> $list
+     * @param list<array{0: mixed, 1: mixed}> $testData
+     */
     #[DataProvider('listTestProvider')]
     public function testList(bool $strict, array $list, array $testData): void
     {
@@ -86,8 +97,12 @@ class DenyListTest extends TestCase
             'list'   => $list,
         ]);
         foreach ($testData as $data) {
-            [$value, $expected] = $data;
-            $message            = sprintf(
+            /**
+             * @var mixed $value
+             * @var mixed $expected
+             */
+            [0 => $value, 1 => $expected] = $data;
+            $message                      = sprintf(
                 '%s (%s) is not filtered as %s; type = %s, strict = %b',
                 var_export($value, true),
                 gettype($value),
@@ -111,7 +126,7 @@ class DenyListTest extends TestCase
         ];
     }
 
-    /** @return list<array{0: bool, 1: array, 2: array}> */
+    /** @return list<array{0: bool, 1: array<array-key, mixed>, 2: list<array{0:mixed, 1: mixed}>}> */
     public static function listTestProvider(): array
     {
         return [

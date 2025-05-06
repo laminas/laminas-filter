@@ -11,25 +11,27 @@ final class BooleanFilterChecks
 {
     public function constructorAcceptsSingleTypeConstant(): Filter\Boolean
     {
-        return new Filter\Boolean(Filter\Boolean::TYPE_FLOAT);
+        return new Filter\Boolean(['type' => Filter\Boolean::TYPE_FLOAT]);
     }
 
     public function constructorAcceptsListOfConstants(): Filter\Boolean
     {
         return new Filter\Boolean([
-            Filter\Boolean::TYPE_EMPTY_ARRAY,
-            Filter\Boolean::TYPE_FALSE_STRING,
+            'type' => [
+                Filter\Boolean::TYPE_EMPTY_ARRAY,
+                Filter\Boolean::TYPE_FALSE_STRING,
+            ],
         ]);
     }
 
     public function constructorAcceptsIntMaskOfConstants(): Filter\Boolean
     {
-        return new Filter\Boolean(Filter\Boolean::TYPE_ALL ^ Filter\Boolean::TYPE_FLOAT);
+        return new Filter\Boolean(['type' => Filter\Boolean::TYPE_ALL ^ Filter\Boolean::TYPE_FLOAT]);
     }
 
     public function constructorAcceptsNamedType(): Filter\Boolean
     {
-        return new Filter\Boolean('localized');
+        return new Filter\Boolean(['type' => 'localized']);
     }
 
     public function constructorAcceptsOptionsArray(): Filter\Boolean

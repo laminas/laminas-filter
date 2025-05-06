@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
-use ArrayObject;
 use Laminas\Filter\Exception\DomainException;
 use Laminas\Filter\HtmlEntities as HtmlEntitiesFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -19,116 +18,30 @@ use const ENT_COMPAT;
 use const ENT_NOQUOTES;
 use const ENT_QUOTES;
 
-class HtmlEntitiesTest extends TestCase
+final class HtmlEntitiesTest extends TestCase
 {
-    private HtmlEntitiesFilter $filter;
-
-    /**
-     * Creates a new Laminas\Filter\HtmlEntities object for each test method
-     */
-    public function setUp(): void
+    #[DataProvider('defaultSettingsDataProvider')]
+    public function testBasic(string $input, string $expected): void
     {
-        $this->filter = new HtmlEntitiesFilter();
+        $filter = new HtmlEntitiesFilter();
+
+        self::assertSame($expected, $filter($input));
+        self::assertSame($expected, $filter->__invoke($input));
+        self::assertSame($expected, $filter->filter($input));
     }
 
-    /**
-     * Ensures that the filter follows expected behavior
-     */
-    public function testBasic(): void
+    /** @return list<array{0: string, 1: string}> */
+    public static function defaultSettingsDataProvider(): array
     {
-        $valuesExpected = [
-            'string' => 'string',
-            '<'      => '&lt;',
-            '>'      => '&gt;',
-            '\''     => '&#039;',
-            '"'      => '&quot;',
-            '&'      => '&amp;',
+        return [
+            ['string', 'string'],
+            ['<', '&lt;'],
+            ['>', '&gt;'],
+            ['\'', '&#039;'],
+            ['"', '&quot;'],
+            ['&', '&amp;'],
+            ['&amp;', '&amp;amp;'],
         ];
-        $filter         = $this->filter;
-        foreach ($valuesExpected as $input => $output) {
-            self::assertSame($output, $filter($input));
-        }
-    }
-
-    /**
-     * Ensures that getQuoteStyle() returns expected default value
-     */
-    public function testGetQuoteStyle(): void
-    {
-        self::assertSame(ENT_QUOTES, $this->filter->getQuoteStyle());
-    }
-
-    /**
-     * Ensures that setQuoteStyle() follows expected behavior
-     */
-    public function testSetQuoteStyle(): void
-    {
-        $this->filter->setQuoteStyle(ENT_QUOTES);
-        self::assertSame(ENT_QUOTES, $this->filter->getQuoteStyle());
-    }
-
-    /**
-     * Ensures that getCharSet() returns expected default value
-     */
-    #[Group('Laminas-8715')]
-    public function testGetCharSet(): void
-    {
-        self::assertSame('UTF-8', $this->filter->getCharSet());
-    }
-
-    /**
-     * Ensures that setCharSet() follows expected behavior
-     */
-    public function testSetCharSet(): void
-    {
-        $this->filter->setCharSet('UTF-8');
-        self::assertSame('UTF-8', $this->filter->getCharSet());
-    }
-
-    /**
-     * Ensures that getDoubleQuote() returns expected default value
-     */
-    public function testGetDoubleQuote(): void
-    {
-        self::assertSame(true, $this->filter->getDoubleQuote());
-    }
-
-    /**
-     * Ensures that setDoubleQuote() follows expected behavior
-     */
-    public function testSetDoubleQuote(): void
-    {
-        $this->filter->setDoubleQuote(false);
-        self::assertSame(false, $this->filter->getDoubleQuote());
-    }
-
-    /**
-     * Ensure that fluent interfaces are supported
-     */
-    #[Group('Laminas-3172')]
-    public function testFluentInterface(): void
-    {
-        $instance = $this->filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES)->setDoubleQuote(false);
-        self::assertInstanceOf(HtmlEntitiesFilter::class, $instance);
-    }
-
-    /**
-     * This test uses an ArrayObject in place of a Laminas\Config\Config instance;
-     * they two are interchangeable in this scenario, as HtmlEntitiesFilter is
-     * checking for arrays or Traversable instances.
-     */
-    #[Group('Laminas-8995')]
-    public function testConfigObject(): void
-    {
-        $options = ['quotestyle' => 5, 'encoding' => 'ISO-8859-1'];
-        $config  = new ArrayObject($options);
-
-        $filter = new HtmlEntitiesFilter(
-            $config
-        );
-
-        self::assertSame('ISO-8859-1', $filter->getEncoding());
-        self::assertSame(5, $filter->getQuoteStyle());
     }
 
     /**
@@ -140,8 +53,11 @@ class HtmlEntitiesTest extends TestCase
         $input  = "A 'single' and " . '"double"';
         $result = 'A &#039;single&#039; and &quot;double&quot;';
 
-        $this->filter->setQuoteStyle(ENT_QUOTES);
-        self::assertSame($result, $this->filter->filter($input));
+        $filterWithDefault = new HtmlEntitiesFilter();
+        self::assertSame($result, $filterWithDefault->filter($input));
+
+        $filter = new HtmlEntitiesFilter(['quotestyle' => ENT_QUOTES]);
+        self::assertSame($result, $filter->filter($input));
     }
 
     /**
@@ -153,8 +69,8 @@ class HtmlEntitiesTest extends TestCase
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and &quot;double&quot;";
 
-        $this->filter->setQuoteStyle(ENT_COMPAT);
-        self::assertSame($result, $this->filter->filter($input));
+        $filter = new HtmlEntitiesFilter(['quotestyle' => ENT_COMPAT]);
+        self::assertSame($result, $filter->filter($input));
     }
 
     /**
@@ -166,32 +82,58 @@ class HtmlEntitiesTest extends TestCase
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and " . '"double"';
 
-        $this->filter->setQuoteStyle(ENT_NOQUOTES);
-        self::assertSame($result, $this->filter->filter($input));
+        $filter = new HtmlEntitiesFilter(['quotestyle' => ENT_NOQUOTES]);
+        self::assertSame($result, $filter->filter($input));
+    }
+
+    public function testDoubleQuoteEncodeDefault(): void
+    {
+        $input  = '&amp;';
+        $result = '&amp;amp;';
+
+        $filterDefault = new HtmlEntitiesFilter();
+        self::assertSame($result, $filterDefault->filter($input));
+
+        $filter = new HtmlEntitiesFilter(['doublequote' => true]);
+        self::assertSame($result, $filter->filter($input));
+    }
+
+    public function testDoubleQuoteEncodeOff(): void
+    {
+        $input  = '&amp;';
+        $result = '&amp;';
+
+        $filter = new HtmlEntitiesFilter(['doublequote' => false]);
+        self::assertSame($result, $filter->filter($input));
     }
 
     #[Group('Laminas-11344')]
     public function testCorrectsForEncodingMismatch(): void
     {
+        $filter = new HtmlEntitiesFilter();
         $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
-        $result = $this->filter->filter($string);
+        self::assertNotFalse($string);
+        $result = $filter->filter($string);
         self::assertGreaterThan(0, strlen($result));
     }
 
     #[Group('Laminas-11344')]
     public function testStripsUnknownCharactersWhenEncodingMismatchDetected(): void
     {
+        $filter = new HtmlEntitiesFilter();
         $string = file_get_contents(__DIR__ . '/_files/latin-1-text.txt');
-        $result = $this->filter->filter($string);
+        self::assertNotFalse($string);
+        $result = $filter->filter($string);
         self::assertStringContainsString('&quot;&quot;', $result);
     }
 
     #[Group('Laminas-11344')]
     public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty(): void
     {
+        $filter = new HtmlEntitiesFilter();
         $string = file_get_contents(__DIR__ . '/_files/latin-1-dash-only.txt');
         $this->expectException(DomainException::class);
-        $this->filter->filter($string);
+        $filter->filter($string);
     }
 
     /** @return list<array{0: mixed}> */
@@ -200,6 +142,10 @@ class HtmlEntitiesTest extends TestCase
         return [
             [null],
             [new stdClass()],
+            [''],
+            [false],
+            [true],
+            [12345],
             [
                 [
                     '<',
@@ -212,6 +158,7 @@ class HtmlEntitiesTest extends TestCase
     #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
-        self::assertSame($input, $this->filter->filter($input));
+        $filter = new HtmlEntitiesFilter();
+        self::assertSame($input, $filter->filter($input));
     }
 }

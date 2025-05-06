@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter\File;
 
-use Laminas\Filter\Exception;
-use Laminas\Filter\Exception\ExtensionNotLoadedException;
+use Laminas\Filter\Exception\InvalidArgumentException;
 use Laminas\Filter\File\UpperCase as FileUpperCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +21,7 @@ use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
-class UpperCaseTest extends TestCase
+final class UpperCaseTest extends TestCase
 {
     private string $testFile;
 
@@ -59,53 +58,45 @@ class UpperCaseTest extends TestCase
 
     public function testInstanceCreationAndNormalWorkflow(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', $this->fileGetContents($this->testFile));
         $filter = new FileUpperCase();
         $filter($this->testFile);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        self::assertStringContainsString('THIS IS A FILE', $this->fileGetContents($this->testFile));
     }
 
     public function testNormalWorkflowWithFilesArray(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
+        self::assertStringContainsString('This is a File', $this->fileGetContents($this->testFile));
         $filter = new FileUpperCase();
         $filter(['tmp_name' => $this->testFile]);
-        self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
+        self::assertStringContainsString('THIS IS A FILE', $this->fileGetContents($this->testFile));
     }
 
     public function testFileNotFoundException(): void
     {
         $filter = new FileUpperCase();
-        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
         $filter($this->testFile . 'unknown');
     }
 
-    public function testCheckSettingOfEncodingInIstance(): void
+    public function testCheckSettingOfEncodingInInstance(): void
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
-        try {
-            $filter = new FileUpperCase('ISO-8859-1');
-            $filter($this->testFile);
-            self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
-        } catch (ExtensionNotLoadedException $e) {
-            self::assertStringContainsString('mbstring is required', $e->getMessage());
-        }
+        self::assertStringContainsString('This is a File', $this->fileGetContents($this->testFile));
+        $filter = new FileUpperCase(['encoding' => 'ISO-8859-1']);
+        $filter($this->testFile);
+        self::assertStringContainsString('THIS IS A FILE', $this->fileGetContents($this->testFile));
     }
 
-    public function testCheckSettingOfEncodingWithMethod(): void
+    private function fileGetContents(string $path): string
     {
-        self::assertStringContainsString('This is a File', file_get_contents($this->testFile));
-        try {
-            $filter = new FileUpperCase();
-            $filter->setEncoding('ISO-8859-1');
-            $filter($this->testFile);
-            self::assertStringContainsString('THIS IS A FILE', file_get_contents($this->testFile));
-        } catch (ExtensionNotLoadedException $e) {
-            self::assertStringContainsString('mbstring is required', $e->getMessage());
-        }
+        $content = file_get_contents($path);
+        self::assertIsString($content);
+
+        return $content;
     }
 
+    /** @return list<array{0: mixed}> */
     public static function returnUnfilteredDataProvider(): array
     {
         return [
@@ -121,10 +112,9 @@ class UpperCaseTest extends TestCase
     }
 
     #[DataProvider('returnUnfilteredDataProvider')]
-    public function testReturnUnfiltered($input): void
+    public function testReturnUnfiltered(mixed $input): void
     {
-        $filter = new FileUpperCase();
-        $filter->setEncoding('ISO-8859-1');
+        $filter = new FileUpperCase(['encoding' => 'ISO-8859-1']);
 
         self::assertSame($input, $filter($input));
     }

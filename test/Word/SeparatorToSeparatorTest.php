@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class SeparatorToSeparatorTest extends TestCase
+final class SeparatorToSeparatorTest extends TestCase
 {
     public function testFilterSeparatesWordsByDefault(): void
     {
@@ -41,7 +41,7 @@ class SeparatorToSeparatorTest extends TestCase
     public function testFilterSeparatesWordsWithSearchSpecified(): void
     {
         $string   = 'dash=separated=words';
-        $filter   = new SeparatorToSeparatorFilter('=');
+        $filter   = new SeparatorToSeparatorFilter(['search_separator' => '=']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);
@@ -51,7 +51,7 @@ class SeparatorToSeparatorTest extends TestCase
     public function testFilterSeparatesWordsWithSearchAndReplacementSpecified(): void
     {
         $string   = 'dash=separated=words';
-        $filter   = new SeparatorToSeparatorFilter('=', '?');
+        $filter   = new SeparatorToSeparatorFilter(['search_separator' => '=', 'replacement_separator' => '?']);
         $filtered = $filter($string);
 
         self::assertNotEquals($string, $filtered);
@@ -70,7 +70,7 @@ class SeparatorToSeparatorTest extends TestCase
     #[DataProvider('returnUnfilteredDataProvider')]
     public function testReturnUnfiltered(mixed $input): void
     {
-        $filter = new SeparatorToSeparatorFilter('=', '?');
+        $filter = new SeparatorToSeparatorFilter(['search_separator' => '=', 'replacement_separator' => '?']);
 
         self::assertSame($input, $filter($input));
     }
@@ -91,7 +91,7 @@ class SeparatorToSeparatorTest extends TestCase
     #[DataProvider('returnNonStringScalarValues')]
     public function testShouldFilterNonStringScalarValues(float|bool|int $input): void
     {
-        $filter = new SeparatorToSeparatorFilter('=', '?');
+        $filter = new SeparatorToSeparatorFilter(['search_separator' => '=', 'replacement_separator' => '?']);
 
         self::assertSame((string) $input, $filter($input));
     }

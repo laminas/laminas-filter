@@ -4,39 +4,26 @@ declare(strict_types=1);
 
 namespace Laminas\Filter;
 
-use Closure;
-
 use function str_replace;
 
-/**
- * @psalm-type Options = array{}
- * @extends AbstractFilter<Options>
- * @final
- */
-class StripNewlines extends AbstractFilter
+/** @implements FilterInterface<string|array<array-key, string|mixed>> */
+final class StripNewlines implements FilterInterface
 {
     /**
-     * Defined by Laminas\Filter\FilterInterface
-     *
      * Returns $value without newline control characters
      *
-     * @param  mixed $value
-     * @return mixed
+     * @inheritDoc
      */
-    public function filter($value)
+    public function filter(mixed $value): mixed
     {
-        return self::applyFilterOnlyToStringableValuesAndStringableArrayValues(
+        return ScalarOrArrayFilterCallback::applyRecursively(
             $value,
-            Closure::fromCallable([$this, 'filterNormalizedValue'])
+            static fn(string $value): string => str_replace(["\n", "\r"], '', $value),
         );
     }
 
-    /**
-     * @param  string|string[] $value
-     * @return string|string[]
-     */
-    private function filterNormalizedValue($value)
+    public function __invoke(mixed $value): mixed
     {
-        return str_replace(["\n", "\r"], '', $value);
+        return $this->filter($value);
     }
 }
