@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/static-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v3/file/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Static Filter - laminas-filter - Laminas Docs</title>
+    <title>File Filters - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -128,6 +128,14 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -138,6 +146,12 @@
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -159,8 +173,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../file/" class="subnavigation__link">File Filters</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">File Filters</a>
     </li>
 
             
@@ -177,14 +191,23 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -199,21 +222,19 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             
@@ -267,13 +288,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -281,7 +302,7 @@
                 
             
                 
-                    <a href="../intro/" class="dropdown-item active">
+                    <a href="../../v2/intro/" class="dropdown-item">
                         
                             v2
                         
@@ -321,7 +342,19 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#using-custom-filters" class="toc__link nav-link">Using custom Filters</a>
+                        <a href="#lowercase" class="toc__link nav-link">Lowercase</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#rename" class="toc__link nav-link">Rename</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#renameupload" class="toc__link nav-link">RenameUpload</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#uppercase" class="toc__link nav-link">Uppercase</a>
                     </li>
                 
             </ul>
@@ -360,21 +393,13 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Static Filter</li>
+                <li class="breadcrumb-item active" aria-current="page">File Filters</li>
             
         
     </ol>
 </nav>
 
 
-
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
 
 
 
@@ -384,33 +409,243 @@
         <h2 class="chapter__headline">Reference</h2>
     
 
-    <h1 id="static-filter">Static Filter</h1>
-<div class="admonition caution">
-<p class="admonition-title">Deprecated</p>
+    <h1 id="file-filters">File Filters</h1>
+<p>laminas-filter also comes with a set of classes for filtering file contents, and
+performing file operations such as renaming.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>$_FILES</code></p>
 <p>
-This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
+All file filter <code>filter()</code> implementations support either a file path string <em>or</em> a <code>$_FILES</code> array as the supplied argument.
+When a <code>$_FILES</code> array is passed in, the <code>tmp_name</code> is used for the file path.</p>
 </div>
-<p>If it is inconvenient to load a given filter class and create an instance of the filter, you can use <code>StaticFilter</code> with it's method <code>execute()</code> as an alternative invocation style.
-The first argument of this method is a data input value that you would pass to the <code>filter()</code> method.
-The second argument is a string, which corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code> namespace.
-The <code>execute()</code> method automatically loads the class, creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
-    '"',
-    'HtmlEntities',
-    ['quotestyle' =&gt; ENT_QUOTES]
-);</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you have the need to run a filter for multiple inputs, it's more efficient to create an instance of the filter and invoke it.
-instance of the filter object and calling its <code>filter()</code> method.</p>
-<p>Additionally, <a href="../filter-chains/">filter chains</a> allow you to instantiate and run multiple filters on demand to process sets of input data.</p>
-<h2 id="using-custom-filters">Using custom Filters</h2>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to amend the standard filter classes:</p>
-<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
+<h2 id="lowercase">Lowercase</h2>
+<p><code>Laminas\Filter\File\Lowercase</code> can be used to convert file contents to lowercase.</p>
+<h3 id="supported-options">Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>encoding</code>: Set the encoding to use during conversion.</li>
+</ul>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
+use Laminas\Http\PhpEnvironment\Request;
 
-StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-<p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new LowerCase();
+$filter-&gt;filter($files['my-upload']);</code></pre>
+<p>This example converts the contents of an uploaded file to lowercase.  After this
+process, you can use the <a href="#rename">Rename</a> or <a href="#renameupload">RenameUpload</a>
+filter to replace this file with your original file, or read directly from file.
+But, don't forget, if you upload a file and send your <code>$_FILES</code> array to a
+filter method, the <code>LowerCase</code> filter will only change the temporary file
+(<code>tmp_name</code> index of array), not the original file. Let's check following
+example:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
+use Laminas\Filter\File\Rename;
+use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$lowercaseFilter = new LowerCase();
+$file = $lowercaseFilter-&gt;filter($files['userfile']);
+$renameFilter = new Rename([
+    'target'    =&gt; '/tmp/newfile.txt',
+    'randomize' =&gt; true,
+]);
+$filename = $renameFilter-&gt;filter($file['tmp_name']);</code></pre>
+<p>With this example, the final, stored file on the server will have the lowercased
+content.</p>
+<p>If you want to use a specific encoding when converting file content, you should
+specify the encoding when instantiating the <code>LowerCase</code> filter, or use the
+<code>setEncoding</code> method to change it.</p>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\LowerCase;
+use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new LowerCase();
+$filter-&gt;setEncoding('ISO-8859-1');
+$filter-&gt;filter($files['my-upload']);</code></pre>
+<p>The <code>LowerCase</code> filter extends from the <code>StringToLower</code> filter; read the
+<a href="../standard-filters/#stringtolower"><code>StringToLower</code> documentation</a>
+for more information about encoding and its exceptions.</p>
+<h2 id="rename">Rename</h2>
+<p><code>Laminas\Filter\File\Rename</code> can be used to rename a file and/or move a file to a new path.</p>
+<h3 id="supported-options_1">Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>match</code> (string; default: <code>*</code>): File name pattern to check if this filter should be applied to the input.
+Read the <a href="https://www.php.net/manual/function.fnmatch.php"><code>fnmatch</code> documentation</a> for more detail</li>
+<li><code>target_directory</code> (string; default: <code>*</code>): Directory to move the file(s) to, if specified. The target directory must exist and be writable by the server process.</li>
+<li><code>rename_to</code> (string: default: <code>*</code>): Change the filename to the specified value. A value of <code>*</code> <em>(The default)</em> preserves the existing file name.</li>
+<li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?
+If the file is unable to be moved into the target path, a <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
+<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random postfix attached?
+The random postfix will generated with <code>uniqid('_')</code> after the file name and before the extension.
+For example, <code>file.txt</code> might be randomized to <code>file_4b3403665fea6.txt</code>.</li>
+</ul>
+<p>A list of "option sets" is also supported, where a single <code>Rename</code> filter instance can be configured to match and rename files using different options based on the received filename.
+for example, a list such as</p>
+<pre class="highlight"><code class="language-php">[
+  ['match' =&gt; '*.txt', 'target_directory' =&gt; '/tmp/text-files'],
+  ['match' =&gt; '*.pdf', 'target_directory' =&gt; '/tmp/pdf-files'],
+];</code></pre>
+<h3 id="usage-examples">Usage Examples</h3>
+<p>Move all filtered files to a different directory:</p>
+<pre class="highlight"><code class="language-php">// 'target' option is assumed if param is a string
+$filter = new \Laminas\Filter\File\Rename(['target_directory' =&gt; '/tmp/']);
+echo $filter-&gt;filter('./myfile.txt');
+// File has been moved to '/tmp/myfile.txt'</code></pre>
+<p>Rename all filtered files to a new name:</p>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\File\Rename(['rename_to' =&gt; 'newfile.txt');
+echo $filter-&gt;filter('./myfile.txt');
+// File has been renamed to 'newfile.txt'</code></pre>
+<p>Move to a new path, and randomize file names:</p>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\File\Rename([
+    'match'    =&gt; '/tmp/*.txt',
+    'randomize' =&gt; true,
+]);
+echo $filter-&gt;filter('./myfile.txt');
+// File has been renamed to '/tmp/newfile_4b3403665fea6.txt'</code></pre>
+<p>Configure different options for several possible source files:</p>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\File\Rename([
+    [
+        'match'    =&gt; '*.pdf'
+        'target_directory' =&gt; '/pdf-files/',
+        'rename_to'    =&gt; 'newfileA.pdf',
+        'overwrite' =&gt; true,
+    ],
+    [
+        'match'    =&gt; '*.txt'
+        'target_directory' =&gt; '/text-files/',
+        'rename_to'    =&gt; 'newfileB.txt',
+        'randomize' =&gt; true,
+    ],
+]);
+echo $filter-&gt;filter('fileA.txt');
+// File has been renamed to '/dest1/newfileA.txt'
+echo $filter-&gt;filter('fileB.txt');
+// File has been renamed to '/dest2/newfileB_4b3403665fea6.txt'</code></pre>
+<h2 id="renameupload">RenameUpload</h2>
+<p><code>Laminas\Filter\File\RenameUpload</code> can be used to rename or move an uploaded file to a new path.</p>
+<p>The filter will only attempt to operate on uploaded files, and will typically succeed given the following inputs:</p>
+<ul>
+<li>An array representing a single <a href="https://www.php.net/manual/features.file-upload.post-method.php">PHP file upload</a></li>
+<li>A <a href="https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface">PSR7 <code>UploadedFileInterface</code></a></li>
+<li>A string representing the file path of an uploaded file</li>
+</ul>
+<h3 id="supported-options_2">Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>target</code> (string; default: <code>*</code>): Target directory or full filename path.</li>
+<li><code>overwrite</code> (boolean; default: <code>false</code>): Shall existing files be overwritten?
+  If the file is unable to be moved into the target path, a
+  <code>Laminas\Filter\Exception\RuntimeException</code> will be thrown.</li>
+<li><code>randomize</code> (boolean; default: <code>false</code>): Shall target files have a random
+  postfix attached? The random postfix will be generated with <code>uniqid('_')</code> after
+  the file name and before the extension. For example, <code>file.txt</code> might be
+  randomized to <code>file_4b3403665fea6.txt</code>.</li>
+<li><code>use_upload_name</code> (boolean; default: <code>false</code>): When true, this filter will
+  use <code>$_FILES['name']</code> as the target filename. Otherwise, the default <code>target</code>
+  rules and the <code>$_FILES['tmp_name']</code> will be used.</li>
+<li><code>use_upload_extension</code> (boolean; default: <code>false</code>): When true, the uploaded
+  file will maintain its original extension if not specified.  For example, if
+  the uploaded file is <code>file.txt</code> and the target is <code>mynewfile</code>, the upload
+  will be renamed to <code>mynewfile.txt</code>.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Using the upload Name is unsafe</p>
+<p>Be <strong>very</strong> careful when using the <code>use_upload_name</code> option. For instance,
+extremely bad things could happen if you were to allow uploaded <code>.php</code> files
+(or other CGI files) to be moved into the <code>DocumentRoot</code>.</p>
+<p>It is generally a better idea to supply an internal filename to avoid
+security risks.</p>
+</div>
+<p><code>RenameUpload</code> can only operate on one file at a time.</p>
+<h3 id="usage-examples_1">Usage Examples</h3>
+<p>Move all filtered files to a different directory.</p>
+<pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+// i.e. $files['my-upload']['name'] === 'myfile.txt'
+
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' =&gt; './data/uploads/',
+]);
+echo $filter-&gt;filter($files['my-upload']);
+// File has been moved to './data/uploads/php5Wx0aJ'
+
+// ... or retain the uploaded file name
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' =&gt; './data/uploads/',
+    'use_upload_name' =&gt; true,
+]);
+echo $filter-&gt;filter($files['my-upload']);
+// File has been moved to './data/uploads/myfile.txt'</code></pre>
+<p>Rename all filtered files to a new name:</p>
+<pre class="highlight"><code class="language-php">// Assuming: $_FILES['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target' =&gt; './data/uploads/newfile.txt',
+]);
+echo $filter-&gt;filter($_FILES['my-upload']);
+// File has been renamed to './data/uploads/newfile.txt'</code></pre>
+<p>Move to a new path and randomize file names:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target'    =&gt; './data/uploads/newfile.txt',
+    'randomize' =&gt; true,
+]);
+echo $filter-&gt;filter($files['my-upload']);
+// File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'</code></pre>
+<p>Handle a PSR-7 uploaded file:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\RenameUpload;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
+
+$filter = new \Laminas\Filter\File\RenameUpload([
+    'target'    =&gt; './data/uploads/',
+    'randomize' =&gt; true,
+]);
+
+// @var ServerRequestInterface $request
+foreach ($request-&gt;getUploadedFiles() as $uploadedFile) {
+    // @var UploadedFileInterface $uploadedFile
+    $newFilePath = $filter-&gt;filter($uploadedFile);
+    echo $newFilePath;
+    // File has been renamed to './data/uploads/newfile_4b3403665fea6.txt'
+}</code></pre>
+<h2 id="uppercase">Uppercase</h2>
+<p><code>Laminas\Filter\File\Uppercase</code> can be used to convert file contents to uppercase.</p>
+<h3 id="supported-options_3">Supported Options</h3>
+<p>The following set of options are supported:</p>
+<ul>
+<li><code>encoding</code>: Set the encoding to use during conversion.</li>
+</ul>
+<h3 id="basic-usage_1">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\File\UpperCase;
+use Laminas\Http\PhpEnvironment\Request;
+
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['tmp_name'] === '/tmp/php5Wx0aJ'
+
+$filter = new UpperCase();
+$filter-&gt;filter($files['my-upload']);</code></pre>
+<p>See the documentation on the <a href="#lowercase"><code>LowerCase</code></a> filter, above, for more information.</p>
 
 
 
@@ -421,10 +656,10 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../inflector/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../word/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    String Inflection
+                    Word Filters
                 </a>
             
         </li>
@@ -432,9 +667,9 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../writing-filters/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../filter-chains/">
                     <small class="page-nav__label">Next</small>
-                    Writing Filters
+                    Filter Chains
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -482,6 +717,14 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -492,6 +735,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -513,8 +762,8 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../file/" class="subnavigation__link">File Filters</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">File Filters</a>
     </li>
 
             
@@ -531,14 +780,23 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -553,21 +811,19 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             

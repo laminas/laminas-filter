@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/static-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v3/word/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Static Filter - laminas-filter - Laminas Docs</title>
+    <title>Word Filters - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -128,6 +128,14 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -138,6 +146,12 @@
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -153,8 +167,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../word/" class="subnavigation__link">Word Filters</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Word Filters</a>
     </li>
 
             
@@ -177,14 +191,23 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -199,21 +222,19 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             
@@ -267,13 +288,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -281,7 +302,7 @@
                 
             
                 
-                    <a href="../intro/" class="dropdown-item active">
+                    <a href="../../v2/intro/" class="dropdown-item">
                         
                             v2
                         
@@ -321,7 +342,55 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#using-custom-filters" class="toc__link nav-link">Using custom Filters</a>
+                        <a href="#camelcasetodash" class="toc__link nav-link">CamelCaseToDash</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#camelcasetoseparator" class="toc__link nav-link">CamelCaseToSeparator</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#camelcasetounderscore" class="toc__link nav-link">CamelCaseToUnderscore</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#dashtocamelcase" class="toc__link nav-link">DashToCamelCase</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#dashtoseparator" class="toc__link nav-link">DashToSeparator</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#dashtounderscore" class="toc__link nav-link">DashToUnderscore</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#separatortocamelcase" class="toc__link nav-link">SeparatorToCamelCase</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#separatortodash" class="toc__link nav-link">SeparatorToDash</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#separatortoseparator" class="toc__link nav-link">SeparatorToSeparator</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#underscoretocamelcase" class="toc__link nav-link">UnderscoreToCamelCase</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#underscoretoseparator" class="toc__link nav-link">UnderscoreToSeparator</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#underscoretodash" class="toc__link nav-link">UnderscoreToDash</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#underscoretostudlycase" class="toc__link nav-link">UnderscoreToStudlyCase</a>
                     </li>
                 
             </ul>
@@ -360,21 +429,13 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Static Filter</li>
+                <li class="breadcrumb-item active" aria-current="page">Word Filters</li>
             
         
     </ol>
 </nav>
 
 
-
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
 
 
 
@@ -384,33 +445,302 @@
         <h2 class="chapter__headline">Reference</h2>
     
 
-    <h1 id="static-filter">Static Filter</h1>
-<div class="admonition caution">
-<p class="admonition-title">Deprecated</p>
+    <h1 id="word-filters">Word Filters</h1>
+<p>In addition to the standard set of filters, there are several classes specific
+to filtering word strings.</p>
+<h2 id="camelcasetodash">CamelCaseToDash</h2>
+<div class="admonition tip">
+<p class="admonition-title">New Behaviour since Version 3</p>
 <p>
-This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
+The filter will now treat numbers as a word boundary.
+For example <code>ThisHas4Words</code> will filter to <code>This-Has-4-Words</code>.</p>
 </div>
-<p>If it is inconvenient to load a given filter class and create an instance of the filter, you can use <code>StaticFilter</code> with it's method <code>execute()</code> as an alternative invocation style.
-The first argument of this method is a data input value that you would pass to the <code>filter()</code> method.
-The second argument is a string, which corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code> namespace.
-The <code>execute()</code> method automatically loads the class, creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
-    '"',
-    'HtmlEntities',
-    ['quotestyle' =&gt; ENT_QUOTES]
-);</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you have the need to run a filter for multiple inputs, it's more efficient to create an instance of the filter and invoke it.
-instance of the filter object and calling its <code>filter()</code> method.</p>
-<p>Additionally, <a href="../filter-chains/">filter chains</a> allow you to instantiate and run multiple filters on demand to process sets of input data.</p>
-<h2 id="using-custom-filters">Using custom Filters</h2>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to amend the standard filter classes:</p>
-<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
+<p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to <code>Camel-Case-Words</code>.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToDash();
 
-StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-<p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
+<p>The above example returns <code>This-Is-My-Content</code>.</p>
+<h3 id="supported-options">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\CamelCaseToDash</code>.</p>
+<h2 id="camelcasetoseparator">CamelCaseToSeparator</h2>
+<div class="admonition tip">
+<p class="admonition-title">New Behaviour since Version 3</p>
+<p>
+The filter will now treat numbers as a word boundary.
+For example <code>ThisHas4Words</code> with the default separator will filter to <code>This Has 4 Words</code></p>
+</div>
+<p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to <code>Camel Case Words</code>.</p>
+<h3 id="basic-usage_1">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToSeparator();
+
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
+<p>The above example returns <code>This Is My Content</code>.</p>
+<h3 id="supported-options_1">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Word\CamelCaseToSeparator</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>separator</code></td>
+<td>A separator character</td>
+<td><code>string</code></td>
+<td>' ' (space)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example">Example</h4>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToSeparator(['separator' =&gt; ':']);
+
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
+<p>The above example returns <code>This:Is:My:Content</code>.</p>
+<h2 id="camelcasetounderscore">CamelCaseToUnderscore</h2>
+<div class="admonition tip">
+<p class="admonition-title">New Behaviour since Version 3</p>
+<p>
+The filter will now treat numbers as a word boundary.
+For example <code>ThisHas4Words</code> will filter to <code>This_Has_4_Words</code></p>
+</div>
+<p>This filter modifies a given string such that <code>CamelCaseWords</code> are converted to
+<code>Camel_Case_Words</code>.</p>
+<h3 id="basic-usage_2">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\CamelCaseToUnderscore();
+
+print $filter-&gt;filter('ThisIsMyContent');</code></pre>
+<p>The above example returns <code>This_Is_My_Content</code>.</p>
+<h3 id="supported-options_2">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\CamelCaseToUnderscore</code>.</p>
+<h2 id="dashtocamelcase">DashToCamelCase</h2>
+<p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
+to <code>WordsWithDashes</code>.</p>
+<h3 id="basic-usage_3">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToCamelCase();
+
+print $filter-&gt;filter('this-is-my-content');</code></pre>
+<p>The above example returns <code>ThisIsMyContent</code>.</p>
+<h3 id="supported-options_3">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\DashToCamelCase</code>:</p>
+<h2 id="dashtoseparator">DashToSeparator</h2>
+<p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
+to <code>words with dashes</code>.</p>
+<h3 id="basic-usage_4">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToSeparator();
+
+print $filter-&gt;filter('this-is-my-content');</code></pre>
+<p>The above example returns <code>this is my content</code>.</p>
+<h3 id="supported-options_4">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Word\DashToSeparator</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>separator</code></td>
+<td>A separator character</td>
+<td><code>string</code></td>
+<td>' ' (space)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example_1">Example</h4>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToSeparator(['separator' =&gt; '+']);
+
+print $filter-&gt;filter('this-is-my-content');</code></pre>
+<p>The above example returns <code>this+is+my+content</code>.</p>
+<h2 id="dashtounderscore">DashToUnderscore</h2>
+<p>This filter modifies a given string such that <code>words-with-dashes</code> are converted
+to <code>words_with_dashes</code>.</p>
+<h3 id="basic-usage_5">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\DashToUnderscore();
+
+print $filter-&gt;filter('this-is-my-content');</code></pre>
+<p>The above example returns <code>this_is_my_content</code>.</p>
+<h3 id="supported-options_5">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\DashToUnderscore</code>.</p>
+<h2 id="separatortocamelcase">SeparatorToCamelCase</h2>
+<p>This filter modifies a given string such that <code>words with separators</code> are
+converted to <code>WordsWithSeparators</code>.</p>
+<h3 id="basic-usage_6">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToCamelCase();
+
+print $filter-&gt;filter('this is my content');</code></pre>
+<p>The above example returns <code>ThisIsMyContent</code>.</p>
+<h3 id="supported-options_6">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Word\SeparatorToCamelCase</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>separator</code></td>
+<td>A separator character</td>
+<td><code>string</code></td>
+<td>' ' (space)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example_2">Example</h4>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToCamelCase(['separator' =&gt; ':']);
+
+print $filter-&gt;filter('this:is:my:content');</code></pre>
+<p>The above example returns <code>ThisIsMyContent</code>.</p>
+<h2 id="separatortodash">SeparatorToDash</h2>
+<p>This filter modifies a given string such that <code>words with separators</code> are
+converted to <code>words-with-separators</code>.</p>
+<h3 id="basic-usage_7">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToDash();
+
+print $filter-&gt;filter('this is my content');</code></pre>
+<p>The above example returns <code>this-is-my-content</code>.</p>
+<h3 id="supported-options_7">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Word\SeparatorToDash</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>separator</code></td>
+<td>A separator character.</td>
+<td><code>string</code></td>
+<td>' ' (space)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example_3">Example</h4>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToDash(['separator' =&gt; ':']);
+
+print $filter-&gt;filter('this:is:my:content');</code></pre>
+<p>The above example returns <code>this-is-my-content</code>.</p>
+<h2 id="separatortoseparator">SeparatorToSeparator</h2>
+<p>This filter modifies a given string such that <code>words with separators</code> are
+converted to <code>words-with-separators</code>.</p>
+<h3 id="basic-usage_8">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToSeparator();
+
+print $filter-&gt;filter('this is my content');</code></pre>
+<p>The above example returns <code>this-is-my-content</code>.</p>
+<h3 id="supported-options_8">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Word\SeparatorToSeparator</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>searchSeparator</code></td>
+<td>The search separator character</td>
+<td><code>string</code></td>
+<td>' ' (space)</td>
+</tr>
+<tr>
+<td><code>replaceSeparator</code></td>
+<td>The replacement separator character</td>
+<td><code>string</code></td>
+<td><code>-</code></td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example_4">Example</h4>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\SeparatorToSeparator([
+    'search_separator'      =&gt; ':',
+    'replacement_separator' =&gt; '+',
+]);
+
+print $filter-&gt;filter('this:is:my:content');</code></pre>
+<p>The above example returns <code>this+is+my+content</code>.</p>
+<h2 id="underscoretocamelcase">UnderscoreToCamelCase</h2>
+<p>This filter modifies a given string such that <code>words_with_underscores</code> are
+converted to <code>WordsWithUnderscores</code>.</p>
+<h3 id="basic-usage_9">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToCamelCase();
+
+print $filter-&gt;filter('this_is_my_content');</code></pre>
+<p>The above example returns <code>ThisIsMyContent</code>.</p>
+<h3 id="supported-options_9">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\UnderscoreToCamelCase</code>.</p>
+<h2 id="underscoretoseparator">UnderscoreToSeparator</h2>
+<p>This filter modifies a given string such that <code>words_with_underscores</code> are
+converted to <code>words with underscores</code>.</p>
+<h3 id="basic-usage_10">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToSeparator();
+
+print $filter-&gt;filter('this_is_my_content');</code></pre>
+<p>The above example returns <code>this is my content</code>.</p>
+<h3 id="supported-options_10">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Word\UnderscoreToSeparator</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>separator</code></td>
+<td>A separator character</td>
+<td><code>string</code></td>
+<td>' ' (space)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example_5">Example</h4>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToSeparator(['separator' =&gt; '+']));
+
+print $filter-&gt;filter('this_is_my_content');</code></pre>
+<p>The above example returns <code>this+is+my+content</code>.</p>
+<h2 id="underscoretodash">UnderscoreToDash</h2>
+<p>This filter modifies a given string such that <code>words_with_underscores</code> are
+converted to <code>words-with-underscores</code>.</p>
+<h3 id="basic-usage_11">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToDash();
+
+print $filter-&gt;filter('this_is_my_content');</code></pre>
+<p>The above example returns <code>this-is-my-content</code>.</p>
+<h3 id="supported-options_11">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\UnderscoreToDash</code>.</p>
+<h2 id="underscoretostudlycase">UnderscoreToStudlyCase</h2>
+<p>This filter modifies a given string such that <code>words_with_underscores</code> are
+converted to <code>wordsWithUnderscores</code>.</p>
+<h3 id="basic-usage_12">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Word\UnderscoreToStudlyCase();
+
+print $filter-&gt;filter('this_is_my_content');</code></pre>
+<p>The above example returns <code>thisIsMyContent</code>.</p>
+<h3 id="supported-options_12">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Word\UnderscoreToStudlyCase</code>.</p>
 
 
 
@@ -421,10 +751,10 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../inflector/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../standard-filters/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    String Inflection
+                    Standard Filters
                 </a>
             
         </li>
@@ -432,9 +762,9 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../writing-filters/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../file/">
                     <small class="page-nav__label">Next</small>
-                    Writing Filters
+                    File Filters
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -482,6 +812,14 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -492,6 +830,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -507,8 +851,8 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../word/" class="subnavigation__link">Word Filters</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Word Filters</a>
     </li>
 
             
@@ -531,14 +875,23 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -553,21 +906,19 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             

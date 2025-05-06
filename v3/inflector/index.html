@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/static-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v3/inflector/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Static Filter - laminas-filter - Laminas Docs</title>
+    <title>String Inflection - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -128,6 +128,14 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -138,6 +146,12 @@
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -171,14 +185,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
-    </li>
-
-            
-                
     <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+        <a href="./" class="subnavigation__link">String Inflection</a>
     </li>
 
             
@@ -194,12 +202,12 @@
                     
                         
     <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Migration</span>
+        <span class="subnavigation__headline">Application Integration</span>
         <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -207,13 +215,26 @@
     </li>
 
                     
-                
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
             
-
                 
-                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
 
-                    
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
                     
                 
             
@@ -267,13 +288,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -281,7 +302,7 @@
                 
             
                 
-                    <a href="../intro/" class="dropdown-item active">
+                    <a href="../../v2/intro/" class="dropdown-item">
                         
                             v2
                         
@@ -321,7 +342,27 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#using-custom-filters" class="toc__link nav-link">Using custom Filters</a>
+                        <a href="#options-reference" class="toc__link nav-link">Options Reference</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#example-transform-mixed-case-and-camel-cased-text-to-another-format" class="toc__link nav-link">Example: Transform Mixed Case and Camel Cased Text to Another Format</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#operation" class="toc__link nav-link">Operation</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#inflection-rules" class="toc__link nav-link">Inflection Rules</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#filterable-values" class="toc__link nav-link">Filterable Values</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#filter-plugin-manager-requirement" class="toc__link nav-link">Filter Plugin Manager Requirement</a>
                     </li>
                 
             </ul>
@@ -360,21 +401,13 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Static Filter</li>
+                <li class="breadcrumb-item active" aria-current="page">String Inflection</li>
             
         
     </ol>
 </nav>
 
 
-
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
 
 
 
@@ -384,33 +417,182 @@
         <h2 class="chapter__headline">Reference</h2>
     
 
-    <h1 id="static-filter">Static Filter</h1>
-<div class="admonition caution">
-<p class="admonition-title">Deprecated</p>
-<p>
-This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
-</div>
-<p>If it is inconvenient to load a given filter class and create an instance of the filter, you can use <code>StaticFilter</code> with it's method <code>execute()</code> as an alternative invocation style.
-The first argument of this method is a data input value that you would pass to the <code>filter()</code> method.
-The second argument is a string, which corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code> namespace.
-The <code>execute()</code> method automatically loads the class, creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
-    '"',
-    'HtmlEntities',
-    ['quotestyle' =&gt; ENT_QUOTES]
-);</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you have the need to run a filter for multiple inputs, it's more efficient to create an instance of the filter and invoke it.
-instance of the filter object and calling its <code>filter()</code> method.</p>
-<p>Additionally, <a href="../filter-chains/">filter chains</a> allow you to instantiate and run multiple filters on demand to process sets of input data.</p>
-<h2 id="using-custom-filters">Using custom Filters</h2>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to amend the standard filter classes:</p>
-<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
+    <h1 id="string-inflection">String Inflection</h1>
+<p><code>Laminas\Filter\Inflector</code> is a general purpose tool for rule-based inflection of strings to a given target.</p>
+<p>As an example, you may find you need to transform MixedCase or camelCasedWords into a path;
+for readability, OS policies, or other reasons, you also need to lower case this;
+and finally, you want to separate the words using a dash (<code>-</code>).
+An inflector can do this for you.</p>
+<p><code>Laminas\Filter\Inflector</code> implements <code>Laminas\Filter\FilterInterface</code>; you perform
+inflection by calling <code>filter()</code> on the object instance.</p>
+<h2 id="options-reference">Options Reference</h2>
+<ul>
+<li><code>target</code> <strong>(required)</strong> The target string containing the placeholders to replace</li>
+<li><code>rules</code> <strong>(required)</strong> An array of inflection rules</li>
+<li><code>targetReplacementIdentifier</code> Can be used to override the default placeholder delimiter of <code>':'</code></li>
+<li><code>throwTargetExceptionsOn</code> A boolean to indicate whether an exception should be thrown for un-processed placeholders <em>(<code>true</code> by default)</em></li>
+</ul>
+<h2 id="example-transform-mixed-case-and-camel-cased-text-to-another-format">Example: Transform Mixed Case and Camel Cased Text to Another Format</h2>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'target' =&gt; 'pages/:page.:suffix',
+    'rules'  =&gt; [
+        ':page'  =&gt; [
+            Laminas\Filter\Word\CamelCaseToDash::class,
+            Laminas\Filter\StringToLower::class,
+        ],
+        'suffix' =&gt; 'html',
+    ],
+]);
 
-StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-<p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
+$filtered = $inflector-&gt;filter(['page' =&gt; 'camelCasedWords']);
+// pages/camel-cased-words.html
+
+$filtered = $inflector-&gt;filter(['page' =&gt; 'this_is_not_camel_cased']);
+// pages/this_is_not_camel_cased.html</code></pre>
+<h2 id="operation">Operation</h2>
+<p>An inflector requires a <strong>target</strong> and one or more <strong>rules</strong>.</p>
+<p>A <code>target</code> is basically a string that defines placeholders for variables you wish to substitute.
+These are specified by prefixing the placeholder name with a <code>:</code>, for example <code>:script</code>.</p>
+<p>When calling <code>filter()</code>, you then pass in an array of key and value pairs corresponding to the placeholder names in the target.</p>
+<p>Each variable in the target can have zero or more rules associated with them.
+Rules may be either <strong>static</strong> or refer to a filter type, or callable.
+<strong>Static Rules</strong> define straight-forward string replacement.
+<strong>Filter Rules</strong> define one or more filters that operate on the value.</p>
+<p>Filters can be specified using:</p>
+<ul>
+<li>The FQCN of a filter such as <code>Laminas\Filter\StringToLower::class</code></li>
+<li>An alias of a known filter such as <code>stringtolower</code></li>
+<li>A concrete filter instance, i.e. <code>new Laminas\Filter\StringToLower()</code></li>
+<li>Any callable, for example a closure such as <code>static fn (string $input): string =&gt; strtolower($input)</code></li>
+</ul>
+<h3 id="using-custom-filters">Using Custom Filters</h3>
+<p><code>Laminas\Filter\Inflector</code> uses <code>Laminas\Filter\FilterPluginManager</code> to manage loading filters to use with inflection.
+By default, all <a href="../standard-filters/">standard filters</a> are available by referencing any FQCN, or known alias of the filter type.
+If you have configured your application with <a href="../writing-filters/">custom filters</a>, these will also be available in any rules you define.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Try to prefer fully qualified class names <em>(FQCNs)</em> rather than aliases or 'short names'.
+It will be easier for your IDE or text editor to identify specific filter usage when you use FQCNs.</p>
+</div>
+<h3 id="setting-the-inflector-target">Setting the Inflector Target</h3>
+<p>As previously mentioned, the <em>required</em> option <code>target</code> is a string with some placeholders for variables.
+Placeholders take the form of an identifier, a colon (<code>:</code>) by default, followed by a variable name: <code>:script</code>, <code>:path</code>, etc.
+The <code>filter()</code> method looks for the identifier followed by the variable name being replaced.</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'target' =&gt; 'pages/:page.:suffix',
+    // ... Other Options
+]);</code></pre>
+<h3 id="changing-the-target-placeholder-delimiter">Changing the Target Placeholder Delimiter</h3>
+<p>By setting the <code>targetReplacementIdentifier</code> option to the delimiter of your choice, you can prevent issues where the delimiter might need to be part of the <code>target</code> option:</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'target' =&gt; '?host:?port/?page.?suffix',
+    'targetReplacementIdentifier' =&gt; '?',
+    'rules' =&gt; [
+        'host' =&gt; 'example.com',
+        'port' =&gt; '80',
+        'page' =&gt; 'anything',
+        'suffix' =&gt; 'html',
+    ],
+]);
+$inflector-&gt;filter(['page' =&gt; 'index']); // example.com:80/index.html</code></pre>
+<h2 id="inflection-rules">Inflection Rules</h2>
+<p>As mentioned in the introduction, there are two types of rules: <strong>static</strong> and <strong>filter-based</strong>.</p>
+<h3 id="specifying-static-rules">Specifying Static Rules</h3>
+<p>Static rules are key-value items, where <code>['placeholder' =&gt; 'replacement']</code>.
+Static rule names lack a leading <code>':'</code>.</p>
+<p>Filter input can be used to override the replacement value for a placeholder:</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'target' =&gt; ':a,:b,:c',
+    'rules' =&gt; [
+        'a' =&gt; 'one',
+        'b' =&gt; 'two',
+        'c' =&gt; 'three',    
+    ],
+]);
+
+$inflector-&gt;filter(['c' =&gt; 'foo']); // 'one,two,foo'</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Order is important</p>
+<p>
+It is important to note that regardless of the rule type, either static of filter based; the order is very important.
+More specific names, or names that might contain other rule names, must be added before the least specific names.
+For example, assuming two rule names <code>moduleDir</code> and <code>module</code>, the <code>moduleDir</code> rule should appear before module since the word <code>module</code> is contained within <code>moduleDir</code>.
+If <code>module</code> were added before <code>moduleDir</code>, <code>module</code> will match part of <code>moduleDir</code> and process it leaving <code>Dir</code> inside of the target un-inflected.</p>
+</div>
+<h3 id="filter-based-inflector-rules">Filter-Based Inflector Rules</h3>
+<p>Filters may be used as inflector rules as well. Just like static rules, these are bound to a target variable; unlike static rules, you may define multiple filters to use when inflecting.
+These filters are processed in order, so be careful to register them in an order that makes sense for the data you receive.</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'target' =&gt; ':script.:suffix',
+    'rules' =&gt; [
+        ':script' =&gt; [
+            Laminas\Filter\Word\CamelCaseToDash::class,
+            Laminas\Filter\StringToLower::class,
+        ],
+        'suffix' =&gt; 'php',
+    ],
+]);
+
+$inflector-&gt;filter(['script' =&gt; 'MyScript']); // "my-script.php"</code></pre>
+<h3 id="avoiding-exceptions">Avoiding Exceptions</h3>
+<p>Finally, the option <code>throwTargetExceptionsOn</code> defines whether an exception is thrown for un-processed placeholders.</p>
+<p>By default, the following example will cause an exception:</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'target' =&gt; ':script.:suffix',
+    'rules' =&gt; [
+        ':script' =&gt; [
+            Laminas\Filter\Word\CamelCaseToDash::class,
+            Laminas\Filter\StringToLower::class,
+        ],
+        'suffix' =&gt; 'php',
+    ],
+]);
+
+$inflector-&gt;filter(['wrong-key' =&gt; 'SomeValue']); // Laminas\Filter\Exception\RuntimeException</code></pre>
+<p>By setting <code>throwTargetExceptionsOn</code> to <code>false</code>, no exception will be thrown, but the filter output will contain un-processed placeholder values:</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = new Laminas\Filter\Inflector($pluginManager, [
+    'throwTargetExceptionsOn' =&gt; false,
+    'target' =&gt; ':script.:suffix',
+    'rules' =&gt; [
+        ':script' =&gt; [
+            Laminas\Filter\Word\CamelCaseToDash::class,
+            Laminas\Filter\StringToLower::class,
+        ],
+        'suffix' =&gt; 'php',
+    ],
+]);
+
+$inflector-&gt;filter(['wrong-key' =&gt; 'SomeValue']); // ':script.php'</code></pre>
+<h2 id="filterable-values">Filterable Values</h2>
+<p>The inflector can only process arrays or objects. Other types will be returned as-is, for example:</p>
+<pre class="highlight"><code class="language-php">$inflector-&gt;filter('string'); // 'string</code></pre>
+<p>When an object is passed, it's public properties are extracted into an array using <a href="https://www.php.net/get_object_vars"><code>get_object_vars</code></a>.</p>
+<p>This can be useful when you wish to use a readonly value object to define a specific, predictable set of data to be used for inflection with consistent type guarantees.</p>
+<h2 id="filter-plugin-manager-requirement">Filter Plugin Manager Requirement</h2>
+<p>In all the examples so far, you will notice that the first constructor argument is an instance of <code>Laminas\Filter\FilterPluginManager</code>. The plugin manager is used to create filter instances for use with inflection and cannot be omitted.</p>
+<p>During general usage of filters, you will typically be configuring filters as part of an <a href="https://docs.laminas.dev/laminas-inputfilter/">input filter specification with laminas-inputfilter</a> or <code>laminas-form</code>. In these cases, the constructor dependencies are resolved automatically and you only need to concern yourself with setting the correct options.</p>
+<p>If you find the need to use the inflector stand-alone, you can use <code>Laminas\Filter\FilterPluginManager::build()</code> to create an instance by only specifying options:</p>
+<pre class="highlight"><code class="language-php">$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$inflector = $pluginManager-&gt;build(
+    Laminas\Filter\Inflector::class,
+    [
+        'target' =&gt; ':script.:suffix',
+        'rules' =&gt; [
+            ':script' =&gt; [
+                Laminas\Filter\Word\CamelCaseToDash::class,
+                Laminas\Filter\StringToLower::class,
+            ],
+            'suffix' =&gt; 'php',
+        ],
+    ],
+);</code></pre>
 
 
 
@@ -421,10 +603,10 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../inflector/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../filter-chains/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    String Inflection
+                    Filter Chains
                 </a>
             
         </li>
@@ -482,6 +664,14 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -492,6 +682,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -525,14 +721,8 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
-    </li>
-
-            
-                
     <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+        <a href="./" class="subnavigation__link">String Inflection</a>
     </li>
 
             
@@ -548,12 +738,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                     
                         
     <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Migration</span>
+        <span class="subnavigation__headline">Application Integration</span>
         <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -561,13 +751,26 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
     </li>
 
                     
-                
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
             
-
                 
-                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
 
-                    
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
                     
                 
             

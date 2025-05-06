@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/static-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v3/writing-filters/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Static Filter - laminas-filter - Laminas Docs</title>
+    <title>Writing Filters - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -128,6 +128,14 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -138,6 +146,12 @@
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -178,13 +192,22 @@
             
                 
     <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+        <a href="./" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -199,21 +222,19 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             
@@ -267,13 +288,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -281,7 +302,7 @@
                 
             
                 
-                    <a href="../intro/" class="dropdown-item active">
+                    <a href="../../v2/intro/" class="dropdown-item">
                         
                             v2
                         
@@ -321,7 +342,11 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#using-custom-filters" class="toc__link nav-link">Using custom Filters</a>
+                        <a href="#example" class="toc__link nav-link">Example</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#registering-custom-filters-with-the-plugin-manager" class="toc__link nav-link">Registering Custom Filters with the Plugin Manager</a>
                     </li>
                 
             </ul>
@@ -360,21 +385,13 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Static Filter</li>
+                <li class="breadcrumb-item active" aria-current="page">Writing Filters</li>
             
         
     </ol>
 </nav>
 
 
-
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
 
 
 
@@ -384,33 +401,71 @@
         <h2 class="chapter__headline">Reference</h2>
     
 
-    <h1 id="static-filter">Static Filter</h1>
-<div class="admonition caution">
-<p class="admonition-title">Deprecated</p>
-<p>
-This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
-</div>
-<p>If it is inconvenient to load a given filter class and create an instance of the filter, you can use <code>StaticFilter</code> with it's method <code>execute()</code> as an alternative invocation style.
-The first argument of this method is a data input value that you would pass to the <code>filter()</code> method.
-The second argument is a string, which corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code> namespace.
-The <code>execute()</code> method automatically loads the class, creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
-    '"',
-    'HtmlEntities',
-    ['quotestyle' =&gt; ENT_QUOTES]
-);</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you have the need to run a filter for multiple inputs, it's more efficient to create an instance of the filter and invoke it.
-instance of the filter object and calling its <code>filter()</code> method.</p>
-<p>Additionally, <a href="../filter-chains/">filter chains</a> allow you to instantiate and run multiple filters on demand to process sets of input data.</p>
-<h2 id="using-custom-filters">Using custom Filters</h2>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to amend the standard filter classes:</p>
-<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
+    <h1 id="writing-filters">Writing Filters</h1>
+<p><code>Laminas\Filter</code> supplies a set of commonly needed filters, but developers will
+often need to write custom filters for their particular use cases.
+You can do so by writing classes that implement <code>Laminas\Filter\FilterInterface</code>, which defines two methods, <code>filter()</code> and <code>__invoke()</code>.</p>
+<h2 id="example">Example</h2>
+<pre class="highlight"><code class="language-php">namespace Application\Filter;
 
-StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-<p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
+use Laminas\Filter\FilterInterface;
+
+final class MyFilter implements FilterInterface
+{
+    public function filter(mixed $value): mixed
+    {
+        // perform some transformation upon $value to arrive at $valueFiltered
+
+        return $valueFiltered;
+    }
+
+    public function __invoke(mixed $value): mixed {
+        return $this-&gt;filter($value);    
+    }
+}</code></pre>
+<p>To attach an instance of the filter defined above to a filter chain:</p>
+<pre class="highlight"><code class="language-php">$filterChain = new Laminas\Filter\FilterChain($pluginManager);
+$filterChain-&gt;attach(new Application\Filter\MyFilter());</code></pre>
+<h3 id="narrowing-return-type-candidates-for-static-analysis-tools">Narrowing Return Type Candidates for Static Analysis Tools</h3>
+<p><code>InputFilterInterface</code> declares a template that you can add to custom filter implementations to improve type inference of filtered values.
+Whilst this is only useful when using filters directly, it can also help reduce unit testing burden if you are a user of Psalm or PHPStan.</p>
+<p>Here's a trivial example to illustrate the generic template applied to a custom filter:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\FilterInterface;
+
+/** @implements FilterInterface&lt;int&lt;0,1&gt;&gt; */
+final class MyFilter implements FilterInterface
+{
+    public function filter(mixed $value): mixed
+    {
+        if (! is_bool($value)) {
+            return $value;
+        }
+
+        return $value ? 1 : 0;
+    }
+
+    public function __invoke(mixed $value): mixed {
+        return $this-&gt;filter($value);    
+    }
+}</code></pre>
+<p>In this example, the return type will be narrowed to <code>mixed|1|0</code></p>
+<h2 id="registering-custom-filters-with-the-plugin-manager">Registering Custom Filters with the Plugin Manager</h2>
+<p>In both Laminas MVC and Mezzio applications, the top-level <code>filters</code> configuration key can be used to register filters with the plugin manager in standard Service Manager format:</p>
+<pre class="highlight"><code class="language-php">use Laminas\ServiceManager\Factory\InvokableFactory;
+
+return [
+    'filters' =&gt; [
+        'factories' =&gt; [
+            My\Filter\FilterOne::class =&gt; InvokableFactory::class,
+            My\Filter\FilterTwo::class =&gt; My\Filter\SomeCustomFactory::class,
+        ],
+        'aliases' =&gt; [
+            'filterOne' =&gt; My\Filter\FilterOne::class,
+            'filterTwo' =&gt; My\Filter\FilterTwo::class,
+        ],
+    ],
+];</code></pre>
+<p>Assuming the configuration above is merged into your application configuration, either by way of a dedicated configuration file, or via an MVC Module class or Mezzio Config Provider, you would be able to retrieve filter instances from the plugin manager by FQCN or alias.</p>
 
 
 
@@ -432,9 +487,9 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../writing-filters/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../application-integration/providing-filters-via-modules/">
                     <small class="page-nav__label">Next</small>
-                    Writing Filters
+                    Providing Filters via Modules
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -482,6 +537,14 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -492,6 +555,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -532,13 +601,22 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
             
                 
     <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
+        <a href="./" class="subnavigation__link">Writing Filters</a>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -553,21 +631,19 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             

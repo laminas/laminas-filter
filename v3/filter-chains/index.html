@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-filter">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v2/static-filter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v3/filter-chains/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Static Filter - laminas-filter - Laminas Docs</title>
+    <title>Filter Chains - laminas-filter - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -128,6 +128,14 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -138,6 +146,12 @@
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -165,20 +179,14 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
         <a href="../inflector/" class="subnavigation__link">String Inflection</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
     </li>
 
             
@@ -194,12 +202,12 @@
                     
                         
     <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Migration</span>
+        <span class="subnavigation__headline">Application Integration</span>
         <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -207,13 +215,26 @@
     </li>
 
                     
-                
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
             
-
                 
-                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
 
-                    
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
                     
                 
             
@@ -267,13 +288,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v3
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v3/intro/" class="dropdown-item">
+                    <a href="../intro/" class="dropdown-item active">
                         
                             v3 (latest)
                         
@@ -281,7 +302,7 @@
                 
             
                 
-                    <a href="../intro/" class="dropdown-item active">
+                    <a href="../../v2/intro/" class="dropdown-item">
                         
                             v2
                         
@@ -321,7 +342,31 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#using-custom-filters" class="toc__link nav-link">Using custom Filters</a>
+                        <a href="#getting-a-filter-chain-instance" class="toc__link nav-link">Getting a Filter Chain Instance</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#adding-filters-to-the-chain" class="toc__link nav-link">Adding Filters to the Chain</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#types-of-attachable-filters" class="toc__link nav-link">Types of Attachable Filters</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#setting-filter-chain-order" class="toc__link nav-link">Setting Filter Chain Order</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#array-configuration" class="toc__link nav-link">Array Configuration</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#using-the-plugin-manager" class="toc__link nav-link">Using the Plugin Manager</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#immutable-filter-chain" class="toc__link nav-link">Immutable Filter Chain</a>
                     </li>
                 
             </ul>
@@ -360,21 +405,13 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Static Filter</li>
+                <li class="breadcrumb-item active" aria-current="page">Filter Chains</li>
             
         
     </ol>
 </nav>
 
 
-
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v3) version.</a>
-        </p>
-    </div>
 
 
 
@@ -384,33 +421,146 @@
         <h2 class="chapter__headline">Reference</h2>
     
 
-    <h1 id="static-filter">Static Filter</h1>
-<div class="admonition caution">
-<p class="admonition-title">Deprecated</p>
-<p>
-This filter is deprecated since version 2.15.0 and <a href="../migration/preparing-for-v3/#static-filter-removal">will be removed</a> in version 3.0.</p>
-</div>
-<p>If it is inconvenient to load a given filter class and create an instance of the filter, you can use <code>StaticFilter</code> with it's method <code>execute()</code> as an alternative invocation style.
-The first argument of this method is a data input value that you would pass to the <code>filter()</code> method.
-The second argument is a string, which corresponds to the basename of the filter class, relative to the <code>Laminas\Filter</code> namespace.
-The <code>execute()</code> method automatically loads the class, creates an instance, and applies the <code>filter()</code> method to the data input.</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute('&amp;', 'HtmlEntities');</code></pre>
-<p>You can also pass an array of constructor arguments, if they are needed for the filter class:</p>
-<pre class="highlight"><code class="language-php">echo StaticFilter::execute(
-    '"',
-    'HtmlEntities',
-    ['quotestyle' =&gt; ENT_QUOTES]
-);</code></pre>
-<p>The static usage can be convenient for invoking a filter ad hoc, but if you have the need to run a filter for multiple inputs, it's more efficient to create an instance of the filter and invoke it.
-instance of the filter object and calling its <code>filter()</code> method.</p>
-<p>Additionally, <a href="../filter-chains/">filter chains</a> allow you to instantiate and run multiple filters on demand to process sets of input data.</p>
-<h2 id="using-custom-filters">Using custom Filters</h2>
-<p>You can set and receive the <code>FilterPluginManager</code> for the <code>StaticFilter</code> to amend the standard filter classes:</p>
-<pre class="highlight"><code class="language-php">$pluginManager = StaticFilter::getPluginManager()
-    -&gt;setInvokableClass('myNewFilter', 'MyCustom\Filter\MyNewFilter');
+    <h1 id="filter-chains">Filter Chains</h1>
+<p>Filter chains provide a way of grouping multiple filters together.
+They operate on the input by fulfilling the <code>FilterInterface</code> contract in the same way as all the other filters.</p>
+<p>You can enqueue as many filters as you like via a straight-forward api, attaching either ready-to-use filter instances, arbitrary callables or by using a declarative array format.</p>
+<h2 id="getting-a-filter-chain-instance">Getting a Filter Chain Instance</h2>
+<p>The filter chain has a constructor dependency on the <code>FilterPluginManager</code>, so whilst you can manually create a filter chain from scratch, it is normally easier to retrieve one from the plugin manager</p>
+<pre class="highlight"><code class="language-php">assert($container instanceof Psr\Container\ContainerInterface);
+$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
 
-StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
-<p>This is useful when adding custom filters to be used by the <code>StaticFilter</code>.</p>
+// Create a Filter Chain instance manually:
+$chain = new Laminas\Filter\FilterChain($pluginManager);
+
+// Fetch an empty filter chain from the plugin manager
+$chain = $pluginManager-&gt;get(Laminas\Filter\FilterChain::class);
+
+// Build a ready-to-use filter chain via the plugin manager
+$chain = $pluginManager-&gt;build(Laminas\Filter\FilterChain::class, [
+    // ...(Filter Chain Configuration))
+]);</code></pre>
+<h2 id="adding-filters-to-the-chain">Adding Filters to the Chain</h2>
+<p>The following examples provide 3 ways of building a chain that performs the following:</p>
+<ul>
+<li>Trim the input string using <code>Laminas\Filter\StringTrim</code></li>
+<li>Make the string lowercase using <code>Laminas\Filter\StringToLower</code></li>
+<li>Reverse the string using a closure</li>
+</ul>
+<h3 id="1-attaching-filter-instances-to-the-chain">1. Attaching Filter Instances to the Chain</h3>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+
+$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+
+$chain = $pluginManager-&gt;get(FilterChain::class);
+
+$chain-&gt;attach(new StringTrim()); // directly instantiate the filter
+$chain-&gt;attach($pluginManager-&gt;get(StringToLower::class));
+$chain-&gt;attach(static fn (string $value): string =&gt; strrev($value));
+
+print $chain-&gt;filter(' OOF '); // 'foo'</code></pre>
+<h3 id="2-building-the-chain-with-array-configuration">2. Building the Chain with Array Configuration</h3>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+
+$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$chain = $pluginManager-&gt;build(FilterChain::class, [
+    'filters' =&gt; [
+        ['name' =&gt; StringTrim::class],
+        ['name' =&gt; StringToLower::class],
+    ],
+    'callbacks' =&gt; [
+        ['callback' =&gt; static fn (string $value): string =&gt; strrev($value)],
+    ],
+]);
+
+print $chain-&gt;filter(' OOF '); // 'foo'</code></pre>
+<h3 id="3-adding-filters-to-the-chain-by-name">3. Adding Filters to the Chain by Name</h3>
+<pre class="highlight"><code class="language-php">use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+
+$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+
+$chain = $pluginManager-&gt;get(FilterChain::class);
+
+// `attachByName` retrieves the filter from the composed plugin manager:
+$chain-&gt;attachByName(StringTrim::class);
+$chain-&gt;attachByName(StringToLower::class);
+// We must still use `attach` to add the closure:
+$chain-&gt;attach(static fn (string $value): string =&gt; strrev($value));
+
+print $chain-&gt;filter(' OOF '); // 'foo'</code></pre>
+<p>By default, filters execute in the order they are added to the filter chain.
+In the above examples, the input is trimmed first, then converted to lowercase and finally reversed.</p>
+<h2 id="types-of-attachable-filters">Types of Attachable Filters</h2>
+<p>Any object that implements <code>Laminas\Filter\FilterInterface</code> may be used in a filter chain.
+Additionally, you can provide any type of <code>callable</code>, however it should match the signature <code>fn (mixed $value): mixed</code>. You are free to narrow the types from mixed, but given the simple contract of <code>FilterInterface</code> it is often better practice to <a href="../writing-filters/">write a custom filter</a> and register it with the plugin manager.</p>
+<h2 id="setting-filter-chain-order">Setting Filter Chain Order</h2>
+<p>For each filter added to the <code>FilterChain</code>, you can set a priority to define the chain order.
+Higher values indicate higher priority (execute first), while lower and/or negative values indicate lower priority (execute last).
+The default priority is <code>1000</code>.</p>
+<p>In the following example, an uppercase prefix is applied after the input has been converted to lower case, even though the prefix filter is added to the chain first:</p>
+<pre class="highlight"><code class="language-php">// Create a filter chain and add filters to the chain
+$filterChain = $pluginManager-&gt;get(Laminas\Filter\FilterChain::class);
+$filterChain-&gt;attach(new Laminas\Filter\StringPrefix(['prefix' =&gt; 'FOO: ']));
+$filterChain-&gt;attach(new Laminas\Filter\StringToLower(), 500);
+
+print $filterChain-&gt;filter('BAR'); // 'FOO: bar'</code></pre>
+<h2 id="array-configuration">Array Configuration</h2>
+<p>As previously noted, you can define filter chains using a configuration array.
+The exact specification of this array is as follows:</p>
+<pre class="highlight"><code class="language-php">$filterChainConfig = [
+    'filters' =&gt; [
+        [
+            'name' =&gt; SomeFilter::class, // Required. Must be an alias or a FQCN registered in the plugin manager
+            'options' =&gt; [ /* ... */ ], // Optional. Provide options specific to the required filter
+            'priority' =&gt; 500, // Optional. Set the execution priority of the filter (Default 1000)
+        ],
+    ],
+    'callbacks' =&gt; [
+        [
+            'callback' =&gt; static fn (string $in): string =&gt; strrev($in), // Required. Any type of PHP callable
+            'priority' =&gt; 500, // Optional priority, default 1000
+        ],
+        [
+            'callback' =&gt; new Laminas\Filter\StringToLower(), // Any object implementing FilterInterface
+        ],
+    ],
+];</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Callbacks are Registered First</p>
+<p>
+It's important to note that internally, <code>callbacks</code> are registered <em>first</em>.
+This means that if you do not specify priorities when using the array configuration format, the filter execution order may not be what you want.</p>
+</div>
+<h2 id="using-the-plugin-manager">Using the Plugin Manager</h2>
+<p>As with other plugin managers in the laminas ecosystem, you can retrieve filters either by fully qualified class name, or by any configured alias of that class.
+For example, the <code>Laminas\Filter\StringToLower</code> filter is aliased to <code>stringToLower</code>, therefore, calling <code>$pluginManager-&gt;get('stringToLower')</code> will yield an instance of this filter.</p>
+<p>When using filter chain, you must remember to <a href="../writing-filters/#registering-custom-filters-with-the-plugin-manager">register custom filters</a> with the plugin manager correctly if you wish to reference your filters by FQCN or alias.</p>
+<h2 id="immutable-filter-chain">Immutable Filter Chain</h2>
+<p>In addition to the standard <code>FilterChain</code>, laminas-filter also provides an immutable variant called <code>ImmutableFilterChain</code>. This class is useful when you want to ensure that a filter chain's configuration cannot be modified after creation.</p>
+<p>Since the <code>ImmutableFilterChain</code> implements the same <code>FilterInterface</code> as the standard <code>FilterChain</code>, they can be used interchangeably in contexts that only rely on the filter method.</p>
+<h3 id="creating-an-immutablefilterchain">Creating an ImmutableFilterChain</h3>
+<pre class="highlight"><code class="language-php">
+$pluginManager = $container-&gt;get(Laminas\Filter\FilterPluginManager::class);
+$chain = new ImmutableFilterChain(
+    $pluginManager,
+    [
+        'filters' =&gt; [
+            ['name' =&gt; StringTrim::class],
+            ['name' =&gt; StringToLower::class],
+        ],
+    ]
+);
+// attach and attachByName will return a new instance
+$chainRev = $chain-&gt;attach(static fn (string $value): string =&gt; strrev($value));
+
+print $chain-&gt;filter(' OOF '); // 'oof'
+print $chainRev-&gt;filter(' OOF '); // 'foo'</code></pre>
 
 
 
@@ -421,10 +571,10 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../inflector/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../file/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    String Inflection
+                    File Filters
                 </a>
             
         </li>
@@ -432,9 +582,9 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../writing-filters/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../inflector/">
                     <small class="page-nav__label">Next</small>
-                    Writing Filters
+                    String Inflection
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -482,6 +632,14 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
@@ -492,6 +650,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                         
     <li class="subnavigation__list-item ">
         <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
     </li>
 
                     
@@ -519,20 +683,14 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Filter Chains</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
         <a href="../inflector/" class="subnavigation__link">String Inflection</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Static Filter</a>
     </li>
 
             
@@ -548,12 +706,12 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
                     
                         
     <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Migration</span>
+        <span class="subnavigation__headline">Application Integration</span>
         <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/preparing-for-v3/" class="subnavigation__link">Preparing for v3</a>
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
     </li>
 
             
@@ -561,13 +719,26 @@ StaticFilter::setPluginManager(new MyFilterPluginManager());</code></pre>
     </li>
 
                     
-                
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
             
-
                 
-                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
 
-                    
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
                     
                 
             

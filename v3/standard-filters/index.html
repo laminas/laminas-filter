@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Programmatically filter and normalize data and files."> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="3.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-filter">
+
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-filter/v3/standard-filters/">
+    <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Standard Filters - laminas-filter - Laminas Docs</title>
+
+    <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
+    
+</head>
+<body id="page-top" class="components" data-spy="scroll" data-target=".toc" data-offset="20">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="https://docs.laminas.dev/img/laminas-foundation-white.svg" height="28" alt="Laminas">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <div class="dropdown sub-project-selector">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="https://docs.mezzio.dev/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mezzio-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Mezzio</strong><br>
+                                        PSR-15 Middleware in Minutes
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/components/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-components-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Components</strong><br>
+                                        Components for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/mvc" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mvc-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>MVC</strong><br>
+                                        MVC for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Migration to Laminas
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/tutorials/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Tutorials
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Reference</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Standard Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../word/" class="subnavigation__link">Word Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/" class="subnavigation__link">File Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-8">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">
+                            
+                            
+    laminas-filter
+
+                        </small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-right">
+                
+                    
+<div class="version-selector">
+    <div class="btn-group">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+            
+                v3
+            
+        </button>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
+            
+                
+                    <a href="../intro/" class="dropdown-item active">
+                        
+                            v3 (latest)
+                        
+                    </a>
+                
+            
+                
+                    <a href="../../v2/intro/" class="dropdown-item">
+                        
+                            v2
+                        
+                    </a>
+                
+            
+        </div>
+    </div>
+</div>
+
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-filter" class="header__link header__link--github" title="Go to repository of laminas-filter">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-12 content" role="main">
+                
+                
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#allowlist" class="toc__link nav-link">AllowList</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#basename" class="toc__link nav-link">BaseName</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#boolean" class="toc__link nav-link">Boolean</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#callback" class="toc__link nav-link">Callback</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#compressstring-and-decompressstring" class="toc__link nav-link">CompressString and DecompressString</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#compresstoarchive" class="toc__link nav-link">CompressToArchive</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#dateselect" class="toc__link nav-link">DateSelect</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#datetimeselect" class="toc__link nav-link">DateTimeSelect</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#decompressarchive" class="toc__link nav-link">DecompressArchive</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#denylist" class="toc__link nav-link">DenyList</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#digits" class="toc__link nav-link">Digits</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#dir" class="toc__link nav-link">Dir</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#htmlentities" class="toc__link nav-link">HtmlEntities</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#tofloat" class="toc__link nav-link">ToFloat</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#monthselect" class="toc__link nav-link">MonthSelect</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#toenum" class="toc__link nav-link">ToEnum</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#toint" class="toc__link nav-link">ToInt</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#tonull" class="toc__link nav-link">ToNull</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#tostring" class="toc__link nav-link">ToString</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#pregreplace" class="toc__link nav-link">PregReplace</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#realpath" class="toc__link nav-link">RealPath</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stringprefix" class="toc__link nav-link">StringPrefix</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stringsuffix" class="toc__link nav-link">StringSuffix</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stringtolower" class="toc__link nav-link">StringToLower</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stringtoupper" class="toc__link nav-link">StringToUpper</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stringtrim" class="toc__link nav-link">StringTrim</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#stripnewlines" class="toc__link nav-link">StripNewlines</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#striptags" class="toc__link nav-link">StripTags</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
+
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/">Overview</a></li>
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
+
+            
+                <li class="breadcrumb-item">
+                    <a href="../..">
+                        
+    laminas-filter
+
+                    </a>
+                </li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Standard Filters</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="standard-filters">Standard Filters</h1>
+<p>laminas-filter comes with a standard set of filters, available for immediate use.</p>
+<h2 id="allowlist">AllowList</h2>
+<p>This filter will return <code>null</code> if the value being filtered is not present the
+filter's allowed list of values. If the value is present, it will return that
+value.</p>
+<p>For the opposite functionality see the <a href="#denylist">DenyList</a> filter.</p>
+<h3 id="supported-options">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\AllowList</code>:</p>
+<ul>
+<li><code>strict</code>: Uses strict mode for comparisons; passed to <code>in_array()</code>'s third argument.</li>
+<li><code>list</code>: An array of allowed values.</li>
+</ul>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$allowList = new \Laminas\Filter\AllowList([
+    'list' =&gt; ['allowed-1', 'allowed-2']
+]);
+echo $allowList-&gt;filter('allowed-2');   // =&gt; 'allowed-2'
+echo $allowList-&gt;filter('not-allowed'); // =&gt; null</code></pre>
+<h2 id="basename">BaseName</h2>
+<p><code>Laminas\Filter\BaseName</code> allows you to filter a string which contains the path to
+a file, and it will return the base name of this file.</p>
+<h3 id="supported-options_1">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\BaseName</code>.</p>
+<h3 id="basic-usage_1">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\BaseName();
+
+print $filter-&gt;filter('/vol/tmp/filename');</code></pre>
+<p>This will return 'filename'.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\BaseName();
+
+print $filter-&gt;filter('/vol/tmp/filename.txt');</code></pre>
+<p>This will return '<code>filename.txt</code>'.</p>
+<h2 id="boolean">Boolean</h2>
+<p>This filter changes a given input to be a <code>BOOLEAN</code> value. This is often useful when working with
+databases or when processing form values.</p>
+<h3 id="supported-options_2">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Boolean</code>:</p>
+<ul>
+<li><code>casting</code>: When this option is set to <code>TRUE</code>, then any given input will be
+  cast to boolean.  This option defaults to <code>TRUE</code>.</li>
+<li><code>translations</code>: This option sets the translations which will be used to detect localized input.</li>
+<li><code>type</code>: The <code>type</code> option sets the boolean type which should be used. Read
+  the following for details.</li>
+</ul>
+<h3 id="default-behavior">Default Behavior</h3>
+<p>By default, this filter works by casting the input to a <code>BOOLEAN</code> value; in other words, it operates
+in a similar fashion to calling <code>(boolean) $value</code>.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Boolean();
+$value  = '';
+$result = $filter-&gt;filter($value);
+// returns false</code></pre>
+<p>This means that without providing any configuration, <code>Laminas\Filter\Boolean</code> accepts all input types
+and returns a <code>BOOLEAN</code> just as you would get by type casting to <code>BOOLEAN</code>.</p>
+<h3 id="changing-the-default-behavior">Changing the Default Behavior</h3>
+<p>Sometimes, casting with <code>(boolean)</code> will not suffice. <code>Laminas\Filter\Boolean</code>
+allows you to configure specific types to convert, as well as which to omit.</p>
+<p>The following types can be handled (in this precedence order):</p>
+<ul>
+<li><code>localized</code>: Converts any string as mapped (case sensitive) in the <code>translations</code> option.</li>
+<li><code>false</code>: Converts a string equal to the word "false" (case insensitive) to boolean <code>FALSE</code>.</li>
+<li><code>null</code>: Converts a <code>NULL</code> value to <code>FALSE</code>.</li>
+<li><code>array</code>: Converts an empty <code>array</code> to <code>FALSE</code>.</li>
+<li><code>zero</code>: Converts a string to <code>FALSE</code> if it equates to <code>'0'</code> after type juggling.</li>
+<li><code>string</code>: Converts an empty string <code>''</code> to <code>FALSE</code>.</li>
+<li><code>float</code>: Converts a float <code>0.0</code> value to <code>FALSE</code>.</li>
+<li><code>integer</code>: Converts an integer <code>0</code> value to <code>FALSE</code>.</li>
+<li><code>boolean</code>: Returns a boolean value as is.</li>
+</ul>
+<p>There are 2 additional special types:</p>
+<ul>
+<li><code>all</code>: Converts all above types to <code>BOOLEAN</code>. The same as setting all above types.</li>
+<li><code>php</code>: Converts all above types to <code>BOOLEAN</code> except <code>localized</code> or <code>false</code>. The same as setting all above types except <code>localized</code> or <code>false</code>.</li>
+</ul>
+<p>All other given values will return <code>TRUE</code> by default.</p>
+<p>There are several ways to select which of the above types are filtered. You can
+give one or multiple types and add them, you can give an array, you can use
+constants, or you can give a textual string.  See the following examples:</p>
+<pre class="highlight"><code class="language-php">// converts 0 to false
+$filter = new Laminas\Filter\Boolean(Laminas\Filter\Boolean::TYPE_INTEGER);
+
+// converts 0 and '0' to false
+$filter = new Laminas\Filter\Boolean(
+    Laminas\Filter\Boolean::TYPE_INTEGER + Laminas\Filter\Boolean::TYPE_ZERO_STRING
+);
+
+// converts 0 and '0' to false
+$filter = new Laminas\Filter\Boolean([
+    'type' =&gt; [
+        Laminas\Filter\Boolean::TYPE_INTEGER,
+        Laminas\Filter\Boolean::TYPE_ZERO_STRING,
+    ],
+]);
+
+// converts 0 and '0' to false
+$filter = new Laminas\Filter\Boolean([
+    'type' =&gt; [
+        'integer',
+        'zero',
+    ],
+]);</code></pre>
+<p>You can also give an instance of <code>Laminas\Config\Config</code> to set the desired types.
+To set types after instantiation, use the <code>setType()</code> method.</p>
+<h3 id="localized-booleans">Localized Booleans</h3>
+<p>As mentioned previously, <code>Laminas\Filter\Boolean</code> can also recognise localized "yes" and "no" strings.
+This means that you can ask your customer in a form for "yes" or "no" within his native language and
+<code>Laminas\Filter\Boolean</code> will convert the response to the appropriate boolean value.</p>
+<p>To set the translation and the corresponding value, you can use the <code>translations</code> option or the
+method <code>setTranslations</code>. The translations must be set for any values you wish to map to boolean values.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Boolean([
+    'type'         =&gt; Laminas\Filter\Boolean::TYPE_LOCALIZED,
+    'translations' =&gt; [
+        'ja'   =&gt; true,
+        'nein' =&gt; false,
+        'yes'  =&gt; true,
+        'no'   =&gt; false,
+    ],
+]);
+
+// returns false
+$result = $filter-&gt;filter('nein');
+
+// returns true
+$result = $filter-&gt;filter('yes');</code></pre>
+<h3 id="disable-casting">Disable Casting</h3>
+<p>Sometimes it is necessary to recognise only <code>TRUE</code> or <code>FALSE</code> and return all
+other values without changes. <code>Laminas\Filter\Boolean</code> allows you to do this by
+setting the <code>casting</code> option to <code>FALSE</code>.</p>
+<p>In this case <code>Laminas\Filter\Boolean</code> will work as described in the following
+table, which shows which values return <code>TRUE</code> or <code>FALSE</code>. All other given values
+are returned without change when <code>casting</code> is set to <code>FALSE</code></p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Type Constant</th>
+<th>Type String</th>
+<th>True</th>
+<th>False</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_BOOLEAN</code></td>
+<td><code>boolean</code></td>
+<td><code>TRUE</code></td>
+<td><code>FALSE</code></td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_EMPTY_ARRAY</code></td>
+<td><code>array</code></td>
+<td></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_FALSE_STRING</code></td>
+<td><code>false</code></td>
+<td><code>'true'</code> (case insensitive)</td>
+<td><code>'false'</code> (case insensitive)</td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_FLOAT</code></td>
+<td><code>float</code></td>
+<td><code>1.0</code></td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_INTEGER</code></td>
+<td><code>integer</code></td>
+<td><code>1</code></td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_NULL</code></td>
+<td><code>null</code></td>
+<td></td>
+<td><code>NULL</code></td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_STRING</code></td>
+<td><code>string</code></td>
+<td></td>
+<td><code>''</code></td>
+</tr>
+<tr>
+<td><code>Laminas\Filter\Boolean::TYPE_ZERO_STRING</code></td>
+<td><code>zero</code></td>
+<td><code>'1'</code></td>
+<td><code>'0'</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The following example shows the behavior when changing the <code>casting</code> option:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Boolean([
+    'type'    =&gt; Laminas\Filter\Boolean::TYPE_ALL,
+    'casting' =&gt; false,
+]);
+
+// returns false
+$result = $filter-&gt;filter(0);
+
+// returns true
+$result = $filter-&gt;filter(1);
+
+// returns the value
+$result = $filter-&gt;filter(2);</code></pre>
+<h2 id="callback">Callback</h2>
+<p>This filter wraps any callable so that it can be invoked using the filter contract.</p>
+<h3 id="supported-options_3">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\Callback</code>:</p>
+<ul>
+<li><code>callback</code>: This sets the callback which should be used.</li>
+<li><code>callback_params</code>: Optional. When provided this should be an array where each element of the array is an additional argument to your callback.</li>
+</ul>
+<h3 id="basic-usage_2">Basic Usage</h3>
+<p>The following example uses PHP's built-in function <code>strrev</code> as the callback:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Callback('strrev');
+
+print $filter-&gt;filter('Hello!');
+// returns "!olleH"</code></pre>
+<p>As previously mentioned, any type of callable can be used as a callback, for example a closure:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Callback([
+    'callback' =&gt; function (mixed $input): mixed {
+        if (is_string($input)) {
+            return $input . ' there!';
+        }
+
+        return $input;
+    },
+]);
+
+$filter-&gt;filter('Hey'); // Returns 'Hey there!'</code></pre>
+<h3 id="additional-callback-parameters">Additional Callback Parameters</h3>
+<p>If your callback requires additional arguments, these can be passed as a list, or an associative array to the <code>callback_params</code> option. The first argument will be the value to be filtered.</p>
+<pre class="highlight"><code class="language-php">class MyClass {
+    public function __invoke(mixed $input, string $a, string $b): string
+    {
+        if (is_string($input)) {
+            return implode(', ', [$input, $a, $b]);
+        }
+
+        return 'Foo';
+    }
+}
+
+$filter = new Laminas\Filter\Callback([
+    'callback' =&gt; new MyClass(),
+    'callback_params' =&gt; [
+        'a' =&gt; 'baz',
+        'b' =&gt; 'bat',
+    ],
+]);
+$filter-&gt;filter('bing'); // returns 'bing,baz,bat'</code></pre>
+<h2 id="compressstring-and-decompressstring">CompressString and DecompressString</h2>
+<p>These two filters compress and decompress strings using either <code>GZ</code> or <code>BZ2</code> compression algorithms.
+Without any options, both filters will default to using <code>GZ</code> compression.</p>
+<div class="admonition note">
+<p class="admonition-title">PHP Extensions Required</p>
+<p>
+These filters require either the <a href="https://www.php.net/zlib"><code>zlib</code></a> or <a href="https://www.php.net/bzip2"><code>bzip2</code></a> PHP extensions depending on the adapter in use.
+Attempting to use these filters without the relevant extension installed will cause an exception to be thrown.</p>
+</div>
+<h3 id="supported-options_4">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\CompressString</code> and <code>Laminas\Filter\DecompressString</code>:</p>
+<ul>
+<li><code>adapter</code>: The compression adapter which should be used. Defaults to <code>gz</code>.
+  Supported values are: <code>gz</code> and <code>bz2</code>, or an instance of <code>Laminas\Filter\Compress\StringCompressionAdapterInterface</code>.</li>
+</ul>
+<h3 id="default-behaviour">Default Behaviour</h3>
+<p>By default, strings will be compressed using Gzip compression:</p>
+<pre class="highlight"><code class="language-php">$compressFilter = new Laminas\Filter\CompressString();
+$compressed = $filter-&gt;filter('String Content');
+
+$decompressFilter = new Laminas\Filter\DecompressString();
+$value = $filter-&gt;filter($compressed); // "String Content"</code></pre>
+<p>Non-string input will pass through the filters unchanged.</p>
+<p>When compression or decompression of string input fails, an exception will be thrown.</p>
+<h3 id="changing-the-compression-type-and-compression-level">Changing the Compression Type and Compression Level</h3>
+<p>Both filters have the option <code>adapter</code> that accepts the aliases <code>'bz2'</code> or <code>'gz'</code>:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressString([
+    'adapter' =&gt; 'bz2',
+]);
+
+$compressed = $filter-&gt;filter('Some Content');</code></pre>
+<p>The <code>level</code> option can be provided to either increase or decrease the compression factor at the expense of CPU time, and should be an integer between 1 and 9 with 9 providing the greatest level of compression.
+Both <code>zlib</code> and <code>bzip2</code> extensions have a default compression level that balances compression ratio and performance; omitting the option uses these defaults.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressString([
+    'adapter' =&gt; 'bz2',
+    'level' =&gt; 9,
+]);
+
+$compressed = $filter-&gt;filter('Some Content');</code></pre>
+<h3 id="custom-compression-adapters">Custom Compression Adapters</h3>
+<p>It is also possible to provide an instance of <code>Laminas\Filter\Compress\StringCompressionAdapterInterface</code> to the <code>adapter</code> option of either filter.
+This can be leveraged to use compression algorithms other than BZ2 or Gzip.</p>
+<h2 id="compresstoarchive">CompressToArchive</h2>
+<p>This filter compresses files, strings, directories and uploads to a pre-configured archive location using either <code>zip</code> or <code>tar</code> archive formats.
+The default archive format is <code>Zip</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Additional PHP Extensions or Dependencies Required</p>
+<p>
+These filters require either the <a href="https://www.php.net/zip"><code>zip</code></a> extension or the <a href="https://pear.php.net/package/Archive_Tar"><code>Archive_Tar</code> pear package</a> depending on the adapter in use.
+Attempting to use these filters without the relevant extension or dependency installed will cause an exception to be thrown.
+<code>Archive_Tar</code> can be installed via composer with <code>composer require pear/archive_tar</code>.</p>
+</div>
+<h3 id="supported-options_5">Supported Options</h3>
+<ul>
+<li><code>archive</code>: This is the destination archive. The option is required and must be a path to the target archive in a directory that exists, and is writable by PHP.</li>
+<li><code>adapter</code>: Archive adapter - can be either <code>zip</code> or <code>tar</code> or an instance of <code>Laminas\Filter\Compress\ArchiveAdapterInterface</code>.</li>
+<li><code>fileName</code>: When archiving arbitrary strings, the string will be placed in a file with this name prior to archiving.</li>
+</ul>
+<h3 id="general-considerations">General Considerations</h3>
+<ul>
+<li>If an archive already exists at the configured target archive, it will be overwritten.</li>
+<li>The filter will return the configured archive path for successfully filtered content.</li>
+<li>If the input cannot be filtered, the given value will be returned un-changed.</li>
+</ul>
+<h3 id="archiving-a-file-path">Archiving a File Path</h3>
+<p>When the filter receives a file path, the file will be archived to the configured destination archive file:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressToArchive([
+    'archive' =&gt; '/path/to/archive.zip',
+]);
+
+$archiveLocation = $filter-&gt;filter('/path/to/any-file.txt');</code></pre>
+<h3 id="archiving-a-directory">Archiving a Directory</h3>
+<p>Given a directory, the contents of that directory will be archived.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressToArchive([
+    'archive' =&gt; '/path/to/archive.zip',
+]);
+
+$archiveLocation = $filter-&gt;filter('/path/to/directory');</code></pre>
+<h3 id="archiving-arbitrary-strings">Archiving Arbitrary Strings</h3>
+<p>If you wish to accept arbitrary string content, those contents will first be placed in a file with the file name configured in the <em>(required)</em> option <code>fileName</code> and archived in the configured archive location:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressToArchive([
+    'archive' =&gt; '/path/to/archive.zip',
+    'fileName' =&gt; 'Content.txt',
+]);
+
+$filter-&gt;filter('Kermit the Frog');</code></pre>
+<h3 id="archiving-psr7-uploaded-files-and-php-uploads">Archiving PSR7 Uploaded Files and PHP Uploads</h3>
+<p>When a PSR7 <code>UploadedFileInterface</code> or a <code>$_FILES</code> array is encountered, the uploaded file will be archived in the configured archive location:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressToArchive([
+    'archive' =&gt; '/path/to/archive.zip',
+]);
+$filter-&gt;filter($uploadedFile);</code></pre>
+<p>Note that PHP provides randomised filenames without a filename extension, so you may need to implement additional measures to track the contents of the archive as something more meaningful.
+This filter does not use the "Client File Name" provided as part of the uploaded file information because it can't be guaranteed to be sanitised prior to filtering.</p>
+<h3 id="using-a-different-adapter">Using a Different Adapter</h3>
+<p>2 adapters are available: <code>zip</code> and <code>tar</code>.
+You can specify which adapter to use with the <code>adapter</code> option, and this option can also be any object that implements <code>Laminas\Filter\Compress\ArchiveAdapterInterface</code>:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\CompressToArchive([
+    'archive' =&gt; '/path/to/archive.tar',
+    'adapter' =&gt; 'tar',
+]);
+
+$archiveLocation = $filter-&gt;filter('/path/to/file.txt');</code></pre>
+<h2 id="dateselect">DateSelect</h2>
+<p><code>Laminas\Filter\DateSelect</code> allows you to filter a day, month, and year value into a dash separated string.</p>
+<h3 id="supported-options_6">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\DateSelect</code>:</p>
+<ul>
+<li><code>null_on_empty</code> =&gt; This defaults to <code>false</code>.
+If set to <code>true</code>, the filter will return <code>null</code> if day, month, or year are empty.</li>
+<li><code>null_on_all_empty</code> =&gt; This defaults to <code>false</code>.
+If set to <code>true</code>, the filter will return <code>null</code> if day, month, and year are empty.</li>
+</ul>
+<h3 id="basic-usage_3">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\DateSelect();
+
+print $filter-&gt;filter(['day' =&gt; '1', 'month' =&gt; '2', 'year' =&gt; '2012']);
+````
+
+This will return '2012-02-01'.
+
+## DateTimeFormatter
+
+This filter formats either a `DateTimeInterface` object, a string, or integer that `DateTime` will understand to a date
+and/or time string in the configured format.
+
+### Supported Options
+
+The following options are supported for `Laminas\Filter\DateTimeFormatter`
+
+- `format`: a valid [date format](https://www.php.net/manual/datetime.format.php) to use when formatting a string, for example `l jS F Y`. This option defaults to `DateTimeInterface::ATOM` when unspecified
+- `timezone` : The default timezone to apply when converting a string or integer argument to a `DateTime` instance. This option falls back to the system timezone when unspecified
+
+### Basic Usage
+
+#### Without Any Options
+
+```php
+$filter = new \Laminas\Filter\DateTimeFormatter();
+
+echo $filter-&gt;filter('2024-01-01'); // =&gt; 2024-01-01T00:00:00+00:00
+echo $filter-&gt;filter(1_359_739_801); // =&gt; 2013-02-01T17:30:01+00:00
+echo $filter-&gt;filter(new DateTimeImmutable('2024-01-01')) // =&gt; 2024-01-01T00:00:00+00:00 </code></pre>
+<h4 id="with-format-option">With <code>format</code> Option</h4>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\DateTimeFormatter([
+    'format' =&gt; 'd-m-Y'
+]);
+echo $filter-&gt;filter('2024-08-16 00:00:00'); // =&gt; 16-08-2024</code></pre>
+<h4 id="with-timezone-option">With <code>timezone</code> Option</h4>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\DateTimeFormatter([
+    'timezone' =&gt; 'Europe/Paris'
+]);
+echo $filter-&gt;filter('2024-01-01'); // =&gt; 2024-01-01T00:00:00+01:00</code></pre>
+<h2 id="datetimeselect">DateTimeSelect</h2>
+<p><code>Laminas\Filter\DateTimeSelect</code> allows you to filter second, minute, hour, day, month, and year values into a string of format <code>Y-m-d H:i:s</code>.
+If not in the input array, second will default to 0.</p>
+<h3 id="supported-options_7">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\DateTimeSelect</code>:</p>
+<ul>
+<li><code>null_on_empty</code> =&gt; This defaults to <code>false</code>.
+  If set to <code>true</code>, the filter will return <code>null</code> if minute, hour, day, month, or year are empty.</li>
+<li><code>null_on_all_empty</code> =&gt; This defaults to <code>false</code>.
+  If set to <code>true</code>, the filter will return <code>null</code> if minute, hour, day, month, and year are empty.</li>
+</ul>
+<h3 id="basic-usage_4">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\DateTimeSelect();
+
+print $filter-&gt;filter(['second' =&gt; '1', 'month' =&gt; '2', 'hour' =&gt; '3', 'day' =&gt; '4', 'month' =&gt; '5', 'year' =&gt; '2012']);</code></pre>
+<p>This will return '2012-05-04 03:02:01'.</p>
+<h2 id="decompressarchive">DecompressArchive</h2>
+<p>This filter accepts an archive in the form of a file path, a PHP uploaded file array or a PSR-7 uploaded file and de-compresses the file to a configured target directory returning the location where the files are expanded.</p>
+<div class="admonition note">
+<p class="admonition-title">Additional PHP Extensions or Dependencies Required</p>
+<p>
+These filters require either the <a href="https://www.php.net/zip"><code>zip</code></a> extension or the <a href="https://pear.php.net/package/Archive_Tar"><code>Archive_Tar</code> pear package</a> depending on the adapter in use.
+Attempting to use these filters without the relevant extension or dependency installed will cause an exception to be thrown.
+<code>Archive_Tar</code> can be installed via composer with <code>composer require pear/archive_tar</code>.</p>
+</div>
+<h3 id="supported-options_8">Supported Options</h3>
+<ul>
+<li><code>target</code> <em>(required)</em> A path to the directory where files will be expanded</li>
+<li><code>matcher</code> <em>(optional)</em> An instance of <code>Laminas\Compress\ArchiveAdapterResolverInterface</code> used to determine the appropriate adapter to use for the detected file type.</li>
+</ul>
+<h3 id="basic-behaviour">Basic Behaviour</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\DecompressArchive([
+    'target' =&gt; '/path/to/writable/directory',
+]);
+
+$result = $filter-&gt;filter('/path/to/an-archive.tar.gz');
+assert($result === '/path/to/writable/directory');</code></pre>
+<div class="admonition note">
+<p class="admonition-title">The target directory must exist</p>
+<p> The directory configured for expanding files must exist, <em>and</em> it must be writable. The filter makes no attempt to create intermediate directories.</p>
+</div>
+<p>When the input cannot be recognised as a supported archive type, or the input cannot be filtered for any other reason, the input is returned un-altered:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\DecompressArchive([
+    'target' =&gt; '/path/to/writable/directory',
+]);
+
+$directory = $filter-&gt;filter('Fozzy Bear');
+assert($result === 'Fozzy Bear');</code></pre>
+<h3 id="handling-different-archive-types">Handling Different Archive Types</h3>
+<p>The type of archive will be automatically detected, first by using PHP's built-in mime-type detection <em>(via mime magic)</em> and falling back to filename extension, then, the relevant archive adapter will then be used to expand the archive.</p>
+<p>Zip and Tar archives are supported out of the box.</p>
+<p>Other archive formats can be supported by writing custom adapters and configuring or creating custom matchers to map mime-type or filename extensions to the custom adapter.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\DecompressArchive([
+    'target' =&gt; '/path/to/extract/to',
+    'matcher' =&gt; new MyCustomArchiveAdapterResolver(),
+]);</code></pre>
+<h3 id="security-considerations">Security Considerations</h3>
+<p>There is no protection from <a href="https://wikipedia.org/wiki/Zip_bomb">Zip Bombs</a> in this filter. It is your responsibility to validate and sanitize the input prior to applying this filter.</p>
+<h2 id="denylist">DenyList</h2>
+<p>This filter will return <code>null</code> if the value being filtered is present in the filter's list of
+values. If the value is not present, it will return that value.</p>
+<p>For the opposite functionality, see the <a href="#allowlist"><code>AllowList</code> filter</a>.</p>
+<h3 id="supported-options_9">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\DenyList</code>:</p>
+<ul>
+<li><code>strict</code>: Uses strict mode when comparing; passed to <code>in_array()</code>'s third argument.</li>
+<li><code>list</code>: An array of forbidden values.</li>
+</ul>
+<h3 id="basic-usage_5">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$denyList = new \Laminas\Filter\DenyList([
+    'list' =&gt; ['forbidden-1', 'forbidden-2']
+]);
+echo $denyList-&gt;filter('forbidden-1'); // =&gt; null
+echo $denyList-&gt;filter('allowed');     // =&gt; 'allowed'</code></pre>
+<h2 id="digits">Digits</h2>
+<p>Returns the string <code>$value</code>, removing all but digits.</p>
+<h3 id="supported-options_10">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Digits</code>.</p>
+<h3 id="basic-usage_6">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Digits();
+
+print $filter-&gt;filter('October 2012');</code></pre>
+<p>This returns "2012".</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Digits();
+
+print $filter-&gt;filter('HTML 5 for Dummies');</code></pre>
+<p>This returns "5".</p>
+<h2 id="dir">Dir</h2>
+<p>Given a string containing a path to a file, this function will return the name of the directory.</p>
+<h3 id="supported-options_11">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\Dir</code>.</p>
+<h3 id="basic-usage_7">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Dir();
+
+print $filter-&gt;filter('/etc/passwd');</code></pre>
+<p>This returns <code>/etc</code>.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\Dir();
+
+print $filter-&gt;filter('C:/Temp/x');</code></pre>
+<p>This returns <code>C:/Temp</code>.</p>
+<h2 id="htmlentities">HtmlEntities</h2>
+<p>Returns the string <code>$value</code>, converting characters to their corresponding HTML
+entity equivalents when possible.</p>
+<h3 id="supported-options_12">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\HtmlEntities</code>:</p>
+<ul>
+<li><code>quotestyle</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter
+  <code>flags</code>.  This allows you to define what will be done with 'single' and
+  "double" quotes. The following constants are accepted: <code>ENT_COMPAT</code>,
+  <code>ENT_QUOTES</code>, and <code>ENT_NOQUOTES</code>, with the default being <code>ENT_COMPAT</code>.</li>
+<li><code>encoding</code>: Equivalent to the PHP <code>htmlentities()</code> native function parameter
+  <code>encoding</code>. This defines the character set to be used in filtering. Unlike the
+  PHP native function, the default is 'UTF-8'. See the <a href="http://php.net/htmlentities">PHP htmlentities
+  manual</a> for a list of supported character sets.</li>
+<li><code>doublequote</code>: Equivalent to the PHP <code>htmlentities()</code> native function
+  parameter <code>double_encode</code>. If set to <code>false</code>, existing HTML entities will not
+  be encoded. The default is to convert everything (<code>true</code>).</li>
+</ul>
+<h3 id="basic-usage_8">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities();
+
+print $filter-&gt;filter('&lt;');</code></pre>
+<h3 id="quote-style">Quote Style</h3>
+<p><code>Laminas\Filter\HtmlEntities</code> allows changing the quote style used. This can be useful when you want to
+leave double, single, or both types of quotes un-filtered.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities(['quotestyle' =&gt; ENT_QUOTES]);
+
+$input = "A 'single' and " . '"double"';
+print $filter-&gt;filter($input);</code></pre>
+<p>The above example returns <code>A &amp;#039;single&amp;#039; and &amp;quot;double&amp;quot;</code>. Notice
+that 'single' as well as "double" quotes are filtered.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities(['quotestyle' =&gt; ENT_COMPAT]);
+
+$input = "A 'single' and " . '"double"';
+print $filter-&gt;filter($input);</code></pre>
+<p>The above example returns <code>A 'single' and &amp;quot;double&amp;quot;</code>. Notice that
+"double" quotes are filtered while 'single' quotes are not altered.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\HtmlEntities(['quotestyle' =&gt; ENT_NOQUOTES]);
+
+$input = "A 'single' and " . '"double"';
+print $filter-&gt;filter($input);</code></pre>
+<p>The above example returns <code>A 'single' and "double"</code>. Notice that neither
+"double" or 'single' quotes are altered.</p>
+<h2 id="tofloat">ToFloat</h2>
+<p><code>Laminas\Filter\ToFloat</code> allows you to transform a scalar value into a float.</p>
+<h3 id="supported-options_13">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\ToFloat</code>.</p>
+<h3 id="basic-usage_9">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToFloat();
+
+print $filter-&gt;filter('-4.4');</code></pre>
+<p>This will return <code>-4.4</code> (as a float).</p>
+<h2 id="monthselect">MonthSelect</h2>
+<p><code>Laminas\Filter\MonthSelect</code> allows you to filter a month and year value into a dash separated string.</p>
+<h3 id="supported-options_14">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\MonthSelect</code>:</p>
+<ul>
+<li><code>null_on_empty</code> =&gt; This defaults to <code>false</code>.
+If set to <code>true</code>, the filter will return <code>null</code> if either month or year is empty.</li>
+<li><code>null_on_all_empty</code> =&gt; This defaults to <code>false</code>.
+If set to <code>true</code>, the filter will return <code>null</code> if both month and year are empty.</li>
+</ul>
+<h3 id="basic-usage_10">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\MonthSelect();
+
+print $filter-&gt;filter(['month' =&gt; '2', 'year' =&gt; '2012']);</code></pre>
+<p>This will return '2012-02'.</p>
+<h2 id="toenum">ToEnum</h2>
+<p><code>Laminas\Filter\ToEnum</code> transforms strings and integers to unit or backed enum instances.</p>
+<h3 id="supported-options_15">Supported Options</h3>
+<p>This filter requires a single option <code>enum</code> which must be a class-string representing a PHP enum.</p>
+<h3 id="basic-usage_11">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">enum Muppets: string {
+    case Kermit = 'Kermit';
+    case MissPiggy = 'Miss Piggy';
+}
+
+$filter = new Laminas\Filter\ToEnum([
+    'enum' =&gt; Muppets::class,
+]);
+
+$enum = $filter-&gt;filter('Kermit'); // Enum Instance
+$enum = $filter-&gt;filter('Miss Piggy'); // Enum Instance
+$enum = $filter-&gt;filter('MissPiggy'); // Enum Instance
+$failed = $filter-&gt;filter('Not There'); // "Not There"</code></pre>
+<p>To successfully filter to a Unit enum, the case name is expected.
+The case name can also be used for both int and string backed enums, as well as a matching value.</p>
+<h2 id="toint">ToInt</h2>
+<p><code>Laminas\Filter\ToInt</code> allows you to transform a scalar value into an integer.</p>
+<h3 id="supported-options_16">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\ToInt</code>.</p>
+<h3 id="basic-usage_12">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToInt();
+
+print $filter-&gt;filter('-4 is less than 0');</code></pre>
+<p>This will return '-4'.</p>
+<h2 id="tonull">ToNull</h2>
+<p>This filter will change the given input to be <code>NULL</code> if it meets specific criteria.
+This is often necessary when you work with databases and want to have a <code>NULL</code> value instead of a boolean or any other type.</p>
+<h3 id="supported-options_17">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\ToNull</code>:</p>
+<ul>
+<li><code>type</code>: The variable type which should be supported.</li>
+</ul>
+<h3 id="default-behavior_1">Default Behavior</h3>
+<p>Per default this filter works like PHP's <code>empty()</code> method;
+in other words, if <code>empty()</code> returns a boolean <code>TRUE</code>, then a <code>NULL</code> value will be returned.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\ToNull();
+$value  = '';
+$result = $filter-&gt;filter($value);
+// returns null instead of the empty string</code></pre>
+<p>This means that without providing any configuration, <code>Laminas\Filter\ToNull</code> will accept all input types and return <code>NULL</code> in the same cases as <code>empty()</code>.</p>
+<p>Any other value will be returned as is, without any changes.</p>
+<h3 id="changing-the-default-behavior_1">Changing the Default Behavior</h3>
+<p>Sometimes it's not enough to filter based on <code>empty()</code>.
+Therefore <code>Laminas\Filter\ToNull</code> allows you to configure which types will be converted, and which not.</p>
+<p>The following types can be handled:</p>
+<ul>
+<li><code>boolean</code>: Converts a boolean <code>FALSE</code> value to <code>NULL</code>.</li>
+<li><code>integer</code>: Converts an integer <code>0</code> value to <code>NULL</code>.</li>
+<li><code>array</code>: Converts an empty <code>array</code> to <code>NULL</code>.</li>
+<li><code>float</code>: Converts a float <code>0.0</code> value to <code>NULL</code>.</li>
+<li><code>string</code>: Converts an empty string <code>''</code> to <code>NULL</code>.</li>
+<li><code>zero</code>: Converts a string containing the single character zero (<code>'0'</code>) to <code>NULL</code>.</li>
+<li><code>all</code>: Converts all above types to <code>NULL</code>. (This is the default behavior.)</li>
+</ul>
+<p>There are several ways to select which of the above types are filtered.
+You can give one or multiple types and add them, you can give an array, you can use constants, or you can give a textual string.</p>
+<p>See the following examples:</p>
+<pre class="highlight"><code class="language-php">// converts false to null
+$filter = new Laminas\Filter\ToNull([
+    'type' =&gt; Laminas\Filter\ToNull::BOOLEAN,
+]);
+
+// converts false and 0 to null
+$filter = new Laminas\Filter\ToNull([
+    'type' =&gt; Laminas\Filter\ToNull::BOOLEAN | Laminas\Filter\ToNull::INTEGER
+]);
+
+// converts false and 0 to null
+$filter = new Laminas\Filter\ToNull([
+    'type' =&gt; [
+        Laminas\Filter\ToNull::BOOLEAN,
+        Laminas\Filter\ToNull::INTEGER
+    ],
+]);
+
+// converts false and 0 to null
+$filter = new Laminas\Filter\ToNull([
+    'type' =&gt; [
+        'boolean',
+        'integer',
+    ],
+]);
+
+// converts only empty arrays to null
+$filter = new Laminas\Filter\ToNull([
+    'type' =&gt; 'array',
+]);</code></pre>
+<p>It is best practice is to use the <code>TYPE_*</code> constants rather than the human-readable strings. Modern IDEs will autocomplete these for you and usage and refactoring is easier.</p>
+<h2 id="tostring">ToString</h2>
+<p>The <code>ToString</code> filter casts <code>Stringable</code> objects or scalar values to <code>string</code>.
+If an array is received, member values are cast to a string recursively.</p>
+<p>This filter has no runtime options.</p>
+<h3 id="basic-usage_13">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\ToString();
+
+$filter-&gt;filter(123); // "123"
+$filter-&gt;filter(['id' =&gt; 100, 'roles' =&gt; null]); // ['id' =&gt; "100", 'roles' =&gt; null]</code></pre>
+<p>Non-scalar or null input will be returned un-filtered:</p>
+<pre class="highlight"><code class="language-php">$filter = new \Laminas\Filter\ToString();
+
+$filter-&gt;filter(null); // null
+$filter-&gt;filter(new \stdClass()); // \stdClass object</code></pre>
+<h2 id="pregreplace">PregReplace</h2>
+<p><code>Laminas\Filter\PregReplace</code> performs a search using regular expressions and replaces all found elements.</p>
+<h3 id="supported-options_18">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\PregReplace</code>:</p>
+<ul>
+<li><code>pattern</code>: The pattern to search for.</li>
+<li><code>replacement</code>: The string which to use as a replacement for the matches; this can optionally contain placeholders for matched groups in the search pattern.</li>
+</ul>
+<h3 id="basic-usage_14">Basic Usage</h3>
+<p>To use this filter properly, you must give both options listed above.</p>
+<p>The <code>pattern</code> option has to be given to set the pattern to search for.
+It can be a string for a single pattern, or an array of strings for multiple patterns.</p>
+<p>The <code>replacement</code> option indicates the string to replace matches with, and can contain placeholders for matched groups from the search <code>pattern</code>.
+The value may be a string replacement, or an array of string replacements.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\PregReplace([
+    'pattern'     =&gt; '/bob/',
+    'replacement' =&gt; 'john',
+]);
+$input  = 'Hi bob!';
+
+$filter-&gt;filter($input);
+// returns 'Hi john!'</code></pre>
+<p>For more complex usage, read the
+<a href="http://www.php.net/manual/reference.pcre.pattern.modifiers.php">PCRE Pattern chapter of the PHP manual</a>.</p>
+<h2 id="realpath">RealPath</h2>
+<p>This filter will resolve given links and pathnames, and returns the canonicalized absolute pathnames.</p>
+<h3 id="supported-options_19">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\RealPath</code>:</p>
+<ul>
+<li><code>exists</code>: This option defaults to <code>TRUE</code>, which validates that the given path
+  really exists.</li>
+</ul>
+<h3 id="basic-usage_15">Basic Usage</h3>
+<p>For any given link or pathname, its absolute path will be returned.
+References to <code>/./</code>, <code>/../</code> and extra <code>/</code> sequences in the input path will be stripped.
+The resulting path will not have any symbolic links, <code>/./</code>, or <code>/../</code> sequences.</p>
+<p><code>Laminas\Filter\RealPath</code> will return the value passed to the filter on failure, e.g. if the file does not exist.
+On BSD systems <code>Laminas\Filter\RealPath</code> doesn't fail if only the last path component doesn't exist, while other systems will return the value passed to the filter.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\RealPath();
+$path = '/www/var/path/../../mypath';
+$filtered = $filter-&gt;filter($path);
+
+// returns '/www/mypath'</code></pre>
+<h3 id="non-existing-paths">Non-Existing Paths</h3>
+<p>Sometimes it is useful to get paths to files that do not exist; e.g., when you want to get the real path for a path you want to create.
+You can then provide <code>false</code> for the <code>exists</code> option during construction.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\RealPath(['exists' =&gt; false]);
+$path = '/www/var/path/../../non/existing/path';
+$filtered = $filter-&gt;filter($path);
+
+// returns '/www/non/existing/path'
+// even when file_exists or realpath would return false</code></pre>
+<h2 id="stringprefix">StringPrefix</h2>
+<p>This filter will add the provided prefix to scalar values or scalar array members.</p>
+<h3 id="supported-options_20">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\StringPrefix</code>:</p>
+<ul>
+<li><code>prefix</code>: The string prefix to add to values.</li>
+</ul>
+<h3 id="basic-usage_16">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringPrefix([
+    'prefix' =&gt; 'PHP-',
+]);
+
+echo $filter-&gt;filter('MidCentral'); // "PHP-MidCentral"
+
+$array = $filter-&gt;filter(['East', 'West']); // ['PHP-East', 'PHP-West']</code></pre>
+<h2 id="stringsuffix">StringSuffix</h2>
+<p>This filter will add the provided suffix to scalar values or scalar array members.</p>
+<h3 id="supported-options_21">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\StringSuffix</code>:</p>
+<ul>
+<li><code>suffix</code>: The string suffix to append to values.</li>
+</ul>
+<h3 id="basic-usage_17">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringSuffix([
+    'suffix' =&gt; '-PHP',
+]);
+
+echo $filter-&gt;filter('MidCentral'); // "MidCentral-PHP"
+
+$array = $filter-&gt;filter(['East', 'West']); // ['East-PHP', 'West-PHP']</code></pre>
+<h2 id="stringtolower">StringToLower</h2>
+<p>This filter converts string input to lowercase.</p>
+<h3 id="supported-options_22">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\StringToLower</code>:</p>
+<ul>
+<li><code>encoding</code>: This option can be used to set the expected character encoding of the input.</li>
+</ul>
+<h3 id="basic-usage_18">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToLower();
+
+print $filter-&gt;filter('SAMPLE');
+// returns "sample"</code></pre>
+<h3 id="handling-alternate-encodings">Handling Alternate Encodings</h3>
+<p>By default, <code>StringToLower</code> will only handle characters from the locale of your server; characters from other charsets will be ignored.
+To correctly filter input in encodings other than the default detected encoding for your environment, pass the
+desired encoding when initiating the <code>StringToLower</code> filter.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToLower([
+    'encoding' =&gt; 'UTF-8',
+]);</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Setting invalid Encodings</p>
+<p>
+Be aware that you will get an exception when you provide an encoding that is not supported by the <code>mbstring</code> extension.</p>
+</div>
+<h2 id="stringtoupper">StringToUpper</h2>
+<p>This filter converts string input to UPPERCASE.</p>
+<h3 id="supported-options_23">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\StringToUpper</code>:</p>
+<ul>
+<li><code>encoding</code>: This option can be used to set the expected character encoding of the input.</li>
+</ul>
+<h3 id="basic-usage_19">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToUpper();
+
+print $filter-&gt;filter('Sample');
+// returns "SAMPLE"</code></pre>
+<h3 id="handling-alternate-encodings_1">Handling Alternate Encodings</h3>
+<p>By default, <code>StringToUpper</code> will only handle characters from the locale of your server; characters from other charsets will be ignored.
+To correctly filter input in encodings other than the default detected encoding for your environment, pass the
+desired encoding when initiating the <code>StringToUpper</code> filter.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringToUpper([
+    'encoding' =&gt; 'UTF-8',
+]);</code></pre>
+<h2 id="stringtrim">StringTrim</h2>
+<p>This filter modifies a given string such that certain characters are removed
+from the beginning and end.</p>
+<h3 id="supported-options_24">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\StringTrim</code>:</p>
+<ul>
+<li><code>charlist</code>: List of characters to remove from the beginning and end of the
+  string. If this is not set or is null, the default behavior will be invoked,
+  which is to remove only whitespace from the beginning and end of the string.</li>
+</ul>
+<h3 id="basic-usage_20">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringTrim();
+
+print $filter-&gt;filter(' This is (my) content: ');</code></pre>
+<p>The above example returns <code>This is (my) content:</code>. Notice that the whitespace
+characters have been removed.</p>
+<h3 id="specifying-alternate-characters">Specifying alternate Characters</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StringTrim(['charlist' =&gt; ':']);
+
+print $filter-&gt;filter(' This is (my) content:');</code></pre>
+<!-- markdownlint-disable-next-line no-space-in-code -->
+<p>The above example returns <code>This is (my) content</code>. Notice that only the colon is removed.</p>
+<h2 id="stripnewlines">StripNewlines</h2>
+<p>This filter modifies a given string and removes all new line characters within that string.</p>
+<p>When provided with an array, all <em>scalar</em> elements of the array will be cast to string and have new line characters removed.
+The operation is also recursive, so nested arrays will be processed in the same way.</p>
+<h3 id="supported-options_25">Supported Options</h3>
+<p>There are no additional options for <code>Laminas\Filter\StripNewlines</code>:</p>
+<h3 id="basic-usage_21">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripNewlines();
+
+print $filter-&gt;filter(' This is (my)``\n\r``content: ');</code></pre>
+<p>The above example returns <code>This is (my) content:</code>. Notice that all newline
+characters have been removed.</p>
+<h2 id="striptags">StripTags</h2>
+<p>This filter can strip XML and HTML tags from given content.</p>
+<div class="admonition warning">
+<p class="admonition-title">This filter is potentially insecure</p>
+<p>Be warned that <code>Laminas\Filter\StripTags</code> should only be used to strip <em>all</em> available tags.
+Using <code>Laminas\Filter\StripTags</code> to make your site secure by stripping <em>some</em> unwanted tags will lead to unsecure and dangerous code, including potential XSS vectors.</p>
+<p>For a fully secure solution that allows selected filtering of HTML tags, use either Tidy or HtmlPurifier.</p>
+</div>
+<h3 id="supported-options_26">Supported Options</h3>
+<p>The following options are supported for <code>Laminas\Filter\StripTags</code>:</p>
+<ul>
+<li><code>allowAttribs</code>: This option sets the attributes which are accepted. All other
+  attributes are stripped from the given content.</li>
+<li><code>allowTags</code>: This option sets the tags which are accepted. All other tags will
+  be stripped from; the given content.</li>
+</ul>
+<h3 id="basic-usage_22">Basic Usage</h3>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags();
+
+print $filter-&gt;filter('&lt;B&gt;My content&lt;/B&gt;');</code></pre>
+<p>The result will be the stripped content <code>My content</code>.</p>
+<p>When the content contains broken or partial tags, any content following the
+opening tag will be completely removed:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags();
+
+print $filter-&gt;filter('This contains &lt;a href="http://example.com"&gt;no ending tag');</code></pre>
+<p>The above will return <code>This contains</code>, with the rest being stripped.</p>
+<h3 id="allowing-defined-tags">Allowing defined Tags</h3>
+<p><code>Laminas\Filter\StripTags</code> allows stripping all but an allowed set of tags. As an
+example, this can be used to strip all markup except for links:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags(['allowTags' =&gt; ['a']]);
+
+$input  = "A text with &lt;br/&gt; a &lt;a href='link.com'&gt;link&lt;/a&gt;";
+print $filter-&gt;filter($input);</code></pre>
+<p>The above will return <code>A text with a &lt;a href='link.com'&gt;link&lt;/a&gt;</code>;
+it strips all tags but the link. By providing an array, you can specify multiple
+tags at once.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Do not use this feature to secure content.
+This component does not replace the use of a properly configured html filter.</p>
+</div>
+<h3 id="allowing-defined-attributes">Allowing defined Attributes</h3>
+<p>You can also strip all but an allowed set of attributes from a tag:</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags([
+    'allowTags' =&gt; ['img'],
+    'allowAttribs' =&gt; ['src'],
+]);
+
+$input  = "A text with &lt;br/&gt; a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt;";
+print $filter-&gt;filter($input);</code></pre>
+<p>The above will return <code>A text with a &lt;img src='picture.com'&gt;picture&lt;/img&gt;</code>; it
+strips all tags but <code>&lt;img&gt;</code>, and all attributes but <code>src</code> from those tags.By
+providing an array you can set multiple attributes at once.</p>
+<h3 id="allow-specific-tags-with-specific-attributes">Allow specific Tags with specific Attributes</h3>
+<p>You can also pass the tag allow list as a set of tag/attribute values. Each key
+will be an allowed tag, pointing to a list of allowed attributes for that
+tag.</p>
+<pre class="highlight"><code class="language-php">$filter = new Laminas\Filter\StripTags([
+    'allowTags' =&gt; [
+        'img' =&gt; [
+            'src',
+            'width'
+        ],
+        'a' =&gt; [
+            'href'
+        ]
+    ]
+]);
+
+$input = "A text with &lt;br/&gt; a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt; click "
+    . "&lt;a href='http://picture.com/laminas' id='hereId'&gt;here&lt;/a&gt;!";
+print $filter-&gt;filter($input);</code></pre>
+<p>The above will return
+<code>A text with a &lt;img src='picture.com' width='100'&gt;picture&lt;/img&gt; click &lt;a href='&lt;http://picture.com/laminas&gt;'&gt;here&lt;/a&gt;!</code>
+as the result.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../basic-usage/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Basic Usage
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../word/">
+                    <small class="page-nav__label">Next</small>
+                    Word Filters
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                <div class="donation-banner">
+    <a href="https://getlaminas.org/support/">
+        <h2>Donate</h2>
+        <p>Support Laminas Developers Directly</p>
+        <img src="https://funding.communitybridge.org/assets/cb-f-horizontal-white.svg">
+    </a>
+</div>
+
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">
+                
+                
+    laminas-filter
+
+            </a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Reference</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Standard Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../word/" class="subnavigation__link">Word Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/" class="subnavigation__link">File Filters</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../filter-chains/" class="subnavigation__link">Filter Chains</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../inflector/" class="subnavigation__link">String Inflection</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../writing-filters/" class="subnavigation__link">Writing Filters</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../application-integration/providing-filters-via-modules/" class="subnavigation__link">Providing Filters via Modules</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/refactoring-from-abstract-filter/" class="subnavigation__link">Refactoring away from AbstractFilter</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+        </ul>
+    </div>
+
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Support</h4>
+                        <ul class="support__list">
+                            <li class="support__list-item">
+                                <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">License</h4>
+                        <p>
+                            Code licensed under <a
+                                href="https://github.com/laminas/laminas-filter/blob/-/LICENSE.md">BSD 3-Clause</a>.
+                        </p>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Copyright</h4>
+                        <p>
+                            <!--Built with love by the Laminas team with the help of our
+                            <a href="https://github.com/laminas/laminas-filter/graphs/contributors">contributors</a>.<br>-->
+                            &copy; 2025 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../..',
+            project  = "components",
+            siteName = 'laminas-filter';
+    </script>
+    <script src="https://docs.laminas.dev/js/scripts.js"></script>
+    
+        <script src="../../search/main.js"></script>
+    
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-filter" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

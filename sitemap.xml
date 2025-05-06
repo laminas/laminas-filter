@@ -44,4 +44,52 @@
          <loc>https://docs.laminas.dev/laminas-filter/v2/migration/preparing-for-v3/</loc>
          <lastmod>2025-05-06</lastmod>
     </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/basic-usage/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/file/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/filter-chains/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/inflector/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/installation/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/intro/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/standard-filters/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/word/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/writing-filters/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/application-integration/providing-filters-via-modules/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/migration/refactoring-from-abstract-filter/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.laminas.dev/laminas-filter/v3/migration/v2-to-v3/</loc>
+         <lastmod>2025-05-06</lastmod>
+    </url>
 </urlset>
