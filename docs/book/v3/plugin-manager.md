@@ -2,7 +2,7 @@
 
 The plugin manager of laminas-filter is called "filter plugin manager" – `Laminas\Filter\FilterPluginManager`.
 
-The filter plugin manager is [a specialized service manager](https://docs.laminas.dev/laminas-servicemanager/) that provides access to filter classes.
+The filter plugin manager is [a specialized service manager](https://docs.laminas.dev/laminas-servicemanager/plugin-managers/) that provides access to filter classes.
 It is used to create and manage instances of filters, which are used to transform data.
 The filter plugin manager can be created using a service container which implements the [PSR-11: Container interface](https://www.php-fig.org/psr/psr-11/).
 
@@ -19,7 +19,7 @@ $filterPluginManager = new Laminas\Filter\FilterPluginManager(
 ## Retrieving Filters
 
 Filters can be retrieved from the filter plugin manager using the `get()` method.
-The filter plugin manager will automatically create an instance of the requested filter if it does not already exist.
+The filter plugin manager will automatically create an instance of the requested filter.
 
 Fetching a filter by its class name:
 
@@ -215,5 +215,6 @@ final class AlbumForm extends Form implements InputFilterProviderInterface
 
 ## Learn More
 
-- [Configuring the service manager](https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/)
+- [Plugin Managers in laminas-servicemanager](https://docs.laminas.dev/laminas-servicemanager/plugin-managers/)
+- [Configuring the Service Manager](https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/)
 - [Using Input Filters in Forms of laminas-form](https://docs.laminas.dev/laminas-inputfilter/cookbook/input-filter-in-forms/)
