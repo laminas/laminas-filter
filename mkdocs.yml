@@ -2,19 +2,6 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - Home: index.md
-    - v2:
-      - Introduction: v2/intro.md
-      - Installation: v2/installation.md
-      - Reference:
-        - 'Standard Filters': v2/standard-filters.md
-        - 'Word Filters': v2/word.md
-        - 'File Filters': v2/file.md
-        - 'Filter Chains': v2/filter-chains.md
-        - 'String Inflection': v2/inflector.md
-        - 'Static Filter': v2/static-filter.md
-        - 'Writing Filters': v2/writing-filters.md
-      - Migration:
-        - 'Preparing for v3': v2/migration/preparing-for-v3.md
     - v3:
       - Introduction: v3/intro.md
       - Installation: v3/installation.md
@@ -31,6 +18,19 @@ nav:
       - Migration:
         - "Migration from Version 2 to 3": v3/migration/v2-to-v3.md
         - "Refactoring away from AbstractFilter": v3/migration/refactoring-from-abstract-filter.md
+    - v2:
+      - Introduction: v2/intro.md
+      - Installation: v2/installation.md
+      - Reference:
+        - 'Standard Filters': v2/standard-filters.md
+        - 'Word Filters': v2/word.md
+        - 'File Filters': v2/file.md
+        - 'Filter Chains': v2/filter-chains.md
+        - 'String Inflection': v2/inflector.md
+        - 'Static Filter': v2/static-filter.md
+        - 'Writing Filters': v2/writing-filters.md
+      - Migration:
+        - 'Preparing for v3': v2/migration/preparing-for-v3.md
 site_name: laminas-filter
 site_description: "Programmatically filter and normalize data and files."
 repo_url: 'https://github.com/laminas/laminas-filter'
