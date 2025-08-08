@@ -225,4 +225,17 @@ final class FilterChainTest extends TestCase
 
         self::assertSame('foo', $chain->__invoke('FOO'));
     }
+
+    public function testFilterChainSpecAcceptsFilterInstances(): void
+    {
+        $filter = new StringTrim();
+        $chain  = new FilterChain($this->plugins, [
+            'filters' => [
+                $filter,
+            ],
+        ]);
+
+        $filters = iterator_to_array($chain);
+        self::assertSame([0 => $filter], $filters);
+    }
 }
