@@ -11,6 +11,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Traversable;
 
 use function count;
+use function is_callable;
 
 /**
  * @psalm-type InstanceType = FilterInterface|(callable(mixed): mixed)
@@ -19,7 +20,7 @@ use function count;
  *        name: string|class-string<FilterInterface>,
  *        options?: array<string, mixed>,
  *        priority?: int,
- *    }>,
+ *    }|InstanceType>,
  *    callbacks?: list<array{
  *        callback: FilterInterface|(callable(mixed): mixed),
  *        priority?: int,
@@ -55,6 +56,11 @@ final class FilterChain implements FilterChainInterface, Countable, IteratorAggr
 
         $filters = $options['filters'] ?? [];
         foreach ($filters as $spec) {
+            if (is_callable($spec) || $spec instanceof FilterInterface) {
+                $this->attach($spec);
+                continue;
+            }
+
             $this->attachByName(
                 $spec['name'],
                 $spec['options'] ?? [],
