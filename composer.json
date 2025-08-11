@@ -36,7 +36,7 @@
         "ext-filter": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-servicemanager": "^4.1.0",
+        "laminas/laminas-servicemanager": "^4.4.0",
         "laminas/laminas-stdlib": "^3.19.0",
         "psr/container": "^1 || ^2",
         "psr/http-factory": "^1.1",
