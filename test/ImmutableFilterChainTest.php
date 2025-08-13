@@ -8,21 +8,32 @@ use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\ImmutableFilterChain;
 use Laminas\Filter\StringPrefix;
 use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
 use function implode;
 use function str_replace;
 use function str_split;
+use function strrev;
 
-/** @psalm-import-type InstanceType from ImmutableFilterChain */
+/**
+ * @psalm-import-type InstanceType from ImmutableFilterChain
+ * @psalm-import-type ServiceManagerConfiguration from ServiceManager
+ */
 final class ImmutableFilterChainTest extends TestCase
 {
     private FilterPluginManager $plugins;
 
     protected function setUp(): void
     {
-        $this->plugins = new FilterPluginManager(new ServiceManager());
+        $this->plugins = self::pluginManagerWithConfig();
+    }
+
+    /** @param ServiceManagerConfiguration $config */
+    private static function pluginManagerWithConfig(array $config = []): FilterPluginManager
+    {
+        return new FilterPluginManager(new ServiceManager(), $config);
     }
 
     public function testThatFiltersWillBeRetrievedFromThePluginManager(): void
@@ -144,5 +155,23 @@ final class ImmutableFilterChainTest extends TestCase
         $chain = ImmutableFilterChain::fromArray($spec, $this->plugins);
 
         self::assertSame('Foofoo', $chain->filter('Foo'));
+    }
+
+    public function testServiceManagerServicesCanBeUsedInChains(): void
+    {
+        $plugins = self::pluginManagerWithConfig([
+            'services' => [
+                'custom' => static fn (string $value): string => strrev($value),
+            ],
+        ]);
+
+        $chain = ImmutableFilterChain::fromArray([
+            'filters' => [
+                ['name' => StringTrim::class],
+                ['name' => 'custom'],
+            ],
+        ], $plugins);
+
+        self::assertSame('oof', $chain->filter('  foo  '));
     }
 }
