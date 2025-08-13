@@ -84,8 +84,13 @@ final class FilterChain implements FilterChainInterface, Countable, IteratorAggr
 
     public function attachByName(string $name, array $options = [], int $priority = self::DEFAULT_PRIORITY): self
     {
-        /** @psalm-var FilterInterface $filter */
-        $filter = $this->plugins->build($name, $options);
+        if ($options === []) {
+            /** @psalm-var FilterInterface $filter */
+            $filter = $this->plugins->get($name);
+        } else {
+            /** @psalm-var FilterInterface $filter */
+            $filter = $this->plugins->build($name, $options);
+        }
 
         return $this->attach($filter, $priority);
     }

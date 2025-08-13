@@ -23,6 +23,7 @@ use function trim;
 
 /**
  * @psalm-import-type FilterChainConfiguration from FilterChain
+ * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  */
 final class FilterChainTest extends TestCase
 {
@@ -30,7 +31,13 @@ final class FilterChainTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->plugins = new FilterPluginManager(new ServiceManager());
+        $this->plugins = self::pluginManagerWithConfig();
+    }
+
+    /** @param ServiceManagerConfiguration $config */
+    private static function pluginManagerWithConfig(array $config = []): FilterPluginManager
+    {
+        return new FilterPluginManager(new ServiceManager(), $config);
     }
 
     public function testEmptyFilterChainReturnsOriginalValue(): void
@@ -237,5 +244,25 @@ final class FilterChainTest extends TestCase
 
         $filters = iterator_to_array($chain);
         self::assertSame([0 => $filter], $filters);
+    }
+
+    public function testServiceManagerServicesCanBeUsedInChains(): void
+    {
+        $closure = static fn (mixed $value): mixed => $value;
+        $plugins = self::pluginManagerWithConfig([
+            'services' => [
+                'custom' => $closure,
+            ],
+        ]);
+
+        $chain = iterator_to_array(new FilterChain($plugins, [
+            'filters' => [
+                ['name' => StringTrim::class],
+                ['name' => 'custom'],
+            ],
+        ]), false);
+
+        self::assertCount(2, $chain);
+        self::assertSame($closure, $chain[1]);
     }
 }
