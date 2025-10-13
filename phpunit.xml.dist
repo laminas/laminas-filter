@@ -28,7 +28,7 @@
             -->
         <env name="TESTS_LAMINAS_FILTER_COMPRESS_ZIP_ENABLED" value="true"/>
     </php>
-    <source>
+    <source restrictDeprecations="true">
         <include>
             <directory suffix=".php">./src</directory>
         </include>
