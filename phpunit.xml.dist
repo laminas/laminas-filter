@@ -6,7 +6,10 @@
         colors="true"
         cacheDirectory=".phpunit.cache"
         displayDetailsOnAllIssues="true"
-        failOnAllIssues="true"
+        failOnDeprecation="true"
+        failOnNotice="true"
+        failOnWarning="true"
+        failOnPhpunitDeprecation="true"
 >
     <testsuites>
         <testsuite name="laminas-filter Test Suite">

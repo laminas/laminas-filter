@@ -7,6 +7,7 @@ namespace LaminasTest\Filter\Compress;
 use Laminas\Filter\Compress\Bz2Adapter;
 use Laminas\Filter\Exception\RuntimeException;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 
 use function array_map;
@@ -58,6 +59,7 @@ final class Bz2AdapterTest extends TestCase
         self::assertSame($input, $result);
     }
 
+    #[RequiresPhp('<= 8.4.99')]
     public function testInvalidCompressionLevel(): void
     {
         /** @psalm-suppress InvalidArgument */
