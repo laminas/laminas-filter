@@ -7,7 +7,7 @@ on:
     tags:
 
 env:
-  default_php: 8.1
+  default_php: 8.2
   php_extensions: fileinfo,filter,iconv,mbstring,bz2,zlib,zip
 
 jobs:

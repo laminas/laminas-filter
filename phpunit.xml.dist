@@ -5,24 +5,15 @@
         bootstrap="vendor/autoload.php"
         colors="true"
         cacheDirectory=".phpunit.cache"
-        displayDetailsOnIncompleteTests="true"
-        displayDetailsOnSkippedTests="true"
-        displayDetailsOnTestsThatTriggerDeprecations="true"
-        displayDetailsOnTestsThatTriggerErrors="true"
-        displayDetailsOnTestsThatTriggerNotices="true"
-        displayDetailsOnTestsThatTriggerWarnings="true"
-        displayDetailsOnPhpunitDeprecations="true"
-        failOnDeprecation="true"
-        failOnPhpunitDeprecation="true"
-        failOnWarning="true"
-        failOnNotice="true"
+        displayDetailsOnAllIssues="true"
+        failOnAllIssues="true"
 >
     <testsuites>
         <testsuite name="laminas-filter Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
-    <source>
+    <source ignoreIndirectDeprecations="true">
         <include>
             <directory suffix=".php">./src</directory>
         </include>
