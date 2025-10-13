@@ -295,6 +295,17 @@ class FilterChain extends AbstractFilter implements Countable, IteratorAggregate
         return ['filters'];
     }
 
+    /**
+     * @internal
+     * @deprecated This method will be removed in 3.0.0 without replacement
+     *
+     * @see __sleep()
+     */
+    public function __serialize(): array
+    {
+        return ['filters' => $this->filters];
+    }
+
     /** @return Traversable<array-key, FilterInterface|callable(mixed): mixed> */
     public function getIterator(): Traversable
     {
