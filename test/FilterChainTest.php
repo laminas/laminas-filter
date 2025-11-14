@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace LaminasTest\Filter;
 
+use Laminas\Filter\Exception\InvalidSpecificationArrayException;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\FilterPluginManager;
 use Laminas\Filter\PregReplace;
+use Laminas\Filter\StringPrefix;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
+use Laminas\Filter\ToInt;
 use Laminas\ServiceManager\ServiceManager;
 use LaminasTest\Filter\TestAsset\StrRepeatFilterInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -264,5 +268,110 @@ final class FilterChainTest extends TestCase
 
         self::assertCount(2, $chain);
         self::assertSame($closure, $chain[1]);
+    }
+
+    /** @return array<string, array{0: array, 1: string}> */
+    public static function invalidSpecProvider(): array
+    {
+        return [
+            'Filters string'            => [
+                ['filters' => 'foo'],
+                'The `filters` key must be a list of arrays or filter instances',
+            ],
+            'Filter not array'          => [
+                ['filters' => ['foo']],
+                'Each member of the `filters` list must be array specification',
+            ],
+            'Filter name missing'       => [
+                ['filters' => [['missing name']]],
+                'Individual filter array specifications must have the key `name`',
+            ],
+            'Filter name empty'         => [
+                ['filters' => [['name' => '']]],
+                'Individual filter array specifications must have the key `name`',
+            ],
+            'Filter name null'          => [
+                ['filters' => [['name' => null]]],
+                'Individual filter array specifications must have the key `name`',
+            ],
+            'Filter name non-string'    => [
+                ['filters' => [['name' => 1]]],
+                'Individual filter array specifications must have the key `name`',
+            ],
+            'Filter options non-array'  => [
+                ['filters' => [['name' => 'foo', 'options' => 1]]],
+                'Filter options must be an array when specified',
+            ],
+            'Filter priority non-int'   => [
+                ['filters' => [['name' => 'foo', 'priority' => 'banana']]],
+                'Filter priorities must be integers when specified',
+            ],
+            'Callbacks not array'       => [
+                ['callbacks' => 'foo'],
+                'The `callbacks` key must be a list of arrays',
+            ],
+            'Callback not array'        => [
+                ['callbacks' => ['foo']],
+                'All items listed under the `callbacks` key must be arrays',
+            ],
+            'Callback missing callback' => [
+                ['callbacks' => [['missing required key']]],
+                'must contain a callable under the key `callback`',
+            ],
+            'Callback not callable'     => [
+                ['callbacks' => [['callback' => 'foo']]],
+                'must contain a callable under the key `callback`',
+            ],
+            'Callback priority non-int' => [
+                ['callbacks' => [['callback' => static fn () => null, 'priority' => 'banana']]],
+                'Filter priorities must be integers when specified',
+            ],
+        ];
+    }
+
+    #[DataProvider('invalidSpecProvider')]
+    public function testSpecificationValidationWithInvalidSpecs(array $spec, string $expectMessage): void
+    {
+        $this->expectException(InvalidSpecificationArrayException::class);
+        $this->expectExceptionMessage($expectMessage);
+        FilterChain::validateSpecification($spec);
+    }
+
+    /** @return array<string, array{0: array}> */
+    public static function validSpecProvider(): array
+    {
+        return [
+            'Empty'              => [[]],
+            'Empty Filters'      => [['filters' => []]],
+            'Empty Callbacks'    => [['callbacks' => []]],
+            'Full Specification' => [
+                [
+                    'filters'   => [
+                        new StringToLower(),
+                        [
+                            'name' => ToInt::class,
+                        ],
+                        [
+                            'name'     => StringPrefix::class,
+                            'options'  => ['prefix' => 'Foo'],
+                            'priority' => 10,
+                        ],
+                    ],
+                    'callbacks' => [
+                        [
+                            'callback' => static fn () => null,
+                            'priority' => 9,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    #[DataProvider('validSpecProvider')]
+    public function testValidSpecifications(array $spec): void
+    {
+        $this->expectNotToPerformAssertions();
+        FilterChain::validateSpecification($spec);
     }
 }
