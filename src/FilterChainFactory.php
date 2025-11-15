@@ -15,7 +15,10 @@ final class FilterChainFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, string $requestedName, ?array $options = null): FilterChain
     {
         /**
-         * It's not worth attempting runtime validation of the specification shape
+         * Runtime validation of the chain spec can be done but is not because it would introduce a BC break
+         *
+         * @see FilterChain::validateSpecification()
+         *
          * @psalm-var FilterChainConfiguration $options
          */
         $options       = $options ?? [];
