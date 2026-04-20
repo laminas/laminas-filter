@@ -50,7 +50,7 @@
         "laminas/laminas-diactoros": "^3.8",
         "pear/archive_tar": "^1.6.0",
         "pear/pear": "^1.10.16",
-        "phpunit/phpunit": "^11.5.42",
+        "phpunit/phpunit": "^12.5.22",
         "psalm/plugin-phpunit": "^0.19.5",
         "vimeo/psalm": "^6.13.1"
     },
