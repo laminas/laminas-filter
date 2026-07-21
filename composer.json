@@ -51,7 +51,7 @@
         "pear/archive_tar": "^1.6.0",
         "pear/pear": "^1.10.18",
         "phpunit/phpunit": "^11.5.56",
-        "psalm/plugin-phpunit": "^0.19.7",
+        "psalm/plugin-phpunit": "^0.20.0",
         "vimeo/psalm": "^6.16.1"
     },
     "suggest": {
