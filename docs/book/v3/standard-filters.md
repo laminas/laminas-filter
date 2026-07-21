@@ -178,16 +178,16 @@ In this case `Laminas\Filter\Boolean` will work as described in the following
 table, which shows which values return `TRUE` or `FALSE`. All other given values
 are returned without change when `casting` is set to `FALSE`
 
-Type Constant | Type String | True | False
----- | ---- | ---- | -----
-`Laminas\Filter\Boolean::TYPE_BOOLEAN` | `boolean` | `TRUE` | `FALSE`
-`Laminas\Filter\Boolean::TYPE_EMPTY_ARRAY` | `array` | | `[]`
-`Laminas\Filter\Boolean::TYPE_FALSE_STRING` | `false` | `'true'` (case insensitive) | `'false'` (case insensitive)
-`Laminas\Filter\Boolean::TYPE_FLOAT` | `float` | `1.0` | `0.0`
-`Laminas\Filter\Boolean::TYPE_INTEGER` | `integer` | `1` | `0`
-`Laminas\Filter\Boolean::TYPE_NULL` | `null` |  | `NULL`
-`Laminas\Filter\Boolean::TYPE_STRING` | `string` | | `''`
-`Laminas\Filter\Boolean::TYPE_ZERO_STRING` | `zero` | `'1'` | `'0'`
+| Type Constant                               | Type String | True                        | False                        |
+|---------------------------------------------|-------------|-----------------------------|------------------------------|
+| `Laminas\Filter\Boolean::TYPE_BOOLEAN`      | `boolean`   | `TRUE`                      | `FALSE`                      |
+| `Laminas\Filter\Boolean::TYPE_EMPTY_ARRAY`  | `array`     |                             | `[]`                         |
+| `Laminas\Filter\Boolean::TYPE_FALSE_STRING` | `false`     | `'true'` (case insensitive) | `'false'` (case insensitive) |
+| `Laminas\Filter\Boolean::TYPE_FLOAT`        | `float`     | `1.0`                       | `0.0`                        |
+| `Laminas\Filter\Boolean::TYPE_INTEGER`      | `integer`   | `1`                         | `0`                          |
+| `Laminas\Filter\Boolean::TYPE_NULL`         | `null`      |                             | `NULL`                       |
+| `Laminas\Filter\Boolean::TYPE_STRING`       | `string`    |                             | `''`                         |
+| `Laminas\Filter\Boolean::TYPE_ZERO_STRING`  | `zero`      | `'1'`                       | `'0'`                        |
 
 The following example shows the behavior when changing the `casting` option:
 
