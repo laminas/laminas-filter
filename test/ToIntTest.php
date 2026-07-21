@@ -56,7 +56,7 @@ final class ToIntTest extends TestCase
         self::assertSame(PHP_INT_MAX, $filter->__invoke($huge));
     }
 
-    #[RequiresPhp('^8.5.0')]
+    #[RequiresPhp('>= 8.5.0')]
     public function testHugeNumbersAreTruncatedToIntMaxOn85WithAWarning(): void
     {
         $called = false;
