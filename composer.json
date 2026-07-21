@@ -49,10 +49,10 @@
         "laminas/laminas-coding-standard": "^3.1.0",
         "laminas/laminas-diactoros": "^3.8",
         "pear/archive_tar": "^1.6.0",
-        "pear/pear": "^1.10.16",
-        "phpunit/phpunit": "^11.5.42",
-        "psalm/plugin-phpunit": "^0.19.5",
-        "vimeo/psalm": "^6.13.1"
+        "pear/pear": "^1.10.18",
+        "phpunit/phpunit": "^11.5.56",
+        "psalm/plugin-phpunit": "^0.19.7",
+        "vimeo/psalm": "^6.16.1"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
