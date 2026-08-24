@@ -642,16 +642,16 @@
         },
         {
             "name": "amphp/dns",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/dns.git",
-                "reference": "78eb3db5fc69bf2fc0cb503c4fcba667bc223c71"
+                "reference": "ec5948bfafac808f410406e18bc7b52a2d4629b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/dns/zipball/78eb3db5fc69bf2fc0cb503c4fcba667bc223c71",
-                "reference": "78eb3db5fc69bf2fc0cb503c4fcba667bc223c71",
+                "url": "https://api.github.com/repos/amphp/dns/zipball/ec5948bfafac808f410406e18bc7b52a2d4629b7",
+                "reference": "ec5948bfafac808f410406e18bc7b52a2d4629b7",
                 "shasum": ""
             },
             "require": {
@@ -670,7 +670,7 @@
                 "amphp/php-cs-fixer-config": "^2",
                 "amphp/phpunit-util": "^3",
                 "phpunit/phpunit": "^9",
-                "psalm/phar": "5.20"
+                "psalm/phar": "6.16.1"
             },
             "type": "library",
             "autoload": {
@@ -719,7 +719,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/dns/issues",
-                "source": "https://github.com/amphp/dns/tree/v2.4.0"
+                "source": "https://github.com/amphp/dns/tree/v2.4.1"
             },
             "funding": [
                 {
@@ -727,7 +727,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-19T15:43:40+00:00"
+            "time": "2026-07-26T17:53:54+00:00"
         },
         {
             "name": "amphp/parallel",
@@ -1079,16 +1079,16 @@
         },
         {
             "name": "amphp/socket",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/socket.git",
-                "reference": "dadb63c5d3179fd83803e29dfeac27350e619314"
+                "reference": "b347be5aff6b2cc025208bb4d896607eb470c018"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/socket/zipball/dadb63c5d3179fd83803e29dfeac27350e619314",
-                "reference": "dadb63c5d3179fd83803e29dfeac27350e619314",
+                "url": "https://api.github.com/repos/amphp/socket/zipball/b347be5aff6b2cc025208bb4d896607eb470c018",
+                "reference": "b347be5aff6b2cc025208bb4d896607eb470c018",
                 "shasum": ""
             },
             "require": {
@@ -1151,7 +1151,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/socket/issues",
-                "source": "https://github.com/amphp/socket/tree/v2.4.0"
+                "source": "https://github.com/amphp/socket/tree/v2.4.1"
             },
             "funding": [
                 {
@@ -1159,7 +1159,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-19T15:09:56+00:00"
+            "time": "2026-08-22T18:13:20+00:00"
         },
         {
             "name": "amphp/sync",
@@ -2343,21 +2343,21 @@
         },
         {
             "name": "pear/archive_tar",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "dc3285537f1832da8ddbbe45f5a007248b6cc00e"
+                "reference": "a0d2c458a2ff6ee8943ac4271b7f57d613529ae0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/dc3285537f1832da8ddbbe45f5a007248b6cc00e",
-                "reference": "dc3285537f1832da8ddbbe45f5a007248b6cc00e",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/a0d2c458a2ff6ee8943ac4271b7f57d613529ae0",
+                "reference": "a0d2c458a2ff6ee8943ac4271b7f57d613529ae0",
                 "shasum": ""
             },
             "require": {
                 "pear/pear-core-minimal": "^1.10.0alpha2",
-                "php": ">=5.4.0"
+                "php": ">=5.6.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -2370,7 +2370,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -2409,7 +2409,7 @@
                 "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Archive_Tar",
                 "source": "https://github.com/pear/Archive_Tar"
             },
-            "time": "2025-07-19T14:49:16+00:00"
+            "time": "2026-08-19T17:37:49+00:00"
         },
         {
             "name": "pear/console_getopt",
@@ -4886,16 +4886,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.4.16",
+            "version": "v7.4.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f4c69c9aed03abf933b294257d618bdd9b30a06d"
+                "reference": "962e18f09ebe68a49039b4c82fc0ea4871824fca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f4c69c9aed03abf933b294257d618bdd9b30a06d",
-                "reference": "f4c69c9aed03abf933b294257d618bdd9b30a06d",
+                "url": "https://api.github.com/repos/symfony/console/zipball/962e18f09ebe68a49039b4c82fc0ea4871824fca",
+                "reference": "962e18f09ebe68a49039b4c82fc0ea4871824fca",
                 "shasum": ""
             },
             "require": {
@@ -4960,7 +4960,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.4.16"
+                "source": "https://github.com/symfony/console/tree/v7.4.17"
             },
             "funding": [
                 {
@@ -4980,7 +4980,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-31T12:37:14+00:00"
+            "time": "2026-08-21T12:09:28+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -5055,16 +5055,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v7.4.15",
+            "version": "v7.4.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "ff16a16bf87fdf264638b8f6995b3515975e3c79"
+                "reference": "ee7bc7bca4c7079b88e57d5000aeeb20df570c8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/ff16a16bf87fdf264638b8f6995b3515975e3c79",
-                "reference": "ff16a16bf87fdf264638b8f6995b3515975e3c79",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/ee7bc7bca4c7079b88e57d5000aeeb20df570c8d",
+                "reference": "ee7bc7bca4c7079b88e57d5000aeeb20df570c8d",
                 "shasum": ""
             },
             "require": {
@@ -5101,7 +5101,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v7.4.15"
+                "source": "https://github.com/symfony/filesystem/tree/v7.4.17"
             },
             "funding": [
                 {
@@ -5121,7 +5121,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-22T07:36:05+00:00"
+            "time": "2026-08-21T12:09:28+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
