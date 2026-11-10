@@ -21,7 +21,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "platform": {
-            "php": "8.2.99"
+            "php": "8.3.99"
         }
     },
     "extra": {
@@ -31,28 +31,29 @@
         }
     },
     "require": {
-        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "php": "~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
         "ext-fileinfo": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-servicemanager": "^4.1.0",
-        "laminas/laminas-stdlib": "^3.19.0",
-        "psr/container": "^1 || ^2",
+        "laminas/laminas-servicemanager": "^4.5.1",
+        "laminas/laminas-stdlib": "^3.22.0",
+        "psr/container": "^1 || ^2.0.2",
         "psr/http-factory": "^1.1",
         "psr/http-message": "^2.0"
     },
     "require-dev": {
         "ext-bz2": "*",
-        "ext-zlib": "*",
         "ext-zip": "*",
+        "ext-zlib": "*",
+        "laminas/internal-tooling": "^1.0",
         "laminas/laminas-coding-standard": "^3.1.0",
-        "laminas/laminas-diactoros": "^3.8",
-        "pear/archive_tar": "^1.6.0",
+        "laminas/laminas-diactoros": "^3.10",
+        "pear/archive_tar": "^1.6.1",
         "pear/pear": "^1.10.18",
-        "phpunit/phpunit": "^11.5.56",
-        "psalm/plugin-phpunit": "~0.22.0",
-        "vimeo/psalm": "^6.16.1"
+        "phpunit/phpunit": "^11.5.57",
+        "psalm/plugin-phpunit": "~0.22.2",
+        "vimeo/psalm": "^6.20.10"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",

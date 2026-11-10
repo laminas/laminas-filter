@@ -1,31 +1,30 @@
-name: "Continuous Integration"
-
-on:
-  pull_request:
+name: 'Continuous Integration'
+'on':
+  pull_request: 
   push:
-    branches:
-    tags:
-
+    branches: 
+    tags: 
 env:
-  default_php: 8.2
-  php_extensions: fileinfo,filter,iconv,mbstring,bz2,zlib,zip
-
+  default_php: '8.3'
+  php_extensions: 'fileinfo,filter,iconv,mbstring,bz2,zlib,zip'
 jobs:
   ci:
     uses: laminas/workflow-continuous-integration/.github/workflows/continuous-integration.yml@1.x
-
   composer-require-checker:
-    name: "Check for missing dependencies"
+    name: 'Check for missing dependencies'
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
-
+      -
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      -
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
         with:
-          php-version: ${{ env.default_php }}
+          php-version: '${{ env.default_php }}'
           ini-values: memory_limit=-1
-          extensions: ${{ env.php_extensions }}
-      - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
-      - run: make install-tools
-      - run: make composer-require-checker
+          extensions: '${{ env.php_extensions }}'
+      -
+        uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda
+      -
+        run: 'make install-tools'
+      -
+        run: 'make composer-require-checker'
