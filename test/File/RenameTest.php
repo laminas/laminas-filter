@@ -25,7 +25,7 @@ use const DIRECTORY_SEPARATOR;
 
 class RenameTest extends TestCase
 {
-    private const TEST_FILE_NAME = 'test_file.txt';
+    private const string TEST_FILE_NAME = 'test_file.txt';
 
     private static ?string $tmpPath             = null;
     private static ?string $tmpSubDirectoryPath = null;
