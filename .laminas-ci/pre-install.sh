@@ -13,11 +13,13 @@ cd "$TMPDIR" || exit 1;
 
 apt install -y make g++
 
-pecl channel-update pecl.php.net
-
-# Install lzf
-pecl install lzf || exit 1
-echo "extension=lzf.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
+# Install lzf - Nov 2026 - lzf does not compile for 8.6
+if [[ ${PHP_VERSION} != "8.6" ]]
+then
+  pecl channel-update pecl.php.net
+  pecl install lzf || exit 1
+  echo "extension=lzf.so" >> /etc/php/"${PHP_VERSION}"/cli/php.ini
+fi
 
 # Install rar - May 2023 - Rar no longer compiles on 8.1 or 8.2
 #pecl install rar
