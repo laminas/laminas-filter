@@ -25,7 +25,7 @@ class FilterPluginManagerCompatibilityTest extends TestCase
      *
      * These deprecated filters rely on `laminas-crypt` which is not fully compatible with PHP 8.2 and OpenSSL 3+
      */
-    private const SKIPPED_ALIASES = [
+    private const array SKIPPED_ALIASES = [
         'decrypt',
         'encrypt',
         'Decrypt',
