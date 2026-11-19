@@ -19,7 +19,7 @@ use function is_dir;
 use function is_string;
 use function move_uploaded_file;
 use function pathinfo;
-use function spl_object_hash;
+use function spl_object_id;
 use function sprintf;
 use function str_replace;
 use function strlen;
@@ -454,7 +454,7 @@ class RenameUpload extends AbstractFilter
      */
     private function filterPsr7UploadedFile(UploadedFileInterface $uploadedFile)
     {
-        $alreadyFilteredKey = spl_object_hash($uploadedFile);
+        $alreadyFilteredKey = spl_object_id($uploadedFile);
 
         if (isset($this->alreadyFiltered[$alreadyFilteredKey])) {
             return $this->alreadyFiltered[$alreadyFilteredKey];
